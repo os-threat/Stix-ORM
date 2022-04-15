@@ -1,0 +1,30 @@
+[
+    {
+        "type": "ipv4-addr",      
+        "spec_version": "2.1",      
+        "id": "ipv4-addr--6da8dad3-4de3-5f8e-ab23-45d0b8f12f16",      
+        "value": "198.51.100.53"      
+    },
+    {      
+        "type": "network-traffic",      
+        "spec_version": "2.1",      
+        "id": "network-traffic--f8ae967a-3dc3-5cdf-8f94-8505abff00c2",      
+        "dst_ref": "ipv4-addr--6da8dad3-4de3-5f8e-ab23-45d0b8f12f16",      
+        "protocols": [      
+          "tcp",      
+          "http"      
+        ],      
+        "extensions": {      
+          "http-request-ext": {      
+            "request_method": "get",      
+            "request_value": "/download.html",      
+            "request_version": "http/1.1",      
+            "request_header": {      
+              "Accept-Encoding": "gzip,deflate",      
+              "User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.6) Gecko/20040113",      
+              "Host": "www.example.com"      
+            }      
+          }      
+        }      
+      }
+]

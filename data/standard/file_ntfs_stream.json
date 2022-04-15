@@ -1,0 +1,18 @@
+[{
+    "type": "file",  
+    "spec_version": "2.1",  
+    "id": "file--73c4cd13-7206-5100-88ef-822c42d3f02c",  
+    "hashes": {  
+      "SHA-256": "35a01331e9ad96f751278b891b6ea09699806faedfa237d40513d92ad1b7100f"  
+    },  
+    "extensions": {  
+      "ntfs-ext": {  
+        "alternate_data_streams": [  
+          {  
+            "name": "second.stream",  
+            "size": 25536  
+          }  
+        ]  
+      }  
+    }  
+  }]

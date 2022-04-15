@@ -1,0 +1,20 @@
+[
+    {
+        "type": "file",      
+        "spec_version": "2.1",      
+        "id": "file--edb1ebee-4387-41cc-943b-f94fd491118c",      
+        "name": "gedit-bin",      
+        "hashes": {      
+          "SHA-256": "aec070645fe53ee3b3763059376134f058cc337247c978add178b6ccdfb0019f"      
+        }      
+    },
+    {      
+        "type": "process",      
+        "spec_version": "2.1",      
+        "id": "process--d2ec5aab-808d-4492-890a-3c1a1e3cb06e",      
+        "pid": 1221,      
+        "created_time": "2016-01-20T14:11:25.55Z",      
+        "command_line": "./gedit-bin --new-window",      
+        "image_ref": "file--c7d1e135-8b34-549a-bb47-302f5cf998ed"      
+    }
+]

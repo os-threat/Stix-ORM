@@ -1,0 +1,32 @@
+[
+    {      
+        "type": "email-addr",      
+        "spec_version": "2.1",      
+        "id": "email-addr--9b7e29b3-fd8d-562e-b3f0-8fc8134f5dda",      
+        "value": "joe@example.com",      
+        "display_name": "Joe Smith"      
+       },
+      {      
+        "type": "email-addr",      
+        "spec_version": "2.1",      
+        "id": "email-addr--d1b3bf0c-f02a-51a1-8102-11aba7959868",      
+        "value": "bob@example.com",      
+        "display_name": "Bob Smith"      
+       }, 
+       {
+        "type": "email-message",      
+        "spec_version": "2.1",      
+        "id": "email-message--0c57a381-2a17-5e61-8754-5ef96efb286c",      
+        "from_ref": "email-addr--9b7e29b3-fd8d-562e-b3f0-8fc8134f5dda",      
+        "to_refs": ["email-addr--d1b3bf0c-f02a-51a1-8102-11aba7959868"],      
+        "is_multipart": false,      
+        "date": "2004-04-19T12:22:23.000Z",      
+        "subject": "Did you see this?",      
+        "additional_header_fields": {      
+          "Reply-To": [      
+            "steve@example.com",      
+            "jane@example.com"      
+          ]      
+        }      
+      }
+]

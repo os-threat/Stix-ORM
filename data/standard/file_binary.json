@@ -1,0 +1,68 @@
+[{
+    "type": "file",  
+    "spec_version": "2.1",  
+    "id": "file--fb0419a8-f09c-57f8-be64-71a80417591c",  
+    "name": "example.exe",  
+    "extensions": {  
+      "windows-pebinary-ext": {  
+        "pe_type": "exe",  
+        "machine_hex": "014c",  
+        "number_of_sections": 4,  
+        "time_date_stamp": "2016-01-22T12:31:12Z",  
+        "pointer_to_symbol_table_hex": "74726144",  
+        "number_of_symbols": 4542568,  
+        "size_of_optional_header": 224,  
+        "characteristics_hex": "818f",  
+        "optional_header": {  
+          "magic_hex": "010b",  
+          "major_linker_version": 2,  
+          "minor_linker_version": 25,  
+          "size_of_code": 512,  
+          "size_of_initialized_data": 283648,  
+          "size_of_uninitialized_data": 0,  
+          "address_of_entry_point": 4096,  
+          "base_of_code": 4096,  
+          "base_of_data": 8192,  
+          "image_base": 14548992,  
+          "section_alignment": 4096,  
+          "file_alignment": 4096,  
+          "major_os_version": 1,  
+          "minor_os_version": 0,  
+          "major_image_version": 0,  
+          "minor_image_version": 0,  
+          "major_subsystem_version": 4,  
+          "minor_subsystem_version": 0,  
+          "win32_version_value_hex": "00",  
+          "size_of_image": 299008,  
+          "size_of_headers": 4096,  
+          "checksum_hex": "00",  
+          "subsystem_hex": "03",  
+          "dll_characteristics_hex": "00",  
+          "size_of_stack_reserve": 100000,  
+          "size_of_stack_commit": 8192,  
+          "size_of_heap_reserve": 100000,  
+          "size_of_heap_commit": 4096,  
+          "loader_flags_hex": "abdbffde",  
+          "number_of_rva_and_sizes": 3758087646  
+        },  
+        "sections": [  
+          {  
+            "name": "CODE",  
+            "entropy": 0.061089  
+          },  
+          {  
+            "name": "DATA",  
+            "entropy": 7.980693  
+          },  
+          {  
+            "name": "NicolasB",  
+            "entropy": 0.607433  
+          },  
+          {  
+            "name": ".idata",  
+            "entropy": 0.607433  
+          }  
+        ]  
+      }  
+    }  
+  }]

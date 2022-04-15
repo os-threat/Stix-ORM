@@ -1,0 +1,45 @@
+[
+    {
+        "type": "file",      
+        "spec_version": "2.1",      
+        "id": "file--019fde1c-94ca-5967-8b3c-a906a51d87ac",      
+        "hashes": {      
+          "SHA-256": "ceafbfd424be2ca4a5f0402cae090dda2fb0526cf521b60b60077c0f622b285a"      
+        }      
+    },
+    {      
+        "type": "file",      
+        "spec_version": "2.1",      
+        "id": "file--94fc2163-dec3-5715-b824-6e689c4de865",      
+        "hashes": {      
+          "SHA-256": "19c549ec2628b989382f6b280cbd7bb836a0b461332c0fe53511ce7d584b89d3"      
+        }      
+    },
+    {      
+        "type": "file",      
+        "spec_version": "2.1",      
+        "id": "file--d07ff290-d7e0-545b-a2ff-04602a9e0b73",      
+        "hashes": {      
+          "SHA-256": "0969de02ecf8a5f003e3f6d063d848c8a193aada092623f8ce408c15bcb5f038"      
+        }      
+    },
+    {      
+        "type": "file",      
+        "spec_version": "2.1",      
+        "id": "file--9a1f834d-2506-5367-baec-7aa63996ac43",      
+        "name": "foo.zip",      
+        "hashes": {      
+          "SHA-256": "35a01331e9ad96f751278b891b6ea09699806faedfa237d40513d92ad1b7100f"      
+        },      
+        "mime_type": "application/zip",      
+        "extensions": {      
+          "archive-ext": {      
+            "contains_refs": [      
+              "file--019fde1c-94ca-5967-8b3c-a906a51d87ac",      
+              "file--94fc2163-dec3-5715-b824-6e689c4de865",      
+              "file--d07ff290-d7e0-545b-a2ff-04602a9e0b73"      
+            ]      
+          }      
+        }      
+      }
+]

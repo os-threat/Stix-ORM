@@ -1,0 +1,65 @@
+[
+    {
+        "type":"infrastructure",      
+        "spec_version": "2.1",      
+        "id":"infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d",      
+        "created":"2016-05-07T11:22:30.000Z",      
+        "modified":"2016-05-07T11:22:30.000Z",      
+        "name":"Poison Ivy C2",      
+        "infrastructure_types": ["command-and-control"]      
+      },      
+      {      
+        "type": "ipv4-addr",      
+        "spec_version": "2.1",      
+        "id": "ipv4-addr--b4e29b62-2053-47c4-bab4-bbce39e5ed67",      
+        "value": "198.51.100.3"      
+      },      
+      {      
+        "type": "ipv4-addr",      
+        "spec_version": "2.1",      
+        "id": "ipv4-addr--84445275-e371-444b-baea-ac7d07a180fd",      
+        "value": "198.52.200.4"      
+      },      
+      {      
+        "type": "malware",      
+        "spec_version": "2.1",      
+        "id": "malware--16f4f3f9-1b68-4abb-bb66-7639d49f1e30",     
+        "created": "2016-05-08T14:31:09.000Z",      
+        "modified": "2016-05-08T14:31:09.000Z",      
+        "is_family": true,      
+        "malware_types":[      
+          "remote-access-trojan"      
+        ],      
+        "name": "Poison Ivy"      
+      },      
+      {      
+        "type": "relationship",      
+        "spec_version": "2.1",      
+        "id": "relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa60266ef",      
+        "created": "2016-05-09T08:17:27.000Z",      
+        "modified": "2016-05-09T08:17:27.000Z",      
+        "relationship_type": "consists-of",      
+        "source_ref": "infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d",      
+        "target_ref": "ipv4-addr--b4e29b62-2053-47c4-bab4-bbce39e5ed67"      
+      },      
+      {      
+        "type": "relationship",      
+        "spec_version": "2.1",      
+        "id": "relationship--b82b2819-3b86-4bd5-afb3-fa36cfbc3f18",      
+        "created": "2016-05-09T08:17:27.000Z",      
+        "modified": "2016-05-09T08:17:27.000Z",      
+        "relationship_type": "consists-of",      
+        "source_ref": "infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d",      
+        "target_ref": "ipv4-addr--84445275-e371-444b-baea-ac7d07a180fd"      
+      },      
+      {      
+        "type": "relationship",      
+        "spec_version": "2.1",      
+        "id": "relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa60266ed",      
+        "created": "2016-05-09T08:17:27.000Z",      
+        "modified": "2016-05-09T08:17:27.000Z",      
+        "relationship_type": "controls",      
+        "source_ref": "infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d",      
+        "target_ref": "malware--16f4f3f9-1b68-4abb-bb66-7639d49f1e30"      
+      }
+]

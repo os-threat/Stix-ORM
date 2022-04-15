@@ -1,0 +1,17 @@
+[{
+    "type": "note",  
+    "spec_version": "2.1",  
+    "id": "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061",  
+    "created": "2016-05-12T08:17:27.000Z",  
+    "modified": "2016-05-12T08:17:27.000Z",  
+    "external_references": [  
+      {  
+        "source_name": "job-tracker",  
+        "external_id": "job-id-1234"  
+      }  
+    ],  
+    "abstract": "Tracking Team Note#1",  
+    "content": "This note indicates the various steps taken by the threat analyst team to investigate this specific campaign. Step 1) Do a scan 2) Review scanned results for identified hosts not known by external intel…etc.",  
+    "authors": ["John Doe"],  
+    "object_refs": ["campaign--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f"]  
+  }]

@@ -1,0 +1,30 @@
+[
+    {
+        "type": "ipv4-addr",      
+        "spec_version": "2.1",      
+        "id": "ipv4-addr--d7177770-fc12-586b-9244-426596a7008e",      
+        "value": "198.51.100.9"      
+    },
+    {      
+        "type": "ipv4-addr",      
+        "spec_version": "2.1",      
+        "id": "ipv4-addr--03b708d9-7761-5523-ab75-5ea096294a68",      
+        "value": "203.0.113.5"      
+    },
+    {      
+        "type": "network-traffic",      
+        "spec_version": "2.1",      
+        "id": "network-traffic--e7a939ca-78c6-5f27-8ae0-4ad112454626",      
+        "src_ref": "ipv4-addr--d7177770-fc12-586b-9244-426596a7008e",      
+        "dst_ref": "ipv4-addr--03b708d9-7761-5523-ab75-5ea096294a68",      
+        "protocols": [      
+          "icmp"      
+        ],      
+        "extensions": {      
+          "icmp-ext": {      
+            "icmp_type_hex": "08",      
+            "icmp_code_hex": "00"      
+          }      
+        }      
+      }
+]

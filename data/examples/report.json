@@ -1,0 +1,64 @@
+{
+    "type": "bundle",  
+    "id": "bundle--44af6c39-c09b-49c5-9de2-394224b04982",  
+    "objects": [  
+      {  
+        "type": "identity",  
+        "spec_version": "2.1",  
+        "id": "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283",  
+        "created": "2015-01-21T19:59:17.000Z",  
+        "modified": "2015-01-21T19:59:17.000Z",  
+        "name": "Acme Cybersecurity Solutions"  
+      },  
+      {  
+        "type": "indicator",  
+        "spec_version": "2.1",  
+        "id": "indicator--26ffb872-1dd9-446e-b6f5-d58527e5b5d2",  
+        "created": "2015-12-21T19:59:17.000Z",  
+        "modified": "2016-05-21T19:59:17.000Z",  
+        "name": "Some indicator",  
+        "indicator_types": ["malicious-activity"],  
+        "pattern": "[ file:hashes.MD5 = '3773a88f65a5e780c8dff9cdc3a056f3' ]",
+        "pattern_type": "stix",  
+        "valid_from": "2015-12-21T19:59:17Z",  
+        "created_by_ref": "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283"  
+      },  
+      {  
+        "type": "campaign",  
+        "spec_version": "2.1",  
+        "id": "campaign--83422c77-904c-4dc1-aff5-5c38f3a2c55c",  
+        "created_by_ref": "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283",  
+        "created": "2015-12-21T19:59:17.000Z",  
+        "modified": "2016-05-21T19:59:17.000Z",  
+        "name": "Some Campaign"  
+      },  
+      {  
+        "type": "relationship",  
+        "spec_version": "2.1",  
+        "id": "relationship--f82356ae-fe6c-437c-9c24-6b64314ae68a",  
+        "created_by_ref": "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283",  
+        "created": "2015-12-21T19:59:17.000Z",  
+        "modified": "2015-12-21T19:59:17.000Z",  
+        "source_ref": "indicator--26ffb872-1dd9-446e-b6f5-d58527e5b5d2",  
+        "target_ref": "campaign--83422c77-904c-4dc1-aff5-5c38f3a2c55c",  
+        "relationship_type": "indicates"  
+      },  
+      {  
+        "type": "report",  
+        "spec_version": "2.1",  
+        "id": "report--84e4d88f-44ea-4bcd-bbf3-b2c1c320bcbd",  
+        "created_by_ref": "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283",  
+        "created": "2015-12-21T19:59:11.000Z",  
+        "modified": "2016-05-21T19:59:11.000Z",  
+        "name": "The Black Vine Cyberespionage Group",  
+        "description": "A simple report with an indicator and campaign",  
+        "published": "2016-01-20T17:00:00.000Z",  
+        "report_types": ["campaign"],  
+        "object_refs": [  
+          "indicator--26ffb872-1dd9-446e-b6f5-d58527e5b5d2",  
+          "campaign--83422c77-904c-4dc1-aff5-5c38f3a2c55c",  
+          "relationship--f82356ae-fe6c-437c-9c24-6b64314ae68a"  
+        ]  
+      }  
+    ]  
+  }
