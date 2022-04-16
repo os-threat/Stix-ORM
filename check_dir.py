@@ -18,7 +18,7 @@ connection = {
     "password": None
 }
 # 150.230.11.93
-data_path = "data/threat_reports/"
+data_path = "data/examples/"
 file = "marking_definitions.json"
 
             
