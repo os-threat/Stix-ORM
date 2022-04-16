@@ -16,6 +16,24 @@ then start the virtual environment with
 
     pipenv shell    
 
+## Suggested Experiments
+Examine and run the granular marking example with
+
+    python test.py
+    
+Notice how the granular marking input example, has different markings for each of the items in a list? Compare those indexes to the TypeQL statements and the final output. See how the indexes and the list are now reversed?
+
+Examine how the ORM handles different shaped objects in the various directories. Check out:
+- examples directory: Granular markings versus Data Markings
+- standard directory: Email_mime, file_binary, file_ntfs_stream, network_ext_HTTP_request, X509_cert_v3_ext
+- threat_reports director: Check out the final report, and the size of the auto-generated relation
+
+To do this, use 
+
+    python check_dir.py
+
+and scroll through the logging output. Change the directory name as needed to change the directory focus
+
 ## Contents
 There are 3 directories and some local files.
 
@@ -50,7 +68,7 @@ There are some markdown docs that contain incomplete documentation describing th
 
 ### 4. Local Files
 There are four local files:
-- test.py: Enables loading of individual data files, and retrieving of a single Stix_id
+- test.py: Enables loading of individual data files, and retrieving of a single Stix_id. It is currently set to examine the Granular Markings and how polymorphic lists mean outputs lose their absolute order, but retain their relative order.
 - check_dir.py: Enables each data file in a a directory to be loaded into TypeDB, and then every object to be sequentially retrieved and printed. The process handles files with either bundles or lists of objects. 
 - export_test.json: An export of the intermediate form of the last object to be retrieved from the datastore
 - export_final.json: An export of the final form of the last object to be retrieved from the datastore
