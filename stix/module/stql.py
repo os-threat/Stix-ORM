@@ -7,7 +7,7 @@ from stix2 import *
 from stix2.v21 import *
 from stix2.utils import is_object, is_stix_type, get_type_from_id, is_sdo, is_sco, is_sro
 from stix2.parsing import parse
-
+from stix.module.definitions.stix21 import stix_models
 
 ##############################################################
 #  1.) Methods to Add 2_tql() Capability to all Stix Objects
@@ -83,7 +83,7 @@ def sdo_to_typeql(sdo, import_type='stix21'):
         return ''	
     
     # 1.C) Add the standard object properties to the specific ones, and split them into properties and relations
-    obj_tql.update(sdo_typeql_dict)
+    obj_tql.update(stix_models['sdo_typeql_dict'])
     properties, relations = split_on_activity_type(total_props, obj_tql)   
     
     # 2.) setup the typeql statement for the sdo entity
@@ -2050,7 +2050,7 @@ def make_sdo(res, import_type):
         return ''	
     
     # 1.C) Add the standard object properties to the specific ones, and split them into properties and relations
-    obj_tql.update(sdo_typeql_dict)
+    obj_tql.update(stix_models['sdo_typeql_dict'])
     # 2.A) get the typeql properties and relations
     props = res["has"]
     relns = res["relns"]
