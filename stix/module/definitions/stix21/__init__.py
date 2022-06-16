@@ -31,6 +31,5 @@ for file_path in glob(f'{dir_path}/*.json'):
         # create well formed key
         key = f'{file_name}_dict'
 
-        stix_models[os.path.basename(key)] = json.load(json_file)
+        stix_models[key] = json.load(json_file)
 
-logger.info(stix_models)
