@@ -742,26 +742,6 @@ def split_on_activity_type(total_props, obj_tql):
 #      - Stix 2 Object Type --> Dict Name
 ###################################################
 
-#---------------------------------------------------
-# 2.1) Stix Domain Object Dicts
-#---------------------------------------------------
-sdo_typeql_dict = {
-  "type" :  "stix-type",
-  "spec_version" : "spec-version",
-  "id"  : "stix-id",
-  "created_by_ref"  : "",
-  "created"  : "created",
-  "modified" : "modified",
-  "revoked"  : "revoked",
-  "labels"  : "labels",
-  "confidence"  : "confidence",
-  "lang"  : "langs",
-  "external_references"  : "",
-  "object_marking_refs"  : "",
-  "granular_markings"  : "",
-  "extensions"  : ""
-}
-
 attack_pattern_typeql_dict = {
   "name": "name",
   "description": "description",

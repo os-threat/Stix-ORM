@@ -43,7 +43,7 @@ if __name__ == '__main__':
     data_path = "data/examples/"
     file = "granular_markings.json"
     
-    load_file(data_path+file)
-    query_id(test_id)
+    #load_file(data_path+file)
+    #query_id(test_id)
     #direct(data_path+file)
     

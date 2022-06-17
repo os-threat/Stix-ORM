@@ -23,13 +23,14 @@ path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
 
 stix_models = {}
-for file_path in glob(f'{dir_path}/*.json'):
+for file_path in glob(f'{dir_path}/data/*.json'):
     # Opening JSON file
     file_name = Path(file_path).stem
 
     with open(file_path) as json_file:
         # create well formed key
-        key = f'{file_name}_dict'
+        key = f'{file_name}'
 
         stix_models[key] = json.load(json_file)
 
+logger.debug('Loaded %d stix dictionary objects' % len(stix_models))
