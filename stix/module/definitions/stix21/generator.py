@@ -27,3 +27,9 @@ for id in dir(definitions):
         # save the object as dictionary
         with open(f'./data/{id}.json','w') as file:
             json.dump(obj,file)
+
+    if isinstance(obj, list) and id!='__builtins__':
+        # save the object as dictionary
+        with open(f'./data/{id}.json','w') as file:
+            json.dump(obj,file)
+

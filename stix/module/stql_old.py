@@ -54,8 +54,8 @@ def sdo_to_typeql(sdo, import_type='stix21'):
     # 1.B) get the specific typeql names for an object into a dictionary
     # - stix import
     if import_type == 'Stix21':
-        if obj_type in stix_models["dispatch_stix"]:
-            obj_tql = stix_models["dispatch_stix"][obj_type]
+        if obj_type in dispatch_stix:
+            obj_tql = dispatch_stix[obj_type]
         else:
             logger.error(f'obj_type type {obj_type} not supported')
             return ''
@@ -69,13 +69,13 @@ def sdo_to_typeql(sdo, import_type='stix21'):
                 logger.error(f'obj_type type {obj_type} not in dispatch mitre')
                 return ''
         else:
-            if obj_type in stix_models["dispatch_stix"]:
+            if obj_type in dispatch_stix:
                 # dispatch specific stix properties plus mitre properties plus generic sdo properties
-                obj_tql = stix_models["dispatch_stix"][obj_type]
+                obj_tql = dispatch_stix[obj_type]
                 obj_tql2 = dispatch_mitre[obj_type]
                 obj_tql.update(obj_tql2)
             else:
-                logger.error(f'obj_type type {obj_type} not in stix_models["dispatch_stix"] or dispatch mitre')
+                logger.error(f'obj_type type {obj_type} not in dispatch_stix or dispatch mitre')
                 return ''              
         
     else:
@@ -83,7 +83,7 @@ def sdo_to_typeql(sdo, import_type='stix21'):
         return ''	
     
     # 1.C) Add the standard object properties to the specific ones, and split them into properties and relations
-    obj_tql.update(stix_models["sdo_typeql_dict"])
+    obj_tql.update(sdo_typeql_dict)
     properties, relations = split_on_activity_type(total_props, obj_tql)   
     
     # 2.) setup the typeql statement for the sdo entity
@@ -132,9 +132,9 @@ def sro_to_typeql(sro, import_type='stix21'):
     # - work out the type of object
     obj_type = sro.type
     # - get the object-specific typeql names, sighting or relationship
-    obj_tql = stix_models["dispatch_stix"][obj_type]
+    obj_tql = dispatch_stix[obj_type]
     # - add on the generic sro properties
-    obj_tql.update(stix_models["sro_base_typeql_dict"])
+    obj_tql.update(sro_base_typeql_dict)
     #initialise the typeql insert statement
     type_ql = 'insert '    
     
@@ -148,7 +148,7 @@ def sro_to_typeql(sro, import_type='stix21'):
         target_var, target_match = get_embedded_match(target_id)
         type_ql_sro_match += source_match + target_match
         # 3.)  then setup the typeql statement to insert the specific sro relation, from the dict, with the matches
-        for record in stix_models["stix_rel_roles"]:
+        for record in stix_rel_roles:
             if record['stix'] == sro["relationship_type"]:
                 type_ql +=  '\n' + sro_var 
                 type_ql += ' (' + record['source'] + ':' + source_var 
@@ -224,9 +224,9 @@ def sco_to_typeql(sco, import_type='stix21'):
     # - work out the type of object
     obj_type = sco.type
     # - get the object-specific typeql names, sighting or relationship
-    obj_tql = stix_models["dispatch_stix"][obj_type]
+    obj_tql = dispatch_stix[obj_type]
     # - add on the generic sro properties
-    obj_tql.update(stix_models["sco_base_typeql_dict"])
+    obj_tql.update(sco_base_typeql_dict)
     #initialise the typeql insert statement
     type_ql = 'insert '    
     
@@ -449,7 +449,7 @@ def extensions(prop_name, prop_dict, parent_var):
     # for each key in the dict (extension type)
     #logger.debug('--------------------- extensions ----------------------------')
     for ext_type in prop_dict:
-        for ext_type_ql in stix_models["ext_typeql_dict_list"]:
+        for ext_type_ql in ext_typeql_dict_list:
             if ext_type == ext_type_ql["stix"]:
                 match2, insert2 = load_object(ext_type, prop_dict[ext_type], parent_var)
                 match = match + match2
@@ -464,7 +464,7 @@ def load_object(prop_name, prop_dict, parent_var):
     match = insert = type_ql = type_ql_props = ''
     # as long as it is predefined, load the object
     #logger.debug('------------------- load object ------------------------------')
-    for prop_type in stix_models["ext_typeql_dict_list"]:
+    for prop_type in ext_typeql_dict_list:
         if prop_name == prop_type["stix"]:
             tot_prop_list = [tot for tot in prop_dict.keys()]
             obj_tql = prop_type["dict"]
@@ -507,7 +507,7 @@ def load_object(prop_name, prop_dict, parent_var):
 
 
 def list_of_object(prop_name, prop_value_list, parent_var):
-    for config in stix_models["list_of_object_typeql"]:
+    for config in list_of_object_typeql:
         if config["name"] == prop_name:
             rel_typeql = config["typeql"]
             obj_props_tql = config["typeql_props"]
@@ -541,7 +541,7 @@ def list_of_object(prop_name, prop_value_list, parent_var):
     return match, insert
 
 def key_value_store( prop, prop_value_dict, obj_var):
-    for config in stix_models["key_value_typeql_list"]:
+    for config in key_value_typeql_list:
         if config["name"] == prop:
             rel_typeql = config["typeql"]
             role_owner = config["owner"]
@@ -580,8 +580,8 @@ def hashes(prop_name, prop_dict, parent_var):
     for i, key in enumerate(prop_dict):
         hash_var = '$hash' + str(i)
         hash_var_list.append(hash_var)
-        if key in stix_models["hash_typeql_dict"]:
-            insert += ' ' + hash_var + ' isa ' + stix_models["hash_typeql_dict"][key] + ', has hash-value ' + val_tql(prop_dict[key]) + ';\n'        
+        if key in hash_typeql_dict:
+            insert += ' ' + hash_var + ' isa ' + hash_typeql_dict[key] + ', has hash-value ' + val_tql(prop_dict[key]) + ';\n'        
         else:
           logger.error(f'Unknown hash type {key}')
           
@@ -644,7 +644,7 @@ def get_selector_var(selector, prop_var_list):
 # etc.
 
 def embedded_relation(prop, prop_value, obj_var, inc):
-    for ex in stix_models["embedded_relations_typeql"]:
+    for ex in embedded_relations_typeql:
       if ex["rel"] == prop:
         owner = ex["owner"]
         pointed_to = ex["pointed-to"]
@@ -741,11 +741,11 @@ def split_on_activity_type(total_props, obj_tql):
 #
 ###################################################################################################
 
-embedded_relations = [x["typeql"] for x in stix_models["embedded_relations_typeql"]]
-standard_relations = [x["typeql"] for x in stix_models["stix_rel_roles"]]
-list_of_objects = [x["typeql"] for x in stix_models["list_of_object_typeql"]]
-key_value_relations = [x["typeql"] for x in stix_models["key_value_typeql_list"]]
-extension_relations = [x["relation"] for x in stix_models["ext_typeql_dict_list"]]
+embedded_relations = [x["typeql"] for x in embedded_relations_typeql]
+standard_relations = [x["typeql"] for x in stix_rel_roles]
+list_of_objects = [x["typeql"] for x in list_of_object_typeql]
+key_value_relations = [x["typeql"] for x in key_value_typeql_list]
+extension_relations = [x["relation"] for x in ext_typeql_dict_list]
 
 #--------------------------------------------------------------------------------------------------------
 #  Overview:
@@ -770,13 +770,13 @@ def convert_res_to_stix(res, import_type):
     for object in res:
         obj_type = object["T_name"]
         tql_type = object["type"]
-        if obj_type in stix_models["sdo_obj"]:
+        if obj_type in sdo_obj:
             stix_dict = make_sdo(object, import_type)
-        elif obj_type in stix_models["sco_obj"]:
+        elif obj_type in sco_obj:
             stix_dict = make_sco(object, import_type)
-        elif obj_type in stix_models["sro_obj"]:
+        elif obj_type in sro_obj:
             stix_dict = make_sro(object, import_type)
-        elif obj_type in stix_models["meta_obj"]:
+        elif obj_type in meta_obj:
             stix_dict = make_meta(object, import_type)
         else:
             logger.error(f'Unknown object type: {object}')     
@@ -790,8 +790,8 @@ def make_sdo(res, import_type):
     # 1.B) get the specific typeql names for an object into a dictionary
     # - stix import
     if import_type == 'Stix21':
-        if obj_type in stix_models["dispatch_stix"]:
-            obj_tql = stix_models["dispatch_stix"][obj_type]
+        if obj_type in dispatch_stix:
+            obj_tql = dispatch_stix[obj_type]
         else:
             logger.error(f'obj_type type {obj_type} not supported')
             return ''
@@ -805,13 +805,13 @@ def make_sdo(res, import_type):
                 logger.error(f'obj_type type {obj_type} not in dispatch mitre')
                 return ''
         else:
-            if obj_type in stix_models["dispatch_stix"]:
+            if obj_type in dispatch_stix:
                 # dispatch specific stix properties plus mitre properties plus generic sdo properties
-                obj_tql = stix_models["dispatch_stix"][obj_type]
+                obj_tql = dispatch_stix[obj_type]
                 obj_tql2 = dispatch_mitre[obj_type]
                 obj_tql.update(obj_tql2)
             else:
-                logger.error(f'obj_type type {obj_type} not in stix_models["dispatch_stix"] or dispatch mitre')
+                logger.error(f'obj_type type {obj_type} not in dispatch_stix or dispatch mitre')
                 return ''              
         
     else:
@@ -819,12 +819,12 @@ def make_sdo(res, import_type):
         return ''	
     
     # 1.C) Add the standard object properties to the specific ones, and split them into properties and relations
-    obj_tql.update(stix_models["sdo_typeql_dict"])
+    obj_tql.update(sdo_typeql_dict)
     # 2.A) get the typeql properties and relations
     props = res["has"]
     relns = res["relns"]
     # 2.B) get the is_list list, the list of properties that are lists for that object
-    is_list = stix_models["sdo_is_list"]["sdo"] + stix_models["sdo_is_list"][obj_type]
+    is_list = sdo_is_list["sdo"] + sdo_is_list[obj_type]
     # 3.A) add the properties onto the the object
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
     # 3.B) add the relations onto the object
@@ -836,17 +836,17 @@ def make_sro(res, import_type):
     stix_dict = {}
     obj_type = res["T_name"]
     if obj_type == "sighting":
-        obj_tql = stix_models["dispatch_stix"]["sighting"]
+        obj_tql = dispatch_stix["sighting"]
         
     elif obj_type in standard_relations:
-        obj_tql = stix_models["dispatch_stix"]["relationship"]
+        obj_tql = dispatch_stix["relationship"]
         
     else:
       logger.error(f'relationship type {obj_type} not supported')
       return ''
     
     # - add on the generic sro properties
-    obj_tql.update(stix_models["sro_base_typeql_dict"])
+    obj_tql.update(sro_base_typeql_dict)
     
     # 2.A) get the typeql properties and relations
     props = res["has"]
@@ -855,13 +855,13 @@ def make_sro(res, import_type):
     # 2.) setup the match statements first, depending on whether the object is a sighting or a relationship
     # A. If it is a Relationship then find the source and target roles for the relation, and match them in
     if obj_type in standard_relations:
-        for stix_rel in stix_models["stix_rel_roles"]:
+        for stix_rel in stix_rel_roles:
             if stix_rel["typeql"] == obj_type:
                 source_role = stix_rel["source"]
                 target_role = stix_rel["target"]
                 break
         
-        is_list = stix_models["sro_is_list"]["sro"]
+        is_list = sro_is_list["sro"]
         for edge in edges:
             players = edge["player"]
             if edge["role"] == source_role:
@@ -879,7 +879,7 @@ def make_sro(res, import_type):
                 
     # B. If it is a Sighting then match the object to the sighting
     elif obj_type == 'sighting':
-        is_list = stix_models["sro_is_list"]["sro"] + stix_models["sro_is_list"]["sighting"]
+        is_list = sro_is_list["sro"] + sro_is_list["sighting"]
         for edge in edges:
             players = edge["player"]
             if edge["role"] == "sighting-of":
@@ -920,15 +920,15 @@ def make_sco(res, import_type):
     stix_dict = {}
     obj_type = res["T_name"]
     # - get the object-specific typeql names, sighting or relationship
-    obj_tql = stix_models["dispatch_stix"][obj_type]
+    obj_tql = dispatch_stix[obj_type]
     # - add on the generic sro properties
-    obj_tql.update(stix_models["sco_base_typeql_dict"])
+    obj_tql.update(sco_base_typeql_dict)
     
     # 2.A) get the typeql properties and relations
     props = res["has"]
     relns = res["relns"]
     
-    is_list = stix_models["sco_is_list"]["sco"] + stix_models["sco_is_list"][obj_type]
+    is_list = sco_is_list["sco"] + sco_is_list[obj_type]
     # 3.A) add the properties onto the the object
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
     # 3.B) add the relations onto the object
@@ -1013,7 +1013,7 @@ def make_relations(relns, obj_tql, stix_dict, is_list, obj_name=None):
         elif reln_name in key_value_relations:
             stix_dict = make_key_value_relations(reln, reln_name, stix_dict, is_list, obj_name)
             
-        elif reln_name in stix_models["extensions_only"]:
+        elif reln_name in extensions_only:
             stix_dict = make_extension_relations(reln, reln_name, stix_dict, is_list, obj_name)
             
         elif reln_name in list_of_objects:
@@ -1036,7 +1036,7 @@ def make_relations(relns, obj_tql, stix_dict, is_list, obj_name=None):
     
 def make_embedded_relations(reln, reln_name, stix_dict, is_list, obj_name):
     stix_object_type = obj_name
-    for embedded_r in stix_models["embedded_relations_typeql"]:
+    for embedded_r in embedded_relations_typeql:
         if reln_name == embedded_r["typeql"]:
             role_pointed = embedded_r["pointed-to"]            
             stix_name = embedded_r["rel"]
@@ -1086,7 +1086,7 @@ def make_standard_relations(reln, reln_name, stix_dict, is_list, obj_name=None):
     
     
 def make_key_value_relations(reln, reln_name, stix_dict, is_list, obj_type=None):
-    for kv_obj in stix_models["key_value_typeql_list"]:
+    for kv_obj in key_value_typeql_list:
         if reln_name == kv_obj["typeql"]:
             role_pointed = kv_obj["pointed_to"]
             reln_owner = kv_obj["owner"]
@@ -1127,14 +1127,14 @@ def make_extension_relations(reln, reln_name, stix_dict, is_list, obj_type=None)
     return stix_dict
     
 def make_object(reln, reln_name, stix_dict, is_list, obj_type=None):
-    for ext_obj in stix_models["ext_typeql_dict_list"]:
+    for ext_obj in ext_typeql_dict_list:
         if reln_name == ext_obj["relation"]:
             role_pointed = ext_obj["pointed-to"]
             role_owner = ext_obj["owner"]
             ext_object = ext_obj["object"]
             obj_props_tql = ext_obj["dict"]
             stix_ext_name = ext_obj["stix"]
-            obj_is_list = stix_models["object_is_list"][ext_object]
+            obj_is_list = object_is_list[ext_object]
             break         
     
     roles = reln["roles"]
@@ -1169,7 +1169,7 @@ def make_object(reln, reln_name, stix_dict, is_list, obj_type=None):
                 # now look to see if there are relations
                 obj_relns = [k for k,v in obj_props_tql.items() if v == ""]
                 sub_relns = p['relns']
-                obj_tql = stix_models["dispatch_stix"][ext_object]
+                obj_tql = dispatch_stix[ext_object]
                 new_dict = {}
                 new_dict = make_relations(sub_relns, obj_tql, new_dict, is_list, ext_object)
                 for k,v in new_dict.items():
@@ -1181,13 +1181,13 @@ def make_object(reln, reln_name, stix_dict, is_list, obj_type=None):
 
     
 def make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_type=None):
-    for l_obj in stix_models["list_of_object_typeql"]:
+    for l_obj in list_of_object_typeql:
         if reln_name == l_obj["typeql"]:
             role_pointed = l_obj["pointed_to"]
             reln_object = l_obj["object"]
             obj_props_tql = l_obj["typeql_props"]
             stix_field_name = l_obj["name"]
-            obj_is_list = stix_models["object_is_list"][reln_object]
+            obj_is_list = object_is_list[reln_object]
             break            
     
     roles = reln["roles"]
@@ -1225,7 +1225,7 @@ def make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_type=None):
                 for sub_reln in sub_relns:
                     # if the relation is embedded
                     if sub_reln["T_name"] in embedded_relations:
-                        for inst in stix_models["embedded_relations_typeql"]:
+                        for inst in embedded_relations_typeql:
                             if inst["typeql"] == sub_reln["T_name"]:
                                 obj_reln_name = inst["typeql"]
                                 obj_owner = inst["owner"]
@@ -1260,7 +1260,7 @@ def make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_type=None):
                 
                     #else:
                         #logger.debug(f'unsupported relation for list of objects {sub_reln}')
-                        #print(f'embedded --> {stix_models["embedded_relations_typeql"]}')
+                        #print(f'embedded --> {embedded_relations_typeql}')
                         
                 list_of_objects.append(player)
     
@@ -1618,7 +1618,7 @@ def get_key_value_relations(r, r_tx):
 
 def get_list_of_objects(r, r_tx):    
     reln_name = r.get_type().get_label().name()
-    for lot in stix_models["list_of_object_typeql"]:
+    for lot in list_of_object_typeql:
         if reln_name == lot["typeql"]:
             reln_pointed_to = lot["pointed_to"]
             reln_object = lot["object"]
@@ -1742,7 +1742,7 @@ def get_embedded_relations(r, r_tx):
 
 def get_extension_relations(r, r_tx):
     reln_name = r.get_type().get_label().name()
-    for ext in stix_models["ext_typeql_dict_list"]:
+    for ext in ext_typeql_dict_list:
         if ext['relation'] == reln_name:
             reln_object = ext['object']
     
@@ -1813,7 +1813,7 @@ def get_extension_relations(r, r_tx):
 def validate_get_relns(rel, r_tx, obj_name):
     reln_name = rel.get_type().get_label().name()                        
     if reln_name in embedded_relations:
-        for emb in stix_models["embedded_relations_typeql"]:
+        for emb in embedded_relations_typeql:
             if emb['typeql'] == reln_name:
                 role_owner = emb['owner']
                 role_pointd = emb['pointed-to']
@@ -1829,7 +1829,7 @@ def validate_get_relns(rel, r_tx, obj_name):
                             return get_relation_details(rel, r_tx)        
         
     elif reln_name in key_value_relations:
-        for kvt in stix_models["key_value_typeql_list"]:
+        for kvt in key_value_typeql_list:
             if kvt['typeql'] == reln_name:
                 role_owner = kvt['owner']
                 role_pointd = kvt['pointed_to']
@@ -1845,7 +1845,7 @@ def validate_get_relns(rel, r_tx, obj_name):
                             return get_relation_details(rel, r_tx)    
                             
     elif reln_name in extension_relations:
-        for kvt in stix_models["ext_typeql_dict_list"]:
+        for kvt in ext_typeql_dict_list:
             if kvt['relation'] == reln_name:
                 role_owner = kvt['owner']
                 role_pointd = kvt['pointed-to']
@@ -1861,7 +1861,7 @@ def validate_get_relns(rel, r_tx, obj_name):
                             return get_relation_details(rel, r_tx)    
                             
     elif reln_name in list_of_objects:
-        for kvt in stix_models["list_of_object_typeql"]:
+        for kvt in list_of_object_typeql:
             if kvt['typeql'] == reln_name:
                 role_owner = kvt['owner']
                 role_pointd = kvt['pointed-to']
