@@ -7,8 +7,9 @@ import re
 import stat
 from typedb.client import *
 from loguru import logger
-from .stql import stix2_to_typeql, get_embedded_match, raw_stix2_to_typeql, convert_ans_to_stix
-
+#from .stql import stix2_to_typeql, get_embedded_match, raw_stix2_to_typeql, convert_ans_to_stix
+from .stix2typeql import stix2_to_typeql, raw_stix2_to_typeql
+from .py2typeql import get_embedded_match, convert_ans_to_stix
 
 from stix2 import v21
 from stix2.base import _STIXBase
@@ -65,8 +66,6 @@ class TypeDBSink(DataSink):
     @property
     def stix_connection(self):
         return self._stix_connection
-    
-    
     
 
     def add(self, stix_data=None, import_type="stix21"):
