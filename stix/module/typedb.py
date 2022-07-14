@@ -6,7 +6,7 @@ import os
 import re
 import stat
 from typedb.client import *
-from loguru import logger
+
 #from .stql import stix2_to_typeql, get_embedded_match, raw_stix2_to_typeql, convert_ans_to_stix
 from .stix2typeql import stix2_to_typeql, raw_stix2_to_typeql
 from .py2typeql import get_embedded_match, convert_ans_to_stix
@@ -23,6 +23,10 @@ from stix2.utils import format_datetime, get_type_from_id, parse_into_datetime
 
 from stix.schema.initialise import initialise_database
 
+import sys
+
+import logging
+logger = logging.getLogger(__name__)
 
 class TypeDBSink(DataSink):
     """Interface for adding/pushing STIX objects to TypeDB.
@@ -43,7 +47,7 @@ class TypeDBSink(DataSink):
     """
     def __init__(self, connection, clear=False, import_type="stix21", **kwargs):	
         super(TypeDBSink, self).__init__()
-        print(f'TypeDBSink: {connection}')
+        logger.debug(f'TypeDBSink: {connection}')
         self._stix_connection = connection
         self.uri = connection["uri"]
         self.port = connection["port"]
@@ -61,7 +65,7 @@ class TypeDBSink(DataSink):
             initialise_database(self.uri, self.port, self.database, self.user, self.password, self.clear)
             
         except Exception as e:
-            print(f'Initialise TypeDB Error: {e}')                    
+            logger.error(f'Initialise TypeDB Error: {e}')                    
 
     @property
     def stix_connection(self):
@@ -89,13 +93,10 @@ class TypeDBSink(DataSink):
         url = self.uri + ":" + self.port
         with TypeDB.core_client(url) as client:
             with client.session(self.database, SessionType.DATA) as session:
-                print(f'------------------------------------ TypeDB Sink Session Start --------------------------------------------')
+                logger.debug(f'------------------------------------ TypeDB Sink Session Start --------------------------------------------')
                 self._separate_objects(stix_data, self.import_type, session)
                 session.close()
-                print(f'------------------------------------ TypeDB Sink Session Complete ---------------------------------')
-    
-        
-    
+                logger.debug(f'------------------------------------ TypeDB Sink Session Complete ---------------------------------')
     
     def _separate_objects(self, stix_data, import_type, session):
         """
@@ -137,12 +138,12 @@ class TypeDBSink(DataSink):
         """Write the given STIX object to the TypeDB database.
         """
         try:
-            print(f'----------------------------- Load {stix_obj.type} Object -----------------------------')
-            print(stix_obj.serialize(pretty=True))
-            print(f'----------------------------- TypeQL Statements -----------------------------')
+            logger.debug(f'----------------------------- Load {stix_obj.type} Object -----------------------------')
+            logger.debug(stix_obj.serialize(pretty=True))
+            logger.debug(f'----------------------------- TypeQL Statements -----------------------------')
             match_tql, insert_tql = raw_stix2_to_typeql(stix_obj, import_type)
-            print(f'{match_tql+insert_tql}')
-            print(f'----------------------------- Object Loaded -----------------------------')
+            logger.debug(f'{match_tql+insert_tql}')
+            logger.debug(f'----------------------------- Object Loaded -----------------------------')
             with session.transaction(TransactionType.WRITE) as write_transaction:
                 if match_tql =='':
                     insert_iterator = write_transaction.query().insert(insert_tql) 
@@ -151,13 +152,14 @@ class TypeDBSink(DataSink):
                     insert_iterator = write_transaction.query().insert(match_tql+insert_tql)                    
                      
                 for result in insert_iterator:
-                    print(f'typedb response ->\n{result}')
+                    logger.debug(f'typedb response ->\n{result}')
                 
                 write_transaction.commit()
                 
-                
         except Exception as e:
-            print(f'Stix Object Submission Error: {e}')
+            logger.error(f'Stix Object Submission Error: {e}')
+            logger.error(f'Query: {insert_tql}')
+            raise
         
         
 class TypeDBSource(DataSource):

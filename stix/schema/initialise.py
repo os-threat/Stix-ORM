@@ -20,9 +20,9 @@
 #
 
 from typedb.client import *
-from loguru import logger
+import logging
+logger = logging.getLogger(__name__)
 
-@logger.catch
 def initialise_database(uri, port, database, user, password, clear=False):
     url = uri + ":" + port
     with TypeDB.core_client(url) as client:
@@ -40,20 +40,20 @@ def initialise_database(uri, port, database, user, password, clear=False):
             # Load rules from file
             with open("stix/schema/cti-rules.tql", "r") as rules_file:
                 rules = rules_file.read()
-            print('.....')
-            print('Inserting schema ...')
-            print('.....')
+            logger.debug('.....')
+            logger.debug('Inserting schema ...')
+            logger.debug('.....')
             with session.transaction(TransactionType.WRITE) as write_transaction:
                 write_transaction.query().define(schema)
                 write_transaction.commit()
-            print('Inserting rules...')
-            print('.....')
+            logger.debug('Inserting rules...')
+            logger.debug('.....')
             # with session.transaction(TransactionType.WRITE) as write_transaction:
             #    write_transaction.query().define(rules)
             #    write_transaction.commit()
-            print('.....')
-            print('Successfully committed schema!')
-            print('.....')
+            logger.debug('.....')
+            logger.debug('Successfully committed schema!')
+            logger.debug('.....')
             session.close()
         
         
@@ -64,18 +64,16 @@ def initialise_database(uri, port, database, user, password, clear=False):
                     for line in mark_list:
                         type_ql += line
                         
-                    print(f'--------------------------------------------------------------------------------')
-                    print(f'{type_ql}')
+                    logger.debug(f'--------------------------------------------------------------------------------')
+                    logger.debug(f'{type_ql}')
                     write_transaction.query().insert(type_ql)
                 
                 write_transaction.commit()
             
-            print('Successfully committed white, green, amber and red markings!')
-            print('.....')
-            print(f'--------------------------- Initialisation Phase Complete -----------------------------------------------------')
+            logger.debug('Successfully committed white, green, amber and red markings!')
+            logger.debug('.....')
+            logger.debug(f'--------------------------- Initialisation Phase Complete -----------------------------------------------------')
             session.close()
- 
- 
 
 # make sure the four TLP Markings are loaded when the database initialises
 initial_markings = [[
