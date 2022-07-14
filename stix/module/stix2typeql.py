@@ -8,6 +8,7 @@ from stix2.utils import is_object, is_stix_type, get_type_from_id, is_sdo, is_sc
 from stix2.parsing import parse
 from stix.module.definitions.stix21 import stix_models
 
+from stix.module.py2typeql import clean_props,get_embedded_match,sco_to_typeql,split_on_activity_type,add_property_to_typeql,add_relation_to_typeql,marking_definition_to_typeql
 ##############################################################
 #  1.) Methods to Add 2_tql() Capability to all Stix Objects
 ############################################################
