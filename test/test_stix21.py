@@ -8,21 +8,15 @@ from typedb.client import *
 import glob
 
 import logging
-logging.basicConfig(level = logging.INFO,format = '[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 
 from stix2 import (v21, parse)
-
-# define the database data and import details
-connection = {
-    "uri": "localhost",
-    "port": "1729",
-    "database": "stix2",
-    "user": None,
-    "password": None
-}
+from .dbconfig import *
 
 os.environ['LOGURU_LEVEL'] = 'info'
+
 
 class TestDatabase(unittest.TestCase):
 
@@ -31,25 +25,40 @@ class TestDatabase(unittest.TestCase):
         '''
         Create a connection to the database and reset it
         '''
-        cls._typedb =  TypeDBSink(connection = connection, clear=True, import_type="Stix21")
+        cls._typedb = TypeDBSink(connection=connection, clear=True, import_type="Stix21")
         cls._example = "./data/examples/"
 
     @classmethod
     def tearDownClass(cls):
-       pass
+        pass
 
-    def test_insert_errors(self):
+    def test_markings(self):
 
         self.assertTrue(os.path.exists(self._example))
 
-        for filename in glob.glob(self._example+'*.json'):
-            with open(filename,'r') as file:
-                logger.info(f'Loading file {filename}')
-                stix_dict = json.load(file)
-                try:
-                    self._typedb.add(stix_dict)
-                except Exception as e:
-                    self.fail(e)
+        filename = './data/examples/marking_definitions.json'
+
+        with self.assertRaises(TypeError):
+            logger.info(f'Loading file {filename}')
+            stix_dict = json.load(filename)
+            self._typedb.add(stix_dict)
+
+    def test_others(self):
+
+        self.assertTrue(os.path.exists(self._example))
+
+        for filename in glob.glob(self._example + '*.json'):
+            with open(filename, 'r') as file:
+                if filename.endswith('marking_definitions.json'):
+                    continue
+                else:
+                    stix_dict = json.load(file)
+                    logger.info(f'Loading file {filename}')
+                    try:
+                        self._typedb.add(stix_dict)
+                    except Exception as e:
+                        self.fail(e)
+
 
 if __name__ == '__main__':
     unittest.main()

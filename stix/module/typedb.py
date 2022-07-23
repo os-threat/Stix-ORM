@@ -115,7 +115,7 @@ class TypeDBSink(DataSink):
         elif isinstance(stix_data, (str, dict)):
             parsed_data = parse(stix_data, allow_custom=self.allow_custom)
             if isinstance(parsed_data, _STIXBase):
-                print(f'dict pathway')
+                logger.debug(f'STIX Base')
                 self._separate_objects(parsed_data, import_type=import_type, session=session)
             else:
                 # custom unregistered object import_type
@@ -145,9 +145,11 @@ class TypeDBSink(DataSink):
             logger.debug(f'{match_tql+insert_tql}')
             logger.debug(f'----------------------------- Object Loaded -----------------------------')
             with session.transaction(TransactionType.WRITE) as write_transaction:
-                if match_tql =='':
-                    insert_iterator = write_transaction.query().insert(insert_tql) 
-                    
+                if match_tql is None:
+                    if insert_tql is None:
+                        logger.warning(f'Object type {stix_obj.type} already existent')
+                    else:
+                        insert_iterator = write_transaction.query().insert(insert_tql)
                 else:
                     insert_iterator = write_transaction.query().insert(match_tql+insert_tql)                    
                      
