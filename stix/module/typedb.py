@@ -219,7 +219,7 @@ class TypeDBSource(DataSource):
         try:
             obj_var, type_ql = get_embedded_match(stix_id)
             match = 'match ' + type_ql
-            print(f' typeql -->: {match}')
+            logger.debug(f' typeql -->: {match}')
             g_uri = self.uri + ':' + self.port
             with TypeDB.core_client(g_uri) as client:
                 with client.session(self.database, SessionType.DATA) as session:
