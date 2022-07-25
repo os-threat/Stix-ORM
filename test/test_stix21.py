@@ -15,9 +15,6 @@ logger = logging.getLogger(__name__)
 from stix2 import (v21, parse)
 from .dbconfig import *
 
-os.environ['LOGURU_LEVEL'] = 'info'
-
-
 class TestDatabase(unittest.TestCase):
 
     @classmethod
@@ -51,7 +48,7 @@ class TestDatabase(unittest.TestCase):
 
         self.assertTrue(os.path.exists(self._example))
 
-        for filename in glob.glob(self._example + '*.json'):
+        for filename in sorted(glob.glob(self._example + '*.json')):
             logger.info(f'Testing file {filename}')
             with open(filename, mode="r", encoding="utf-8") as file:
                 if filename.endswith('marking_definitions.json'):
