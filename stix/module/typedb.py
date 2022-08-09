@@ -8,8 +8,9 @@ import stat
 from typedb.client import *
 
 #from .stql import stix2_to_typeql, get_embedded_match, raw_stix2_to_typeql, convert_ans_to_stix
-from .stix2typeql import stix2_to_typeql, raw_stix2_to_typeql
-from .py2typeql import get_embedded_match, convert_ans_to_stix
+from .import_stix_to_typeql import stix2_to_typeql, raw_stix2_to_typeql
+from .import_stix_utilities import get_embedded_match
+from .export_intermediate_to_stix import convert_ans_to_stix
 
 from stix2 import v21
 from stix2.base import _STIXBase
@@ -45,7 +46,7 @@ class TypeDBSink(DataSink):
         - import_type (str): It forces the parser to use either the stix2.1, or mitre att&ck
 
     """
-    def __init__(self, connection, clear=False, import_type="stix21", **kwargs):	
+    def __init__(self, connection, clear=False, import_type="STIX21", **kwargs):	
         super(TypeDBSink, self).__init__()
         logger.debug(f'TypeDBSink: {connection}')
         self._stix_connection = connection
@@ -56,7 +57,7 @@ class TypeDBSink(DataSink):
         self.password = connection["password"]
         self.clear = clear
         self.import_type = import_type
-        if self.import_type == "stix21":
+        if self.import_type == "STIX21":
             self.allow_custom = False
         else:
             self.allow_custom = True
@@ -72,7 +73,7 @@ class TypeDBSink(DataSink):
         return self._stix_connection
     
 
-    def add(self, stix_data=None, import_type="stix21"):
+    def add(self, stix_data=None, import_type="STIX21"):
         """Add STIX objects to the typedb server.
 
         Args:
@@ -81,7 +82,7 @@ class TypeDBSink(DataSink):
                 json encoded string.
             import_type (str): It forces the parser to use either the stix2.1,
                 or the mitre attack typeql description. Values can be either:
-                        - "stix21"
+                        - "STIX21"
                         - "mitre"
 
         Note:
@@ -142,12 +143,14 @@ class TypeDBSink(DataSink):
             logger.debug(stix_obj.serialize(pretty=True))
             logger.debug(f'----------------------------- TypeQL Statements -----------------------------')
             match_tql, insert_tql = raw_stix2_to_typeql(stix_obj, import_type)
-            logger.debug(f'{match_tql+insert_tql}')
+            logger.debug(f'query string?-> {match_tql+insert_tql}')
             logger.debug(f'----------------------------- Object Loaded -----------------------------')
             with session.transaction(TransactionType.WRITE) as write_transaction:
-                if match_tql is None:
-                    if insert_tql is None:
+                if not match_tql:
+                    if not insert_tql:
                         logger.warning(f'Object type {stix_obj.type} already existent')
+                        return
+
                     else:
                         insert_iterator = write_transaction.query().insert(insert_tql)
                 else:
@@ -180,7 +183,7 @@ class TypeDBSource(DataSource):
         - import_type (str): It forces the parser to use either the stix2.1, or mitre att&ck
 
     """
-    def __init__(self, connection, import_type="stix21", **kwargs):	
+    def __init__(self, connection, import_type="STIX21", **kwargs):	
         super(TypeDBSource, self).__init__()
         print(f'TypeDBSink: {connection}')
         self._stix_connection = connection
@@ -190,7 +193,7 @@ class TypeDBSource(DataSource):
         self.user = connection["user"]
         self.password = connection["password"]
         self.import_type = import_type
-        if self.import_type == "stix21":
+        if self.import_type == "STIX21":
             self.allow_custom = False
         else:
             self.allow_custom = True
@@ -198,7 +201,6 @@ class TypeDBSource(DataSource):
     @property
     def stix_connection(self):
         return self._stix_connection
-    
     
 
     def get(self, stix_id, _composite_filters=None):
@@ -215,7 +217,6 @@ class TypeDBSource(DataSource):
                 a python STIX object and then returned
 
         """
-        
         try:
             obj_var, type_ql = get_embedded_match(stix_id)
             match = 'match ' + type_ql
@@ -226,19 +227,17 @@ class TypeDBSource(DataSource):
                     with session.transaction(TransactionType.READ) as read_transaction:
                         answer_iterator = read_transaction.query().match(match)
                         #logger.debug((f'have read the query -> {answer_iterator}'))
-                        stix_obj = convert_ans_to_stix(answer_iterator, read_transaction, 'Stix21')
-                        #logger.debug(f'stix_obj -> {stix_obj}')
+                        stix_dict = convert_ans_to_stix(answer_iterator, read_transaction, 'STIX21')
+                        stix_obj = parse(stix_dict)
+                        logger.debug(f'stix_obj -> {stix_obj}')
                         with open("export_final.json", "w") as outfile:  
-                            json.dump(stix_obj, outfile) 
+                            json.dump(stix_dict, outfile)
                 
         except Exception as e:
             logger.error(f'Stix Object Retrieval Error: {e}')
             stix_obj = None
         
         return stix_obj
-    
-    
-
     
 
     def query(self, query=None, version=None, _composite_filters=None):

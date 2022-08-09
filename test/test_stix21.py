@@ -2,7 +2,7 @@ import unittest
 import json
 import os
 from stix.module.typedb import TypeDBSink, TypeDBSource
-from stix.module.stix2typeql import stix2_to_typeql
+from stix.module.import_stix_to_typeql import stix2_to_typeql
 from typedb.client import *
 
 import glob
@@ -22,8 +22,8 @@ class TestDatabase(unittest.TestCase):
         '''
         Create a connection to the database and reset it
         '''
-        cls._typedbSink = TypeDBSink(connection=connection, clear=True, import_type="Stix21")
-        cls._typedbSource = TypeDBSource(connection=connection, import_type="Stix21")
+        cls._typedbSink = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
+        cls._typedbSource = TypeDBSource(connection=connection, import_type="STIX21")
 
         cls._example = "./data/examples/"
 
