@@ -1,0 +1,66 @@
+[
+  {
+    "name": "additional_header_fields",
+    "typeql": "additional-header",
+    "owner": "email",
+    "pointed_to": "item",
+    "key": "header-key",
+    "value": "header-value"
+  },
+  {
+    "name": "document_info_dict",
+    "typeql": "doc-info",
+    "owner": "pdf",
+    "pointed_to": "info",
+    "key": "doc-key",
+    "value": "doc-value"
+  },
+  {
+    "name": "exif_tags",
+    "typeql": "EXIF-tags",
+    "owner": "image",
+    "pointed_to": "info",
+    "key": "EXIF-key",
+    "value": "EXIF-value"
+  },
+  {
+    "name": "ipfix",
+    "typeql": "IPFIX-store",
+    "owner": "traffic",
+    "pointed_to": "item",
+    "key": "IPFIX-key",
+    "value": "IPFIX-value"
+  },
+  {
+    "name": "request_header",
+    "typeql": "HTTP-header",
+    "owner": "request",
+    "pointed_to": "header",
+    "key": "HTTP-key",
+    "value": "HTTP-value"
+  },
+  {
+    "name": "options",
+    "typeql": "socket-options",
+    "owner": "socket",
+    "pointed_to": "option",
+    "key": "socket-key",
+    "value": "socket-value"
+  },
+  {
+    "name": "environment_variables",
+    "typeql": "environment-variables",
+    "owner": "process",
+    "pointed_to": "env-variable",
+    "key": "environment-key",
+    "value": "environment-value"
+  },
+  {
+    "name": "startup_info",
+    "typeql": "startup-info",
+    "owner": "process",
+    "pointed_to": "option",
+    "key": "startup-key",
+    "value": "startup-value"
+  }
+]

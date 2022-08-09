@@ -1,0 +1,21 @@
+[
+  "attack-pattern",
+  "campaign",
+  "course-of-action",
+  "grouping",
+  "identity",
+  "incident",
+  "indicator",
+  "infrastructure",
+  "intrusion-set",
+  "location",
+  "malware",
+  "malware-analysis",
+  "note",
+  "observed-data",
+  "opinion",
+  "report",
+  "threat-actor",
+  "tool",
+  "vulnerability"
+]

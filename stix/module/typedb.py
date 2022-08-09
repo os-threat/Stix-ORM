@@ -6,9 +6,11 @@ import os
 import re
 import stat
 from typedb.client import *
-from loguru import logger
-from .stql import stix2_to_typeql, get_embedded_match, raw_stix2_to_typeql, convert_ans_to_stix
 
+#from .stql import stix2_to_typeql, get_embedded_match, raw_stix2_to_typeql, convert_ans_to_stix
+from .import_stix_to_typeql import stix2_to_typeql, raw_stix2_to_typeql
+from .import_stix_utilities import get_embedded_match
+from .export_intermediate_to_stix import convert_ans_to_stix
 
 from stix2 import v21
 from stix2.base import _STIXBase
@@ -22,6 +24,10 @@ from stix2.utils import format_datetime, get_type_from_id, parse_into_datetime
 
 from stix.schema.initialise import initialise_database
 
+import sys
+
+import logging
+logger = logging.getLogger(__name__)
 
 class TypeDBSink(DataSink):
     """Interface for adding/pushing STIX objects to TypeDB.
@@ -40,9 +46,9 @@ class TypeDBSink(DataSink):
         - import_type (str): It forces the parser to use either the stix2.1, or mitre att&ck
 
     """
-    def __init__(self, connection, clear=False, import_type="stix21", **kwargs):	
+    def __init__(self, connection, clear=False, import_type="STIX21", **kwargs):	
         super(TypeDBSink, self).__init__()
-        print(f'TypeDBSink: {connection}')
+        logger.debug(f'TypeDBSink: {connection}')
         self._stix_connection = connection
         self.uri = connection["uri"]
         self.port = connection["port"]
@@ -51,7 +57,7 @@ class TypeDBSink(DataSink):
         self.password = connection["password"]
         self.clear = clear
         self.import_type = import_type
-        if self.import_type == "stix21":
+        if self.import_type == "STIX21":
             self.allow_custom = False
         else:
             self.allow_custom = True
@@ -60,16 +66,14 @@ class TypeDBSink(DataSink):
             initialise_database(self.uri, self.port, self.database, self.user, self.password, self.clear)
             
         except Exception as e:
-            print(f'Initialise TypeDB Error: {e}')                    
+            logger.error(f'Initialise TypeDB Error: {e}')                    
 
     @property
     def stix_connection(self):
         return self._stix_connection
     
-    
-    
 
-    def add(self, stix_data=None, import_type="stix21"):
+    def add(self, stix_data=None, import_type="STIX21"):
         """Add STIX objects to the typedb server.
 
         Args:
@@ -78,7 +82,7 @@ class TypeDBSink(DataSink):
                 json encoded string.
             import_type (str): It forces the parser to use either the stix2.1,
                 or the mitre attack typeql description. Values can be either:
-                        - "stix21"
+                        - "STIX21"
                         - "mitre"
 
         Note:
@@ -90,13 +94,10 @@ class TypeDBSink(DataSink):
         url = self.uri + ":" + self.port
         with TypeDB.core_client(url) as client:
             with client.session(self.database, SessionType.DATA) as session:
-                print(f'------------------------------------ TypeDB Sink Session Start --------------------------------------------')
+                logger.debug(f'------------------------------------ TypeDB Sink Session Start --------------------------------------------')
                 self._separate_objects(stix_data, self.import_type, session)
                 session.close()
-                print(f'------------------------------------ TypeDB Sink Session Complete ---------------------------------')
-    
-        
-    
+                logger.debug(f'------------------------------------ TypeDB Sink Session Complete ---------------------------------')
     
     def _separate_objects(self, stix_data, import_type, session):
         """
@@ -115,7 +116,7 @@ class TypeDBSink(DataSink):
         elif isinstance(stix_data, (str, dict)):
             parsed_data = parse(stix_data, allow_custom=self.allow_custom)
             if isinstance(parsed_data, _STIXBase):
-                print(f'dict pathway')
+                logger.debug(f'STIX Base')
                 self._separate_objects(parsed_data, import_type=import_type, session=session)
             else:
                 # custom unregistered object import_type
@@ -138,27 +139,32 @@ class TypeDBSink(DataSink):
         """Write the given STIX object to the TypeDB database.
         """
         try:
-            print(f'----------------------------- Load {stix_obj.type} Object -----------------------------')
-            print(stix_obj.serialize(pretty=True))
-            print(f'----------------------------- TypeQL Statements -----------------------------')
+            logger.debug(f'----------------------------- Load {stix_obj.type} Object -----------------------------')
+            logger.debug(stix_obj.serialize(pretty=True))
+            logger.debug(f'----------------------------- TypeQL Statements -----------------------------')
             match_tql, insert_tql = raw_stix2_to_typeql(stix_obj, import_type)
-            print(f'{match_tql+insert_tql}')
-            print(f'----------------------------- Object Loaded -----------------------------')
+            logger.debug(f'query string?-> {match_tql+insert_tql}')
+            logger.debug(f'----------------------------- Object Loaded -----------------------------')
             with session.transaction(TransactionType.WRITE) as write_transaction:
-                if match_tql =='':
-                    insert_iterator = write_transaction.query().insert(insert_tql) 
-                    
+                if not match_tql:
+                    if not insert_tql:
+                        logger.warning(f'Object type {stix_obj.type} already existent')
+                        return
+
+                    else:
+                        insert_iterator = write_transaction.query().insert(insert_tql)
                 else:
                     insert_iterator = write_transaction.query().insert(match_tql+insert_tql)                    
                      
                 for result in insert_iterator:
-                    print(f'typedb response ->\n{result}')
+                    logger.debug(f'typedb response ->\n{result}')
                 
                 write_transaction.commit()
                 
-                
         except Exception as e:
-            print(f'Stix Object Submission Error: {e}')
+            logger.error(f'Stix Object Submission Error: {e}')
+            logger.error(f'Query: {insert_tql}')
+            raise
         
         
 class TypeDBSource(DataSource):
@@ -177,7 +183,7 @@ class TypeDBSource(DataSource):
         - import_type (str): It forces the parser to use either the stix2.1, or mitre att&ck
 
     """
-    def __init__(self, connection, import_type="stix21", **kwargs):	
+    def __init__(self, connection, import_type="STIX21", **kwargs):	
         super(TypeDBSource, self).__init__()
         print(f'TypeDBSink: {connection}')
         self._stix_connection = connection
@@ -187,7 +193,7 @@ class TypeDBSource(DataSource):
         self.user = connection["user"]
         self.password = connection["password"]
         self.import_type = import_type
-        if self.import_type == "stix21":
+        if self.import_type == "STIX21":
             self.allow_custom = False
         else:
             self.allow_custom = True
@@ -195,7 +201,6 @@ class TypeDBSource(DataSource):
     @property
     def stix_connection(self):
         return self._stix_connection
-    
     
 
     def get(self, stix_id, _composite_filters=None):
@@ -212,30 +217,27 @@ class TypeDBSource(DataSource):
                 a python STIX object and then returned
 
         """
-        
         try:
             obj_var, type_ql = get_embedded_match(stix_id)
             match = 'match ' + type_ql
-            print(f' typeql -->: {match}')
+            logger.debug(f' typeql -->: {match}')
             g_uri = self.uri + ':' + self.port
             with TypeDB.core_client(g_uri) as client:
                 with client.session(self.database, SessionType.DATA) as session:
                     with session.transaction(TransactionType.READ) as read_transaction:
                         answer_iterator = read_transaction.query().match(match)
                         #logger.debug((f'have read the query -> {answer_iterator}'))
-                        stix_obj = convert_ans_to_stix(answer_iterator, read_transaction, 'Stix21')
-                        #logger.debug(f'stix_obj -> {stix_obj}')
+                        stix_dict = convert_ans_to_stix(answer_iterator, read_transaction, 'STIX21')
+                        stix_obj = parse(stix_dict)
+                        logger.debug(f'stix_obj -> {stix_obj}')
                         with open("export_final.json", "w") as outfile:  
-                            json.dump(stix_obj, outfile) 
+                            json.dump(stix_dict, outfile)
                 
         except Exception as e:
             logger.error(f'Stix Object Retrieval Error: {e}')
             stix_obj = None
         
         return stix_obj
-    
-    
-
     
 
     def query(self, query=None, version=None, _composite_filters=None):

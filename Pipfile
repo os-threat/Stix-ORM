@@ -10,6 +10,7 @@ typedb-client = "*"
 tqdm = "*"
 loguru = "*"
 stix2 = "*"
+pyhamcrest = "*"
 
 [requires]
 python_version = "3.9"
