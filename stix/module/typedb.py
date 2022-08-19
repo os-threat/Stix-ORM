@@ -150,7 +150,6 @@ class TypeDBSink(DataSink):
                     if not insert_tql:
                         logger.warning(f'Object type {stix_obj.type} already existent')
                         return
-
                     else:
                         insert_iterator = write_transaction.query().insert(insert_tql)
                 else:
