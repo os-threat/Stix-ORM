@@ -1,8 +1,12 @@
 from hamcrest import *
 import pickle
 import json
+import json
+from stix2 import (v21, parse)
 
 from loguru import logger
+
+import itertools as it
 
 class StixComparator(object):
 
@@ -12,10 +16,14 @@ class StixComparator(object):
 
     def property_check(self,a,b,key,property_type):
         if property_type == 'ListProperty':
-            if sorted(a._inner[key]) == sorted(b._inner[key]):
-                return True
-            else:
+            if len(a._inner[key]) != len(b._inner[key]):
                 return False
+            else:
+                # Equivalent
+                matched = 0
+                for r in it.product(a._inner[key], b._inner[key]):
+                    if r[0] == r[1]: matched += 1
+                return matched == len(a._inner[key])
         elif property_type == 'StringProperty':
             return a._inner[key] == b._inner[key]
         elif property_type == 'StringProperty':
@@ -85,3 +93,34 @@ if __name__ == '__main__':
     logger.info(f'Equals: {p_ok}')
     logger.info(f'Not Equals: {p_not}')
 
+    def test_loop(a,b):
+        # Equivalent
+        matched = 0
+        for r in it.product(a, b):
+            if r[0]==r[1]: matched +=1
+        return matched
+
+    # test granular markings
+    filename = '../data/examples/granular_markings.json'
+    with open(filename, mode="r", encoding="utf-8") as file:
+        json_blob = json.load(file)
+
+        stix_obj = parse(json_blob)
+        clone_obj = parse(json_blob)
+
+        matched = test_loop(stix_obj._inner['objects'],clone_obj._inner['objects'])
+        logger.info(f'Total identical {matched}')
+        mix_objects = stix_obj._inner['objects']
+        logger.info(f'Total {len(mix_objects)} objects')
+        # can we do a sorted list NO!
+        try:
+            sorted_objects = sorted(mix_objects)
+        except Exception as e:
+            logger.info('Unable to sort mixed objects')
+            logger.error(e)
+
+        try:
+            set_objects = set(mix_objects)
+        except Exception as e:
+            logger.info('Unable to hash mixed objects')
+            logger.error(e)
