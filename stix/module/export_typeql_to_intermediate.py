@@ -160,6 +160,10 @@ def process_props(props_obj):
             dt_obj = nt_obj.astimezone(timezone.utc)
             prop["value"] = dt_obj.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
             prop['datetime'] = True
+        elif a.is_string():
+            temp_string = a.get_value()
+            prop["value"] = temp_string.replace("\\\\", "\\")
+            prop['datetime'] = False
         else:
             prop["value"] = a.get_value()
             prop['datetime'] = False

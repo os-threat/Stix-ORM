@@ -22,7 +22,6 @@ connection = {
 }
 
 
-
 test_id = "indicator--1ed8caa7-a708-4706-b651-f1186ede6ca1"
 
 
@@ -38,6 +37,37 @@ def query_id(stixid):
     stix_dict = typedb.get(stixid)
     stix_obj = parse(stix_dict)    
     print(stix_obj.serialize(pretty=True))
+
+
+def test_slashes(path):
+    orig = ''
+    ret = ''
+    with open(path, mode="r", encoding="utf-8") as f:
+        json_text =  json.load(f)
+        typedb = TypeDBSink(connection, True, "STIX21")
+        typedb.add(json_text)
+        for stix_obj in json_text.get("objects", []):
+            if stix_obj.get("type") == "indicator":
+                orig = parse(stix_obj)
+    typedb = TypeDBSource(connection, "STIX21")
+    stix_dict = typedb.get(test_id)
+    ret = parse(stix_dict)
+    print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    print(orig.serialize(pretty=True))
+    print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    print(ret.serialize(pretty=True))
+    print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    opat = orig["pattern"]
+    rpat = ret["pattern"]
+    if opat == rpat:
+        print("equals")
+        print(f'original -> {opat}')
+        print(f'retruned -> {rpat}')
+    else:
+        print("not equals")
+        print(f'original -> {opat}')
+        print(f'retruned -> {rpat}')
+
 
 def check_dir(path):
     dirFiles = os.listdir(path)
@@ -74,5 +104,6 @@ if __name__ == '__main__':
     
     #load_file(data_path+file)
     #query_id(test_id)
-    check_dir(data_path)
+    #check_dir(data_path)
+    test_slashes(data_path+file)
     
