@@ -1,0 +1,77 @@
+Stix 2.1 Certification Testing
+Reference https://docs.oasis-open.org/cti/stix-2.1-interop/v1.0/csd01/stix-2.1-interop-v1.0-csd01.html
+
+--------------------------------------------------------------------------------------------------------------
+Adversary Infrastructure Mapping (AIM) Certification:
+Description: Software or system, that consumes and produces STIX content, that is used to map out adversarial networks
+
+Consumer Level 1 Tests : [AIM.C1]
+Consumer Level 2 Tests : [AIM.C2]
+Producer Level 1 Tests : [AIM.P1]
+Producer Level 2 Tests : [AIM.P2]
+
+--------------------------------------------------------------------------------------------------------------
+Local Infrastructure Mapping (LIM) Certification:
+Description: Software that scans local networks and provides STIX representations of these finds.
+
+Consumer Level 1 Tests : [LIM.C1]
+Consumer Level 2 Tests : [LIM.C2]
+Producer Level 1 Tests : [LIM.P1]
+Producer Level 2 Tests : [LIM.P2]
+
+--------------------------------------------------------------------------------------------------------------
+Malware Analysis System (MAS) Certification:
+Description: Software instance, system, or set of systems that performs static and/or dynamic analysis of binary files and produces STIX content with this analysis information.
+
+Consumer Level 1 Tests : [MAS.C1]
+Consumer Level 2 Tests : [MAS.C2]
+Producer Level 1 Tests : [MAS.P1]
+Producer Level 2 Tests : [MAS.P2]
+
+--------------------------------------------------------------------------------------------------------------
+Security Incident and Event Management system (SIEM) Certification:
+Description: Software instance that acts as a Producer and/or Consumer of STIX 2.1 content. A SIEM that produces STIX content will typically create Indicators and other information about incidents. A SIEM that consumes STIX content will typically consume Sightings, Indicators.
+
+Consumer Level 1 Tests : [SIEM.C1]
+Consumer Level 2 Tests : [SIEM.C2]
+Producer Level 1 Tests : [SIEM.P1]
+Producer Level 2 Tests : [SIEM.P2]
+
+--------------------------------------------------------------------------------------------------------------
+Threat Detection System (TDS) Certification:
+Description: Software instance of any network product that monitors, detects and alerts such as Intrusion Detection Software (IDS), Endpoint Detection and Response (EDR) software, web proxy, etc. This is applicable for both Producers and Consumers.
+
+Consumer Level 1 Tests : [TDS.C1]
+Consumer Level 2 Tests : [TDS.C2]
+Producer Level 1 Tests : [TDS.P1]
+Producer Level 2 Tests : [TDS.P2]
+
+--------------------------------------------------------------------------------------------------------------
+Threat Intelligence Platform (TIP) Certification:
+Description: Software instance that acts as a Producer and/or Consumer of STIX 2.1 content primarily used to aggregate, refine and share intelligence with other machines or security personnel operating other security infrastructure.
+
+Consumer Level 1 Tests : [TIP.C1]
+Consumer Level 2 Tests : [TIP.C2]
+Producer Level 1 Tests : [TIP.P1]
+Producer Level 2 Tests : [TIP.P2]
+
+--------------------------------------------------------------------------------------------------------------
+Threat Mitigation System (TMS) Certification:
+Description: Software instance that acts on Course of Action and data from other threat mitigations such as a firewall, IPS, Endpoint Detection and Response (EDR) software, etc. This is applicable for both Producers and Consumers.
+
+Consumer Level 1 Tests : [TMS.C1]
+Consumer Level 2 Tests : [TMS.C2]
+Producer Level 1 Tests : [TMS.P1]
+Producer Level 2 Tests : [TMS.P2]
+
+--------------------------------------------------------------------------------------------------------------
+Summary
+--------------------------------------------------------------------------------------------------------------
+ STIX Producer (SXP)  Certification: Tests Passed
+Description: Software instance that acts as a Producer of STIX 2.1 content.
+
+--------------------------------------------------------------------------------------------------------------
+ STIX Consumer (SXC)  Certification: Tests Passed
+Description: Software instance that consumes STIX 2.1 content in order to perform translations to domain-specific formats consumable by enforcement and/or detection systems that do not natively support STIX 2.1. A SXC will typically consume STIX content but may not produce any STIX content itself.
+
+----------------------------------------------------------------------------------------------------------------
