@@ -262,7 +262,7 @@ def reln_map_entity_attribute(reln_map, r_tx, stix_id, is_kv):
                 role_i['player'].append(play)
 
             else:
-                print(f'player is not entity type {p}')
+                logger.debug(f'player is not entity type {p}')
 
         roles.append(role_i)
 
@@ -321,7 +321,7 @@ def get_hashes(r, r_tx):
                 role_i['player'].append(play)
 
             else:
-                print(f'player is not entity type {p}')
+                logger.debug(f'player is not entity type {p}')
 
         roles.append(role_i)
     return roles
@@ -392,7 +392,7 @@ def get_list_of_objects(r, r_tx):
 
 
             else:
-                print(f'player is not entity type {p}')
+                logger.debug(f'player is not entity type {p}')
 
         roles.append(role_i)
     return roles
@@ -420,7 +420,7 @@ def reln_map_entity_relation(reln_map, r_tx, stix_id):
                 role_i['player'].append(process_relation(p, r_tx, stix_id))
 
             else:
-                print(f'player is not entity type {p}')
+                logger.debug(f'player is not entity type {p}')
 
         roles.append(role_i)
 
@@ -498,7 +498,7 @@ def get_extension_relations(r, r_tx):
                 role_i['player'].append(play)
 
             else:
-                print(f'player is not entity type {p}')
+                logger.debug(f'player is not entity type {p}')
 
         roles.append(role_i)
     return roles
