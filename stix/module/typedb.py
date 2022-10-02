@@ -30,6 +30,13 @@ import sys
 import logging
 logger = logging.getLogger(__name__)
 
+
+marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+          "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
+          "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
+          "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
+
+
 class TypeDBSink(DataSink):
     """Interface for adding/pushing STIX objects to TypeDB.
 
@@ -72,6 +79,28 @@ class TypeDBSink(DataSink):
     @property
     def stix_connection(self):
         return self._stix_connection
+
+    def get_stix_ids(self):
+        """ Get all the stix-ids in a database, should be moved to typedb file
+
+        Returns:
+            id_list : list of the stix-ids in the database
+        """
+        get_ids_tql = 'match $ids isa stix-id;'
+        g_uri = self.uri + ':' + self.port
+        id_list = []
+        with TypeDB.core_client(g_uri) as client:
+            with client.session( self.database, SessionType.DATA) as session:
+                with session.transaction(TransactionType.READ) as read_transaction:
+                    answer_iterator = read_transaction.query().match(get_ids_tql)
+                    ids = [ans.get("ids") for ans in answer_iterator]
+                    for sid_obj in ids:
+                        sid = sid_obj.get_value()
+                        if sid in marking:
+                            continue
+                        else:
+                            id_list.append(sid)
+        return id_list
 
     def delete(self, stixid_list):
         """ Delete a list of STIX objects from the typedb server. Must include all related objects and relations
