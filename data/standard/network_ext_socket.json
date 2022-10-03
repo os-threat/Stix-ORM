@@ -2,14 +2,14 @@
     {
         "type": "ipv4-addr",      
         "spec_version": "2.1",      
-        "id": "ipv4-addr--4d22aae0-2bf9-5427-8819-e4f6abf20a53",      
+        "id": "ipv4-addr--4d22aae0-2bf9-2754-8819-e4f6abf20a53",
         "value": "198.51.100.2"      
     },
     {      
         "type": "network-traffic",      
         "spec_version": "2.1",      
         "id": "network-traffic--c95e972a-20a4-5307-b00d-b8393faf02c5",      
-        "src_ref": "ipv4-addr--4d22aae0-2bf9-5427-8819-e4f6abf20a53",      
+        "src_ref": "ipv4-addr--4d22aae0-2bf9-2754-8819-e4f6abf20a53",
         "src_port": 223,      
         "protocols": [      
           "ip",      

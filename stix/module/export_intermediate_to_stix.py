@@ -35,6 +35,7 @@ def convert_ans_to_stix(answer_iterator, r_tx, import_type):
     res = convert_ans_to_res(answer_iterator, r_tx, import_type)
     with open("export_test.json", "w") as outfile:
         json.dump(res, outfile)
+    logger.debug(f'got res, now for stix')
     stix_dict = convert_res_to_stix(res, import_type)
     # stix_object = parse(stix_dict)
     return stix_dict
@@ -124,8 +125,14 @@ def make_sdo(res, import_type):
     is_list = stix_models["sdo_is_list"]["sdo"] + stix_models["sdo_is_list"][obj_type]
     # 3.A) add the properties onto the the object
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
+    logger.debug('sdo, add properties')
     # 3.B) add the relations onto the object
     stix_dict = make_relations(relns, obj_tql, stix_dict, is_list, obj_type)
+    logger.debug('sdo, add relations')
+    # 4.0 Check for the edge case where an identity creates an identity, but they are the same id
+    if "created_by_ref" in stix_dict and stix_dict["type"] == "identity":
+        if stix_dict["created_by_ref"] == stix_dict["id"]:
+            del stix_dict["created_by_ref"]
 
     return stix_dict
 

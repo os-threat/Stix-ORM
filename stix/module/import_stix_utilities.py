@@ -102,6 +102,7 @@ def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], inc=-1):
         match: the typeql match string
         insert: the typeql insert string
     """
+    dep_list = []
     if rel == "granular_markings":
         match, insert = granular_markings( rel, obj[rel], obj_var, prop_var_list)
     
@@ -128,7 +129,7 @@ def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], inc=-1):
           or rel == "sections"
           or rel == "alternate_data_streams"
           or rel == "values"):
-        match, insert = list_of_object( rel, obj[rel], obj_var)
+        match, insert, dep_list = list_of_object( rel, obj[rel], obj_var)
     
     # insert embedded relations based on stix-id
     elif (rel == "object_refs"
@@ -167,16 +168,16 @@ def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], inc=-1):
           or rel == "parent_ref"
           or rel == "child_refs"
           or rel == "service_dll_refs"): 
-        match, insert = embedded_relation( rel, obj[rel], obj_var, inc)
+        match, insert, dep_list = embedded_relation( rel, obj[rel], obj_var, inc)
     
     # insert plain sub-object with relation
     elif (rel == "x509_v3_extensions"
           or rel == "optional_header"):
-        match, insert = load_object( rel, obj[rel], obj_var)
+        match, insert, dep_list = load_object( rel, obj[rel], obj_var)
         
     # insert  SCO Extensions here, a possible dict of sub-objects
     elif rel == "extensions":
-        match, insert = extensions( rel, obj[rel], obj_var)
+        match, insert, dep_list = extensions( rel, obj[rel], obj_var)
     
     # ignore the following relations as they are already processed, for Relationships, Sightings and Extensions
     elif (rel == "sighting_of_ref" 
@@ -190,7 +191,7 @@ def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], inc=-1):
         logger.error(f'relation type not known, rel -> {rel}')
         match = insert = ""
         
-    return match, insert
+    return match, insert, dep_list
 
 
 #---------------------------------------------------
@@ -212,18 +213,19 @@ def extensions(prop_name, prop_dict, parent_var):
         insert: the typeql insert string
     """
     match = insert = ''
+    dep_list = []
     # for each key in the dict (extension type)
     #logger.debug('--------------------- extensions ----------------------------')
     for ext_type in prop_dict:
         for ext_type_ql in stix_models["ext_typeql_dict_list"]:
             if ext_type == ext_type_ql["stix"]:
-                match2, insert2 = load_object(ext_type, prop_dict[ext_type], parent_var)
+                match2, insert2, dep_list2 = load_object(ext_type, prop_dict[ext_type], parent_var)
                 match = match + match2
                 insert = insert + insert2
+                dep_list = dep_list + dep_list2
                 break
         
-    return match, insert
-
+    return match, insert, dep_list
 
 
 def load_object(prop_name, prop_dict, parent_var):
@@ -254,6 +256,7 @@ def load_object(prop_name, prop_dict, parent_var):
             # Split them into properties and relations
             properties, relations = split_on_activity_type(tot_prop_list, obj_tql)     
             prop_var_list = []
+            dep_list = []
             for prop in properties:
                 # split off for properties processing
                 type_ql2, type_ql_props2, prop_var_list = add_property_to_typeql(prop, obj_tql, prop_dict, prop_var_list)
@@ -266,10 +269,11 @@ def load_object(prop_name, prop_dict, parent_var):
             # add each of the relations to the match and insert statements
             for rel in relations:        
                 # split off for relation processing
-                match2, insert2 = add_relation_to_typeql(rel, prop_dict, obj_var, prop_var_list)
+                match2, insert2, dep_list2 = add_relation_to_typeql(rel, prop_dict, obj_var, prop_var_list)
                 # then add it back together    
                 match = match +  match2
-                insert = insert + "\n" + insert2                   
+                insert = insert + "\n" + insert2
+                dep_list = dep_list + dep_list2
                 
             # finally, connect the local object to the parent object
             type_ql += ' ' + rel_var + ' (' + rel_owner + ':' + parent_var 
@@ -278,9 +282,7 @@ def load_object(prop_name, prop_dict, parent_var):
             break            
         
     insert =  type_ql + "\n" + insert
-    return match, insert
-
-
+    return match, insert, dep_list
 
 
 def list_of_object(prop_name, prop_value_list, parent_var):
@@ -305,6 +307,7 @@ def list_of_object(prop_name, prop_value_list, parent_var):
             break
         
     lod_list = []
+    dep_list = []
     match = rel_insert = rel_match = insert = ''
     for i, dict_instance in enumerate(prop_value_list):
         lod_var = '$' + typeql_obj + str(i)
@@ -313,9 +316,10 @@ def list_of_object(prop_name, prop_value_list, parent_var):
         for key in dict_instance:
             typeql_prop = obj_props_tql[key]
             if typeql_prop == '':
-                rel_match2, rel_insert2 = add_relation_to_typeql(key, dict_instance, lod_var, [], i)    
+                rel_match2, rel_insert2, dep_list2 = add_relation_to_typeql(key, dict_instance, lod_var, [], i)
                 rel_insert += rel_insert2
-                rel_match += rel_match2                            
+                rel_match += rel_match2
+                dep_list = dep_list + dep_list2
             else:
                 insert += ',\n has ' + typeql_prop + ' ' + val_tql(dict_instance[key])
         insert += ';\n'
@@ -326,7 +330,8 @@ def list_of_object(prop_name, prop_value_list, parent_var):
         
     insert += ') isa ' + rel_typeql  + ';\n' + rel_insert
     match += rel_match
-    return match, insert
+    return match, insert, dep_list
+
 
 def key_value_store( prop, prop_value_dict, obj_var):
     """
@@ -494,13 +499,15 @@ def embedded_relation(prop, prop_value, obj_var, inc):
         break
     
     prop_var_list = []
+    dep_list = []
     match = ''
     if inc == -1:
         inc_add = ''
     else:
         inc_add = str(inc)
     # if the prop_value is a list, then match in each item
-    if isinstance(prop_value, list):        
+    if isinstance(prop_value, list):
+        dep_list = prop_value
         for i, prop_v in enumerate(prop_value):
             prop_type = prop_v.split('--')[0]
             if prop_type == 'relationship':
@@ -510,6 +517,7 @@ def embedded_relation(prop, prop_value, obj_var, inc):
             match += ' ' + prop_var + ' isa ' + prop_type + ', has stix-id ' + '"' + prop_v + '";\n'
     # else, match in the single prop_value
     else:
+        dep_list.append(prop_value)
         prop_type = prop_value.split('--')[0]
         if prop_type == 'relationship':
             prop_type = 'stix-core-relationship'
@@ -522,7 +530,7 @@ def embedded_relation(prop, prop_value, obj_var, inc):
     for prop_var in prop_var_list:
         insert += ', ' + pointed_to + ':' + prop_var
     insert += ') isa ' + relation + ';\n'
-    return match, insert
+    return match, insert, dep_list
 
 
 def get_embedded_match(source_id, i=1):

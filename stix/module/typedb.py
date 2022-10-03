@@ -8,7 +8,8 @@ import stat
 from typedb.client import *
 
 #from .stql import stix2_to_typeql, get_embedded_match, raw_stix2_to_typeql, convert_ans_to_stix
-from .import_stix_to_typeql import stix2_to_typeql, raw_stix2_to_typeql
+from .import_stix_to_typeql import raw_stix2_to_typeql, stix2_to_match_insert
+from .delete_stix_to_typeql import delete_stix_object, add_delete_layers
 from .import_stix_utilities import get_embedded_match
 from .export_intermediate_to_stix import convert_ans_to_stix
 
@@ -20,7 +21,7 @@ from stix2.datastore import (
 from stix2.datastore.filters import Filter, FilterSet, apply_common_filters
 from stix2.parsing import parse
 from stix2.serialization import fp_serialize
-from stix2.utils import format_datetime, get_type_from_id, parse_into_datetime
+from stix2.utils import is_sdo, is_sco, is_sro
 
 from stix.schema.initialise import initialise_database
 
@@ -28,6 +29,13 @@ import sys
 
 import logging
 logger = logging.getLogger(__name__)
+
+
+marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+          "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
+          "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
+          "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
+
 
 class TypeDBSink(DataSink):
     """Interface for adding/pushing STIX objects to TypeDB.
@@ -71,7 +79,97 @@ class TypeDBSink(DataSink):
     @property
     def stix_connection(self):
         return self._stix_connection
-    
+
+    def get_stix_ids(self):
+        """ Get all the stix-ids in a database, should be moved to typedb file
+
+        Returns:
+            id_list : list of the stix-ids in the database
+        """
+        get_ids_tql = 'match $ids isa stix-id;'
+        g_uri = self.uri + ':' + self.port
+        id_list = []
+        with TypeDB.core_client(g_uri) as client:
+            with client.session( self.database, SessionType.DATA) as session:
+                with session.transaction(TransactionType.READ) as read_transaction:
+                    answer_iterator = read_transaction.query().match(get_ids_tql)
+                    ids = [ans.get("ids") for ans in answer_iterator]
+                    for sid_obj in ids:
+                        sid = sid_obj.get_value()
+                        if sid in marking:
+                            continue
+                        else:
+                            id_list.append(sid)
+        return id_list
+
+    def delete(self, stixid_list):
+        """ Delete a list of STIX objects from the typedb server. Must include all related objects and relations
+
+        Args:
+            stixid_list (): The list of Stix-id's of the object's to delete
+        """
+        clean = 'match $a isa attribute; not { $b isa thing; $b has $a;}; delete $a isa attribute;'
+        cleandict = {'delete': clean}
+        cleanup = [cleandict]
+        connection = {'uri': self.uri, 'port': self.port, 'database': self.database, 'user':self.user, 'password':self.password}
+        try:
+            typedb = TypeDBSource(connection, "STIX21")
+            layers = []
+            indexes = []
+            missing = []
+
+            for stixid in stixid_list:
+                local_obj = typedb.get(stixid)
+                dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(local_obj, self.import_type)
+                del_match, del_tql = delete_stix_object(local_obj, dep_match, dep_insert, indep_ql, core_ql, self.import_type)
+                logger.debug(' ---------------------------Delete Object----------------------')
+                logger.debug(f'dep_match -> {dep_match}')
+                logger.debug(f'dep_insert -> {dep_insert}')
+                logger.debug(f'indep_ql -> {indep_ql}')
+                logger.debug(f'dep_obj -> {dep_obj}')
+                logger.debug("=========================== delete typeql below ====================================")
+                logger.debug(f'del_match -> {del_match}')
+                logger.debug(f'del_tql -> {del_tql}')
+                if del_match == '' and del_tql == '':
+                    continue
+                dep_obj["delete"] = del_match + '\n' + del_tql
+                if len(layers) == 0:
+                    missing = dep_obj['dep_list']
+                    indexes.append(dep_obj['id'])
+                    layers.append(dep_obj)
+                else:
+                    layers, indexes, missing = add_delete_layers(layers, dep_obj, indexes, missing)
+                logger.debug(' ---------------------------Object Delete----------------------')
+
+            logger.debug("=========================== dependency indexes ====================================")
+            logger.debug(f'indexes -> {indexes}')
+            logger.debug("=========================== dependency indexes ====================================")
+            ordered = layers + cleanup + cleanup
+            for layer in ordered:
+                logger.debug("666666666666666 delete 6666666666666666666666666666666666")
+                logger.debug(f'del query -> {layer["delete"]}')
+            logger.debug(f'\nordered -> {ordered}')
+            with TypeDB.core_client(connection["uri"] + ":" + connection["port"]) as client:
+                with client.session(connection["database"], SessionType.DATA) as session:
+                    for layer in ordered:
+                        with session.transaction(TransactionType.WRITE) as write_transaction:
+                            logger.debug("77777777777777777 delete 777777777777777777777777777777777")
+                            logger.debug(f'del query -> {layer["delete"]}')
+                            query_future = write_transaction.query().delete(layer["delete"])
+                            logger.debug(f'typedb delete response ->\n{query_future.get()}')
+                            logger.debug("7777777777777777777777777777777777777777777777777777777777")
+                            write_transaction.commit()
+                    logger.debug(' ---------------------------Object Delete----------------------')
+
+
+        except Exception as e:
+            logger.error(f'Stix Object Deletion Error: {e}')
+            logger.error(f'dep_match -> {dep_match}')
+            logger.error(f'dep_insert -> {dep_insert}')
+            logger.error(f'indep_ql -> {indep_ql}')
+            logger.error(f'core_ql -> {core_ql}')
+            raise
+
 
     def add(self, stix_data=None, import_type="STIX21"):
         """Add STIX objects to the typedb server.
@@ -103,26 +201,33 @@ class TypeDBSink(DataSink):
         """
           the details for the add details, checking what import_type of data object it is
         """
+        logger.debug('----------------------------------------')
+        logger.debug(f'going into separate objects function {stix_data}')
+        logger.debug('-----------------------------------------------------')
         
         if isinstance(stix_data, (v21.Bundle)):
+            logger.debug(f'isinstance Bundle')
             # recursively add individual STIX objects
             for stix_obj in stix_data.get("objects", []):
                 self._separate_objects(stix_obj, import_type=import_type, session=session)
 
         elif isinstance(stix_data, _STIXBase):
+            logger.debug(f'isinstance _STIXBase')
             # adding python STIX object
             self._submit_Stix_object(stix_data, import_type=import_type, session=session)
 
         elif isinstance(stix_data, (str, dict)):
+            logger.debug(f'isinstance dict')
             parsed_data = parse(stix_data, allow_custom=self.allow_custom)
             if isinstance(parsed_data, _STIXBase):
-                logger.debug(f'STIX Base')
+                logger.debug(f'isinstance STIX Base')
                 self._separate_objects(parsed_data, import_type=import_type, session=session)
             else:
                 # custom unregistered object import_type
                 self._submit_Stix_object(parsed_data, import_type=import_type, session=session)
 
         elif isinstance(stix_data, list):
+            logger.debug(f'isinstance list')
             # recursively add individual STIX objects
             for stix_obj in stix_data:
                 self._separate_objects(stix_obj, import_type=import_type, session=session)
@@ -142,23 +247,26 @@ class TypeDBSink(DataSink):
             logger.debug(f'----------------------------- Load {stix_obj.type} Object -----------------------------')
             logger.debug(stix_obj.serialize(pretty=True))
             logger.debug(f'----------------------------- TypeQL Statements -----------------------------')
-            match_tql, insert_tql = raw_stix2_to_typeql(stix_obj, import_type)
-            logger.debug(f'query string?-> {match_tql+insert_tql}')
-            logger.debug(f'----------------------------- Object Loaded -----------------------------')
+            match_tql, insert_tql, dep_obj = stix2_to_match_insert(stix_obj, import_type)
+            logger.debug(f'match_tql string?-> {match_tql}')
+            logger.debug(f'insert_tql string?-> {insert_tql}')
+            logger.debug(f'dep_obj string?-> {dep_obj}')
+            logger.debug(f'----------------------------- Get Ready to Load Object -----------------------------')
+            typeql_string = match_tql + insert_tql
+            if not insert_tql:
+                logger.warning(f'Marking Object type {stix_obj.type} already exists')
+                return
+            #logger.debug(typeql_string)
+            logger.debug('=============================================================')
             with session.transaction(TransactionType.WRITE) as write_transaction:
-                if not match_tql:
-                    if not insert_tql:
-                        logger.warning(f'Object type {stix_obj.type} already existent')
-                        return
-                    else:
-                        insert_iterator = write_transaction.query().insert(insert_tql)
-                else:
-                    insert_iterator = write_transaction.query().insert(match_tql+insert_tql)                    
-                     
+                logger.debug(f'inside session and ready to load')
+                insert_iterator = write_transaction.query().insert(typeql_string)
+
                 for result in insert_iterator:
                     logger.debug(f'typedb response ->\n{result}')
                 
                 write_transaction.commit()
+                logger.debug(f'----------------------------- write_transaction.commit -----------------------------')
                 
         except Exception as e:
             logger.error(f'Stix Object Submission Error: {e}')
@@ -184,7 +292,7 @@ class TypeDBSource(DataSource):
     """
     def __init__(self, connection, import_type="STIX21", **kwargs):	
         super(TypeDBSource, self).__init__()
-        print(f'TypeDBSink: {connection}')
+        logger.debug(f'TypeDBSink: {connection}')
         self._stix_connection = connection
         self.uri = connection["uri"]
         self.port = connection["port"]
@@ -200,7 +308,6 @@ class TypeDBSource(DataSource):
     @property
     def stix_connection(self):
         return self._stix_connection
-    
 
     def get(self, stix_id, _composite_filters=None):
         """Retrieve STIX object from file directory via STIX ID.
@@ -237,7 +344,6 @@ class TypeDBSource(DataSource):
             stix_obj = None
         
         return stix_obj
-    
 
     def query(self, query=None, version=None, _composite_filters=None):
         """Search and retrieve STIX objects based on the complete query.
