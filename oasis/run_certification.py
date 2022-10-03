@@ -2,6 +2,8 @@ import os,json,sys
 import logging
 import re
 
+from pathlib import Path
+
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 
@@ -21,7 +23,7 @@ def load_template(file_path='./oasis/cert_template.txt'):
         logger.info(f"Loaded {len(m)} profiles")
         return t,m
 
-def run_profiles(config:dict,template,tags):
+def run_profiles(config:dict,template,tags,out_file):
     report = template
     for profile in config.keys():
         logger.info(f'Checking profile {profile}')
@@ -33,11 +35,12 @@ def run_profiles(config:dict,template,tags):
                 logger.info(f'Asserting flag {code}')
                 report = report.replace(code,result[code])
     # now write the report
-    with open('./oasis/report.txt','w') as file:
+    with open(out_file,'w') as file:
         file.write(report)
 
 def run_profile(short,profile):
     logger.info(f'Title {profile["title"]}')
+    root_folder = './data/stix_cert_data'
     results = {}
     if 'level1' in profile:
         count = 0
@@ -45,7 +48,8 @@ def run_profile(short,profile):
             count +=1
             consumer_passed = True
             producer_passed = True
-
+            test_file = f"{root_folder}/{level['dir']}/{level['sub_dir']}"
+            logger.info(f"Test file {test_file}")
             if level['sub_dir'] == 'consumer_test':
                 check = True
                 if check == False: consumer_passed = False
@@ -83,7 +87,9 @@ def run_profile(short,profile):
         return results
 
 if __name__ == '__main__':
-    tests = load_personas()
-    template,tags = load_template()
+    cwd = Path.cwd()
+    logger.info(f'Running tests in {cwd}')
+    tests = load_personas(file_path=Path.joinpath(cwd,'data','stix_cert_data','stix_cert_persona_dict.json'))
+    template,tags = load_template(file_path=Path.joinpath(cwd,'oasis','cert_template.txt'))
     logger.info(f"Profiles: {list(tests.keys())}")
-    run_profiles(tests,template,tags)
+    run_profiles(tests,template,tags,out_file=Path.joinpath(cwd,'oasis','report.txt'))

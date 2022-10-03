@@ -14,7 +14,7 @@ from stix2 import (v21, parse)
 
 # define the database data and import details
 connection = {
-    "uri": "localhost",
+    "uri": "20.224.56.132",
     "port": "1729",
     "database": "stix2",
     "user": None,
@@ -106,4 +106,5 @@ if __name__ == '__main__':
     #query_id(test_id)
     #check_dir(data_path)
     test_slashes(data_path+file)
+
     
