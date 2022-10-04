@@ -1,6 +1,8 @@
 import os,json,sys
 import logging
 import re
+from stix.module.typedb import TypeDBSink, TypeDBSource
+from dbconfig import connection
 
 from pathlib import Path
 
@@ -25,6 +27,9 @@ def load_template(file_path='./oasis/cert_template.txt'):
 
 def run_profiles(config:dict,template,tags,out_file):
     report = template
+    # create the database and init
+    typedb = TypeDBSink(connection, True, "STIX21")
+
     for profile in config.keys():
         logger.info(f'Checking profile {profile}')
         result = run_profile(profile,config[profile])
