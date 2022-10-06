@@ -51,13 +51,27 @@ def run_profiles(config:dict,template,tags,out_file):
 
 def verify_file(file_path,sink_db):
     with open(file_path, mode="r", encoding="utf-8") as file:
+
+        check_list = []
+
         logger.info(f"Loading file {file_path}")
         json_blob = json.load(file)
 
         if isinstance(json_blob, list):
-            for item in json_blob:
-                stix_obj = parse(item)
-                sink_db.add(stix_obj)
+            for json_dict in json_blob:
+                #stix_obj = parse(item)
+                sink_db.add(json_dict)
+
+                insert_ids = sink_db.get_stix_ids()
+                tot_insert = len(insert_ids)
+
+                if tot_insert == 0 :
+                    logger.error(f"Total STIX ID {tot_insert}")
+                    check_list.append(False)
+                else:
+                    check_list.append(True)
+                    logger.info(f"Total STIX ID {tot_insert}")
+
                 '''
                 return_dict = source_db.get(stix_obj.id)
                 return_obj = parse(return_dict)
@@ -65,11 +79,14 @@ def verify_file(file_path,sink_db):
                 check, p_ok, p_not = cmp.compare(stix_obj, return_obj)
                 return check
                 '''
-                return True
         else:
             bundle = parse(json_blob)
             for stix_obj in bundle.objects:
                 sink_db.add(stix_obj)
+
+                insert_ids = sink_db.get_stix_ids()
+                logger.info(f"Total STIX ID in bundle {len(insert_ids)}")
+                check_list.append(True)
                 '''
                 return_dict = self._typedbSource.get(stix_obj.id)
                 return_obj = parse(return_dict)
@@ -79,7 +96,8 @@ def verify_file(file_path,sink_db):
                 logger.info(f'KO properties {p_not}')
                 self.assertTrue(check)
                 '''
-            return True
+
+        return check_list
 
 def verify_files(directory,sink_db,source_db):
     """ Load and verify the file
@@ -88,10 +106,12 @@ def verify_files(directory,sink_db,source_db):
         fullname (): folder path
     """
     path = Path(directory)
-
+    check_list = []
     if path.is_dir():
         for file_path in path.iterdir():
-            verify_file(file_path,sink_db)
+            file_list = verify_file(file_path,sink_db)
+            check_list = check_list + file_list
+        return check_list
     else:
         logger.error('This is not a folder???')
 
