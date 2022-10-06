@@ -30,6 +30,11 @@ def run_profiles(config:dict,template,tags,out_file):
     # create the database and init
     sink_db = TypeDBSink(connection=connection, clear=True,import_type= "STIX21")
     source_db =  TypeDBSource(connection=connection, import_type="STIX21")
+    # get all the initial STIX IDs (only markings should be there)
+    base_ids = sink_db.get_stix_ids()
+    # markings should be automatically ignored
+    assert len(base_ids) == 0
+    logger.info(f'Total default stix objects {len(base_ids)}')
 
     for profile in config.keys():
         logger.info(f'Checking profile {profile}')

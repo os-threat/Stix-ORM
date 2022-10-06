@@ -72,3 +72,25 @@ There are four local files:
 - check_dir.py: Enables each data file in a a directory to be loaded into TypeDB, and then every object to be sequentially retrieved and printed. The process handles files with either bundles or lists of objects. 
 - export_test.json: An export of the intermediate form of the last object to be retrieved from the datastore
 - export_final.json: An export of the final form of the last object to be retrieved from the datastore
+
+### 5. Code information
+
+TypeDB:
+- init() - create clean database with schema and marking objects loaded
+- add() - can add single objects, lists and bundles
+- get() - can get single object based on id
+- get_all_ids() - get all of the stix ids in the database as a list (except for marking objects)
+- delete () - delete a list of sitx ids, orders the records and checks for missing dependencies and circular references
+
+
+Raw STIX method:
+
+dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(local_obj, self.import_type)
+
+Returned description:
+* dep_match: the matches needed for the new object that are dependent on other objects, already inserted
+* dep_insert: the inserts needed for the new objects that are dependent on matches with existing objects
+* indep-ql: the inserts for the new object that are indepdpent of other objects
+* core_ql: statements describing the main  object and its stix id
+* dep_obj: The dependency object for this objects, used to order it in a list. Contains its own id, and a list of all of the ids it is dependent on (i.e. dependent objects must be added before, or deleted after, this object)
+
