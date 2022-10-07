@@ -117,24 +117,22 @@ def verify_files(directory,sink_db,source_db):
 
 def run_profile(short,profile,sink_db,source_db):
     logger.info(f'Title {profile["title"]}')
-    root_folder = './data/stix_cert_data'
     results = {}
     if 'level1' in profile:
         count = 0
         for level in profile['level1']:
             count +=1
-            consumer_passed = True
-            producer_passed = True
-            test_file = f"{root_folder}/{level['dir']}/{level['sub_dir']}"
-            logger.info(f"Test folder {test_file}")
-            check = verify_files(test_file,sink_db,source_db)
+            consumer_passed = False
+            producer_passed = False
+
+            sub_dir = Path.cwd()/'data'/'stix_cert_data'/level['dir']/level['sub_dir']
+            logger.info(f"Test folder {sub_dir}")
+            checks = verify_files(sub_dir,sink_db,source_db)
 
             if level['sub_dir'] == 'consumer_test':
-                check = True
-                if check == False: consumer_passed = False
+                consumer_passed = all(checks)
             elif level['sub_dir'] == 'producer_test':
-                check = True
-                if check == False: producer_passed = False
+                producer_passed = all(checks)
 
             if consumer_passed: results[f'[{short}.C1]'] = 'Passed'
             else: results[f'[{short}.C1]'] = 'Failed'
@@ -145,14 +143,17 @@ def run_profile(short,profile,sink_db,source_db):
         logger.info(f'\tTotal level 1 checks {count}')
     if 'level2' in profile:
         count += 1
-        consumer_passed = True
-        producer_passed = True
+        consumer_passed = False
+        producer_passed = False
+
+        sub_dir = Path.cwd() / 'data' / 'stix_cert_data' / level['dir'] / level['sub_dir']
+        logger.info(f"Test folder {sub_dir}")
+        checks = verify_files(sub_dir, sink_db, source_db)
+
         if level['sub_dir'] == 'consumer_test':
-            check = True
-            if check == False: consumer_passed = False
+            consumer_passed = all(checks)
         elif level['sub_dir'] == 'producer_test':
-            check = True
-            if check == False: producer_passed = False
+            producer_passed = all(checks)
 
         if consumer_passed: results[f'[{short}.C2]'] = 'Passed'
         else:
