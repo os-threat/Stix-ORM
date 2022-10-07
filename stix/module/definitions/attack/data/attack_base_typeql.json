@@ -1,0 +1,8 @@
+{
+  "name": "name",
+  "description": "description",
+  "x_mitre_version": "x-mitre-version",
+  "x_mitre_contributors": "x-mitre-contributors",
+  "x_mitre_modified_by_ref": "x-mitre-modified-by-ref",
+  "x_mitre_attack_spec_version": "x-mitre-attack-spec-version"
+}
