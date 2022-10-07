@@ -10,7 +10,7 @@ from stix.module.delete_stix_to_typeql import delete_stix_object, add_delete_lay
 
 import logging
 
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 
 
@@ -252,6 +252,6 @@ if __name__ == '__main__':
     #check_dir(path1)
     #test_delete(path1+files10)
     #test_initialise()
-    test_delete_dir(path1)
-    #clean_db()
+    #test_delete_dir(path1)
+    clean_db()
     
