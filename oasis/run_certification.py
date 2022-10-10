@@ -198,7 +198,7 @@ def sanity_check(path:Path):
                 try:
                     json_blob = json.load(file)
                 except Exception as e:
-                    json_fails.append(file_path)
+                    json_fails.append((file_path,str(e)))
                     continue
 
                 try:
