@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os,json,sys
 import logging
 import re
@@ -5,6 +7,16 @@ from stix.module.typedb import TypeDBSink, TypeDBSource
 from dbconfig import connection
 from stix2 import (v21, parse)
 from pathlib import Path
+
+loggers = [logging.getLogger()]  # get the root logger
+loggers = loggers + [logging.getLogger(name) for name in logging.root.manager.loggerDict]
+
+for l in loggers:
+    if l.name.startswith('stix.module'):
+        # you can change verbosity here if needed
+        '''
+        l.setLevel(logging.DEBUG)
+        '''
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
@@ -166,10 +178,53 @@ def run_profile(short,profile,sink_db,source_db):
 
         return results
 
+def sanity_check(path:Path):
+    quotes = ['\u201c', '\u201d']
+    p = path.glob('**/*.json')
+    files = [x for x in p if x.is_file()]
+    logger.info('Checking %d files' % len(files))
+    json_fails = []
+    stix_fails = []
+    quote_fails = []
+    for file_path in files:
+        #print(file_path)
+        with open(file_path, mode="r", encoding="utf-8") as file:
+            content = file.read()
+            checks = [True for c in quotes if c in content]
+            if any(checks): quote_fails.append(file_path)
+
+        if file_path.name!='stix_cert_persona_dict.json':
+            with open(file_path, mode="r", encoding="utf-8") as file:
+                try:
+                    json_blob = json.load(file)
+                except Exception as e:
+                    json_fails.append(file_path)
+                    continue
+
+                try:
+                    if isinstance(json_blob, list):
+                        for json_dict in json_blob:
+                            stix_obj = parse(json_dict)
+                    elif isinstance(json_blob, dict):
+                        stix_obj = parse(json_dict)
+                    else:
+                        logger.error(f'Error on json type {type(json_blob)}')
+                except Exception as e:
+                    stix_fails.append((file_path,str(e)))
+                    continue
+
+    logger.error(f'Files with unicode quotes =  {len(quote_fails)}')
+    logger.error(f'Files with broken json = {len(json_fails)}')
+    logger.error(f'Files with broken stix = {len(stix_fails)}')
+
+
 if __name__ == '__main__':
     cwd = Path.cwd()
+
     logger.info(f'Running tests in {cwd}')
     tests = load_personas(file_path=Path.joinpath(cwd,'data','stix_cert_data','stix_cert_persona_dict.json'))
+    logger.info(f'Running sanity checks in {cwd}')
+    sanity_check(path=Path.joinpath(cwd,'data','stix_cert_data'))
     template,tags = load_template(file_path=Path.joinpath(cwd,'oasis','cert_template.txt'))
     logger.info(f"Profiles: {list(tests.keys())}")
     run_profiles(tests,template,tags,out_file=Path.joinpath(cwd,'oasis','report.txt'))
