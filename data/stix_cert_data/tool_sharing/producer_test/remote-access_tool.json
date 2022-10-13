@@ -6,8 +6,7 @@
       "identity_class": "organization",
       "name": "XYZA Corp, Inc.",
       "created": "2017-01-17T11:11:13.000Z",
-      "modified": "2017-01-17T11:11:13.000Z",
-      "created_by_ref": "identity--826d4837-a92b-44a3-91c9-107ec7982c1d"
+      "modified": "2017-01-17T11:11:13.000Z"
   },
   {
       "type": "tool",

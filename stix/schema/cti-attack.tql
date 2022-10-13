@@ -1,0 +1,168 @@
+#
+# Copyright (C) 2022 OS-Threat
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+define
+
+    matrix sub stix-domain-object,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-modified-by-ref,
+        owns x-mitre-attack-spec-version,
+        owns tactic-refs;
+
+    tactic sub stix-domain-object,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-modified-by-ref,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-shortname;
+
+    technique sub attack-pattern,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-modified-by-ref,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-detection,
+        owns x-mitre-platforms,
+        owns x-mitre-data-sources,
+        owns x-mitre-is-subtechnique,
+        owns x-mitre-system-requirements,
+        owns x-mitre-tactic-type,
+        owns x-mitre-permissions-required,
+        owns x-mitre-effective-permissions,
+        owns x-mitre-defense-bypassed,
+        owns x-mitre-remote-support,
+        owns x-mitre-impact-type;
+
+    subtechnique sub technique;
+
+    mitigation sub course-of-action,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-modified-by-ref,
+        owns x-mitre-attack-spec-version;
+
+    attack-group sub intrusion-set,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-modified-by-ref,
+        owns x-mitre-attack-spec-version;
+
+    software-malware sub malware,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-modified-by-ref,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-platforms,
+        owns x-mitre-aliases;
+
+    software-tool sub tool,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-modified-by-ref,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-platforms,
+        owns x-mitre-aliases;
+
+    data-source  sub stix-domain-object,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-modified-by-ref,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-platforms,
+        owns x-mitre-collection-layers;
+
+    data-component  sub stix-domain-object,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-modified-by-ref,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-data-source-ref;
+
+
+    collection   sub stix-domain-object,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-modified-by-ref,
+        owns x-mitre-attack-spec-version,
+        plays x-mitre-content:collector;
+
+
+    # 2.5 External Reference
+    object-version sub stix-meta-object,
+        # In addition to source-name, at least one of description, url or external-id must be present§
+        # Required
+        owns object-ref,
+        owns object-modified,
+        plays x-mitre-content:collected;
+
+    x-mitre-content sub embedded,
+		relates collector as owner,
+		relates collected as pointed-to;
+
+
+
+    mitre-attribute-string sub stix-attribute-string;
+        x-mitre-version sub mitre-attribute-string;
+        x-mitre-contributors sub mitre-attribute-string;
+        x-mitre-modified-by-ref sub mitre-attribute-string;
+        x-mitre-attack-spec-version sub mitre-attribute-string;
+        tactic-refs sub mitre-attribute-string;
+        x-mitre-shortname sub mitre-attribute-string;
+        x-mitre-detection sub mitre-attribute-string;
+        x-mitre-platforms sub mitre-attribute-string;
+        x-mitre-data-sources sub mitre-attribute-string;
+        x-mitre-system-requirements sub mitre-attribute-string;
+        x-mitre-tactic-type sub mitre-attribute-string;
+        x-mitre-permissions-required sub mitre-attribute-string;
+        x-mitre-effective-permissions sub mitre-attribute-string;
+        x-mitre-defense-bypassed sub mitre-attribute-string;
+        x-mitre-impact-type sub mitre-attribute-string;
+        x-mitre-aliases sub mitre-attribute-string;
+        object-ref sub mitre-attribute-string;
+        x-mitre-collection-layers sub mitre-attribute-string;
+        x-mitre-data-source-ref sub mitre-attribute-string;
+
+    mitre-attribute-boolean sub stix-attribute-boolean;
+        x-mitre-is-subtechnique sub mitre-attribute-boolean;
+        x-mitre-remote-support sub mitre-attribute-boolean;
+
+    mitre-attribute-timestamp sub stix-attribute-timestamp;
+        object-modified sub mitre-attribute-timestamp;

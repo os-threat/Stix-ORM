@@ -6,8 +6,7 @@
       "created": "2019-02-15T13:29:42.904Z",
       "modified": "2019-09-19T20:21:59.961Z",
       "name": "Example Shodan Inferred Vulnerability",
-      "identity_class": "organization",
-      "created_by_ref": "identity--c00275a5-4423-46c6-bb79-235654096f8a"
+      "identity_class": "organization"
   },
   {
       "spec_version": "2.1",

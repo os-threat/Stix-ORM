@@ -1,4 +1,13 @@
 [
+    {
+      "type": "identity",
+      "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp, Inc.",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
   {
       "type": "identity",
       "id": "identity--f6e43aa5-76cc-45ca-9b06-be2d65f26bfb",
@@ -12,7 +21,7 @@
   {
       "type": "indicator",
       "spec_version": "2.1",
-      "id": "indicator--aaabbbcc-cddd-eeef-fff6-be2d65defabc",
+      "id": "indicator--df3aed46-3415-4b5c-8f74-c21c92db0146",
       "created_by_ref": "identity--f6e43aa5-76cc-45ca-9b06-be2d65f26bfb",
       "created": "2015-01-21T12:34:56.000Z",
       "description": "Example of what a TMS Indicator Consumer can do",

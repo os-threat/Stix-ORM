@@ -1,1 +1,1 @@
-{"key": "HKEY_LOCAL_MACHINE\\System\\Foo\\Bar", "id": "windows-registry-key--9d60798d-4e3e-5fe4-af8a-0e4986f0f90b", "type": "windows-registry-key", "spec_version": "2.1"}
+{"spec_version": "2.1", "modified": "2016-05-12T08:17:27.000000Z", "created": "2016-05-12T08:17:27.000000Z", "name": "CVE-2016-1234", "id": "vulnerability--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061", "type": "vulnerability", "created_by_ref": "identity--d88cb6e5-0c4b-4611-8297-d1b8b55e40b5", "external_references": [{"external_id": "CVE-2016-1234", "source_name": "cve"}]}
