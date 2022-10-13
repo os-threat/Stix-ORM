@@ -33,6 +33,8 @@ def initialise_database(uri, port, database, user, password, clear=False):
             else:
                 return
                 #raise ValueError(f"Database '{database}' already exists")
+        else:
+            client.databases().create(database)
 
         # Stage 1: Create the schema
         with client.session(database, SessionType.SCHEMA) as session:

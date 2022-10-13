@@ -69,7 +69,12 @@ class StixComparator(object):
             return a._inner[key] == b._inner[key]
         elif property_type == 'PatternProperty':
             return a._inner[key] == b._inner[key]
-        else: raise NotImplementedError(f'Property type {property_type} not considered')
+        elif property_type == 'IntegerProperty':
+            return a._inner[key] == b._inner[key]
+        elif property_type == 'HashesProperty':
+            return a._inner[key] == b._inner[key]
+        else:
+            raise NotImplementedError(f'Property type {property_type} not considered')
 
     def compare(self,a,b,skip_type = False):
         if (skip_type == False) and (a._type != b._type):
@@ -145,8 +150,7 @@ class TestDatabase(unittest.TestCase):
             with open(filename, mode="r", encoding="utf-8") as file:
                 if filename.endswith('marking_definitions.json'):
                     continue
-                # TODO: focusing here on granular markings first
-                elif filename.endswith('granular_markings.json'):
+                else:
                     logger.info(f'Loading file {filename}')
                     json_blob = json.load(file)
 

@@ -10,9 +10,10 @@ from stix.module.delete_stix_to_typeql import delete_stix_object, add_delete_lay
 
 import logging
 
-logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
-logger = logging.getLogger(__name__)
 
+
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+logger = logging.getLogger(__name__)
 
 # define the database data and import details
 connection = {

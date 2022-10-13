@@ -28,8 +28,10 @@ from stix.schema.initialise import initialise_database
 import sys
 
 import logging
-logger = logging.getLogger(__name__)
 
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+
+logger = logging.getLogger(__name__)
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
