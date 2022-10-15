@@ -16,7 +16,7 @@
       "created": "2016-04-06T20:03:48.000Z",
       "modified": "2016-04-06T20:03:48.000Z",
       "name": "Bobcat Breakin",
-      "description": "Incidents usually feature a shared TTP of a bobcat being released within           the building containing network access, scaring users to leave their computers without locking them first. Still determining where the threat actors are getting the bobcats.",
+      "description": "Incidents usually feature a shared TTP of a bobcat being released within           the building containing network access, scaring users to leave their computers without locking them first. Still determining where the threat actors are getting the bobcats."
   },
   {
       "type": "infrastructure",

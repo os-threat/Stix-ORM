@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2021 Vaticle
+# Copyright (C) 2022 OS-Threat
 #
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -17,6 +17,8 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+#
+# Note: Large portions of this schema were defined by Tomas Sabat, Vaticle, 2021
 #
 
 define
@@ -62,7 +64,8 @@ stix-object sub entity,
 			stix-cyber-observable-object sub stix-core-object,
 				owns defanged,
 				plays malware-env:env,
-				plays extensions:sco;
+				plays extensions:sco,
+				plays consist:consisted;
 
 	stix-meta-object sub stix-object, 
 		abstract, 
@@ -122,7 +125,7 @@ custom-object sub stix-domain-object,
 	owns last-seen,
 	owns objective,
 	plays kill-chain-usage:kill-chain-used,
-	plays delivers:deliverers,
+	plays delivers:delivering,
 	plays targets:targetter,
 	plays uses:used-by,
 	plays mitigates:mitigated,
@@ -139,7 +142,7 @@ attack-pattern sub stix-domain-object,
 	plays kill-chain-usage:kill-chain-used,
 
 	# Common Relations
-	plays delivers:deliverers,
+	plays delivers:delivering,
 	plays targets:targetter,
 	plays uses:used-by,
 
@@ -297,7 +300,7 @@ infrastructure sub stix-domain-object,
 	plays consist:consisting,
 	plays control:controlling,
 
-	plays delivers:deliverers,
+	plays delivers:delivering,
 	plays have:having,
 	plays hosts:hosting,
 	plays located-at:locating,
@@ -407,6 +410,7 @@ malware sub stix-domain-object,
     plays hosts:hosting,
     plays uses:used-by,
     plays variant:variant-source,
+    plays communicates-with:communicating,
 
    	# Reverse Relations
    	plays variant:variant-target,
@@ -587,7 +591,7 @@ tool sub stix-domain-object,
 	plays kill-chain-usage:kill-chain-used,
 
 	# Common Relations
-	plays delivers:deliverers,
+	plays delivers:delivering,
 	plays drop:dropping,
 	plays have:having,
 	plays targets:targetter,
@@ -660,7 +664,7 @@ stix-core-relationship sub relation,
 
 	# Specific Relationships from Appendix B
 	delivers sub stix-core-relationship, 
-		relates deliverers as source, 
+		relates delivering as source, 
 		relates delivered as target;
 
 	targets sub stix-core-relationship, 
@@ -730,6 +734,10 @@ stix-core-relationship sub relation,
 	authored-by sub stix-core-relationship,
 		relates authoring as source,
 		relates authored as target;
+
+	resolve-to sub stix-core-relationship,
+	    relates resolves-from as source,
+	    relates resolves-to as target;
 
 	beacon sub stix-core-relationship,
 		relates beaconed-to as target,
@@ -828,11 +836,13 @@ directory sub stix-cyber-observable-object,
 # 6.4 Domain Name Object
 domain-name sub stix-cyber-observable-object,
 	owns stix-value, 
-	plays resolves:resolve,
-	plays resolves:resolves-to,
+	plays resolves-to-ref:from-ref,
+	plays resolves-to-ref:to-ref,
 	plays communicates-with:communicated,
 	plays traffic-src:source,
-	plays traffic-dst:destination;
+	plays traffic-dst:destination,
+	plays resolve-to:resolves-from,
+	plays resolve-to:resolves-to;
 
 # 6.5 Email Address Object
 email-addr sub stix-cyber-observable-object,
@@ -1005,31 +1015,36 @@ SCO-extension sub entity,
 # 6.8 IPv4 Address
 ipv4-addr sub stix-cyber-observable-object,
 	owns stix-value, 
-	plays resolves:resolves-to,
-	plays resolves:resolve,
+	plays resolves-to-ref:to-ref,
+	plays resolves-to-ref:from-ref,
 	plays belongs-to-autonomous:belonged,
 	plays communicates-with:communicated,
 	plays traffic-src:source,
 	plays traffic-dst:destination,
-	plays consist:consisted;
+	#plays consist:consisted,
+	plays resolve-to:resolves-from,
+	plays resolve-to:resolves-to;
 
 # 6.9 IPv6 Address
 ipv6-addr sub stix-cyber-observable-object,
 	owns stix-value, 
-	plays resolves:resolves-to,
-	plays resolves:resolve,
+	plays resolves-to-ref:to-ref,
+	plays resolves-to-ref:from-ref,
 	plays belongs-to-autonomous:belonged,	
 	plays communicates-with:communicated,
 	plays traffic-src:source,
 	plays traffic-dst:destination,
-	plays consist:consisted;
+	#plays consist:consisted,
+	plays resolve-to:resolves-from,
+	plays resolve-to:resolves-to;
 
 # 6.10 MAC Address
 mac-addr sub stix-cyber-observable-object,
 	owns stix-value,
-	plays resolves:resolves-to,
+	plays resolves-to-ref:to-ref,
 	plays traffic-src:source,
-	plays traffic-dst:destination;
+	plays traffic-dst:destination,
+	plays resolve-to:resolves-to;
 
 # 6.11 Mutex
 mutex sub stix-cyber-observable-object,
@@ -1362,9 +1377,9 @@ embedded sub relation,
 		encapsulated sub orig-contained;
 
 	# IP Address or Domain Name
-	resolves sub embedded,
-		relates resolve as owner,
-		relates resolves-to as pointed-to;
+	resolves-to-ref sub embedded,
+		relates from-ref as owner,
+		relates to-ref as pointed-to;
 
 	# User Account email address belongs to
 	belongs sub embedded,
@@ -1611,7 +1626,6 @@ stix-attribute-string sub attribute, value string, abstract,
 	stix-value sub stix-attribute-string;
 	object-marking-refs sub stix-attribute-string;
 	labels sub stix-attribute-string;
-	confidence sub stix-attribute-string;
 	langs sub stix-attribute-string;
 	source-name sub stix-attribute-string;
 	description sub stix-attribute-string;
@@ -1801,6 +1815,7 @@ stix-attribute-integer sub attribute, value long, abstract,
 	image-height sub stix-attribute-integer;
 	image-width sub stix-attribute-integer;
 	bits-per-pixel sub stix-attribute-integer;
+	confidence sub stix-attribute-integer;
 
 	number-of-sections sub stix-attribute-integer;
 	number-of-symbols sub stix-attribute-integer;

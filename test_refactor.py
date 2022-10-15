@@ -10,16 +10,15 @@ from stix.module.delete_stix_to_typeql import delete_stix_object, add_delete_lay
 
 import logging
 
-
-
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
+
 
 # define the database data and import details
 connection = {
     "uri": "localhost",
     "port": "1729",
-    "database": "stix2",
+    "database": "oasis",
     "user": None,
     "password": None
 }
@@ -200,6 +199,45 @@ def check_dir(dirpath):
                 typedb_sink.add(json_text)
 
 
+def cert_test(dirpath):
+    dirs = [
+        "consumer_example/",
+        "consumer_test/",
+        "producer_example/",
+        "producer_test/"
+    ]
+    for d in dirs:
+        #print(f'############## {dirpath+d} #################')
+        #print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        #print('----------------------------------------')
+        dirFiles = os.listdir(dirpath+d)
+        for s_file in dirFiles:
+            if os.path.isdir(os.path.join((dirpath+d), s_file)):
+                continue
+            else:
+                local_list1 = []
+                print(f's-file {s_file}')
+                with open(os.path.join(dirpath+d, s_file), mode="r", encoding="utf-8") as f:
+                    json_text = json.load(f)
+                    for l in json_text:
+                        local_list1.append(l["id"])
+                print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+                print(f'==================== {dirpath+d+s_file} ===================================')
+                print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+                load_file(dirpath+d+s_file)
+                local_list = get_stix_ids()
+                print(f'my id list -> {local_list}')
+                print('========================= I am starting deletion ===========================================')
+                typedb = TypeDBSink(connection, False, "STIX21")
+                typedb.delete(local_list)
+                local_list2 = get_stix_ids()
+                print("******************************************")
+                print(f'\n\nmy initial list is -> {local_list1}')
+                print(f'\n\nmy returned list is -> {local_list}')
+                print(f'\n\nmy final list is -> {local_list2}')
+                print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+
+
 # if this file is run directly, then start here
 if __name__ == '__main__':
 
@@ -232,6 +270,29 @@ if __name__ == '__main__':
 
     data_path = "data/examples/"
     path1 = "data/standard/"
+    cert_root = "data/stix_cert_data"
+    cert1 = "/attack_pattern_sharing/"
+    cert2 = "/campaign_sharing/"
+    cert3 = "/confidence_sharing/"
+    cert4 = "/course_of_action_sharing/"
+    cert5 = "/data_marking_sharing/"
+    cert6 = "/grouping_sharing/"
+    cert7 = "/indicator_sharing/"
+    cert8 = "/infrastructure_sharing/"
+    cert9 = "/intrusion_set_sharing/"
+    cert10 = "/location_sharing/"
+    cert11 = "/malware_analysis_sharing/"
+    cert12 = "/malware_sharing/"
+    cert13 = "/note_sharing/"
+    cert14 = "/observed_data_sharing/"
+    cert15 = "/opinion_sharing/"
+    cert16 = "/report_sharing/"
+    cert17 = "/sighting_sharing/"
+    cert18 = "/threat_actor_sharing/"
+    cert19 = "/tool_sharing/"
+    cert20 = "/versioning/"
+    cert21 = "/vulnerability_sharing/"
+    probs1 = "consumer_test/sighting_of_indicator.json"
 
     file1 = "granular_markings.json"
     file2 = "attack_pattern_malware.json"
@@ -245,14 +306,15 @@ if __name__ == '__main__':
 
     #test_initialise()
     #load_file_list(path1,file_list)
-    #load_file(data_path + file8)
+    #load_file(cert_root + cert17 + probs1)
     print("=====")
     print("=====")
     print("=====")
     #query_id(test_id)
-    #check_dir(path1)
+    #check_dir(cert_root+cert1+cert_consumer)
     #test_delete(path1+files10)
     #test_initialise()
     #test_delete_dir(path1)
-    clean_db()
+    #clean_db()
+    cert_test(cert_root+cert21)
     

@@ -375,8 +375,8 @@ def del_extensions(prop_name, prop_dict, parent_var, i):
 
 def add_delete_layers(layers, dep_obj, indexes, missing):
     logger.debug("################################### enter add_layers ###############################################")
-    logger.debug(f'layers -> {layers}')
-    logger.debug(f'dep_obj -> {dep_obj}')
+    logger.debug(f'\nlayers -> {layers}')
+    logger.debug(f'\ndep_obj -> {dep_obj}')
     logger.debug(f'indexes -> {indexes}')
     logger.debug(f'missing -> {missing}')
     logger.debug("-------------------------------  ------------------------------------------------")
@@ -466,10 +466,11 @@ def add_delete_layers(layers, dep_obj, indexes, missing):
 def reorder(layers, indexes, tree, dep_obj):
     front_layers = []
     front_indexes = []
+    tree = list(set(tree))
     logger.debug("%%%%%%%%%%%%%%% reorder 1 %%%%%%%%%%%%%%%%%%")
     logger.debug(f'\n orig indexes -> {indexes}')
-    logger.debug("\n orig layers", layers)
-    logger.debug("\n dep_obj ", dep_obj)
+    logger.debug(f"\n orig layers, {layers}")
+    logger.debug(f"\n dep_obj , {dep_obj}")
     logger.debug("%%%%%%%%%%%%%%% reorder 2 %%%%%%%%%%dep_obj%%%%%%%%")
     # 1. Copy elements from layers and indexes so they are in the order we want them
     for t in reversed(tree):
@@ -486,14 +487,14 @@ def reorder(layers, indexes, tree, dep_obj):
     front_layers.append(dep_obj)
     # 5. Assemble the final lists
     logger.debug(f'\nfront_indexes -> {front_indexes}')
-    logger.debug("\nfront_layers", front_layers)
-    logger.debug("\n old layers", layers)
+    logger.debug(f"\nfront_layers, {front_layers}")
+    logger.debug(f"\n old layers, {layers}")
     logger.debug(f'\nold indexes -> {indexes}')
     logger.debug("-------------------------------------------------------------------------------------")
     layers = front_layers + layers
     indexes = front_indexes + indexes
-    logger.debug("\nlayers", layers)
-    logger.debug(f'\nindexes -> {indexes}')
+    #logger.debug(f"\nlayers, {layers}")
+    #logger.debug(f'\nindexes -> {indexes}')
     logger.debug("%%%%%%%%%%%%%%% end reorder %%%%%%%%%%%%%%%%%%")
     return layers, indexes
 

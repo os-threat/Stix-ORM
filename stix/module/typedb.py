@@ -264,6 +264,7 @@ class TypeDBSink(DataSink):
                 logger.debug(f'inside session and ready to load')
                 insert_iterator = write_transaction.query().insert(typeql_string)
 
+                logger.debug(f'insert_iterator response ->\n{insert_iterator}')
                 for result in insert_iterator:
                     logger.debug(f'typedb response ->\n{result}')
                 
@@ -294,7 +295,7 @@ class TypeDBSource(DataSource):
     """
     def __init__(self, connection, import_type="STIX21", **kwargs):	
         super(TypeDBSource, self).__init__()
-        logger.debug(f'TypeDBSink: {connection}')
+        logger.debug(f'TypeDBSource: {connection}')
         self._stix_connection = connection
         self.uri = connection["uri"]
         self.port = connection["port"]
