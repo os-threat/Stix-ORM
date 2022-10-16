@@ -18,9 +18,21 @@ for l in loggers:
         l.setLevel(logging.DEBUG)
         '''
 
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+format = '[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s'
+formatter = logging.Formatter(format )
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
+stdout_handler = logging.StreamHandler(sys.stdout)
+stdout_handler.setLevel(logging.DEBUG)
+stdout_handler.setFormatter(formatter)
+
+file_handler = logging.FileHandler('oasis_cert.log')
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(formatter)
+
+logger.addHandler(file_handler)
+#logger.addHandler(stdout_handler)
 
 def load_personas(file_path='./data/stix_cert_data/stix_cert_persona_dict.json'):
     logger.info(f'Loading file {file_path}')
@@ -74,10 +86,11 @@ def verify_file(file_path,sink_db):
         json_blob = json.load(file)
 
         if isinstance(json_blob, list):
+            input_ids = set()
             for json_dict in json_blob:
                 #stix_obj = parse(item)
                 sink_db.add(json_dict)
-
+                input_ids.add(json_dict['id'])
                 '''
                 return_dict = source_db.get(stix_obj.id)
                 return_obj = parse(return_dict)
@@ -86,13 +99,20 @@ def verify_file(file_path,sink_db):
                 return check
                 '''
 
-            insert_ids = sink_db.get_stix_ids()
-            tot_insert = len(insert_ids)
+            output_ids = sink_db.get_stix_ids()
+            tot_insert = len(output_ids)
+            input_list = ','.join(list(input_ids))
+            output_list = ','.join(list(output_ids))
+            logger.debug(f'File = {file_path.name} in {file_path.parent.name}')
+            logger.debug(f'Input IDS = {input_list}')
+            logger.debug(f'Output IDS = {output_list}')
 
             if tot_insert == len(json_blob):
-                check_list.append(False)
-            else:
                 check_list.append(True)
+                logger.debug(f'Check Passed')
+            else:
+                logger.debug(f'Check Failed')
+                check_list.append(False)
         else:
             bundle = parse(json_blob)
 
@@ -128,11 +148,14 @@ def verify_files(directory,sink_db,source_db):
     check_list = []
     if path.is_dir():
         for file_path in path.iterdir():
-            file_list = verify_file(file_path,sink_db)
-            check_list = check_list + file_list
+            file_checks = verify_file(file_path,sink_db)
+            # clean up the database for next test
+            new_ids = sink_db.get_stix_ids()
+            sink_db.delete(new_ids)
+            check_list = check_list + file_checks
         return check_list
     else:
-        logger.error('This is not a folder???')
+        logger.error(f'{directory} not a folder')
 
 
 def run_profile(short,profile,sink_db,source_db):
@@ -148,6 +171,9 @@ def run_profile(short,profile,sink_db,source_db):
             sub_dir = Path.cwd()/'data'/'stix_cert_data'/level['dir']/level['sub_dir']
             logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
             checks = verify_files(sub_dir,sink_db,source_db)
+            if checks is None:
+                logger.warning('No checks were run')
+                continue
 
             if level['sub_dir'] == 'consumer_test':
                 consumer_passed = all(checks)

@@ -30,7 +30,7 @@
       {"dir" : "infrastructure_sharing", "sub_dir" : "producer_test"},
       {"dir" : "location_sharing", "sub_dir" : "producer_test"},
       {"dir" : "note_sharing", "sub_dir" : "producer_test"},
-      {"dir" : "observed_data_sharing_", "sub_dir" : "producer_test"},
+      {"dir" : "observed_data_sharing", "sub_dir" : "producer_test"},
       {"dir" : "vulnerability_sharing", "sub_dir" : "producer_test"}
     ],
     "level2": [
