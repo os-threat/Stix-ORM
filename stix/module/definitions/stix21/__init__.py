@@ -15,12 +15,13 @@ __status__ = "Production"
 
 import json
 from glob import glob
-from loguru import logger
+import logging
 import os
 from pathlib import Path
 
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
+logger = logging.getLogger(__name__)
 
 stix_models = {}
 for file_path in glob(f'{dir_path}/data/*.json'):
