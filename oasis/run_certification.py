@@ -107,17 +107,18 @@ def verify_file(file_path,sink_db):
             logger.debug(f'Input IDS = {input_list}')
             logger.debug(f'Output IDS = {output_list}')
 
-            if tot_insert == len(json_blob):
+            if input_ids == set(output_ids):
                 check_list.append(True)
-                logger.debug(f'Check Passed')
+                logger.debug(f'Check STIX ID Passed')
             else:
-                logger.debug(f'Check Failed')
+                logger.debug(f'Check STIX ID Failed')
                 check_list.append(False)
         else:
             bundle = parse(json_blob)
-
+            input_ids = set()
             for stix_obj in bundle.objects:
                 sink_db.add(stix_obj)
+                stix_obj.add(stix_obj ['id'])
                 '''
                 return_dict = self._typedbSource.get(stix_obj.id)
                 return_obj = parse(return_dict)
@@ -128,15 +129,22 @@ def verify_file(file_path,sink_db):
                 self.assertTrue(check)
                 '''
 
-            insert_ids = sink_db.get_stix_ids()
+            output_ids = sink_db.get_stix_ids()
+            tot_insert = len(output_ids)
+            input_list = ','.join(list(input_ids))
+            output_list = ','.join(list(output_ids))
+            logger.debug(f'File = {file_path.name} in {file_path.parent.name}')
+            logger.debug(f'Input IDS = {input_list}')
+            logger.debug(f'Output IDS = {output_list}')
 
-            if len(bundle.objects) == len(insert_ids):
+            if input_ids == set(output_ids):
                 check_list.append(True)
+                logger.debug(f'Check STIX ID Passed')
             else:
                 check_list.append(False)
+                logger.debug(f'Check STIX ID Failed')
 
         return check_list
-
 
 def verify_files(directory,sink_db,source_db):
     """ Load and verify the file
