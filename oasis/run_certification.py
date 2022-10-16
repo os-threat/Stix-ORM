@@ -173,8 +173,6 @@ def run_profile(short,profile,sink_db,source_db):
         count = 0
         for level in profile['level1']:
             count +=1
-            consumer_passed = False
-            producer_passed = False
 
             sub_dir = Path.cwd()/'data'/'stix_cert_data'/level['dir']/level['sub_dir']
             logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
@@ -182,54 +180,62 @@ def run_profile(short,profile,sink_db,source_db):
 
             if checks is None:
                 logger.warning('No checks were run')
-            else:
-                if level['sub_dir'] == 'consumer_test':
-                    consumer_passed = all(checks)
-                elif level['sub_dir'] == 'producer_test':
-                    producer_passed = all(checks)
+                continue
 
-            logger.info(f'Consumer Passed = {consumer_passed}')
-            logger.info(f'Producer Passed = {producer_passed}')
+            if level['sub_dir'] == 'consumer_test':
+                consumer_passed = all(checks)
+                logger.info(f'Consumer Passed = {consumer_passed}')
 
-            if consumer_passed:
-                results[f'[{short}.C1]'] = 'Passed'
-            else:
-                results[f'[{short}.C1]'] = 'Failed'
-            if producer_passed:
-                results[f'[{short}.P1]'] = 'Passed'
-            else:
-                results[f'[{short}.P1]'] = 'Failed'
+                if consumer_passed:
+                    results[f'[{short}.C1]'] = 'Passed'
+                else:
+                    results[f'[{short}.C1]'] = 'Failed'
+
+            elif level['sub_dir'] == 'producer_test':
+                producer_passed = all(checks)
+                logger.info(f'Producer Passed = {producer_passed}')
+
+                if producer_passed:
+                    results[f'[{short}.P1]'] = 'Passed'
+                else:
+                    results[f'[{short}.P1]'] = 'Failed'
 
         logger.info(f'\tTotal level 1 checks {count}')
+
     if 'level2' in profile:
-        count += 1
-        consumer_passed = False
-        producer_passed = False
+        count = 0
+        for level in profile['level2']:
+            count +=1
 
-        sub_dir = Path.cwd() / 'data' / 'stix_cert_data' / level['dir'] / level['sub_dir']
-        logger.info(f"Test folder {sub_dir}")
-        checks = verify_files(sub_dir, sink_db, source_db)
+            sub_dir = Path.cwd()/'data'/'stix_cert_data'/level['dir']/level['sub_dir']
+            logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
+            checks = verify_files(sub_dir,sink_db,source_db)
 
-        if level['sub_dir'] == 'consumer_test':
-            consumer_passed = all(checks)
-        elif level['sub_dir'] == 'producer_test':
-            producer_passed = all(checks)
+            if checks is None:
+                logger.warning('No checks were run')
+                continue
 
-        logger.info(f'Consumer Passed = {consumer_passed}')
-        logger.info(f'Producer Passed = {producer_passed}')
+            if level['sub_dir'] == 'consumer_test':
+                consumer_passed = all(checks)
+                logger.info(f'Consumer Passed = {consumer_passed}')
 
-        if consumer_passed:
-            results[f'[{short}.C2]'] = 'Passed'
-        else:
-            results[f'[{short}.C2]'] = 'Failed'
-        if producer_passed:
-            results[f'[{short}.P2]'] = 'Passed'
-        else:
-            results[f'[{short}.P2]'] = 'Failed'
+                if consumer_passed:
+                    results[f'[{short}.C2]'] = 'Passed'
+                else:
+                    results[f'[{short}.C2]'] = 'Failed'
+
+            elif level['sub_dir'] == 'producer_test':
+                producer_passed = all(checks)
+                logger.info(f'Producer Passed = {producer_passed}')
+
+                if producer_passed:
+                    results[f'[{short}.P2]'] = 'Passed'
+                else:
+                    results[f'[{short}.P2]'] = 'Failed'
 
         logger.info(f'\tTotal level 2 checks {count}')
 
-        return results
+    return results
 
 def sanity_check(path:Path):
     quotes = ['\u201c', '\u201d']
