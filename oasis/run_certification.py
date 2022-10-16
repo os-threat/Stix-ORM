@@ -70,23 +70,13 @@ def verify_file(file_path,sink_db):
 
         check_list = []
 
-        logger.info(f"Loading file {file_path}")
+        logger.info(f"Loading file {file_path.name}")
         json_blob = json.load(file)
 
         if isinstance(json_blob, list):
             for json_dict in json_blob:
                 #stix_obj = parse(item)
                 sink_db.add(json_dict)
-
-                insert_ids = sink_db.get_stix_ids()
-                tot_insert = len(insert_ids)
-
-                if tot_insert == 0 :
-                    logger.error(f"Total STIX ID {tot_insert}")
-                    check_list.append(False)
-                else:
-                    check_list.append(True)
-                    logger.info(f"Total STIX ID {tot_insert}")
 
                 '''
                 return_dict = source_db.get(stix_obj.id)
@@ -95,14 +85,19 @@ def verify_file(file_path,sink_db):
                 check, p_ok, p_not = cmp.compare(stix_obj, return_obj)
                 return check
                 '''
+
+            insert_ids = sink_db.get_stix_ids()
+            tot_insert = len(insert_ids)
+
+            if tot_insert == len(json_blob):
+                check_list.append(False)
+            else:
+                check_list.append(True)
         else:
             bundle = parse(json_blob)
+
             for stix_obj in bundle.objects:
                 sink_db.add(stix_obj)
-
-                insert_ids = sink_db.get_stix_ids()
-                logger.info(f"Total STIX ID in bundle {len(insert_ids)}")
-                check_list.append(True)
                 '''
                 return_dict = self._typedbSource.get(stix_obj.id)
                 return_obj = parse(return_dict)
@@ -112,6 +107,13 @@ def verify_file(file_path,sink_db):
                 logger.info(f'KO properties {p_not}')
                 self.assertTrue(check)
                 '''
+
+            insert_ids = sink_db.get_stix_ids()
+
+            if len(bundle.objects) == len(insert_ids):
+                check_list.append(True)
+            else:
+                check_list.append(False)
 
         return check_list
 
@@ -144,7 +146,7 @@ def run_profile(short,profile,sink_db,source_db):
             producer_passed = False
 
             sub_dir = Path.cwd()/'data'/'stix_cert_data'/level['dir']/level['sub_dir']
-            logger.info(f"Test folder {sub_dir}")
+            logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
             checks = verify_files(sub_dir,sink_db,source_db)
 
             if level['sub_dir'] == 'consumer_test':
@@ -152,11 +154,17 @@ def run_profile(short,profile,sink_db,source_db):
             elif level['sub_dir'] == 'producer_test':
                 producer_passed = all(checks)
 
-            if consumer_passed: results[f'[{short}.C1]'] = 'Passed'
-            else: results[f'[{short}.C1]'] = 'Failed'
-            if producer_passed: results[f'[{short}.P1]'] = 'Passed'
-            else: results[f'[{short}.P1]'] = 'Failed'
+            logger.info(f'Consumer Passed = {consumer_passed}')
+            logger.info(f'Producer Passed = {producer_passed}')
 
+            if consumer_passed:
+                results[f'[{short}.C1]'] = 'Passed'
+            else:
+                results[f'[{short}.C1]'] = 'Failed'
+            if producer_passed:
+                results[f'[{short}.P1]'] = 'Passed'
+            else:
+                results[f'[{short}.P1]'] = 'Failed'
 
         logger.info(f'\tTotal level 1 checks {count}')
     if 'level2' in profile:
@@ -172,6 +180,9 @@ def run_profile(short,profile,sink_db,source_db):
             consumer_passed = all(checks)
         elif level['sub_dir'] == 'producer_test':
             producer_passed = all(checks)
+
+        logger.info(f'Consumer Passed = {consumer_passed}')
+        logger.info(f'Producer Passed = {producer_passed}')
 
         if consumer_passed: results[f'[{short}.C2]'] = 'Passed'
         else:
