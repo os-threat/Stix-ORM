@@ -179,14 +179,14 @@ def run_profile(short,profile,sink_db,source_db):
             sub_dir = Path.cwd()/'data'/'stix_cert_data'/level['dir']/level['sub_dir']
             logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
             checks = verify_files(sub_dir,sink_db,source_db)
+
             if checks is None:
                 logger.warning('No checks were run')
-                continue
-
-            if level['sub_dir'] == 'consumer_test':
-                consumer_passed = all(checks)
-            elif level['sub_dir'] == 'producer_test':
-                producer_passed = all(checks)
+            else:
+                if level['sub_dir'] == 'consumer_test':
+                    consumer_passed = all(checks)
+                elif level['sub_dir'] == 'producer_test':
+                    producer_passed = all(checks)
 
             logger.info(f'Consumer Passed = {consumer_passed}')
             logger.info(f'Producer Passed = {producer_passed}')
@@ -218,10 +218,12 @@ def run_profile(short,profile,sink_db,source_db):
         logger.info(f'Consumer Passed = {consumer_passed}')
         logger.info(f'Producer Passed = {producer_passed}')
 
-        if consumer_passed: results[f'[{short}.C2]'] = 'Passed'
+        if consumer_passed:
+            results[f'[{short}.C2]'] = 'Passed'
         else:
             results[f'[{short}.C2]'] = 'Failed'
-        if producer_passed: results[f'[{short}.P2]'] = 'Passed'
+        if producer_passed:
+            results[f'[{short}.P2]'] = 'Passed'
         else:
             results[f'[{short}.P2]'] = 'Failed'
 

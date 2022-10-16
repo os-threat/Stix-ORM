@@ -93,8 +93,8 @@
       {"dir" : "confidence_sharing", "sub_dir" : "consumer_test"},
       {"dir" : "course_of_action_sharing", "sub_dir" : "producer_test"},
       {"dir" : "course_of_action_sharing", "sub_dir" : "consumer_test"},
-      {"dir" : "data_markings_sharing", "sub_dir" : "producer_test"},
-      {"dir" : "data_markings_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "data_marking_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "data_marking_sharing", "sub_dir" : "consumer_test"},
       {"dir" : "indicator_sharing", "sub_dir" : "producer_test"},
       {"dir" : "indicator_sharing", "sub_dir" : "consumer_test"},
       {"dir" : "intrusion_set_sharing", "sub_dir" : "producer_test"},
@@ -143,7 +143,7 @@
     "description": "Software instance that consumes STIX 2.1 content in order to perform translations to domain-specific formats consumable by enforcement and/or detection systems that do not natively support STIX 2.1. A SXC will typically consume STIX content but may not produce any STIX content itself.",
     "level1": [
       {"dir" : "confidence_sharing", "sub_dir" : "consumer_test"},
-      {"dir" : "data_markings_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "data_marking_sharing", "sub_dir" : "consumer_test"},
       {"dir" : "versioning", "sub_dir" : "consumer_test"}
     ],
     "level2": [
@@ -172,7 +172,7 @@
     "description": "Software instance that acts as a Producer of STIX 2.1 content.",
     "level1": [
       {"dir" : "confidence_sharing", "sub_dir" : "producer_test"},
-      {"dir" : "data_markings_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "data_marking_sharing", "sub_dir" : "producer_test"},
       {"dir" : "versioning", "sub_dir" : "producer_test"}
     ],
     "level2": [
