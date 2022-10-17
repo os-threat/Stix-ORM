@@ -27,7 +27,7 @@ stdout_handler = logging.StreamHandler(sys.stdout)
 stdout_handler.setLevel(logging.DEBUG)
 stdout_handler.setFormatter(formatter)
 
-file_handler = logging.FileHandler('oasis_cert.log')
+file_handler = logging.FileHandler('oasis_cert.log',mode='w')
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
 
@@ -82,7 +82,7 @@ def verify_file(file_path,sink_db):
 
         check_list = []
 
-        logger.info(f"Loading file {file_path.name}")
+        logger.info(f"Run check on file {file_path.name}")
         json_blob = json.load(file)
 
         if isinstance(json_blob, list):
@@ -156,11 +156,19 @@ def verify_files(directory,sink_db,source_db):
     check_list = []
     if path.is_dir():
         for file_path in path.iterdir():
-            file_checks = verify_file(file_path,sink_db)
-            # clean up the database for next test
-            new_ids = sink_db.get_stix_ids()
-            sink_db.delete(new_ids)
-            check_list = check_list + file_checks
+            '''
+            if file_path.name == 'indictor_url.json':
+                print('Loop of death')
+            '''
+            try:
+                file_checks = verify_file(file_path,sink_db)
+                # clean up the database for next test
+                new_ids = sink_db.get_stix_ids()
+                sink_db.delete(new_ids)
+                check_list = check_list + file_checks
+            except Exception as e:
+                logger.error(e)
+
         return check_list
     else:
         logger.error(f'{directory} not a folder')
