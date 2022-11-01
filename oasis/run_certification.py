@@ -32,7 +32,7 @@ file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
 
 logger.addHandler(file_handler)
-#logger.addHandler(stdout_handler)
+logger.addHandler(stdout_handler)
 
 def load_personas(file_path='./data/stix_cert_data/stix_cert_persona_dict.json'):
     logger.info(f'Loading file {file_path}')
@@ -58,14 +58,13 @@ def run_profiles(config:dict,template,tags,out_file):
     for profile in config.keys():
         # let's reset the database for each profile
         sink_db = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
-        source_db = TypeDBSource(connection=connection, import_type="STIX21")
         # get all the initial STIX IDs (only markings should be there)
         base_ids = sink_db.get_stix_ids()
         # markings should be automatically ignored
         assert len(base_ids) == 0
 
         logger.info(f'Checking profile {profile}')
-        result = run_profile(profile,config[profile],sink_db,source_db)
+        result = run_profile(profile,config[profile])
         logger.info(result)
 
         for code in result.keys():
@@ -156,15 +155,12 @@ def verify_files(directory,sink_db,source_db):
     check_list = []
     if path.is_dir():
         for file_path in path.iterdir():
-            '''
-            if file_path.name == 'indictor_url.json':
-                print('Loop of death')
-            '''
             try:
                 file_checks = verify_file(file_path,sink_db)
             except Exception as ins_e:
                 logger.error(ins_e)
                 sys.exit(1)
+
             try:
                 # clean up the database for next test
                 new_ids = sink_db.get_stix_ids()
@@ -178,18 +174,29 @@ def verify_files(directory,sink_db,source_db):
     else:
         logger.error(f'{directory} not a folder')
 
+# contains a cache as most test are repeated between levels
+profile_cache = {}
 
-def run_profile(short,profile,sink_db,source_db):
+def run_profile(short,profile):
     logger.info(f'Title {profile["title"]}')
     results = {}
+
     if 'level1' in profile:
         count = 0
         for level in profile['level1']:
+            key = level['dir'] + level['sub_dir']
+            if key in profile_cache:
+                if level['sub_dir'] == 'consumer_test':
+                    results[f'[{short}.C1]'] = profile_cache[key]
+                elif level['sub_dir'] == 'producer_test':
+                    results[f'[{short}.P1]'] = profile_cache[key]
+
+                logger.info('Cache hit level 1')
+                continue
 
             # let's reset the database for each level
             sink_db = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
-
-            count +=1
+            source_db = TypeDBSource(connection=connection, import_type="STIX21")
 
             sub_dir = Path.cwd()/'data'/'stix_cert_data'/level['dir']/level['sub_dir']
             logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
@@ -198,6 +205,8 @@ def run_profile(short,profile,sink_db,source_db):
             if checks is None:
                 logger.warning('No checks were run')
                 continue
+            else:
+                count += 1
 
             if level['sub_dir'] == 'consumer_test':
                 consumer_passed = all(checks)
@@ -208,6 +217,8 @@ def run_profile(short,profile,sink_db,source_db):
                 else:
                     results[f'[{short}.C1]'] = 'Failed'
 
+                profile_cache[key] = results[f'[{short}.C1]']
+
             elif level['sub_dir'] == 'producer_test':
                 producer_passed = all(checks)
                 logger.info(f'Producer Passed = {producer_passed}')
@@ -217,15 +228,25 @@ def run_profile(short,profile,sink_db,source_db):
                 else:
                     results[f'[{short}.P1]'] = 'Failed'
 
+                profile_cache[key] = results[f'[{short}.P1]']
+
         logger.info(f'\tTotal level 1 checks {count}')
 
     if 'level2' in profile:
         count = 0
         for level in profile['level2']:
+            key = level['dir'] + level['sub_dir']
+            if key in profile_cache:
+                if level['sub_dir'] == 'consumer_test':
+                    results[f'[{short}.C2]'] = profile_cache[key]
+                elif level['sub_dir'] == 'producer_test':
+                    results[f'[{short}.P2]'] = profile_cache[key]
+
+                logger.info('Cache hit level 2')
+                continue
+
             # let's reset the database for each level
             sink_db = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
-
-            count +=1
 
             sub_dir = Path.cwd()/'data'/'stix_cert_data'/level['dir']/level['sub_dir']
             logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
@@ -234,6 +255,8 @@ def run_profile(short,profile,sink_db,source_db):
             if checks is None:
                 logger.warning('No checks were run')
                 continue
+            else:
+                count += 1
 
             if level['sub_dir'] == 'consumer_test':
                 consumer_passed = all(checks)
@@ -244,6 +267,8 @@ def run_profile(short,profile,sink_db,source_db):
                 else:
                     results[f'[{short}.C2]'] = 'Failed'
 
+                profile_cache[key] = results[f'[{short}.C2]']
+
             elif level['sub_dir'] == 'producer_test':
                 producer_passed = all(checks)
                 logger.info(f'Producer Passed = {producer_passed}')
@@ -252,6 +277,8 @@ def run_profile(short,profile,sink_db,source_db):
                     results[f'[{short}.P2]'] = 'Passed'
                 else:
                     results[f'[{short}.P2]'] = 'Failed'
+
+                profile_cache[key] = results[f'[{short}.P2]']
 
         logger.info(f'\tTotal level 2 checks {count}')
 

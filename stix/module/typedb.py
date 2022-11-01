@@ -29,9 +29,10 @@ import sys
 
 import logging
 
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+#logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
@@ -166,10 +167,10 @@ class TypeDBSink(DataSink):
 
         except Exception as e:
             logger.error(f'Stix Object Deletion Error: {e}')
-            logger.error(f'dep_match -> {dep_match}')
-            logger.error(f'dep_insert -> {dep_insert}')
-            logger.error(f'indep_ql -> {indep_ql}')
-            logger.error(f'core_ql -> {core_ql}')
+            if 'dep_match' in locals(): logger.error(f'dep_match -> {dep_match}')
+            if 'dep_insert' in locals(): logger.error(f'dep_insert -> {dep_insert}')
+            if 'indep_ql' in locals():logger.error(f'indep_ql -> {indep_ql}')
+            if 'core_ql' in locals(): logger.error(f'core_ql -> {core_ql}')
             raise
 
 
