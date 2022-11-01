@@ -54,16 +54,16 @@ def load_template(file_path='./oasis/cert_template.txt'):
 
 def run_profiles(config:dict,template,tags,out_file):
     report = template
-    # create the database and init
-    sink_db = TypeDBSink(connection=connection, clear=True,import_type= "STIX21")
-    source_db =  TypeDBSource(connection=connection, import_type="STIX21")
-    # get all the initial STIX IDs (only markings should be there)
-    base_ids = sink_db.get_stix_ids()
-    # markings should be automatically ignored
-    assert len(base_ids) == 0
-    logger.info(f'Total default stix objects {len(base_ids)}')
 
     for profile in config.keys():
+        # let's reset the database for each profile
+        sink_db = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
+        source_db = TypeDBSource(connection=connection, import_type="STIX21")
+        # get all the initial STIX IDs (only markings should be there)
+        base_ids = sink_db.get_stix_ids()
+        # markings should be automatically ignored
+        assert len(base_ids) == 0
+
         logger.info(f'Checking profile {profile}')
         result = run_profile(profile,config[profile],sink_db,source_db)
         logger.info(result)
@@ -180,6 +180,10 @@ def run_profile(short,profile,sink_db,source_db):
     if 'level1' in profile:
         count = 0
         for level in profile['level1']:
+
+            # let's reset the database for each level
+            sink_db = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
+
             count +=1
 
             sub_dir = Path.cwd()/'data'/'stix_cert_data'/level['dir']/level['sub_dir']
@@ -213,6 +217,9 @@ def run_profile(short,profile,sink_db,source_db):
     if 'level2' in profile:
         count = 0
         for level in profile['level2']:
+            # let's reset the database for each level
+            sink_db = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
+
             count +=1
 
             sub_dir = Path.cwd()/'data'/'stix_cert_data'/level['dir']/level['sub_dir']
