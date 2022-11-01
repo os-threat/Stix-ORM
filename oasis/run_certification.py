@@ -162,12 +162,17 @@ def verify_files(directory,sink_db,source_db):
             '''
             try:
                 file_checks = verify_file(file_path,sink_db)
+            except Exception as ins_e:
+                logger.error(ins_e)
+                sys.exit(1)
+            try:
                 # clean up the database for next test
                 new_ids = sink_db.get_stix_ids()
                 sink_db.delete(new_ids)
                 check_list = check_list + file_checks
-            except Exception as e:
-                logger.error(e)
+            except Exception as read_e:
+                logger.error(read_e)
+                sys.exit(1)
 
         return check_list
     else:
