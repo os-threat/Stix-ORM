@@ -8,18 +8,23 @@ from stix2.v21 import *
 from stix2.utils import is_object, is_stix_type, get_type_from_id, is_sdo, is_sco, is_sro
 from stix2.parsing import parse
 from stix.module.definitions.stix21 import stix_models
+from stix.module.definitions.attack import attack_models
 
-from stix.module.import_stix_utilities import clean_props,get_embedded_match,split_on_activity_type,add_property_to_typeql,add_relation_to_typeql, val_tql
+from stix.module.import_stix_utilities import clean_props, get_embedded_match, split_on_activity_type, \
+    add_property_to_typeql, add_relation_to_typeql, val_tql
 
 import logging
+
 logger = logging.getLogger(__name__)
+
+
 ##############################################################
 #  1.) Methods to Add 2_tql() Capability to all Stix Objects
 ############################################################
 
-#---------------------------------------------------
+# ---------------------------------------------------
 # 1.0) Helper method to direct the right typeql method to an incoming Stix object
-#---------------------------------------------------
+# ---------------------------------------------------
 
 
 def stix2_to_typeql(stix_object, import_type='STIX21'):
@@ -36,7 +41,7 @@ def stix2_to_typeql(stix_object, import_type='STIX21'):
     """
     match, insert, dep_obj = stix2_to_match_insert(stix_object, import_type)
     typeql = match + insert
-        
+
     return typeql, dep_obj
 
 
@@ -98,10 +103,10 @@ def raw_stix2_to_typeql(stix_object, import_type='STIX21'):
     return dep_match, dep_insert, indep_ql, core_ql, dep_obj
 
 
-#-------------------------------------------------------------
+# -------------------------------------------------------------
 # 1.1) SDO Object Method to convert a Python object --> typeql string
 #                 -   
-#-------------------------------------------------------------
+# -------------------------------------------------------------
 def sdo_to_data(sdo, import_type='STIX21'):
     """ convert Stix object into a data model for processing
 
@@ -111,7 +116,7 @@ def sdo_to_data(sdo, import_type='STIX21'):
 
     Returns:
         total_props, : a list of all properties
-        obj_tql : the dict of the twl proeprties
+        obj_tql : the dict of the tql properties
 
     """
     # - list of property names that have values
@@ -123,20 +128,61 @@ def sdo_to_data(sdo, import_type='STIX21'):
     # - stix import
     if import_type == 'STIX21':
         if obj_type in stix_models["dispatch_stix"]:
+            # dispatch specific stix properties plus later on, generic sdo properties
             obj_tql = stix_models["dispatch_stix"][obj_type]
         else:
             logger.error(f'obj_type type {obj_type} not supported')
-            return ''
+            return {}, ''
     # - mitre attack import
     elif import_type == 'ATT&CK':
         if obj_type[0:6] == "x-mitre":
-            if obj_type in stix_models["dispatch_stix"]:
-                # dispatch specific mitre properties plus generic sdo properties
-                obj_tql = stix_models["dispatch_stix"][obj_type]
+            if obj_type in attack_models["dispatch_attack"]:
+                # dispatch specific mitre properties plus deneric mitre properties plus later on, generic sdo properties
+                obj_tql = attack_models["dispatch_attack"][obj_type]
+                obj_tql.update(attack_models["attack_base_typeql"])
             else:
-                logger.error(f'obj_type type {obj_type} not in dispatch mitre')
-                return ''
+                logger.error(f'obj_type type {obj_type} not in attack_models')
+                return {}, ''
+
+        elif 'x_mitre_version' in sdo:
+            # Its an Attack object, but with a Stix type, process each type
+            if obj_type == 'attack-pattern':
+                # if a technique, then split into technique and subechnique and get mitre properties
+                if sdo['x_mitre_is_subtechnique']:
+                    obj_tql = attack_models["subtechnique_typeql"]
+                    obj_tql.update(attack_models["attack_base_typeql"])
+                elif not sdo['x_mitre_is_subtechnique']:
+                    obj_tql = attack_models["technique_typeql"]
+                    obj_tql.update(attack_models["attack_base_typeql"])
+                else:
+                    logger.error(f'obj_type type {obj_type} not a technique or subtechnique')
+                    return {}, ''
+            elif obj_type == 'campaign':
+                # the object is a campaign, get mitre properties
+                obj_tql = attack_models["campaign_typeql"][obj_type]
+                obj_tql.update(attack_models["attack_base_typeql"])
+            elif obj_type == 'course-of-action':
+                # the object is a mitigation, get mitre properties
+                obj_tql = attack_models["mitigation_typeql"][obj_type]
+                obj_tql.update(attack_models["attack_base_typeql"])
+            elif obj_type == 'intrusion-set':
+                # the object is a group, get mitre properties
+                obj_tql = attack_models["group_typeql"][obj_type]
+                obj_tql.update(attack_models["attack_base_typeql"])
+            elif obj_type == 'malware':
+                # the object is a software-malware, get mitre properties
+                obj_tql = attack_models["software_malware_typeql"][obj_type]
+                obj_tql.update(attack_models["attack_base_typeql"])
+            elif obj_type == 'tool':
+                # the object is a software-tool, get mitre properties
+                obj_tql = attack_models["software_tool_typeql"][obj_type]
+                obj_tql.update(attack_models["attack_base_typeql"])
+            else:
+                logger.error(f'obj_type type {obj_type} has a mitre field, but is not a mitre object')
+                return {}, ''
+
         else:
+            # its a Stix object, not an AT&CK one
             if obj_type in stix_models["dispatch_stix"]:
                 # dispatch specific stix properties plus mitre properties plus generic sdo properties
                 obj_tql = stix_models["dispatch_stix"][obj_type]
@@ -144,11 +190,11 @@ def sdo_to_data(sdo, import_type='STIX21'):
                 obj_tql.update(obj_tql2)
             else:
                 logger.error(f'obj_type type {obj_type} not in stix_models["dispatch_stix"] or dispatch mitre')
-                return ''
+                return {}, ''
 
     else:
         logger.error(f'import type {import_type} not supported')
-        return ''
+        return {}, ''
 
     # 1.C) Add the standard object properties to the specific ones, and split them into properties and relations
     obj_tql.update(stix_models["sdo_typeql_dict"])
@@ -177,6 +223,8 @@ def sdo_to_typeql(sdo, import_type='STIX21'):
     dep_list = []
     # 1.B) get the data model
     total_props, obj_tql = sdo_to_data(sdo, import_type)
+    if obj_tql == '':
+        return '', '', '', '', {}
     properties, relations = split_on_activity_type(total_props, obj_tql)
 
     # 2.) setup the typeql statement for the sdo entity
@@ -208,10 +256,10 @@ def sdo_to_typeql(sdo, import_type='STIX21'):
     return dep_match, dep_insert, indep_ql, core_ql, dep_obj
 
 
-#-------------------------------------------------------
+# -------------------------------------------------------
 # 1.2) SRO Object Method to convert a Python object --> typeql string
 #                 -   
-#-----------------------------------------------------
+# -----------------------------------------------------
 def sro_to_data(sro, import_type='STIX21'):
     """ convert Stix object into a data model for processing
 
@@ -230,8 +278,27 @@ def sro_to_data(sro, import_type='STIX21'):
 
     # - work out the type of object
     obj_type = sro.type
-    # - get the object-specific typeql names, sighting or relationship
-    obj_tql = stix_models["dispatch_stix"][obj_type]
+
+    if import_type == 'STIX21':
+        if obj_type in stix_models["dispatch_stix"]:
+            # dispatch specific stix properties plus later on, generic sdo properties
+            obj_tql = stix_models["dispatch_stix"][obj_type]
+        else:
+            logger.error(f'obj_type type {obj_type} not supported stix relation')
+            return {}, ''
+    # - mitre attack import
+    elif import_type == 'ATT&CK':
+        if sro['relationship_type'] == 'uses' and sro['target_ref'][0:13] == 'attack-pattern':
+            # dispatch specific stix properties plus later on, generic sdo properties
+            obj_tql = stix_models["dispatch_stix"][obj_type]
+            obj_tql.update(attack_models["attack_base_typeql"])
+        elif obj_type in stix_models["dispatch_stix"]:
+            # dispatch specific stix properties plus later on, generic sdo properties
+            obj_tql = stix_models["dispatch_stix"][obj_type]
+        else:
+            logger.error(f'obj_type type {obj_type} not supported stix relation')
+            return {}, ''
+
     # - add on the generic sro properties
     obj_tql.update(stix_models["sro_base_typeql_dict"])
 
@@ -260,7 +327,9 @@ def sro_to_typeql(sro, import_type='STIX21'):
     # - work out the type of object
     obj_type = sro.type
     total_props, obj_tql = sro_to_data(sro, import_type)
-    #initialise the typeql insert statement
+    if obj_tql == '':
+        return '', '', '', '', {}
+    # initialise the typeql insert statement
     dep_match = dep_insert = indep_ql = core_ql = dep_insert_props = ''
 
     # 2.) setup the match statements first, depending on whether the object is a sighting or a relationship
@@ -371,6 +440,7 @@ def sco_to_data(sco, import_type='STIX21'):
 
     return total_props, obj_tql
 
+
 def sco_to_typeql(sco, import_type='STIX21'):
     """
     Initial function to convert Stix2 SCO object into typeql
@@ -464,4 +534,3 @@ def marking_definition_to_typeql(stix_object, import_type="STIX21"):
 
     dep_obj = {"id": stix_object.id, "dep_list": dep_list, "type": "marking"}
     return dep_match, dep_insert, indep_ql, core_ql, dep_obj
-

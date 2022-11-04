@@ -23,6 +23,18 @@ connection = {
     "password": None
 }
 
+import_type = {
+    "STIX21": True,
+    "CVE": False,
+    "identity": False,
+    "location": False,
+    "rules": False,
+    "ATT&CK": True,
+    "ATT&CK_Versions": ["12.0"],
+    "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
+    "CACAO": False
+}
+
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
           "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
@@ -304,6 +316,8 @@ if __name__ == '__main__':
     file8 = "sighting_observable.json"
     file9 = "threat_actor.json"
 
+    mitre = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack-12.0.json"
+
     #test_initialise()
     #load_file_list(path1,file_list)
     #load_file(cert_root + cert17 + probs1)
@@ -316,5 +330,5 @@ if __name__ == '__main__':
     #test_initialise()
     #test_delete_dir(path1)
     #clean_db()
-    cert_test(cert_root+cert21)
+    #cert_test(cert_root+cert7)
     

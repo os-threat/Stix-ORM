@@ -3,7 +3,7 @@
     "rel": "object_refs",
     "owner": "object",
     "pointed-to": "referred",
-    "typeql": "obj-ref"
+    "typeql": "obj-refs"
   },
   {
     "rel": "created_by_ref",
@@ -208,5 +208,23 @@
     "owner": "process",
     "pointed-to": "loaded-dll",
     "typeql": "service-dll"
+  },
+  {
+    "rel": "x_mitre_modified_by_ref",
+    "owner": "modified",
+    "pointed-to": "modified-by",
+    "typeql": "x-mitre-modified-by"
+  },
+  {
+    "rel": "x_mitre_data_source_ref",
+    "owner": "component",
+    "pointed-to": "data-source",
+    "typeql": "x-mitre-data-source"
+  },
+  {
+    "rel": "object_ref",
+    "owner": "container",
+    "pointed-to": "content",
+    "typeql": "obj-ref"
   }
 ]

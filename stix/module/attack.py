@@ -1,46 +1,22 @@
 """Python Mitre ATT&CK Stix Class Definitions """
-import errno
-import io
-import json
-import os
-import re
-import stat
-from typedb.client import *
 
 from collections import OrderedDict
-from urllib.parse import quote_plus
-import warnings
 
-from stix2patterns.validator import run_validator
-
-from stix2.custom import _custom_object_builder
 from stix2.exceptions import (
-    InvalidValueError, PropertyPresenceError, STIXDeprecationWarning,
-)
+    PropertyPresenceError, )
 from stix2.properties import (
-    BooleanProperty, EnumProperty, ExtensionsProperty, FloatProperty,
-    IDProperty, IntegerProperty, ListProperty, ObservableProperty,
-    OpenVocabProperty, PatternProperty, ReferenceProperty, StringProperty,
+    BooleanProperty, ExtensionsProperty, IDProperty, IntegerProperty, ListProperty, OpenVocabProperty, ReferenceProperty, StringProperty,
     TimestampProperty, TypeProperty,
 )
 from stix2.utils import NOW
 from stix2.v21.base import _DomainObject, _STIXBase21
-from stix2.v21.sdo import AttackPattern, CourseOfAction
 from stix2.v21.common import (
-    CustomExtension, ExternalReference, GranularMarking, KillChainPhase,
+    ExternalReference, GranularMarking, KillChainPhase,
 )
 from stix2.v21.vocab import (
-    ATTACK_MOTIVATION, ATTACK_RESOURCE_LEVEL, GROUPING_CONTEXT, IDENTITY_CLASS,
-    IMPLEMENTATION_LANGUAGE, INDICATOR_TYPE, INDUSTRY_SECTOR,
-    INFRASTRUCTURE_TYPE, MALWARE_CAPABILITIES, MALWARE_RESULT, MALWARE_TYPE,
-    OPINION, PATTERN_TYPE, PROCESSOR_ARCHITECTURE, REGION, REPORT_TYPE,
-    THREAT_ACTOR_ROLE, THREAT_ACTOR_SOPHISTICATION, THREAT_ACTOR_TYPE,
-    TOOL_TYPE,
+    ATTACK_MOTIVATION, ATTACK_RESOURCE_LEVEL, IMPLEMENTATION_LANGUAGE, MALWARE_CAPABILITIES, MALWARE_TYPE,
+    PROCESSOR_ARCHITECTURE, TOOL_TYPE,
 )
-
-from stix.schema.initialise import initialise_database
-
-import sys
 
 import logging
 logger = logging.getLogger(__name__)
