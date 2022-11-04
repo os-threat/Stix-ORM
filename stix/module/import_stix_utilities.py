@@ -128,11 +128,13 @@ def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], inc=-1):
           or rel == "kill_chain_phases"
           or rel == "sections"
           or rel == "alternate_data_streams"
-          or rel == "values"):
+          or rel == "values"
+          or rel == "x_mitre_contents"):
         match, insert, dep_list = list_of_object( rel, obj[rel], obj_var)
     
     # insert embedded relations based on stix-id
     elif (rel == "object_refs"
+          or rel == "object_ref"
           or rel == "created_by_ref"
           or rel == "object_marking_refs"
           or rel == "sample_refs"
@@ -167,7 +169,9 @@ def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], inc=-1):
           or rel == "image_ref"
           or rel == "parent_ref"
           or rel == "child_refs"
-          or rel == "service_dll_refs"): 
+          or rel == "service_dll_refs"
+          or rel == "x_mitre_modified_by_ref"
+          or rel == "x_mitre_data_source_ref"):
         match, insert, dep_list = embedded_relation( rel, obj[rel], obj_var, inc)
     
     # insert plain sub-object with relation

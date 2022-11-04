@@ -29,7 +29,7 @@ stix-object sub entity,
 	owns custom-attribute,
 	plays stix-core-relationship:source,
 	plays stix-core-relationship:target,
-	plays obj-ref:referred, 
+	plays obj-refs:referred, 
 	plays granular-marking:object;
 
 	stix-core-object sub stix-object, 
@@ -211,7 +211,7 @@ grouping sub stix-domain-object,
 	# Embedded Relations
 	# created-by
 	# Object markings
-	plays obj-ref:object;
+	plays obj-refs:object;
 
 # 4.5 Identity
 identity sub stix-domain-object,
@@ -486,7 +486,7 @@ note sub stix-domain-object,
 	# Embedded Relations
 	# created-by
 	# Object marking
-	plays obj-ref:object;
+	plays obj-refs:object;
 
 # 4.14
 observed-data sub stix-domain-object,
@@ -506,7 +506,7 @@ observed-data sub stix-domain-object,
 	# Embedded Relations
 	# created-by
 	# Object marking
-	plays obj-ref:object; # Object ref
+	plays obj-refs:object; # Object ref
 
 # 4.15 Opinion
 opinion sub stix-domain-object, 
@@ -523,7 +523,7 @@ opinion sub stix-domain-object,
 	# Embedded relations
 	# created-by
 	# Object marking
-	plays obj-ref:object;
+	plays obj-refs:object;
 
 # 4.16 Report
 report sub stix-domain-object, 
@@ -541,7 +541,7 @@ report sub stix-domain-object,
 	# Embedded relations
 	# created-by 
 	# Object Marking
-	plays obj-ref:object;
+	plays obj-refs:object;
 
 # 4.17
 threat-actor sub stix-domain-object,
@@ -655,14 +655,14 @@ stix-core-relationship sub relation,
 
 	relates source, 
 	relates target,
-	plays obj-ref:referred,
+	plays obj-refs:referred,
 	plays object-marking:marked,
 	plays granular-marking:object, 
 	plays external-references:referencing,
 	plays created-by:created;
 
 
-	# Specific Relationships from Appendix B
+	# Specific Relationships from Appendix C
 	delivers sub stix-core-relationship, 
 		relates delivering as source, 
 		relates delivered as target;
@@ -1353,7 +1353,7 @@ embedded sub relation,
 		host-vm-ref sub malware-env;            # host_vm_ref 
 		captured-objects sub malware-env;   # analysis_sco_refs 
 
-	obj-ref sub embedded, 
+	obj-refs sub embedded, 
 		relates referred as pointed-to,
 		relates object as owner;
 
