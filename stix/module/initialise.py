@@ -21,28 +21,27 @@
 
 from typedb.client import *
 import logging
-logger = logging.getLogger(__name__)
 
+logger = logging.getLogger(__name__)
 
 # make sure the four TLP Markings are loaded when the database initialises
 initial_markings = [[
-     '$mark isa tlp-white, has stix-type "marking-definition"',
-     ', has stix-id "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"',
-     ', has spec-version "2.1", has created 2017-01-20T00:00:00.000;'
- ], [
-     '$mark isa tlp-green, has stix-type "marking-definition"',
-     ', has stix-id "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"',
-     ', has spec-version "2.1", has created 2017-01-20T00:00:00.000;'
- ], [
-     '$mark isa tlp-amber, has stix-type "marking-definition"',
-     ', has stix-id "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"',
-     ', has spec-version "2.1", has created 2017-01-20T00:00:00.000;'
- ], [
-     '$mark isa tlp-red, has stix-type "marking-definition"',
-     ', has stix-id "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"',
-     ', has spec-version "2.1", has created 2017-01-20T00:00:00.000;'
- ],
-                     ]
+    '$mark isa tlp-white, has stix-type "marking-definition"',
+    ', has stix-id "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"',
+    ', has spec-version "2.1", has created 2017-01-20T00:00:00.000;'
+], [
+    '$mark isa tlp-green, has stix-type "marking-definition"',
+    ', has stix-id "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"',
+    ', has spec-version "2.1", has created 2017-01-20T00:00:00.000;'
+], [
+    '$mark isa tlp-amber, has stix-type "marking-definition"',
+    ', has stix-id "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"',
+    ', has spec-version "2.1", has created 2017-01-20T00:00:00.000;'
+], [
+    '$mark isa tlp-red, has stix-type "marking-definition"',
+    ', has stix-id "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"',
+    ', has spec-version "2.1", has created 2017-01-20T00:00:00.000;'
+]]
 
 
 def setup_database(stix_connection, clear):
@@ -62,7 +61,10 @@ def setup_database(stix_connection, clear):
         logger.debug('.......................... clear complete')
 
 
-def load_schema(stix_connection, rel_path=None, schema_type="schema "):
+def load_schema(stix_connection, rel_path=None, schema_type="schema"):
+    logger.debug(f'{stix_connection}')
+    logger.debug(rel_path)
+    logger.debug(schema_type)
     url = stix_connection["uri"] + ":" + stix_connection["port"]
     with TypeDB.core_client(url) as client:
         # Stage 1: Create the schema
@@ -82,22 +84,63 @@ def load_schema(stix_connection, rel_path=None, schema_type="schema "):
             session.close()
 
 
-def load_dataset(client, stix_connection, rel_path=None, schema_type="schema "):
-    if stix_connection is None:
-        return
-    # Stage 1: Create the schema
-    with client.session(stix_connection["database"], SessionType.DATA) as session:
-        with session.transaction(TransactionType.WRITE) as write_transaction:
-            for mark_list in initial_markings:
-                type_ql = " insert "
-                for line in mark_list:
-                    type_ql += line
+def load_markings(stix_connection):
+    type_ql_list = []
+    for mark_list in initial_markings:
+        type_ql = " insert "
+        for line in mark_list:
+            type_ql += line
+        type_ql_list.append(type_ql)
+    load_typeql_data(type_ql_list, stix_connection)
+    return_list = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                   "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
+                   "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
+                   "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
+    return return_list
 
-                logger.debug(f'--------------------------------------------------------------------------------')
-                logger.debug(f'{type_ql}')
-                write_transaction.query().insert(type_ql)
 
-            write_transaction.commit()
+def load_typeql_data(data_list, stix_connection):
+    url = stix_connection["uri"] + ":" + stix_connection["port"]
+    with TypeDB.core_client(url) as client:
+        # Stage 1: Create the schema
+        with client.session(stix_connection["database"], SessionType.DATA) as session:
+            with session.transaction(TransactionType.WRITE) as write_transaction:
+                for data in data_list:
+                    logger.debug(f'inside session and ready to load')
+                    insert_iterator = write_transaction.query().insert(data)
+
+                    logger.debug(f'insert_iterator response ->\n{insert_iterator}')
+                    for result in insert_iterator:
+                        logger.debug(f'typedb response ->\n{result}')
+
+                write_transaction.commit()
+
+
+def check_stix_ids(id_list, stix_connection):
+    """ Get all the stix-ids in a database, should be moved to typedb file
+
+    Returns:
+        id_list : list of the stix-ids in the database
+    """
+    url = stix_connection["uri"] + ":" + stix_connection["port"]
+    get_ids_tql = 'match $id isa stix-id;'
+    len_id = len(id_list)
+    if len_id == 1:
+        get_ids_tql += '$id "' + id_list[0] + '";'
+    else:
+        for index, id_l in enumerate(id_list):
+            get_ids_tql += ' {$id "' + id_l + '";}'
+            if index == len_id - 1:
+                get_ids_tql += " ;"
+            else:
+                get_ids_tql += ' or '
+    with TypeDB.core_client(url) as client:
+        with client.session(stix_connection["database"], SessionType.DATA) as session:
+            with session.transaction(TransactionType.READ) as read_transaction:
+                answer_iterator = read_transaction.query().match(get_ids_tql)
+                ids = [ans.get("id").get_value() for ans in answer_iterator]
+                logger.debug(f'ids {ids}\n\n')
+    return ids
 
 
 def sort_layers(layers, cyclical, indexes, missing, dep_obj, add_or_del='del'):
@@ -114,7 +157,8 @@ def sort_layers(layers, cyclical, indexes, missing, dep_obj, add_or_del='del'):
     Returns:
 
     """
-    logger.debug(f"################################### enter sort_layers {add_or_del} ###############################################")
+    logger.debug(
+        f"################################### enter sort_layers {add_or_del} ###############################################")
     logger.debug(f'\nlayers -> {layers}\ncyclical indexes -> {cyclical}\nindexes -> {indexes}\nmissing -> {missing}')
     logger.debug(f'add_or_del -> {add_or_del}\ndep_obj -> {dep_obj}')
     logger.debug("-------------------------------  ------------------------------------------------")
@@ -164,8 +208,9 @@ def sort_layers(layers, cyclical, indexes, missing, dep_obj, add_or_del='del'):
             layers.insert(0, dep_obj)
             indexes.insert(0, loc_id)
         logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
-        logger.debug(f"################################## end of  sort_layers {add_or_del} ####################################################")
-        return layers, indexes, list(mset)
+        logger.debug(
+            f"################################## end of  sort_layers {add_or_del} ####################################################")
+        return layers, indexes, list(mset), cyclical
     # 6. There are no dependencies but id is in missing, delete from missing,follow the tree and reorder
     if not dep_list_items and id_in_missing:
         logger.debug('### delete from missing,follow the tree and reorder')
@@ -175,8 +220,9 @@ def sort_layers(layers, cyclical, indexes, missing, dep_obj, add_or_del='del'):
         logger.debug(f' tree -> {tree}')
         layers, indexes = reorder(layers, indexes, tree, dep_obj, add_or_del)
         logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
-        logger.debug(f"################################## end of  sort_layers {add_or_del} ####################################################")
-        return layers, indexes, list(mset)
+        logger.debug(
+            f"################################## end of  sort_layers {add_or_del} ####################################################")
+        return layers, indexes, list(mset), cyclical
     # 7 There are dependencies, object is not in missing, insert at front
     if dep_list_items and not id_in_missing:
         logger.debug('### Add current to the front of the record')
@@ -187,8 +233,9 @@ def sort_layers(layers, cyclical, indexes, missing, dep_obj, add_or_del='del'):
             layers.append(dep_obj)
             indexes.append(loc_id)
         logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
-        logger.debug(f"################################## end of  sort_layers {add_or_del} ####################################################")
-        return layers, indexes, list(mset)
+        logger.debug(
+            f"################################## end of  sort_layers {add_or_del} ####################################################")
+        return layers, indexes, list(mset), cyclical
     # 8 There are dependencies, object is in missing , delete from missing,follow the tree and reorder
     if dep_list_items and id_in_missing:
         logger.debug(f'### delete from missing,follow the tree and reorder')
@@ -198,8 +245,9 @@ def sort_layers(layers, cyclical, indexes, missing, dep_obj, add_or_del='del'):
         logger.debug(f' tree -> {tree}')
         layers, indexes = reorder(layers, indexes, tree, dep_obj, add_or_del)
         logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
-        logger.debug(f"################################## end of  sort_layers {add_or_del} ####################################################")
-        return layers, indexes, list(mset)
+        logger.debug(
+            f"################################## end of  sort_layers {add_or_del} ####################################################")
+        return layers, indexes, list(mset), cyclical
 
     logger.debug("theres a massive problem")
     return layers, indexes, list(mset), cyclical
@@ -261,7 +309,8 @@ def reorder(layers, indexes, tree, dep_obj, add_or_del):
         layers = dep_layers + front_layers + layers
         indexes = dep_indexes + front_indexes + indexes
     # 5. Assemble the final lists
-    logger.debug(f'\nfront_indexes -> {front_indexes}\n\nfront_layers, {front_layers}\n\n old layers, {layers}\n\nold indexes -> {indexes}')
+    logger.debug(
+        f'\nfront_indexes -> {front_indexes}\n\nfront_layers, {front_layers}\n\n old layers, {layers}\n\nold indexes -> {indexes}')
     logger.debug("-------------------------------------------------------------------------------------")
     logger.debug("%%%%%%%%%%%%%%% end reorder %%%%%%%%%%%%%%%%%%")
     return layers, indexes
@@ -336,8 +385,8 @@ if __name__ == '__main__':
         "uri": "localhost",
         "port": "1729",
         "database": "stix2",
-        "user" : None,
-        "password" : None,
+        "user": None,
+        "password": None,
         "clear": True
     }
 
@@ -352,4 +401,3 @@ if __name__ == '__main__':
         "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
         "CACAO": False
     }
-    

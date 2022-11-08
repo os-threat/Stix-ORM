@@ -6,7 +6,7 @@ from .import_stix_to_typeql import raw_stix2_to_typeql, stix2_to_match_insert
 from .delete_stix_to_typeql import delete_stix_object, add_delete_layers
 from .import_stix_utilities import get_embedded_match
 from .export_intermediate_to_stix import convert_ans_to_stix
-from .initialise import setup_database, load_schema, sort_layers
+from .initialise import setup_database, load_schema, sort_layers, load_markings, check_stix_ids
 
 from stix2 import v21
 from stix2.base import _STIXBase
@@ -57,27 +57,34 @@ class TypeDBSink(DataSink):
         self.clear = clear
         if import_type is None:
             import_type = {"STIX21": True, "CVE": False, "identity": False, "location": False, "rules": False}
-            import_type.update({"ATT&CK": True, "ATT&CK_Versions": ["12.0"],
+            import_type.update({"ATT&CK": False, "ATT&CK_Versions": ["12.0"],
                                 "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"], "CACAO": False})
         self.import_type = import_type
         
         try:
             # 1. Setup database
-            setup_database(connection, clear)
+            setup_database(self._stix_connection, clear)
+
             # 2. Load the Stix schema
             if clear:
                 load_schema(connection, "stix/schema/cti-schema-v2.tql", "Stix 2.1 Schema ")
+                self.loaded = load_markings(connection)
+                logger.debug("moving past load Stix schema")
             # 3. Check for Stix Rules
             if clear and import_type["rules"]:
+                logger.debug("rules")
                 load_schema(connection, "stix/schema/cti-rules.tql", "Stix 2.1 Rules")
+                logger.debug("moving past load rules")
             # 3. Load the Stix Markings
-            if clear:
+            if clear and import_type["ATT&CK"]:
+                logger.debug("attack")
                 load_schema(connection, "stix/schema/cti-schema-v2.tql", "Stix 2.1 Schema ")
+                logger.debug("moving past load schema")
             # 3. Check for Stix Rules
-            if clear and import_type["rules"]:
+            if clear and import_type["CACAO"]:
+                logger.debug("cacao")
                 load_schema(connection, "stix/schema/cti-rules.tql", "Stix 2.1 Rules")
-
-
+                logger.debug("moving past load schema")
             
         except Exception as e:
             logger.error(f'Initialise TypeDB Error: {e}')                    
@@ -164,7 +171,6 @@ class TypeDBSink(DataSink):
                             write_transaction.commit()
                     logger.debug(' ---------------------------Object Delete----------------------')
 
-
         except Exception as e:
             logger.error(f'Stix Object Deletion Error: {e}')
             if 'dep_match' in locals(): logger.error(f'dep_match -> {dep_match}')
@@ -173,8 +179,7 @@ class TypeDBSink(DataSink):
             if 'core_ql' in locals(): logger.error(f'core_ql -> {core_ql}')
             raise
 
-
-    def add(self, stix_data=None, import_type="STIX21"):
+    def add(self, stix_data=None):
         """Add STIX objects to the typedb server.
             1. Gather objects into a list
             2. For each object
@@ -182,7 +187,6 @@ class TypeDBSink(DataSink):
                 b. add object to an ordered list
                 c. return the ordered list
             3. Add each object in the ordered list
-
         Args:
             stix_data (STIX object OR Bundle OR dict OR list): valid STIX 2.1 content
                 in a STIX object (or list of), dict (or list of), or a STIX 2.1
@@ -191,12 +195,10 @@ class TypeDBSink(DataSink):
                 or the mitre attack typeql description. Values can be either:
                         - "STIX21"
                         - "mitre"
-
         Note:
             ``stix_data`` can be a Bundle object, but each object in it will be
             saved separately; you will be able to retrieve any of the objects
             the Bundle contained, but not the Bundle itself.
-
         """
         layers = []
         indexes = []
@@ -204,7 +206,8 @@ class TypeDBSink(DataSink):
         cyclical = []
         try:
             # 1. gather objects into a list
-            obj_list = self._gather_objects(self, stix_data)
+            obj_list = self._gather_objects(stix_data)
+            logger.debug(f'\n\n object list is  {obj_list}')
             # 2. for stix ibject in list
             for stix_dict in obj_list:
                 # 3. Parse stix objects and get typeql and dependency
@@ -212,9 +215,10 @@ class TypeDBSink(DataSink):
                 dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
                 dep_obj["dep_match"] = dep_match
                 dep_obj["dep_insert"] = dep_insert
-                dep_obj["dep_match"] = indep_ql
+                dep_obj["indep_ql"] = indep_ql
                 dep_obj["core_ql"] = core_ql
                 # 4. Order the list of stix objects, and collect errors
+                logger.debug(f'\ndep object {dep_obj}')
                 if len(layers) == 0:
                     # 4a. For the first record to order
                     missing = dep_obj['dep_list']
@@ -224,30 +228,42 @@ class TypeDBSink(DataSink):
                     # 4b. Add up and return the layers, indexes, missing and cyclical lists
                     add = 'add'
                     layers, indexes, missing, cyclical = sort_layers(layers, cyclical, indexes, missing, dep_obj, add)
+                    logger.debug(f'\npast sort {layers}')
 
-            # 5. If missing and cylcial are empty, then we can safely import all the objects
-            if missing is [] and cyclical is []:
-                url = self.uri + ":" + self.port
-                with TypeDB.core_client(url) as client:
-                    with client.session(self.database, SessionType.DATA) as session:
-                        logger.debug(f'------------------------------------ TypeDB Sink Session Start --------------------------------------------')
-                        for lay in layers:
-                            logger.debug(f'------------------------------------ Load Object --------------------------------------------')
-                            self._submit_Stix_object(lay, session)
+            # 5. If missing then check to see if the records are in the database, or raise an error
+            mset = set(missing)
+            logger.debug(f'missing stuff {len(missing)} - {len(set(missing))}')
+            logger.debug(f'mset {mset}')
+            if mset:
+                list_in_database = check_stix_ids(list(mset), self._stix_connection)
+                real_missing = list(mset.difference(set(list_in_database)))
+                logger.debug(f'\nmissing {missing}\n\n loaded {real_missing}')
+                if real_missing:
+                    raise Exception(f'Error: Missing Stix deopendencies, id={real_missing}')
+            # 6. If cyclicla, just raise an error for the moment
+            if cyclical:
+                raise Exception(f'Error: Cyclical Stix Dependencies, id={cyclical}')
+            # 7. Else go ahead and add the records to the database
+            url = self.uri + ":" + self.port
+            logger.debug(f'url {url}')
+            with TypeDB.core_client(url) as client:
+                with client.session(self.database, SessionType.DATA) as session:
+                    logger.debug(f'------------------------------------ TypeDB Sink Session Start --------------------------------------------')
+                    for lay in layers:
+                        logger.debug(f'------------------------------------ Load Object --------------------------------------------')
+                        logger.debug(f' lay {lay}')
+                        self._submit_Stix_object(lay, session)
+                    session.close()
+                    logger.debug(f'------------------------------------ TypeDB Sink Session Complete ---------------------------------')
 
-                        session.close()
-                        logger.debug(f'------------------------------------ TypeDB Sink Session Complete ---------------------------------')
-            else:
-                logger.error(f'missing is {missing}\n cyclical is {cyclical}')
-        except:
-            logger.error(f' something wrong in the add function')
-
-
+        except Exception as e:
+            logger.error(f'Stix Add Object Function Error: {e}')
 
     def _gather_objects(self, stix_data):
         """
           the details for the add details, checking what import_type of data object it is
         """
+        logger.debug(f" gethering ...{stix_data}")
         logger.debug('----------------------------------------')
         logger.debug(f'going into separate objects function {stix_data}')
         logger.debug('-----------------------------------------------------')
@@ -255,60 +271,63 @@ class TypeDBSink(DataSink):
         if isinstance(stix_data, (v21.Bundle)):
             logger.debug(f'isinstance Bundle')
             # recursively add individual STIX objects
-            for stix_obj in stix_data.get("objects", []):
-                self._separate_objects(stix_obj, import_type=import_type, session=session)
+            logger.debug(f'obects are {stix_data["objects"]}')
+            return stix_data.get("objects", [])
 
         elif isinstance(stix_data, _STIXBase):
+            logger.debug("base")
             logger.debug(f'isinstance _STIXBase')
-            # adding python STIX object
-            self._submit_Stix_object(stix_data, import_type=import_type, session=session)
+            temp_list = []
+            return temp_list.append(stix_data)
 
         elif isinstance(stix_data, (str, dict)):
-            logger.debug(f'isinstance dict')
-            parsed_data = parse(stix_data, allow_custom=self.allow_custom)
-            if isinstance(parsed_data, _STIXBase):
-                logger.debug(f'isinstance STIX Base')
-                self._separate_objects(parsed_data, import_type=import_type, session=session)
+            if stix_data.get("type", '') == 'bundle':
+                return stix_data.get("objects", [])
             else:
-                # custom unregistered object import_type
-                self._submit_Stix_object(parsed_data, import_type=import_type, session=session)
+                logger.debug("dcit")
+                logger.debug(f'isinstance dict')
+                temp_list = []
+                return temp_list.append(stix_data)
 
         elif isinstance(stix_data, list):
             logger.debug(f'isinstance list')
             # recursively add individual STIX objects
-            for stix_obj in stix_data:
-                self._separate_objects(stix_obj, import_type=import_type, session=session)
+            return stix_data
 
         else:
             raise TypeError(
                 "stix_data must be a STIX object (or list of), "
                 "JSON formatted STIX (or list of), "
                 "or a JSON formatted STIX bundle",
-            )    
+            )
             
-            
-    def _submit_Stix_object(self, stix_obj, import_type, session):
+    def _submit_Stix_object(self, layer, session):
         """Write the given STIX object to the TypeDB database.
         """
         try:
-            logger.debug(f'----------------------------- Load {stix_obj.type} Object -----------------------------')
-            logger.debug(stix_obj.serialize(pretty=True))
-            logger.debug(f'----------------------------- TypeQL Statements -----------------------------')
-            match_tql, insert_tql, dep_obj = stix2_to_match_insert(stix_obj, import_type)
+            dep_match = layer["dep_match"]
+            dep_insert = layer["dep_insert"]
+            indep_ql = layer["indep_ql"]
+            if dep_match == '':
+                match_tql = ''
+            else:
+                match_tql = 'match ' + dep_match
+            if indep_ql == '' and dep_insert == '':
+                insert_tql = ''
+            else:
+                insert_tql = 'insert ' + indep_ql + dep_insert
             logger.debug(f'match_tql string?-> {match_tql}')
             logger.debug(f'insert_tql string?-> {insert_tql}')
-            logger.debug(f'dep_obj string?-> {dep_obj}')
             logger.debug(f'----------------------------- Get Ready to Load Object -----------------------------')
             typeql_string = match_tql + insert_tql
             if not insert_tql:
-                logger.warning(f'Marking Object type {stix_obj.type} already exists')
+                logger.warning(f'Marking Object type {layer["type"]} already exists')
                 return
             #logger.debug(typeql_string)
             logger.debug('=============================================================')
             with session.transaction(TransactionType.WRITE) as write_transaction:
                 logger.debug(f'inside session and ready to load')
                 insert_iterator = write_transaction.query().insert(typeql_string)
-
                 logger.debug(f'insert_iterator response ->\n{insert_iterator}')
                 for result in insert_iterator:
                     logger.debug(f'typedb response ->\n{result}')
@@ -338,7 +357,7 @@ class TypeDBSource(DataSource):
         - import_type (str): It forces the parser to use either the stix2.1, or mitre att&ck
 
     """
-    def __init__(self, connection, import_type="STIX21", **kwargs):	
+    def __init__(self, connection, import_type=None, **kwargs):
         super(TypeDBSource, self).__init__()
         logger.debug(f'TypeDBSource: {connection}')
         self._stix_connection = connection
@@ -348,10 +367,11 @@ class TypeDBSource(DataSource):
         self.user = connection["user"]
         self.password = connection["password"]
         self.import_type = import_type
-        if self.import_type == "STIX21":
-            self.allow_custom = False
-        else:
-            self.allow_custom = True
+        if import_type is None:
+            import_type = {"STIX21": True, "CVE": False, "identity": False, "location": False, "rules": False}
+            import_type.update({"ATT&CK": False, "ATT&CK_Versions": ["12.0"],
+                                "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"], "CACAO": False})
+        self.import_type = import_type
 
     @property
     def stix_connection(self):
