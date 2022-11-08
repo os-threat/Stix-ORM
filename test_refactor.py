@@ -6,11 +6,12 @@ from typedb.client import *
 from stix2 import (v21, parse)
 from stix.module.import_stix_to_typeql import raw_stix2_to_typeql, stix2_to_match_insert
 from stix.module.delete_stix_to_typeql import delete_stix_object, add_delete_layers
+from stix.module.initialise import check_stix_ids
 
 
 import logging
 
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 
 
@@ -18,7 +19,7 @@ logger = logging.getLogger(__name__)
 connection = {
     "uri": "localhost",
     "port": "1729",
-    "database": "oasis",
+    "database": "stix",
     "user": None,
     "password": None
 }
@@ -29,7 +30,7 @@ import_type = {
     "identity": False,
     "location": False,
     "rules": False,
-    "ATT&CK": True,
+    "ATT&CK": False,
     "ATT&CK_Versions": ["12.0"],
     "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
     "CACAO": False
@@ -52,17 +53,18 @@ def test_initialise():
     """ Test the database initialisation function
 
     """
-    typedb = TypeDBSink(connection, True, "STIX21")
+    typedb = TypeDBSink(connection, True, import_type)
 
 
-def load_file_list(path1,file_list):
+def load_file_list(path1, file_list):
     """ Load a list of files from a path, number of files can be restricted
 
     Args:
         path1 (): path
         file_list (): list of files
     """
-    typedb = TypeDBSink(connection, True, "STIX21")
+    logger.debug(f' connection {connection}')
+    typedb = TypeDBSink(connection, True, import_type)
     print(f'files {file_list}')
     for i, f in enumerate(file_list):
         logger.debug(f'i have entered the file loop, time {i}')
@@ -70,7 +72,7 @@ def load_file_list(path1,file_list):
             break
         else:
             with open((path1+f), mode="r", encoding="utf-8") as df:
-                logger.debug(f'I am about to load {f}')
+                print(f'I am about to load {f}')
                 json_text = json.load(df)
                 typedb.add(json_text)
 
@@ -83,7 +85,7 @@ def load_file(fullname):
     """
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
-        typedb = TypeDBSink(connection, True, "STIX21")
+        typedb = TypeDBSink(connection, True, import_type)
         typedb.add(json_text)
 
 
@@ -93,7 +95,7 @@ def query_id(stixid):
     Args:
         stixid ():
     """
-    typedb = TypeDBSource(connection, "STIX21")
+    typedb = TypeDBSource(connection, import_type)
     stix_dict = typedb.get(stixid)
     stix_obj = parse(stix_dict)
     print(' ---------------------------Query Object----------------------')
@@ -138,7 +140,7 @@ def clean_db():
     """
     local_list = get_stix_ids()
     print(f'list -> {local_list}')
-    typedb = TypeDBSink(connection, False, "STIX21")
+    typedb = TypeDBSink(connection, False, import_type)
     typedb.delete(local_list)
 
 
@@ -150,7 +152,7 @@ def test_delete_dir(dirpath):
     """
     dirFiles = os.listdir(dirpath)
     sorted_files = sorted(dirFiles)
-    typedb_sink = TypeDBSink(connection, True, "STIX21")
+    typedb_sink = TypeDBSink(connection, True, import_type)
     print(sorted_files)
     file_list = []
     for i, s_file in enumerate(sorted_files):
@@ -179,7 +181,7 @@ def test_delete(path):
         path (): the path and file name
     """
     obj_ids = []
-    typedb = TypeDBSink(connection, True, "STIX21")
+    typedb = TypeDBSink(connection, True, import_type)
     with open(path, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         typedb.add(json_text)
@@ -197,8 +199,8 @@ def check_dir(dirpath):
     dirFiles = os.listdir(dirpath)
     sorted_files = sorted(dirFiles)
     print(sorted_files)
-    typedb_sink = TypeDBSink(connection, True, "STIX21")
-    typedb_source = TypeDBSource(connection, "STIX21")
+    typedb_sink = TypeDBSink(connection, True, import_type)
+    typedb_source = TypeDBSource(connection, import_type)
     for s_file in sorted_files:
         if os.path.isdir(os.path.join(dirpath, s_file)):
             continue
@@ -240,7 +242,7 @@ def cert_test(dirpath):
                 local_list = get_stix_ids()
                 print(f'my id list -> {local_list}')
                 print('========================= I am starting deletion ===========================================')
-                typedb = TypeDBSink(connection, False, "STIX21")
+                typedb = TypeDBSink(connection, False, import_type)
                 typedb.delete(local_list)
                 local_list2 = get_stix_ids()
                 print("******************************************")
@@ -248,6 +250,16 @@ def cert_test(dirpath):
                 print(f'\n\nmy returned list is -> {local_list}')
                 print(f'\n\nmy final list is -> {local_list2}')
                 print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+
+def test_get_ids(connection, import_type):
+    typedb_sink = TypeDBSink(connection, False, import_type)
+    my_id_list = typedb_sink.get_stix_ids()
+    print(f'myidlist {my_id_list}')
+
+def test_ids_loaded(id_list, connection):
+    return_list = check_stix_ids(id_list, connection)
+    print(f'return {return_list}')
+
 
 
 # if this file is run directly, then start here
@@ -318,9 +330,13 @@ if __name__ == '__main__':
 
     mitre = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack-12.0.json"
 
+    id_list = ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46', 'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265', 'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559', 'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6', 'attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5', 'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
+    # 019fde1c-
+    id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
+    id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
     #test_initialise()
-    #load_file_list(path1,file_list)
-    #load_file(cert_root + cert17 + probs1)
+    load_file_list(path1, file_list)
+    #load_file(path1 + f9)
     print("=====")
     print("=====")
     print("=====")
@@ -331,4 +347,5 @@ if __name__ == '__main__':
     #test_delete_dir(path1)
     #clean_db()
     #cert_test(cert_root+cert7)
-    
+    #test_get_ids(connection, import_type)
+    #test_ids_loaded(id_list2, connection)

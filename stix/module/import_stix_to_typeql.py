@@ -17,6 +17,10 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+default_import_type = {"STIX21": True, "CVE": False, "identity": False, "location": False, "rules": False,
+                       "ATT&CK": False, "ATT&CK_Versions": ["12.0"],
+                       "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"], "CACAO": False}
+
 
 ##############################################################
 #  1.) Methods to Add 2_tql() Capability to all Stix Objects
@@ -27,7 +31,7 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------
 
 
-def stix2_to_typeql(stix_object, import_type='STIX21'):
+def stix2_to_typeql(stix_object, import_type=None):
     """
     Initial function to convert Stix into typeql, it adds together the match and insert statements
 
@@ -45,7 +49,7 @@ def stix2_to_typeql(stix_object, import_type='STIX21'):
     return typeql, dep_obj
 
 
-def stix2_to_match_insert(stix_object, import_type='STIX21'):
+def stix2_to_match_insert(stix_object, import_type=None):
     """
     Initial function to convert Stix into match/insert statments
 
@@ -71,7 +75,7 @@ def stix2_to_match_insert(stix_object, import_type='STIX21'):
     return match, insert, dep_obj
 
 
-def raw_stix2_to_typeql(stix_object, import_type='STIX21'):
+def raw_stix2_to_typeql(stix_object, import_type=None):
     """
     Initial function to convert Stix into typeql, it splits the incoming object into different
     channels based on its object type: sdo, sro, sco or meta
@@ -87,14 +91,20 @@ def raw_stix2_to_typeql(stix_object, import_type='STIX21'):
         core_ql: a typeql insert statement that describes the object head, so the independent and dependent parts can be injected seaparately
 
     """
+    if import_type is None:
+        import_type = default_import_type
+    if import_type["ATT&CK"]:
+        import_method = "ATT&CK"
+    else:
+        import_method = "STIX21"
     if is_sdo(stix_object):
-        dep_match, dep_insert, indep_ql, core_ql, dep_obj = sdo_to_typeql(stix_object, import_type)
+        dep_match, dep_insert, indep_ql, core_ql, dep_obj = sdo_to_typeql(stix_object, import_method)
     elif is_sro(stix_object):
-        dep_match, dep_insert, indep_ql, core_ql, dep_obj = sro_to_typeql(stix_object, import_type)
+        dep_match, dep_insert, indep_ql, core_ql, dep_obj = sro_to_typeql(stix_object, import_method)
     elif is_sco(stix_object):
-        dep_match, dep_insert, indep_ql, core_ql, dep_obj = sco_to_typeql(stix_object, import_type)
+        dep_match, dep_insert, indep_ql, core_ql, dep_obj = sco_to_typeql(stix_object, import_method)
     elif stix_object.type == 'marking-definition':
-        dep_match, dep_insert, indep_ql, core_ql, dep_obj = marking_definition_to_typeql(stix_object, import_type)
+        dep_match, dep_insert, indep_ql, core_ql, dep_obj = marking_definition_to_typeql(stix_object, import_method)
     else:
         logger.error(f'object type not supported: {stix_object.type}, import type {import_type}')
         dep_match, dep_insert, indep_ql, core_ql = ''
