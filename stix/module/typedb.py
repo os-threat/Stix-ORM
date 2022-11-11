@@ -60,6 +60,8 @@ class TypeDBSink(DataSink):
             import_type.update({"ATT&CK": False, "ATT&CK_Versions": ["12.0"],
                                 "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"], "CACAO": False})
         self.import_type = import_type
+        print(f'connection {self._stix_connection}')
+        print(f'\import type{import_type}')
         
         try:
             # 1. Setup database

@@ -227,7 +227,8 @@ define
         plays x-mitre-content:collector;
 
     # Collection External Reference
-    object-version sub stix-meta-object,
+    attack-sub-object sub stix-sub-object;
+    object-version sub attack-sub-object,
         owns object-modified,
         plays obj-ref:container,
         plays x-mitre-content:collected;

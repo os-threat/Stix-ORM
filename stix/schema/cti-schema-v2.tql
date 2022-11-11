@@ -22,10 +22,13 @@
 #
 
 define
-stix-object sub entity, 
+stix-entity sub entity,
+    abstract;
+
+stix-object sub stix-entity,
 	# Required
 	owns stix-type,
-	owns stix-id, # TODO should be a key
+	owns stix-id @key, # TODO should be a key
 	owns custom-attribute,
 	plays stix-core-relationship:source,
 	plays stix-core-relationship:target,
@@ -67,15 +70,20 @@ stix-object sub entity,
 				plays extensions:sco,
 				plays consist:consisted;
 
-	stix-meta-object sub stix-object, 
+	stix-sub-object sub stix-entity,
 		abstract, 
 		owns created, 
-		owns modified;
+		owns modified,
+        plays stix-core-relationship:source,
+        plays stix-core-relationship:target,
+        plays obj-refs:referred,
+        plays granular-marking:object;
+
 
 ##### 2 Common Data Types #####
 
 # 2.5 External Reference
-external-reference sub stix-meta-object,
+external-reference sub stix-sub-object,
 	# In addition to source-name, at least one of description, url or external-id must be present§
 	# Required
 	owns source-name, 
@@ -105,7 +113,7 @@ hash sub entity,
 
 
 # 2.11 Kill Chain Phase
-kill-chain-phase sub stix-meta-object,
+kill-chain-phase sub stix-sub-object,
 	owns kill-chain-name, 
 	owns phase-name,
 	plays kill-chain-usage:kill-chain-using,
@@ -637,7 +645,7 @@ vulnerability sub stix-domain-object,
 stix-core-relationship sub relation,
 	# Required
 	owns spec-version,
-	owns stix-id, 
+	owns stix-id @key,
 	owns created,
 	owns modified,
 	owns stix-type,
@@ -795,7 +803,8 @@ sighting sub stix-core-relationship,
 	relates sighting-of as source, 
 	relates observed;
 
-##### 6 STIX™ Cyber-observable Objects ##### 
+##### 6 STIX™ Cyber-observable Objects #####
+stix_sco_sub_object sub stix-sub-object;
 
 # 6.1 Artifact Object
 artifact sub stix-cyber-observable-object,
@@ -875,7 +884,7 @@ header-key sub stix-attribute-string,
 	owns header-value,
 	plays additional-header:item;
 
-email-mime-part sub stix-cyber-observable-object,
+email-mime-part sub stix_sco_sub_object,
 	owns body,
 	owns content-type, 
 	owns content-disposition, 
@@ -911,7 +920,7 @@ file sub stix-cyber-observable-object,
 
 #### SCO EXTENSIONS ####
 
-SCO-extension sub entity,
+SCO-extension sub stix_sco_sub_object,
 	plays extensions:extension;
 
 	archive-ext sub SCO-extension,
@@ -1275,6 +1284,10 @@ x509-certificate sub stix-cyber-observable-object,
 	
 
 ##### 7 STIX™ Meta Objects #####
+stix-meta-object sub stix-object,
+    abstract,
+    owns created,
+    owns modified;
 
 # 7.1 Language Content 
 
