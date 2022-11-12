@@ -11,7 +11,7 @@ from stix.module.initialise import check_stix_ids
 
 import logging
 
-logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 
 
@@ -56,7 +56,7 @@ def test_initialise():
     typedb = TypeDBSink(connection, True, import_type)
 
 
-def load_file_list(path1, file_list):
+def load_file_list(path1: str, file_list: List[str]):
     """ Load a list of files from a path, number of files can be restricted
 
     Args:
@@ -77,7 +77,7 @@ def load_file_list(path1, file_list):
                 typedb.add(json_text)
 
 
-def load_file(fullname):
+def load_file(fullname: str):
     """ Add a json file to typeDB
 
     Args:
@@ -89,7 +89,7 @@ def load_file(fullname):
         typedb.add(json_text)
 
 
-def query_id(stixid):
+def query_id(stixid: str):
     """  Print out the match/insert and match/delete statements for any stix-id
 
     Args:
@@ -144,7 +144,7 @@ def clean_db():
     typedb.delete(local_list)
 
 
-def test_delete_dir(dirpath):
+def test_delete_dir(dirpath: str):
     """ Load an entire directory and delete all files except marking objects
 
     Args:
@@ -174,7 +174,7 @@ def test_delete_dir(dirpath):
     print(f' files-> {file_list}')
 
 
-def test_delete(path):
+def test_delete(path: str):
     """ Load a single file and delete it
 
     Args:
@@ -190,7 +190,7 @@ def test_delete(path):
     typedb.delete(local_list)
 
 
-def check_dir(dirpath):
+def check_dir(dirpath: str):
     """ Open a directory and load all the files, optionally printing them
 
     Args:

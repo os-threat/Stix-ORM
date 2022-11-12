@@ -28,7 +28,7 @@ def load_template(file_path='./oasis/cert_template.txt'):
         return t,m
 
 
-def run_profiles(config:dict,template,tags,out_file):
+def run_profiles(config: dict,template,tags,out_file):
     report = template
     # create the database and init
     sink_db = TypeDBSink(connection=connection, clear=True,import_type= "STIX21")
@@ -41,7 +41,7 @@ def run_profiles(config:dict,template,tags,out_file):
 
     for profile in config.keys():
         logger.info(f'Checking profile {profile}')
-        result = run_profile(profile,config[profile],sink_db,source_db)
+        result = +run_profile(profile,config[profile],sink_db,source_db)
         logger.info(result)
 
         for code in result.keys():
@@ -53,7 +53,7 @@ def run_profiles(config:dict,template,tags,out_file):
         file.write(report)
 
 
-def verify_file(file_path,sink_db):
+def verify_file(file_path: str, sink_db: str):
     with open(file_path, mode="r", encoding="utf-8") as file:
 
         check_list = []
@@ -104,7 +104,9 @@ def verify_file(file_path,sink_db):
         return check_list
 
 
-def verify_files(directory,sink_db,source_db):
+def verify_files(directory: str,
+                 sink_db: str,
+                 source_db: str):
     """ Load and verify the file
 
     Args:
@@ -121,7 +123,10 @@ def verify_files(directory,sink_db,source_db):
         logger.error('This is not a folder???')
 
 
-def run_profile(short,profile,sink_db,source_db):
+def run_profile(short,
+                profile,
+                sink_db,
+                source_db):
     logger.info(f'Title {profile["title"]}')
     results = {}
     if 'level1' in profile:

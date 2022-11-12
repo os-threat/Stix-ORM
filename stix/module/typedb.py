@@ -49,12 +49,12 @@ class TypeDBSink(DataSink):
         super(TypeDBSink, self).__init__()
         logger.debug(f'TypeDBSink: {connection}')
         self._stix_connection = connection
-        self.uri = connection["uri"]
-        self.port = connection["port"]
-        self.database = connection["database"]
-        self.user = connection["user"]
-        self.password = connection["password"]
-        self.clear = clear
+        self.uri: str = connection["uri"]
+        self.port: str = connection["port"]
+        self.database: str = connection["database"]
+        self.user: str = connection["user"]
+        self.password: str = connection["password"]
+        self.clear: bool = clear
         if import_type is None:
             import_type = {"STIX21": True, "CVE": False, "identity": False, "location": False, "rules": False}
             import_type.update({"ATT&CK": False, "ATT&CK_Versions": ["12.0"],
@@ -117,7 +117,7 @@ class TypeDBSink(DataSink):
                             id_list.append(sid)
         return id_list
 
-    def delete(self, stixid_list):
+    def delete(self, stixid_list: List[str]):
         """ Delete a list of STIX objects from the typedb server. Must include all related objects and relations
 
         Args:
@@ -331,6 +331,8 @@ class TypeDBSink(DataSink):
                 logger.debug(f'inside session and ready to load')
                 insert_iterator = write_transaction.query().insert(typeql_string)
                 logger.debug(f'insert_iterator response ->\n{insert_iterator}')
+                # Capture error here
+                # log it - object id
                 for result in insert_iterator:
                     logger.debug(f'typedb response ->\n{result}')
                 
