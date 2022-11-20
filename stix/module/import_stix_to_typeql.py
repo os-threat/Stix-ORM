@@ -92,19 +92,15 @@ def raw_stix2_to_typeql(stix_object, import_type=None):
 
     """
     if import_type is None:
-        import_type = default_import_type
-    if import_type["ATT&CK"]:
-        import_method = "ATT&CK"
-    else:
-        import_method = "STIX21"
+        import_type = ['STIX21']
     if is_sdo(stix_object):
-        dep_match, dep_insert, indep_ql, core_ql, dep_obj = sdo_to_typeql(stix_object, import_method)
+        dep_match, dep_insert, indep_ql, core_ql, dep_obj = sdo_to_typeql(stix_object, import_type)
     elif is_sro(stix_object):
-        dep_match, dep_insert, indep_ql, core_ql, dep_obj = sro_to_typeql(stix_object, import_method)
+        dep_match, dep_insert, indep_ql, core_ql, dep_obj = sro_to_typeql(stix_object, import_type)
     elif is_sco(stix_object):
-        dep_match, dep_insert, indep_ql, core_ql, dep_obj = sco_to_typeql(stix_object, import_method)
+        dep_match, dep_insert, indep_ql, core_ql, dep_obj = sco_to_typeql(stix_object, import_type)
     elif stix_object.type == 'marking-definition':
-        dep_match, dep_insert, indep_ql, core_ql, dep_obj = marking_definition_to_typeql(stix_object, import_method)
+        dep_match, dep_insert, indep_ql, core_ql, dep_obj = marking_definition_to_typeql(stix_object, import_type)
     else:
         logger.error(f'object type not supported: {stix_object.type}, import type {import_type}')
         dep_match, dep_insert, indep_ql, core_ql = ''
@@ -117,7 +113,7 @@ def raw_stix2_to_typeql(stix_object, import_type=None):
 # 1.1) SDO Object Method to convert a Python object --> typeql string
 #                 -   
 # -------------------------------------------------------------
-def sdo_to_data(sdo, import_type='STIX21'):
+def sdo_to_data(sdo, import_type=['STIX21']):
     """ convert Stix object into a data model for processing
 
     Args:
@@ -136,7 +132,10 @@ def sdo_to_data(sdo, import_type='STIX21'):
     obj_type = sdo.type
     # 1.B) get the specific typeql names for an object into a dictionary
     # - stix import
-    if import_type == 'STIX21':
+    stix21 = import_type.get("STIX21", False)
+    attack = import_type.get('ATT&CK', False)
+
+    if stix21 and not attack:
         if obj_type in stix_models["dispatch_stix"]:
             # dispatch specific stix properties plus later on, generic sdo properties
             obj_tql = stix_models["dispatch_stix"][obj_type]
@@ -144,7 +143,7 @@ def sdo_to_data(sdo, import_type='STIX21'):
             logger.error(f'obj_type type {obj_type} not supported')
             return {}, ''
     # - mitre attack import
-    elif import_type == 'ATT&CK':
+    elif stix21 and attack:
         if obj_type[0:6] == "x-mitre":
             if obj_type in attack_models["dispatch_attack"]:
                 # dispatch specific mitre properties plus deneric mitre properties plus later on, generic sdo properties
@@ -288,8 +287,10 @@ def sro_to_data(sro, import_type='STIX21'):
 
     # - work out the type of object
     obj_type = sro.type
+    stix21 = import_type.get("STIX21", False)
+    attack = import_type.get('ATT&CK', False)
 
-    if import_type == 'STIX21':
+    if stix21 and not attack:
         if obj_type in stix_models["dispatch_stix"]:
             # dispatch specific stix properties plus later on, generic sdo properties
             obj_tql = stix_models["dispatch_stix"][obj_type]
@@ -297,7 +298,7 @@ def sro_to_data(sro, import_type='STIX21'):
             logger.error(f'obj_type type {obj_type} not supported stix relation')
             return {}, ''
     # - mitre attack import
-    elif import_type == 'ATT&CK':
+    elif stix21 and attack:
         if sro['relationship_type'] == 'uses' and sro['target_ref'][0:13] == 'attack-pattern':
             # dispatch specific stix properties plus later on, generic sdo properties
             obj_tql = stix_models["dispatch_stix"][obj_type]
