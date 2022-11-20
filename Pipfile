@@ -8,9 +8,9 @@ verify_ssl = true
 [packages]
 typedb-client = "*"
 tqdm = "*"
-loguru = "*"
 stix2 = "*"
 pyhamcrest = "*"
+loguru = "*"
 
 [requires]
 python_version = "3.9"

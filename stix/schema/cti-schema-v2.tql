@@ -28,7 +28,7 @@ stix-entity sub entity,
 stix-object sub stix-entity,
 	# Required
 	owns stix-type,
-	owns stix-id @key, # TODO should be a key
+	owns stix-id @key, #
 	owns custom-attribute,
 	plays stix-core-relationship:source,
 	plays stix-core-relationship:target,
@@ -787,6 +787,7 @@ stix-core-relationship sub relation,
 		av-analysis sub analysis;
 		static-analysis sub analysis;
 		dynamic-analysis sub analysis;
+		analysis-of sub analysis;
 
 	remediation sub stix-core-relationship,
 		relates remediating as source,
@@ -1240,7 +1241,7 @@ windows-registry-key sub stix-cyber-observable-object,
 	plays reg-val:reg-key,
 	plays user-created-by:created;
 
-windows-registry-value-type sub stix-cyber-observable-object, 
+windows-registry-value-type sub stix_sco_sub_object,
 	owns name, 
 	owns data,
 	owns data-type,

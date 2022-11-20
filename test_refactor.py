@@ -13,6 +13,8 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+#logger.addHandler(logging.StreamHandler())
 
 
 # define the database data and import details
@@ -83,6 +85,7 @@ def load_file(fullname):
     Args:
         fullname (): path and filename
     """
+    logger.debug(f'inside load file {fullname}')
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         typedb = TypeDBSink(connection, True, import_type)
@@ -213,6 +216,14 @@ def check_dir(dirpath):
                 typedb_sink.add(json_text)
 
 
+def cert_dict(cert_root, certs):
+    for cert in certs:
+        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+        print(f'==================== {cert} ===================================')
+        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+        cert_test(cert_root + cert)
+
+
 def cert_test(dirpath):
     dirs = [
         "consumer_example/",
@@ -222,8 +233,9 @@ def cert_test(dirpath):
     ]
     for d in dirs:
         #print(f'############## {dirpath+d} #################')
-        #print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        #print('----------------------------------------')
+        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        #print(f'handler {logger.handlers}')
+        print('----------------------------------------')
         dirFiles = os.listdir(dirpath+d)
         for s_file in dirFiles:
             if os.path.isdir(os.path.join((dirpath+d), s_file)):
@@ -251,15 +263,16 @@ def cert_test(dirpath):
                 print(f'\n\nmy final list is -> {local_list2}')
                 print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
 
+
 def test_get_ids(connection, import_type):
     typedb_sink = TypeDBSink(connection, False, import_type)
     my_id_list = typedb_sink.get_stix_ids()
     print(f'myidlist {my_id_list}')
 
+
 def test_ids_loaded(id_list, connection):
     return_list = check_stix_ids(id_list, connection)
     print(f'return {return_list}')
-
 
 
 # if this file is run directly, then start here
@@ -317,6 +330,10 @@ if __name__ == '__main__':
     cert20 = "/versioning/"
     cert21 = "/vulnerability_sharing/"
     probs1 = "consumer_test/sighting_of_indicator.json"
+    certs = [
+        cert1, cert2, cert3, cert4, cert5, cert6, cert7, cert8, cert9, cert10, cert11, cert12, cert13,cert14,
+        cert15, cert16, cert17, cert18, cert19, cert20, cert21
+    ]
 
     file1 = "granular_markings.json"
     file2 = "attack_pattern_malware.json"
@@ -335,17 +352,18 @@ if __name__ == '__main__':
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
     #test_initialise()
-    load_file_list(path1, file_list)
-    #load_file(path1 + f9)
+    #load_file_list(path1, file_list)
+    #load_file(data_path + file2)
     print("=====")
     print("=====")
     print("=====")
     #query_id(test_id)
-    #check_dir(cert_root+cert1+cert_consumer)
+    #check_dir(path1)
     #test_delete(path1+files10)
     #test_initialise()
     #test_delete_dir(path1)
     #clean_db()
-    #cert_test(cert_root+cert7)
+    #cert_test(cert_root+cert11)
+    cert_dict(cert_root, certs)
     #test_get_ids(connection, import_type)
     #test_ids_loaded(id_list2, connection)

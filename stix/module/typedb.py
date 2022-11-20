@@ -47,7 +47,7 @@ class TypeDBSink(DataSink):
     """
     def __init__(self, connection, clear=False, import_type=None, **kwargs):
         super(TypeDBSink, self).__init__()
-        logger.debug(f'TypeDBSink: {connection}')
+        print(f'TypeDBSink: {connection}')
         self._stix_connection = connection
         self.uri = connection["uri"]
         self.port = connection["port"]
@@ -71,22 +71,22 @@ class TypeDBSink(DataSink):
             if clear:
                 load_schema(connection, "stix/schema/cti-schema-v2.tql", "Stix 2.1 Schema ")
                 self.loaded = load_markings(connection)
-                logger.debug("moving past load Stix schema")
+                print("moving past load Stix schema")
             # 3. Check for Stix Rules
             if clear and import_type["rules"]:
-                logger.debug("rules")
+                print("rules")
                 load_schema(connection, "stix/schema/cti-rules.tql", "Stix 2.1 Rules")
-                logger.debug("moving past load rules")
+                print("moving past load rules")
             # 3. Load the Stix Markings
             if clear and import_type["ATT&CK"]:
-                logger.debug("attack")
+                print("attack")
                 load_schema(connection, "stix/schema/cti-schema-v2.tql", "Stix 2.1 Schema ")
-                logger.debug("moving past load schema")
+                print("moving past load schema")
             # 3. Check for Stix Rules
             if clear and import_type["CACAO"]:
-                logger.debug("cacao")
+                print("cacao")
                 load_schema(connection, "stix/schema/cti-rules.tql", "Stix 2.1 Rules")
-                logger.debug("moving past load schema")
+                print("moving past load schema")
             
         except Exception as e:
             logger.error(f'Initialise TypeDB Error: {e}')                    
@@ -137,11 +137,11 @@ class TypeDBSink(DataSink):
                 local_obj = typedb.get(stixid)
                 dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(local_obj, self.import_type)
                 del_match, del_tql = delete_stix_object(local_obj, dep_match, dep_insert, indep_ql, core_ql, self.import_type)
-                logger.debug(' ---------------------------Delete Object----------------------')
-                logger.debug(f'dep_match -> {dep_match}\n dep_insert -> {dep_insert}')
-                logger.debug(f'indep_ql -> {indep_ql}\n dep_obj -> {dep_obj}')
-                logger.debug("=========================== delete typeql below ====================================")
-                logger.debug(f'del_match -> {del_match}\n del_tql -> {del_tql}')
+                print(' ---------------------------Delete Object----------------------')
+                print(f'dep_match -> {dep_match}\n dep_insert -> {dep_insert}')
+                print(f'indep_ql -> {indep_ql}\n dep_obj -> {dep_obj}')
+                print("=========================== delete typeql below ====================================")
+                print(f'del_match -> {del_match}\n del_tql -> {del_tql}')
                 if del_match == '' and del_tql == '':
                     continue
                 dep_obj["delete"] = del_match + '\n' + del_tql
@@ -151,27 +151,27 @@ class TypeDBSink(DataSink):
                     layers.append(dep_obj)
                 else:
                     layers, indexes, missing = add_delete_layers(layers, dep_obj, indexes, missing)
-                logger.debug(' ---------------------------Object Delete----------------------')
+                print(' ---------------------------Object Delete----------------------')
 
-            logger.debug("=========================== dependency indexes ====================================")
-            logger.debug(f'indexes -> {indexes}')
-            logger.debug("=========================== dependency indexes ====================================")
+            print("=========================== dependency indexes ====================================")
+            print(f'indexes -> {indexes}')
+            print("=========================== dependency indexes ====================================")
             ordered = layers + cleanup + cleanup
-            for layer in ordered:
-                logger.debug("666666666666666 delete 6666666666666666666666666666666666")
-                logger.debug(f'del query -> {layer["delete"]}')
-            logger.debug(f'\nordered -> {ordered}')
+            #for layer in ordered:
+                #print("666666666666666 delete 6666666666666666666666666666666666")
+                #rint(f'del query -> {layer["delete"]}')
+            print(f'\nordered -> {ordered}')
             with TypeDB.core_client(connection["uri"] + ":" + connection["port"]) as client:
                 with client.session(connection["database"], SessionType.DATA) as session:
                     for layer in ordered:
                         with session.transaction(TransactionType.WRITE) as write_transaction:
-                            logger.debug("77777777777777777 delete 777777777777777777777777777777777")
-                            logger.debug(f'del query -> {layer["delete"]}')
+                            print("7777777777777777777777777777777777777777777777777777777777")
+                            print(f'del query -> {layer["delete"]}')
                             query_future = write_transaction.query().delete(layer["delete"])
-                            logger.debug(f'typedb delete response ->\n{query_future.get()}')
-                            logger.debug("7777777777777777777777777777777777777777777777777777777777")
+                            print(f'typedb delete response ->\n{query_future.get()}')
+                            print("7777777777777777777777777777777777777777777777777777777777")
                             write_transaction.commit()
-                    logger.debug(' ---------------------------Object Delete----------------------')
+                    print(' ---------------------------Object Delete----------------------')
 
         except Exception as e:
             logger.error(f'Stix Object Deletion Error: {e}')
@@ -209,7 +209,7 @@ class TypeDBSink(DataSink):
         try:
             # 1. gather objects into a list
             obj_list = self._gather_objects(stix_data)
-            logger.debug(f'\n\n object list is  {obj_list}')
+            print(f'\n\n object list is  {obj_list}')
             # 2. for stix ibject in list
             for stix_dict in obj_list:
                 # 3. Parse stix objects and get typeql and dependency
@@ -220,7 +220,7 @@ class TypeDBSink(DataSink):
                 dep_obj["indep_ql"] = indep_ql
                 dep_obj["core_ql"] = core_ql
                 # 4. Order the list of stix objects, and collect errors
-                logger.debug(f'\ndep object {dep_obj}')
+                print(f'\ndep object {dep_obj}')
                 if len(layers) == 0:
                     # 4a. For the first record to order
                     missing = dep_obj['dep_list']
@@ -230,16 +230,16 @@ class TypeDBSink(DataSink):
                     # 4b. Add up and return the layers, indexes, missing and cyclical lists
                     add = 'add'
                     layers, indexes, missing, cyclical = sort_layers(layers, cyclical, indexes, missing, dep_obj, add)
-                    logger.debug(f'\npast sort {layers}')
 
+            print(f'\nid add, past sort {layers}')
             # 5. If missing then check to see if the records are in the database, or raise an error
             mset = set(missing)
-            logger.debug(f'missing stuff {len(missing)} - {len(set(missing))}')
-            logger.debug(f'mset {mset}')
+            print(f'missing stuff {len(missing)} - {len(set(missing))}')
+            print(f'mset {mset}')
             if mset:
                 list_in_database = check_stix_ids(list(mset), self._stix_connection)
                 real_missing = list(mset.difference(set(list_in_database)))
-                logger.debug(f'\nmissing {missing}\n\n loaded {real_missing}')
+                print(f'\nmissing {missing}\n\n loaded {real_missing}')
                 if real_missing:
                     raise Exception(f'Error: Missing Stix deopendencies, id={real_missing}')
             # 6. If cyclicla, just raise an error for the moment
@@ -247,16 +247,16 @@ class TypeDBSink(DataSink):
                 raise Exception(f'Error: Cyclical Stix Dependencies, id={cyclical}')
             # 7. Else go ahead and add the records to the database
             url = self.uri + ":" + self.port
-            logger.debug(f'url {url}')
+            print(f'url {url}')
             with TypeDB.core_client(url) as client:
                 with client.session(self.database, SessionType.DATA) as session:
-                    logger.debug(f'------------------------------------ TypeDB Sink Session Start --------------------------------------------')
+                    print(f'------------------------------------ TypeDB Sink Session Start --------------------------------------------')
                     for lay in layers:
-                        logger.debug(f'------------------------------------ Load Object --------------------------------------------')
-                        logger.debug(f' lay {lay}')
+                        print(f'------------------------------------ Load Object --------------------------------------------')
+                        print(f' lay {lay}')
                         self._submit_Stix_object(lay, session)
                     session.close()
-                    logger.debug(f'------------------------------------ TypeDB Sink Session Complete ---------------------------------')
+                    print(f'------------------------------------ TypeDB Sink Session Complete ---------------------------------')
 
         except Exception as e:
             logger.error(f'Stix Add Object Function Error: {e}')
@@ -265,20 +265,20 @@ class TypeDBSink(DataSink):
         """
           the details for the add details, checking what import_type of data object it is
         """
-        logger.debug(f" gethering ...{stix_data}")
-        logger.debug('----------------------------------------')
-        logger.debug(f'going into separate objects function {stix_data}')
-        logger.debug('-----------------------------------------------------')
+        print(f" gethering ...{stix_data}")
+        print('----------------------------------------')
+        print(f'going into separate objects function {stix_data}')
+        print('-----------------------------------------------------')
         
         if isinstance(stix_data, (v21.Bundle)):
-            logger.debug(f'isinstance Bundle')
+            print(f'isinstance Bundle')
             # recursively add individual STIX objects
-            logger.debug(f'obects are {stix_data["objects"]}')
+            print(f'obects are {stix_data["objects"]}')
             return stix_data.get("objects", [])
 
         elif isinstance(stix_data, _STIXBase):
-            logger.debug("base")
-            logger.debug(f'isinstance _STIXBase')
+            print("base")
+            print(f'isinstance _STIXBase')
             temp_list = []
             return temp_list.append(stix_data)
 
@@ -286,13 +286,13 @@ class TypeDBSink(DataSink):
             if stix_data.get("type", '') == 'bundle':
                 return stix_data.get("objects", [])
             else:
-                logger.debug("dcit")
-                logger.debug(f'isinstance dict')
+                print("dcit")
+                print(f'isinstance dict')
                 temp_list = []
                 return temp_list.append(stix_data)
 
         elif isinstance(stix_data, list):
-            logger.debug(f'isinstance list')
+            print(f'isinstance list')
             # recursively add individual STIX objects
             return stix_data
 
@@ -318,24 +318,24 @@ class TypeDBSink(DataSink):
                 insert_tql = ''
             else:
                 insert_tql = 'insert ' + indep_ql + dep_insert
-            logger.debug(f'match_tql string?-> {match_tql}')
-            logger.debug(f'insert_tql string?-> {insert_tql}')
-            logger.debug(f'----------------------------- Get Ready to Load Object -----------------------------')
+            print(f'match_tql string?-> {match_tql}')
+            print(f'insert_tql string?-> {insert_tql}')
+            print(f'----------------------------- Get Ready to Load Object -----------------------------')
             typeql_string = match_tql + insert_tql
             if not insert_tql:
                 logger.warning(f'Marking Object type {layer["type"]} already exists')
                 return
-            #logger.debug(typeql_string)
-            logger.debug('=============================================================')
+            #print(typeql_string)
+            print('=============================================================')
             with session.transaction(TransactionType.WRITE) as write_transaction:
-                logger.debug(f'inside session and ready to load')
+                print(f'inside session and ready to load')
                 insert_iterator = write_transaction.query().insert(typeql_string)
-                logger.debug(f'insert_iterator response ->\n{insert_iterator}')
+                print(f'insert_iterator response ->\n{insert_iterator}')
                 for result in insert_iterator:
-                    logger.debug(f'typedb response ->\n{result}')
+                    print(f'typedb response ->\n{result}')
                 
                 write_transaction.commit()
-                logger.debug(f'----------------------------- write_transaction.commit -----------------------------')
+                print(f'----------------------------- write_transaction.commit -----------------------------')
                 
         except Exception as e:
             logger.error(f'Stix Object Submission Error: {e}')
@@ -361,7 +361,7 @@ class TypeDBSource(DataSource):
     """
     def __init__(self, connection, import_type=None, **kwargs):
         super(TypeDBSource, self).__init__()
-        logger.debug(f'TypeDBSource: {connection}')
+        print(f'TypeDBSource: {connection}')
         self._stix_connection = connection
         self.uri = connection["uri"]
         self.port = connection["port"]
@@ -396,16 +396,16 @@ class TypeDBSource(DataSource):
         try:
             obj_var, type_ql = get_embedded_match(stix_id)
             match = 'match ' + type_ql
-            logger.debug(f' typeql -->: {match}')
+            print(f' typeql -->: {match}')
             g_uri = self.uri + ':' + self.port
             with TypeDB.core_client(g_uri) as client:
                 with client.session(self.database, SessionType.DATA) as session:
                     with session.transaction(TransactionType.READ) as read_transaction:
                         answer_iterator = read_transaction.query().match(match)
-                        #logger.debug((f'have read the query -> {answer_iterator}'))
+                        #print((f'have read the query -> {answer_iterator}'))
                         stix_dict = convert_ans_to_stix(answer_iterator, read_transaction, 'STIX21')
                         stix_obj = parse(stix_dict)
-                        logger.debug(f'stix_obj -> {stix_obj}')
+                        print(f'stix_obj -> {stix_obj}')
                         with open("export_final.json", "w") as outfile:  
                             json.dump(stix_dict, outfile)
                 

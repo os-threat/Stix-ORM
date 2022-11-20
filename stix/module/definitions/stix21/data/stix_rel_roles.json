@@ -168,6 +168,12 @@
     "target": "analysed"
   },
   {
+    "stix": "analysis-of",
+    "typeql": "analysis-of",
+    "source": "analysing",
+    "target": "analysed"
+  },
+  {
     "stix": "impersonates",
     "typeql": "impersonate",
     "source": "impersonating",
