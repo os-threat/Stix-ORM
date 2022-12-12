@@ -353,7 +353,7 @@ if __name__ == '__main__':
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
     #test_initialise()
     #load_file_list(path1, file_list)
-    #load_file(data_path + file2)
+    load_file(data_path + file2)
     print("=====")
     print("=====")
     print("=====")
@@ -364,6 +364,6 @@ if __name__ == '__main__':
     #test_delete_dir(path1)
     #clean_db()
     #cert_test(cert_root+cert11)
-    cert_dict(cert_root, certs)
+    #cert_dict(cert_root, certs)
     #test_get_ids(connection, import_type)
     #test_ids_loaded(id_list2, connection)
