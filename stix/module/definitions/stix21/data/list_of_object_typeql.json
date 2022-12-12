@@ -22,8 +22,8 @@
       "hashes": "",
       "external_id": "external-id"
     },
-    "owner": "referencing",
-    "pointed_to": "referenced",
+    "owner": "referenced",
+    "pointed_to": "referencing",
     "object": "external-reference"
   },
   {

@@ -59,7 +59,7 @@ stix-object sub stix-entity,
 				owns labels,
 				owns confidence,
 				owns langs,
-				plays external-references:referencing,
+				plays external-references:referenced,
 				plays sighting:sighting-of,
 
 				plays indicates:indicated;
@@ -93,7 +93,7 @@ external-reference sub stix-sub-object,
 	owns url-link, 
 	owns external-id, 
 	plays hashes:owner,
-	plays external-references:referenced;
+	plays external-references:referencing;
 
 
 # 2.7 Hash
@@ -666,7 +666,7 @@ stix-core-relationship sub relation,
 	plays obj-refs:referred,
 	plays object-marking:marked,
 	plays granular-marking:object, 
-	plays external-references:referencing,
+	plays external-references:referenced,
 	plays created-by:created;
 
 
@@ -1143,7 +1143,7 @@ process sub stix-cyber-observable-object,
 	owns created-time,
 	owns cwd,
 	owns command-line,
-	plays environment-variables:process, # TODO
+	plays environment-variables:process,
 
 	plays open-connections:process,
 	plays user-created-by:created,

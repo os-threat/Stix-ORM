@@ -2,25 +2,27 @@
 
 At high level, the Stix model transforms quite cleanly into a TypeQL model, and if one understands how the transforms work then it is easy to predict the TypeQL syntax. First one needs to consider the basic STIX model.
 
-The STIX Model is based on six different types of objects, but the bulk of the system can be understood by examining just three:
+## STIX Model Overview
+
+The STIX Model is based on seven different types of objects, as can be seen in the table below, and there are a number of common properties across the objects.
+
+
+
+<img src="../docs/images/stix-core.png?raw=true" width="600" />
+
+from the [Stix 2.1 Standard](https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_xzbicbtscatx)
+
+The majority of the STIX 2.1 system can be understood by examining the three Core Objects:
 1. 18 x STIX Domain Objects
 2. 18 x STIX Cyber Observable Objects
 3. 31 x STIX Relationship Objects
 
-These two types of entities and one type of relation contain the bulk of the meaning expressed by Stix. By understanding the common features of these objects we cam quickly get an overview of how the whole model works. First, we examine the obects at high level.
-
+By understanding the common features of these objects we cam quickly get an overview of how the whole model works. 
 There are two different types of similarities through the Stix standard:
-1. Similarities based on object ierarchy, such as common properties
-2. Similarities based on underlying data shape
+1. Similarities based on object ierarchy, such as common properties in the table above
+2. Similarities based on underlying data shape, as outlined in the discussion below.
 
-The common properties that are widely used are  demonstrated in the image below.
-
-<img src="../docs/images/stix-core.png?raw=true" width="600" />
-
-## STIX Model Overview
-The STIX model is based on more than 70 core objects (entities and relations), which can be considered as a flat core object with 7 optional sub objects.
-
-<img src="../docs/images/Stix-Generic-Object.png?raw=true" width="400" />
+Firstly, consider the construction of each of the 3 types of objects.
 
 
 
@@ -186,7 +188,9 @@ The generic flat stix object has some key features. It is an entity, or relation
 - an "id" property, which is a unique key field that contains the type of the object and a UUID
 - additional properties, which are a basic datatype: string, integer, double, boolean or datetime stamps
 
-An example of a flat Stix object, with no sub-object shapes is shown below, an identity object.
+<img src="../docs/images/Stix-Generic-Object.png?raw=true" width="600" />
+
+An example of a flat Stix object, with no sub-object shapes is shown below, an identity object. One can see that the object only has properties comprised of basic datatypes.
 ```json
         {
             "type": "identity",
@@ -200,7 +204,7 @@ An example of a flat Stix object, with no sub-object shapes is shown below, an i
             "contact_information": "disco-team@stealthemail.com"
         }
 ```
-We can add an additional sub-type to the generic flat object, and this is where there is a string of basic datatypes. In this case, then the below threat-actor object with lists of strings is also a generic flat object.
+We can add an additional sub-type to the generic flat object, and this is where there is a list of basic datatypes. In this case, then the below threat-actor object with lists of strings is also a generic flat object.
 ```json
         {
             "type": "threat-actor",
@@ -227,9 +231,30 @@ We can add an additional sub-type to the generic flat object, and this is where 
             "primary_motivation": "personal-gain"
         }
 ```
-In short, a generic flat object is any data object where it consists of an entity or relation, with perties comprised of basic datatypes or lists of basic datatypes.
+In short, a generic flat object is any entity or relation, with properties that are either basic datatypes or lists of basic datatypes. Any time a proeprty name represents a different shape, like a dict, list of dicts, a key-value store, then we can consider it a sub-object. This is shown in the diagram below.
+```mermaid
+  flowchart LR
+    subgraph obj0 [Stix 2.1 Object]
+        direction TB
+        c1([Stix Object])
+        a1[Attribute]
+        a2[Atomic Value]
+        a3[Attribute]
+        a4[List of Values]
+        c1-->a1
+        c1-->a3 
+        subgraph ide1 [Flat Object]
+            direction LR
+            a1-->a2
+            a3-->a4
+        end
+    end
+```
 
-## Hashes Sub Onject
+
+There are two types of sub objects, ones that are common properties in the table, and others that are based on the common data shape.
+
+## Hashes Sub Object
 Hashes are actually a Basic Sub Object (i.e. an entity and relation that acts )
 
 ```json
@@ -245,11 +270,116 @@ Hashes are actually a Basic Sub Object (i.e. an entity and relation that acts )
         "name": "resume.pdf"
     }
 ```
+This is shown in the diagram below.
 
+```mermaid
+  flowchart LR
+    subgraph obj0 [Stix 2.1 Object]
+        direction TB
+        c1([Stix Object])
+        a1[Stix-Attribute]
+        a2[Atomic Value]
+        a3[Stix-Attribute]
+        a4[List of Values]
+        a5[Hash Type]
+        a6[Hash Value]
+        c1-->a1
+        c1-->a3 
+        c1-->a5
+        subgraph ide1 [Flat Object]
+            direction LR
+            a1-->a2
+            a3-->a4
+        end
+        subgraph ide2 [Hashes]
+            direction LR
+            a5-->a6
+        end
+    end
+```
 
 ## Granular Markings Sub Object
+The Granular MArkings sub object is actually just a list of objects, but it has its own category as it is a common property.
 
-## Embedded Relarion Sub Object
+```json
+{
+    "type": "indicator",
+    "spec_version": "2.1",
+    "id": "indicator--1ed8caa7-a708-4706-b651-f1186ede6ca1",
+    "created_by_ref": "identity--b38dfe21-7477-40d1-aa90-5c8671ce51ca",
+    "created": "2017-04-27T16:18:24.318Z",
+    "modified": "2017-04-27T16:18:24.318Z",
+    "name": "Fake email address",
+    "description": "Known to be used by The Joker.",
+    "indicator_types": [
+        "malicious-activity",
+        "attribution"
+    ],
+    "pattern": "[email-message:from_ref.value MATCHES '.+\\\\banking@g0thamnatl\\\\.com$']",
+    "pattern_type": "stix",
+    "valid_from": "2017-04-27T16:18:24.318Z",
+    "granular_markings": [
+        {
+            "marking_ref": "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed",
+            "selectors": [
+                "description"
+            ]
+        },
+        {
+            "marking_ref": "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
+            "selectors": [
+                "indicator_types.[1]"
+            ]
+        },
+        {
+            "marking_ref": "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
+            "selectors": [
+                "indicator_types.[0]",
+                "name",
+                "pattern"
+            ]
+        }
+    ]
+}
+```
+
+
+```mermaid
+  flowchart TD
+    subgraph obj0 [Stix 2.1 Object]
+        direction TB
+        c1([Stix Object])
+        a1[Attribute]
+        a2[Atomic Value]
+        a3[Attribute]
+        a4[List of Values]
+        a7[Marking Attribute]
+        a8[Marking Value]
+        a9[Marking Attribute]
+        a10[Marking Value]
+        c1-->a1
+        c1-->a3 
+        c1--granular markings-->ide2
+        subgraph ide1 [Flat Object]
+            direction LR
+            a1-->a2
+            a3-->a4
+        end
+        subgraph ide2 [List of Granular Markings]
+        direction TB
+            subgraph ide3 [Granular Marking]
+                direction TB
+                a7-->a8
+            end
+            subgraph ide4 [Granular Marking]
+                direction TB
+                a9-->a10
+            end
+        end
+    end
+```
+
+## Embedded Relation Sub Object
 
 ## List of Objects
 
