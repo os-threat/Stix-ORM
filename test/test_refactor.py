@@ -292,7 +292,7 @@ if __name__ == '__main__':
     f25 = 'grouping.json'
     file_list = [f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,f21,f22,f23,f24,f25]
 
-    data_path = "data/examples/"
+    data_path = "../data/examples/"
     path1 = "data/standard/"
     cert_root = "data/stix_cert_data"
     cert1 = "/attack_pattern_sharing/"
