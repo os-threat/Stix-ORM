@@ -108,7 +108,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Observed-Data Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\observed-data.png)
+![Observed-Data Example](./img/observed-data.png)
 
 ## Retrieving the Example Observed-Data  in Python
 The Python retrieval statement

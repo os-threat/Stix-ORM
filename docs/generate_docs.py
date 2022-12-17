@@ -91,7 +91,7 @@ def generate_md(dir, fields, row):
     print(f'```typeql\n{tql_match}\n```\n', file=outfile)
     # 7. Setup Force Graph Image Section
     print(f'\nwill retrieve the example attack-pattern object in Vaticle Studio', file=outfile)
-    imagefile = dir+"\\img\\"+image
+    imagefile = "./img/"+image
     print(f'![{obj} Example]({imagefile})', file=outfile)
     # 8. Setup Python Match Section
     print(f'\n## Retrieving the Example {obj}  in Python', file=outfile)

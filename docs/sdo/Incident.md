@@ -83,7 +83,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Incident Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\incident.png)
+![Incident Example](./img/incident.png)
 
 ## Retrieving the Example Incident  in Python
 The Python retrieval statement

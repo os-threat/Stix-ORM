@@ -120,7 +120,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Location Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\location.png)
+![Location Example](./img/location.png)
 
 ## Retrieving the Example Location  in Python
 The Python retrieval statement

@@ -93,7 +93,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Opinion Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\opinion.png)
+![Opinion Example](./img/opinion.png)
 
 ## Retrieving the Example Opinion  in Python
 The Python retrieval statement
