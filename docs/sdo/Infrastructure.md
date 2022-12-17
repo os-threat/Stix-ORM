@@ -80,7 +80,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Infrastructure Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\infrastructure.png)
+![Infrastructure Example](./img/infrastructure.png)
 
 ## Retrieving the Example Infrastructure  in Python
 The Python retrieval statement

@@ -113,7 +113,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Intrusion-Set Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\intrusion-set.png)
+![Intrusion-Set Example](./img/intrusion-set.png)
 
 ## Retrieving the Example Intrusion-Set  in Python
 The Python retrieval statement

@@ -101,7 +101,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Grouping Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\grouping.png)
+![Grouping Example](./img/grouping.png)
 
 ## Retrieving the Example Grouping  in Python
 The Python retrieval statement

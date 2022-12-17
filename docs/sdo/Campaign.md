@@ -99,7 +99,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Campaign Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\campaign.png)
+![Campaign Example](./img/campaign.png)
 
 ## Retrieving the Example Campaign  in Python
 The Python retrieval statement

@@ -115,7 +115,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Threat-Actor Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\threat-actor.png)
+![Threat-Actor Example](./img/threat-actor.png)
 
 ## Retrieving the Example Threat-Actor  in Python
 The Python retrieval statement

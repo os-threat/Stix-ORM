@@ -111,7 +111,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Indicator Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\indicator.png)
+![Indicator Example](./img/indicator.png)
 
 ## Retrieving the Example Indicator  in Python
 The Python retrieval statement

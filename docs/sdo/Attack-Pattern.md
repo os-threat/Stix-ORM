@@ -109,7 +109,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Attack-Pattern Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\attack-pattern.png)
+![Attack-Pattern Example](./img/attack-pattern.png)
 
 ## Retrieving the Example Attack-Pattern  in Python
 The Python retrieval statement

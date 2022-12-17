@@ -79,7 +79,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Identity Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\identity.png)
+![Identity Example](./img/identity.png)
 
 ## Retrieving the Example Identity  in Python
 The Python retrieval statement

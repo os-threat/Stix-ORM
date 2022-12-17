@@ -118,7 +118,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Report Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\report.png)
+![Report Example](./img/report.png)
 
 ## Retrieving the Example Report  in Python
 The Python retrieval statement

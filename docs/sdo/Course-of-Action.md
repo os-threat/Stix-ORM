@@ -89,7 +89,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Course-of-Action Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\course-of-action.png)
+![Course-of-Action Example](./img/course-of-action.png)
 
 ## Retrieving the Example Course-of-Action  in Python
 The Python retrieval statement

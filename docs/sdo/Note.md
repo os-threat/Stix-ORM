@@ -120,7 +120,7 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Note Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\note.png)
+![Note Example](./img/note.png)
 
 ## Retrieving the Example Note  in Python
 The Python retrieval statement
