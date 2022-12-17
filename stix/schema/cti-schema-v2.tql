@@ -484,7 +484,7 @@ malware-analysis sub stix-domain-object,
 
 # 4.13 Note
 note sub stix-domain-object, 
-	owns abstract-note, 
+	owns note-abstract, 
 	owns content, 
 	owns authors,
 
@@ -617,7 +617,7 @@ tool sub stix-domain-object,
 	# created-by
 	# Object Marking
 
-# 4.19 Vulnerability TODO
+# 4.19 Vulnerability
 vulnerability sub stix-domain-object,
 	owns name, 
 	owns description,
@@ -1285,10 +1285,7 @@ x509-certificate sub stix-cyber-observable-object,
 	
 
 ##### 7 STIX™ Meta Objects #####
-stix-meta-object sub stix-object,
-    abstract,
-    owns created,
-    owns modified;
+
 
 # 7.1 Language Content 
 
@@ -1296,7 +1293,7 @@ stix-meta-object sub stix-object,
 
 # 7.2 Data markings - this describes how data can be used/shared
 
-marking-definition sub stix-meta-object,
+marking-definition sub stix-sub-object,
 	owns name, 
 	owns spec-version,
 	plays created-by:created,
@@ -1707,7 +1704,7 @@ stix-attribute-string sub attribute, value string, abstract,
 	result-name sub stix-attribute-string;
 	result sub stix-attribute-string;
 
-	abstract-note sub stix-attribute-string;
+	note-abstract sub stix-attribute-string;
 	content sub stix-attribute-string;
 	report-type sub stix-attribute-string;
 	explanation sub stix-attribute-string;

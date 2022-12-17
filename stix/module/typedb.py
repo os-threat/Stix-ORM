@@ -325,7 +325,7 @@ class TypeDBSink(DataSink):
             if not insert_tql:
                 logger.warning(f'Marking Object type {layer["type"]} already exists')
                 return
-            #print(typeql_string)
+            print(typeql_string)
             print('=============================================================')
             with session.transaction(TransactionType.WRITE) as write_transaction:
                 print(f'inside session and ready to load')

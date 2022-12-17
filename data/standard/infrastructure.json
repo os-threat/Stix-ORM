@@ -1,13 +1,13 @@
 [
     {
-        "type":"infrastructure",      
-        "spec_version": "2.1",      
-        "id":"infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d",      
-        "created":"2016-05-07T11:22:30.000Z",      
-        "modified":"2016-05-07T11:22:30.000Z",      
-        "name":"Poison Ivy C2",      
-        "infrastructure_types": ["command-and-control"]      
-      },      
+        "type":"infrastructure",
+        "spec_version": "2.1",
+        "id":"infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d",
+        "created":"2016-05-07T11:22:30.000Z",
+        "modified":"2016-05-07T11:22:30.000Z",
+        "name":"Poison Ivy C2",
+        "infrastructure_types": ["command-and-control"]
+      },
       {      
         "type": "ipv4-addr",      
         "spec_version": "2.1",      
