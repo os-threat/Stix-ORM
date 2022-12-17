@@ -1,5 +1,7 @@
 """Python STIX2 TypeDB Source/Sink"""
 import json
+import pathlib
+
 from typedb.client import *
 
 from .import_stix_to_typeql import raw_stix2_to_typeql, stix2_to_match_insert
@@ -45,9 +47,18 @@ class TypeDBSink(DataSink):
         - import_type (str): It forces the parser to use either the stix2.1, or mitre att&ck
 
     """
-    def __init__(self, connection, clear=False, import_type=None, **kwargs):
+    def __init__(self,
+                 connection: Dict[str, str],
+                 clear=False,
+                 import_type=None,
+                 schema_path :Optional[str] =None, **kwargs):
         super(TypeDBSink, self).__init__()
         logger.debug(f'TypeDBSink: {connection}')
+
+        assert connection["uri"] is not None
+        assert connection["port"] is not None
+        assert connection["database"] is not None
+
         self._stix_connection = connection
         self.uri: str = connection["uri"]
         self.port: str = connection["port"]
@@ -62,30 +73,39 @@ class TypeDBSink(DataSink):
         self.import_type = import_type
         print(f'connection {self._stix_connection}')
         print(f'\import type{import_type}')
-        
+
+        if schema_path is None:
+            schema_path = str(pathlib.Path.parent)
+
+        cti_schema_path = pathlib.Path(schema_path).joinpath("stix/schema/cti-schema-v2.tql")
+        assert cti_schema_path.is_file()
+
+        cti_schema_rules_path = pathlib.Path(schema_path).joinpath("stix/schema/cti-rules.tql")
+        assert cti_schema_rules_path.is_file()
+
         try:
             # 1. Setup database
             setup_database(self._stix_connection, clear)
 
             # 2. Load the Stix schema
             if clear:
-                load_schema(connection, "stix/schema/cti-schema-v2.tql", "Stix 2.1 Schema ")
+                load_schema(connection, str(cti_schema_path), "Stix 2.1 Schema ")
                 self.loaded = load_markings(connection)
                 logger.debug("moving past load Stix schema")
             # 3. Check for Stix Rules
             if clear and import_type["rules"]:
                 logger.debug("rules")
-                load_schema(connection, "stix/schema/cti-rules.tql", "Stix 2.1 Rules")
+                load_schema(connection, str(cti_schema_rules_path), "Stix 2.1 Rules")
                 logger.debug("moving past load rules")
             # 3. Load the Stix Markings
             if clear and import_type["ATT&CK"]:
                 logger.debug("attack")
-                load_schema(connection, "stix/schema/cti-schema-v2.tql", "Stix 2.1 Schema ")
+                load_schema(connection, str(cti_schema_path), "Stix 2.1 Schema ")
                 logger.debug("moving past load schema")
             # 3. Check for Stix Rules
             if clear and import_type["CACAO"]:
                 logger.debug("cacao")
-                load_schema(connection, "stix/schema/cti-rules.tql", "Stix 2.1 Rules")
+                load_schema(connection, str(cti_schema_rules_path), "Stix 2.1 Rules")
                 logger.debug("moving past load schema")
             
         except Exception as e:
@@ -94,6 +114,12 @@ class TypeDBSink(DataSink):
     @property
     def stix_connection(self):
         return self._stix_connection
+
+    def clear_db(self):
+        g_uri = self.uri + ':' + self.port
+        with TypeDB.core_client(g_uri) as client:
+            with client.session( self.database, SessionType.DATA) as session:
+                session.database().delete()
 
     def get_stix_ids(self):
         """ Get all the stix-ids in a database, should be moved to typedb file
@@ -181,7 +207,40 @@ class TypeDBSink(DataSink):
             if 'core_ql' in locals(): logger.error(f'core_ql -> {core_ql}')
             raise
 
-    def add(self, stix_data=None):
+    def __get_core_client(self) -> TypeDBClient:
+        typedb_url = self.uri + ":" + self.port
+        return TypeDB.core_client(typedb_url)
+
+    def __get_datatype_session(self) -> TypeDBSession:
+        return self.__get_core_client().session(self.database, SessionType.DATA)
+
+    def __get_read_transaction(self) -> TypeDBTransaction:
+        return self.__get_datatype_session().transaction(TransactionType.READ)
+
+    def get_stix_ids(self):
+        """ Get all the stix-ids in a database, should be moved to typedb file
+
+        Returns:
+            id_list : list of the stix-ids in the database
+        """
+        id_list: List[str] = []
+        get_ids = 'match $ids isa stix-id;'
+
+        with self.__get_core_client() as client:
+            with client.session(self.database, SessionType.DATA) as session:
+                with session.transaction(TransactionType.READ) as read_transaction:
+                    answer_iterator = read_transaction.query().match(get_ids)
+                    ids = [ans.get("ids") for ans in answer_iterator]
+                    for sid_obj in ids:
+                        sid: str = sid_obj.get_value()
+                        if sid in marking:
+                            continue
+                        else:
+                            id_list.append(sid)
+        return id_list
+
+
+    def add(self, stix_data: Optional[List[dict]]=None):
         """Add STIX objects to the typedb server.
             1. Gather objects into a list
             2. For each object
@@ -361,27 +420,40 @@ class TypeDBSource(DataSource):
         - import_type (str): It forces the parser to use either the stix2.1, or mitre att&ck
 
     """
-    def __init__(self, connection, import_type=None, **kwargs):
+    def __init__(self, connection: Dict[str, str], import_type=None, **kwargs):
         super(TypeDBSource, self).__init__()
         logger.debug(f'TypeDBSource: {connection}')
+
+        assert connection["uri"] is not None
+        assert connection["port"] is not None
+        assert connection["database"] is not None
+
         self._stix_connection = connection
         self.uri = connection["uri"]
         self.port = connection["port"]
         self.database = connection["database"]
         self.user = connection["user"]
         self.password = connection["password"]
-        self.import_type = import_type
-        if import_type is None:
-            import_type = {"STIX21": True, "CVE": False, "identity": False, "location": False, "rules": False}
-            import_type.update({"ATT&CK": False, "ATT&CK_Versions": ["12.0"],
-                                "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"], "CACAO": False})
-        self.import_type = import_type
+        self.import_type = self.__default_import_type() if import_type is None else import_type
+
+    def __default_import_type(self):
+        import_type = {"STIX21": True,
+                       "CVE": False,
+                       "identity": False,
+                       "location": False,
+                       "rules": False}
+        import_type.update({"ATT&CK": False, "ATT&CK_Versions": ["12.0"],
+                            "ATT&CK_Domains": ["enterprise-attack",
+                                               "mobile-attack",
+                                               "ics-attack"],
+                            "CACAO": False})
+        return import_type
 
     @property
     def stix_connection(self):
         return self._stix_connection
 
-    def get(self, stix_id, _composite_filters=None):
+    def get(self, stix_id: str, _composite_filters=None):
         """Retrieve STIX object from file directory via STIX ID.
 
         Args:
