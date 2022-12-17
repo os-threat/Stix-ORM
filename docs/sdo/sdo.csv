@@ -335,7 +335,41 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""identity--8c6af861-7b20-41ef-9b59-6344fd872a8f"")"
-,incident-table.csv,Incident,Note: The Incident object in STIX 2.1 is a stub. It is included to support basic use cases but does not contain properties to represent metadata about incidents. Future STIX 2 releases will expand it to include these capabilities.  It is suggested that it is used as an extension point for an Incident object defined using the extension facility described in section 7.3.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_sczfhw64pjxt,,,,"from stix.module.typedb import TypeDBSink, TypeDBSource
+incident.png,incident-table.csv,Incident,Note: The Incident object in STIX 2.1 is a stub. It is included to support basic use cases but does not contain properties to represent metadata about incidents. Future STIX 2 releases will expand it to include these capabilities.  It is suggested that it is used as an extension point for an Incident object defined using the extension facility described in section 7.3.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_sczfhw64pjxt,"{
+    ""type"": ""incident"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""incident--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f"",
+    ""created_by_ref"": ""identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65"",
+    ""created"": ""2016-04-06T20:03:48.000Z"",
+    ""modified"": ""2016-04-06T20:03:48.000Z"",
+    ""name"": ""Incident 43"",
+    ""description"": ""This incident addresses APT 28 ...""
+  }","match  
+    $identity0 isa identity, 
+        has stix-id ""identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65"";
+insert 
+    $incident isa incident,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has created $created,
+        has modified $modified,
+        has name $name,
+        has description $description;
+    
+    $stix-type ""incident"";
+    $spec-version ""2.1"";
+    $stix-id ""incident--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f"";
+    $created 2016-04-06T20:03:48.000;
+    $modified 2016-04-06T20:03:48.000;
+    $name ""Incident 43"";
+    $description ""This incident addresses APT 28 ..."";
+    
+    $created-by0 (created:$incident, creator:$identity0) isa created-by;","match
+    $a isa incident,
+        has stix-id ""incident--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f"",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -357,10 +391,7 @@ import_type = {
 }
 
 typedb = TypeDBSource(connection, import_type)
-stix_obj = typedb.get(""match
-    $a isa campaign,
-        has stix-id ""campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e"",
-        has $b;"")"
+stix_obj = typedb.get(""incident--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f"")"
 indicator.png,indicator-table.csv,Indicator,"Indicators contain a pattern that can be used to detect suspicious or malicious cyber activity. For example, an Indicator may be used to represent a set of malicious domains and use the STIX Patterning Language (see section 9) to specify these domains.
 
  
