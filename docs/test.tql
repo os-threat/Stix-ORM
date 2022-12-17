@@ -1,0 +1,31 @@
+match
+    $identity0 isa identity, has stix-id "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283";
+    $indicator01 isa indicator, has stix-id "indicator--26ffb872-1dd9-446e-b6f5-d58527e5b5d2";
+    $campaign11 isa campaign, has stix-id "campaign--83422c77-904c-4dc1-aff5-5c38f3a2c55c";
+    $stix-core-relationship21 isa stix-core-relationship, has stix-id "relationship--f82356ae-fe6c-437c-9c24-6b64314ae68a";
+
+insert
+    $report isa report,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has created $created,
+        has modified $modified,
+        has name $name,
+        has description $description,
+        has report-type $report_types0,
+        has published $published;
+
+    $stix-type "report";
+    $spec-version "2.1";
+    $stix-id "report--84e4d88f-44ea-4bcd-bbf3-b2c1c320bcbd";
+    $created 2015-12-21T19:59:11.000;
+    $modified 2016-05-21T19:59:11.000;
+    $name "The Black Vine Cyberespionage Group";
+    $description "A simple report with an indicator and campaign";
+    $report_types0 "campaign";
+    $published 2016-01-20T17:00:00.000;
+
+    $created-by0 (created:$report, creator:$identity0) isa created-by;
+
+    $obj-refs1 (object:$report, referred:$indicator01, referred:$campaign11, referred:$stix-core-relationship21) isa obj-refs;

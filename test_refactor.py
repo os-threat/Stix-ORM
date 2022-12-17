@@ -303,7 +303,10 @@ if __name__ == '__main__':
     f23 = 'file_ntfs_stream.json'
     f24 = 'file_pdf_basic.json'
     f25 = 'grouping.json'
+    f26 = 'note.json'
     file_list = [f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,f21,f22,f23,f24,f25]
+    group_list = [f2, f3, f21, f25]
+    note_list = [f2, f8, f26]
 
     data_path = "data/examples/"
     path1 = "data/standard/"
@@ -344,6 +347,7 @@ if __name__ == '__main__':
     file7 = "report.json"
     file8 = "sighting_observable.json"
     file9 = "threat_actor.json"
+    mitre_data = "data/mitre/enterprise-attack.json"
 
     mitre = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack-12.0.json"
 
@@ -352,8 +356,9 @@ if __name__ == '__main__':
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
     #test_initialise()
-    #load_file_list(path1, file_list)
-    load_file(data_path + file2)
+    #load_file_list(path1, note_list)
+    #load_file(mitre_data)
+    load_file(data_path + file7)
     print("=====")
     print("=====")
     print("=====")

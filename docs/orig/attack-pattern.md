@@ -1,4 +1,4 @@
-## Attack-Pattern Domain Object
+# Attack-Pattern Domain Object
 
 Attack Patterns are a type of TTP that describe ways that adversaries attempt to compromise targets. Attack Patterns are used to help categorize attacks, generalize specific attacks to the patterns that they follow, and provide detailed information about how attacks are performed. An example of an attack pattern is "spear phishing": a common type of attack where an attacker sends a carefully crafted e-mail message to a party with the intent of getting them to click a link or open an attachment to deliver malware. Attack Patterns can also be more specific; spear phishing as practiced by a particular threat actor (e.g., they might generally say that the target won a contest) can also be an Attack Pattern. 
 
@@ -7,7 +7,7 @@ The Attack Pattern SDO contains textual descriptions of the pattern along with r
 [Reference in Stix2.1 Standard](https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_axjijf603msy) 
 
 
-### Stix 2.1 Properties Converted to TypeQL
+## Stix 2.1 Properties Converted to TypeQL
 Mapping of the Stix Attack Pattern Properties to TypeDB
 
 | Stix 2.1 Property   |           Schema Name            | Required  Optional |      Schema Object       | Schema Parent |
@@ -32,7 +32,7 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 | extensions          |               n/a                |        n/a         |           n/a            |      n/a      |
 
 
-### Attack Pattern Example in JSON
+## Attack Pattern Example in JSON
 The original JSON, accessible in the Python environment
 
 ```json
@@ -61,7 +61,7 @@ The original JSON, accessible in the Python environment
 }
 ```
 
-### Attack Pattern Example Insert Statement in TypeQL
+## Attack Pattern Example Insert Statement in TypeQL
 The TypeQL insert statement
 
 ```typeql
@@ -99,7 +99,7 @@ insert
 ```
 
 
-### Retrieving the Example Attack-Pattern in Typeql
+## Retrieving the Example Attack-Pattern in TypeQL
 The typeQL match statement
 
 ```typeql
@@ -113,10 +113,10 @@ match
 ```
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Attack Pattern Example](img/attack-pattern.png)
+![Attack Pattern Example](../sdo/img/attack-pattern.png)
 
 
-### Rtrieving the Example Attack-Pattern in Python
+## Rtrieving the Example Attack-Pattern in Python
 The Python retrieval statement
 
 ```python

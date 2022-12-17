@@ -93,6 +93,8 @@ def raw_stix2_to_typeql(stix_object, import_type=None):
     """
     if import_type is None:
         import_type = ['STIX21']
+    if stix_object.get("x_mitre_version"):
+        dep_match, dep_insert, indep_ql, core_ql, dep_obj = sdo_to_typeql(stix_object, import_type)
     if is_sdo(stix_object):
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = sdo_to_typeql(stix_object, import_type)
     elif is_sro(stix_object):

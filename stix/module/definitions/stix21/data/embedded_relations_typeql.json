@@ -222,6 +222,12 @@
     "typeql": "x-mitre-data-source"
   },
   {
+    "rel": "x_mitre_modified_by_ref",
+    "owner": "modified",
+    "pointed-to": "modifier",
+    "typeql": "mitre-modified-by-ref"
+  },
+  {
     "rel": "object_ref",
     "owner": "container",
     "pointed-to": "content",
