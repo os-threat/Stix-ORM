@@ -30,26 +30,60 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 ## The Example Incident in JSON
 The original JSON, accessible in the Python environment
 ```json
-
+{
+    "type": "incident",
+    "spec_version": "2.1",
+    "id": "incident--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f",
+    "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
+    "created": "2016-04-06T20:03:48.000Z",
+    "modified": "2016-04-06T20:03:48.000Z",
+    "name": "Incident 43",
+    "description": "This incident addresses APT 28 ..."
+  }
 ```
 
 
 ## Inserting the Example Incident in TypeQL
 The TypeQL insert statement
 ```typeql
-
+match  
+    $identity0 isa identity, 
+        has stix-id "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65";
+insert 
+    $incident isa incident,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has created $created,
+        has modified $modified,
+        has name $name,
+        has description $description;
+    
+    $stix-type "incident";
+    $spec-version "2.1";
+    $stix-id "incident--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f";
+    $created 2016-04-06T20:03:48.000;
+    $modified 2016-04-06T20:03:48.000;
+    $name "Incident 43";
+    $description "This incident addresses APT 28 ...";
+    
+    $created-by0 (created:$incident, creator:$identity0) isa created-by;
 ```
 
 ## Retrieving the Example Incident in TypeQL
 The typeQL match statement
 
 ```typeql
-
+match
+    $a isa incident,
+        has stix-id "incident--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;
 ```
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Incident Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\)
+![Incident Example](C:\Users\brett\PycharmProjects\Stix-ORM\docs\sdo\img\incident.png)
 
 ## Retrieving the Example Incident  in Python
 The Python retrieval statement
@@ -77,9 +111,6 @@ import_type = {
 }
 
 typedb = TypeDBSource(connection, import_type)
-stix_obj = typedb.get("match
-    $a isa campaign,
-        has stix-id "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
-        has $b;")
+stix_obj = typedb.get("incident--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f")
 ```
 
