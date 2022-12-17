@@ -116,7 +116,8 @@ def load_typeql_data(data_list, stix_connection):
                 write_transaction.commit()
 
 
-def check_stix_ids(id_list, stix_connection):
+def check_stix_ids(id_list: List[str],
+                   stix_connection: Dict[str, str]):
     """ Get all the stix-ids in a database, should be moved to typedb file
 
     Returns:

@@ -2,6 +2,7 @@ import json
 import types
 import datetime
 import re
+from typing import List
 
 from stix2 import *
 from stix2.v21 import *
@@ -23,21 +24,26 @@ logger = logging.getLogger(__name__)
 #---------------------------------------------------
 
 
-def delete_stix_object(stix_object, dep_match, dep_insert, indep_ql, core_ql, import_type):
+def delete_stix_object(stix_object,
+                       dep_match: str,
+                       dep_insert: str,
+                       indep_ql: str,
+                       core_ql: str,
+                       import_type) -> [str, str]:
     if is_sdo(stix_object):
         total_props, obj_tql = sdo_to_data(stix_object, import_type)
-        var_name = get_obj_var(indep_ql)
-        tql_name = stix_object.type
+        var_name: List[str] = get_obj_var(indep_ql)
+        tql_name: str = stix_object.type
         del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, tql_name)
     elif is_sro(stix_object):
         total_props, obj_tql = sro_to_data(stix_object, import_type)
-        var_name = get_obj_var(dep_insert)
-        tql_name = get_tql_name(dep_insert)[0]
+        var_name: List[str] = get_obj_var(dep_insert)
+        tql_name: str = get_tql_name(dep_insert)[0]
         del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, tql_name)
     elif is_sco(stix_object):
         total_props, obj_tql = sco_to_data(stix_object, import_type)
-        var_name = get_obj_var(core_ql)
-        tql_name = stix_object.type
+        var_name: List[str] = get_obj_var(core_ql)
+        tql_name: str = stix_object.type
         del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, tql_name)
     elif stix_object.type == 'marking-definition':
         del_match, del_tql = delete_marking(stix_object, dep_match, dep_insert, indep_ql, core_ql, import_type)
@@ -49,7 +55,12 @@ def delete_stix_object(stix_object, dep_match, dep_insert, indep_ql, core_ql, im
     return del_match, del_tql
 
 
-def delete_object(stix_object, core_ql, total_props, obj_tql, var_name, tql_name):
+def delete_object(stix_object,
+                  core_ql: str,
+                  total_props,
+                  obj_tql,
+                  var_name: List[str],
+                  tql_name: str) -> [str, str]:
     # 1.B) get the data model
     properties, relations = split_on_activity_type(total_props, obj_tql)
     # 2.0) MAtch in the object, the id and all attributes not owned by another object
@@ -73,7 +84,7 @@ def delete_object(stix_object, core_ql, total_props, obj_tql, var_name, tql_name
     return del_match, del_tql
 
 
-def delete_marking(stix_object, dep_match, dep_insert, indep_ql, core_ql, import_type):
+def delete_marking(stix_object, dep_match, dep_insert, indep_ql, core_ql, import_type) -> [str, str]:
     del_match = del_tql = ''
     if stix_object.definition_type == "statement":
         del_match = 'match \n$marking isa statement-marking'
@@ -89,7 +100,7 @@ def delete_marking(stix_object, dep_match, dep_insert, indep_ql, core_ql, import
     return del_match, del_tql
 
 
-def get_obj_var(core_ql):
+def get_obj_var(core_ql) -> List[str]:
     m = re.findall(r"(\$[a-z\-0-9]+)\s+(.+)?isa\s+", core_ql,re.MULTILINE)
     output = []
     #logger.debug(f'local 1 -> {m}')
@@ -513,7 +524,7 @@ def follow_the_tree(layers, dep_obj):
     return tree
 
 
-def find_id(loc_ids, layers):
+def find_id(loc_ids, layers) -> [bool, List[int], List[str]]:
     found = False
     indexes = []
     ids = []

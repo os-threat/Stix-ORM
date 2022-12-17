@@ -2,6 +2,7 @@ import json
 import types
 import datetime
 import re
+from typing import Optional, Dict
 
 from stix2 import *
 from stix2.v21 import *
@@ -75,7 +76,8 @@ def stix2_to_match_insert(stix_object, import_type=None):
     return match, insert, dep_obj
 
 
-def raw_stix2_to_typeql(stix_object, import_type=None):
+def raw_stix2_to_typeql(stix_object,
+                        import_type: Optional[Dict[str, str]]=None):
     """
     Initial function to convert Stix into typeql, it splits the incoming object into different
     channels based on its object type: sdo, sro, sco or meta
@@ -107,7 +109,7 @@ def raw_stix2_to_typeql(stix_object, import_type=None):
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = marking_definition_to_typeql(stix_object, import_method)
     else:
         logger.error(f'object type not supported: {stix_object.type}, import type {import_type}')
-        dep_match, dep_insert, indep_ql, core_ql = ''
+        dep_match, dep_insert, indep_ql, core_ql = '', '', '', ''
         dep_list = []
 
     return dep_match, dep_insert, indep_ql, core_ql, dep_obj
@@ -212,7 +214,7 @@ def sdo_to_data(sdo, import_type='STIX21'):
     return total_props, obj_tql
 
 
-def sdo_to_typeql(sdo, import_type='STIX21'):
+def sdo_to_typeql(sdo, import_type:str ='STIX21'):
     """
     Initial function to convert Stix2 SDO object into typeql
 
@@ -288,7 +290,7 @@ def sro_to_data(sro, import_type='STIX21'):
 
     # - work out the type of object
     obj_type = sro.type
-
+    obj_tql = {}
     if import_type == 'STIX21':
         if obj_type in stix_models["dispatch_stix"]:
             # dispatch specific stix properties plus later on, generic sdo properties
