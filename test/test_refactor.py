@@ -17,6 +17,13 @@ import logging
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 
+failed_connection = {
+    "uri": "localhost",
+    "port": "729",
+    "database": "stix",
+    "user": None,
+    "password": None
+}
 
 # define the database data and import details
 connection = {
@@ -246,6 +253,19 @@ class TestTypeDB(unittest.TestCase):
                    schema_path=schema_path)
 
 
+    def test_failed_initialise(self):
+        """ Test the database initialisation function
+
+        """
+        with self.assertRaises(Exception) as context:
+            TypeDBSink(connection=failed_connection,
+                       clear=True,
+                       import_type=import_type,
+                       schema_path=schema_path)
+
+        self.assertTrue('Client Error: Unable to connect to TypeDB server.' in str(context.exception))
+
+
     def test_load_file_list(self):
         """ Load a list of files from a path, number of files can be restricted """
 
@@ -297,7 +317,8 @@ class TestTypeDB(unittest.TestCase):
         print(1)
 
     def setUp(self):
-         self.clean_db()
+        self.clean_db()
+
     def tearDown(self):
         self.clean_db()
 
@@ -313,7 +334,7 @@ class TestTypeDB(unittest.TestCase):
         typedb.clear_db()
 
 
-    def test_delete_dir(self):
+    def  test_delete_dir(self):
         """ Load an entire directory and delete all files except marking objects
 
         """
@@ -398,4 +419,7 @@ class TestTypeDB(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.DEBUG,
+                        filename="test.log")
+    loader = unittest.TestLoader()
     unittest.main()
