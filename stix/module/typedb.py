@@ -1,13 +1,16 @@
 """Python STIX2 TypeDB Source/Sink"""
 import json
 import pathlib
+from dataclasses import dataclass
 
+from pydantic import BaseModel
 from returns._internal.pipeline.managed import managed
+from returns._internal.pipeline.pipe import pipe
 from returns.io import impure_safe, IOResult
 from returns.pipeline import flow, is_successful
 from returns.pointfree import bind
 #from returns.pointfree import bind, bind_optional, bind_result
-from returns.result import safe, Result
+from returns.result import safe, Result, Failure
 from returns.unsafe import unsafe_perform_io
 from typedb.client import *
 
@@ -31,11 +34,11 @@ import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
-          "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
-          "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
-          "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
 
+@dataclass
+class TransactionObject:
+    transaction: TypeDBTransaction
+    session: TypeDBSession
 
 class TypeDBSink(DataSink):
     """Interface for adding/pushing STIX objects to TypeDB.
@@ -170,20 +173,20 @@ class TypeDBSink(DataSink):
 
 
     @impure_safe
-    def __delete_database(self,
-           session):
-        return session.map(lambda s: s.database().delete())
-
-    @impure_safe
-    def __close_session(self,
-           session):
-        session.map(lambda s: s.close())
+    def __delete_database(self):
+        core_client = self.__get_core_client()
+        if not is_successful(core_client):
+            return IOResult.failure(core_client.failure())
+        with core_client.unwrap() as client:
+            client_session = unsafe_perform_io(self.__get_datatype_session(client))
+            if not is_successful(client_session):
+                return IOResult.failure(client_session.failure())
+            with client_session.unwrap() as session:
+                session.database().delete()
 
     def clear_db(self) -> bool:
 
-        result = self.__get_datatype_session() \
-            .map(lambda session: (session, self.__delete_database(session))) \
-            .map(lambda v: self.__close_session(v[0]))
+        result = self.__delete_database()
 
 
         if is_successful(result):
@@ -194,6 +197,36 @@ class TypeDBSink(DataSink):
             logger.warning(str(result.failure()))
             return False
 
+    @safe
+    def __filter_markings(self, stix_ids: List[StringAttribute]):
+        marking = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                   "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
+                   "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
+                   "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
+
+        return list(filter(lambda x: x.get_value() in marking, stix_ids))
+
+
+    @impure_safe
+    def  __query_stix_ids(self):
+        get_ids_tql = 'match $ids isa stix-id;'
+        stix_ids = []
+        core_client = self.__get_core_client()
+        if not is_successful(core_client):
+            return IOResult.failure(core_client.failure())
+        with core_client.unwrap() as client:
+            client_session = unsafe_perform_io(self.__get_datatype_session(client))
+            if not is_successful(client_session):
+                return IOResult.failure(client_session.failure())
+            with client_session.unwrap() as session:
+                read_transaction = unsafe_perform_io(self.__get_read_transaction(session))
+                if not is_successful(read_transaction):
+                    return IOResult.failure(read_transaction.failure())
+                with read_transaction.unwrap() as transaction:
+                    answer_iterator = transaction.query().match(get_ids_tql)
+                    stix_ids = [ans.get("ids") for ans in answer_iterator]
+        return stix_ids
+
 
     def get_stix_ids(self):
         """ Get all the stix-ids in a database, should be moved to typedb file
@@ -201,21 +234,18 @@ class TypeDBSink(DataSink):
         Returns:
             id_list : list of the stix-ids in the database
         """
-        get_ids_tql = 'match $ids isa stix-id;'
-        g_uri = self.uri + ':' + self.port
-        id_list = []
-        with TypeDB.core_client(g_uri) as client:
-            with client.session( self.database, SessionType.DATA) as session:
-                with session.transaction(TransactionType.READ) as read_transaction:
-                    answer_iterator = read_transaction.query().match(get_ids_tql)
-                    ids = [ans.get("ids") for ans in answer_iterator]
-                    for sid_obj in ids:
-                        sid = sid_obj.get_value()
-                        if sid in marking:
-                            continue
-                        else:
-                            id_list.append(sid)
-        return id_list
+        stix_ids_query = self.__query_stix_ids()
+
+        transaction = pipe(
+                      bind(self.__filter_markings)
+                      )
+
+        result = transaction(stix_ids_query)
+        if is_successful(result):
+            return result.unwrap()
+        else:
+            logger.error(str(result.failure()))
+            raise Exception(str(result.failure()))
 
     def delete(self, stixid_list: List[str]) -> bool:
         """ Delete a list of STIX objects from the typedb server. Must include all related objects and relations
@@ -282,41 +312,20 @@ class TypeDBSink(DataSink):
             raise
 
     @safe
-    def __get_core_client(self):
+    def __get_core_client(self) -> TypeDBClient:
         typedb_url = self.uri + ":" + self.port
         return TypeDB.core_client(typedb_url)
 
     @impure_safe
-    def __get_datatype_session(self) -> TypeDBSession:
-        type_db_client = self.__get_core_client()
-        return type_db_client.map(lambda client : client.session(self.database, SessionType.DATA))
+    def __get_datatype_session(self,
+                               type_db_client) -> TypeDBSession:
+        return type_db_client.session(self.database, SessionType.DATA)
+
 
     @impure_safe
-    def __get_read_transaction(self,
-                               session: TypeDBSession) -> TypeDBTransaction:
+    def __get_read_transaction(self, session) -> TransactionObject:
         return session.transaction(TransactionType.READ)
 
-    def get_stix_ids(self):
-        """ Get all the stix-ids in a database, should be moved to typedb file
-
-        Returns:
-            id_list : list of the stix-ids in the database
-        """
-        id_list: List[str] = []
-        get_ids = 'match $ids isa stix-id;'
-
-        with self.__get_core_client() as client:
-            with client.session(self.database, SessionType.DATA) as session:
-                with session.transaction(TransactionType.READ) as read_transaction:
-                    answer_iterator = read_transaction.query().match(get_ids)
-                    ids = [ans.get("ids") for ans in answer_iterator]
-                    for sid_obj in ids:
-                        sid: str = sid_obj.get_value()
-                        if sid in marking:
-                            continue
-                        else:
-                            id_list.append(sid)
-        return id_list
 
     @safe
     def add(self, stix_data: Optional[List[dict]] = None) -> bool:
@@ -344,6 +353,9 @@ class TypeDBSink(DataSink):
         indexes = []
         missing = []
         cyclical = []
+
+
+
         try:
             # 1. gather objects into a list
             obj_list = self._gather_objects(stix_data)
@@ -399,6 +411,7 @@ class TypeDBSink(DataSink):
         except Exception as e:
             logger.error(f'Stix Add Object Function Error: {e}')
 
+    @safe
     def _gather_objects(self, stix_data):
         """
           the details for the add details, checking what import_type of data object it is
