@@ -44,7 +44,7 @@ initial_markings = [[
 ]]
 
 
-def setup_database(stix_connection, clear):
+def setup_database(stix_connection: Dict[str, str], clear: bool):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
     with TypeDB.core_client(url) as client:
         logger.debug(f'Database Clearing is [{clear}]')
@@ -61,7 +61,7 @@ def setup_database(stix_connection, clear):
         logger.debug('.......................... clear complete')
 
 
-def load_schema(stix_connection, rel_path=None, schema_type="schema"):
+def load_schema(stix_connection: Dict[str, str], rel_path=None, schema_type: str = "schema"):
     logger.debug(f'{stix_connection}')
     logger.debug(rel_path)
     logger.debug(schema_type)
@@ -84,7 +84,7 @@ def load_schema(stix_connection, rel_path=None, schema_type="schema"):
             session.close()
 
 
-def load_markings(stix_connection):
+def load_markings(stix_connection: Dict[str, str]):
     type_ql_list = []
     for mark_list in initial_markings:
         type_ql = " insert "
@@ -99,7 +99,7 @@ def load_markings(stix_connection):
     return return_list
 
 
-def load_typeql_data(data_list, stix_connection):
+def load_typeql_data(data_list, stix_connection: Dict[str, str]):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
     with TypeDB.core_client(url) as client:
         # Stage 1: Create the schema
