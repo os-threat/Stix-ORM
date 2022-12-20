@@ -6,7 +6,7 @@ from returns.io import impure_safe
 from returns.methods import unwrap_or_failure
 from returns.pipeline import is_successful
 from returns.pointfree import bind
-from returns.result import safe, Result
+from returns.result import safe, Result, Failure, Success
 from returns.unsafe import unsafe_perform_io
 from typedb.client import *
 
@@ -204,7 +204,6 @@ class TypeDBSink(DataSink):
            a):
         pass
 
-    @safe
     def __query_stix_ids(self):
         get_ids_tql = 'match $ids isa stix-id;'
         data_query = query_ids
@@ -213,8 +212,10 @@ class TypeDBSink(DataSink):
                                  self.database,
                                  get_ids_tql,
                                  data_query)
-        extracted_output = unsafe_perform_io(query_data)
-        return unwrap_or_failure(extracted_output)
+        if not is_successful(query_data):
+            return Failure(query_data.failure())
+        return Success(unsafe_perform_io(query_data))
+
 
 
     def get_stix_ids(self):
@@ -375,6 +376,7 @@ class TypeDBSink(DataSink):
         dep_obj["dep_insert"] = dep_insert
         dep_obj["indep_ql"] = indep_ql
         dep_obj["core_ql"] = core_ql
+        return dep_obj
     @safe
     def __retrieve_add_instructions(self,
                                     obj_list):
@@ -427,6 +429,7 @@ class TypeDBSink(DataSink):
                 queries.append(result.unwrap())
             elif not is_successful(result):
                 log_insert_query(result, layer)
+        return queries
 
 
     def add(self, stix_data: Optional[List[dict]] = None) -> bool:
@@ -450,8 +453,8 @@ class TypeDBSink(DataSink):
             saved separately; you will be able to retrieve any of the objects
             the Bundle contained, but not the Bundle itself.
         """
-        obj_list = self._gather_objects(stix_data)
-        add_instruction_result = self.__retrieve_add_instructions(obj_list)
+        obj_result = self._gather_objects(stix_data)
+        add_instruction_result = obj_result.bind(lambda obj_list: self.__retrieve_add_instructions(obj_list))
         missing_data_result = add_instruction_result.bind(lambda result: self.__check_missing_data(result[1]))
 
         is_missing_dependencies = is_successful(missing_data_result) and len(missing_data_result.unwrap()) > 0
@@ -462,7 +465,7 @@ class TypeDBSink(DataSink):
         if is_cyclical:
             raise Exception("cyclical stix dependencies")
 
-        insertion_query_result = add_instruction_result.bind(lambda result: self.__create_insert_queries(result))
+        insertion_query_result = add_instruction_result.bind(lambda result: self.__create_insert_queries(result[0]))
         insert_into_database_result = insertion_query_result.bind(lambda result: add_layers(self.uri,
                                                                                             self.port,
                                                                                             self.database,

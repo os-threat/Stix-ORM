@@ -62,7 +62,8 @@ schema_path = path = str(pathlib.Path(__file__).parents[1])
 
 
 def variables_id_list():
-    return ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46',
+    return ['file--94ca-5967-8b3c-a906a51d87ac',
+            'file--5a27d487-c542-5f97-a131-a8866b477b46',
             'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265',
             'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559',
             'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6',
@@ -114,6 +115,8 @@ def aaa_identity_path() -> str:
     data_standard_path = "data/standard/"
     top_dir_path = pathlib.Path(__file__).parents[1]
     return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_identity.json"))
+
+
 def variable_all_standard_data_filepaths() -> List[str]:
     top_dir_path = pathlib.Path(__file__).parents[1]
     standard_data_path = top_dir_path.joinpath("data/standard/")
@@ -405,20 +408,32 @@ class TestTypeDB(unittest.TestCase):
 
         local_list_post = typedb.get_stix_ids()
 
-
-    @parameterized.expand((connection, import_type))
-    def test_get_ids(self, connection, import_type):
+    def test_add(self):
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=False,
                                  import_type=import_type,
                                  schema_path=schema_path)
+        json_text = self.get_json_from_file(aaa_identity_path())
+
+        assert typedb_sink.add(json_text)
+
+    def test_get_ids(self):
+        typedb_sink = TypeDBSink(connection=connection,
+                                 clear=False,
+                                 import_type=import_type,
+                                 schema_path=schema_path)
+        json_text = self.get_json_from_file(aaa_identity_path())
+
+        typedb_sink.add(json_text)
+
         my_id_list = typedb_sink.get_stix_ids()
-        print(f'myidlist {my_id_list}')
+        print(my_id_list)
+
 
     @parameterized.expand(variables_id_list())
     def test_ids_loaded(self, id_list: List[str]):
         return_list = check_stix_ids(id_list, connection)
-        print(f'return {return_list}')
+
 
 
 if __name__ == '__main__':
