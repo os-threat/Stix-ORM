@@ -1,20 +1,16 @@
 """Python STIX2 TypeDB Source/Sink"""
-import json
 import pathlib
 from dataclasses import dataclass
-
-from pydantic import BaseModel
-from returns._internal.pipeline.managed import managed
 from returns._internal.pipeline.pipe import pipe
-from returns.io import impure_safe, IOResult
-from returns.pipeline import flow, is_successful
+from returns.io import impure_safe
+from returns.methods import unwrap_or_failure
+from returns.pipeline import is_successful
 from returns.pointfree import bind
-#from returns.pointfree import bind, bind_optional, bind_result
-from returns.result import safe, Result, Failure
+from returns.result import safe, Result
 from returns.unsafe import unsafe_perform_io
 from typedb.client import *
 
-from .import_stix_to_typeql import raw_stix2_to_typeql, stix2_to_match_insert
+from .import_stix_to_typeql import raw_stix2_to_typeql
 from .delete_stix_to_typeql import delete_stix_object, add_delete_layers
 from .import_stix_utilities import get_embedded_match
 from .export_intermediate_to_stix import convert_ans_to_stix
@@ -28,6 +24,10 @@ from stix2.datastore.filters import FilterSet
 from stix2.parsing import parse
 
 import logging
+
+from .type_db_logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers
+from .type_db_queries import delete_database, match_query, query_ids, delete_layers
+from stix.module.type_db_file import write_to_file
 
 #logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
@@ -171,23 +171,9 @@ class TypeDBSink(DataSink):
     def stix_connection(self):
         return self._stix_connection
 
-
-    @impure_safe
-    def __delete_database(self):
-        core_client = self.__get_core_client()
-        if not is_successful(core_client):
-            return IOResult.failure(core_client.failure())
-        with core_client.unwrap() as client:
-            client_session = unsafe_perform_io(self.__get_datatype_session(client))
-            if not is_successful(client_session):
-                return IOResult.failure(client_session.failure())
-            with client_session.unwrap() as session:
-                session.database().delete()
-
     def clear_db(self) -> bool:
 
-        result = self.__delete_database()
-
+        result = delete_database(self.uri, self.port, self.database)
 
         if is_successful(result):
             logger.debug("Successfully cleared database")
@@ -198,34 +184,30 @@ class TypeDBSink(DataSink):
             return False
 
     @safe
-    def __filter_markings(self, stix_ids: List[StringAttribute]):
+    def __filter_markings(self, stix_ids: List[StringAttribute]) -> List[str]:
         marking = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
                    "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
                    "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
                    "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
 
-        return list(filter(lambda x: x.get_value() in marking, stix_ids))
+        filtered_list = list(filter(lambda x: x.get_value() in marking, stix_ids))
+        return [stix_id.get_value() for stix_id in filtered_list]
 
+    def xx(self,
+           a):
+        pass
 
-    @impure_safe
-    def  __query_stix_ids(self):
+    @safe
+    def __query_stix_ids(self):
         get_ids_tql = 'match $ids isa stix-id;'
-        stix_ids = []
-        core_client = self.__get_core_client()
-        if not is_successful(core_client):
-            return IOResult.failure(core_client.failure())
-        with core_client.unwrap() as client:
-            client_session = unsafe_perform_io(self.__get_datatype_session(client))
-            if not is_successful(client_session):
-                return IOResult.failure(client_session.failure())
-            with client_session.unwrap() as session:
-                read_transaction = unsafe_perform_io(self.__get_read_transaction(session))
-                if not is_successful(read_transaction):
-                    return IOResult.failure(read_transaction.failure())
-                with read_transaction.unwrap() as transaction:
-                    answer_iterator = transaction.query().match(get_ids_tql)
-                    stix_ids = [ans.get("ids") for ans in answer_iterator]
-        return stix_ids
+        data_query = query_ids
+        query_data = match_query(self.uri,
+                                 self.port,
+                                 self.database,
+                                 get_ids_tql,
+                                 data_query)
+        extracted_output = unsafe_perform_io(query_data)
+        return unwrap_or_failure(extracted_output)
 
 
     def get_stix_ids(self):
@@ -247,69 +229,92 @@ class TypeDBSink(DataSink):
             logger.error(str(result.failure()))
             raise Exception(str(result.failure()))
 
+    @impure_safe
+    def __delete_layer(self):
+        pass
+
+    @safe
+    def __retrieve_stix_id(self,
+           stix_id: str):
+        type_db_source = unwrap_or_failure(self.__get_source_client())
+        return type_db_source.get(stix_id)
+
+    @safe
+    def __delete_instruction(self,
+                            stixid: str):
+
+        stix_obj = self.__retrieve_stix_id(stixid)
+        dep_match, dep_insert, indep_ql, core_ql, dep_obj = stix_obj.bind(
+            lambda x: raw_stix2_to_typeql(x, self.import_type))
+        del_match, del_tql = stix_obj.bind(
+            lambda x: delete_stix_object(x, dep_match, dep_insert, indep_ql, core_ql, self.import_type))
+        dep_obj["delete"] = del_match + '\n' + del_tql
+
+        log_delete_instruction(del_match, dep_insert, indep_ql, dep_obj, del_match, del_tql)
+        if del_match == '' and del_tql == '':
+            return None
+        else:
+            return dep_obj
+
+    @safe
+    def __update_delete_layers(self,
+                               layers,
+                               indexes,
+                               missing,
+                               dep_obj):
+        if dep_obj is None:
+            return layers, indexes, missing
+        if len(layers) == 0:
+            missing = dep_obj['dep_list']
+            indexes.append(dep_obj['id'])
+            layers.append(dep_obj)
+        else:
+            layers, indexes, missing = add_delete_layers(layers, dep_obj, indexes, missing)
+        return layers, indexes, missing
+
+
+    @safe
+    def __retrieve_delete_instructions(self,
+                                       stixids: List[str]):
+
+        layers = []
+        indexes = []
+        missing = []
+
+        for stixid in stixids:
+            del_result = self.__delete_instruction(stixid)
+            update_result = del_result.bind(lambda dep_obj: self.__update_delete_layers(layers, indexes, missing, dep_obj))
+            if is_successful(update_result):
+                layers, indexes, missing = update_result.unwrap()
+            else:
+                log_delete_instruction_update_layer(update_result)
+
+        return layers
+
+    @safe
+    def __order_delete_instructions(self,
+                                    delete_instructions):
+        clean = 'match $a isa attribute; not { $b isa thing; $b has $a;}; delete $a isa attribute;'
+        cleandict = {'delete': clean}
+        cleanup = [cleandict]
+        ordered = delete_instructions + cleanup + cleanup
+        return ordered
+
     def delete(self, stixid_list: List[str]) -> bool:
         """ Delete a list of STIX objects from the typedb server. Must include all related objects and relations
 
         Args:
             stixid_list (): The list of Stix-id's of the object's to delete
         """
-        clean = 'match $a isa attribute; not { $b isa thing; $b has $a;}; delete $a isa attribute;'
-        cleandict = {'delete': clean}
-        cleanup = [cleandict]
-        connection = {'uri': self.uri, 'port': self.port, 'database': self.database, 'user':self.user, 'password':self.password}
-        try:
-            typedb = TypeDBSource(connection, "STIX21")
-            layers = []
-            indexes = []
-            missing = []
 
-            for stixid in stixid_list:
-                local_obj = typedb.get(stixid)
-                dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(local_obj, self.import_type)
-                del_match, del_tql = delete_stix_object(local_obj, dep_match, dep_insert, indep_ql, core_ql, self.import_type)
-                logger.debug(' ---------------------------Delete Object----------------------')
-                logger.debug(f'dep_match -> {dep_match}\n dep_insert -> {dep_insert}')
-                logger.debug(f'indep_ql -> {indep_ql}\n dep_obj -> {dep_obj}')
-                logger.debug("=========================== delete typeql below ====================================")
-                logger.debug(f'del_match -> {del_match}\n del_tql -> {del_tql}')
-                if del_match == '' and del_tql == '':
-                    continue
-                dep_obj["delete"] = del_match + '\n' + del_tql
-                if len(layers) == 0:
-                    missing = dep_obj['dep_list']
-                    indexes.append(dep_obj['id'])
-                    layers.append(dep_obj)
-                else:
-                    layers, indexes, missing = add_delete_layers(layers, dep_obj, indexes, missing)
-                logger.debug(' ---------------------------Object Delete----------------------')
-
-            logger.debug("=========================== dependency indexes ====================================")
-            logger.debug(f'indexes -> {indexes}')
-            logger.debug("=========================== dependency indexes ====================================")
-            ordered = layers + cleanup + cleanup
-            for layer in ordered:
-                logger.debug("666666666666666 delete 6666666666666666666666666666666666")
-                logger.debug(f'del query -> {layer["delete"]}')
-            logger.debug(f'\nordered -> {ordered}')
-            with TypeDB.core_client(connection["uri"] + ":" + connection["port"]) as client:
-                with client.session(connection["database"], SessionType.DATA) as session:
-                    for layer in ordered:
-                        with session.transaction(TransactionType.WRITE) as write_transaction:
-                            logger.debug("77777777777777777 delete 777777777777777777777777777777777")
-                            logger.debug(f'del query -> {layer["delete"]}')
-                            query_future = write_transaction.query().delete(layer["delete"])
-                            logger.debug(f'typedb delete response ->\n{query_future.get()}')
-                            logger.debug("7777777777777777777777777777777777777777777777777777777777")
-                            write_transaction.commit()
-                    logger.debug(' ---------------------------Object Delete----------------------')
-
-        except Exception as e:
-            logger.error(f'Stix Object Deletion Error: {e}')
-            if 'dep_match' in locals(): logger.error(f'dep_match -> {dep_match}')
-            if 'dep_insert' in locals(): logger.error(f'dep_insert -> {dep_insert}')
-            if 'indep_ql' in locals():logger.error(f'indep_ql -> {indep_ql}')
-            if 'core_ql' in locals(): logger.error(f'core_ql -> {core_ql}')
-            raise
+        delete_instruction_result = self.__retrieve_delete_instructions(stixid_list)
+        order_instruction_result = delete_instruction_result.bind(lambda x: self.__order_delete_instructions(x))
+        delete_from_database_result = order_instruction_result.bind(lambda order_instruction: delete_layers(self.uri,
+                                                                                                            self.port,
+                                                                                                            self.database,
+                                                                                                            order_instruction))
+        log_delete_layers(delete_from_database_result)
+        return is_successful(delete_from_database_result)
 
     @safe
     def __get_core_client(self) -> TypeDBClient:
@@ -326,6 +331,15 @@ class TypeDBSink(DataSink):
     def __get_read_transaction(self, session) -> TransactionObject:
         return session.transaction(TransactionType.READ)
 
+    @safe
+    def __get_source_client(self):
+        connection = {'uri': self.uri,
+                      'port': self.port,
+                      'database': self.database,
+                      'user': self.user,
+                      'password': self.password}
+
+        return TypeDBSource(connection, "STIX21")
 
     @safe
     def add(self, stix_data: Optional[List[dict]] = None) -> bool:
@@ -548,6 +562,26 @@ class TypeDBSource(DataSource):
     def stix_connection(self):
         return self._stix_connection
 
+    @safe
+    def __retrieve_stix_object(self,
+                               stix_id: str):
+        obj_var, type_ql = get_embedded_match(stix_id)
+        query = 'match ' + type_ql
+
+        data = match_query(uri=self.uri,
+                           port=self.port,
+                           database=self.database,
+                           query=query,
+                           data_query=convert_ans_to_stix, import_type= 'STIX21')
+
+        stix_obj = unwrap_or_failure(data).bind(lambda x: parse(x))
+
+        result = write_to_file("export_final.json", stix_obj)
+        if not is_successful(result):
+            logger.error(str(result.failure()))
+
+        return stix_obj
+
     def get(self, stix_id: str, _composite_filters=None):
         """Retrieve STIX object from file directory via STIX ID.
 
@@ -562,27 +596,14 @@ class TypeDBSource(DataSource):
                 a python STIX object and then returned
 
         """
-        try:
-            obj_var, type_ql = get_embedded_match(stix_id)
-            match = 'match ' + type_ql
-            logger.debug(f' typeql -->: {match}')
-            g_uri = self.uri + ':' + self.port
-            with TypeDB.core_client(g_uri) as client:
-                with client.session(self.database, SessionType.DATA) as session:
-                    with session.transaction(TransactionType.READ) as read_transaction:
-                        answer_iterator = read_transaction.query().match(match)
-                        #logger.debug((f'have read the query -> {answer_iterator}'))
-                        stix_dict = convert_ans_to_stix(answer_iterator, read_transaction, 'STIX21')
-                        stix_obj = parse(stix_dict)
-                        logger.debug(f'stix_obj -> {stix_obj}')
-                        with open("export_final.json", "w") as outfile:  
-                            json.dump(stix_dict, outfile)
-                
-        except Exception as e:
-            logger.error(f'Stix Object Retrieval Error: {e}')
-            stix_obj = None
-        
-        return stix_obj
+
+        result = self.__retrieve_stix_object(stix_id)
+        if is_successful(result):
+            return result.unwrap()
+        else:
+            logger.error(str(result.failure()))
+            raise Exception(str(result.failure()))
+
 
     def query(self, query=None, version=None, _composite_filters=None):
         """Search and retrieve STIX objects based on the complete query.
