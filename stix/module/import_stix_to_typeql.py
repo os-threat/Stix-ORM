@@ -77,7 +77,7 @@ def stix2_to_match_insert(stix_object, import_type=None):
 
 
 def raw_stix2_to_typeql(stix_object,
-                        import_type: Optional[Dict[str, str]]=None):
+                        import_type: Optional[Dict[str, str]]=None) -> [str, str, str, str, str]:
     """
     Initial function to convert Stix into typeql, it splits the incoming object into different
     channels based on its object type: sdo, sro, sco or meta
@@ -109,7 +109,7 @@ def raw_stix2_to_typeql(stix_object,
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = marking_definition_to_typeql(stix_object, import_method)
     else:
         logger.error(f'object type not supported: {stix_object.type}, import type {import_type}')
-        dep_match, dep_insert, indep_ql, core_ql = '', '', '', ''
+        dep_match, dep_insert, indep_ql, core_ql, dep_obj = '', '', '', '', ''
         dep_list = []
 
     return dep_match, dep_insert, indep_ql, core_ql, dep_obj
