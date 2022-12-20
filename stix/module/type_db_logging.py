@@ -46,7 +46,7 @@ def log_insert_query(result, layer):
 def log_delete_instruction_update_layer(result):
     try:
         if not is_successful(result):
-            logger.debug("Failed to update layer")
+            logger.debug("Failed to delete layer")
             logger.error(str(result.failure()))
     except Exception as e:
         logger.error(e)
