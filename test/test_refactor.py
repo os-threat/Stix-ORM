@@ -434,7 +434,7 @@ class TestTypeDB(unittest.TestCase):
 
     def test_get_ids(self):
         typedb_sink = TypeDBSink(connection=connection,
-                                 clear=False,
+                                 clear=True,
                                  import_type=import_type,
                                  schema_path=schema_path)
         json_text = self.get_json_from_file(aaa_identity_path())
@@ -442,7 +442,7 @@ class TestTypeDB(unittest.TestCase):
         typedb_sink.add(json_text)
 
         my_id_list = typedb_sink.get_stix_ids()
-        print(my_id_list)
+        assert set(my_id_list) == set(['identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65', 'identity--f431f809-377b-45e0-aa1c-6a4751cae5ff'])
 
 
     @parameterized.expand(variables_id_list())

@@ -99,13 +99,13 @@ class TypeDBSink(DataSink):
         setup_database(self._stix_connection, self.clear)
 
         # 2. Load the Stix schema
-        self.__load_stix_schema()
+        schema_result = self.__load_stix_schema()
         # 3. Check for Stix Rules
-        self.__check_stix_rules()
+        rules_result = self.__check_stix_rules()
         # 3. Load the Stix Markings,
-        self.__load_stix_markings()
+        markings_result = self.__load_stix_markings()
         # 3. Check for Stix Rules
-        self.__check_for_stix_rules_cacao()
+        cacao_result = self.__check_for_stix_rules_cacao()
 
     @safe
     def __validate_connect_to_db(self):
@@ -192,7 +192,7 @@ class TypeDBSink(DataSink):
                    "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
                    "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
 
-        filtered_list = list(filter(lambda x: x.get_value() in marking, stix_ids))
+        filtered_list = list(filter(lambda x: x.get_value() not in marking, stix_ids))
         return self.__string_attibute_to_string(filtered_list)
 
 
@@ -214,7 +214,8 @@ class TypeDBSink(DataSink):
                                  data_query)
         if not is_successful(query_data):
             return Failure(query_data.failure())
-        return Success(unsafe_perform_io(query_data))
+        extracted_output = unsafe_perform_io(query_data)
+        return Success(unwrap_or_failure(extracted_output))
 
 
 
