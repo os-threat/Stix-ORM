@@ -416,7 +416,7 @@ class TestTypeDB(unittest.TestCase):
 
     def test_add_identity_path(self):
         typedb_sink = TypeDBSink(connection=connection,
-                                 clear=False,
+                                 clear=True,
                                  import_type=import_type,
                                  schema_path=schema_path)
         json_text = self.get_json_from_file(aaa_identity_path())
