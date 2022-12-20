@@ -71,6 +71,11 @@ def variables_id_list():
             'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
 
 
+def mitre_path():
+    data_mitre_path = "data/mitre"
+    top_dir_path = pathlib.Path(__file__).parents[1]
+    return str(top_dir_path.joinpath(data_mitre_path).joinpath("enterprise-attack.json"))
+
 def variables_standard_data_file_paths() -> List[str]:
 
     data_standard_path = "data/standard/"
@@ -408,12 +413,12 @@ class TestTypeDB(unittest.TestCase):
 
         local_list_post = typedb.get_stix_ids()
 
-    def test_add(self):
+    def test_add_mitre(self):
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=False,
                                  import_type=import_type,
                                  schema_path=schema_path)
-        json_text = self.get_json_from_file(aaa_identity_path())
+        json_text = self.get_json_from_file(mitre_path())
 
         assert typedb_sink.add(json_text)
 
