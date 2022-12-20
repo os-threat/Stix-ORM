@@ -26,12 +26,12 @@ define
         owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
-        owns x-mitre-modified-by-ref,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns tactic-refs,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     # Campaigns - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#campaigns
@@ -40,7 +40,6 @@ define
         owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
-        owns x-mitre-modified-by-ref,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-first-seen-citation,
@@ -49,6 +48,7 @@ define
         plays attributed-to:result,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     # Tactics - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#tactics
@@ -57,12 +57,12 @@ define
         owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
-        owns x-mitre-modified-by-ref,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-shortname,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     # Techniques - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#techniques
@@ -71,7 +71,6 @@ define
         owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
-        owns x-mitre-modified-by-ref,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-detection,
@@ -91,6 +90,7 @@ define
         plays detects:ttp,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     # Sub Techniques - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#sub-techniques
@@ -102,11 +102,11 @@ define
         owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
-        owns x-mitre-modified-by-ref,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     # Groups - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#groups
@@ -115,13 +115,13 @@ define
         owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
-        owns x-mitre-modified-by-ref,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         plays uses:used-by,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays attributed-to:fault-of,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     # Software- Malware and Tool - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#software
@@ -130,7 +130,6 @@ define
         owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
-        owns x-mitre-modified-by-ref,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-platforms,
@@ -139,6 +138,7 @@ define
         plays uses:used,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     software-tool sub tool,
@@ -146,7 +146,6 @@ define
         owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
-        owns x-mitre-modified-by-ref,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-platforms,
@@ -155,6 +154,7 @@ define
         plays uses:used,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     # Data Sources and Components - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#data-sources-and-data-components
@@ -163,7 +163,6 @@ define
         owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
-        owns x-mitre-modified-by-ref,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-platforms,
@@ -171,6 +170,7 @@ define
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-data-source:data-source,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     # Data Components - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#data-components
@@ -179,13 +179,13 @@ define
         owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
-        owns x-mitre-modified-by-ref,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         plays detects:sensor,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-data-source:component,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     # Built-in Embedded Relations for Mitre Attack objects
@@ -221,9 +221,9 @@ define
         owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
-        owns x-mitre-modified-by-ref,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
+        plays x-mitre-modified-by-ref:modified,
         plays x-mitre-content:collector;
 
     # Collection External Reference
@@ -232,6 +232,7 @@ define
         owns object-modified,
         plays obj-ref:container,
         plays x-mitre-content:collected;
+
     # Collection embedded Relation
     obj-ref sub embedded,
 		relates content as pointed-to,
@@ -241,13 +242,16 @@ define
 		relates collector as owner,
 		relates collected as pointed-to;
 
+	x-mitre-modified-by-ref sub created-by,
+	    relates modified as created,
+	    relates modifier as creator;
+
 
     # Attribute Definitions
     mitre-attribute-string sub stix-attribute-string;
         x-mitre-version sub mitre-attribute-string;
         x-mitre-domains sub mitre-attribute-string;
         x-mitre-contributors sub mitre-attribute-string;
-        x-mitre-modified-by-ref sub mitre-attribute-string;
         x-mitre-attack-spec-version sub mitre-attribute-string;
         tactic-refs sub mitre-attribute-string;
         x-mitre-shortname sub mitre-attribute-string;
@@ -261,7 +265,6 @@ define
         x-mitre-defense-bypassed sub mitre-attribute-string;
         x-mitre-impact-type sub mitre-attribute-string;
         x-mitre-aliases sub mitre-attribute-string;
-        object-ref sub mitre-attribute-string;
         x-mitre-collection-layers sub mitre-attribute-string;
         x-mitre-first-seen-citation sub mitre-attribute-string;
         x-mitre-last-seen-citation sub mitre-attribute-string;

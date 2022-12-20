@@ -28,7 +28,7 @@ stix-entity sub entity,
 stix-object sub stix-entity,
 	# Required
 	owns stix-type,
-	owns stix-id @key, # TODO should be a key
+	owns stix-id @key, #
 	owns custom-attribute,
 	plays stix-core-relationship:source,
 	plays stix-core-relationship:target,
@@ -59,7 +59,7 @@ stix-object sub stix-entity,
 				owns labels,
 				owns confidence,
 				owns langs,
-				plays external-references:referencing,
+				plays external-references:referenced,
 				plays sighting:sighting-of,
 
 				plays indicates:indicated;
@@ -93,7 +93,7 @@ external-reference sub stix-sub-object,
 	owns url-link, 
 	owns external-id, 
 	plays hashes:owner,
-	plays external-references:referenced;
+	plays external-references:referencing;
 
 
 # 2.7 Hash
@@ -484,7 +484,7 @@ malware-analysis sub stix-domain-object,
 
 # 4.13 Note
 note sub stix-domain-object, 
-	owns abstract-note, 
+	owns note-abstract, 
 	owns content, 
 	owns authors,
 
@@ -617,7 +617,7 @@ tool sub stix-domain-object,
 	# created-by
 	# Object Marking
 
-# 4.19 Vulnerability TODO
+# 4.19 Vulnerability
 vulnerability sub stix-domain-object,
 	owns name, 
 	owns description,
@@ -666,7 +666,7 @@ stix-core-relationship sub relation,
 	plays obj-refs:referred,
 	plays object-marking:marked,
 	plays granular-marking:object, 
-	plays external-references:referencing,
+	plays external-references:referenced,
 	plays created-by:created;
 
 
@@ -787,6 +787,7 @@ stix-core-relationship sub relation,
 		av-analysis sub analysis;
 		static-analysis sub analysis;
 		dynamic-analysis sub analysis;
+		analysis-of sub analysis;
 
 	remediation sub stix-core-relationship,
 		relates remediating as source,
@@ -1142,7 +1143,7 @@ process sub stix-cyber-observable-object,
 	owns created-time,
 	owns cwd,
 	owns command-line,
-	plays environment-variables:process, # TODO
+	plays environment-variables:process,
 
 	plays open-connections:process,
 	plays user-created-by:created,
@@ -1240,7 +1241,7 @@ windows-registry-key sub stix-cyber-observable-object,
 	plays reg-val:reg-key,
 	plays user-created-by:created;
 
-windows-registry-value-type sub stix-cyber-observable-object, 
+windows-registry-value-type sub stix_sco_sub_object,
 	owns name, 
 	owns data,
 	owns data-type,
@@ -1284,10 +1285,7 @@ x509-certificate sub stix-cyber-observable-object,
 	
 
 ##### 7 STIX™ Meta Objects #####
-stix-meta-object sub stix-object,
-    abstract,
-    owns created,
-    owns modified;
+
 
 # 7.1 Language Content 
 
@@ -1295,7 +1293,7 @@ stix-meta-object sub stix-object,
 
 # 7.2 Data markings - this describes how data can be used/shared
 
-marking-definition sub stix-meta-object,
+marking-definition sub stix-sub-object,
 	owns name, 
 	owns spec-version,
 	plays created-by:created,
@@ -1706,7 +1704,7 @@ stix-attribute-string sub attribute, value string, abstract,
 	result-name sub stix-attribute-string;
 	result sub stix-attribute-string;
 
-	abstract-note sub stix-attribute-string;
+	note-abstract sub stix-attribute-string;
 	content sub stix-attribute-string;
 	report-type sub stix-attribute-string;
 	explanation sub stix-attribute-string;
