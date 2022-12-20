@@ -408,7 +408,10 @@ class TestTypeDB(unittest.TestCase):
 
     @parameterized.expand((connection, import_type))
     def test_get_ids(self, connection, import_type):
-        typedb_sink = TypeDBSink(connection, False, import_type)
+        typedb_sink = TypeDBSink(connection=connection,
+                                 clear=False,
+                                 import_type=import_type,
+                                 schema_path=schema_path)
         my_id_list = typedb_sink.get_stix_ids()
         print(f'myidlist {my_id_list}')
 

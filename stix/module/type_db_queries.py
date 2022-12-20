@@ -1,4 +1,5 @@
 import logging
+from typing import List
 
 from returns.io import impure_safe, IOResult
 from returns.pipeline import is_successful
@@ -9,9 +10,48 @@ from typedb.api.connection.session import SessionType, TypeDBSession
 from typedb.api.connection.transaction import TransactionType
 from typedb.client import TypeDB
 
-from stix.module.type_db_logging import log_delete_layer
+from stix.module.type_db_logging import log_delete_layer, log_add_layer
 
 logger = logging.getLogger(__name__)
+
+
+@safe
+def build_insert_query(layer):
+    dep_match = layer["dep_match"]
+    dep_insert = layer["dep_insert"]
+    indep_ql = layer["indep_ql"]
+    if dep_match == '':
+        match_tql = ''
+    else:
+        match_tql = 'match ' + dep_match
+    if indep_ql == '' and dep_insert == '':
+        insert_tql = ''
+    else:
+        insert_tql = 'insert ' + indep_ql + dep_insert
+    logger.debug(f'match_tql string?-> {match_tql}')
+    logger.debug(f'insert_tql string?-> {insert_tql}')
+    logger.debug(f'----------------------------- Get Ready to Load Object -----------------------------')
+    typeql_string = match_tql + insert_tql
+
+    insertion_is_empty = len(insert_tql) == 0
+    if insertion_is_empty:
+        return None
+    return typeql_string
+
+@safe
+def build_match_id_query(stix_ids: List[str]):
+    get_ids_tql = 'match $id isa stix-id;'
+    len_id = len(stix_ids)
+    if len_id == 1:
+        get_ids_tql += '$id "' + stix_ids[0] + '";'
+    else:
+        for index, id_l in enumerate(stix_ids):
+            get_ids_tql += ' {$id "' + id_l + '";}'
+            if index == len_id - 1:
+                get_ids_tql += " ;"
+            else:
+                get_ids_tql += ' or '
+    return get_ids_tql
 
 @safe
 def get_core_client(uri: str,
@@ -66,6 +106,7 @@ def delete_database(uri: str, port: str, database: str):
 def query_ids(generator, transaction, **data_query_args):
     return [ans.get("ids") for ans in generator]
 
+
 @impure_safe
 def delete_layers(uri: str, port: str, database: str, layers: list):
     with get_core_client(uri, port).unwrap() as client:
@@ -80,10 +121,32 @@ def delete_layers(uri: str, port: str, database: str, layers: list):
                 with write_transaction.unwrap() as transaction:
 
                     result = delete_layer(transaction, layer)
-                    log_delete_layer(result)
+                    log_delete_layer(result, layer)
 
 
 @impure_safe
 def delete_layer(transaction, layer):
     query_future = transaction.query().delete(layer["delete"])
     transaction.commit()
+
+@impure_safe
+def add_layer(transaction, layer):
+    query_future = transaction.query().insert(layer)
+    transaction.commit()
+
+@impure_safe
+def add_layers(uri: str, port: str, database: str, layers: list):
+    with get_core_client(uri, port).unwrap() as client:
+        client_session = unsafe_perform_io(get_data_session(client, database))
+        if not is_successful(client_session):
+            return IOResult.failure(client_session.failure())
+        with client_session.unwrap() as session:
+            for layer in layers:
+                write_transaction = unsafe_perform_io(get_write_transaction(session))
+                if not is_successful(write_transaction):
+                    return IOResult.failure(write_transaction.failure())
+                with write_transaction.unwrap() as transaction:
+
+                    result = add_layer(transaction, layer)
+                    log_add_layer(result, layer)
+

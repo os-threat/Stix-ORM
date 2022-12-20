@@ -16,11 +16,30 @@ def log_delete_layers(result):
     except Exception as e:
         logger.error(e)
 
-def log_delete_layer(result):
+def log_delete_layer(result, layer):
     try:
         if not is_successful(result):
             logger.debug("Failed to delete layer")
             logger.error(str(result.failure()))
+            logger.debug(layer)
+    except Exception as e:
+        logger.error(e)
+
+def log_add_layer(result, layer):
+    try:
+        if not is_successful(result):
+            logger.debug("Failed to add layer")
+            logger.error(str(result.failure()))
+            logger.debug(layer)
+    except Exception as e:
+        logger.error(e)
+
+def log_insert_query(result, layer):
+    try:
+        if not is_successful(result):
+            logger.debug("Failed to creare insert query")
+            logger.error(str(result.failure()))
+            logger.debug(layer)
     except Exception as e:
         logger.error(e)
 
@@ -31,6 +50,15 @@ def log_delete_instruction_update_layer(result):
             logger.error(str(result.failure()))
     except Exception as e:
         logger.error(e)
+
+def log_add_instruction_update_layer(result):
+    try:
+        if not is_successful(result):
+            logger.debug("Failed to update layer")
+            logger.error(str(result.failure()))
+    except Exception as e:
+        logger.error(e)
+
 
 def log_delete_instruction_outcome(result):
     try:

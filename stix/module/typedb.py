@@ -25,8 +25,10 @@ from stix2.parsing import parse
 
 import logging
 
-from .type_db_logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers
-from .type_db_queries import delete_database, match_query, query_ids, delete_layers
+from .type_db_logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers, \
+    log_add_instruction_update_layer, log_insert_query
+from .type_db_queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query, add_layers, \
+    build_insert_query
 from stix.module.type_db_file import write_to_file
 
 #logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
@@ -191,7 +193,12 @@ class TypeDBSink(DataSink):
                    "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
 
         filtered_list = list(filter(lambda x: x.get_value() in marking, stix_ids))
-        return [stix_id.get_value() for stix_id in filtered_list]
+        return self.__string_attibute_to_string(filtered_list)
+
+
+    def __string_attibute_to_string(self,
+                                    string_attributes: List[StringAttribute]):
+        return [stix_id.get_value() for stix_id in string_attributes]
 
     def xx(self,
            a):
@@ -342,6 +349,86 @@ class TypeDBSink(DataSink):
         return TypeDBSource(connection, "STIX21")
 
     @safe
+    def __update_add_layers(self,
+                            layers,
+                            indexes,
+                            missing,
+                            dep_obj,
+                            cyclical):
+        if len(layers) == 0:
+            # 4a. For the first record to order
+            missing = dep_obj['dep_list']
+            indexes.append(dep_obj['id'])
+            layers.append(dep_obj)
+        else:
+            # 4b. Add up and return the layers, indexes, missing and cyclical lists
+            add = 'add'
+            layers, indexes, missing, cyclical = sort_layers(layers, cyclical, indexes, missing, dep_obj, add)
+        return layers, indexes, missing, cyclical
+
+    @safe
+    def __add_instruction(self,
+                          stix_dict):
+        stix_obj = parse(stix_dict)
+        dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
+        dep_obj["dep_match"] = dep_match
+        dep_obj["dep_insert"] = dep_insert
+        dep_obj["indep_ql"] = indep_ql
+        dep_obj["core_ql"] = core_ql
+    @safe
+    def __retrieve_add_instructions(self,
+                                    obj_list):
+        layers = []
+        indexes = []
+        missing = []
+        cyclical = []
+
+        for stix_dict in obj_list:
+            add_result = self.__add_instruction(stix_dict)
+            update_result = add_result.bind(lambda dep_obj: self.__update_add_layers(layers,
+                            indexes,
+                            missing,
+                            dep_obj,
+                            cyclical))
+            if is_successful(update_result):
+                layers, indexes, missing, cyclical = update_result.unwrap()
+            else:
+                log_add_instruction_update_layer(update_result)
+        return layers, missing, cyclical
+
+    @safe
+    def __check_missing_data(self,
+                             missing):
+        if len(missing) > 0:
+            return
+        query_result = build_match_id_query(missing)
+
+        data_result = query_result.bind(lambda query: match_query(uri=self.uri,
+                           port=self.port,
+                           database=self.database,
+                           query=query,
+                           data_query=convert_ans_to_stix))
+
+
+        list_found_in_database = self.__string_attibute_to_string(data_result.unwrap())
+
+        values_not_in_database = list(missing.difference(set(list_found_in_database)))
+
+        return values_not_in_database
+
+    @safe
+    def __create_insert_queries(self,
+                                 layers):
+        queries = []
+        for layer in layers:
+            result = build_insert_query(layer)
+            is_non_empty_insertion = is_successful(result) and result.unwrap() is not None
+            if is_non_empty_insertion:
+                queries.append(result.unwrap())
+            elif not is_successful(result):
+                log_insert_query(result, layer)
+
+
     def add(self, stix_data: Optional[List[dict]] = None) -> bool:
         """Add STIX objects to the typedb server.
             1. Gather objects into a list
@@ -363,67 +450,26 @@ class TypeDBSink(DataSink):
             saved separately; you will be able to retrieve any of the objects
             the Bundle contained, but not the Bundle itself.
         """
-        layers = []
-        indexes = []
-        missing = []
-        cyclical = []
+        obj_list = self._gather_objects(stix_data)
+        add_instruction_result = self.__retrieve_add_instructions(obj_list)
+        missing_data_result = add_instruction_result.bind(lambda result: self.__check_missing_data(result[1]))
 
+        is_missing_dependencies = is_successful(missing_data_result) and len(missing_data_result.unwrap()) > 0
+        if is_missing_dependencies:
+            raise Exception("missing stix dependencies")
 
+        is_cyclical = add_instruction_result.bind(lambda result: len(result[2]) > 0)
+        if is_cyclical:
+            raise Exception("cyclical stix dependencies")
 
-        try:
-            # 1. gather objects into a list
-            obj_list = self._gather_objects(stix_data)
-            logger.debug(f'\n\n object list is  {obj_list}')
-            # 2. for stix ibject in list
-            for stix_dict in obj_list:
-                # 3. Parse stix objects and get typeql and dependency
-                stix_obj = parse(stix_dict)
-                dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
-                dep_obj["dep_match"] = dep_match
-                dep_obj["dep_insert"] = dep_insert
-                dep_obj["indep_ql"] = indep_ql
-                dep_obj["core_ql"] = core_ql
-                # 4. Order the list of stix objects, and collect errors
-                logger.debug(f'\ndep object {dep_obj}')
-                if len(layers) == 0:
-                    # 4a. For the first record to order
-                    missing = dep_obj['dep_list']
-                    indexes.append(dep_obj['id'])
-                    layers.append(dep_obj)
-                else:
-                    # 4b. Add up and return the layers, indexes, missing and cyclical lists
-                    add = 'add'
-                    layers, indexes, missing, cyclical = sort_layers(layers, cyclical, indexes, missing, dep_obj, add)
-                    logger.debug(f'\npast sort {layers}')
+        insertion_query_result = add_instruction_result.bind(lambda result: self.__create_insert_queries(result))
+        insert_into_database_result = insertion_query_result.bind(lambda result: add_layers(self.uri,
+                                                                                            self.port,
+                                                                                            self.database,
+                                                                                            result))
 
-            # 5. If missing then check to see if the records are in the database, or raise an error
-            mset = set(missing)
-            logger.debug(f'missing stuff {len(missing)} - {len(set(missing))}')
-            logger.debug(f'mset {mset}')
-            if mset:
-                list_in_database = check_stix_ids(list(mset), self._stix_connection)
-                real_missing = list(mset.difference(set(list_in_database)))
-                logger.debug(f'\nmissing {missing}\n\n loaded {real_missing}')
-                if real_missing:
-                    raise Exception(f'Error: Missing Stix deopendencies, id={real_missing}')
-            # 6. If cyclicla, just raise an error for the moment
-            if cyclical:
-                raise Exception(f'Error: Cyclical Stix Dependencies, id={cyclical}')
-            # 7. Else go ahead and add the records to the database
-            url = self.uri + ":" + self.port
-            logger.debug(f'url {url}')
-            with TypeDB.core_client(url) as client:
-                with client.session(self.database, SessionType.DATA) as session:
-                    logger.debug(f'------------------------------------ TypeDB Sink Session Start --------------------------------------------')
-                    for lay in layers:
-                        logger.debug(f'------------------------------------ Load Object --------------------------------------------')
-                        logger.debug(f' lay {lay}')
-                        self._submit_Stix_object(lay, session)
-                    session.close()
-                    logger.debug(f'------------------------------------ TypeDB Sink Session Complete ---------------------------------')
+        return is_successful(insert_into_database_result)
 
-        except Exception as e:
-            logger.error(f'Stix Add Object Function Error: {e}')
 
     @safe
     def _gather_objects(self, stix_data):
@@ -470,48 +516,6 @@ class TypeDBSink(DataSink):
                 "JSON formatted STIX (or list of), "
                 "or a JSON formatted STIX bundle",
             )
-            
-    def _submit_Stix_object(self, layer, session):
-        """Write the given STIX object to the TypeDB database.
-        """
-        try:
-            dep_match = layer["dep_match"]
-            dep_insert = layer["dep_insert"]
-            indep_ql = layer["indep_ql"]
-            if dep_match == '':
-                match_tql = ''
-            else:
-                match_tql = 'match ' + dep_match
-            if indep_ql == '' and dep_insert == '':
-                insert_tql = ''
-            else:
-                insert_tql = 'insert ' + indep_ql + dep_insert
-            logger.debug(f'match_tql string?-> {match_tql}')
-            logger.debug(f'insert_tql string?-> {insert_tql}')
-            logger.debug(f'----------------------------- Get Ready to Load Object -----------------------------')
-            typeql_string = match_tql + insert_tql
-            if not insert_tql:
-                logger.warning(f'Marking Object type {layer["type"]} already exists')
-                return
-            #logger.debug(typeql_string)
-            logger.debug('=============================================================')
-            with session.transaction(TransactionType.WRITE) as write_transaction:
-                logger.debug(f'inside session and ready to load')
-                insert_iterator = write_transaction.query().insert(typeql_string)
-                logger.debug(f'insert_iterator response ->\n{insert_iterator}')
-                # Capture error here
-                # log it - object id
-                for result in insert_iterator:
-                    logger.debug(f'typedb response ->\n{result}')
-                
-                write_transaction.commit()
-                logger.debug(f'----------------------------- write_transaction.commit -----------------------------')
-                
-        except Exception as e:
-            logger.error(f'Stix Object Submission Error: {e}')
-            logger.error(f'Query: {insert_tql}')
-            raise
-        
         
 class TypeDBSource(DataSource):
     """Interface for searching/retrieving STIX objects from a TypeDB Database.
