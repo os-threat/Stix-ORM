@@ -1,5 +1,7 @@
 # Identity Domain Object
 
+**Stix and TypeQL Object Type:**  `identity`
+
 Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.) as well as classes of individuals, organizations, systems or groups (e.g., the finance sector).
 
 The Identity SDO can capture basic identifying information, contact information, and the sectors that the Identity belongs to. Identity is used in STIX to represent, among other things, targets of attacks, information sources, object creators, and threat actor identities.

@@ -1,5 +1,7 @@
 # Course-of-Action Domain Object
 
+**Stix and TypeQL Object Type:**  `course-of-action`
+
 Note: The Course of Action object in STIX 2.1 is a stub. It is included to support basic use cases (such as sharing prose courses of action) but does not support the ability to represent automated courses of action or contain properties to represent metadata about courses of action. Future STIX 2 releases will expand it to include these capabilities.
 
  

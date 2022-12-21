@@ -1,0 +1,23 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+ type                ,            stix-type             ,      Required      ,  stix-attribute-string   ,   attribute   
+ id                  ,             stix-id              ,      Required      ,  stix-attribute-string   ,   attribute   
+ spec_version        ,           spec-version           ,      Optional      ,  stix-attribute-string   ,   attribute   
+ object_marking_refs ,      object-marking:marked       ,      Optional      ,   embedded    ,relation
+ granular_markings   ,     granular-marking:marked      ,      Optional      ,   embedded    ,relation
+defanged,defanged,      Optional      ,stix-attribute-boolean,   attribute   
+ extensions          ,               n/a                ,        n/a         ,           n/a            ,      n/a      
+is_multipart ,stix-value,      Optional      ,  stix-attribute-string   ,   attribute   
+date,resolve-to:resolves-from,      Optional      ,  stix-attribute-string   ,   attribute   
+content_type,,      Optional      ,  stix-attribute-string   ,   attribute   
+from_ref,from-email:email,      Optional      ,   embedded    ,relation
+sender_ref,sender-email:email,      Optional      ,   embedded    ,relation
+to_refs,to-email:email,      Optional      ,   embedded    ,relation
+cc_refs,cc-email:email,      Optional      ,   embedded    ,relation
+bcc_refs,bcc-email:email,      Optional      ,   embedded    ,relation
+message_id ,message-id ,      Optional      ,  stix-attribute-string   ,   attribute   
+subject,subject,      Optional      ,  stix-attribute-string   ,   attribute   
+received_lines ,received-lines,      Optional      ,  stix-attribute-string   ,   attribute   
+additional_header_fields,additional-header:email,      Optional      ,   embedded    ,relation
+body,body,      Optional      ,  stix-attribute-string   ,   attribute   
+body_multipart,body-multipart:email,      Optional      ,   embedded    ,relation
+raw_email_ref,raw-email-references:email,      Optional      ,   embedded    ,relation

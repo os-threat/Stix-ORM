@@ -1,5 +1,7 @@
 # Report Domain Object
 
+**Stix and TypeQL Object Type:**  `report`
+
 Reports are collections of threat intelligence focused on one or more topics, such as a description of a threat actor, malware, or attack technique, including context and related details. They are used to group related threat intelligence together so that it can be published as a comprehensive cyber threat story.
 
  

@@ -1,0 +1,2231 @@
+image,table,type,object,para1,para2,url,json_example,typeql_insert,typeql_match,python_match
+artifact.png,artifact.csv,artifact,Artifact,"The Artifact object permits capturing an array of bytes (8-bits), as a base64-encoded string, or linking to a file-like payload.",One of payload_bin or url MUST be provided. It is incumbent on object creators to ensure that the URL is accessible for downstream consumers,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_4jegwl6ojbes,"{
+    ""type"": ""artifact"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""artifact--ca17bcf8-9846-5ab4-8662-75c1bf6e63ee"",  
+    ""mime_type"": ""image/jpeg"",  
+    ""payload_bin"": ""VBORw0KGgoAAAANSUhEUgAAADI== ...""  
+  }","insert 
+    $artifact isa artifact,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has mime-type $mime-type,
+        has payload-bin $payload-bin;
+    
+    $stix-type ""artifact"";
+    $spec-version ""2.1"";
+    $stix-id ""artifact--ca17bcf8-9846-5ab4-8662-75c1bf6e63ee"";
+    $mime-type ""image/jpeg"";
+    $payload-bin ""VBORw0KGgoAAAANSUhEUgAAADI== ..."";","match
+    $a isa artifact,
+        has stix-id  ""artifact--ca17bcf8-9846-5ab4-8662-75c1bf6e63ee"",
+        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""artifact--ca17bcf8-9846-5ab4-8662-75c1bf6e63ee"")"
+autonomous-system.png,autonomous.csv,autonomous-system,Autonomous-System,This object represents the properties of an Autonomous System (AS).,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_27gux0aol9e3,"{
+    ""type"": ""autonomous-system"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74"",  
+    ""number"": 15139,  
+    ""name"": ""Slime Industries"",  
+    ""rir"": ""ARIN""  
+  }","insert 
+    $autonomous-system isa autonomous-system,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has number $number,
+        has name $name,
+        has rir $rir;
+    
+    $stix-type ""autonomous-system"";
+    $spec-version ""2.1"";
+    $stix-id ""autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74"";
+    $number 15139;
+    $name ""Slime Industries"";
+    $rir ""ARIN"";","match
+    $a isa autonomous-system,
+        has stix-id ""autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74"",
+        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74"")"
+directory.png,directory.csv,directory,Directory,The Directory object represents the properties common to a file system directory.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_lyvpga5hlw52,"{
+    ""type"": ""directory"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""directory--93c0a9b0-520d-545d-9094-1d80adf46b05"",  
+    ""path"": ""C:\\Windows\\System32""  
+  }","insert 
+    $directory isa directory,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has path $path;
+    
+    $stix-type ""directory"";
+    $spec-version ""2.1"";
+    $stix-id ""directory--93c0a9b0-520d-545d-9094-1d80adf46b05"";
+    $path ""C:\\Windows\\System32"";","match
+    $a isa directory,
+        has stix-id ""directory--93c0a9b0-520d-545d-9094-1d80adf46b05"",
+        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""directory--93c0a9b0-520d-545d-9094-1d80adf46b05"")"
+domain.png,domain.csv,domain-name,Domain-Name,The Domain Name object represents the properties of a network domain name.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_prhhksbxbg87,"{
+  ""type"": ""domain-name"",      
+  ""spec_version"": ""2.1"",      
+  ""id"": ""domain-name--3c10e93f-798e-52a6-a0c1-08156efab7f5"",
+  ""value"": ""example.com"",      
+  ""resolves_to_refs"": [""ipv4-addr--ff26c055-6336-5bc5-b98d-13d6226742dd""]
+}","match  
+    $ipv4-addr00 isa ipv4-addr, 
+        has stix-id ""ipv4-addr--ff26c055-6336-5bc5-b98d-13d6226742dd"";
+insert 
+    $domain-name isa domain-name,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has stix-value $stix-value;
+    
+    $stix-type ""domain-name"";
+    $spec-version ""2.1"";
+    $stix-id ""domain-name--3c10e93f-798e-52a6-a0c1-08156efab7f5"";
+    $stix-value ""example.com"";
+    
+    $resolves-to-ref0 (from-ref:$domain-name, to-ref:$ipv4-addr00) isa resolves-to-ref;","match
+    $a isa domain-name,
+        has stix-id ""domain-name--3c10e93f-798e-52a6-a0c1-08156efab7f5"",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""domain-name--3c10e93f-798e-52a6-a0c1-08156efab7f5"")"
+email-addr.png,email-addr.csv,email-addr,Email-Address,The Email Address object represents a single email address,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_wmenahkvqmgj,"{
+    ""type"": ""email-addr"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""email-addr--2d77a846-6264-5d51-b586-e48322ea1ea3"",
+    ""value"": ""john@example.com"",  
+    ""display_name"": ""John Doe""
+  }","insert 
+    $email-addr isa email-addr,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has stix-value $stix-value,
+        has display-name $display-name;
+    
+    $stix-type ""email-addr"";
+    $spec-version ""2.1"";
+    $stix-id ""email-addr--2d77a846-6264-5d51-b586-e48322ea1ea3"";
+    $stix-value ""john@example.com"";
+    $display-name ""John Doe"";","match
+    $a isa email-addr,
+        has stix-id ""email-addr--2d77a846-6264-5d51-b586-e48322ea1ea3"",
+        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""email-addr--2d77a846-6264-5d51-b586-e48322ea1ea3"")"
+email-message.png,email-message.csv,email-message,Email-Message,"The Email Message object represents an instance of an email message, corresponding to the internet message format described in [RFC5322] and related RFCs.","Header field values that have been encoded as described in section 2 of [RFC2047] MUST be decoded before inclusion in Email Message object properties. For example, this is some text MUST be used instead of =?iso-8859-1?q?this=20is=20some=20text?=. Any characters in the encoded value which cannot be decoded into Unicode SHOULD be replaced with the 'REPLACEMENT CHARACTER' (U+FFFD). If it is necessary to capture the header value as observed, this can be achieved by referencing an Artifact object through the raw_email_ref property.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_grboc7sq5514,"{
+  ""type"": ""email-message"",      
+  ""spec_version"": ""2.1"",      
+  ""id"": ""email-message--0c57a381-2a17-5e61-8754-5ef96efb286c"",      
+  ""from_ref"": ""email-addr--9b7e29b3-fd8d-562e-b3f0-8fc8134f5dda"",      
+  ""to_refs"": [""email-addr--2d77a846-6264-5d51-b586-e43822ea1ea3""],      
+  ""is_multipart"": false,      
+  ""date"": ""2004-04-19T12:22:23.000Z"",      
+  ""subject"": ""Did you see this?"",      
+  ""additional_header_fields"": {      
+    ""Reply-To"": [      
+      ""steve@example.com"",      
+      ""jane@example.com""      
+    ]      
+  }      
+}","match  
+    $email-addr0 isa email-addr, 
+        has stix-id ""email-addr--9b7e29b3-fd8d-562e-b3f0-8fc8134f5dda"";
+    $email-addr01 isa email-addr, 
+        has stix-id ""email-addr--2d77a846-6264-5d51-b586-e43822ea1ea3"";
+insert 
+    $email-message isa email-message,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has is-multipart $is-multipart,
+        has date $date,
+        has subject $subject;
+    
+    $stix-type ""email-message"";
+    $spec-version ""2.1"";
+    $stix-id ""email-message--0c57a381-2a17-5e61-8754-5ef96efb286c"";
+    $is-multipart false;
+    $date 2004-04-19T12:22:23.000;
+    $subject ""Did you see this?"";
+    
+    $from-email0 (email:$email-message, email-address:$email-addr0) isa from-email;
+    
+    $to-email1 (email:$email-message, email-address:$email-addr01) isa to-email;
+    
+    $header-key0 isa header-key;  $header-key0 ""Reply-To"";
+    $header-key0 has header-value ""steve@example.com"";
+    $header-key0 has header-value ""jane@example.com"";
+    $additional-header (email:$email-message, item: $header-key0) isa additional-header;","match
+    $a isa email-message,
+        has stix-id ""email-message--0c57a381-2a17-5e61-8754-5ef96efb286c"",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;
+    $e isa header-key, has $f;
+    $g (owner:$a, pointed-to:$e) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""email-addr--9b7e29b3-fd8d-562e-b3f0-8fc8134f5dda"")"
+email-mime.png,email-mime.csv,email-mime-part,Email-MIME-Component,Specifies one component of a multi-part email body.,"There is no property to capture the value of the ""Content-Transfer-Encoding"" header field, since the body MUST be decoded before being represented in the body property.
+
+One of body OR body_raw_ref MUST be included.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_grboc7sq5514,"{
+  ""type"": ""email-message"",      
+  ""spec_version"": ""2.1"",      
+  ""id"": ""email-message--cf9b4b7f-14c8-5955-8065-020e0316b559"",      
+  ""is_multipart"": true,      
+  ""received_lines"": [      
+    ""from mail.example.com ([198.51.100.3]) by smtp.gmail.com with ESMTPSA id q23sm23309939wme.17.2016.07.19.07.20.32 (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Tue, 19 Jul 2016 07:20:40 -0700 (PDT)""      
+  ],      
+  ""content_type"": ""multipart/mixed"",      
+  ""date"": ""2016-06-19T14:20:40.000Z"",      
+  ""from_ref"": ""email-addr--89f52ea8-d6ef-51e9-8fce-6a29236436ed"",      
+  ""to_refs"": [""email-addr--d1b3bf0c-f02a-51a1-8102-11aba7959868""],      
+  ""cc_refs"": [""email-addr--e4ee5301-b52d-59cd-a8fa-8036738c7194""],      
+  ""subject"": ""Check out this picture of a cat!"",      
+  ""additional_header_fields"": {      
+    ""Content-Disposition"": ""inline"",      
+    ""X-Mailer"": ""Mutt/1.5.23"",      
+    ""X-Originating-IP"": ""198.51.100.3""      
+  },      
+  ""body_multipart"": [      
+    {      
+      ""content_type"": ""text/plain; charset=utf-8"",      
+      ""content_disposition"": ""inline"",      
+      ""body"": ""Cats are funny!""      
+    },      
+    {      
+      ""content_type"": ""image/png"",      
+      ""content_disposition"": ""attachment; filename=\""tabby.png\"""",      
+      ""body_raw_ref"": ""artifact--4cce66f8-6eaa-53cb-85d5-3a85fca3a6c5""      
+    },      
+    {      
+      ""content_type"": ""application/zip"",      
+      ""content_disposition"": ""attachment; filename=\""tabby_pics.zip\"""",      
+      ""body_raw_ref"": ""file--6ce09d9c-0ad3-5ebf-900c-e3cb288955b5""      
+    }      
+  ]      
+  } ","match  $email-addr0 isa email-addr, has stix-id ""email-addr--89f52ea8-d6ef-51e9-8fce-6a29236436ed"";
+ $email-addr01 isa email-addr, has stix-id ""email-addr--d1b3bf0c-f02a-51a1-8102-11aba7959868"";
+ $email-addr02 isa email-addr, has stix-id ""email-addr--e4ee5301-b52d-59cd-a8fa-8036738c7194"";
+ $artifact1 isa artifact, has stix-id ""artifact--4cce66f8-6eaa-53cb-85d5-3a85fca3a6c5"";
+ $file2 isa file, has stix-id ""file--6ce09d9c-0ad3-5ebf-900c-e3cb288955b5"";
+insert $email-message isa email-message,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has is-multipart $is-multipart,
+ has date $date,
+ has content-type $content-type,
+ has subject $subject,
+ has received-lines $received_lines0;
+
+ $stix-type ""email-message"";
+ $spec-version ""2.1"";
+ $stix-id ""email-message--cf9b4b7f-14c8-5955-8065-020e0316b559"";
+ $is-multipart true;
+ $date 2016-06-19T14:20:40.000;
+ $content-type ""multipart/mixed"";
+ $subject ""Check out this picture of a cat!"";
+ $received_lines0 ""from mail.example.com ([198.51.100.3]) by smtp.gmail.com with ESMTPSA id q23sm23309939wme.17.2016.07.19.07.20.32 (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128); Tue, 19 Jul 2016 07:20:40 -0700 (PDT)"";
+
+
+ $from-email0 (email:$email-message, email-address:$email-addr0) isa from-email;
+
+ $to-email1 (email:$email-message, email-address:$email-addr01) isa to-email;
+
+ $cc-email2 (email:$email-message, email-address:$email-addr02) isa cc-email;
+
+ $header-key0 isa header-key;  $header-key0 ""Content-Disposition"";
+ $header-key0 has header-value ""inline"";
+ $header-key1 isa header-key;  $header-key1 ""X-Mailer"";
+ $header-key1 has header-value ""Mutt/1.5.23"";
+ $header-key2 isa header-key;  $header-key2 ""X-Originating-IP"";
+ $header-key2 has header-value ""198.51.100.3"";
+ $additional-header (email:$email-message, item: $header-key0, item: $header-key1, item: $header-key2) isa additional-header;
+
+$email-mime-part0 isa email-mime-part,
+ has body ""Cats are funny!"",
+ has content-type ""text/plain; charset=utf-8"",
+ has content-disposition ""inline"";
+$email-mime-part1 isa email-mime-part,
+ has content-type ""image/png"",
+ has content-disposition ""attachment; filename='tabby.png'"";
+$email-mime-part2 isa email-mime-part,
+ has content-type ""application/zip"",
+ has content-disposition ""attachment; filename='tabby_pics.zip'"";
+
+ $body-multipart (email:$email-message, mime-part:$email-mime-part0, mime-part:$email-mime-part1, mime-part:$email-mime-part2) isa body-multipart;
+
+ $body-raw-references1 (containing-mime:$email-mime-part1, non-textual:$artifact1) isa body-raw-references;
+
+ $body-raw-references2 (containing-mime:$email-mime-part2, non-textual:$file2) isa body-raw-references;","match
+    $a isa email-message,
+        has stix-id ""email-message--cf9b4b7f-14c8-5955-8065-020e0316b559"",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;
+    $e isa header-key, has $f;
+    $g (owner:$a, pointed-to:$e) isa embedded;
+    $h isa stix-sub-object,
+        has $i;
+    $j (owner:$a, pointed-to:$h) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""email-message--cf9b4b7f-14c8-5955-8065-020e0316b559"")"
+file.png,file.csv,file,File-,The File object represents the properties of a file. A File object MUST contain at least one of hashes or name.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_99bl2dibcztv,"{      
+  ""type"": ""file"",      
+  ""spec_version"": ""2.1"",      
+  ""id"": ""file--5a27d487-c542-5f97-a131-a8866b477b46"",      
+  ""hashes"": {      
+    ""SHA-256"": ""ceafbfd424be2ca4a5f0402cae090dda2fb0526cf521b60b60077c0f622b285a""      
+  },      
+  ""parent_directory_ref"": ""directory--93c0a9b0-520d-545d-9094-1a08ddf46b05"",      
+  ""name"": ""qwerty.dll""      
+}","match  
+    $directory1 isa directory, 
+        has stix-id ""directory--93c0a9b0-520d-545d-9094-1a08ddf46b05"";
+insert 
+    $file isa file,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has name $name;    
+    
+    $stix-type ""file"";
+    $spec-version ""2.1"";
+    $stix-id ""file--5a27d487-c542-5f97-a131-a8866b477b46"";
+    $name ""qwerty.dll"";
+    
+    $hash0 isa sha-256, has hash-value ""ceafbfd424be2ca4a5f0402cae090dda2fb0526cf521b60b60077c0f622b285a"";
+    
+    $hash_rel (owner:$file, pointed-to:$hash0) isa hashes;
+    
+    $directory-parent1 (contained:$file, container:$directory1) isa directory-parent;","match
+    $a isa file,
+        has stix-id ""file--5a27d487-c542-5f97-a131-a8866b477b46"",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;
+    $e isa stix-sub-object, 
+        has $f;
+    $g (owner:$a, pointed-to:$e) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""file--5a27d487-c542-5f97-a131-a8866b477b46"")"
+file-archive.png,file-archive.csv,archive-ext,File-Archive,The Archive File extension specifies a default extension for capturing properties specific to archive files. The key for this extension when used in the extensions dictionary MUST be archive-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_xi3g7dwaigs6,"{      
+    ""type"": ""file"",      
+    ""spec_version"": ""2.1"",      
+    ""id"": ""file--9a1f834d-2506-5367-baec-7aa63996ac43"",      
+    ""name"": ""foo.zip"",      
+    ""hashes"": {      
+      ""SHA-256"": ""35a01331e9ad96f751278b891b6ea09699806faedfa237d40513d92ad1b7100f""      
+    },      
+    ""mime_type"": ""application/zip"",      
+    ""extensions"": {      
+      ""archive-ext"": {      
+        ""contains_refs"": [      
+          ""file--019fde1c-94ca-5967-8b3c-a906a51d87ac"",      
+          ""file--94fc2163-dec3-5715-b824-6e689c4de865"",      
+          ""file--d07ff290-d7e0-545b-a2ff-04602a9e0b73""      
+        ]      
+      }      
+    }      
+  }","match  
+    $file0 isa file, 
+        has stix-id ""file--019fde1c-94ca-5967-8b3c-a906a51d87ac"";
+    $file1 isa file, 
+        has stix-id ""file--94fc2163-dec3-5715-b824-6e689c4de865"";
+    $file2 isa file, 
+        has stix-id ""file--d07ff290-d7e0-545b-a2ff-04602a9e0b73"";
+insert 
+    $file isa file,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has name $name,
+        has mime-type $mime-type;
+    
+    $stix-type ""file"";
+    $spec-version ""2.1"";
+    $stix-id ""file--9a1f834d-2506-5367-baec-7aa63996ac43"";
+    $name ""foo.zip"";
+    $mime-type ""application/zip"";
+    
+    $hash0 isa sha-256, has hash-value ""35a01331e9ad96f751278b891b6ea09699806faedfa237d40513d92ad1b7100f"";    
+    $hash_rel (owner:$file, pointed-to:$hash0) isa hashes;
+    
+    $archive-ext isa archive-ext;    
+    $archive-extension (file:$file, an-archive:$archive-ext) isa archive-extension;    
+    $directory-contains (container:$archive-ext, contained:$file0, contained:$file1, contained:$file2) isa directory-contains;","match
+    $a isa file,
+        has stix-id ""file--9a1f834d-2506-5367-baec-7aa63996ac43"",
+        has $b;
+    $c isa stix-sub-object,
+        has $d;
+    $e (owner:$a, pointed-to:$c) isa embedded;
+    $g (owner:$a, pointed-to:$h) isa embedded;
+    $i (owner:$h, pointed-to:$j) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""file--9a1f834d-2506-5367-baec-7aa63996ac43"")"
+file-ntfs.png,file-ntfs.csv,ntfs-ext,File-NTFS,The NTFS file extension specifies a default extension for capturing properties specific to the storage of the file on the NTFS file system. The key for this extension when used in the extensions dictionary MUST be ntfs-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,An object using the NTFS File Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_o6cweepfrsci,"
+    ""type"": ""file"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""file--73c4cd13-7206-5100-88ef-822c42d3f02c"",  
+    ""hashes"": {  
+      ""SHA-256"": ""35a01331e9ad96f751278b891b6ea09699806faedfa237d40513d92ad1b7100f""  
+    },  
+    ""extensions"": {  
+      ""ntfs-ext"": {  
+        ""alternate_data_streams"": [  
+          {  
+            ""name"": ""second.stream"",  
+            ""size"": 25536  
+          }  
+        ]  
+      }  
+    }  
+  }","insert 
+    $file isa file,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id;
+    
+    $stix-type ""file"";
+    $spec-version ""2.1"";
+    $stix-id ""file--73c4cd13-7206-5100-88ef-822c42d3f02c"";
+    
+    $hash0 isa sha-256, has hash-value ""35a01331e9ad96f751278b891b6ea09699806faedfa237d40513d92ad1b7100f"";
+    
+    $hash_rel (owner:$file, pointed-to:$hash0) isa hashes;
+    $ntfs-ext isa ntfs-ext;
+    
+    $ntfs-extension (file:$file, ntfs:$ntfs-ext) isa ntfs-extension;
+    
+    $alternate-data-stream0 isa alternate-data-stream,
+        has name ""second.stream"",
+        has size 25536;
+    
+    $alt-data-streams (ntfs-ext:$ntfs-ext, alt-data-stream:$alternate-data-stream0) isa alt-data-streams;","match
+    $a isa file,
+        has stix-id ""file--73c4cd13-7206-5100-88ef-822c42d3f02c"",
+        has $b;
+    $c isa stix-sub-object,
+        has $d;
+    $e (owner:$a, pointed-to:$c) isa embedded;
+    $g (owner:$a, pointed-to:$h) isa embedded;
+    $i isa stix-sub-object,
+        has $j;
+    $k (owner:$h, pointed-to:$i) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""file--73c4cd13-7206-5100-88ef-822c42d3f02c"")"
+file-pdf.png,file-pdf.csv,pdf-ext,File-PDF,"The PDF file extension specifies a default extension for capturing properties specific to PDF files. The key for this extension when used in the extensions dictionary MUST be pdf-ext. Note that this predefined extension does not use the extension facility described in section 7.3.
+",An object using the PDF File Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_8xmpb2ghp9km,"{
+    ""type"": ""file"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""file--ec3415cc-5f4f-5ec8-bdb1-6f86996ae66d"",  
+    ""name"": ""example.pdf"",  
+    ""extensions"": {  
+      ""pdf-ext"": {  
+        ""version"": ""1.7"",  
+        ""document_info_dict"": {  
+          ""Title"": ""Sample document"",  
+          ""Author"": ""Adobe Systems Incorporated"",  
+          ""Creator"": ""Adobe FrameMaker 5.5.3 for Power Macintosh"",  
+          ""Producer"": ""Acrobat Distiller 3.01 for Power Macintosh"",  
+          ""CreationDate"": ""20070412090123-02""  
+        },  
+        ""pdfid0"": ""DFCE52BD827ECF765649852119D"",  
+        ""pdfid1"": ""57A1E0F9ED2AE523E313C""  
+      }  
+    }  
+  }","insert 
+    $file isa file,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has name $name;
+    
+    $stix-type ""file"";
+    $spec-version ""2.1"";
+    $stix-id ""file--ec3415cc-5f4f-5ec8-bdb1-6f86996ae66d"";
+    $name ""example.pdf"";
+    
+    $pdf-ext isa pdf-ext,
+        has version $version,
+        has pdfid0 $pdfid0,
+        has pdfid1 $pdfid1;
+    
+    $version ""1.7"";
+    $pdfid0 ""DFCE52BD827ECF765649852119D"";
+    $pdfid1 ""57A1E0F9ED2AE523E313C"";
+    
+    $pdf-extension (file:$file, pdf:$pdf-ext) isa pdf-extension;
+    
+    $doc-key0 isa doc-key;  $doc-key0 ""Title"";
+    $doc-key0 has doc-value ""Sample document"";
+    $doc-key1 isa doc-key;  $doc-key1 ""Author"";
+    $doc-key1 has doc-value ""Adobe Systems Incorporated"";
+    $doc-key2 isa doc-key;  $doc-key2 ""Creator"";
+    $doc-key2 has doc-value ""Adobe FrameMaker 5.5.3 for Power Macintosh"";
+    $doc-key3 isa doc-key;  $doc-key3 ""Producer"";
+    $doc-key3 has doc-value ""Acrobat Distiller 3.01 for Power Macintosh"";
+    $doc-key4 isa doc-key;  $doc-key4 ""CreationDate"";
+    $doc-key4 has doc-value ""20070412090123-02"";
+    $doc-info (pdf:$pdf-ext, info: $doc-key0, info: $doc-key1, info: $doc-key2, info: $doc-key3, info: $doc-key4) isa doc-info;","match
+    $a isa file,
+        has stix-id ""file--ec3415cc-5f4f-5ec8-bdb1-6f86996ae66d"",
+        has $b;
+    $c isa stix-sub-object,
+        has $d;
+    $e (owner:$a, pointed-to:$c) isa embedded;
+    $g has $h;
+    $i (owner:$c, pointed-to:$g) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""file--ec3415cc-5f4f-5ec8-bdb1-6f86996ae66d"")"
+file-image.png,file-image.csv,raster-image-ext,File-Raster-Image,The Raster Image file extension specifies a default extension for capturing properties specific to raster image files. The key for this extension when used in the extensions dictionary MUST be raster-image-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,An object using the Raster Image File Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_u5z7i2ox8w4x,"{
+    ""type"": ""file"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""file--c7d1e135-8b34-549a-bb47-302f5cf998ed"",  
+    ""name"": ""picture.jpg"",  
+    ""hashes"": {  
+      ""SHA-256"": ""4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877""  
+    },  
+    ""extensions"": {  
+      ""raster-image-ext"": {  
+        ""exif_tags"": {  
+          ""Make"": ""Nikon"",  
+          ""Model"": ""D7000"",  
+          ""XResolution"": 4928,  
+          ""YResolution"": 3264  
+        }  
+      }  
+    }  
+  }","insert 
+    $file isa file,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has name $name;
+    
+    $stix-type ""file"";
+    $spec-version ""2.1"";
+    $stix-id ""file--c7d1e135-8b34-549a-bb47-302f5cf998ed"";
+    $name ""picture.jpg"";
+    
+    $hash0 isa sha-256, has hash-value ""4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877"";
+    $hash_rel (owner:$file, pointed-to:$hash0) isa hashes;
+    
+    $raster-image-ext isa raster-image-ext;
+    $raster-image-extension (file:$file, image:$raster-image-ext) isa raster-image-extension;
+    
+    $EXIF-key0 isa EXIF-key;  $EXIF-key0 ""Make"";
+    $EXIF-key0 has EXIF-value ""Nikon"";
+    $EXIF-key1 isa EXIF-key;  $EXIF-key1 ""Model"";
+    $EXIF-key1 has EXIF-value ""D7000"";
+    $EXIF-key2 isa EXIF-key;  $EXIF-key2 ""XResolution"";
+    $EXIF-key2 has EXIF-value ""4928"";
+    $EXIF-key3 isa EXIF-key;  $EXIF-key3 ""YResolution"";
+    $EXIF-key3 has EXIF-value ""3264"";
+    $EXIF-tags (image:$raster-image-ext, info: $EXIF-key0, info: $EXIF-key1, info: $EXIF-key2, info: $EXIF-key3) isa EXIF-tags;","match
+    $a isa file,
+        has stix-id ""file--c7d1e135-8b34-549a-bb47-302f5cf998ed"",
+        has $b;
+    $c isa stix-sub-object,
+        has $d;
+    $e (owner:$a, pointed-to:$c) isa embedded;
+    $g (owner:$a, pointed-to:$f) isa embedded;
+    $h has $j;
+    $i (owner:$f, pointed-to:$h) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""file--c7d1e135-8b34-549a-bb47-302f5cf998ed"")"
+file-windows.png,file-windows.csv,windows-pebinary-ext,File-Windows-PE-Binary,"The Windows™ PE Binary File extension specifies a default extension for capturing properties specific to Windows portable executable (PE) files. The key for this extension when used in the extensions dictionary MUST be windows-pebinary-ext. Note that this predefined extension does not use the extension facility described in section 7.3.
+
+An object using the Windows™ PE Binary File Extension MUST contain at least one property other than the required pe_type property from this extension.","Note that the example below also contains data and properties from the ""windows-pe-optional-header-type"" and the ""windows-pe-section-type"" ",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_gg5zibddf9bs,"{
+    ""type"": ""file"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""file--fb0419a8-f09c-57f8-be64-71a80417591c"",  
+    ""name"": ""example.exe"",  
+    ""extensions"": {  
+      ""windows-pebinary-ext"": {  
+        ""pe_type"": ""exe"",  
+        ""machine_hex"": ""014c"",  
+        ""number_of_sections"": 4,  
+        ""time_date_stamp"": ""2016-01-22T12:31:12Z"",  
+        ""pointer_to_symbol_table_hex"": ""74726144"",  
+        ""number_of_symbols"": 4542568,  
+        ""size_of_optional_header"": 224,  
+        ""characteristics_hex"": ""818f"",  
+        ""optional_header"": {  
+          ""magic_hex"": ""010b"",  
+          ""major_linker_version"": 2,  
+          ""minor_linker_version"": 25,  
+          ""size_of_code"": 512,  
+          ""size_of_initialized_data"": 283648,  
+          ""size_of_uninitialized_data"": 0,  
+          ""address_of_entry_point"": 4096,  
+          ""base_of_code"": 4096,  
+          ""base_of_data"": 8192,  
+          ""image_base"": 14548992,  
+          ""section_alignment"": 4096,  
+          ""file_alignment"": 4096,  
+          ""major_os_version"": 1,  
+          ""minor_os_version"": 0,  
+          ""major_image_version"": 0,  
+          ""minor_image_version"": 0,  
+          ""major_subsystem_version"": 4,  
+          ""minor_subsystem_version"": 0,  
+          ""win32_version_value_hex"": ""00"",  
+          ""size_of_image"": 299008,  
+          ""size_of_headers"": 4096,  
+          ""checksum_hex"": ""00"",  
+          ""subsystem_hex"": ""03"",  
+          ""dll_characteristics_hex"": ""00"",  
+          ""size_of_stack_reserve"": 100000,  
+          ""size_of_stack_commit"": 8192,  
+          ""size_of_heap_reserve"": 100000,  
+          ""size_of_heap_commit"": 4096,  
+          ""loader_flags_hex"": ""abdbffde"",  
+          ""number_of_rva_and_sizes"": 3758087646  
+        },  
+        ""sections"": [  
+          {  
+            ""name"": ""CODE"",  
+            ""entropy"": 0.061089  
+          },  
+          {  
+            ""name"": ""DATA"",  
+            ""entropy"": 7.980693  
+          },  
+          {  
+            ""name"": ""NicolasB"",  
+            ""entropy"": 0.607433  
+          },  
+          {  
+            ""name"": "".idata"",  
+            ""entropy"": 0.607433  
+          }  
+        ]  
+      }  
+    }  
+  }","insert 
+    $file isa file,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has name $name;
+    
+    $stix-type ""file"";
+    $spec-version ""2.1"";
+    $stix-id ""file--fb0419a8-f09c-57f8-be64-71a80417591c"";
+    $name ""example.exe"";
+    
+    $windows-pebinary-ext isa windows-pebinary-ext,
+        has pe-type $pe-type,
+        has machine-hex $machine-hex,
+        has number-of-sections $number-of-sections,
+        has time-date-stamp $time-date-stamp,
+        has pointer-to-symbol-table-hex $pointer-to-symbol-table-hex,
+        has number-of-symbols $number-of-symbols,
+        has size-of-optional-header $size-of-optional-header,
+        has characteristics-hex $characteristics-hex;
+    
+    $pe-type ""exe"";
+    $machine-hex ""014c"";
+    $number-of-sections 4;
+    $time-date-stamp 2016-01-22T12:31:12.000;
+    $pointer-to-symbol-table-hex ""74726144"";
+    $number-of-symbols 4542568;
+    $size-of-optional-header 224;
+    $characteristics-hex ""818f"";
+    
+    $windows-pebinary-extension (file:$file, pebinary:$windows-pebinary-ext) isa windows-pebinary-extension;
+    
+    $windows-pe-optional-header-type isa windows-pe-optional-header-type,
+        has magic-hex $magic-hex,
+        has major-linker-version $major-linker-version,
+        has minor-linker-version $minor-linker-version,
+        has size-of-code $size-of-code,
+        has size-of-initialized-data $size-of-initialized-data,
+        has size-of-uninitialized-data $size-of-uninitialized-data,
+        has address-of-entry-point $address-of-entry-point,
+        has base-of-code $base-of-code,
+        has base-of-data $base-of-data,
+        has image-base $image-base,
+        has section-alignment $section-alignment,
+        has file-alignment $file-alignment,
+        has major-os-version $major-os-version,
+        has minor-os-version $minor-os-version,
+        has major-image-version $major-image-version,
+        has minor-image-version $minor-image-version,
+        has major-subsystem-version $major-subsystem-version,
+        has minor-subsystem-version $minor-subsystem-version,
+        has win32-version-value-hex $win32-version-value-hex,
+        has size-of-image $size-of-image,
+        has size-of-headers $size-of-headers,
+        has checksum-hex $checksum-hex,
+        has subsystem-hex $subsystem-hex,
+        has dll-characteristics-hex $dll-characteristics-hex,
+        has size-of-stack-reserve $size-of-stack-reserve,
+        has size-of-stack-commit $size-of-stack-commit,
+        has size-of-heap-reserve $size-of-heap-reserve,
+        has size-of-heap-commit $size-of-heap-commit,
+        has loader-flags-hex $loader-flags-hex,
+        has number-of-rva-and-sizes $number-of-rva-and-sizes;
+    
+    $magic-hex ""010b"";
+    $major-linker-version 2;
+    $minor-linker-version 25;
+    $size-of-code 512;
+    $size-of-initialized-data 283648;
+    $size-of-uninitialized-data 0;
+    $address-of-entry-point 4096;
+    $base-of-code 4096;
+    $base-of-data 8192;
+    $image-base 14548992;
+    $section-alignment 4096;
+    $file-alignment 4096;
+    $major-os-version 1;
+    $minor-os-version 0;
+    $major-image-version 0;
+    $minor-image-version 0;
+    $major-subsystem-version 4;
+    $minor-subsystem-version 0;
+    $win32-version-value-hex ""00"";
+    $size-of-image 299008;
+    $size-of-headers 4096;
+    $checksum-hex ""00"";
+    $subsystem-hex ""03"";
+    $dll-characteristics-hex ""00"";
+    $size-of-stack-reserve 100000;
+    $size-of-stack-commit 8192;
+    $size-of-heap-reserve 100000;
+    $size-of-heap-commit 4096;
+    $loader-flags-hex ""abdbffde"";
+    $number-of-rva-and-sizes 3758087646;
+    
+    $optional-headers (pebinary:$windows-pebinary-ext, optional-header:$windows-pe-optional-header-type) isa optional-headers;
+    
+    $windows-pe-section0 isa windows-pe-section,
+        has name ""CODE"",
+        has entropy 0.061089;
+    $windows-pe-section1 isa windows-pe-section,
+        has name ""DATA"",
+        has entropy 7.980693;
+    $windows-pe-section2 isa windows-pe-section,
+        has name ""NicolasB"",
+        has entropy 0.607433;
+    $windows-pe-section3 isa windows-pe-section,
+        has name "".idata"",
+        has entropy 0.607433;
+    
+    $sections (pebinary:$windows-pebinary-ext, pe-section:$windows-pe-section0, pe-section:$windows-pe-section1, pe-section:$windows-pe-section2, pe-section:$windows-pe-section3) isa sections;","match
+    $a isa file,
+        has stix-id ""file--fb0419a8-f09c-57f8-be64-71a80417591c"",
+        has $b;
+    $c isa stix-sub-object,
+        has $d;
+    $e (owner:$a, pointed-to:$c) isa embedded;
+    $g (owner:$a, pointed-to:$f) isa embedded;
+    $h has $j;
+    $i (owner:$f, pointed-to:$h) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""file--fb0419a8-f09c-57f8-be64-71a80417591c"",)"
+ipv4-addr.png,ipv4.csv,ipv4-addr,IPv4-Address,The IPv4 Address object represents one or more IPv4 addresses expressed using CIDR notation.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_ki1ufj1ku8s0,"{
+    ""type"": ""ipv4-addr"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""ipv4-addr--ff26c055-6336-5bc5-b89d-13d6226742dd"",
+    ""value"": ""198.51.100.3""  
+  }","insert 
+    $ipv4-addr isa ipv4-addr,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has stix-value $stix-value;
+    
+    $stix-type ""ipv4-addr"";
+    $spec-version ""2.1"";
+    $stix-id ""ipv4-addr--ff26c055-6336-5bc5-b89d-13d6226742dd"";
+    $stix-value ""198.51.100.3"";","match
+    $a isa ipv4-addr,
+        has stix-id ""ipv4-addr--ff26c055-6336-5bc5-b89d-13d6226742dd"",
+        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""directory--93c0a9b0-520d-545d-9094-1d80adf46b05"")"
+ipv6-addr.png,ipv6.csv,ipv6-addr,IPv6-Address,The IPv6 Address object represents one or more IPv6 addresses expressed using CIDR notation.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_oeggeryskriq,"{
+    ""type"": ""ipv6-addr"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""ipv6-addr--5daf7456-8863-5481-9d42-237d477697f4"",  
+    ""value"": ""2001:0db8::/96""  
+  }","insert 
+    $ipv6-addr isa ipv6-addr,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has stix-value $stix-value;
+    
+    $stix-type ""ipv6-addr"";
+    $spec-version ""2.1"";
+    $stix-id ""ipv6-addr--5daf7456-8863-5481-9d42-237d477697f4"";
+    $stix-value ""2001:0db8::/96"";","match
+    $a isa ipv6-addr,
+        has stix-id ""ipv6-addr--5daf7456-8863-5481-9d42-237d477697f4"",
+        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""ipv6-addr--5daf7456-8863-5481-9d42-237d477697f4"")"
+mac-addr.png,mac.csv,mac-addr,MAC-Address,The MAC Address object represents a single Media Access Control (MAC) address.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_f92nr9plf58y,"{
+    ""type"": ""mac-addr"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""mac-addr--65cfcf98-8a6e-5a1b-8f61-379ac4f92d00"",  
+    ""value"": ""d2:fb:49:24:37:18""  
+  }","insert 
+    $mac-addr isa mac-addr,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has stix-value $stix-value;
+    
+    $stix-type ""mac-addr"";
+    $spec-version ""2.1"";
+    $stix-id ""mac-addr--65cfcf98-8a6e-5a1b-8f61-379ac4f92d00"";
+    $stix-value ""d2:fb:49:24:37:18"";","match
+    $a isa mac-addr,
+        has stix-id ""mac-addr--65cfcf98-8a6e-5a1b-8f61-379ac4f92d00"",
+        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""mac-addr--65cfcf98-8a6e-5a1b-8f61-379ac4f92d00"")"
+mutex.png,mutex.csv,mutex,Mutex,The Mutex object represents the properties of a mutual exclusion (mutex) object.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_f92nr9plf58y,"{
+    ""type"": ""mutex"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""mutex--eba44954-d4e4-5d3b-814c-2b17dd8de300"",  
+    ""name"": ""__CLEANSWEEP__""  
+  }","insert 
+    $mutex isa mutex,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has name $name;
+    
+    $stix-type ""mutex"";
+    $spec-version ""2.1"";
+    $stix-id ""mutex--eba44954-d4e4-5d3b-814c-2b17dd8de300"";
+    $name ""__CLEANSWEEP__"";","match
+    $a isa mutex,
+        has stix-id ""mutex--eba44954-d4e4-5d3b-814c-2b17dd8de300"",
+        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""mutex--eba44954-d4e4-5d3b-814c-2b17dd8de300"")"
+network.png,network-traffic.csv,network-traffic,Network-Traffic,"The Network Traffic object represents arbitrary network traffic that originates from a source and is addressed to a destination. The network traffic MAY or MAY NOT constitute a valid unicast, multicast, or broadcast network connection. This MAY also include traffic that is not established, such as a SYN flood.","To allow for use cases where a source or destination address may be sensitive and not suitable for sharing, such as addresses that are internal to an organization’s network, the source and destination properties (src_ref and dst_ref, respectively) are defined as optional in the properties table below. However, a Network Traffic object MUST contain the protocols property and at least one of the src_ref or dst_ref properties and SHOULD contain the src_port and dst_port properties.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_rgnc3w40xy,"{      
+    ""type"": ""network-traffic"",      
+    ""spec_version"": ""2.1"",      
+    ""id"": ""network-traffic--630d7bb1-0bbc-53a6-a6d4-f3c2d35c2734"",      
+    ""src_ref"": ""ipv4-addr--e42c19c8-f9fe-5ae9-9fc8-22c398f78fb7"",      
+    ""dst_ref"": ""ipv4-addr--03b708d9-7761-2355-ab75-5ea096294a68"",
+    ""protocols"": [      
+      ""ipv4"",      
+      ""tcp""      
+    ],      
+    ""src_byte_count"": 147600,      
+    ""src_packets"": 100,      
+    ""ipfix"": {      
+      ""minimumIpTotalLength"": 32,      
+      ""maximumIpTotalLength"": 2556      
+    }      
+  }","match  $ipv4-addr0 isa ipv4-addr, has stix-id ""ipv4-addr--e42c19c8-f9fe-5ae9-9fc8-22c398f78fb7"";
+ $ipv4-addr1 isa ipv4-addr, has stix-id ""ipv4-addr--03b708d9-7761-2355-ab75-5ea096294a68"";
+insert $network-traffic isa network-traffic,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has protocols $protocols0,
+ has protocols $protocols1,
+ has src-byte-count $src-byte-count,
+ has src-packets $src-packets;
+
+ $stix-type ""network-traffic"";
+ $spec-version ""2.1"";
+ $stix-id ""network-traffic--630d7bb1-0bbc-53a6-a6d4-f3c2d35c2734"";
+ $protocols0 ""ipv4"";
+ $protocols1 ""tcp"";
+ $src-byte-count 147600;
+ $src-packets 100;
+
+
+ $traffic-src0 (traffic:$network-traffic, source:$ipv4-addr0) isa traffic-src;
+
+ $traffic-dst1 (traffic:$network-traffic, destination:$ipv4-addr1) isa traffic-dst;
+
+ $IPFIX-key0 isa IPFIX-key;  $IPFIX-key0 ""minimumIpTotalLength"";
+ $IPFIX-key0 has IPFIX-value ""32"";
+ $IPFIX-key1 isa IPFIX-key;  $IPFIX-key1 ""maximumIpTotalLength"";
+ $IPFIX-key1 has IPFIX-value ""2556"";
+ $IPFIX-store (traffic:$network-traffic, item: $IPFIX-key0, item: $IPFIX-key1) isa IPFIX-store;","match
+    $a isa network-traffic,
+        has stix-id  ""network-traffic--630d7bb1-0bbc-53a6-a6d4-f3c2d35c2734"",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;
+    $e has $f;
+    $g (owner:$a, pointed-to:$e) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""network-traffic--630d7bb1-0bbc-53a6-a6d4-f3c2d35c2734"")"
+network-http.png,network-http.csv,http-request-ext,Network-HTTP,The HTTP request extension specifies a default extension for capturing network traffic properties specific to HTTP requests. The key for this extension when used in the extensions dictionary MUST be http-request-ext. Note that this predefined extension does not use the extension facility described in section 7.3. The corresponding protocol value for this extension is http.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_b0e376hgtml8,"{      
+    ""type"": ""network-traffic"",      
+    ""spec_version"": ""2.1"",      
+    ""id"": ""network-traffic--f8ae967a-3dc3-5cdf-8f94-8505abff00c2"",      
+    ""dst_ref"": ""ipv4-addr--6da8dad3-4de3-5f8e-ab23-45d0b8f12f16"",      
+    ""protocols"": [      
+      ""tcp"",      
+      ""http""      
+    ],      
+    ""extensions"": {      
+      ""http-request-ext"": {      
+        ""request_method"": ""get"",      
+        ""request_value"": ""/download.html"",      
+        ""request_version"": ""http/1.1"",      
+        ""request_header"": {      
+          ""Accept-Encoding"": ""gzip,deflate"",      
+          ""User-Agent"": ""Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.6) Gecko/20040113"",      
+          ""Host"": ""www.example.com""      
+        }      
+      }      
+    }      
+  }","match  $ipv4-addr0 isa ipv4-addr, has stix-id ""ipv4-addr--6da8dad3-4de3-5f8e-ab23-45d0b8f12f16"";
+insert $network-traffic isa network-traffic,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has protocols $protocols0,
+ has protocols $protocols1;
+
+ $stix-type ""network-traffic"";
+ $spec-version ""2.1"";
+ $stix-id ""network-traffic--f8ae967a-3dc3-5cdf-8f94-8505abff00c2"";
+ $protocols0 ""tcp"";
+ $protocols1 ""http"";
+
+
+ $traffic-dst0 (traffic:$network-traffic, destination:$ipv4-addr0) isa traffic-dst;
+ $http-request-ext isa http-request-ext,
+ has request-method $request-method,
+ has request-value $request-value,
+ has request-version $request-version;
+
+ $request-method ""get"";
+ $request-value ""/download.html"";
+ $request-version ""http/1.1"";
+
+ $http-request-extension (traffic:$network-traffic, request:$http-request-ext) isa http-request-extension;
+
+
+
+ $HTTP-key0 isa HTTP-key;  $HTTP-key0 ""Accept-Encoding"";
+ $HTTP-key0 has HTTP-value ""gzip,deflate"";
+ $HTTP-key1 isa HTTP-key;  $HTTP-key1 ""User-Agent"";
+ $HTTP-key1 has HTTP-value ""Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.6) Gecko/20040113"";
+ $HTTP-key2 isa HTTP-key;  $HTTP-key2 ""Host"";
+ $HTTP-key2 has HTTP-value ""www.example.com"";
+ $HTTP-header (request:$http-request-ext, header: $HTTP-key0, header: $HTTP-key1, header: $HTTP-key2) isa HTTP-header;","match
+    $a isa network-traffic,
+        has stix-id ""network-traffic--f8ae967a-3dc3-5cdf-8f94-8505abff00c2"",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;
+    $e isa stix-sub-object,
+        has $f;
+    $g (owner:$a, pointed-to:$e) isa embedded;
+    $i has $j;
+    $k (owner:$e, pointed-to:$i) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""network-traffic--f8ae967a-3dc3-5cdf-8f94-8505abff00c2"")"
+network-icmp.png,network-icmp.csv,icmp-ext,Network-ICMP,The ICMP extension specifies a default extension for capturing network traffic properties specific to ICMP. The key for this extension when used in the extensions dictionary MUST be icmp-ext. Note that this predefined extension does not use the extension facility described in section 7.3. The corresponding protocol value for this extension is icmp.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_ozypx0lmkebv,"{      
+    ""type"": ""network-traffic"",      
+    ""spec_version"": ""2.1"",      
+    ""id"": ""network-traffic--e7a939ca-78c6-5f27-8ae0-4ad112454626"",      
+    ""src_ref"": ""ipv4-addr--d7177770-fc12-586b-9244-426596a7008e"",      
+    ""dst_ref"": ""ipv4-addr--03b708d9-7761-5523-ab75-5ea096294a68"",      
+    ""protocols"": [      
+      ""icmp""      
+    ],      
+    ""extensions"": {      
+      ""icmp-ext"": {      
+        ""icmp_type_hex"": ""08"",      
+        ""icmp_code_hex"": ""00""      
+      }      
+    }      
+  }","match  
+    $ipv4-addr0 isa ipv4-addr, 
+        has stix-id ""ipv4-addr--d7177770-fc12-586b-9244-426596a7008e"";
+    $ipv4-addr1 isa ipv4-addr, 
+        has stix-id ""ipv4-addr--03b708d9-7761-5523-ab75-5ea096294a68"";
+insert 
+    $network-traffic isa network-traffic,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has protocols $protocols0;
+    
+    $stix-type ""network-traffic"";
+    $spec-version ""2.1"";
+    $stix-id ""network-traffic--e7a939ca-78c6-5f27-8ae0-4ad112454626"";
+    $protocols0 ""icmp"";
+    
+    $traffic-src0 (traffic:$network-traffic, source:$ipv4-addr0) isa traffic-src;
+    
+    $traffic-dst1 (traffic:$network-traffic, destination:$ipv4-addr1) isa traffic-dst;
+    $icmp-ext isa icmp-ext,
+        has icmp-type-hex $icmp-type-hex,
+        has icmp-code-hex $icmp-code-hex;
+    
+    $icmp-type-hex ""08"";
+    $icmp-code-hex ""00"";
+    
+    $icmp-extension (traffic:$network-traffic, icmp:$icmp-ext) isa icmp-extension;","match
+    $a isa network-traffic,
+        has stix-id  ""network-traffic--e7a939ca-78c6-5f27-8ae0-4ad112454626"",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;
+    $e isa stix-sub-object,
+        has $f;
+    $g (owner:$a, pointed-to:$e) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""network-traffic--e7a939ca-78c6-5f27-8ae0-4ad112454626"")"
+network-socket.png,network-socket.csv,socket-ext,Network-Socket,The Network Socket extension specifies a default extension for capturing network traffic properties associated with network sockets. The key for this extension when used in the extensions dictionary MUST be socket-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_8jamupj9ubdv,"{      
+  ""type"": ""network-traffic"",      
+  ""spec_version"": ""2.1"",      
+  ""id"": ""network-traffic--c95e972a-20a4-5307-b00d-b8393faf02c5"",      
+  ""src_ref"": ""ipv4-addr--4d22aae0-2bf9-2754-8819-e4f6abf20a53"",
+  ""src_port"": 223,      
+  ""protocols"": [      
+    ""ip"",      
+    ""tcp""      
+  ],      
+  ""extensions"": {      
+    ""socket-ext"": {      
+      ""is_listening"": true,      
+      ""address_family"": ""AF_INET"",      
+      ""socket_type"": ""SOCK_STREAM""      
+    }      
+  }      
+}","match
+    $ipv4-addr0 isa ipv4-addr,
+        has stix-id ""ipv4-addr--4d22aae0-2bf9-2754-8819-e4f6abf20a53"";
+insert 
+    $network-traffic isa network-traffic,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has src-port $src-port,
+        has protocols $protocols0,
+        has protocols $protocols1;
+    
+    $stix-type ""network-traffic"";
+    $spec-version ""2.1"";
+    $stix-id ""network-traffic--c95e972a-20a4-5307-b00d-b8393faf02c5"";
+    $src-port 223;
+    $protocols0 ""ip"";
+    $protocols1 ""tcp"";
+    
+    $traffic-src0 (traffic:$network-traffic, source:$ipv4-addr0) isa traffic-src;
+    $socket-ext isa socket-ext,
+        has address-family $address-family,
+        has is-listening $is-listening,
+        has socket-type $socket-type;
+    
+    $address-family ""AF_INET"";
+    $is-listening true;
+    $socket-type ""SOCK_STREAM"";
+    
+    $socket-extension (traffic:$network-traffic, socket:$socket-ext) isa socket-extension;","match
+    $a isa network-traffic,
+        has stix-id  ""network-traffic--c95e972a-20a4-5307-b00d-b8393faf02c5"",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;
+    $e isa stix-sub-object,
+        has $f;
+    $g (owner:$a, pointed-to:$e) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""network-traffic--c95e972a-20a4-5307-b00d-b8393faf02c5"")"
+network-tcp.png,network-tcp.csv,tcp-ext,Network-TCP,The TCP extension specifies a default extension for capturing network traffic properties specific to TCP. The key for this extension when used in the extensions dictionary MUST be tcp-ext. Note that this predefined extension does not use the extension facility described in section 7.3. The corresponding protocol value for this extension is tcp.,An object using the TCP Extension MUST contain at least one property from this extension,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_k2njqio7f142,"{      
+    ""type"": ""network-traffic"",      
+    ""spec_version"": ""2.1"",      
+    ""id"": ""network-traffic--09ca55c3-97e5-5966-bad0-1d41d557ae13"",      
+    ""src_ref"": ""ipv4-addr--89830c10-2e94-57fa-8ca6-e0537d2719d1"",      
+    ""dst_ref"": ""ipv4-addr--45f4c6fb-2d7d-576a-a571-edc78d899a72"",      
+    ""src_port"": 3372,      
+    ""dst_port"": 80,      
+    ""protocols"": [      
+      ""tcp""      
+    ],      
+    ""extensions"": {      
+      ""tcp-ext"": {      
+        ""src_flags_hex"": ""00000002""      
+      }      
+    }      
+  }","match  
+    $ipv4-addr0 isa ipv4-addr, 
+        has stix-id ""ipv4-addr--89830c10-2e94-57fa-8ca6-e0537d2719d1"";
+    $ipv4-addr1 isa ipv4-addr, 
+        has stix-id ""ipv4-addr--45f4c6fb-2d7d-576a-a571-edc78d899a72"";
+insert 
+    $network-traffic isa network-traffic,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has src-port $src-port,
+        has dst-port $dst-port,
+        has protocols $protocols0;
+    
+    $stix-type ""network-traffic"";
+    $spec-version ""2.1"";
+    $stix-id ""network-traffic--09ca55c3-97e5-5966-bad0-1d41d557ae13"";
+    $src-port 3372;
+    $dst-port 80;
+    $protocols0 ""tcp"";
+    
+    $traffic-src0 (traffic:$network-traffic, source:$ipv4-addr0) isa traffic-src;
+    
+    $traffic-dst1 (traffic:$network-traffic, destination:$ipv4-addr1) isa traffic-dst;
+    $tcp-ext isa tcp-ext,
+        has src-flags-hex $src-flags-hex;
+    
+    $src-flags-hex ""00000002"";
+    
+    $tcp-extension (traffic:$network-traffic, tcp:$tcp-ext) isa tcp-extension;","match
+    $a isa network-traffic,
+        has stix-id  ""network-traffic--09ca55c3-97e5-5966-bad0-1d41d557ae13"",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;
+    $e isa stix-sub-object,
+        has $f;
+    $g (owner:$a, pointed-to:$e) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""network-traffic--09ca55c3-97e5-5966-bad0-1d41d557ae13"")"
+process.png,process.csv,process,Process,The Process object represents common properties of an instance of a computer program as executed on an operating system. A Process object MUST contain at least one property (other than type) from this object (or one of its extensions).,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_hpppnm86a1jm,"{      
+    ""type"": ""process"",      
+    ""spec_version"": ""2.1"",      
+    ""id"": ""process--d2ec5aab-808d-4492-890a-3c1a1e3cb06e"",      
+    ""pid"": 1221,      
+    ""created_time"": ""2016-01-20T14:11:25.55Z"",      
+    ""command_line"": ""./gedit-bin --new-window"",      
+    ""image_ref"": ""file--c7d1e135-8b34-549a-bb47-302f5cf998ed""      
+}","match  
+    $file0 isa file, 
+        has stix-id ""file--c7d1e135-8b34-549a-bb47-302f5cf998ed"";
+insert 
+    $process isa process,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has pid $pid,
+        has created-time $created-time,
+        has command-line $command-line;
+    
+    $stix-type ""process"";
+    $spec-version ""2.1"";
+    $stix-id ""process--d2ec5aab-808d-4492-890a-3c1a1e3cb06e"";
+    $pid 1221;
+    $created-time 2016-01-20T14:11:25.550;
+    $command-line ""./gedit-bin --new-window"";
+    
+    $process-image0 (process:$process, executed-image:$file0) isa process-image;","match
+    $a isa process,
+        has stix-id  ""process--d2ec5aab-808d-4492-890a-3c1a1e3cb06e"",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""process--d2ec5aab-808d-4492-890a-3c1a1e3cb06e"")"
+process-windows.png,process-windows.csv,windows-process-ext,Process-Windows-Process,The Windows Process extension specifies a default extension for capturing properties specific to Windows processes. The key for this extension when used in the extensions dictionary MUST be windows-process-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,An object using the Windows Process Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_oyegq07gjf5t,"{
+    ""type"": ""process"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""process--de02a3e4-4b96-460a-b799-684347004444"",  
+    ""pid"": 314,  
+    ""extensions"": {  
+      ""windows-process-ext"": {  
+        ""aslr_enabled"": true,  
+        ""dep_enabled"": true,  
+        ""priority"": ""HIGH_PRIORITY_CLASS"",  
+        ""owner_sid"": ""S-1-5-21-186985262-1144665072-74031268-1309""  
+      }  
+    }  
+  }","insert 
+    $process isa process,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has pid $pid;
+    
+    $stix-type ""process"";
+    $spec-version ""2.1"";
+    $stix-id ""process--de02a3e4-4b96-460a-b799-684347004444"";
+    $pid 314;
+    
+    $windows-process-ext isa windows-process-ext,
+        has aslr-enabled $aslr-enabled,
+        has dep-enabled $dep-enabled,
+        has priority $priority,
+        has owner-sid $owner-sid;
+    
+    $aslr-enabled true;
+    $dep-enabled true;
+    $priority ""HIGH_PRIORITY_CLASS"";
+    $owner-sid ""S-1-5-21-186985262-1144665072-74031268-1309"";
+    
+    $windows-process-extension (process:$process, win-process:$windows-process-ext) isa windows-process-extension;","match
+    $a isa process,
+        has stix-id  ""process--de02a3e4-4b96-460a-b799-684347004444"",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;
+    $d isa stix-sub-object,
+        has $e;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""process--de02a3e4-4b96-460a-b799-684347004444"")"
+process-windows-service.png,process-windows-service.csv,windows-service-ext,Process-Windows-Service,The Windows Service extension specifies a default extension for capturing properties specific to Windows services. The key for this extension when used in the extensions dictionary MUST be windows-service-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,"As all properties of this extension are optional, at least one of the properties defined below MUST be included when using this extension.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_lbcvc2ahx1s0,"{      
+    ""type"": ""process"",      
+    ""spec_version"": ""2.1"",      
+    ""id"": ""process--70b17c6c-93e5-4c80-8683-5a4d4e51f2c1"",      
+    ""pid"": 2217,      
+    ""command_line"": ""C:\\Windows\\System32\\sirvizio.exe /s"",      
+    ""image_ref"": ""file--c7d1e135-8b34-549a-bb47-302f5cf998ed"",      
+    ""extensions"": {      
+      ""windows-service-ext"": {      
+        ""service_name"": ""sirvizio"",      
+        ""display_name"": ""Sirvizio"",      
+        ""start_type"": ""SERVICE_AUTO_START"",      
+        ""service_type"": ""SERVICE_WIN32_OWN_PROCESS"",      
+        ""service_status"": ""SERVICE_RUNNING""      
+      }      
+    }      
+  }","match  
+    $file0 isa file, 
+        has stix-id ""file--c7d1e135-8b34-549a-bb47-302f5cf998ed"";
+insert 
+    $process isa process,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has pid $pid,
+        has command-line $command-line;
+    
+    $stix-type ""process"";
+    $spec-version ""2.1"";
+    $stix-id ""process--70b17c6c-93e5-4c80-8683-5a4d4e51f2c1"";
+    $pid 2217;
+    $command-line ""C:\\Windows\\System32\\sirvizio.exe /s"";
+    
+    $process-image0 (process:$process, executed-image:$file0) isa process-image;
+    $windows-service-ext isa windows-service-ext,
+        has service-name $service-name,
+        has display-name $display-name,
+        has start-type $start-type,
+        has service-type $service-type,
+        has service-status $service-status;
+    
+    $service-name ""sirvizio"";
+    $display-name ""Sirvizio"";
+    $start-type ""SERVICE_AUTO_START"";
+    $service-type ""SERVICE_WIN32_OWN_PROCESS"";
+    $service-status ""SERVICE_RUNNING"";
+    
+    $windows-service-extension (process:$process, win-service:$windows-service-ext) isa windows-service-extension;","match
+    $a isa process,
+        has stix-id  ""process--70b17c6c-93e5-4c80-8683-5a4d4e51f2c1"",
+        has $b;
+    $c (owner:$a, pointed-to:$d) isa embedded;
+    $d isa stix-sub-object,
+        has $e;
+    $f (owner:$a, pointed-to:$g) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""process--70b17c6c-93e5-4c80-8683-5a4d4e51f2c1"")"
+software.png,software.csv,software,Software,"The Software object represents high-level properties associated with software, including software products.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_7rkyhtkdthok,"{
+    ""type"": ""software"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""software--a1827f6d-ca53-5605-9e93-4316cd22a00a"",  
+    ""name"": ""Word"",  
+    ""cpe"": ""cpe:2.3:a:microsoft:word:2000:*:*:*:*:*:*:*"",    
+    ""version"": ""2002"",  
+    ""vendor"": ""Microsoft""  
+  }","insert 
+    $software isa software,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has name $name,
+        has cpe $cpe,
+        has vendor $vendor,
+        has version $version;
+    
+    $stix-type ""software"";
+    $spec-version ""2.1"";
+    $stix-id ""software--a1827f6d-ca53-5605-9e93-4316cd22a00a"";
+    $name ""Word"";
+    $cpe ""cpe:2.3:a:microsoft:word:2000:*:*:*:*:*:*:*"";
+    $vendor ""Microsoft"";
+    $version ""2002"";","match
+    $a isa software,
+        has stix-id  ""software--a1827f6d-ca53-5605-9e93-4316cd22a00a"",
+        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""software--a1827f6d-ca53-5605-9e93-4316cd22a00a"")"
+url.png,url.csv,url,URL,The URL object represents the properties of a uniform resource locator (URL).,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_ah3hict2dez0,"{  
+    ""type"": ""url"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""url--c1477287-23ac-5971-a010-5c287877fa60"",  
+    ""value"": ""https://example.com/research/index.html""  
+  }","insert 
+    $url isa url,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has stix-value $stix-value;
+    
+    $stix-type ""url"";
+    $spec-version ""2.1"";
+    $stix-id ""url--c1477287-23ac-5971-a010-5c287877fa60"";
+    $stix-value ""https://example.com/research/index.html"";","match
+    $a isa url,
+        has stix-id  ""url--c1477287-23ac-5971-a010-5c287877fa60"",
+        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""url--c1477287-23ac-5971-a010-5c287877fa60"")"
+user-account.png,user-account.csv,user-account,User-Account,"The User Account object represents an instance of any type of user account, including but not limited to operating system, device, messaging service, and social media platform accounts. As all properties of this object are optional, at least one of the properties defined below MUST be included when using this object.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_azo70vgj1vm2,"{
+    ""type"": ""user-account"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""user-account--9bd3afcf-deee-54f9-83e2-520653cb6bba"",  
+    ""user_id"": ""thegrugq_ebooks"",  
+    ""account_login"": ""thegrugq_ebooks"",  
+    ""account_type"": ""twitter"",  
+    ""display_name"": ""the grugq""  
+  }","insert 
+    $user-account isa user-account,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has user-id $user-id,
+        has account-login $account-login,
+        has account-type $account-type,
+        has display-name $display-name;
+    
+    $stix-type ""user-account"";
+    $spec-version ""2.1"";
+    $stix-id ""user-account--9bd3afcf-deee-54f9-83e2-520653cb6bba"";
+    $user-id ""thegrugq_ebooks"";
+    $account-login ""thegrugq_ebooks"";
+    $account-type ""twitter"";
+    $display-name ""the grugq"";","match
+    $a isa user-account,
+        has stix-id  ""user-account--9bd3afcf-deee-54f9-83e2-520653cb6bba"",
+        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""user-account--9bd3afcf-deee-54f9-83e2-520653cb6bba"")"
+user-account-unix.png,user-account-unix.csv,unix-account-ext,User-UNIX-Account,The UNIX account extension specifies a default extension for capturing the additional information for an account on a UNIX system. The key for this extension when used in the extensions dictionary MUST be unix-account-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,An object using the UNIX Account Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_hodiamlggpw5,"{
+    ""type"": ""user-account"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""user-account--0d5b424b-93b8-5cd8-ac36-306e1789d63c"",  
+    ""user_id"": ""1001"",  
+    ""account_login"": ""jdoe"",  
+    ""account_type"": ""unix"",  
+    ""display_name"": ""John Doe"",  
+    ""is_service_account"": false,  
+    ""is_privileged"": false,  
+    ""can_escalate_privs"": true,  
+    ""extensions"": {  
+      ""unix-account-ext"": {  
+        ""gid"": 1001,  
+        ""groups"": [""wheel""],  
+        ""home_dir"": ""/home/jdoe"",  
+        ""shell"": ""/bin/bash""  
+      }  
+    }  
+  }","insert 
+    $user-account isa user-account,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has user-id $user-id,
+        has account-login $account-login,
+        has account-type $account-type,
+        has display-name $display-name,
+        has is-service-account $is-service-account,
+        has is-privileged $is-privileged,
+        has can-escalate-privs $can-escalate-privs;
+    
+    $stix-type ""user-account"";
+    $spec-version ""2.1"";
+    $stix-id ""user-account--0d5b424b-93b8-5cd8-ac36-306e1789d63c"";
+    $user-id ""1001"";
+    $account-login ""jdoe"";
+    $account-type ""unix"";
+    $display-name ""John Doe"";
+    $is-service-account false;
+    $is-privileged false;
+    $can-escalate-privs true;
+    
+    $unix-account-ext isa unix-account-ext,
+        has gid $gid,
+        has unix-group $groups0,
+        has home-dir $home-dir,
+        has shell $shell;
+        
+    $gid 1001;
+    $groups0 ""wheel"";
+    $home-dir ""/home/jdoe"";
+    $shell ""/bin/bash"";
+    
+    $unix-account-extension (account:$user-account, unix:$unix-account-ext) isa unix-account-extension;","match
+    $a isa user-account,
+        has stix-id  ""user-account--0d5b424b-93b8-5cd8-ac36-306e1789d63c"",
+        has $b;
+    $c isa stix-sub-object,
+        has $d;
+    $f (owner:$a, pointed-to:$c) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""user-account--0d5b424b-93b8-5cd8-ac36-306e1789d63c"")"
+registry-key.png,registry-key.csv,windows-registry-key,Windows-Registry-Key,"The Registry Key object represents the properties of a Windows registry key. As all properties of this object are optional, at least one of the properties defined below MUST be included when using this object.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_luvw8wjlfo3y,"{
+    ""type"": ""windows-registry-key"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""windows-registry-key--9d60798d-4e3e-5fe4-af8a-0e4986f0f90b"",  
+    ""key"": ""HKEY_LOCAL_MACHINE\\System\\Foo\\Bar""  
+  }","insert 
+    $windows-registry-key isa windows-registry-key,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has attribute-key $attribute-key;
+    
+    $stix-type ""windows-registry-key"";
+    $spec-version ""2.1"";
+    $stix-id ""windows-registry-key--9d60798d-4e3e-5fe4-af8a-0e4986f0f90b"";
+    $attribute-key ""HKEY_LOCAL_MACHINE\\System\\Foo\\Bar"";","match
+    $a isa windows-registry-key,
+        has stix-id  ""windows-registry-key--9d60798d-4e3e-5fe4-af8a-0e4986f0f90b"",
+        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get""windows-registry-key--9d60798d-4e3e-5fe4-af8a-0e4986f0f90b"")"
+registry-key-value.png,registry-key-value.csv,windows-registry-value-type,Windows-Registry-Value,"The Windows Registry Value type captures the properties of a Windows Registry Key Value. As all properties of this type are optional, at least one of the properties defined below MUST be included when using this type.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_u7n4ndghs3qq,"{    ""type"": ""windows-registry-key"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""windows-registry-key--2ba37ae7-2745-5082-9dfd-9486dad41016"",  
+    ""key"": ""hkey_local_machine\\system\\bar\\foo"",  
+    ""values"": [  
+      {  
+        ""name"": ""Foo"",  
+        ""data"": ""qwerty"",  
+        ""data_type"": ""REG_SZ""  
+      },  
+      {  
+        ""name"": ""Bar"",  
+        ""data"": ""42"",  
+        ""data_type"": ""REG_DWORD""  
+      }  
+    ]  
+  }","insert 
+    $windows-registry-key isa windows-registry-key,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has attribute-key $attribute-key;
+    
+    $stix-type ""windows-registry-key"";
+    $spec-version ""2.1"";
+    $stix-id ""windows-registry-key--2ba37ae7-2745-5082-9dfd-9486dad41016"";
+    $attribute-key ""hkey_local_machine\\system\\bar\\foo"";
+    
+    $windows-registry-value-type0 isa windows-registry-value-type,
+        has name ""Foo"",
+        has data ""qwerty"",
+        has data-type ""REG_SZ"";
+    $windows-registry-value-type1 isa windows-registry-value-type,
+        has name ""Bar"",
+        has data ""42"",
+        has data-type ""REG_DWORD"";
+    
+    $reg-val (reg-key:$windows-registry-key, reg-value:$windows-registry-value-type0, reg-value:$windows-registry-value-type1) isa reg-val;","match
+    $a isa windows-registry-key,
+        has stix-id  ""windows-registry-key--2ba37ae7-2745-5082-9dfd-9486dad41016"",
+        has $b;
+    $c isa stix-sub-object,
+        has $d;
+    $e (owner:$a, pointed-to:$c) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""windows-registry-key--2ba37ae7-2745-5082-9dfd-9486dad41016"")"
+x509.png,x509.csv,x509-certificate,X.509-Certificate,"The X.509 Certificate object represents the properties of an X.509 certificate, as defined by ITU recommendation X.509 [X.509]. An X.509 Certificate object MUST contain at least one object specific property (other than type) from this object.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_8abcy1o5x9w1,"{
+    ""type"": ""x509-certificate"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""x509-certificate--463d7b2a-8516-5a50-a3d7-6f801465d5de"",  
+    ""issuer"": ""C=ZA, ST=Western Cape, L=Cape Town, O=Thawte Consulting cc, OU=Certification Services Division, CN=Thawte Server CA/emailAddress=server-certs@thawte.com"",  
+    ""validity_not_before"": ""2016-03-12T12:00:00Z"",  
+    ""validity_not_after"": ""2016-08-21T12:00:00Z"",  
+    ""subject"": ""C=US, ST=Maryland, L=Pasadena, O=Brent Baccala, OU=FreeSoft, CN=www.freesoft.org/emailAddress=baccala@freesoft.org"",  
+    ""serial_number"": ""36:f7:d4:32:f4:ab:70:ea:d3:ce:98:6e:ea:99:93:49:32:0a:b7:06""
+}","insert 
+    $x509-certificate isa x509-certificate,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has serial-number $serial-number,
+        has issuer $issuer,
+        has validity-not-before $validity-not-before,
+        has validity-not-after $validity-not-after,
+        has subject $subject;
+    
+    $stix-type ""x509-certificate"";
+    $spec-version ""2.1"";
+    $stix-id ""x509-certificate--463d7b2a-8516-5a50-a3d7-6f801465d5de"";
+    $serial-number ""36:f7:d4:32:f4:ab:70:ea:d3:ce:98:6e:ea:99:93:49:32:0a:b7:06"";
+    $issuer ""C=ZA, ST=Western Cape, L=Cape Town, O=Thawte Consulting cc, OU=Certification Services Division, CN=Thawte Server CA/emailAddress=server-certs@thawte.com"";
+    $validity-not-before 2016-03-12T12:00:00.000;
+    $validity-not-after 2016-08-21T12:00:00.000;
+    $subject ""C=US, ST=Maryland, L=Pasadena, O=Brent Baccala, OU=FreeSoft, CN=www.freesoft.org/emailAddress=baccala@freesoft.org"";","match
+    $a isa x509-certificate,
+        has stix-id   ""x509-certificate--463d7b2a-8516-5a50-a3d7-6f801465d5de"",
+        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get( ""x509-certificate--463d7b2a-8516-5a50-a3d7-6f801465d5de"")"
+x509-ext.png,x509-ext.csv,x509-v3-extensions-type,X.509-Certificate Extension,"The X.509 v3 Extensions type captures properties associated with X.509 v3 extensions, which serve as a mechanism for specifying additional information such as alternative subject names. An object using the X.509 v3 Extensions type MUST contain at least one property from this type.","The X.509 v3 Extensions type captures properties associated with X.509 v3 extensions, which serve as a mechanism for specifying additional information such as alternative subject names. An object using the X.509 v3 Extensions type MUST contain at least one property from this type.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_oudvonxzdlku,"{
+    ""type"":""x509-certificate"",  
+    ""spec_version"": ""2.1"",  
+    ""id"": ""x509-certificate--b595eaf0-0b28-5dad-9e8e-0fab9c1facc9"",  
+    ""issuer"":""C=ZA, ST=Western Cape, L=Cape Town, O=Thawte Consulting cc, OU=Certification Services Division, CN=Thawte Server CA/emailAddress=server-certs@thawte.com"",  
+    ""validity_not_before"":""2016-03-12T12:00:00Z"",  
+    ""validity_not_after"":""2016-08-21T12:00:00Z"",  
+    ""subject"":""C=US, ST=Maryland, L=Pasadena, O=Brent Baccala, OU=FreeSoft, CN=www.freesoft.org/emailAddress=baccala@freesoft.org"",  
+    ""serial_number"": ""02:08:87:83:f2:13:58:1f:79:52:1e:66:90:0a:02:24:c9:6b:c7:dc"",  
+    ""x509_v3_extensions"":{  
+      ""basic_constraints"":""critical,CA:TRUE, pathlen:0"",  
+      ""name_constraints"":""permitted;IP:192.168.0.0/255.255.0.0"",  
+      ""policy_constraints"":""requireExplicitPolicy:3"",  
+      ""key_usage"":""critical, keyCertSign"",  
+      ""extended_key_usage"":""critical,codeSigning,1.2.3.4"",  
+      ""subject_key_identifier"":""hash"",  
+      ""authority_key_identifier"":""keyid,issuer"",  
+      ""subject_alternative_name"":""email:my@other.address,RID:1.2.3.4"",  
+      ""issuer_alternative_name"":""issuer:copy"",  
+      ""crl_distribution_points"":""URI:http://myhost.com/myca.crl"",  
+      ""inhibit_any_policy"":""2"",  
+      ""private_key_usage_period_not_before"":""2016-03-12T12:00:00Z"",  
+      ""private_key_usage_period_not_after"":""2018-03-12T12:00:00Z"",  
+      ""certificate_policies"":""1.2.4.5, 1.1.3.4""  
+    }
+  
+  }","insert 
+    $x509-certificate isa x509-certificate,
+        has stix-type $stix-type,
+        has spec-version $spec-version,
+        has stix-id $stix-id,
+        has serial-number $serial-number,
+        has issuer $issuer,
+        has validity-not-before $validity-not-before,
+        has validity-not-after $validity-not-after,
+        has subject $subject;
+    
+    $stix-type ""x509-certificate"";
+    $spec-version ""2.1"";
+    $stix-id ""x509-certificate--b595eaf0-0b28-5dad-9e8e-0fab9c1facc9"";
+    $serial-number ""02:08:87:83:f2:13:58:1f:79:52:1e:66:90:0a:02:24:c9:6b:c7:dc"";
+    $issuer ""C=ZA, ST=Western Cape, L=Cape Town, O=Thawte Consulting cc, OU=Certification Services Division, CN=Thawte Server CA/emailAddress=server-certs@thawte.com"";
+    $validity-not-before 2016-03-12T12:00:00.000;
+    $validity-not-after 2016-08-21T12:00:00.000;
+    $subject ""C=US, ST=Maryland, L=Pasadena, O=Brent Baccala, OU=FreeSoft, CN=www.freesoft.org/emailAddress=baccala@freesoft.org"";
+    
+    $x509-v3-extension isa x509-v3-extension,
+        has basic-constraints $basic-constraints,
+        has name-constraints $name-constraints,
+        has policy-constraints $policy-constraints,
+        has key-usage $key-usage,
+        has extended-key-usage $extended-key-usage,
+        has subject-key-identifier $subject-key-identifier,
+        has authority-key-identifier $authority-key-identifier,
+        has subject-alternative-name $subject-alternative-name,
+        has issuer-alternative-name $issuer-alternative-name,
+        has crl-distribution-points $crl-distribution-points,
+        has inhibit-any-policy $inhibit-any-policy,
+        has private-key-usage-period-not-before $private-key-usage-period-not-before,
+        has private-key-usage-period-not-after $private-key-usage-period-not-after,
+        has certificate-policies $certificate-policies;
+    
+    $basic-constraints ""critical,CA:TRUE, pathlen:0"";
+    $name-constraints ""permitted;IP:192.168.0.0/255.255.0.0"";
+    $policy-constraints ""requireExplicitPolicy:3"";
+    $key-usage ""critical, keyCertSign"";
+    $extended-key-usage ""critical,codeSigning,1.2.3.4"";
+    $subject-key-identifier ""hash"";
+    $authority-key-identifier ""keyid,issuer"";
+    $subject-alternative-name ""email:my@other.address,RID:1.2.3.4"";
+    $issuer-alternative-name ""issuer:copy"";
+    $crl-distribution-points ""URI:http://myhost.com/myca.crl"";
+    $inhibit-any-policy ""2"";
+    $private-key-usage-period-not-before 2016-03-12T12:00:00.000;
+    $private-key-usage-period-not-after 2018-03-12T12:00:00.000;
+    $certificate-policies ""1.2.4.5, 1.1.3.4"";
+    
+    $v3-extensions (cert:$x509-certificate, v3-extension:$x509-v3-extension) isa v3-extensions;","match
+    $a isa x509-certificate,
+        has stix-id   ""x509-certificate--b595eaf0-0b28-5dad-9e8e-0fab9c1facc9"",
+        has $b;
+    $c isa stix-sub-object,
+        has $d;
+    $e (owner:$a, pointed-to:$c) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get( ""x509-certificate--b595eaf0-0b28-5dad-9e8e-0fab9c1facc9"")"

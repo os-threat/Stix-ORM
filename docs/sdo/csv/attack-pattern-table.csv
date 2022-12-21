@@ -1,0 +1,19 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object  Type, Schema Parent 
+ type                ,            stix-type             ,      Required      ,  stix-attribute-string   ,   attribute   
+ id                  ,             stix-id              ,      Required      ,  stix-attribute-string   ,   attribute   
+ spec_version        ,           spec-version           ,      Required      ,  stix-attribute-string   ,   attribute   
+ created             ,             created              ,      Required      , stix-attribute-timestamp ,   attribute   
+ modified            ,             modified             ,      Required      , stix-attribute-timestamp ,   attribute   
+ name                ,               name               ,      Required      ,  stix-attribute-string   ,   attribute   
+ description         ,           description            ,      Optional      ,  stix-attribute-string   ,   attribute   
+ aliases             ,            stix-role             ,      Optional      ,  stix-attribute-string   ,   attribute   
+ kill_chain_phases   , kill-chain-usage:kill-chain-used ,      Optional      ,   embedded    ,relation
+ created_by_ref      ,        created-by:created        ,      Optional      ,   embedded    ,relation
+ revoked             ,             revoked              ,      Optional      ,  stix-attribute-boolean  ,   attribute   
+ labels              ,              labels              ,      Optional      ,  stix-attribute-string   ,   attribute   
+ confidence          ,            confidence            ,      Optional      ,  stix-attribute-integer  ,   attribute   
+ lang                ,               lang               ,      Optional      ,  stix-attribute-string   ,   attribute   
+ external_references , external-references:referencing  ,      Optional      ,   embedded    ,relation
+ object_marking_refs ,      object-marking:marked       ,      Optional      ,   embedded    ,relation
+ granular_markings   ,     granular-marking:marked      ,      Optional      ,   embedded    ,relation
+ extensions          ,               n/a                ,        n/a         ,           n/a            ,      n/a      

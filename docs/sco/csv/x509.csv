@@ -1,0 +1,21 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+ type                ,            stix-type             ,      Required      ,  stix-attribute-string   ,   attribute   
+ id                  ,             stix-id              ,      Required      ,  stix-attribute-string   ,   attribute   
+ spec_version        ,           spec-version           ,      Optional      ,  stix-attribute-string   ,   attribute   
+ object_marking_refs ,      object-marking:marked       ,      Optional      ,   embedded    ,relation
+ granular_markings   ,     granular-marking:marked      ,      Optional      ,   embedded    ,relation
+defanged,defanged,      Optional      ,stix-attribute-boolean,   attribute   
+ extensions          ,               n/a                ,        n/a         ,           n/a            ,      n/a      
+is_self_signed,is-self-signed,      Optional      ,  stix-attribute-boolean   ,   attribute   
+ hashes,hashes:owner,      Optional      ,embedded,relation
+ version,version,      Optional      ,  stix-attribute-string   ,   attribute   
+ serial_number,serial-number,      Optional      ,  stix-attribute-string   ,   attribute   
+ signature_algorithm,signature-algorithm,      Optional      ,  stix-attribute-string   ,   attribute   
+ issuer,issuer,      Optional      ,  stix-attribute-string   ,   attribute   
+ validity_not_before,validity-not-before,      Optional      ,  stix-attribute-timestamp   ,   attribute   
+ validity_not_after,validity-not-after,      Optional      ,  stix-attribute-timestamp   ,   attribute   
+ subject,subject,      Optional      ,  stix-attribute-string   ,   attribute   
+ subject_public_key_algorithm,subject-public-key-algorithm,      Optional      ,  stix-attribute-string   ,   attribute   
+ subject_public_key_modulus,subject-public-key-modulus,      Optional      ,  stix-attribute-string   ,   attribute   
+ subject_public_key_exponent,subject-public-key-exponent,      Optional      ,  stix-attribute-integer   ,   attribute   
+ x509_v3_extensions,v3-extensions:cert,      Optional      ,embedded,relation

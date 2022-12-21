@@ -1,0 +1,14 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+ type                ,            stix-type             ,      Required      ,  stix-attribute-string   ,   attribute   
+ id                  ,             stix-id              ,      Required      ,  stix-attribute-string   ,   attribute   
+ spec_version        ,           spec-version           ,      Optional      ,  stix-attribute-string   ,   attribute   
+ object_marking_refs ,      object-marking:marked       ,      Optional      ,   embedded    ,relation
+ granular_markings   ,     granular-marking:marked      ,      Optional      ,   embedded    ,relation
+defanged,defanged,      Optional      ,stix-attribute-boolean,   attribute   
+ extensions          ,               n/a                ,        n/a         ,           n/a            ,      n/a      
+path,path,Required,  stix-attribute-integer   ,   attribute   
+path_enc,path_enc,      Optional      ,  stix-attribute-string   ,   attribute   
+ctime,ctime,      Optional      ,  stix-attribute-timestamp   ,   attribute   
+mtime,mtime,      Optional      ,  stix-attribute-timestamp   ,   attribute   
+atime,atime,      Optional      ,  stix-attribute-timestamp   ,   attribute   
+contains_refs,directory-contains:container,      Optional      ,   embedded    ,relation

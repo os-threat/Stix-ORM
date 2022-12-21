@@ -1,5 +1,7 @@
 # Location Domain Object
 
+**Stix and TypeQL Object Type:**  `location`
+
 A Location represents a geographic location. The location may be described as any, some or all of the following: region (e.g., North America), civic address (e.g. New York, US), latitude and longitude.
 
  
