@@ -1,5 +1,7 @@
 # Note Domain Object
 
+**Stix and TypeQL Object Type:**  `note`
+
 A Note is intended to convey informative text to provide further context and/or to provide additional analysis not contained in the STIX Objects, Marking Definition objects, or Language Content objects which the Note relates to. Notes can be created by anyone (not just the original object creator).
 
  

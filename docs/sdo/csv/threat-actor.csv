@@ -1,0 +1,27 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+ type                ,            stix-type             ,      Required      ,  stix-attribute-string   ,   attribute   
+ id                  ,             stix-id              ,      Required      ,  stix-attribute-string   ,   attribute   
+ spec_version        ,           spec-version           ,      Required      ,  stix-attribute-string   ,   attribute   
+ created             ,             created              ,      Required      , stix-attribute-timestamp ,   attribute   
+ modified            ,             modified             ,      Required      , stix-attribute-timestamp ,   attribute   
+ name                ,               name               ,      Optional      ,  stix-attribute-string   ,   attribute   
+ description         ,           description            ,      Optional      ,  stix-attribute-string   ,   attribute   
+aliases,aliases,      Optional      ,  stix-attribute-string   ,   attribute   
+first_seen,first_seen,      Optional      , stix-attribute-timestamp ,   attribute   
+last_seen,last-seen,      Optional      , stix-attribute-timestamp ,   attribute   
+roles,roles,      Optional      ,  stix-attribute-string   ,   attribute   
+goals,goals,      Optional      ,  stix-attribute-string   ,   attribute   
+sophistication,sophistication,      Optional      ,  stix-attribute-string   ,   attribute   
+resource_level,resource-level,      Optional      ,  stix-attribute-string   ,   attribute   
+primary_motivation,primary-motivation,      Optional      ,  stix-attribute-string   ,   attribute   
+secondary_motivations,secondary-motivations,      Optional      ,  stix-attribute-string   ,   attribute   
+personal_motivations,personal-motivations,      Optional      ,  stix-attribute-string   ,   attribute   
+ created_by_ref      ,        created-by:created        ,      Optional      ,   embedded    ,relation
+ revoked             ,             revoked              ,      Optional      ,  stix-attribute-boolean  ,   attribute   
+ labels              ,              labels              ,      Optional      ,  stix-attribute-string   ,   attribute   
+ confidence          ,            confidence            ,      Optional      ,  stix-attribute-integer  ,   attribute   
+ lang                ,               lang               ,      Optional      ,  stix-attribute-string   ,   attribute   
+ external_references , external-references:referencing  ,      Optional      ,   embedded    ,relation
+ object_marking_refs ,      object-marking:marked       ,      Optional      ,   embedded    ,relation
+ granular_markings   ,     granular-marking:marked      ,      Optional      ,   embedded    ,relation
+ extensions          ,               n/a                ,        n/a         ,           n/a            ,      n/a      

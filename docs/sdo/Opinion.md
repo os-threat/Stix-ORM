@@ -1,5 +1,7 @@
 # Opinion Domain Object
 
+**Stix and TypeQL Object Type:**  `opinion`
+
 An Opinion is an assessment of the correctness of the information in a STIX Object produced by a different entity. The primary property is the opinion property, which captures the level of agreement or disagreement using a fixed scale. That fixed scale also supports a numeric mapping to allow for consistent statistical operations across opinions.
 
  

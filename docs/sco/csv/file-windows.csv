@@ -1,0 +1,13 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+pe_type ,"pe-type,",Required,  stix-attribute-string   ,   attribute   
+imphash ,"imphash,",      Optional      ,  stix-attribute-string   ,   attribute   
+machine_hex ,"machine-hex,",      Optional      ,  stix-attribute-string   ,   attribute   
+number_of_sections ,"number-of-sections,",      Optional      ,  stix-attribute-integer   ,   attribute   
+time_date_stamp ,"time-date-stamp,",      Optional      ,  stix-attribute-timestamp   ,   attribute   
+pointer_to_symbol_table_hex ,"pointer-to-symbol-table-hex,",      Optional      ,  stix-attribute-string   ,   attribute   
+number_of_symbols ,"number-of-symbols,",      Optional      ,  stix-attribute-integer   ,   attribute   
+size_of_optional_header ,"size-of-optional-header,",      Optional      ,  stix-attribute-integer   ,   attribute   
+characteristics_hex ,"characteristics-hex,",      Optional      ,  stix-attribute-string   ,   attribute   
+file_header_hashes ,"hashes:owner,",      Optional      ,embedded,relation
+optional_header ,"optional-headers:pebinary,",      Optional      ,embedded,relation
+sections ,"sections:pebinary,",      Optional      ,embedded,relation

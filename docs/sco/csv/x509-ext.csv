@@ -1,0 +1,17 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+basic_constraints ,basic-constraints,Optional,  stix-attribute-string   ,   attribute   
+name_constraints ,name-constraints,Optional,  stix-attribute-string   ,   attribute   
+policy_constraints ,policy-constraints,Optional,  stix-attribute-string   ,   attribute   
+key_usage ,key-usage,Optional,  stix-attribute-string   ,   attribute   
+extended_key_usage ,extended-key-usage,Optional,  stix-attribute-string   ,   attribute   
+subject_key_identifier ,subject-key-identifier,Optional,  stix-attribute-string   ,   attribute   
+authority_key_identifier ,authority-key-identifier,Optional,  stix-attribute-string   ,   attribute   
+subject_alternative_name ,subject-alternative-name,Optional,  stix-attribute-string   ,   attribute   
+issuer_alternative_name ,issuer-alternative-name,Optional,  stix-attribute-string   ,   attribute   
+subject_directory_attributes ,subject-directory-attributes,Optional,  stix-attribute-string   ,   attribute   
+crl_distribution_points ,crl-distribution-points,Optional,  stix-attribute-string   ,   attribute   
+inhibit_any_policy ,inhibit-any-policy,Optional,  stix-attribute-string   ,   attribute   
+private_key_usage_period_not_before ,private-key-usage-period-not-before,Optional,  stix-attribute-timestamp   ,   attribute   
+private_key_usage_period_not_after ,private-key-usage-period-not-after,Optional,  stix-attribute-timestamp   ,   attribute   
+certificate_policies ,certificate-policies,Optional,  stix-attribute-string   ,   attribute   
+policy_mappings ,policy-mappings,Optional,  stix-attribute-string   ,   attribute   

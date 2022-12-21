@@ -1,5 +1,7 @@
 # Indicator Domain Object
 
+**Stix and TypeQL Object Type:**  `indicator`
+
 Indicators contain a pattern that can be used to detect suspicious or malicious cyber activity. For example, an Indicator may be used to represent a set of malicious domains and use the STIX Patterning Language (see section 9) to specify these domains.
 
  

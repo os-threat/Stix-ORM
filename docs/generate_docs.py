@@ -14,7 +14,13 @@ heading_align = [
 input_docs = [
     {
         "dir": "sdo",
-        "file": "sdo.csv"
+        "file": "sdo.csv",
+        "obj_type": "Domain"
+    },
+    {
+        "dir": "sco",
+        "file": "sco.csv",
+        "obj_type": "Cyber Obervable"
     }
 ]
 
@@ -33,24 +39,27 @@ def delete_existing_markdown(dir):
     return del_dir
 
 
-def generate_md(dir, fields, row):
+def generate_md(dir, fields, row, obj_type):
     image = row[0]
     table = row[1]
-    obj = row[2]
-    para1 = row[3]
-    para2 = row[4]
-    url = row[5]
-    json_example = row[6]
-    tql_ins = row[7]
-    tql_match = row[8]
-    py_match = row[9]
+    stix_type = row[2]
+    obj = row[3]
+    para1 = row[4]
+    para2 = row[5]
+    url = row[6]
+    json_example = row[7]
+    tql_ins = row[8]
+    tql_match = row[9]
+    py_match = row[10]
     md_name = dir + "\\" + obj + ".md"
     outfile = open(md_name, "w")
     # 1. Setup Page title
-    print(f'# {obj} Domain Object\n', file=outfile)
+    print(f'# {obj} {obj_type} Object\n', file=outfile)
+    print(f'**Stix and TypeQL Object Type:**  `{stix_type}`\n', file=outfile)
     # 2. Setup Overview paragraphs
     print(f'{para1}\n', file=outfile)
-    print(f'{para2}\n', file=outfile)
+    if para2 != "":
+        print(f'{para2}\n', file=outfile)
     print(f'[Reference in Stix2.1 Standard]({url})', file=outfile)
     # 3. Setup Table
     print(f'## Stix 2.1 Properties Converted to TypeQL', file=outfile)
@@ -107,6 +116,7 @@ def gen_docs(docs):
         # Get details for each set of documents
         dir = doc_set["dir"]
         doc_file = doc_set["file"]
+        obj_type = doc_set["obj_type"]
         # delete existing markdown documents
         full_doc_dir = delete_existing_markdown(dir)
         # generate new markdown docs in the target directory
@@ -122,7 +132,7 @@ def gen_docs(docs):
 
                 # extracting each data row one by one
                 for row in csvreader:
-                    generate_md(full_doc_dir, fields, row)
+                    generate_md(full_doc_dir, fields, row, obj_type)
                     rows.append(row)
 
                 # get total number of rows

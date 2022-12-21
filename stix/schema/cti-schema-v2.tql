@@ -97,7 +97,7 @@ external-reference sub stix-sub-object,
 
 
 # 2.7 Hash
-hash sub entity, 
+hash sub stix-sub-object,
 	owns hash-value, 
 	plays hashes:pointed-to; 
 
@@ -805,7 +805,6 @@ sighting sub stix-core-relationship,
 	relates observed;
 
 ##### 6 STIX™ Cyber-observable Objects #####
-stix_sco_sub_object sub stix-sub-object;
 
 # 6.1 Artifact Object
 artifact sub stix-cyber-observable-object,
@@ -885,7 +884,7 @@ header-key sub stix-attribute-string,
 	owns header-value,
 	plays additional-header:item;
 
-email-mime-part sub stix_sco_sub_object,
+email-mime-part sub stix-sub-object,
 	owns body,
 	owns content-type, 
 	owns content-disposition, 
@@ -921,7 +920,7 @@ file sub stix-cyber-observable-object,
 
 #### SCO EXTENSIONS ####
 
-SCO-extension sub stix_sco_sub_object,
+SCO-extension sub stix-sub-object,
 	plays extensions:extension;
 
 	archive-ext sub SCO-extension,
@@ -1241,7 +1240,7 @@ windows-registry-key sub stix-cyber-observable-object,
 	plays reg-val:reg-key,
 	plays user-created-by:created;
 
-windows-registry-value-type sub stix_sco_sub_object,
+windows-registry-value-type sub stix-sub-object,
 	owns name, 
 	owns data,
 	owns data-type,
@@ -1293,7 +1292,9 @@ x509-certificate sub stix-cyber-observable-object,
 
 # 7.2 Data markings - this describes how data can be used/shared
 
-marking-definition sub stix-sub-object,
+marking-definition sub stix-object,
+    owns created,
+    owns modified,
 	owns name, 
 	owns spec-version,
 	plays created-by:created,

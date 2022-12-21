@@ -1,0 +1,19 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+ type                ,            stix-type             ,      Required      ,  stix-attribute-string   ,   attribute   
+ id                  ,             stix-id              ,      Required      ,  stix-attribute-string   ,   attribute   
+ spec_version        ,           spec-version           ,      Optional      ,  stix-attribute-string   ,   attribute   
+ object_marking_refs ,      object-marking:marked       ,      Optional      ,   embedded    ,relation
+ granular_markings   ,     granular-marking:marked      ,      Optional      ,   embedded    ,relation
+defanged,defanged,      Optional      ,stix-attribute-boolean,   attribute   
+ extensions          ,               n/a                ,        n/a         ,           n/a            ,      n/a      
+is_hidden,is-hidden,      Optional      ,  stix-attribute-boolean   ,   attribute   
+ pid,pid,      Optional      ,  stix-attribute-string   ,   attribute   
+ created_time,created-time,      Optional      ,  stix-attribute-timestamp   ,   attribute   
+ cwd,cwd,      Optional      ,  stix-attribute-string   ,   attribute   
+ command_line,command-line,      Optional      ,  stix-attribute-string   ,   attribute   
+ environment_variables,environment-variables:process,      Optional      ,   embedded    ,relation
+ opened_connection_refs,open-connections:process,      Optional      ,   embedded    ,relation
+ creator_user_ref,user-created-by:created,      Optional      ,   embedded    ,relation
+ image_ref,process-image:process,      Optional      ,   embedded    ,relation
+ parent_ref,process-parent:parent,      Optional      ,   embedded    ,relation
+ child_refs,process-child:process,      Optional      ,   embedded    ,relation

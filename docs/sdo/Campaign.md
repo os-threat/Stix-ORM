@@ -1,5 +1,7 @@
 # Campaign Domain Object
 
+**Stix and TypeQL Object Type:**  `campaign`
+
 A Campaign is a grouping of adversarial behaviors that describes a set of malicious activities or attacks (sometimes called waves) that occur over a period of time against a specific set of targets. Campaigns usually have well defined objectives and may be part of an Intrusion Set.
 
  
