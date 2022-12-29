@@ -287,11 +287,13 @@ class TypeDBSink(DataSink):
 
     @safe
     def __retrieve_delete_instructions(self,
-                                       stixids: List[str]):
+                                       stixids: List[str]) -> Instructions:
 
         layers = []
         indexes = []
         missing = []
+
+        instructions = Instructions()
 
         for stixid in stixids:
             del_result = self.__delete_instruction(stixid)
@@ -300,18 +302,25 @@ class TypeDBSink(DataSink):
             if is_successful(update_result):
                 layers, indexes, missing = update_result.unwrap()
             else:
+                instructions.insert_delete_instruction_error(stixid, str(update_result.failure()))
                 log_delete_instruction_update_layer(update_result)
 
-        return layers
+        for layer in layers:
+            instructions.insert_delete_instruction(layer['id'], layer)
+        return instructions
 
     @safe
     def __order_delete_instructions(self,
-                                    delete_instructions):
-        clean = 'match $a isa attribute; not { $b isa thing; $b has $a;}; delete $a isa attribute;'
-        cleandict = {'delete': clean}
-        cleanup = [cleandict]
-        ordered = delete_instructions + cleanup + cleanup
-        return ordered
+                                    delete_instructions: Instructions):
+        layer = {}
+        layer['delete'] = 'match $a isa attribute; not { $b isa thing; $b has $a;}; delete $a isa attribute;'
+        delete_instructions.insert_delete_instruction(
+            "cleanup-1", layer
+        )
+        delete_instructions.insert_delete_instruction(
+            "cleanup-2", layer
+        )
+        return delete_instructions
 
     def delete(self, stixid_list: List[str]) -> Instructions:
         """ Delete a list of STIX objects from the typedb server. Must include all related objects and relations
@@ -327,7 +336,13 @@ class TypeDBSink(DataSink):
                                                                                                             self.database,
                                                                                                             order_instruction))
         log_delete_layers(delete_from_database_result)
-        return is_successful(delete_from_database_result)
+        if not is_successful(delete_from_database_result):
+            raise Exception(delete_from_database_result.failure())
+
+        instructions = unsafe_perform_io(delete_from_database_result.unwrap())
+
+        return instructions.convert_to_result()
+
 
     @safe
     def __get_core_client(self) -> TypeDBClient:
@@ -394,7 +409,7 @@ class TypeDBSink(DataSink):
                 layers, indexes, missing, cyclical = update_result.unwrap()
             else:
                 log_add_instruction_update_layer(update_result)
-                instructions.insert_add_instruction_error(stix_dict['id'], str(update_result.failure()))
+                instructions.insert_instruction_error(stix_dict['id'], str(update_result.failure()))
 
         for id in missing:
             instructions.insert_add_insert_missing_dependency(id)

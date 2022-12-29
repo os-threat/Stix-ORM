@@ -394,7 +394,6 @@ class TestTypeDB(unittest.TestCase):
         typedb_sink.delete(stix_id_list)
 
 
-
     @parameterized.expand(variables_standard_data_file_paths_success())
     def test_delete(self, file_path: str):
         """ Load a single file and delete it
@@ -411,6 +410,7 @@ class TestTypeDB(unittest.TestCase):
 
         local_list = typedb.get_stix_ids()
         result = typedb.delete(local_list)
+        self.validate_successful_result(result)
 
     @parameterized.expand(cert_grouped_filepaths())
     def check_dir(self, file_paths: List[str]):

@@ -32,17 +32,17 @@ class Instructions:
         error = None
         status = ResultStatus.UNKNOWN
         for instruction in self.instructions:
-            if instruction.status == AddStatus.SUCCESS:
+            if instruction.status in [DeleteStatus.SUCCESS, AddStatus.SUCCESS]:
                 status = ResultStatus.SUCCESS
             elif instruction.status == AddStatus.EXCLUDE_EXISTS_IN_DATABASE:
                 status = ResultStatus.ALREADY_IN_DB
-            elif instruction.status == AddStatus.ERROR:
+            elif instruction.status in [DeleteStatus.ERROR, AddStatus.ERROR]:
                 status = ResultStatus.ERROR
             elif instruction.status == AddStatus.FAILED_CYCLICAL:
                 status = ResultStatus.CYCLICAL_DEPENDENCY
             elif instruction.status == AddStatus.FAILED_MISSING_DEPENDENCY:
                 status = ResultStatus.MISSING_DEPENDENCY
-            elif instruction.status in [AddStatus.STEP_2_CREATED_QUERY]:
+            elif instruction.status in [DeleteStatus.STEP_1_CREATED_QUERY, AddStatus.STEP_2_CREATED_QUERY]:
                 status = ResultStatus.VALID_FOR_DB_COMMIT
 
             results.append(Result(id=instruction.id, error=error, status=status))
@@ -88,7 +88,7 @@ class Instructions:
             is_non_empty_insertion = is_successful(result) and result.unwrap() is not None
             if is_non_empty_insertion:
                 instruction.status = AddStatus.STEP_2_CREATED_QUERY
-                instruction.insertion_query = result.unwrap()
+                instruction.query = result.unwrap()
             elif not is_successful(result):
                 instruction.status = AddStatus.ERROR
                 instruction.error = str(result.failure())
@@ -102,25 +102,47 @@ class Instructions:
                                       id: int):
         self.instructions[id].status = AddStatus.SUCCESS
 
+    def update_delete_instruction_as_success(self,
+                                      id: int):
+        self.instructions[id].status = DeleteStatus.SUCCESS
+
     def update_instruction_as_error(self,
                                     id: int,
                                     error: str):
         self.instructions[id].status = AddStatus.ERROR
         self.instructions[id].error = error
 
+    def update_delete_instruction_as_error(self,
+                                    id: int,
+                                    error: str):
+        self.instructions[id].status = DeleteStatus.ERROR
+        self.instructions[id].error = error
+
     def get_query_for_id(self,
                          id: int):
-        return self.instructions[id].insertion_query
+        return self.instructions[id].query
 
     def insert_add_instruction(self,
                                id: str,
                                layer: dict):
         self.instructions.append(AddInstruction(status=AddStatus.STEP_1_ADDED_ID_FOR_INSERTION, id=id, layer=layer))
 
+    def insert_delete_instruction(self,
+                               id: str,
+                               layer: dict):
+        self.instructions.append(DeleteInstruction(status=DeleteStatus.STEP_1_CREATED_QUERY,
+                                                id=id,
+                                                layer=layer,
+                                                query=layer['delete']))
 
-    def insert_add_instruction_error(self,
-                                     id: str,
-                                     error:str):
+    def insert_delete_instruction_error(self,
+                                 id: str,
+                                 error:str):
+        self.instructions.append(AddInstruction(status=DeleteStatus.ERROR, id=id, error=error))
+
+    def insert_instruction_error(self,
+                                 id: str,
+                                 error:str):
         self.instructions.append(AddInstruction(status=AddStatus.ERROR, id=id, error=error))
 
     def insert_add_insert_missing_dependency(self,
@@ -142,6 +164,11 @@ class AddStatus(Enum):
     FAILED_CYCLICAL = 'cyclical'
     ERROR = 'error'
 
+class DeleteStatus(Enum):
+    SUCCESS = "success"
+    STEP_1_CREATED_QUERY = 'created_query'
+    ERROR= 'error'
+
 
 class AddInfo(BaseModel):
     status: AddStatus
@@ -152,7 +179,14 @@ class AddInstruction(BaseModel):
     status: AddStatus
     id: str
     layer: Optional[dict]
-    insertion_query: Optional[str]
+    query: Optional[str]
+    error: Optional[str]
+
+class DeleteInstruction(BaseModel):
+    status: DeleteStatus
+    id: str
+    layer: Optional[dict]
+    query: Optional[str]
     error: Optional[str]
 
 class AddInstructions(BaseModel):

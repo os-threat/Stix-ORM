@@ -111,25 +111,30 @@ def query_id(generator, transaction, **data_query_args):
     return [ans.get("id").get_value() for ans in generator]
 
 @impure_safe
-def delete_layers(uri: str, port: str, database: str, layers: list):
+def delete_layers(uri: str, port: str, database: str, instructions: Instructions):
     with get_core_client(uri, port).unwrap() as client:
         client_session = unsafe_perform_io(get_data_session(client, database))
         if not is_successful(client_session):
             return IOResult.failure(client_session.failure())
         with client_session.unwrap() as session:
-            for layer in layers:
+            for instruction_id in instructions.getids():
                 write_transaction = unsafe_perform_io(get_write_transaction(session))
                 if not is_successful(write_transaction):
                     return IOResult.failure(write_transaction.failure())
                 with write_transaction.unwrap() as transaction:
-
-                    result = delete_layer(transaction, layer)
-                    log_delete_layer(result, layer)
+                    query = instructions.get_query_for_id(instruction_id)
+                    result = delete_layer(transaction, query)
+                    log_delete_layer(result, query)
+                    if is_successful(result):
+                        instructions.update_delete_instruction_as_success(instruction_id)
+                    else:
+                        instructions.update_delete_instruction_as_error(instruction_id, str(result.failure()))
+    return instructions
 
 
 @impure_safe
-def delete_layer(transaction, layer):
-    query_future = transaction.query().delete(layer["delete"])
+def delete_layer(transaction, query):
+    query_future = transaction.query().delete(query)
     transaction.commit()
 
 @impure_safe
