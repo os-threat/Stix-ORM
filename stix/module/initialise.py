@@ -116,35 +116,13 @@ def load_typeql_data(data_list, stix_connection: Dict[str, str]):
                 write_transaction.commit()
 
 
-def check_stix_ids(id_list: List[str],
-                   stix_connection: Dict[str, str]):
-    """ Get all the stix-ids in a database, should be moved to typedb file
-
-    Returns:
-        id_list : list of the stix-ids in the database
-    """
-    url = stix_connection["uri"] + ":" + stix_connection["port"]
-    get_ids_tql = 'match $id isa stix-id;'
-    len_id = len(id_list)
-    if len_id == 1:
-        get_ids_tql += '$id "' + id_list[0] + '";'
-    else:
-        for index, id_l in enumerate(id_list):
-            get_ids_tql += ' {$id "' + id_l + '";}'
-            if index == len_id - 1:
-                get_ids_tql += " ;"
-            else:
-                get_ids_tql += ' or '
-    with TypeDB.core_client(url) as client:
-        with client.session(stix_connection["database"], SessionType.DATA) as session:
-            with session.transaction(TransactionType.READ) as read_transaction:
-                answer_iterator = read_transaction.query().match(get_ids_tql)
-                ids = [ans.get("id").get_value() for ans in answer_iterator]
-                logger.debug(f'ids {ids}\n\n')
-    return ids
 
 
-def sort_layers(layers, cyclical, indexes, missing, dep_obj, add_or_del='del'):
+def sort_layers(layers,
+                cyclical,
+                indexes: List[str],
+                missing: List[str],
+                dep_obj, add_or_del='del'):
     """ Sort the layers depending on whether they are "add" or "del" layers
 
     Args:

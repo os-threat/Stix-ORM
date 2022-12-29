@@ -1,6 +1,10 @@
 """Python STIX2 TypeDB Source/Sink"""
 import pathlib
 from dataclasses import dataclass
+from enum import Enum
+from typing import List
+
+from pydantic import BaseModel
 from returns._internal.pipeline.pipe import pipe
 from returns.io import impure_safe
 from returns.methods import unwrap_or_failure
@@ -14,7 +18,7 @@ from .import_stix_to_typeql import raw_stix2_to_typeql
 from .delete_stix_to_typeql import delete_stix_object, add_delete_layers
 from .import_stix_utilities import get_embedded_match
 from .export_intermediate_to_stix import convert_ans_to_stix
-from .initialise import setup_database, load_schema, sort_layers, load_markings, check_stix_ids
+from .initialise import setup_database, load_schema, sort_layers, load_markings
 
 from stix2 import v21
 from stix2.base import _STIXBase
@@ -25,13 +29,16 @@ from stix2.parsing import parse
 
 import logging
 
+from .type_db_handlers import handle_result, handle_missing_values
 from .type_db_logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers, \
     log_add_instruction_update_layer, log_insert_query
-from .type_db_queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query, add_layers, \
+from .type_db_queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query, \
+    add_layers_to_typedb, \
     build_insert_query
 from stix.module.type_db_file import write_to_file
+from .typedb_instructions import Instructions
 
-#logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+# logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -41,6 +48,7 @@ logger.setLevel(logging.INFO)
 class TransactionObject:
     transaction: TypeDBTransaction
     session: TypeDBSession
+
 
 class TypeDBSink(DataSink):
     """Interface for adding/pushing STIX objects to TypeDB.
@@ -59,11 +67,13 @@ class TypeDBSink(DataSink):
         - import_type (str): It forces the parser to use either the stix2.1, or mitre att&ck
 
     """
+
     def __init__(self,
                  connection: Dict[str, str],
                  clear=False,
                  import_type=None,
-                 schema_path :Optional[str] =None, **kwargs):
+                 schema_path: Optional[str] = None,
+                 strict_failure: bool = False, **kwargs):
         super(TypeDBSink, self).__init__()
         logger.debug(f'TypeDBSink: {connection}')
 
@@ -78,6 +88,7 @@ class TypeDBSink(DataSink):
         self.user: str = connection["user"]
         self.password: str = connection["password"]
         self.clear: bool = clear
+        self.strict_failure = strict_failure
 
         self.schema_path = schema_path
         self.import_type = import_type
@@ -100,12 +111,16 @@ class TypeDBSink(DataSink):
 
         # 2. Load the Stix schema
         schema_result = self.__load_stix_schema()
+        handle_result(schema_result, "load schema result", self.strict_failure)
         # 3. Check for Stix Rules
         rules_result = self.__check_stix_rules()
+        handle_result(rules_result, "check stix rules result", self.strict_failure)
         # 3. Load the Stix Markings,
         markings_result = self.__load_stix_markings()
+        handle_result(markings_result, "load markings result", self.strict_failure)
         # 3. Check for Stix Rules
         cacao_result = self.__check_for_stix_rules_cacao()
+        handle_result(cacao_result, "check cacao result", self.strict_failure)
 
     @safe
     def __validate_connect_to_db(self):
@@ -113,7 +128,6 @@ class TypeDBSink(DataSink):
         result: Result[TypeDBClient, Exception] = self.__get_core_client()
         result.bind(lambda client: client.databases().all())
         logger.debug("DB Connection Successful")
-
 
     @safe
     def __check_for_stix_rules_cacao(self):
@@ -167,7 +181,8 @@ class TypeDBSink(DataSink):
         if self.import_type is None:
             self.import_type = {"STIX21": True, "CVE": False, "identity": False, "location": False, "rules": False}
             self.import_type.update({"ATT&CK": False, "ATT&CK_Versions": ["12.0"],
-                                "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"], "CACAO": False})
+                                     "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
+                                     "CACAO": False})
 
     @property
     def stix_connection(self):
@@ -195,14 +210,9 @@ class TypeDBSink(DataSink):
         filtered_list = list(filter(lambda x: x.get_value() not in marking, stix_ids))
         return self.__string_attibute_to_string(filtered_list)
 
-
     def __string_attibute_to_string(self,
                                     string_attributes: List[StringAttribute]):
         return [stix_id.get_value() for stix_id in string_attributes]
-
-    def xx(self,
-           a):
-        pass
 
     def __query_stix_ids(self):
         get_ids_tql = 'match $ids isa stix-id;'
@@ -217,8 +227,6 @@ class TypeDBSink(DataSink):
         extracted_output = unsafe_perform_io(query_data)
         return Success(unwrap_or_failure(extracted_output))
 
-
-
     def get_stix_ids(self):
         """ Get all the stix-ids in a database, should be moved to typedb file
 
@@ -228,8 +236,8 @@ class TypeDBSink(DataSink):
         stix_ids_query = self.__query_stix_ids()
 
         transaction = pipe(
-                      bind(self.__filter_markings)
-                      )
+            bind(self.__filter_markings)
+        )
 
         result = transaction(stix_ids_query)
         if is_successful(result):
@@ -238,19 +246,15 @@ class TypeDBSink(DataSink):
             logger.error(str(result.failure()))
             raise Exception(str(result.failure()))
 
-    @impure_safe
-    def __delete_layer(self):
-        pass
-
     @safe
     def __retrieve_stix_id(self,
-           stix_id: str):
+                           stix_id: str):
         type_db_source = unwrap_or_failure(self.__get_source_client())
         return type_db_source.get(stix_id)
 
     @safe
     def __delete_instruction(self,
-                            stixid: str):
+                             stixid: str):
 
         stix_obj = self.__retrieve_stix_id(stixid)
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = stix_obj.bind(
@@ -281,7 +285,6 @@ class TypeDBSink(DataSink):
             layers, indexes, missing = add_delete_layers(layers, dep_obj, indexes, missing)
         return layers, indexes, missing
 
-
     @safe
     def __retrieve_delete_instructions(self,
                                        stixids: List[str]):
@@ -292,7 +295,8 @@ class TypeDBSink(DataSink):
 
         for stixid in stixids:
             del_result = self.__delete_instruction(stixid)
-            update_result = del_result.bind(lambda dep_obj: self.__update_delete_layers(layers, indexes, missing, dep_obj))
+            update_result = del_result.bind(
+                lambda dep_obj: self.__update_delete_layers(layers, indexes, missing, dep_obj))
             if is_successful(update_result):
                 layers, indexes, missing = update_result.unwrap()
             else:
@@ -329,16 +333,6 @@ class TypeDBSink(DataSink):
     def __get_core_client(self) -> TypeDBClient:
         typedb_url = self.uri + ":" + self.port
         return TypeDB.core_client(typedb_url)
-
-    @impure_safe
-    def __get_datatype_session(self,
-                               type_db_client) -> TypeDBSession:
-        return type_db_client.session(self.database, SessionType.DATA)
-
-
-    @impure_safe
-    def __get_read_transaction(self, session) -> TransactionObject:
-        return session.transaction(TransactionType.READ)
 
     @safe
     def __get_source_client(self):
@@ -378,59 +372,72 @@ class TypeDBSink(DataSink):
         dep_obj["indep_ql"] = indep_ql
         dep_obj["core_ql"] = core_ql
         return dep_obj
+
     @safe
     def __retrieve_add_instructions(self,
-                                    obj_list):
+                                    obj_list) -> Instructions:
         layers = []
         indexes = []
         missing = []
         cyclical = []
 
+        instructions = Instructions()
+
         for stix_dict in obj_list:
             add_result = self.__add_instruction(stix_dict)
             update_result = add_result.bind(lambda dep_obj: self.__update_add_layers(layers,
-                            indexes,
-                            missing,
-                            dep_obj,
-                            cyclical))
+                                                                                     indexes,
+                                                                                     missing,
+                                                                                     dep_obj,
+                                                                                     cyclical))
             if is_successful(update_result):
                 layers, indexes, missing, cyclical = update_result.unwrap()
             else:
                 log_add_instruction_update_layer(update_result)
-        return layers, missing, cyclical
+                instructions.insert_add_instruction_error(stix_dict['id'], str(update_result.failure()))
 
-    @safe
+        for id in missing:
+            instructions.insert_add_insert_missing_dependency(id)
+        for layer in layers:
+            if layer['id'] in cyclical:
+                instructions.insert_add_instruction_cyclical(layer['id'], layer)
+            else:
+                instructions.insert_add_instruction(layer['id'], layer)
+
+        return instructions
+
     def __check_missing_data(self,
-                             missing):
-        if len(missing) > 0:
-            return
+                             instructions: Instructions):
+
+        missing = instructions.missing_dependency_ids()
+
         query_result = build_match_id_query(missing)
 
         data_result = query_result.bind(lambda query: match_query(uri=self.uri,
-                           port=self.port,
-                           database=self.database,
-                           query=query,
-                           data_query=convert_ans_to_stix))
+                                                                  port=self.port,
+                                                                  database=self.database,
+                                                                  query=query,
+                                                                  data_query=convert_ans_to_stix,
+                                                                  import_type=self.import_type))
 
+        if not is_successful(data_result):
+            return Failure(unsafe_perform_io(data_result.failure()))
 
-        list_found_in_database = self.__string_attibute_to_string(data_result.unwrap())
+        data = unsafe_perform_io(data_result.unwrap())
+        list_found_in_database = self.__string_attibute_to_string(data)
+        instructions.update_ids_in_database(list_found_in_database)
 
-        values_not_in_database = list(missing.difference(set(list_found_in_database)))
+        return Success(instructions)
 
-        return values_not_in_database
 
     @safe
     def __create_insert_queries(self,
-                                 layers):
-        queries = []
-        for layer in layers:
-            result = build_insert_query(layer)
-            is_non_empty_insertion = is_successful(result) and result.unwrap() is not None
-            if is_non_empty_insertion:
-                queries.append(result.unwrap())
-            elif not is_successful(result):
-                log_insert_query(result, layer)
-        return queries
+                                instructions: Instructions):
+        result = instructions.create_insert_queries(build_insert_query)
+        if is_successful(result):
+            return instructions
+        else:
+            raise Exception(result.failure)
 
 
     def add(self, stix_data: Optional[List[dict]] = None) -> bool:
@@ -455,25 +462,30 @@ class TypeDBSink(DataSink):
             the Bundle contained, but not the Bundle itself.
         """
         obj_result = self._gather_objects(stix_data)
-        add_instruction_result = obj_result.bind(lambda obj_list: self.__retrieve_add_instructions(obj_list))
-        missing_data_result = add_instruction_result.bind(lambda result: self.__check_missing_data(result[1]))
+        step_1_instructions_result = obj_result.bind(lambda obj_list: self.__retrieve_add_instructions(obj_list))
+        step_2_instructions_result = step_1_instructions_result.bind(lambda result: self.__check_missing_data(result))
 
-        is_missing_dependencies = is_successful(missing_data_result) and len(missing_data_result.unwrap()) > 0
-        if is_missing_dependencies:
+        if not is_successful(step_2_instructions_result):
+            raise Exception("failed to check missing dependencies")
+        step_2_instructions = step_1_instructions_result.unwrap()
+        if step_2_instructions.exist_missing_dependencies():
             raise Exception("missing stix dependencies")
-
-        is_cyclical = add_instruction_result.bind(lambda result: len(result[2]) > 0)
-        if is_cyclical:
+        if step_2_instructions.exist_cyclical_ids():
             raise Exception("cyclical stix dependencies")
 
-        insertion_query_result = add_instruction_result.bind(lambda result: self.__create_insert_queries(result[0]))
-        insert_into_database_result = insertion_query_result.bind(lambda result: add_layers(self.uri,
-                                                                                            self.port,
-                                                                                            self.database,
-                                                                                            result))
+        step_3_generate_query_result = step_2_instructions_result.bind(
+            lambda result: self.__create_insert_queries(result))
+        step_4_insert_int_database_result = step_3_generate_query_result.bind(
+            lambda result: add_layers_to_typedb(self.uri,
+                                                self.port,
+                                                self.database,
+                                                result))
+        if not is_successful(step_4_insert_int_database_result):
+            raise Exception(step_4_insert_int_database_result.failure())
 
-        return is_successful(insert_into_database_result)
+        instructions = unsafe_perform_io(step_4_insert_int_database_result.unwrap())
 
+        return instructions.convert_to_result()
 
     @safe
     def _gather_objects(self, stix_data):
@@ -484,8 +496,6 @@ class TypeDBSink(DataSink):
         logger.debug('----------------------------------------')
         logger.debug(f'going into separate objects function {stix_data}')
         logger.debug('-----------------------------------------------------')
-
-
 
         if isinstance(stix_data, (v21.Bundle)):
             logger.debug(f'isinstance Bundle')
@@ -520,7 +530,8 @@ class TypeDBSink(DataSink):
                 "JSON formatted STIX (or list of), "
                 "or a JSON formatted STIX bundle",
             )
-        
+
+
 class TypeDBSource(DataSource):
     """Interface for searching/retrieving STIX objects from a TypeDB Database.
 
@@ -537,6 +548,7 @@ class TypeDBSource(DataSource):
         - import_type (str): It forces the parser to use either the stix2.1, or mitre att&ck
 
     """
+
     def __init__(self, connection: Dict[str, str], import_type=None, **kwargs):
         super(TypeDBSource, self).__init__()
         logger.debug(f'TypeDBSource: {connection}')
@@ -580,7 +592,7 @@ class TypeDBSource(DataSource):
                            port=self.port,
                            database=self.database,
                            query=query,
-                           data_query=convert_ans_to_stix, import_type= 'STIX21')
+                           data_query=convert_ans_to_stix, import_type='STIX21')
 
         stix_obj = unwrap_or_failure(data).bind(lambda x: parse(x))
 
@@ -612,7 +624,6 @@ class TypeDBSource(DataSource):
             logger.error(str(result.failure()))
             raise Exception(str(result.failure()))
 
-
     def query(self, query=None, version=None, _composite_filters=None):
         """Search and retrieve STIX objects based on the complete query.
 
@@ -635,7 +646,7 @@ class TypeDBSource(DataSource):
 
         """
         pass
-    
+
     def all_versions(self, stix_id, version=None, _composite_filters=None):
         """Retrieve STIX object from file directory via STIX ID, all versions.
 
@@ -657,4 +668,3 @@ class TypeDBSource(DataSource):
 
         """
         pass
-            

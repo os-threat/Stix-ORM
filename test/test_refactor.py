@@ -1,18 +1,13 @@
 import json
-import os
 import pathlib
 import unittest
 from parameterized import parameterized
-from stix.module.typedb import TypeDBSink, TypeDBSource
-from stix.module.import_stix_to_typeql import stix2_to_typeql
+from stix.module.typedb import TypeDBSink
 from typedb.client import *
-from stix2 import (v21, parse)
-from stix.module.import_stix_to_typeql import raw_stix2_to_typeql, stix2_to_match_insert
-from stix.module.delete_stix_to_typeql import delete_stix_object, add_delete_layers
-from stix.module.initialise import check_stix_ids
-import itertools
 
 import logging
+
+from stix.module.typedb_instructions import ResultStatus
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
@@ -41,6 +36,18 @@ import_type = {
     "location": False,
     "rules": False,
     "ATT&CK": False,
+    "ATT&CK_Versions": ["12.0"],
+    "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
+    "CACAO": False
+}
+
+import_type_attack = {
+    "STIX21": False,
+    "CVE": False,
+    "identity": False,
+    "location": False,
+    "rules": False,
+    "ATT&CK": True,
     "ATT&CK_Versions": ["12.0"],
     "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
     "CACAO": False
@@ -75,6 +82,74 @@ def mitre_path():
     data_mitre_path = "data/mitre"
     top_dir_path = pathlib.Path(__file__).parents[1]
     return str(top_dir_path.joinpath(data_mitre_path).joinpath("enterprise-attack.json"))
+
+def variables_failing_standard_data_file_paths() -> List[str]:
+    data_standard_path = "data/standard/"
+
+    standard_data_file_list = [
+        'grouping.json']
+
+    top_dir_path = pathlib.Path(__file__).parents[1]
+
+    paths = []
+    for file in standard_data_file_list:
+        path = top_dir_path.joinpath(data_standard_path).joinpath(file)
+        paths.append(str(path))
+
+    return paths
+
+
+def variables_standard_data_file_paths_exception() -> List[str]:
+    data_standard_path = "data/standard/"
+
+    standard_data_file_list = [
+        "aaa_indicator.json",
+        "campaign.json",
+        "course_action.json",
+        'grouping.json'
+    ]
+    top_dir_path = pathlib.Path(__file__).parents[1]
+
+    paths = []
+    for file in standard_data_file_list:
+        path = top_dir_path.joinpath(data_standard_path).joinpath(file)
+        paths.append(str(path))
+
+    return paths
+
+def variables_standard_data_file_paths_success() -> List[str]:
+    data_standard_path = "data/standard/"
+
+    standard_data_file_list = [
+        "aaa_attack_pattern.json",
+        "aaa_identity.json",
+        "aaa_malware.json",
+        "artifact_basic.json",
+        "artifact_encrypted.json",
+        "autonomous.json",
+        "directory.json",
+        "domain.json",
+        "email_basic_addr.json",
+        "email_headers.json",
+        "email_mime.json",
+        "email_simple.json",
+        'file_archive_unencrypted.json',
+        'file_basic.json',
+        'file_basic_encoding.json',
+        'file_basic_parent.json',
+        'file_binary.json',
+        'file_image_simple.json',
+        'file_ntfs_stream.json',
+        'file_pdf_basic.json',
+    ]
+    top_dir_path = pathlib.Path(__file__).parents[1]
+
+    paths = []
+    for file in standard_data_file_list:
+        path = top_dir_path.joinpath(data_standard_path).joinpath(file)
+        paths.append(str(path))
+
+    return paths
 
 def variables_standard_data_file_paths() -> List[str]:
 
@@ -114,7 +189,17 @@ def variables_standard_data_file_paths() -> List[str]:
         path = top_dir_path.joinpath(data_standard_path).joinpath(file)
         paths.append(str(path))
 
-    return [paths[0]]
+    return paths
+
+def aaa_grouping_path() -> str:
+    data_standard_path = "data/standard/"
+    top_dir_path = pathlib.Path(__file__).parents[1]
+    return str(top_dir_path.joinpath(data_standard_path).joinpath("grouping.json"))
+
+def aaa_indicator_path() -> str:
+    data_standard_path = "data/standard/"
+    top_dir_path = pathlib.Path(__file__).parents[1]
+    return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_indicator.json"))
 
 def aaa_identity_path() -> str:
     data_standard_path = "data/standard/"
@@ -274,56 +359,6 @@ class TestTypeDB(unittest.TestCase):
         self.assertTrue('Client Error: Unable to connect to TypeDB server.' in str(context.exception))
 
 
-    def test_load_file_list(self):
-        """ Load a list of files from a path, number of files can be restricted """
-
-        typedb = TypeDBSink(connection=connection,
-                            clear=True,
-                            import_type=import_type,
-                            schema_path=schema_path)
-        file_list = variables_standard_data_file_paths()
-        for file_path in file_list:
-            json_text = self.get_json_from_file(file_path)
-            typedb.add(json_text)
-
-
-    @parameterized.expand(variables_standard_data_file_paths())
-    def test_load_file(self, file_path: str):
-        """ Add a json file to typeDB
-
-        Args:
-            file_path (): path and filename
-        """
-        json_text = self.get_json_from_file(file_path)
-        typedb = TypeDBSink(connection=connection, clear=True, import_type=import_type, schema_path=schema_path)
-        typedb.add(json_text)
-
-
-    def test_query_id(self):
-        """  Print out the match/insert and match/delete statements for any stix-id
-
-        """
-
-
-
-        stixid = "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff"
-        file_path = aaa_identity_path()
-        typedb_sink = TypeDBSink(connection=connection,
-                            clear=False,
-                            import_type=import_type,
-                            schema_path=schema_path)
-        json_text = self.get_json_from_file(file_path)
-        typedb_sink.add(json_text)
-
-        typedb = TypeDBSource(connection=connection,
-                              import_type=import_type)
-
-        stix_dict = typedb.get(stixid)
-        stix_obj = parse(stix_dict)
-        dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj)
-        del_match, del_tql = delete_stix_object(stix_obj, dep_match, dep_insert, indep_ql, core_ql, "STIX21")
-        print(1)
-
     def setUp(self):
         self.clean_db()
 
@@ -342,7 +377,7 @@ class TestTypeDB(unittest.TestCase):
         typedb.clear_db()
 
 
-    def  test_delete_dir(self):
+    def test_delete_dir(self):
         """ Load an entire directory and delete all files except marking objects
 
         """
@@ -360,7 +395,7 @@ class TestTypeDB(unittest.TestCase):
 
 
 
-    @parameterized.expand(variables_standard_data_file_paths())
+    @parameterized.expand(variables_standard_data_file_paths_success())
     def test_delete(self, file_path: str):
         """ Load a single file and delete it
 
@@ -414,6 +449,44 @@ class TestTypeDB(unittest.TestCase):
         local_list_post = typedb.get_stix_ids()
 
 
+    def test_add_grouping_path(self):
+        typedb_sink = TypeDBSink(connection=connection,
+                                 clear=True,
+                                 import_type=import_type,
+                                 schema_path=schema_path)
+        json_text = self.get_json_from_file(aaa_grouping_path())
+
+        with self.assertRaises(Exception) as context:
+           typedb_sink.add(json_text)
+
+
+    def test_add_files(self):
+        typedb_sink = TypeDBSink(connection=connection,
+                                 clear=True,
+                                 import_type=import_type,
+                                 schema_path=schema_path)
+
+        files = variables_standard_data_file_paths()
+        for file in files:
+            json_text = self.get_json_from_file(file)
+            typedb_sink.add(json_text)
+
+
+    def test_add_indicator_path(self):
+        typedb_sink = TypeDBSink(connection=connection,
+                                 clear=True,
+                                 import_type=import_type,
+                                 schema_path=schema_path)
+        json_text = self.get_json_from_file(aaa_indicator_path())
+
+        with self.assertRaises(Exception) as context:
+            typedb_sink.add(json_text)
+
+    def validate_successful_result(self,
+                                   results):
+        for result in results:
+            assert result.status == ResultStatus.SUCCESS
+
     def test_add_identity_path(self):
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
@@ -421,7 +494,8 @@ class TestTypeDB(unittest.TestCase):
                                  schema_path=schema_path)
         json_text = self.get_json_from_file(aaa_identity_path())
 
-        assert typedb_sink.add(json_text)
+        result = typedb_sink.add(json_text)
+        self.validate_successful_result(result)
 
     def test_add_mitre(self):
         typedb_sink = TypeDBSink(connection=connection,
@@ -430,7 +504,8 @@ class TestTypeDB(unittest.TestCase):
                                  schema_path=schema_path)
         json_text = self.get_json_from_file(mitre_path())
 
-        assert typedb_sink.add(json_text)
+        result = typedb_sink.add(json_text)
+        self.validate_successful_result(result)
 
     def test_get_ids(self):
         typedb_sink = TypeDBSink(connection=connection,
@@ -442,13 +517,55 @@ class TestTypeDB(unittest.TestCase):
         typedb_sink.add(json_text)
 
         my_id_list = typedb_sink.get_stix_ids()
-        assert set(my_id_list) == set(['identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65', 'identity--f431f809-377b-45e0-aa1c-6a4751cae5ff'])
+        self.assertTrue(set(my_id_list) == {'identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65',
+                                   'identity--f431f809-377b-45e0-aa1c-6a4751cae5ff'})
+
+    @parameterized.expand(variables_standard_data_file_paths_success())
+    def test_get_all_ids_loaded(self, path):
+        variables_id_list()
+        typedb_sink = TypeDBSink(connection=connection,
+                                 clear=True,
+                                 import_type=import_type,
+                                 schema_path=schema_path)
+        json_text = self.get_json_from_file(path)
+        typedb_sink.add(json_text)
+
+        stix_ids_list = typedb_sink.get_stix_ids()
+        my_id_list = []
+        for doc in json_text:
+            id = doc['id']
+            if isinstance(id, list):
+                my_id_list = my_id_list + id
+            else:
+                my_id_list.append(id)
+
+        self.assertTrue(set(my_id_list) == set(stix_ids_list))
+
+    @parameterized.expand(variables_standard_data_file_paths_success())
+    def test_all_ids_loaded_success(self, path):
+        variables_id_list()
+        typedb_sink = TypeDBSink(connection=connection,
+                                 clear=True,
+                                 import_type=import_type,
+                                 schema_path=schema_path)
+        json_text = self.get_json_from_file(path)
+
+        result = typedb_sink.add(json_text)
+
+        self.validate_successful_result(result)
+
+    @parameterized.expand(variables_standard_data_file_paths_exception())
+    def test_all_ids_loaded_exception(self, path):
+        variables_id_list()
+        typedb_sink = TypeDBSink(connection=connection,
+                                 clear=True,
+                                 import_type=import_type,
+                                 schema_path=schema_path)
+        json_text = self.get_json_from_file(path)
 
 
-    @parameterized.expand(variables_id_list())
-    def test_ids_loaded(self, id_list: List[str]):
-        return_list = check_stix_ids(id_list, connection)
-
+        with self.assertRaises(Exception) as context:
+            result = typedb_sink.add(json_text)
 
 
 if __name__ == '__main__':

@@ -11,6 +11,7 @@ from typedb.api.connection.transaction import TransactionType
 from typedb.client import TypeDB
 
 from stix.module.type_db_logging import log_delete_layer, log_add_layer
+from stix.module.typedb_instructions import Instructions
 
 logger = logging.getLogger(__name__)
 
@@ -135,18 +136,24 @@ def add_layer(transaction, layer):
     transaction.commit()
 
 @impure_safe
-def add_layers(uri: str, port: str, database: str, layers: list):
+def add_layers_to_typedb(uri: str, port: str, database: str, instructions: Instructions):
     with get_core_client(uri, port).unwrap() as client:
         client_session = unsafe_perform_io(get_data_session(client, database))
         if not is_successful(client_session):
             return IOResult.failure(client_session.failure())
         with client_session.unwrap() as session:
-            for layer in layers:
+            for instruction_id in instructions.getids():
                 write_transaction = unsafe_perform_io(get_write_transaction(session))
                 if not is_successful(write_transaction):
                     return IOResult.failure(write_transaction.failure())
                 with write_transaction.unwrap() as transaction:
+                    query = instructions.get_query_for_id(instruction_id)
+                    result = add_layer(transaction, query)
+                    log_add_layer(result, query)
+                    if is_successful(result):
+                        instructions.update_instruction_as_success(instruction_id)
+                    else:
+                        instructions.insert_add_instruction_error(instruction_id, result.failure())
+    return instructions
 
-                    result = add_layer(transaction, layer)
-                    log_add_layer(result, layer)
 
