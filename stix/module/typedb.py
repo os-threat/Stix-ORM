@@ -34,7 +34,7 @@ from .type_db_logging import log_delete_instruction, log_delete_instruction_upda
     log_add_instruction_update_layer, log_insert_query
 from .type_db_queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query, \
     add_layers_to_typedb, \
-    build_insert_query
+    build_insert_query, query_id
 from stix.module.type_db_file import write_to_file
 from .typedb_instructions import Instructions
 
@@ -313,7 +313,7 @@ class TypeDBSink(DataSink):
         ordered = delete_instructions + cleanup + cleanup
         return ordered
 
-    def delete(self, stixid_list: List[str]) -> bool:
+    def delete(self, stixid_list: List[str]) -> Instructions:
         """ Delete a list of STIX objects from the typedb server. Must include all related objects and relations
 
         Args:
@@ -411,21 +411,23 @@ class TypeDBSink(DataSink):
 
         missing = instructions.missing_dependency_ids()
 
+        if not instructions.exist_missing_dependencies():
+            return Success(instructions)
+
         query_result = build_match_id_query(missing)
 
-        data_result = query_result.bind(lambda query: match_query(uri=self.uri,
+        data_result = query_result.bind(lambda query:  match_query(uri=self.uri,
                                                                   port=self.port,
                                                                   database=self.database,
                                                                   query=query,
-                                                                  data_query=convert_ans_to_stix,
-                                                                  import_type=self.import_type))
+                                                                  data_query=query_id,
+                                                                  import_type=None))
 
         if not is_successful(data_result):
             return Failure(unsafe_perform_io(data_result.failure()))
 
         data = unsafe_perform_io(data_result.unwrap())
-        list_found_in_database = self.__string_attibute_to_string(data)
-        instructions.update_ids_in_database(list_found_in_database)
+        instructions.update_ids_in_database(data)
 
         return Success(instructions)
 
@@ -469,9 +471,9 @@ class TypeDBSink(DataSink):
             raise Exception("failed to check missing dependencies")
         step_2_instructions = step_1_instructions_result.unwrap()
         if step_2_instructions.exist_missing_dependencies():
-            raise Exception("missing stix dependencies")
+            return step_2_instructions.convert_to_result()
         if step_2_instructions.exist_cyclical_ids():
-            raise Exception("cyclical stix dependencies")
+            return step_2_instructions.convert_to_result()
 
         step_3_generate_query_result = step_2_instructions_result.bind(
             lambda result: self.__create_insert_queries(result))

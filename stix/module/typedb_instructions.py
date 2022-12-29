@@ -12,6 +12,9 @@ class ResultStatus(Enum):
     ERROR = "error"
     ALREADY_IN_DB = "already_in_db"
     UNKNOWN = "unknown"
+    CYCLICAL_DEPENDENCY = "cyclical_dependency"
+    MISSING_DEPENDENCY = "missing_Dependency"
+    VALID_FOR_DB_COMMIT = "valid_for_db_commit"
 
 class Result(BaseModel):
     id: str
@@ -35,9 +38,19 @@ class Instructions:
                 status = ResultStatus.ALREADY_IN_DB
             elif instruction.status == AddStatus.ERROR:
                 status = ResultStatus.ERROR
+            elif instruction.status == AddStatus.FAILED_CYCLICAL:
+                status = ResultStatus.CYCLICAL_DEPENDENCY
+            elif instruction.status == AddStatus.FAILED_MISSING_DEPENDENCY:
+                status = ResultStatus.MISSING_DEPENDENCY
+            elif instruction.status in [AddStatus.STEP_2_CREATED_QUERY]:
+                status = ResultStatus.VALID_FOR_DB_COMMIT
 
             results.append(Result(id=instruction.id, error=error, status=status))
         return results
+
+    def not_allow_insertion(self,
+                            id: int):
+        return self.instructions[id].status != AddStatus.STEP_2_CREATED_QUERY
 
     def cyclical_ids(self):
         cyclical = []

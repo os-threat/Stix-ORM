@@ -99,7 +99,7 @@ def variables_failing_standard_data_file_paths() -> List[str]:
     return paths
 
 
-def variables_standard_data_file_paths_exception() -> List[str]:
+def variables_standard_data_file_paths_missing() -> List[str]:
     data_standard_path = "data/standard/"
 
     standard_data_file_list = [
@@ -410,7 +410,7 @@ class TestTypeDB(unittest.TestCase):
         typedb.add(json_text)
 
         local_list = typedb.get_stix_ids()
-        typedb.delete(local_list)
+        result = typedb.delete(local_list)
 
     @parameterized.expand(cert_grouped_filepaths())
     def check_dir(self, file_paths: List[str]):
@@ -456,8 +456,8 @@ class TestTypeDB(unittest.TestCase):
                                  schema_path=schema_path)
         json_text = self.get_json_from_file(aaa_grouping_path())
 
-        with self.assertRaises(Exception) as context:
-           typedb_sink.add(json_text)
+        result = typedb_sink.add(json_text)
+        self.validate_has_missing_dependencies(result)
 
 
     def test_add_files(self):
@@ -465,11 +465,16 @@ class TestTypeDB(unittest.TestCase):
                                  clear=True,
                                  import_type=import_type,
                                  schema_path=schema_path)
-
         files = variables_standard_data_file_paths()
         for file in files:
             json_text = self.get_json_from_file(file)
-            typedb_sink.add(json_text)
+            result = typedb_sink.add(json_text)
+            if 'grouping' in file:
+                self.validate_contains_error(result)
+            else:
+                self.validate_successful_result(result)
+
+
 
 
     def test_add_indicator_path(self):
@@ -479,13 +484,27 @@ class TestTypeDB(unittest.TestCase):
                                  schema_path=schema_path)
         json_text = self.get_json_from_file(aaa_indicator_path())
 
-        with self.assertRaises(Exception) as context:
-            typedb_sink.add(json_text)
+        result = typedb_sink.add(json_text)
+        self.validate_has_missing_dependencies(result)
+
+    def validate_contains_error(self,
+                                results):
+        count = 0
+        for result in results:
+            if result.status in [ ResultStatus.ERROR]:
+                count = count + 1
+
+        assert count == 1
 
     def validate_successful_result(self,
                                    results):
         for result in results:
-            assert result.status == ResultStatus.SUCCESS
+            assert result.status in [ ResultStatus.SUCCESS, ResultStatus.ALREADY_IN_DB]
+
+    def validate_has_missing_dependencies(self,
+                                   results):
+        for result in results:
+            assert result.status in [ResultStatus.VALID_FOR_DB_COMMIT, ResultStatus.MISSING_DEPENDENCY]
 
     def test_add_identity_path(self):
         typedb_sink = TypeDBSink(connection=connection,
@@ -554,8 +573,8 @@ class TestTypeDB(unittest.TestCase):
 
         self.validate_successful_result(result)
 
-    @parameterized.expand(variables_standard_data_file_paths_exception())
-    def test_all_ids_loaded_exception(self, path):
+    @parameterized.expand(variables_standard_data_file_paths_missing())
+    def test_all_ids_loaded_missing_dependencies(self, path):
         variables_id_list()
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
@@ -564,8 +583,8 @@ class TestTypeDB(unittest.TestCase):
         json_text = self.get_json_from_file(path)
 
 
-        with self.assertRaises(Exception) as context:
-            result = typedb_sink.add(json_text)
+        result = typedb_sink.add(json_text)
+        self.validate_has_missing_dependencies(result)
 
 
 if __name__ == '__main__':

@@ -107,6 +107,8 @@ def delete_database(uri: str, port: str, database: str):
 def query_ids(generator, transaction, **data_query_args):
     return [ans.get("ids") for ans in generator]
 
+def query_id(generator, transaction, **data_query_args):
+    return [ans.get("id").get_value() for ans in generator]
 
 @impure_safe
 def delete_layers(uri: str, port: str, database: str, layers: list):
@@ -143,6 +145,8 @@ def add_layers_to_typedb(uri: str, port: str, database: str, instructions: Instr
             return IOResult.failure(client_session.failure())
         with client_session.unwrap() as session:
             for instruction_id in instructions.getids():
+                if instructions.not_allow_insertion(instruction_id):
+                    continue
                 write_transaction = unsafe_perform_io(get_write_transaction(session))
                 if not is_successful(write_transaction):
                     return IOResult.failure(write_transaction.failure())
@@ -153,7 +157,7 @@ def add_layers_to_typedb(uri: str, port: str, database: str, instructions: Instr
                     if is_successful(result):
                         instructions.update_instruction_as_success(instruction_id)
                     else:
-                        instructions.insert_add_instruction_error(instruction_id, result.failure())
+                        instructions.update_instruction_as_error(instruction_id, str(result.failure()))
     return instructions
 
 
