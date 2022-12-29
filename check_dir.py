@@ -1,7 +1,6 @@
 import json
 import os
 from stix.module.typedb import TypeDBSink, TypeDBSource
-from stix.module.stql import stix2_to_typeql
 from typedb.client import *
 
 

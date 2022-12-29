@@ -55,6 +55,7 @@ def convert_res_to_stix(res, import_type):
     Returns:
         stix_dict {}: a dict containing the stix object
     """
+    stix_dict = {}
     for obj in res:
         obj_type = obj["T_name"]
         tql_type = obj["type"]
@@ -68,7 +69,6 @@ def convert_res_to_stix(res, import_type):
             stix_dict = make_meta(obj, import_type)
         else:
             logger.error(f'Unknown object type: {obj}')
-            stix_dict = {}
 
     return stix_dict
 
