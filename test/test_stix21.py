@@ -1,3 +1,4 @@
+import pathlib
 import unittest
 import json
 import os
@@ -122,8 +123,9 @@ class TestDatabase(unittest.TestCase):
         '''
         cls._typedbSink = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
         cls._typedbSource = TypeDBSource(connection=connection, import_type="STIX21")
+        cls._data_folder = pathlib.Path(__file__).parents[1].joinpath("data/examples/")
+        cls._example = str(pathlib.Path(__file__).parents[1].joinpath("data/examples/"))
 
-        cls._example = "./data/examples/"
 
     @classmethod
     def tearDownClass(cls):
@@ -133,7 +135,7 @@ class TestDatabase(unittest.TestCase):
 
         self.assertTrue(os.path.exists(self._example))
 
-        filename = './data/examples/marking_definitions.json'
+        filename = self._data_folder.joinpath("marking_definitions.json")
 
         logger.info(f'Loading file {filename}')
         with open(filename,mode="r", encoding="utf-8") as file:
