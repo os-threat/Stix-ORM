@@ -1,0 +1,7 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+request_method,request-method,Required,  stix-attribute-string   ,   attribute   
+request_value,request-value,      Optional      ,  stix-attribute-string   ,   attribute   
+request_version,request-version,      Optional      ,  stix-attribute-string   ,   attribute   
+request_header,HTTP-header:request,      Optional      ,embedded,relation
+message_body_length,message-body-length,      Optional      ,  stix-attribute-integer   ,   attribute   
+message_body_data_ref,HTTP-body-data:HTPP-message,      Optional      ,embedded,relation

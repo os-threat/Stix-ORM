@@ -1,0 +1,6 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+version,version,      Optional      ,  stix-attribute-string   ,   attribute   
+is_optimized,is_optimized,      Optional      ,  stix-attribute-boolean   ,   attribute   
+document_info_dict,doc-info:pdf,      Optional      ,   embedded    ,relation
+pdfid0,pdfid0,      Optional      ,  stix-attribute-string   ,   attribute   
+pdfid1,pdfid1,      Optional      ,  stix-attribute-string   ,   attribute   

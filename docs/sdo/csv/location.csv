@@ -1,0 +1,26 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+ type                ,            stix-type             ,      Required      ,  stix-attribute-string   ,   attribute   
+ id                  ,             stix-id              ,      Required      ,  stix-attribute-string   ,   attribute   
+ spec_version        ,           spec-version           ,      Required      ,  stix-attribute-string   ,   attribute   
+ created             ,             created              ,      Required      , stix-attribute-timestamp ,   attribute   
+ modified            ,             modified             ,      Required      , stix-attribute-timestamp ,   attribute   
+ name                ,               name               ,      Optional      ,  stix-attribute-string   ,   attribute   
+ description         ,           description            ,      Optional      ,  stix-attribute-string   ,   attribute   
+latitude,latitude,      Optional      ,stix-attribute-double,   attribute   
+longitude,longitude,      Optional      ,stix-attribute-double,   attribute   
+precision,precision,      Optional      ,stix-attribute-double,   attribute   
+region,region,      Optional      ,  stix-attribute-string   ,   attribute   
+country,country,      Optional      ,  stix-attribute-string   ,   attribute   
+administrative_area,administrative_area,      Optional      ,  stix-attribute-string   ,   attribute   
+city,city,      Optional      ,  stix-attribute-string   ,   attribute   
+street_address,street-address,      Optional      ,  stix-attribute-string   ,   attribute   
+postal_code,postal-code,      Optional      ,  stix-attribute-string   ,   attribute   
+created_by_ref      ,        created-by:created        ,      Optional      ,   embedded    ,relation
+ revoked             ,             revoked              ,      Optional      ,  stix-attribute-boolean  ,   attribute   
+ labels              ,              labels              ,      Optional      ,  stix-attribute-string   ,   attribute   
+ confidence          ,            confidence            ,      Optional      ,  stix-attribute-integer  ,   attribute   
+ lang                ,               lang               ,      Optional      ,  stix-attribute-string   ,   attribute   
+ external_references , external-references:referencing  ,      Optional      ,   embedded    ,relation
+ object_marking_refs ,      object-marking:marked       ,      Optional      ,   embedded    ,relation
+ granular_markings   ,     granular-marking:marked      ,      Optional      ,   embedded    ,relation
+ extensions          ,               n/a                ,        n/a         ,           n/a            ,      n/a      

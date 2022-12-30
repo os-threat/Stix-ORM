@@ -1,8 +1,8 @@
 # Incident Domain Object
 
+**Stix and TypeQL Object Type:**  `incident`
+
 Note: The Incident object in STIX 2.1 is a stub. It is included to support basic use cases but does not contain properties to represent metadata about incidents. Future STIX 2 releases will expand it to include these capabilities.  It is suggested that it is used as an extension point for an Incident object defined using the extension facility described in section 7.3.
-
-
 
 [Reference in Stix2.1 Standard](https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_sczfhw64pjxt)
 ## Stix 2.1 Properties Converted to TypeQL

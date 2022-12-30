@@ -1,5 +1,7 @@
 # Threat-Actor Domain Object
 
+**Stix and TypeQL Object Type:**  `threat-actor`
+
 Threat Actors are actual individuals, groups, or organizations believed to be operating with malicious intent. A Threat Actor is not an Intrusion Set but may support or be affiliated with various Intrusion Sets, groups, or organizations over time.
 
  

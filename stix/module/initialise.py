@@ -44,7 +44,7 @@ initial_markings = [[
 ]]
 
 
-def setup_database(stix_connection, clear):
+def setup_database(stix_connection: Dict[str, str], clear: bool):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
     with TypeDB.core_client(url) as client:
         logger.debug(f'Database Clearing is [{clear}]')
@@ -61,7 +61,7 @@ def setup_database(stix_connection, clear):
         logger.debug('.......................... clear complete')
 
 
-def load_schema(stix_connection, rel_path=None, schema_type="schema"):
+def load_schema(stix_connection: Dict[str, str], rel_path=None, schema_type: str = "schema"):
     logger.debug(f'{stix_connection}')
     logger.debug(rel_path)
     logger.debug(schema_type)
@@ -84,7 +84,7 @@ def load_schema(stix_connection, rel_path=None, schema_type="schema"):
             session.close()
 
 
-def load_markings(stix_connection):
+def load_markings(stix_connection: Dict[str, str]):
     type_ql_list = []
     for mark_list in initial_markings:
         type_ql = " insert "
@@ -99,7 +99,7 @@ def load_markings(stix_connection):
     return return_list
 
 
-def load_typeql_data(data_list, stix_connection):
+def load_typeql_data(data_list, stix_connection: Dict[str, str]):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
     with TypeDB.core_client(url) as client:
         # Stage 1: Create the schema
@@ -116,34 +116,13 @@ def load_typeql_data(data_list, stix_connection):
                 write_transaction.commit()
 
 
-def check_stix_ids(id_list, stix_connection):
-    """ Get all the stix-ids in a database, should be moved to typedb file
-
-    Returns:
-        id_list : list of the stix-ids in the database
-    """
-    url = stix_connection["uri"] + ":" + stix_connection["port"]
-    get_ids_tql = 'match $id isa stix-id;'
-    len_id = len(id_list)
-    if len_id == 1:
-        get_ids_tql += '$id "' + id_list[0] + '";'
-    else:
-        for index, id_l in enumerate(id_list):
-            get_ids_tql += ' {$id "' + id_l + '";}'
-            if index == len_id - 1:
-                get_ids_tql += " ;"
-            else:
-                get_ids_tql += ' or '
-    with TypeDB.core_client(url) as client:
-        with client.session(stix_connection["database"], SessionType.DATA) as session:
-            with session.transaction(TransactionType.READ) as read_transaction:
-                answer_iterator = read_transaction.query().match(get_ids_tql)
-                ids = [ans.get("id").get_value() for ans in answer_iterator]
-                logger.debug(f'ids {ids}\n\n')
-    return ids
 
 
-def sort_layers(layers, cyclical, indexes, missing, dep_obj, add_or_del='del'):
+def sort_layers(layers,
+                cyclical,
+                indexes: List[str],
+                missing: List[str],
+                dep_obj, add_or_del='del'):
     """ Sort the layers depending on whether they are "add" or "del" layers
 
     Args:

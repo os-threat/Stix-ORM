@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(n
 logger = logging.getLogger(__name__)
 
 from stix2 import (v21, parse)
-from .dbconfig import *
+from dbconfig import *
 
 import re
 s = "Example String"

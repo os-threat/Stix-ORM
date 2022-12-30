@@ -1,0 +1,14 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+ type                ,            stix-type             ,      Required      ,  stix-attribute-string   ,   attribute   
+ id                  ,             stix-id              ,      Required      ,  stix-attribute-string   ,   attribute   
+ spec_version        ,           spec-version           ,      Optional      ,  stix-attribute-string   ,   attribute   
+ object_marking_refs ,      object-marking:marked       ,      Optional      ,   embedded    ,relation
+ granular_markings   ,     granular-marking:marked      ,      Optional      ,   embedded    ,relation
+defanged,defanged,      Optional      ,stix-attribute-boolean,   attribute   
+ extensions          ,               n/a                ,        n/a         ,           n/a            ,      n/a      
+mime_type        ,mime_type        ,      Optional      ,  stix-attribute-string   ,   attribute   
+payload_bin,payload_bin,      Optional      ,  stix-attribute-string   ,   attribute   
+url,url,      Optional      ,  stix-attribute-string   ,   attribute   
+hashes,hashes:owner,      Optional      ,   embedded    ,relation
+encryption_algorithm,encryption_algorithm,      Optional      ,  stix-attribute-string   ,   attribute   
+decryption_key,decryption_key,      Optional      ,  stix-attribute-string   ,   attribute   

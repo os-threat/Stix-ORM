@@ -1,0 +1,9 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+service_name ,service-name,Optional,  stix-attribute-string   ,   attribute   
+descriptions ,description,Optional,  stix-attribute-string   ,   attribute   
+display_name ,display-name,Optional,  stix-attribute-string   ,   attribute   
+group_name ,group-name,Optional,  stix-attribute-string   ,   attribute   
+start_type ,start-type,Optional,  stix-attribute-string   ,   attribute   
+service_dll_refs ,service-dll:process,Optional,embedded,relation
+service_type ,service-type,Optional,  stix-attribute-string   ,   attribute   
+service_status ,service-status,Optional,  stix-attribute-string   ,   attribute   

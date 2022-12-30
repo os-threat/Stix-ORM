@@ -1,8 +1,8 @@
 # Infrastructure Domain Object
 
+**Stix and TypeQL Object Type:**  `infrastructure`
+
 The Infrastructure SDO represents a type of TTP and describes any systems, software services and any associated physical or virtual resources intended to support some purpose (e.g., C2 servers used as part of an attack, device or server that are part of defense, database servers targeted by an attack, etc.). While elements of an attack can be represented by other SDOs or SCOs, the Infrastructure SDO represents a named group of related data that constitutes the infrastructure.
-
-
 
 [Reference in Stix2.1 Standard](https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_jo3k1o6lr9)
 ## Stix 2.1 Properties Converted to TypeQL

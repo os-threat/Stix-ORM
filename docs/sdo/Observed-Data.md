@@ -1,5 +1,7 @@
 # Observed-Data Domain Object
 
+**Stix and TypeQL Object Type:**  `observed-data`
+
 Observed Data conveys information about cyber security related entities such as files, systems, and networks using the STIX Cyber-observable Objects (SCOs). For example, Observed Data can capture information about an IP address, a network connection, a file, or a registry key. Observed Data is not an intelligence assertion, it is simply the raw information without any context for what it means.
 
  
