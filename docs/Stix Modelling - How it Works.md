@@ -35,20 +35,40 @@ There are 18 STIX Domain Objects, as shown in the diagram below
     id2([Campaign])
     id3([Course of Action])
     id4([Grouping])
-    id5([Identity])
-    id6([Indicator])
-    id7([Infrastructure])
-    id8([Intrusion Set])
-    id9([Location])
-    id10([Malwaare])
-    id11([Malware Analysis])
-    id12([Note])
-    id13([Observed Data])
-    id14([Opinion])
-    id15([Report])
-    id16([Threat Actor])
-    id17([Tool])
-    id18([Vulnerability])
+    id5([Incident])
+    id6([Identity])
+    id7([Indicator])
+    id8([Infrastructure])
+    id9([Intrusion Set])
+    id10([Location])
+    id11([Malwaare])
+    id12([Malware Analysis])
+    id13([Note])
+    id14([Observed Data])
+    id15([Opinion])
+    id16([Report])
+    id17([Threat Actor])
+    id18([Tool])
+    id19([Vulnerability])
+    click id1 "./sdo/Attack-Pattern.md" _blank
+    click id2 "./sdo/Campaign.md" _blank
+    click id3 "./sdo/Course-of-Action.md" _blank
+    click id4 "./sdo/Grouping.md" _blank
+    click id5 "./sdo/Identity.md" _blank
+    click id6 "./sdo/Incident.md" _blank
+    click id7 "./sdo/Indicator.md" _blank
+    click id8 "./sdo/Infrastructure.md" _blank
+    click id9 "./sdo/Intrusion-Set.md" _blank
+    click id10 "./sdo/Location.md" _blank
+    click id11 "./sdo/Malware.md" _blank
+    click id12 "./sdo/Malware-Analysis.md" _blank
+    click id13 "./sdo/Note.md" _blank
+    click id14 "./sdo/Observed-Data.md" _blank
+    click id15 "./sdo/Opinion.md" _blank
+    click id16 "./sdo/Report.md" _blank
+    click id17 "./sdo/Threat-Actor.md" _blank
+    click id18 "./sdo/Tool.md" _blank
+    click id18 "./sdo/Vulnerability.md" _blank
     id0-->id1
     id0-->id2
     id0-->id3
@@ -92,6 +112,24 @@ There are 18 STIX Cyber Observable Objects, as shown in the diagram below
     id16([User Account])
     id17([Windows Registry Key])
     id18([X509 Certificate])
+    click id1 "./sco/Artifact.md" _blank
+    click id2 "./sco/Autonomous-System.md" _blank
+    click id3 "./sco/Directory.md" _blank
+    click id4 "./sco/Domain-Name.md" _blank
+    click id5 "./sco/Email-Address.md" _blank
+    click id6 "./sco/Email-Message.md" _blank
+    click id7 "./sco/File.md" _blank
+    click id8 "./sco/IPv4-Address.md" _blank
+    click id9 "./sco/IPv6-Address.md" _blank
+    click id10 "./sco/MAC-Address.md" _blank
+    click id11 "./sco/Mutex.md" _blank
+    click id12 "./sco/Network-Traffic.md" _blank
+    click id13 "./sco/Process.md" _blank
+    click id14 "./sco/Software.md" _blank
+    click id15 "./sco/URL.md" _blank
+    click id16 "./sco/User-Account.md" _blank
+    click id17 "./sco/Windows-Registryt-Key.md" _blank
+    click id18 "./sco/X509-Certificate.md" _blank
     id0-->id1
     id0-->id2
     id0-->id3
