@@ -234,6 +234,8 @@ def sro_to_data(sro, import_type='STIX21'):
     print(f'into sro -> {sro}')
     # - work out the type of object
     auth = authorised_mappings(import_type)
+    uses_relation = False
+    is_procedure = False
     attack_object = False if not sro.get("x_mitre_version", False) else True
     if attack_object:
         uses_relation = False if not sro.get("relationship_type", False) == "uses" else True
@@ -286,7 +288,7 @@ def sro_to_typeql(sro, import_type='STIX21'):
         target_var, target_match = get_embedded_match(target_id)
         dep_match += source_match + target_match
         # 3.)  then setup the typeql statement to insert the specific sro relation, from the dict, with the matches
-        for record in auth["relations_sro_roles"]:
+        for record in auth["reln"]["relations_sro_roles"]:
             if record['stix'] == sro["relationship_type"]:
                 dep_insert += '\n' + sro_var
                 dep_insert += ' (' + record['source'] + ':' + source_var
@@ -296,6 +298,7 @@ def sro_to_typeql(sro, import_type='STIX21'):
                 core_ql += ', has stix-id $stix-id;\n$stix-id ' + val_tql(sro.id) + ';\n'
                 break
                 # B. If it is a Sighting then match the object to the sighting
+        print(f'dep_insert -> {dep_insert}')
     elif obj_type == 'sighting':
         sighting_of_id = sro.sighting_of_ref
         dep_list.append(sighting_of_id)
