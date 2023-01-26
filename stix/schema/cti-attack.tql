@@ -36,16 +36,12 @@ define
 
     # Campaigns - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#campaigns
     attack-campaign sub campaign,
-        owns name,
-        owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-first-seen-citation,
         owns x-mitre-last-seen-citation,
-        plays uses:used-by,
-        plays attributed-to:result,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
@@ -67,8 +63,6 @@ define
 
     # Techniques - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#techniques
     technique sub attack-pattern,
-        owns name,
-        owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
         owns x-mitre-domains,
@@ -84,7 +78,6 @@ define
         owns x-mitre-defense-bypassed,
         owns x-mitre-remote-support,
         owns x-mitre-impact-type,
-        plays uses:used,
         plays subtechnique-of:parent,
         plays subtechnique-of:child,
         plays detects:ttp,
@@ -94,12 +87,10 @@ define
         plays obj-ref:content;
 
     # Sub Techniques - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#sub-techniques
-    subtechnique sub technique;
+    sub-technique sub technique;
 
     # Mitigations - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#mitigations
     mitigation sub course-of-action,
-        owns name,
-        owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
         owns x-mitre-domains,
@@ -111,47 +102,35 @@ define
 
     # Groups - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#groups
     attack-group sub intrusion-set,
-        owns name,
-        owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
-        plays uses:used-by,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
-        plays attributed-to:fault-of,
         plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     # Software- Malware and Tool - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#software
     software-malware sub malware,
-        owns name,
-        owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-platforms,
         owns x-mitre-aliases,
-        plays uses:used-by,
-        plays uses:used,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     software-tool sub tool,
-        owns name,
-        owns description,
         owns x-mitre-version,
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-platforms,
         owns x-mitre-aliases,
-        plays uses:used-by,
-        plays uses:used,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
@@ -188,17 +167,6 @@ define
         plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
-    # Built-in Embedded Relations for Mitre Attack objects
-    x-mitre-modified-by sub embedded,
-		relates modified-by as pointed-to,
-		relates modified as owner,
-        plays obj-ref:content;
-
-	x-mitre-data-source sub embedded,
-		relates data-source as pointed-to,
-		relates component as owner,
-        plays obj-ref:content;
-
     # Custom ATT&CK Relations -https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#relationships
 	subtechnique-of sub stix-core-relationship,
 		relates child as source,
@@ -213,6 +181,17 @@ define
 	revoked-by sub stix-core-relationship,
 		relates revoked as source,
 		relates new-version as target,
+        plays obj-ref:content;
+
+    procedure sub stix-core-relationship,
+		relates user as source,
+		relates technique as target,
+        plays obj-ref:content;
+
+    # Built-in Embedded Relations for Mitre Attack objects
+	x-mitre-data-source sub embedded,
+		relates data-source as pointed-to,
+		relates component as owner,
         plays obj-ref:content;
 
     # ATT&CK Collection Object
@@ -244,11 +223,12 @@ define
 
 	x-mitre-modified-by-ref sub created-by,
 	    relates modified as created,
-	    relates modifier as creator;
+	    relates modifier as creator,
+        plays obj-ref:content;
 
 
     # Attribute Definitions
-    mitre-attribute-string sub stix-attribute-string;
+    mitre-attribute-string sub stix-attribute-string, abstract;
         x-mitre-version sub mitre-attribute-string;
         x-mitre-domains sub mitre-attribute-string;
         x-mitre-contributors sub mitre-attribute-string;
@@ -269,9 +249,9 @@ define
         x-mitre-first-seen-citation sub mitre-attribute-string;
         x-mitre-last-seen-citation sub mitre-attribute-string;
 
-    mitre-attribute-boolean sub stix-attribute-boolean;
+    mitre-attribute-boolean sub stix-attribute-boolean, abstract;
         x-mitre-is-subtechnique sub mitre-attribute-boolean;
         x-mitre-remote-support sub mitre-attribute-boolean;
 
-    mitre-attribute-timestamp sub stix-attribute-timestamp;
+    mitre-attribute-timestamp sub stix-attribute-timestamp, abstract;
         object-modified sub mitre-attribute-timestamp;

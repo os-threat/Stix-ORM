@@ -1,0 +1,114 @@
+[
+  {
+    "stix": "alternate_data_streams",
+    "object": "alternate-data-stream",
+    "relation": "alt-data-streams",
+    "owner": "ntfs-ext",
+    "pointed-to": "alt-data-stream"
+  },
+  {
+    "stix": "archive-ext",
+    "object": "archive-ext",
+    "relation": "archive-extension",
+    "owner": "file",
+    "pointed-to": "an-archive"
+  },
+  {
+    "stix": "http-request-ext",
+    "object": "http-request-ext",
+    "relation": "http-request-extension",
+    "owner": "traffic",
+    "pointed-to": "request"
+  },
+  {
+    "stix": "icmp-ext",
+    "object": "icmp-ext",
+    "relation": "icmp-extension",
+    "owner": "traffic",
+    "pointed-to": "icmp"
+  },
+  {
+    "stix": "ntfs-ext",
+    "object": "ntfs-ext",
+    "relation": "ntfs-extension",
+    "owner": "file",
+    "pointed-to": "ntfs"
+  },
+  {
+    "stix": "pdf-ext",
+    "object": "pdf-ext",
+    "relation": "pdf-extension",
+    "owner": "file",
+    "pointed-to": "pdf"
+  },
+  {
+    "stix": "raster-image-ext",
+    "object": "raster-image-ext",
+    "relation": "raster-image-extension",
+    "owner": "file",
+    "pointed-to": "image"
+  },
+  {
+    "stix": "socket-ext",
+    "object": "socket-ext",
+    "relation": "socket-extension",
+    "owner": "traffic",
+    "pointed-to": "socket"
+  },
+  {
+    "stix": "tcp-ext",
+    "object": "tcp-ext",
+    "relation": "tcp-extension",
+    "owner": "traffic",
+    "pointed-to": "tcp"
+  },
+  {
+    "stix": "unix-account-ext",
+    "object": "unix-account-ext",
+    "relation": "unix-account-extension",
+    "owner": "account",
+    "pointed-to": "unix"
+  },
+  {
+    "stix": "windows-pebinary-ext",
+    "object": "windows-pebinary-ext",
+    "relation": "windows-pebinary-extension",
+    "owner": "file",
+    "pointed-to": "pebinary"
+  },
+  {
+    "stix": "windows-pe-section-type",
+    "object": "windows-pe-section",
+    "relation": "sections",
+    "owner": "pebinary",
+    "pointed-to": "pe-section"
+  },
+  {
+    "stix": "windows-process-ext",
+    "object": "windows-process-ext",
+    "relation": "windows-process-extension",
+    "owner": "process",
+    "pointed-to": "win-process"
+  },
+  {
+    "stix": "windows-service-ext",
+    "object": "windows-service-ext",
+    "relation": "windows-service-extension",
+    "owner": "process",
+    "pointed-to": "win-service"
+  },
+  {
+    "stix": "x509_v3_extensions",
+    "object": "x509-v3-extension",
+    "relation": "v3-extensions",
+    "owner": "cert",
+    "pointed-to": "v3-extension"
+  },
+  {
+    "stix": "optional_header",
+    "object": "windows-pe-optional-header-type",
+    "relation": "optional-headers",
+    "owner": "pebinary",
+    "pointed-to": "optional-header"
+  }
+]

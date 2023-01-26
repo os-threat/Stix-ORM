@@ -1,0 +1,14 @@
+[
+  "x-mitre-matrix",
+  "x-mitre-tactic",
+  "attack-pattern",
+  "relationship",
+  "course-of-action",
+  "intrustion-set",
+  "malware",
+  "tool",
+  "x-mitre-collection",
+  "x-mitre-data-source",
+  "x-mitre-data-component",
+  "campaign"
+]

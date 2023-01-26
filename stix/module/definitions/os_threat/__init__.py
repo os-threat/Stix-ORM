@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Loader module for all ATT&CK data model
+Loader module for all os_threat data model
 """
 
 __author__ = "Brett Forbes"
@@ -22,8 +22,8 @@ from pathlib import Path
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
 
-attack_models = {}
-attack_models["data"] = {}
+os_threat_models = {}
+os_threat_models["data"] = {}
 for file_path in glob(f'{dir_path}/data/*.json'):
     # Opening JSON file
     file_name = Path(file_path).stem
@@ -32,10 +32,10 @@ for file_path in glob(f'{dir_path}/data/*.json'):
         # create well formed key
         key = f'{file_name}'
 
-        attack_models["data"][key] = json.load(json_file)
+        os_threat_models["data"][key] = json.load(json_file)
         
 
-attack_models["base"] = {}
+os_threat_models["base"] = {}
 for file_path in glob(f'{dir_path}/base/*.json'):
     # Opening JSON file
     file_name = Path(file_path).stem
@@ -44,10 +44,10 @@ for file_path in glob(f'{dir_path}/base/*.json'):
         # create well formed key
         key = f'{file_name}'
 
-        attack_models["base"][key] = json.load(json_file)
+        os_threat_models["base"][key] = json.load(json_file)
         
 
-attack_models["mappings"] = {}
+os_threat_models["mappings"] = {}
 for file_path in glob(f'{dir_path}/mappings/*.json'):
     # Opening JSON file
     file_name = Path(file_path).stem
@@ -56,10 +56,10 @@ for file_path in glob(f'{dir_path}/mappings/*.json'):
         # create well formed key
         key = f'{file_name}'
 
-        attack_models["mappings"][key] = json.load(json_file)
+        os_threat_models["mappings"][key] = json.load(json_file)
 
 
-attack_models["sub_objects"] = {}
+os_threat_models["sub_objects"] = {}
 for file_path in glob(f'{dir_path}/sub_objects/*.json'):
     # Opening JSON file
     file_name = Path(file_path).stem
@@ -68,8 +68,6 @@ for file_path in glob(f'{dir_path}/sub_objects/*.json'):
         # create well formed key
         key = f'{file_name}'
 
-        attack_models["sub_objects"][key] = json.load(json_file)
+        os_threat_models["sub_objects"][key] = json.load(json_file)
 
-
-
-logger.debug('Loaded %d attack dictionary objects' % len(attack_models))
+logger.debug('Loaded %d os-threat objects' % len(os_threat_models))

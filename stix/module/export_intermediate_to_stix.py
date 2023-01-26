@@ -1,8 +1,11 @@
 import json
 import datetime
 from stix.module.definitions.stix21 import stix_models
-from stix.module.export_typeql_to_intermediate import convert_ans_to_res, embedded_relations, standard_relations, list_of_objects, key_value_relations, extension_relations
-
+from stix.module.definitions.attack import attack_models
+from stix.module.definitions.os_threat import os_threat_models
+from stix.module.authorise import authorised_mappings
+from stix.module.decisions_type_to_typeql import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
+from stix.module.export_typeql_to_intermediate import convert_ans_to_res
 import logging
 logger = logging.getLogger(__name__)
 
@@ -55,17 +58,19 @@ def convert_res_to_stix(res, import_type):
     Returns:
         stix_dict {}: a dict containing the stix object
     """
+
+    auth = authorised_mappings(import_type)
     stix_dict = {}
     for obj in res:
         obj_type = obj["T_name"]
         tql_type = obj["type"]
-        if obj_type in stix_models["sdo_obj"]:
+        if obj_type in auth["tql_types"]["types_sdo"]:
             stix_dict = make_sdo(obj, import_type)
-        elif obj_type in stix_models["sco_obj"]:
+        elif obj_type in auth["tql_types"]["types_sco"]:
             stix_dict = make_sco(obj, import_type)
-        elif obj_type in stix_models["sro_obj"]:
+        elif obj_type in auth["tql_types"]["types_sro"]:
             stix_dict = make_sro(obj, import_type)
-        elif obj_type in stix_models["meta_obj"]:
+        elif obj_type in auth["tql_types"]["types_meta"]:
             stix_dict = make_meta(obj, import_type)
         else:
             logger.error(f'Unknown object type: {obj}')
@@ -83,51 +88,29 @@ def make_sdo(res, import_type):
     Returns:
         stix_dict {}: a dict containing the stix object
     """
+    auth = authorised_mappings(import_type)
     stix_dict = {}
-    obj_type = res["T_name"]
-    # 1.B) get the specific typeql names for an object into a dictionary
-    # - stix import
-    if import_type == 'STIX21':
-        if obj_type in stix_models["dispatch_stix"]:
-            obj_tql = stix_models["dispatch_stix"][obj_type]
-        else:
-            logger.error(f'obj_type type {obj_type} not supported')
-            return ''
-    # - mitre attack import
-    elif import_type == 'ATT&CK':
-        if obj_type[0:6] == "x-mitre":
-            if obj_type in dispatch_mitre:
-                # dispatch specific mitre properties plus generic sdo properties
-                obj_tql = dispatch_mitre[obj_type]
-            else:
-                logger.error(f'obj_type type {obj_type} not in dispatch mitre')
-                return ''
-        else:
-            if obj_type in stix_models["dispatch_stix"]:
-                # dispatch specific stix properties plus mitre properties plus generic sdo properties
-                obj_tql = stix_models["dispatch_stix"][obj_type]
-                obj_tql2 = dispatch_mitre[obj_type]
-                obj_tql.update(obj_tql2)
-            else:
-                logger.error(f'obj_type type {obj_type} not in stix_models["dispatch_stix"] or dispatch mitre')
-                return ''
-
-    else:
-        logger.error(f'import type {import_type} not supported')
-        return ''
-
-    # 1.C) Add the standard object properties to the specific ones, and split them into properties and relations
-    obj_tql.update(stix_models["sdo_typeql_dict"])
     # 2.A) get the typeql properties and relations
+    sdo_tql_name = res["T_name"]
     props = res["has"]
     relns = res["relns"]
+    attack_object = False
+    sub_technique = False
+    for prop in props:
+        if prop["typeql"] == "x_mitre_version":
+            attack_object = True
+        if prop["typeql"] == "x_mitre_is_subtechnique":
+            sub_technique = True
+
+    obj_tql, sdo_tql_name = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique)
+
     # 2.B) get the is_list list, the list of properties that are lists for that object
-    is_list = stix_models["sdo_is_list"]["sdo"] + stix_models["sdo_is_list"][obj_type]
+    is_list = auth["is_lists"]["sdo"]["sdo"] + auth["is_lists"]["sdo"][sdo_tql_name]
     # 3.A) add the properties onto the the object
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
     logger.debug('sdo, add properties')
     # 3.B) add the relations onto the object
-    stix_dict = make_relations(relns, obj_tql, stix_dict, is_list, obj_type)
+    stix_dict = make_relations(relns, obj_tql, stix_dict, is_list, sdo_tql_name, import_type)
     logger.debug('sdo, add relations')
     # 4.0 Check for the edge case where an identity creates an identity, but they are the same id
     if "created_by_ref" in stix_dict and stix_dict["type"] == "identity":
@@ -147,20 +130,23 @@ def make_sro(res, import_type):
     Returns:
         stix_dict {}: a dict containing the stix object
     """
+    auth = authorised_mappings(import_type)
     stix_dict = {}
-    obj_type = res["T_name"]
-    if obj_type == "sighting":
-        obj_tql = stix_models["dispatch_stix"]["sighting"]
+    # 2.A) get the typeql properties and relations
+    sro_tql_name = res["T_name"]
+    props = res["has"]
+    relns = res["relns"]
+    #
+    # Note, Issue, cannot yet tell what to do with a procedure
+    #
+    attack_object = False
+    uses_relation = False
+    is_procedure = False
+    for prop in props:
+        if prop["typeql"] == "x_mitre_version":
+            attack_object = True
 
-    elif obj_type in standard_relations:
-        obj_tql = stix_models["dispatch_stix"]["relationship"]
-
-    else:
-        logger.error(f'relationship type {obj_type} not supported')
-        return ''
-
-    # - add on the generic sro properties
-    obj_tql.update(stix_models["sro_base_typeql_dict"])
+    obj_tql, sdo_tql_name = sro_type_to_tql(sro_tql_name, import_type, attack_object, uses_relation, is_procedure)
 
     # 2.A) get the typeql properties and relations
     props = res["has"]
@@ -168,14 +154,14 @@ def make_sro(res, import_type):
     edges = res["edges"]
     # 2.) setup the match statements first, depending on whether the object is a sighting or a relationship
     # A. If it is a Relationship then find the source and target roles for the relation, and match them in
-    if obj_type in standard_relations:
-        for stix_rel in stix_models["stix_rel_roles"]:
-            if stix_rel["typeql"] == obj_type:
+    if sdo_tql_name in auth["reln_name"]["standard_relations"]:
+        for stix_rel in auth["reln_name"]["standard_relations"]:
+            if stix_rel["typeql"] == sdo_tql_name:
                 source_role = stix_rel["source"]
                 target_role = stix_rel["target"]
                 break
 
-        is_list = stix_models["sro_is_list"]["sro"]
+        is_list = auth["is_lists"]["sro"]["sro"]
         for edge in edges:
             players = edge["player"]
             if edge["role"] == source_role:
@@ -192,8 +178,8 @@ def make_sro(res, import_type):
                 return ''
 
     # B. If it is a Sighting then match the object to the sighting
-    elif obj_type == 'sighting':
-        is_list = stix_models["sro_is_list"]["sro"] + stix_models["sro_is_list"]["sighting"]
+    elif sdo_tql_name == 'sighting':
+        is_list = auth["is_lists"]["sro"]["sro"] + auth["is_lists"]["sro"]["sighting"]
         for edge in edges:
             players = edge["player"]
             if edge["role"] == "sighting-of":
@@ -219,13 +205,13 @@ def make_sro(res, import_type):
                 return ''
 
     else:
-        logger.error(f'relationship type {obj_type} not supported')
+        logger.error(f'relationship type {sro_tql_name} not supported')
         return ''
 
     # 3.A) add the properties onto the the object
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
     # 3.B) add the relations onto the object
-    stix_dict = make_relations(relns, obj_tql, stix_dict, is_list, obj_type)
+    stix_dict = make_relations(relns, obj_tql, stix_dict, is_list, sro_tql_name, import_type)
     return stix_dict
 
 
@@ -239,23 +225,25 @@ def make_sco(res, import_type):
     Returns:
         stix_dict {}: a dict containing the stix object
     """
+    auth = authorised_mappings(import_type)
     # - work out the type of object
     stix_dict = {}
     obj_type = res["T_name"]
     # - get the object-specific typeql names, sighting or relationship
-    obj_tql = stix_models["dispatch_stix"][obj_type]
-    # - add on the generic sro properties
-    obj_tql.update(stix_models["sco_base_typeql_dict"])
+    # - work out the type of object
+    sco_tql_name = obj_type
+    # - get the object-specific typeql names, sighting or relationship
+    obj_tql, sco_tql_name = sco__type_to_tql(sco_tql_name, import_type)
 
     # 2.A) get the typeql properties and relations
     props = res["has"]
     relns = res["relns"]
 
-    is_list = stix_models["sco_is_list"]["sco"] + stix_models["sco_is_list"][obj_type]
+    is_list = auth["is_lists"]["sco"]["sco"] + stix_models["sco_is_list"][obj_type]
     # 3.A) add the properties onto the the object
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
     # 3.B) add the relations onto the object
-    stix_dict = make_relations(relns, obj_tql, stix_dict, is_list, obj_type)
+    stix_dict = make_relations(relns, obj_tql, stix_dict, is_list, obj_type, import_type)
     return stix_dict
 
 
@@ -348,7 +336,7 @@ def make_properties(props, obj_tql, stix_dict, is_list):
     return stix_dict
 
 
-def make_relations(relns, obj_tql, stix_dict, is_list, obj_name=None):
+def make_relations(relns, obj_tql, stix_dict, is_list, obj_name=None, import_type=None):
     """
         Overall branching function for processing all the sub objects
     Args:
@@ -361,30 +349,31 @@ def make_relations(relns, obj_tql, stix_dict, is_list, obj_name=None):
     Returns:
         stix_dict {}: a dict containing the stix object
     """
+    auth = authorised_mappings(import_type)
     for reln in relns:
         reln_name = reln["T_name"]
-        if reln_name in embedded_relations:
-            stix_dict = make_embedded_relations(reln, reln_name, stix_dict, is_list, obj_name)
+        if reln_name in auth["reln_name"]["embedded_relations"]:
+            stix_dict = make_embedded_relations(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
-        elif reln_name in standard_relations or reln_name == "sighting":
-            stix_dict = make_standard_relations(reln, reln_name, stix_dict, is_list, obj_name)
+        elif reln_name in auth["reln_name"]["standard_relations"] or reln_name == "sighting":
+            stix_dict = make_standard_relations(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
-        elif reln_name in key_value_relations:
-            stix_dict = make_key_value_relations(reln, reln_name, stix_dict, is_list, obj_name)
+        elif reln_name in auth["reln_name"]["key_value_relations"]:
+            stix_dict = make_key_value_relations(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
-        elif reln_name in stix_models["extensions_only"]:
-            stix_dict = make_extension_relations(reln, reln_name, stix_dict, is_list, obj_name)
+        elif reln_name in auth["reln_name"]["extension_relations"]:
+            stix_dict = make_extension_relations(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
-        elif reln_name in list_of_objects:
-            stix_dict = make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_name)
+        elif reln_name in auth["reln_name"]["list_of_objects"]:
+            stix_dict = make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
-        elif reln_name in extension_relations:
-            stix_dict = make_object(reln, reln_name, stix_dict, is_list, obj_name)
+        elif reln_name == "x509_v3_extensions" or reln_name == "optional_header":
+            stix_dict = make_object(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
         elif reln_name == "granular-marking":
             stix_dict = make_granular_marking(reln, reln_name, stix_dict, is_list, obj_tql, obj_name)
 
-        elif reln_name == "hashes":
+        elif reln_name == "hashes" or reln_name == "file_header_hashes":
             stix_dict = make_hashes(reln, reln_name, stix_dict)
 
         else:
@@ -394,7 +383,7 @@ def make_relations(relns, obj_tql, stix_dict, is_list, obj_name=None):
     return stix_dict
 
 
-def make_embedded_relations(reln, reln_name, stix_dict, is_list, obj_name):
+def make_embedded_relations(reln, reln_name, stix_dict, is_list, obj_name, import_type):
     """
         Setup embedded relations based on stix-id's
     Args:
@@ -407,8 +396,9 @@ def make_embedded_relations(reln, reln_name, stix_dict, is_list, obj_name):
     Returns:
         stix_dict {}: a dict containing the stix object
     """
+    auth = authorised_mappings(import_type)
     stix_object_type = obj_name
-    for embedded_r in stix_models["embedded_relations_typeql"]:
+    for embedded_r in auth["reln"]["embedded_relations"]:
         if reln_name == embedded_r["typeql"]:
             role_pointed = embedded_r["pointed-to"]
             stix_name = embedded_r["rel"]
@@ -450,12 +440,13 @@ def make_embedded_relations(reln, reln_name, stix_dict, is_list, obj_name):
     return stix_dict
 
 
-def make_standard_relations(reln, reln_name, stix_dict, is_list, obj_name=None):
+def make_standard_relations(reln, reln_name, stix_dict, is_list, obj_name=None, import_type=None):
     logger.warning(" make standard relations visited, but not implemented")
+    auth = authorised_mappings(import_type)
     return stix_dict
 
 
-def make_key_value_relations(reln, reln_name, stix_dict, is_list, obj_type=None):
+def make_key_value_relations(reln, reln_name, stix_dict, is_list, obj_type=None, import_type=None):
     """
         Setup embedded relations based on stix-id's
     Args:
@@ -468,7 +459,8 @@ def make_key_value_relations(reln, reln_name, stix_dict, is_list, obj_type=None)
     Returns:
         stix_dict {}: a dict containing the stix object
     """
-    for kv_obj in stix_models["key_value_typeql_list"]:
+    auth = authorised_mappings(import_type)
+    for kv_obj in auth["reln"]["key_value_relations"]:
         if reln_name == kv_obj["typeql"]:
             role_pointed = kv_obj["pointed_to"]
             reln_owner = kv_obj["owner"]
@@ -501,7 +493,7 @@ def make_key_value_relations(reln, reln_name, stix_dict, is_list, obj_type=None)
     return stix_dict
 
 
-def make_extension_relations(reln, reln_name, stix_dict, is_list, obj_type=None):
+def make_extension_relations(reln, reln_name, stix_dict, is_list, obj_type, import_type=None):
     """
         Setup extension relations based on stix-id's
     Args:
@@ -514,13 +506,14 @@ def make_extension_relations(reln, reln_name, stix_dict, is_list, obj_type=None)
     Returns:
         stix_dict {}: a dict containing the stix object
     """
+    auth = authorised_mappings(import_type)
     local_dict = {}
     local_dict = make_object(reln, reln_name, local_dict, is_list, obj_type)
     stix_dict["extensions"] = local_dict
     return stix_dict
 
 
-def make_object(reln, reln_name, stix_dict, is_list, obj_type=None):
+def make_object(reln, reln_name, stix_dict, is_list, obj_type=None, import_type=None):
     """
         Setup a sub object
     Args:
@@ -533,16 +526,20 @@ def make_object(reln, reln_name, stix_dict, is_list, obj_type=None):
     Returns:
         stix_dict {}: a dict containing the stix object
     """
-    for ext_obj in stix_models["ext_typeql_dict_list"]:
+    auth = authorised_mappings(import_type)
+    for ext_obj in auth["reln"]["extension_relations"]:
         if reln_name == ext_obj["relation"]:
             role_pointed = ext_obj["pointed-to"]
             role_owner = ext_obj["owner"]
             ext_object = ext_obj["object"]
-            obj_props_tql = ext_obj["dict"]
             stix_ext_name = ext_obj["stix"]
             obj_is_list = stix_models["object_is_list"][ext_object]
             break
 
+    if ext_object in auth["sub_objects"]:
+        obj_props_tql = auth["sub_objects"][ext_object]
+    else:
+        raise ValueError("no sub-object available")
     roles = reln["roles"]
     ext_data_object = {}
     for role in roles:
@@ -585,7 +582,7 @@ def make_object(reln, reln_name, stix_dict, is_list, obj_type=None):
     return stix_dict
 
 
-def make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_type=None):
+def make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_type=None, import_type=None):
     """
         Setup a list of sub objects
     Args:
@@ -598,15 +595,19 @@ def make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_type=None):
     Returns:
         stix_dict {}: a dict containing the stix object
     """
-    for l_obj in stix_models["list_of_object_typeql"]:
+    auth = authorised_mappings(import_type)
+    for l_obj in auth["reln"]["list_of_objects"]:
         if reln_name == l_obj["typeql"]:
             role_pointed = l_obj["pointed_to"]
             reln_object = l_obj["object"]
-            obj_props_tql = l_obj["typeql_props"]
             stix_field_name = l_obj["name"]
-            obj_is_list = stix_models["object_is_list"][reln_object]
+            obj_is_list = auth["is_lists"]["sub"][reln_object]
             break
 
+    if reln_object in auth["sub_objects"]:
+        obj_props_tql = auth["sub_objects"][reln_object]
+    else:
+        raise ValueError("no sub-object available")
     roles = reln["roles"]
     list_of_objects = []
     for role in roles:
@@ -641,8 +642,8 @@ def make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_type=None):
                 sub_relns = p['relns']
                 for sub_reln in sub_relns:
                     # if the relation is embedded
-                    if sub_reln["T_name"] in embedded_relations:
-                        for inst in stix_models["embedded_relations_typeql"]:
+                    if sub_reln["T_name"] in auth["reln_name"]["embedded_relations"]:
+                        for inst in auth["reln"]["embedded_relations"]:
                             if inst["typeql"] == sub_reln["T_name"]:
                                 obj_reln_name = inst["typeql"]
                                 obj_owner = inst["owner"]

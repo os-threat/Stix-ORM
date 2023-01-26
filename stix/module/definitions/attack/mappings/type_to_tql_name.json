@@ -1,0 +1,50 @@
+[
+  {
+    "type":  "x-mitre-matrix",
+    "typeql": "matrix"
+  },
+  {
+    "type":  "x-mitre-tactic",
+    "typeql": "tactic"
+  },
+  {
+    "type":  "attack-pattern",
+    "typeql": "technique"
+  },
+  {
+    "type":  "relationship",
+    "typeql": "attack-relation"
+  },
+  {
+    "type":  "course-of-action",
+    "typeql": "mitigation"
+  },
+  {
+    "type":  "intrustion-set",
+    "typeql": "group"
+  },
+  {
+    "type":  "malware",
+    "typeql": "software-malware"
+  },
+  {
+    "type":  "tool",
+    "typeql": "software-tool"
+  },
+  {
+    "type":  "x-mitre-collection",
+    "typeql": "collection"
+  },
+  {
+    "type":  "x-mitre-data-source",
+    "typeql": "data-source"
+  },
+  {
+    "type":  "x-mitre-data-component",
+    "typeql": "data-component"
+  },
+  {
+    "type":  "campaign",
+    "typeql": "attack-campaign"
+  }
+]

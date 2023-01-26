@@ -1,0 +1,50 @@
+{
+  "attack": [
+    "x_mitre_contributors",
+    "x_mitre_domains"
+  ],
+  "matrix": [
+    "tactic_refs"
+  ],
+  "tactic": [],
+  "technique": [
+    "x_mitre_platforms",
+    "x_mitre_data_sources",
+    "x_mitre_system_requirements",
+    "x_mitre_tactic_type",
+    "x_mitre_permissions_required",
+    "x_mitre_effective_permissions",
+    "x_mitre_defense_bypassed",
+    "x_mitre_impact_type"
+  ],
+  "subtechnique": [
+    "x_mitre_platforms",
+    "x_mitre_data_sources",
+    "x_mitre_system_requirements",
+    "x_mitre_tactic_type",
+    "x_mitre_permissions_required",
+    "x_mitre_effective_permissions",
+    "x_mitre_defense_bypassed",
+    "x_mitre_impact_type"
+  ],
+  "mitigations": [],
+  "attack-group": [],
+  "software-malware": [
+    "x_mitre_platforms",
+    "x_mitre_aliases"
+  ],
+  "software-tool": [
+    "x_mitre_platforms",
+    "x_mitre_aliases"
+  ],
+  "data-source": [
+    "x_mitre_platforms",
+    "x_mitre_collection_layers"
+  ],
+  "data-component": [],
+  "collection": [
+    "object_marking_refs",
+    "x_mitre_contents"
+  ],
+  "attack-campiagn": []
+}

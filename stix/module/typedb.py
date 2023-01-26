@@ -109,18 +109,22 @@ class TypeDBSink(DataSink):
         # 1. Setup database
         setup_database(self._stix_connection, self.clear)
 
-        # 2. Load the Stix schema
+        # 2. Load the Schema's
+        # A. Load the Stix Schema
         schema_result = self.__load_stix_schema()
         handle_result(schema_result, "load schema result", self.strict_failure)
-        # 3. Check for Stix Rules
-        rules_result = self.__check_stix_rules()
-        handle_result(rules_result, "check stix rules result", self.strict_failure)
-        # 3. Load the Stix Markings,
-        markings_result = self.__load_stix_markings()
-        handle_result(markings_result, "load markings result", self.strict_failure)
-        # 3. Check for Stix Rules
-        cacao_result = self.__check_for_stix_rules_cacao()
-        handle_result(cacao_result, "check cacao result", self.strict_failure)
+        # B. Load Stix Rules Schema
+        rules_result = self.__load_stix_rules()
+        handle_result(rules_result, "load stix rules result", self.strict_failure)
+        # C. Load the Attack Schema
+        attack_result = self.__load_attack_schema()
+        handle_result(attack_result, "load attack result", self.strict_failure)
+        # D. Load the OS-Hunt Schema
+        markings_result = self.__load_stix_os_hunt()
+        handle_result(markings_result, "load os hunt result", self.strict_failure)
+
+        # 3. Load the Objects
+        # Still to do
 
     @safe
     def __validate_connect_to_db(self):
@@ -130,28 +134,28 @@ class TypeDBSink(DataSink):
         logger.debug("DB Connection Successful")
 
     @safe
-    def __check_for_stix_rules_cacao(self):
-        if self.clear and self.import_type["CACAO"]:
-            logger.debug("cacao")
-            load_schema(self._stix_connection, str(self.cti_schema_rules_path), "Stix 2.1 Rules")
-            logger.debug("moving past load schema")
-        else:
-            logger.debug("ignoring check stix rule for cacao")
-
-    @safe
-    def __load_stix_markings(self):
+    def __load_attack_schema(self):
         if self.clear and self.import_type["ATT&CK"]:
-            logger.debug("attack")
-            load_schema(self._stix_connection, str(self.cti_schema_path), "Stix 2.1 Schema ")
+            logger.debug("ATT&CK")
+            load_schema(self._stix_connection, str(self.cti_schema_attack), "ATT&CK Schema")
             logger.debug("moving past load schema")
         else:
-            logger.debug("ignoring load  stix markings")
+            logger.debug("ignoring load ATT&CK schema")
 
     @safe
-    def __check_stix_rules(self):
+    def __load_stix_os_hunt(self):
+        if self.clear and self.import_type["os-hunt"]:
+            logger.debug("attack")
+            load_schema(self._stix_connection, str(self.cti_schema_os_hunt), "os-hunt Schema ")
+            logger.debug("moving past load schema")
+        else:
+            logger.debug("ignoring load  os hunt")
+
+    @safe
+    def __load_stix_rules(self):
         if self.clear and self.import_type["rules"]:
             logger.debug("rules")
-            load_schema(self._stix_connection, str(self.cti_schema_rules_path), "Stix 2.1 Rules")
+            load_schema(self._stix_connection, str(self.cti_schema_stix_rules), "Stix 2.1 Rules")
             logger.debug("moving past load rules")
         else:
             logger.debug("ignoring check of stix rules")
@@ -159,7 +163,7 @@ class TypeDBSink(DataSink):
     @safe
     def __load_stix_schema(self):
         if self.clear:
-            load_schema(self._stix_connection, str(self.cti_schema_path), "Stix 2.1 Schema ")
+            load_schema(self._stix_connection, str(self.cti_schema_stix), "Stix 2.1 Schema ")
             self.loaded = load_markings(self._stix_connection)
             logger.debug("moving past load Stix schema")
         else:
@@ -167,14 +171,19 @@ class TypeDBSink(DataSink):
 
     @safe
     def __assign_schemas(self):
-        if self.schema_path is None:
-            self.schema_path = str(pathlib.Path.parent)
-
-        self.cti_schema_path = pathlib.Path(self.schema_path).joinpath("stix/schema/cti-schema-v2.tql")
-        assert self.cti_schema_path.is_file(), "The schema does not exist: " + str(self.cti_schema_path)
-
-        self.cti_schema_rules_path = pathlib.Path(self.schema_path).joinpath("stix/schema/cti-rules.tql")
-        assert self.cti_schema_rules_path.is_file(), "The schema does not exist: " + str(self.cti_schema_rules_path)
+        self.cti_schema_stix = "stix/schema/cti-schema-v2.tql"
+        self.cti_schema_stix_rules = "stix/schema/cti-rules.tql"
+        self.cti_schema_os_intel = "stix/schema/cti-os-intel.tql"
+        self.cti_schema_os_hunt = "stix/schema/cti-os-hunt.tql"
+        self.cti_schema_attack = "stix/schema/cti-attack.tql"
+        # if self.schema_path is None:
+        #     self.schema_path = str(pathlib.Path.parent)
+        #
+        # self.cti_schema_path = pathlib.Path(self.schema_path).joinpath("stix/schema/cti-schema-v2.tql")
+        # assert self.cti_schema_path.is_file(), "The schema does not exist: " + str(self.cti_schema_path)
+        #
+        # self.cti_schema_rules_path = pathlib.Path(self.schema_path).joinpath("stix/schema/cti-rules.tql")
+        # assert self.cti_schema_rules_path.is_file(), "The schema does not exist: " + str(self.cti_schema_rules_path)
 
     @safe
     def __assign_import_type(self):
@@ -382,6 +391,7 @@ class TypeDBSink(DataSink):
                           stix_dict):
         stix_obj = parse(stix_dict)
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
+        print(f'dep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
         dep_obj["dep_match"] = dep_match
         dep_obj["dep_insert"] = dep_insert
         dep_obj["indep_ql"] = indep_ql
@@ -397,14 +407,17 @@ class TypeDBSink(DataSink):
         cyclical = []
 
         instructions = Instructions()
+        print(f'===> obj list {obj_list}')
 
         for stix_dict in obj_list:
             add_result = self.__add_instruction(stix_dict)
+            print(f'\nadd result {add_result}')
             update_result = add_result.bind(lambda dep_obj: self.__update_add_layers(layers,
                                                                                      indexes,
                                                                                      missing,
                                                                                      dep_obj,
                                                                                      cyclical))
+            print(f'\nupdate result {update_result}')
             if is_successful(update_result):
                 layers, indexes, missing, cyclical = update_result.unwrap()
             else:
@@ -478,9 +491,13 @@ class TypeDBSink(DataSink):
             saved separately; you will be able to retrieve any of the objects
             the Bundle contained, but not the Bundle itself.
         """
+        print("1. starting in add")
         obj_result = self._gather_objects(stix_data)
+        print(f"2. gathered objects -> {obj_result}")
         step_1_instructions_result = obj_result.bind(lambda obj_list: self.__retrieve_add_instructions(obj_list))
+        print(f"3. step 1 -> {step_1_instructions_result}")
         step_2_instructions_result = step_1_instructions_result.bind(lambda result: self.__check_missing_data(result))
+        print(f"3. step 2 -> {step_2_instructions_result}")
 
         if not is_successful(step_2_instructions_result):
             raise Exception("failed to check missing dependencies")

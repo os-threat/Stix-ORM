@@ -1,0 +1,10 @@
+{
+  "relationship": [
+    "x_mitre_contributors",
+    "x_mitre_domains"
+  ],
+  "procedure": [
+    "x_mitre_contributors",
+    "x_mitre_domains"
+  ]
+}

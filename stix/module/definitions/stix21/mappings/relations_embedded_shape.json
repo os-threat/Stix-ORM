@@ -1,0 +1,79 @@
+{
+  "granular_markings": [
+      "granular_markings"
+  ],
+  "hashes": [
+      "hashes",
+      "file_header_hashes"
+  ],
+  "key_value_store": [
+      "additional_header_fields",
+      "document_info_dict",
+      "exif_tags",
+      "ipfix",
+      "request_header",
+      "options",
+      "environment_variables",
+      "startup_info"
+  ],
+  "list_of_object": [
+      "body_multipart",
+      "external_references",
+      "kill_chain_phases",
+      "sections",
+      "alternate_data_streams",
+      "values"
+  ],
+  "embedded_relation": [
+      "object_refs",
+      "created_by_ref",
+      "object_marking_refs",
+      "sample_refs",
+      "host_vm_ref",
+      "operating_system_ref",
+      "installed_software_refs",
+      "analysis_sco_refs",
+      "sample_ref",
+      "contains_refs",
+      "resolves_to_refs",
+      "belongs_to_ref",
+      "belongs_to_refs",
+      "raw_email_ref",
+      "from_ref",
+      "sender_ref",
+      "to_refs",
+      "cc_refs",
+      "bcc_refs",
+      "body_raw_ref",
+      "raw_email_ref",
+      "content_ref",
+      "parent_directory_ref",
+      "src_ref",
+      "dst_ref",
+      "src_payload_ref",
+      "dst_payload_ref",
+      "encapsulates_refs",
+      "encapsulated_by_ref",
+      "message_body_data_ref",
+      "opened_connection_refs",
+      "creator_user_ref",
+      "image_ref",
+      "parent_ref",
+      "child_refs",
+      "service_dll_refs"
+  ],
+  "load_object": [
+      "x509_v3_extensions",
+      "optional_header"
+  ],
+  "extensions": [
+      "extensions"
+  ],
+  "ignore": [
+      "sighting_of_ref",
+      "observed_data_refs" ,
+      "where_sighted_refs",
+      "source_ref",
+      "target_ref"
+  ]
+}

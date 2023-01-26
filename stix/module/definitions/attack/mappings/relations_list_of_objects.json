@@ -1,0 +1,9 @@
+[
+  {
+    "name": "x_mitre_contents",
+    "typeql": "x-mitre-content",
+    "owner": "collector",
+    "pointed_to": "collected",
+    "object": "object-version"
+  }
+]

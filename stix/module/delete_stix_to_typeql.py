@@ -9,6 +9,7 @@ from stix2.v21 import *
 from stix2.utils import is_object, is_stix_type, get_type_from_id, is_sdo, is_sco, is_sro
 from stix2.parsing import parse
 from stix.module.definitions.stix21 import stix_models
+from stix.module.authorise import authorised_mappings
 
 from stix.module.import_stix_to_typeql import sdo_to_data, sro_to_data, sco_to_data
 from stix.module.import_stix_utilities import split_on_activity_type, val_tql
@@ -30,21 +31,21 @@ def delete_stix_object(stix_object,
                        indep_ql: str,
                        core_ql: str,
                        import_type) -> [str, str]:
-    if is_sdo(stix_object):
-        total_props, obj_tql = sdo_to_data(stix_object, import_type)
+
+    auth = authorised_mappings(import_type)
+    if stix_object.type in auth.get("types_sdo"):
+        total_props, obj_tql, sdo_tql_name = sdo_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(indep_ql)
-        tql_name: str = stix_object.type
-        del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, tql_name)
-    elif is_sro(stix_object):
-        total_props, obj_tql = sro_to_data(stix_object, import_type)
+        del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sdo_tql_name)
+    elif stix_object.type in auth.get("types_sro"):
+        total_props, obj_tql, sro_tql_name = sro_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(dep_insert)
-        tql_name: str = get_tql_name(dep_insert)[0]
-        del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, tql_name)
-    elif is_sco(stix_object):
-        total_props, obj_tql = sco_to_data(stix_object, import_type)
+        del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sro_tql_name)
+    elif stix_object.type in auth.get("types_sco"):
+        total_props, obj_tql, sro_tql_name = sco_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(core_ql)
-        tql_name: str = stix_object.type
-        del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, tql_name)
+        # Need to change this line to suit scenarios where object name is not type name (e.g. future)
+        del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sro_tql_name)
     elif stix_object.type == 'marking-definition':
         del_match, del_tql = delete_marking(stix_object, dep_match, dep_insert, indep_ql, core_ql, import_type)
     else:
@@ -60,7 +61,8 @@ def delete_object(stix_object,
                   total_props,
                   obj_tql,
                   var_name: List[str],
-                  tql_name: str) -> [str, str]:
+                  tql_name: str,
+                  import_type) -> [str, str]:
     # 1.B) get the data model
     properties, relations = split_on_activity_type(total_props, obj_tql)
     # 2.0) MAtch in the object, the id and all attributes not owned by another object
@@ -71,7 +73,7 @@ def delete_object(stix_object,
     del_tql = 'delete \n'
     # 3.0) Now setup the match and delete statements for the local relations or  sub objects
     for i, reln in enumerate(relations):
-        del_match2, del_tql2 = delete_sub_reln(reln, stix_object, var_name[0], i)
+        del_match2, del_tql2 = delete_sub_reln(reln, stix_object, var_name[0], i, import_type)
         del_match += del_match2
         del_tql += del_tql2
 
@@ -125,7 +127,7 @@ def get_tql_name(dep_insert):
     return output
 
 
-def delete_sub_reln(rel, obj, obj_var, i):
+def delete_sub_reln(rel, obj, obj_var, i, import_type):
     """
         Top level function to delete one of the sub objects from the stix object
     Args:
@@ -137,6 +139,7 @@ def delete_sub_reln(rel, obj, obj_var, i):
         match: the typeql match string
         delete: the typeql delete string
     """
+    auth = authorised_mappings(import_type)
     if rel == "granular_markings":
         match, delete = del_granular_markings(obj_var)
 
@@ -146,72 +149,25 @@ def delete_sub_reln(rel, obj, obj_var, i):
         match, delete = del_hashes(rel, obj[rel], obj_var, i)
 
     # insert key value store
-    elif (rel == "additional_header_fields"
-          or rel == "document_info_dict"
-          or rel == "exif_tags"
-          or rel == "ipfix"
-          or rel == "request_header"
-          or rel == "options"
-          or rel == "environment_variables"
-          or rel == "startup_info"):
-        match, delete = del_key_value_store(rel, obj[rel], obj_var, i)
+    elif rel in auth["reln_name"]["key_value_relations"]:
+        match, delete = del_key_value_store(rel, obj[rel], obj_var, i, import_type)
 
     # insert list of object relation
-    elif (rel == "body_multipart"
-          or rel == "external_references"
-          or rel == "kill_chain_phases"
-          or rel == "sections"
-          or rel == "alternate_data_streams"
-          or rel == "values"):
-        match, delete = del_list_of_object(rel, obj[rel], obj_var, i)
+    elif rel in auth["reln_name"]["list_of_objects"]:
+        match, delete = del_list_of_object(rel, obj[rel], obj_var, i, import_type)
 
     # insert embedded relations based on stix-id
-    elif (rel == "object_refs"
-          or rel == "created_by_ref"
-          or rel == "object_marking_refs"
-          or rel == "sample_refs"
-          or rel == "host_vm_ref"
-          or rel == "operating_system_ref"
-          or rel == "installed_software_refs"
-          or rel == "analysis_sco_refs"
-          or rel == "sample_ref"
-          or rel == "contains_refs"
-          or rel == "resolves_to_refs"
-          or rel == "belongs_to_ref"
-          or rel == "belongs_to_refs"
-          or rel == "raw_email_ref"
-          or rel == "from_ref"
-          or rel == "sender_ref"
-          or rel == "to_refs"
-          or rel == "cc_refs"
-          or rel == "bcc_refs"
-          or rel == "body_raw_ref"
-          or rel == "raw_email_ref"
-          or rel == "content_ref"
-          or rel == "parent_directory_ref"
-          or rel == "src_ref"
-          or rel == "dst_ref"
-          or rel == "src_payload_ref"
-          or rel == "dst_payload_ref"
-          or rel == "encapsulates_refs"
-          or rel == "encapsulated_by_ref"
-          or rel == "message_body_data_ref"
-          or rel == "opened_connection_refs"
-          or rel == "creator_user_ref"
-          or rel == "image_ref"
-          or rel == "parent_ref"
-          or rel == "child_refs"
-          or rel == "service_dll_refs"):
-        match, delete = del_embedded_relation(rel, obj[rel], obj_var, i)
+    elif rel in auth["reln_name"]["embedded_relations"]:
+        match, delete = del_embedded_relation(rel, obj[rel], obj_var, i, import_type)
 
     # insert plain sub-object with relation
     elif (rel == "x509_v3_extensions"
           or rel == "optional_header"):
-        match, delete = del_load_object(rel, obj[rel], obj_var, i)
+        match, delete = del_load_object(rel, obj[rel], obj_var, i, import_type)
 
     # insert  SCO Extensions here, a possible dict of sub-objects
-    elif rel == "extensions":
-        match, delete = del_extensions(rel, obj[rel], obj_var, i)
+    elif rel in auth["reln_name"]["extension_relations"]:
+        match, delete = del_extensions(rel, obj[rel], obj_var, i, import_type)
 
     # ignore the following relations as they are already processed, for Relationships, Sightings and Extensions
     elif (rel == "sighting_of_ref"
@@ -244,8 +200,9 @@ def del_hashes(rel_name, rel_object, obj_var, i):
     return match, delete
 
 
-def del_key_value_store(rel_name, rel_object, obj_var, i):
-    for config in stix_models["key_value_typeql_list"]:
+def del_key_value_store(rel_name, rel_object, obj_var, i, import_type):
+    auth = authorised_mappings(import_type)
+    for config in auth["reln"]["relations_key_value"]:
         if config["name"] == rel_name:
             rel_typeql = config["typeql"]
             role_owner = config["owner"]
@@ -269,8 +226,9 @@ def del_key_value_store(rel_name, rel_object, obj_var, i):
     return match, delete
 
 
-def del_list_of_object(rel_name, prop_value_list, parent_var, i):
-    for config in stix_models["list_of_object_typeql"]:
+def del_list_of_object(rel_name, prop_value_list, parent_var, i, import_type):
+    auth = authorised_mappings(import_type)
+    for config in auth["reln"]["relations_list_of_objects"]:
         if config["name"] == rel_name:
             rel_typeql = config["typeql"]
             obj_props_tql = config["typeql_props"]
@@ -288,7 +246,7 @@ def del_list_of_object(rel_name, prop_value_list, parent_var, i):
             typeql_prop = obj_props_tql[key]
             if typeql_prop == '':
                 # split off for relation processing
-                match2, delete2 = delete_sub_reln(key, dict_instance, lod_var, i + j)
+                match2, delete2 = delete_sub_reln(key, dict_instance, lod_var, i + j, import_type)
                 # then add it back together
                 match = match + match2
                 delete = delete + "\n" + delete2 + "\n"
@@ -312,8 +270,9 @@ def del_list_of_object(rel_name, prop_value_list, parent_var, i):
     return match, delete
 
 
-def del_embedded_relation(rel_name, rel_object, obj_var, i):
-    for ex in stix_models["embedded_relations_typeql"]:
+def del_embedded_relation(rel_name, rel_object, obj_var, i, import_type):
+    auth = authorised_mappings(import_type)
+    for ex in auth["reln"]["relations_embedded"]:
       if ex["rel"] == rel_name:
         owner = ex["owner"]
         relation = ex["typeql"]
@@ -325,10 +284,11 @@ def del_embedded_relation(rel_name, rel_object, obj_var, i):
     return match, delete
 
 
-def del_load_object(prop_name, prop_dict, parent_var, i):
+def del_load_object(prop_name, prop_dict, parent_var, i, import_type):
     # as long as it is predefined, load the object
     #logger.debug('------------------- load object ------------------------------')
-    for prop_type in stix_models["ext_typeql_dict_list"]:
+    auth = authorised_mappings(import_type)
+    for prop_type in auth["reln"]["relations_extensions_and_objects"]:
         if prop_name == prop_type["stix"]:
             tot_prop_list = [tot for tot in prop_dict.keys()]
             obj_tql = prop_type["dict"]
@@ -369,13 +329,14 @@ def del_load_object(prop_name, prop_dict, parent_var, i):
     return match, delete
 
 
-def del_extensions(prop_name, prop_dict, parent_var, i):
+def del_extensions(prop_name, prop_dict, parent_var, i, import_type):
+    auth = authorised_mappings(import_type)
     match = ''
     delete = ''
     # for each key in the dict (extension type)
     # logger.debug('--------------------- extensions ----------------------------')
     for ext_type in prop_dict:
-        for ext_type_ql in stix_models["ext_typeql_dict_list"]:
+        for ext_type_ql in auth["reln"]["relations_extensions_and_objects"]:
             if ext_type == ext_type_ql["stix"]:
                 match2, delete2 = del_load_object(ext_type, prop_dict[ext_type], parent_var, i)
                 match = match + match2

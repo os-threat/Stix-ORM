@@ -1,0 +1,8 @@
+{
+  "type": "stix-type",
+  "id": "stix-id",
+  "spec_version": "spec-version",
+  "created": "created",
+  "name": "name",
+  "statement": "statement"
+}

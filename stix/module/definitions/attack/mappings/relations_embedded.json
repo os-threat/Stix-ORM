@@ -1,0 +1,20 @@
+[
+  {
+    "rel": "x_mitre_modified_by_ref",
+    "owner": "modified",
+    "pointed-to": "modified-by",
+    "typeql": "x-mitre-modified-by"
+  },
+  {
+    "rel": "x_mitre_data_source_ref",
+    "owner": "component",
+    "pointed-to": "data-source",
+    "typeql": "x-mitre-data-source"
+  },
+  {
+    "rel": "object_ref",
+    "owner": "container",
+    "pointed-to": "content",
+    "typeql": "obj-ref"
+  }
+]

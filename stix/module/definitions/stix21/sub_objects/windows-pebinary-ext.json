@@ -1,0 +1,14 @@
+{
+  "pe_type": "pe-type",
+  "imphash": "imphash",
+  "machine_hex": "machine-hex",
+  "number_of_sections": "number-of-sections",
+  "time_date_stamp": "time-date-stamp",
+  "pointer_to_symbol_table_hex": "pointer-to-symbol-table-hex",
+  "number_of_symbols": "number-of-symbols",
+  "size_of_optional_header": "size-of-optional-header",
+  "characteristics_hex": "characteristics-hex",
+  "file_header_hashes": "",
+  "optional_header": "",
+  "sections": ""
+}

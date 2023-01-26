@@ -28,6 +28,8 @@ connection = {
 
 import_type = {
     "STIX21": True,
+    "os-intel": False,
+    "os-hunt": False,
     "CVE": False,
     "identity": False,
     "location": False,
@@ -353,14 +355,14 @@ if __name__ == '__main__':
     #test_initialise()
     #load_file_list(path1, note_list)
     #load_file(mitre_data)
-    load_file(data_path + file7)
+    load_file(path1 + f1)
     #load_file(data_path + file7)
     print("=====")
     print("=====")
     print("=====")
     #query_id(test_id)
     #check_dir(path1)
-    check_dir(path1)
+    #check_dir(path1)
     #test_delete(path1+files10)
     #test_initialise()
     #test_delete_dir(path1)

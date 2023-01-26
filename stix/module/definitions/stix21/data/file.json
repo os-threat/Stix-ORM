@@ -1,0 +1,14 @@
+{
+  "hashes": "",
+  "size": "size",
+  "name": "name",
+  "name_enc": "name-enc",
+  "magic_number_hex": "magic-number-hex",
+  "mime_type": "mime-type",
+  "ctime": "ctime",
+  "dtime": "dtime",
+  "atime": "atime",
+  "parent_directory_ref": "",
+  "contains_refs": "",
+  "content_ref": ""
+}

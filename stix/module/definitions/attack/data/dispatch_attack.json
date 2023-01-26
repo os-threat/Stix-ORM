@@ -1,6 +1,11 @@
 {
   "x-mitre-matrix": {
+    "name": "name",
+    "description": "description",
     "tactic_refs": "tactic-refs"
+  },
+  "campaignn": {
+
   },
   "x-mitre-tactic": {
     "x_mitre_shortname": "x-mitre-shortname"
