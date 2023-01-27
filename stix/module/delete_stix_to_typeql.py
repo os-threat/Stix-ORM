@@ -202,7 +202,7 @@ def del_hashes(rel_name, rel_object, obj_var, i):
 
 def del_key_value_store(rel_name, rel_object, obj_var, i, import_type):
     auth = authorised_mappings(import_type)
-    for config in auth["reln"]["relations_key_value"]:
+    for config in auth["reln"]["key_value_relations"]:
         if config["name"] == rel_name:
             rel_typeql = config["typeql"]
             role_owner = config["owner"]
@@ -228,7 +228,7 @@ def del_key_value_store(rel_name, rel_object, obj_var, i, import_type):
 
 def del_list_of_object(rel_name, prop_value_list, parent_var, i, import_type):
     auth = authorised_mappings(import_type)
-    for config in auth["reln"]["relations_list_of_objects"]:
+    for config in auth["reln"]["list_of_objects"]:
         if config["name"] == rel_name:
             rel_typeql = config["typeql"]
             obj_props_tql = config["typeql_props"]
@@ -288,7 +288,7 @@ def del_load_object(prop_name, prop_dict, parent_var, i, import_type):
     # as long as it is predefined, load the object
     #logger.debug('------------------- load object ------------------------------')
     auth = authorised_mappings(import_type)
-    for prop_type in auth["reln"]["relations_extensions_and_objects"]:
+    for prop_type in auth["reln"]["extension_relations"]:
         if prop_name == prop_type["stix"]:
             tot_prop_list = [tot for tot in prop_dict.keys()]
             obj_tql = prop_type["dict"]
@@ -336,7 +336,7 @@ def del_extensions(prop_name, prop_dict, parent_var, i, import_type):
     # for each key in the dict (extension type)
     # logger.debug('--------------------- extensions ----------------------------')
     for ext_type in prop_dict:
-        for ext_type_ql in auth["reln"]["relations_extensions_and_objects"]:
+        for ext_type_ql in auth["reln"]["extension_relations"]:
             if ext_type == ext_type_ql["stix"]:
                 match2, delete2 = del_load_object(ext_type, prop_dict[ext_type], parent_var, i)
                 match = match + match2

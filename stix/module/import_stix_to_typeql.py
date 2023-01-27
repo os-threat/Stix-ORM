@@ -288,7 +288,7 @@ def sro_to_typeql(sro, import_type='STIX21'):
         target_var, target_match = get_embedded_match(target_id)
         dep_match += source_match + target_match
         # 3.)  then setup the typeql statement to insert the specific sro relation, from the dict, with the matches
-        for record in auth["reln"]["relations_sro_roles"]:
+        for record in auth["reln"]["standard_relations"]:
             if record['stix'] == sro["relationship_type"]:
                 dep_insert += '\n' + sro_var
                 dep_insert += ' (' + record['source'] + ':' + source_var

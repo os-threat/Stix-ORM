@@ -194,13 +194,13 @@ def test_delete(path):
     local_list = get_stix_ids()
     typedb.delete(local_list)
 
-
-def check_dir(dirpath):
+def check_dir_ids(dirpath):
     """ Open a directory and load all the files, optionally printing them
 
     Args:
         dirpath ():
     """
+    id_list = []
     dirFiles = os.listdir(dirpath)
     sorted_files = sorted(dirFiles)
     print(sorted_files)
@@ -214,6 +214,46 @@ def check_dir(dirpath):
             print(f'==================== {s_file} ===================================')
             print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
+                json_text = json.load(f)
+                for element in json_text:
+                    print(f'**********==={element}')
+                    temp_id = element.get('id', False)
+                    if temp_id:
+                        id_list.append(temp_id)
+                typedb_sink.add(json_text)
+    id_set = set(id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> {id_diff}')
+
+
+def check_dir(dirpath):
+    """ Open a directory and load all the files, optionally printing them
+
+    Args:
+        dirpath ():
+    """
+    id_list = []
+    dirFiles = os.listdir(dirpath)
+    sorted_files = sorted(dirFiles)
+    print(sorted_files)
+    typedb_sink = TypeDBSink(connection, True, import_type)
+    typedb_source = TypeDBSource(connection, import_type)
+    for s_file in sorted_files:
+        if os.path.isdir(os.path.join(dirpath, s_file)):
+            continue
+        else:
+            print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            print(f'==================== {s_file} ===================================')
+            print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
+                for element in f:
+                    temp_id = element.get('id', False)
+                    if temp_id:
+                        id_list.append(temp_id)
                 json_text = json.load(f)
                 typedb_sink.add(json_text)
 
@@ -301,6 +341,7 @@ if __name__ == '__main__':
     f24 = 'file_pdf_basic.json'
     f25 = 'grouping.json'
     f26 = 'note.json'
+    f27 = 'process_ext_win_service.json'
     file_list = [f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,f21,f22,f23,f24,f25]
     group_list = [f2, f3, f21, f25]
     note_list = [f2, f8, f26]
@@ -353,15 +394,15 @@ if __name__ == '__main__':
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
     #test_initialise()
-    #load_file_list(path1, note_list)
+    #load_file_list(path1, group_list)
     #load_file(mitre_data)
-    #load_file(path1 + f4)
+    #load_file(path1 + f22)
     #load_file(data_path + file7)
     print("=====")
     print("=====")
     print("=====")
     #query_id(test_id)
-    check_dir(path1)
+    check_dir_ids(path1)
     #check_dir(path1)
     #test_delete(path1+files10)
     #test_initialise()

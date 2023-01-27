@@ -357,7 +357,7 @@ def get_list_of_objects(r, r_tx, import_type):
         if reln_name == lot["typeql"]:
             reln_pointed_to = lot["pointed_to"]
             reln_object = lot["object"]
-            reln_object_props = lot["typeql_props"]
+            reln_object_props = auth["sub_objects"][reln_object]
             reln_stix = lot["name"]
 
     stix_id = r_tx.concepts().get_attribute_type("stix-id")
