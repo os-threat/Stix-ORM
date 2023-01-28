@@ -7,8 +7,6 @@ from stix2 import (v21, parse)
 from stix.module.import_stix_to_typeql import raw_stix2_to_typeql, stix2_to_match_insert
 from stix.module.delete_stix_to_typeql import delete_stix_object, add_delete_layers
 
-
-
 import logging
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
