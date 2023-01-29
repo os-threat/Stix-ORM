@@ -10,11 +10,13 @@ import glob
 from hamcrest import *
 import logging
 
+from test.dbconfig import *
+
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 
 from stix2 import (v21, parse)
-from dbconfig import *
+
 
 import re
 s = "Example String"

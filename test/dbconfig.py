@@ -1,7 +1,9 @@
 # define the database data and import details
+import os
+
 connection = {
-    "uri": "20.224.56.132",
-    "port": "1729",
+    "uri": os.getenv("TYPEDB_HOST"),
+    "port": os.getenv("TYPEDB_PORT"),
     "database": "stix2",
     "user": None,
     "password": None
