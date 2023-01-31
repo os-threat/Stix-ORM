@@ -58,9 +58,10 @@ def authorised_mappings(import_type=None):
         auth["reln"]["key_value_relations"] = stix_models["mappings"]["relations_key_value"]
         auth["reln"]["extension_relations"] = stix_models["mappings"]["relations_extensions_and_objects"]
         auth["reln"]["relations_sro_roles"] = stix_models["mappings"]["relations_sro_roles"]
-        auth["tql_types"]["sdo"] = stix_models["mappings"]["types_sdo"]
-        auth["tql_types"]["sro"] = stix_models["mappings"]["types_sro"]
-        auth["tql_types"]["sco"] = stix_models["mappings"]["types_sco"]
+        auth["tql_types"]["sdo"] = [x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sdo"]
+        auth["tql_types"]["sro"] = [x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sro"]
+        auth["tql_types"]["sco"] = [x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sco"]
+        auth["tql_types"]["sub"] = [x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sub"]
         auth["tql_types"]["meta"] = stix_models["mappings"]["types_meta"]
         auth["is_lists"]["sdo"] = stix_models["mappings"]["is_list_sdo"]
         auth["is_lists"]["sro"] = stix_models["mappings"]["is_list_sro"]
@@ -82,9 +83,10 @@ def authorised_mappings(import_type=None):
         auth["reln"]["key_value_relations"].extend(attack_models["mappings"]["relations_key_value"])
         auth["reln"]["extension_relations"].extend(attack_models["mappings"]["relations_extensions_and_objects"])
         auth["reln"]["relations_sro_roles"].extend(attack_models["mappings"]["relations_sro_roles"])
-        auth["tql_types"]["sdo"].extend(attack_models["mappings"]["types_sdo"])
-        auth["tql_types"]["sro"].extend(attack_models["mappings"]["types_sro"])
-        auth["tql_types"]["sco"].extend(attack_models["mappings"]["types_sco"])
+        auth["tql_types"]["sdo"].extend([x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sdo"])
+        auth["tql_types"]["sro"].extend([x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sro"])
+        auth["tql_types"]["sco"].extend([x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sco"])
+        auth["tql_types"]["sub"].extend([x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sub"])
         auth["tql_types"]["meta"].extend(attack_models["mappings"]["types_meta"])
         auth["is_lists"]["sdo"].update(attack_models["mappings"]["is_list_sdo"])
         auth["is_lists"]["sro"].update(attack_models["mappings"]["is_list_sro"])

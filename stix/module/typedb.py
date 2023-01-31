@@ -171,11 +171,11 @@ class TypeDBSink(DataSink):
 
     @safe
     def __assign_schemas(self):
-        self.cti_schema_stix = "stix/schema/cti-schema-v2.tql"
-        self.cti_schema_stix_rules = "stix/schema/cti-rules.tql"
-        self.cti_schema_os_intel = "stix/schema/cti-os-intel.tql"
-        self.cti_schema_os_hunt = "stix/schema/cti-os-hunt.tql"
-        self.cti_schema_attack = "stix/schema/cti-attack.tql"
+        self.cti_schema_stix = "stix/module/definitions/stix21/schema/cti-schema-v2.tql"
+        self.cti_schema_stix_rules = "stix/module/definitions/stix21/schema/cti-rules.tql"
+        self.cti_schema_os_intel = "stix/module/definitions/os_threat/schema/cti-os-intel.tql"
+        self.cti_schema_os_hunt = "stix/module/definitions/os_threat/schema/cti-os-hunt.tql"
+        self.cti_schema_attack = "stix/module/definitions/attack/schema/cti-attack.tql"
         # if self.schema_path is None:
         #     self.schema_path = str(pathlib.Path.parent)
         #

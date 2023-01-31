@@ -1,0 +1,86 @@
+[
+  {
+    "type":  "x-mitre-matrix",
+    "typeql": "matrix",
+    "class": "Matrix",
+    "object": "sdo"
+  },
+  {
+    "type":  "x-mitre-tactic",
+    "typeql": "tactic",
+    "class": "Tactic",
+    "object": "sdo"
+  },
+  {
+    "type":  "attack-pattern",
+    "typeql": "technique",
+    "class": "Technique",
+    "object": "sdo"
+  },
+  {
+    "type":  "attack-pattern",
+    "typeql": "sub-technique",
+    "class": "SubTechnique",
+    "object": "sdo"
+  },
+  {
+    "type":  "relationship",
+    "typeql": "attack-relation",
+    "class": "AttackRelation",
+    "object": "sro"
+  },
+  {
+    "type":  "course-of-action",
+    "typeql": "mitigation",
+    "class": "Mitigation",
+    "object": "sdo"
+  },
+  {
+    "type":  "intrustion-set",
+    "typeql": "group",
+    "class": "Group",
+    "object": "sdo"
+  },
+  {
+    "type":  "malware",
+    "typeql": "software-malware",
+    "class": "SoftwareMalware",
+    "object": "sdo"
+  },
+  {
+    "type":  "tool",
+    "typeql": "software-tool",
+    "class": "SoftwareTool",
+    "object": "sdo"
+  },
+  {
+    "type":  "x-mitre-collection",
+    "typeql": "collection",
+    "class": "Collection",
+    "object": "sdo"
+  },
+  {
+    "type":  "x-mitre-data-source",
+    "typeql": "data-source",
+    "class": "DataSource",
+    "object": "sdo"
+  },
+  {
+    "type":  "x-mitre-data-component",
+    "typeql": "data-component",
+    "class": "DataComponent",
+    "object": "sdo"
+  },
+  {
+    "type":  "campaign",
+    "typeql": "attack-campaign",
+    "class": "AttackCampaign",
+    "object": "sdo"
+  },
+  {
+    "type":  "object-version-ref",
+    "typeql": "object-version",
+    "class": "ObjectVersion",
+    "object": "sub"
+  }
+]

@@ -239,7 +239,7 @@ def make_sco(res, import_type):
     props = res["has"]
     relns = res["relns"]
 
-    is_list = auth["is_lists"]["sco"]["sco"] + stix_models["sco_is_list"][obj_type]
+    is_list = auth["is_lists"]["sco"]["sco"] + auth["is_lists"]["sco"][obj_type]
     # 3.A) add the properties onto the the object
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
     # 3.B) add the relations onto the object
@@ -533,7 +533,7 @@ def make_object(reln, reln_name, stix_dict, is_list, obj_type=None, import_type=
             role_owner = ext_obj["owner"]
             ext_object = ext_obj["object"]
             stix_ext_name = ext_obj["stix"]
-            obj_is_list = stix_models["object_is_list"][ext_object]
+            obj_is_list =auth["is_lists"]["sub"][ext_object]
             break
 
     if ext_object in auth["sub_objects"]:
@@ -572,7 +572,7 @@ def make_object(reln, reln_name, stix_dict, is_list, obj_type=None, import_type=
                 # now look to see if there are relations
                 obj_relns = [k for k, v in obj_props_tql.items() if v == ""]
                 sub_relns = p['relns']
-                obj_tql = stix_models["dispatch_stix"][ext_object]
+                obj_tql = auth["sub_objects"][ext_object]
                 new_dict = {}
                 new_dict = make_relations(sub_relns, obj_tql, new_dict, is_list, ext_object)
                 for k, v in new_dict.items():

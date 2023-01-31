@@ -74,7 +74,7 @@ def sdo_type_to_tql(sdo_type, import_type=None, attack_object=False, subtechniqu
             attack_type = ''
             obj_tql = attack_models["base"][sdo_type]
             # Convert from stix-type to attack-tql-entity
-            for model in attack_models["mappings"]["type_to_tql_name"]:
+            for model in attack_models["mappings"]["object_conversion"]:
                 if model["type"] == sdo_type:
                     attack_type = model["typeql"]
                     if attack_type == "technique":

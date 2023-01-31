@@ -1,0 +1,351 @@
+[
+  {
+    "type":  "attack-pattern",
+    "typeql": "attack-pattern",
+    "class": "AttackPattern",
+    "object": "sdo"
+  },
+  {
+    "type":  "campaign",
+    "typeql": "campaign",
+    "class": "Campaign",
+    "object": "sdo"
+  },
+  {
+    "type":  "course-of-action",
+    "typeql": "course-of-action'",
+    "class": "CourseOfAction",
+    "object": "sdo"
+  },
+  {
+    "type":  "grouping",
+    "typeql": "grouping",
+    "class": "Grouping",
+    "object": "sdo"
+  },
+  {
+    "type":  "identity",
+    "typeql": "identity",
+    "class": "Identity",
+    "object": "sdo"
+  },
+  {
+    "type":  "incident",
+    "typeql": "incident",
+    "class": "Incident",
+    "object": "sdo"
+  },
+  {
+    "type":  "indicator",
+    "typeql": "indicator",
+    "class": "Indicator",
+    "object": "sdo"
+  },
+  {
+    "type":  "infrastructure",
+    "typeql": "infrastructure",
+    "class": "Infrastructure",
+    "object": "sdo"
+  },
+  {
+    "type":  "intrusion-set",
+    "typeql": "intrusion-set",
+    "class": "IntrusionSet",
+    "object": "sdo"
+  },
+  {
+    "type":  "location",
+    "typeql": "location",
+    "class": "Location",
+    "object": "sdo"
+  },
+  {
+    "type":  "malware",
+    "typeql": "malware",
+    "class": "Malware",
+    "object": "sdo"
+  },
+  {
+    "type":  "malware-analysis",
+    "typeql": "malware-analysis",
+    "class": "MalwareAnalysis",
+    "object": "sdo"
+  },
+  {
+    "type":  "note",
+    "typeql": "note",
+    "class": "Note",
+    "object": "sdo"
+  },
+  {
+    "type":  "observed-data",
+    "typeql": "observed-data",
+    "class": "ObservedData",
+    "object": "sdo"
+  },
+  {
+    "type":  "opinion",
+    "typeql": "opinion",
+    "class": "Opinion",
+    "object": "sdo"
+  },
+  {
+    "type":  "report",
+    "typeql": "report",
+    "class": "Report",
+    "object": "sdo"
+  },
+  {
+    "type":  "threat-actor",
+    "typeql": "threat-actor",
+    "class": "ThreatActor",
+    "object": "sdo"
+  },
+  {
+    "type":  "tool",
+    "typeql": "tool",
+    "class": "Tool",
+    "object": "sdo"
+  },
+  {
+    "type":  "vulnerability",
+    "typeql": "vulnerability",
+    "class": "Vulnerability",
+    "object": "sdo"
+  },
+  {
+    "type":  "artifact",
+    "typeql": "artifact",
+    "class": "Artifact",
+    "object": "sco"
+  },
+  {
+    "type":  "autonomous-system",
+    "typeql": "autonomous-system",
+    "class": "AutonomousSystem",
+    "object": "sco"
+  },
+  {
+    "type":  "directory",
+    "typeql": "directory",
+    "class": "Directory",
+    "object": "sco"
+  },
+  {
+    "type":  "domain-name",
+    "typeql": "domain-name",
+    "class": "DomainName",
+    "object": "sco"
+  },
+  {
+    "type":  "email-addr",
+    "typeql": "email-addr",
+    "class": "EmailAddress",
+    "object": "sco"
+  },
+  {
+    "type":  "email-message",
+    "typeql": "email-message",
+    "class": "EmailMessage",
+    "object": "sco"
+  },
+  {
+    "type":  "file",
+    "typeql": "file",
+    "class": "File",
+    "object": "sco"
+  },
+  {
+    "type":  "ipv4-addr",
+    "typeql": "ipv4-addr",
+    "class": "IPv4Address",
+    "object": "sco"
+  },
+  {
+    "type":  "ipv6-addr",
+    "typeql": "ipv6-addr",
+    "class": "IPv6Address",
+    "object": "sco"
+  },
+  {
+    "type":  "mac-addr",
+    "typeql": "mac-addr",
+    "class": "MACAddress",
+    "object": "sco"
+  },
+  {
+    "type":  "mutex",
+    "typeql": "mutex",
+    "class": "Mutex",
+    "object": "sco"
+  },
+  {
+    "type":  "network-traffic",
+    "typeql": "network-traffic",
+    "class": "NetworkTraffic",
+    "object": "sco"
+  },
+  {
+    "type":  "process",
+    "typeql": "process",
+    "class": "Process",
+    "object": "sco"
+  },
+  {
+    "type":  "software",
+    "typeql": "software",
+    "class": "Software",
+    "object": "sco"
+  },
+  {
+    "type":  "url",
+    "typeql": "url",
+    "class": "URL",
+    "object": "sco"
+  },
+  {
+    "type":  "user-account",
+    "typeql": "user-account",
+    "class": "UserAccount",
+    "object": "sco"
+  },
+  {
+    "type":  "windows-registry-key",
+    "typeql": "windows-registry-key",
+    "class": "WindowsRegistryKey",
+    "object": "sco"
+  },
+  {
+    "type":  "x509-certificate",
+    "typeql": "x509-certificate",
+    "class": "X509Certificate",
+    "object": "sco"
+  },
+  {
+    "type":  "alternate-data-stream",
+    "typeql": "alternate-data-stream",
+    "class": "",
+    "object": "sub"
+  },
+  {
+    "type":  "archive-ext",
+    "typeql": "archive-ext",
+    "class": "ArchiveExt",
+    "object": "sub"
+  },
+  {
+    "type":  "email-mime-part",
+    "typeql": "email-mime-part",
+    "class": "",
+    "object": "suo"
+  },
+  {
+    "type":  "external-reference",
+    "typeql": "external-reference",
+    "class": "",
+    "object": "sub"
+  },
+  {
+    "type":  "hash_typeql_dict",
+    "typeql": "hash_typeql_dict",
+    "class": "",
+    "object": "sub"
+  },
+  {
+    "type":  "http-request-ext",
+    "typeql": "http-request-ext",
+    "class": "HTTPRequestExt",
+    "object": "sub"
+  },
+  {
+    "type":  "icmp-ext",
+    "typeql": "icmp-ext",
+    "class": "ICMPExt",
+    "object": "sub"
+  },
+  {
+    "type":  "kill-chain-phase",
+    "typeql": "kill-chain-phase",
+    "class": "",
+    "object": "sub"
+  },
+  {
+    "type":  "ntfs-ext",
+    "typeql": "ntfs-ext",
+    "class": "NTFSExt",
+    "object": "sub"
+  },
+  {
+    "type":  "pdf-ext",
+    "typeql": "pdf-ext",
+    "class": "PDFExt",
+    "object": "sub"
+  },
+  {
+    "type":  "raster-image-ext",
+    "typeql": "raster-image-ext",
+    "class": "RasterImageExt",
+    "object": "sub"
+  },
+  {
+    "type":  "socket-ext",
+    "typeql": "socket-ext",
+    "class": "SocketExt",
+    "object": "sub"
+  },
+  {
+    "type":  "tcp-ext",
+    "typeql": "tcp-ext",
+    "class": "TCPExt",
+    "object": "sub"
+  },
+  {
+    "type":  "unix-account-ext",
+    "typeql": "unix-account-ext",
+    "class": "UNIXAccountExt",
+    "object": "sub"
+  },
+  {
+    "type":  "windows-pe-optional-header-type",
+    "typeql": "windows-pe-optional-header-type",
+    "class": "",
+    "object": "sub"
+  },
+  {
+    "type":  "windows-pe-section",
+    "typeql": "windows-pe-section",
+    "class": "",
+    "object": "sub"
+  },
+  {
+    "type":  "windows-pebinary-ext",
+    "typeql": "windows-pebinary-ext",
+    "class": "WindowsPEBinaryExt",
+    "object": "sub"
+  },
+  {
+    "type":  "windows-process-ext",
+    "typeql": "windows-process-ext",
+    "class": "WindowsProcessExt",
+    "object": "sub"
+  },
+  {
+    "type":  "windows-registry-value-type",
+    "typeql": "windows-registry-value-type",
+    "class": "",
+    "object": "sub"
+  },
+  {
+    "type":  "windows-service-ext",
+    "typeql": "windows-service-ext",
+    "class": "WindowsServiceExt",
+    "object": "sub"
+  },
+  {
+    "type":  "x509-v3-extension",
+    "typeql": "x509-v3-extension",
+    "class": "X509V3ExtensionsType",
+    "object": "sub"
+  }
+]
+

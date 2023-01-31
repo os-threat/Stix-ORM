@@ -104,7 +104,7 @@ def variables_standard_data_file_paths_missing() -> List[str]:
 
     standard_data_file_list = [
         "aaa_indicator.json",
-        "campaign.json",
+        "attack-campaign.json",
         "course_action.json",
         'grouping.json'
     ]
@@ -163,7 +163,7 @@ def variables_standard_data_file_paths() -> List[str]:
         "artifact_basic.json",
         "artifact_encrypted.json",
         "autonomous.json",
-        "campaign.json",
+        "attack-campaign.json",
         "course_action.json",
         "directory.json",
         "domain.json",

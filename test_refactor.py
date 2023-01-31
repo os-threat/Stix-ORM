@@ -320,7 +320,7 @@ if __name__ == '__main__':
     f5 = "artifact_basic.json"
     f6 = "artifact_encrypted.json"
     f7 = "autonomous.json"
-    f8 = "campaign.json"
+    f8 = "attack-campaign.json"
     f9 = "course_action.json"
     f10 = "directory.json"
     f11 = "domain.json"
