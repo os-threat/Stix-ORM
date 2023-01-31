@@ -7,7 +7,7 @@ from typedb.client import *
 
 import logging
 
-from stix.module.typedb_instructions import ResultStatus
+from stix.module.typedb.instructions import ResultStatus
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)

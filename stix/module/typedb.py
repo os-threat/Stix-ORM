@@ -1,12 +1,7 @@
 """Python STIX2 TypeDB Source/Sink"""
-import pathlib
 from dataclasses import dataclass
-from enum import Enum
-from typing import List
 
-from pydantic import BaseModel
 from returns._internal.pipeline.pipe import pipe
-from returns.io import impure_safe
 from returns.methods import unwrap_or_failure
 from returns.pipeline import is_successful
 from returns.pointfree import bind
@@ -29,14 +24,14 @@ from stix2.parsing import parse
 
 import logging
 
-from .type_db_handlers import handle_result, handle_missing_values
-from .type_db_logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers, \
-    log_add_instruction_update_layer, log_insert_query
-from .type_db_queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query, \
+from stix.module.typedb.handlers import handle_result
+from stix.module.typedb.logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers, \
+    log_add_instruction_update_layer
+from stix.module.typedb.queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query, \
     add_layers_to_typedb, \
     build_insert_query, query_id
-from stix.module.type_db_file import write_to_file
-from .typedb_instructions import Instructions
+from stix.module.typedb.file import write_to_file
+from stix.module.typedb.instructions import Instructions
 
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 

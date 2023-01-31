@@ -10,8 +10,8 @@ from typedb.api.connection.session import SessionType, TypeDBSession
 from typedb.api.connection.transaction import TransactionType
 from typedb.client import TypeDB
 
-from stix.module.type_db_logging import log_delete_layer, log_add_layer
-from stix.module.typedb_instructions import Instructions
+from stix.module.typedb.logging import log_delete_layer, log_add_layer
+from stix.module.typedb.instructions import Instructions
 
 logger = logging.getLogger(__name__)
 
