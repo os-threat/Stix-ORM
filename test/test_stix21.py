@@ -3,17 +3,14 @@ import unittest
 import json
 import os
 from stix.module.typedb import TypeDBSink, TypeDBSource
-from stix.module.import_stix_to_typeql import stix2_to_typeql
-from typedb.client import *
 import itertools as it
 import glob
-from hamcrest import *
 import logging
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 
-from stix2 import (v21, parse)
+from stix2 import (parse)
 from dbconfig import *
 
 import re

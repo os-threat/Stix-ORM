@@ -9,10 +9,10 @@ from returns.result import safe, Result, Failure, Success
 from returns.unsafe import unsafe_perform_io
 from typedb.client import *
 
-from .import_stix_to_typeql import raw_stix2_to_typeql
-from .delete_stix_to_typeql import delete_stix_object, add_delete_layers
-from .import_stix_utilities import get_embedded_match
-from .export_intermediate_to_stix import convert_ans_to_stix
+from stix.module.orm.import_stix_to_typeql import raw_stix2_to_typeql
+from stix.module.orm.delete_stix_to_typeql import delete_stix_object, add_delete_layers
+from stix.module.orm.import_stix_utilities import get_embedded_match
+from stix.module.orm.export_intermediate_to_stix import convert_ans_to_stix
 from .initialise import setup_database, load_schema, sort_layers, load_markings
 
 from stix2 import v21

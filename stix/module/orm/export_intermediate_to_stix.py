@@ -1,11 +1,7 @@
 import json
-import datetime
-from stix.module.definitions.stix21 import stix_models
-from stix.module.definitions.attack import attack_models
-from stix.module.definitions.os_threat import os_threat_models
 from stix.module.authorise import authorised_mappings
-from stix.module.decisions_type_to_typeql import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
-from stix.module.export_typeql_to_intermediate import convert_ans_to_res
+from stix.module.orm.decisions_type_to_typeql import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
+from stix.module.orm.export_typeql_to_intermediate import convert_ans_to_res
 import logging
 logger = logging.getLogger(__name__)
 

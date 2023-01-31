@@ -1,11 +1,10 @@
 import json
 import os
 from stix.module.typedb import TypeDBSink, TypeDBSource
-from stix.module.import_stix_to_typeql import stix2_to_typeql
 from typedb.client import *
-from stix2 import (v21, parse)
-from stix.module.import_stix_to_typeql import raw_stix2_to_typeql, stix2_to_match_insert
-from stix.module.delete_stix_to_typeql import delete_stix_object, add_delete_layers
+from stix2 import (parse)
+from stix.module.orm.import_stix_to_typeql import raw_stix2_to_typeql
+from stix.module.orm.delete_stix_to_typeql import delete_stix_object
 
 import logging
 

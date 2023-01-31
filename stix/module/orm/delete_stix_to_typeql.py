@@ -1,18 +1,10 @@
-import json
-import types
-import datetime
 import re
 from typing import List
 
-from stix2 import *
-from stix2.v21 import *
-from stix2.utils import is_object, is_stix_type, get_type_from_id, is_sdo, is_sco, is_sro
-from stix2.parsing import parse
-from stix.module.definitions.stix21 import stix_models
 from stix.module.authorise import authorised_mappings
 
-from stix.module.import_stix_to_typeql import sdo_to_data, sro_to_data, sco_to_data
-from stix.module.import_stix_utilities import split_on_activity_type, val_tql
+from stix.module.orm.import_stix_to_typeql import sdo_to_data, sro_to_data, sco_to_data
+from stix.module.orm.import_stix_utilities import split_on_activity_type, val_tql
 
 import logging
 logger = logging.getLogger(__name__)
