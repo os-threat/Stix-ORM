@@ -18,7 +18,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Note: Large portions of this schema were defined by Tomas Sabat, Vaticle, 2021
+# Note: Large portions of this schema were originally defined by Tomas Sabat, Vaticle, 2021
 #
 
 define
@@ -346,8 +346,9 @@ intrusion-set sub stix-domain-object,
 	plays hosts:hosting,
 	plays ownership:owning,
 	plays originates-from:originating,
-	plays targets:targetter, 
+	plays targets:targetter,
 	plays uses:used-by,
+	plays uses:used,
 
 	# Reverse Relations
 	plays attributed-to:fault-of, 

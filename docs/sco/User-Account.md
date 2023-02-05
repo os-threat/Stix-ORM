@@ -18,19 +18,19 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 | defanged |defanged |      Optional       |stix-attribute-boolean |   attribute    |
 |  extensions           |               n/a                 |        n/a          |           n/a             |      n/a       |
 | user_id |user-id |      Optional       |  stix-attribute-string    |   attribute    |
-|  credential |credential |      Optional       |  stix-attribute-string    |   attribute    |
-|  account_login |account-login |      Optional       |  stix-attribute-string    |   attribute    |
-|  account_type |account-type |      Optional       |  stix-attribute-string    |   attribute    |
-|  display_name |display-name |      Optional       |  stix-attribute-string    |   attribute    |
-|  is_service_account |is-service-account |      Optional       |  stix-attribute-boolean    |   attribute    |
-|  is_privileged |is-privileged |      Optional       |  stix-attribute-boolean    |   attribute    |
-|  can_escalate_privs |can-escalate-privs |      Optional       |  stix-attribute-boolean    |   attribute    |
-|  is_disabled |is-disabled |      Optional       |  stix-attribute-boolean    |   attribute    |
-|  account_created |account-created |      Optional       |  stix-attribute-timestamp    |   attribute    |
-|  account_expires |account-expires |      Optional       |  stix-attribute-timestamp    |   attribute    |
-|  credential_last_changed |credential-last-changed |      Optional       |  stix-attribute-timestamp    |   attribute    |
-|  account_first_login |account-first-login |      Optional       |  stix-attribute-timestamp    |   attribute    |
-|  account_last_login |account-last-login |      Optional       |  stix-attribute-timestamp    |   attribute    |
+| ï¿½credential |credential |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½account_login |account-login |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½account_type |account-type |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½display_name |display-name |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½is_service_account |is-service-account |      Optional       |  stix-attribute-boolean    |   attribute    |
+| ï¿½is_privileged |is-privileged |      Optional       |  stix-attribute-boolean    |   attribute    |
+| ï¿½can_escalate_privs |can-escalate-privs |      Optional       |  stix-attribute-boolean    |   attribute    |
+| ï¿½is_disabled |is-disabled |      Optional       |  stix-attribute-boolean    |   attribute    |
+| ï¿½account_created |account-created |      Optional       |  stix-attribute-timestamp    |   attribute    |
+| ï¿½account_expires |account-expires |      Optional       |  stix-attribute-timestamp    |   attribute    |
+| ï¿½credential_last_changed |credential-last-changed |      Optional       |  stix-attribute-timestamp    |   attribute    |
+| ï¿½account_first_login |account-first-login |      Optional       |  stix-attribute-timestamp    |   attribute    |
+| ï¿½account_last_login |account-last-login |      Optional       |  stix-attribute-timestamp    |   attribute    |
 
 ## The Example User-Account in JSON
 The original JSON, accessible in the Python environment
@@ -87,7 +87,8 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stix.module.typedb_lib import TypeDBSink, TypeDBSource
+
 connection = {
     "uri": "localhost",
     "port": "1729",

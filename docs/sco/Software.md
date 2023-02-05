@@ -18,11 +18,11 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 | defanged |defanged |      Optional       |stix-attribute-boolean |   attribute    |
 |  extensions           |               n/a                 |        n/a          |           n/a             |      n/a       |
 | name |name |      Optional       |  stix-attribute-string    |   attribute    |
-|  cpe |cpe |      Optional       |  stix-attribute-string    |   attribute    |
-|  swid |swid |      Optional       |  stix-attribute-string    |   attribute    |
-|  languages |language |      Optional       |  stix-attribute-string    |   attribute    |
-|  vendor |vendor |      Optional       |  stix-attribute-string    |   attribute    |
-|  version |version; |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½cpe |cpe |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½swid |swid |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½languages |language |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½vendor |vendor |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½version |version; |      Optional       |  stix-attribute-string    |   attribute    |
 
 ## The Example Software in JSON
 The original JSON, accessible in the Python environment
@@ -79,7 +79,8 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stix.module.typedb_lib import TypeDBSink, TypeDBSource
+
 connection = {
     "uri": "localhost",
     "port": "1729",

@@ -1,7 +1,7 @@
 import json
 from stix.module.authorise import authorised_mappings
-from stix.module.orm.decisions_type_to_typeql import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
-from stix.module.orm.export_typeql_to_intermediate import convert_ans_to_res
+from stix.module.orm.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
+from stix.module.orm.export_utilities import convert_ans_to_res
 import logging
 logger = logging.getLogger(__name__)
 
@@ -21,10 +21,10 @@ logger = logging.getLogger(__name__)
 
 def convert_ans_to_stix(answer_iterator, r_tx, import_type):
     """
-        High level function to convert the typedb return into a Stix object.
+        High level function to convert the typedb_lib return into a Stix object.
         Firstly, drive the grpc to make an intermediate format, then convert that to a Stix dict
     Args:
-        answer_iterator (): the returned iterator from the typedb query
+        answer_iterator (): the returned iterator from the typedb_lib query
         r_tx (): the transaction
         import_type (): the type of import STIX21 or ATT&CK
 
@@ -32,11 +32,10 @@ def convert_ans_to_stix(answer_iterator, r_tx, import_type):
         stix_dict {}: a dict containing the stix object
     """
     res = convert_ans_to_res(answer_iterator, r_tx, import_type)
-    with open("export_test.json", "w") as outfile:
+    with open("stix/module/orm/export_test.json", "w") as outfile:
         json.dump(res, outfile)
     logger.debug(f'got res, now for stix')
     stix_dict = convert_res_to_stix(res, import_type)
-    # stix_object = parse(stix_dict)
     return stix_dict
 
 
@@ -130,7 +129,15 @@ def make_sro(res, import_type):
     stix_dict = {}
     # 2.A) get the typeql properties and relations
     sro_tql_name = res["T_name"]
+
     props = res["has"]
+    sro_sub_rel = ""
+    if sro_tql_name == "relation":
+        for has in props:
+            if has["typeql"] == "relationship_type":
+                sro_sub_rel = has["value"]
+                break
+
     relns = res["relns"]
     #
     # Note, Issue, cannot yet tell what to do with a procedure
@@ -142,7 +149,7 @@ def make_sro(res, import_type):
         if prop["typeql"] == "x_mitre_version":
             attack_object = True
 
-    obj_tql, sdo_tql_name = sro_type_to_tql(sro_tql_name, import_type, attack_object, uses_relation, is_procedure)
+    obj_tql, sro_tql_name, is_list = sro_type_to_tql(sro_tql_name, sro_sub_rel, import_type, attack_object, uses_relation, is_procedure)
 
     # 2.A) get the typeql properties and relations
     props = res["has"]
@@ -150,14 +157,13 @@ def make_sro(res, import_type):
     edges = res["edges"]
     # 2.) setup the match statements first, depending on whether the object is a sighting or a relationship
     # A. If it is a Relationship then find the source and target roles for the relation, and match them in
-    if sdo_tql_name in auth["reln_name"]["standard_relations"]:
-        for stix_rel in auth["reln_name"]["standard_relations"]:
-            if stix_rel["typeql"] == sdo_tql_name:
+    if sro_tql_name in auth["reln_name"]["standard_relations"]:
+        for stix_rel in auth["reln"]["standard_relations"]:
+            if stix_rel["typeql"] == sro_tql_name:
                 source_role = stix_rel["source"]
                 target_role = stix_rel["target"]
                 break
 
-        is_list = auth["is_lists"]["sro"]["sro"]
         for edge in edges:
             players = edge["player"]
             if edge["role"] == source_role:
@@ -174,7 +180,7 @@ def make_sro(res, import_type):
                 return ''
 
     # B. If it is a Sighting then match the object to the sighting
-    elif sdo_tql_name == 'sighting':
+    elif sro_tql_name == 'sighting':
         is_list = auth["is_lists"]["sro"]["sro"] + auth["is_lists"]["sro"]["sighting"]
         for edge in edges:
             players = edge["player"]

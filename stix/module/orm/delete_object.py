@@ -3,8 +3,8 @@ from typing import List
 
 from stix.module.authorise import authorised_mappings
 
-from stix.module.orm.import_stix_to_typeql import sdo_to_data, sro_to_data, sco_to_data
-from stix.module.orm.import_stix_utilities import split_on_activity_type, val_tql
+from stix.module.orm.import_objects import sdo_to_data, sro_to_data, sco_to_data
+from stix.module.orm.import_utilities import split_on_activity_type, val_tql
 
 import logging
 logger = logging.getLogger(__name__)

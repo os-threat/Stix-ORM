@@ -18,18 +18,18 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 | defanged |defanged |      Optional       |stix-attribute-boolean |   attribute    |
 |  extensions           |               n/a                 |        n/a          |           n/a             |      n/a       |
 | is_self_signed |is-self-signed |      Optional       |  stix-attribute-boolean    |   attribute    |
-|  hashes |hashes:owner |      Optional       |embedded |relation |
-|  version |version |      Optional       |  stix-attribute-string    |   attribute    |
-|  serial_number |serial-number |      Optional       |  stix-attribute-string    |   attribute    |
-|  signature_algorithm |signature-algorithm |      Optional       |  stix-attribute-string    |   attribute    |
-|  issuer |issuer |      Optional       |  stix-attribute-string    |   attribute    |
-|  validity_not_before |validity-not-before |      Optional       |  stix-attribute-timestamp    |   attribute    |
-|  validity_not_after |validity-not-after |      Optional       |  stix-attribute-timestamp    |   attribute    |
-|  subject |subject |      Optional       |  stix-attribute-string    |   attribute    |
-|  subject_public_key_algorithm |subject-public-key-algorithm |      Optional       |  stix-attribute-string    |   attribute    |
-|  subject_public_key_modulus |subject-public-key-modulus |      Optional       |  stix-attribute-string    |   attribute    |
-|  subject_public_key_exponent |subject-public-key-exponent |      Optional       |  stix-attribute-integer    |   attribute    |
-|  x509_v3_extensions |v3-extensions:cert |      Optional       |embedded |relation |
+| ï¿½hashes |hashes:owner |      Optional       |embedded |relation |
+| ï¿½version |version |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½serial_number |serial-number |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½signature_algorithm |signature-algorithm |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½issuer |issuer |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½validity_not_before |validity-not-before |      Optional       |  stix-attribute-timestamp    |   attribute    |
+| ï¿½validity_not_after |validity-not-after |      Optional       |  stix-attribute-timestamp    |   attribute    |
+| ï¿½subject |subject |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½subject_public_key_algorithm |subject-public-key-algorithm |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½subject_public_key_modulus |subject-public-key-modulus |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½subject_public_key_exponent |subject-public-key-exponent |      Optional       |  stix-attribute-integer    |   attribute    |
+| ï¿½x509_v3_extensions |v3-extensions:cert |      Optional       |embedded |relation |
 
 ## The Example X.509-Certificate in JSON
 The original JSON, accessible in the Python environment
@@ -89,7 +89,8 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stix.module.typedb_lib import TypeDBSink, TypeDBSource
+
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -111,6 +112,6 @@ import_type = {
 }
 
 typedb = TypeDBSource(connection, import_type)
-stix_obj = typedb.get( "x509-certificate--463d7b2a-8516-5a50-a3d7-6f801465d5de")
+stix_obj = typedb.get("x509-certificate--463d7b2a-8516-5a50-a3d7-6f801465d5de")
 ```
 

@@ -109,7 +109,8 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stix.module.typedb_lib import TypeDBSink, TypeDBSource
+
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -132,8 +133,13 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("match
-    $a isa campaign,
-        has stix-id "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
-        has $b;")
+$a
+isa
+campaign,
+has
+stix - id
+"campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+has $b;
+")
 ```
 

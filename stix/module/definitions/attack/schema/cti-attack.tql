@@ -34,19 +34,6 @@ define
         plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
-    # Campaigns - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#campaigns
-    attack-campaign sub campaign,
-        owns x-mitre-version,
-        owns x-mitre-contributors,
-        owns x-mitre-domains,
-        owns x-mitre-attack-spec-version,
-        owns x-mitre-first-seen-citation,
-        owns x-mitre-last-seen-citation,
-        plays revoked-by:revoked,
-        plays revoked-by:new-version,
-        plays x-mitre-modified-by-ref:modified,
-        plays obj-ref:content;
-
     # Tactics - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#tactics
     tactic sub stix-domain-object,
         owns name,
@@ -87,7 +74,8 @@ define
         plays obj-ref:content;
 
     # Sub Techniques - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#sub-techniques
-    sub-technique sub technique;
+    sub-technique sub technique,
+        plays subtechnique-of:child;
 
     # Mitigations - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#mitigations
     mitigation sub course-of-action,
@@ -167,23 +155,86 @@ define
         plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
+    # Campaigns - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#campaigns
+    attack-campaign sub campaign,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-first-seen-citation,
+        owns x-mitre-last-seen-citation,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
+        plays obj-ref:content;
+
+    # Relations
+    #===================
+    # Existing Stix Relations,now with ATT&CK properties -
+    # https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#relationships
+    uses
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        plays obj-ref:content;
+
+    attributed-to
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        plays obj-ref:content;
+
+   mitigates
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        plays obj-ref:content;
+
+    #=================================
     # Custom ATT&CK Relations -https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#relationships
 	subtechnique-of sub stix-core-relationship,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        plays obj-ref:content,
 		relates child as source,
 		relates parent as target,
-        plays obj-ref:content;
+        plays obj-ref:content,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version;
 
-	detects sub stix-core-relationship,
+	detects sub  stix-core-relationship,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        plays obj-ref:content,
 		relates sensor as source,
 		relates ttp as target,
-        plays obj-ref:content;
+        plays obj-ref:content,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version;
 
 	revoked-by sub stix-core-relationship,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        plays obj-ref:content,
 		relates revoked as source,
 		relates new-version as target,
         plays obj-ref:content;
 
-    procedure sub stix-core-relationship,
+    procedure sub  stix-core-relationship,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        plays obj-ref:content,
 		relates user as source,
 		relates technique as target,
         plays obj-ref:content;

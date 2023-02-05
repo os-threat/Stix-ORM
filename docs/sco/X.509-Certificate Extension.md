@@ -12,22 +12,22 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 
 |  Stix 2.1 Property    |           Schema Name             | Required  Optional  |      Schema Object Type | Schema Parent  |
 |:--------------------|:--------------------------------:|:------------------:|:------------------------:|:-------------:|
-| basic_constraints  |basic-constraints |Optional |  stix-attribute-string    |   attribute    |
-| name_constraints  |name-constraints |Optional |  stix-attribute-string    |   attribute    |
-| policy_constraints  |policy-constraints |Optional |  stix-attribute-string    |   attribute    |
-| key_usage  |key-usage |Optional |  stix-attribute-string    |   attribute    |
-| extended_key_usage  |extended-key-usage |Optional |  stix-attribute-string    |   attribute    |
-| subject_key_identifier  |subject-key-identifier |Optional |  stix-attribute-string    |   attribute    |
-| authority_key_identifier  |authority-key-identifier |Optional |  stix-attribute-string    |   attribute    |
-| subject_alternative_name  |subject-alternative-name |Optional |  stix-attribute-string    |   attribute    |
-| issuer_alternative_name  |issuer-alternative-name |Optional |  stix-attribute-string    |   attribute    |
-| subject_directory_attributes  |subject-directory-attributes |Optional |  stix-attribute-string    |   attribute    |
-| crl_distribution_points  |crl-distribution-points |Optional |  stix-attribute-string    |   attribute    |
-| inhibit_any_policy  |inhibit-any-policy |Optional |  stix-attribute-string    |   attribute    |
-| private_key_usage_period_not_before  |private-key-usage-period-not-before |Optional |  stix-attribute-timestamp    |   attribute    |
-| private_key_usage_period_not_after  |private-key-usage-period-not-after |Optional |  stix-attribute-timestamp    |   attribute    |
-| certificate_policies  |certificate-policies |Optional |  stix-attribute-string    |   attribute    |
-| policy_mappings  |policy-mappings |Optional |  stix-attribute-string    |   attribute    |
+| basic_constraintsï¿½ |basic-constraints |Optional |  stix-attribute-string    |   attribute    |
+| name_constraintsï¿½ |name-constraints |Optional |  stix-attribute-string    |   attribute    |
+| policy_constraintsï¿½ |policy-constraints |Optional |  stix-attribute-string    |   attribute    |
+| key_usageï¿½ |key-usage |Optional |  stix-attribute-string    |   attribute    |
+| extended_key_usageï¿½ |extended-key-usage |Optional |  stix-attribute-string    |   attribute    |
+| subject_key_identifierï¿½ |subject-key-identifier |Optional |  stix-attribute-string    |   attribute    |
+| authority_key_identifierï¿½ |authority-key-identifier |Optional |  stix-attribute-string    |   attribute    |
+| subject_alternative_nameï¿½ |subject-alternative-name |Optional |  stix-attribute-string    |   attribute    |
+| issuer_alternative_nameï¿½ |issuer-alternative-name |Optional |  stix-attribute-string    |   attribute    |
+| subject_directory_attributesï¿½ |subject-directory-attributes |Optional |  stix-attribute-string    |   attribute    |
+| crl_distribution_pointsï¿½ |crl-distribution-points |Optional |  stix-attribute-string    |   attribute    |
+| inhibit_any_policyï¿½ |inhibit-any-policy |Optional |  stix-attribute-string    |   attribute    |
+| private_key_usage_period_not_beforeï¿½ |private-key-usage-period-not-before |Optional |  stix-attribute-timestamp    |   attribute    |
+| private_key_usage_period_not_afterï¿½ |private-key-usage-period-not-after |Optional |  stix-attribute-timestamp    |   attribute    |
+| certificate_policiesï¿½ |certificate-policies |Optional |  stix-attribute-string    |   attribute    |
+| policy_mappingsï¿½ |policy-mappings |Optional |  stix-attribute-string    |   attribute    |
 
 ## The Example X.509-Certificate Extension in JSON
 The original JSON, accessible in the Python environment
@@ -140,7 +140,8 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stix.module.typedb_lib import TypeDBSink, TypeDBSource
+
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -162,6 +163,6 @@ import_type = {
 }
 
 typedb = TypeDBSource(connection, import_type)
-stix_obj = typedb.get( "x509-certificate--b595eaf0-0b28-5dad-9e8e-0fab9c1facc9")
+stix_obj = typedb.get("x509-certificate--b595eaf0-0b28-5dad-9e8e-0fab9c1facc9")
 ```
 

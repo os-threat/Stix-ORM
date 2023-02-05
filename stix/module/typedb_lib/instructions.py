@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from returns.pipeline import is_successful
 from returns.result import safe
 
-from stix.module.typedb.logging import log_insert_query
+from stix.module.typedb_lib.logging import log_insert_query
 
 class ResultStatus(Enum):
     SUCCESS = "success"

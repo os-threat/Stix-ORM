@@ -15,13 +15,30 @@ __status__ = "Production"
 
 import json
 from glob import glob
-import logging
+from loguru import logger
 import os
 from pathlib import Path
+from stix2.v21.sdo import (
+    AttackPattern, Campaign, CourseOfAction, CustomObject, Grouping, Identity,
+    Incident, Indicator, Infrastructure, IntrusionSet, Location, Malware,
+    MalwareAnalysis, Note, ObservedData, Opinion, Report, ThreatActor, Tool,
+    Vulnerability,
+)
+from stix2.v21.observables import (
+    URL, AlternateDataStream, ArchiveExt, Artifact, AutonomousSystem,
+    CustomObservable, Directory, DomainName, EmailAddress, EmailMessage,
+    EmailMIMEComponent, File, HTTPRequestExt, ICMPExt, IPv4Address,
+    IPv6Address, MACAddress, Mutex, NetworkTraffic, NTFSExt, PDFExt, Process,
+    RasterImageExt, SocketExt, Software, TCPExt, UNIXAccountExt, UserAccount,
+    WindowsPEBinaryExt, WindowsPEOptionalHeaderType, WindowsPESection,
+    WindowsProcessExt, WindowsRegistryKey, WindowsRegistryValueType,
+    WindowsServiceExt, X509Certificate, X509V3ExtensionsType,
+)
+from stix2.v21.sro import Relationship, Sighting
 
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
-logger = logging.getLogger(__name__)
+#logger = logging.getLogger(__name__)
 
 stix_models = {}
 stix_models["data"] = {}
@@ -71,4 +88,78 @@ for file_path in glob(f'{dir_path}/sub_objects/*.json'):
 
         stix_models["sub_objects"][key] = json.load(json_file)
 
-logger.debug('Loaded %d stix dictionary objects' % len(stix_models))
+stix_models["classes"] = {}
+stix_models["classes"]["sro"] = {
+    "Relationship":Relationship,
+    "Sighting":Sighting
+}
+stix_models["classes"]["sdo"] = {
+    "AttackPattern":AttackPattern,
+    "Campaign":Campaign,
+    "CourseOfAction":CourseOfAction,
+    "CustomObject":CustomObject,
+    "Grouping":Grouping,
+    "Identity":Identity,
+    "Incident":Incident,
+    "Indicator":Indicator,
+    "Infrastructure":Infrastructure,
+    "IntrusionSet":IntrusionSet,
+    "Location":Location,
+    "Malware":Malware,
+    "MalwareAnalysis":MalwareAnalysis,
+    "Note":Note,
+    "ObservedData":ObservedData,
+    "Opinion":Opinion,
+    "Report":Report,
+    "ThreatActor":ThreatActor,
+    "Tool":Tool,
+    "Vulnerability":Vulnerability,
+}
+stix_models["classes"]["sub"] = {
+    "AlternateDataStream":AlternateDataStream,
+    "ArchiveExt":ArchiveExt,
+    "EmailMIMEComponent": EmailMIMEComponent,
+    "HTTPRequestExt":HTTPRequestExt,
+    "ICMPExt":ICMPExt,
+    "NTFSExt":NTFSExt,
+    "PDFExt":PDFExt,
+    "RasterImageExt":RasterImageExt,
+    "SocketExt":SocketExt,
+    "TCPExt":TCPExt,
+    "UNIXAccountExt":UNIXAccountExt,
+    "WindowsPEBinaryExt":WindowsPEBinaryExt,
+    "WindowsPEOptionalHeaderType":WindowsPEOptionalHeaderType,
+    "WindowsPESection":WindowsPESection,
+    "WindowsProcessExt":WindowsProcessExt,
+    "WindowsRegistryValueType":WindowsRegistryValueType,
+    "WindowsServiceExt":WindowsServiceExt,
+    "X509V3ExtensionsType":X509V3ExtensionsType
+}
+stix_models["classes"]["sco"] = {
+    "URL":URL,
+    "Artifact":Artifact,
+    "AutonomousSystem":AutonomousSystem,
+    "CustomObservable":CustomObservable,
+    "Directory":Directory,
+    "DomainName":DomainName,
+    "EmailAddress":EmailAddress,
+    "EmailMessage":EmailMessage,
+    "File":File,
+    "IPv4Address":IPv4Address,
+    "IPv6Address":IPv6Address,
+    "MACAddress":MACAddress,
+    "Mutex":Mutex,
+    "NetworkTraffic":NetworkTraffic,
+    "Process":Process,
+    "Software":Software,
+    "UserAccount":UserAccount,
+    "WindowsRegistryKey":WindowsRegistryKey,
+    "X509Certificate":X509Certificate,
+}
+
+total_len = len(stix_models["data"])+len(stix_models["base"])+len(stix_models["mappings"])
+total_len += len(stix_models["sub_objects"])+len(stix_models["classes"]["sdo"])
+total_len += len(stix_models["classes"]["sub"])+len(stix_models["classes"]["sco"])
+total_len += len(stix_models["classes"]["sro"])
+
+logger.debug('Loaded %d stix dictionary objects' % total_len)

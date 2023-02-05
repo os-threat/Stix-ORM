@@ -11,7 +11,7 @@ from stix2.properties import (
 )
 from stix2.utils import NOW
 from stix2.v21.base import _DomainObject, _STIXBase21
-from stix2.v21.sdo import AttackPattern
+from stix2.v21.sdo import AttackPattern, CourseOfAction, IntrusionSet, Malware, Tool, Campaign
 from stix2.v21.common import (
     ExternalReference, GranularMarking, KillChainPhase,
 )
@@ -90,7 +90,7 @@ class Technique(AttackPattern):
     """
 
     _type = 'attack-pattern'
-    _properties = OrderedDict([
+    _properties = super()._properties.update(OrderedDict([
         ('x_mitre_detection', StringProperty()),
         ('x_mitre_platforms', ListProperty(StringProperty)),
         ('x_mitre_data_sources', ListProperty(StringProperty)),
@@ -102,120 +102,46 @@ class Technique(AttackPattern):
         ('x_mitre_defense_bypassed', ListProperty(StringProperty)),
         ('x_mitre_remote_support', BooleanProperty(default=lambda: False)),
         ('x_mitre_impact_type', ListProperty(StringProperty)),
-    ])
+    ]))
 
 
-class SubTechnique(_DomainObject):
+class SubTechnique(Technique):
     """For more detailed information on this object's properties, see
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
 
     _type = 'attack-pattern'
-    _properties = OrderedDict([
-        ('type', TypeProperty(_type, spec_version='2.1')),
-        ('spec_version', StringProperty(fixed='2.1')),
-        ('id', IDProperty(_type, spec_version='2.1')),
-        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
-        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('name', StringProperty(required=True)),
-        ('description', StringProperty()),
-        ('x_mitre_version', StringProperty()),
-        ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', StringProperty()),
-        ('x_mitre_domains', ListProperty(StringProperty)),
-        ('x_mitre_attack_spec_version', StringProperty()),
-        ('aliases', ListProperty(StringProperty)),
-        ('kill_chain_phases', ListProperty(KillChainPhase)),
-        ('revoked', BooleanProperty(default=lambda: True)),
-        ('labels', ListProperty(StringProperty)),
-        ('confidence', IntegerProperty()),
-        ('lang', StringProperty()),
-        ('external_references', ListProperty(ExternalReference)),
-        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
-        ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
-        ('x_mitre_detection', StringProperty()),
-        ('x_mitre_platforms', ListProperty(StringProperty)),
-        ('x_mitre_data_sources', ListProperty(StringProperty)),
-        ('x_mitre_is_subtechnique', BooleanProperty(default=lambda: True)),
-        ('x_mitre_system_requirements', ListProperty(StringProperty)),
-        ('x_mitre_tactic_type', ListProperty(StringProperty)),
-        ('x_mitre_permissions_required', ListProperty(StringProperty)),
-        ('x_mitre_effective_permissions', ListProperty(StringProperty)),
-        ('x_mitre_defense_bypassed', ListProperty(StringProperty)),
-        ('x_mitre_remote_support', BooleanProperty(default=lambda: False)),
-        ('x_mitre_impact_type', ListProperty(StringProperty)),
-    ])
+    _properties = super()._properties
 
 
-class Mitigation(_DomainObject):
+class Mitigation(CourseOfAction):
     """For more detailed information on this object's properties, see
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
 
     _type = 'course-of-action'
-    _properties = OrderedDict([
-        ('type', TypeProperty(_type, spec_version='2.1')),
-        ('spec_version', StringProperty(fixed='2.1')),
-        ('id', IDProperty(_type, spec_version='2.1')),
-        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
-        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('name', StringProperty(required=True)),
-        ('description', StringProperty()),
+    _properties = super()._properties.update(OrderedDict([
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
         ('x_mitre_modified_by_ref', StringProperty()),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
-        ('revoked', BooleanProperty(default=lambda: False)),
-        ('labels', ListProperty(StringProperty)),
-        ('confidence', IntegerProperty()),
-        ('lang', StringProperty()),
-        ('external_references', ListProperty(ExternalReference)),
-        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
-        ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
-    ])
+    ]))
 
 
-class Group(_DomainObject):
+class Group(IntrusionSet):
     """For more detailed information on this object's properties, see
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
 
     _type = 'intrusion-set'
-    _properties = OrderedDict([
-        ('type', TypeProperty(_type, spec_version='2.1')),
-        ('spec_version', StringProperty(fixed='2.1')),
-        ('id', IDProperty(_type, spec_version='2.1')),
-        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
-        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('name', StringProperty(required=True)),
-        ('description', StringProperty()),
+    _properties = super()._properties.update(OrderedDict([
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
         ('x_mitre_modified_by_ref', StringProperty()),
         ('x_mitre_domains', ListProperty(StringProperty)),
-        ('x_mitre_attack_spec_version', StringProperty()),
-        ('aliases', ListProperty(StringProperty)),
-        ('first_seen', TimestampProperty()),
-        ('last_seen', TimestampProperty()),
-        ('goals', ListProperty(StringProperty)),
-        ('resource_level', OpenVocabProperty(ATTACK_RESOURCE_LEVEL)),
-        ('primary_motivation', OpenVocabProperty(ATTACK_MOTIVATION)),
-        ('secondary_motivations', ListProperty(OpenVocabProperty(ATTACK_MOTIVATION))),
-        ('revoked', BooleanProperty(default=lambda: False)),
-        ('labels', ListProperty(StringProperty)),
-        ('confidence', IntegerProperty()),
-        ('lang', StringProperty()),
-        ('external_references', ListProperty(ExternalReference)),
-        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
-        ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
-    ])
+        ('x_mitre_attack_spec_version', StringProperty())
+    ]))
 
     def _check_object_constraints(self):
         super(Group, self)._check_object_constraints()
@@ -228,48 +154,22 @@ class Group(_DomainObject):
             raise ValueError(msg.format(self))
 
 
-class SoftwareMalware(_DomainObject):
+class SoftwareMalware(Malware):
     """For more detailed information on this object's properties, see
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
 
     _type = 'malware'
-    _properties = OrderedDict([
-        ('type', TypeProperty(_type, spec_version='2.1')),
-        ('spec_version', StringProperty(fixed='2.1')),
-        ('id', IDProperty(_type, spec_version='2.1')),
-        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
-        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('name', StringProperty()),
-        ('description', StringProperty()),
+    _properties = super()._properties.update(OrderedDict([
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
         ('x_mitre_modified_by_ref', StringProperty()),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('malware_types', ListProperty(OpenVocabProperty(MALWARE_TYPE))),
-        ('is_family', BooleanProperty(required=True)),
-        ('aliases', ListProperty(StringProperty)),
-        ('kill_chain_phases', ListProperty(KillChainPhase)),
-        ('first_seen', TimestampProperty()),
-        ('last_seen', TimestampProperty()),
-        ('operating_system_refs', ListProperty(ReferenceProperty(valid_types='software', spec_version='2.1'))),
-        ('architecture_execution_envs', ListProperty(OpenVocabProperty(PROCESSOR_ARCHITECTURE))),
-        ('implementation_languages', ListProperty(OpenVocabProperty(IMPLEMENTATION_LANGUAGE))),
-        ('capabilities', ListProperty(OpenVocabProperty(MALWARE_CAPABILITIES))),
-        ('sample_refs', ListProperty(ReferenceProperty(valid_types=['artifact', 'file'], spec_version='2.1'))),
-        ('revoked', BooleanProperty(default=lambda: False)),
-        ('labels', ListProperty(StringProperty)),
-        ('confidence', IntegerProperty()),
-        ('lang', StringProperty()),
-        ('external_references', ListProperty(ExternalReference)),
-        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
-        ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
         ('x_mitre_platforms', ListProperty(StringProperty)),
         ('x_mitre_aliases', ListProperty(StringProperty)),
-    ])
+    ]))
 
     def _check_object_constraints(self):
         super(SoftwareMalware, self)._check_object_constraints()
@@ -288,41 +188,21 @@ class SoftwareMalware(_DomainObject):
             )
 
 
-class SoftwareTool(_DomainObject):
+class SoftwareTool(Tool):
     """For more detailed information on this object's properties, see
     `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_z4voa9ndw8v>`__.
     """
 
     _type = 'tool'
-    _properties = OrderedDict([
-        ('type', TypeProperty(_type, spec_version='2.1')),
-        ('spec_version', StringProperty(fixed='2.1')),
-        ('id', IDProperty(_type, spec_version='2.1')),
-        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
-        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('name', StringProperty(required=True)),
-        ('description', StringProperty()),
+    _properties = super()._properties.update(OrderedDict([
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
         ('x_mitre_modified_by_ref', StringProperty()),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
-        ('tool_types', ListProperty(OpenVocabProperty(TOOL_TYPE))),
-        ('aliases', ListProperty(StringProperty)),
-        ('kill_chain_phases', ListProperty(KillChainPhase)),
-        ('tool_version', StringProperty()),
-        ('revoked', BooleanProperty(default=lambda: False)),
-        ('labels', ListProperty(StringProperty)),
-        ('confidence', IntegerProperty()),
-        ('lang', StringProperty()),
-        ('external_references', ListProperty(ExternalReference)),
-        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
-        ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
         ('x_mitre_platforms', ListProperty(StringProperty)),
         ('x_mitre_aliases', ListProperty(StringProperty)),
-    ])
+    ]))
 
 
 class DataSource(_DomainObject):
@@ -389,6 +269,22 @@ class DataComponent(_DomainObject):
         ('x_mitre_platforms', ListProperty(StringProperty)),
         ('x_mitre_aliases', ListProperty(StringProperty)),
     ])
+
+class AttackCampaign(Campaign):
+    """For more detailed information on this object's properties, see
+        `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    """
+
+    _type = 'campaign'
+    _properties = super()._properties.update(OrderedDict([
+        ('x_mitre_version', StringProperty()),
+        ('x_mitre_contributors', ListProperty(StringProperty)),
+        ('x_mitre_modified_by_ref', StringProperty()),
+        ('x_mitre_domains', ListProperty(StringProperty)),
+        ('x_mitre_attack_spec_version', StringProperty()),
+        ('x_mitre_first_seen_citation', StringProperty()),
+        ('x_mitre_aliases', StringProperty()),
+    ]))
 
 
 class ObjectVersion(_STIXBase21):

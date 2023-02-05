@@ -18,10 +18,10 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 | defanged |defanged |      Optional       |stix-attribute-boolean |   attribute    |
 |  extensions           |               n/a                 |        n/a          |           n/a             |      n/a       |
 | key |attribute-key |      Optional       |  stix-attribute-string    |   attribute    |
-|  values |reg-val:reg-key |      Optional       |embedded |relation |
-|  modified_time |modified-time |      Optional       |  stix-attribute-timestamp    |   attribute    |
-|  creator_user_ref |user-created-by:created |      Optional       |embedded |relation |
-|  number_of_subkeys |number-subkeys |      Optional       |  stix-attribute-integer    |   attribute    |
+| ï¿½values |reg-val:reg-key |      Optional       |embedded |relation |
+| ï¿½modified_time |modified-time |      Optional       |  stix-attribute-timestamp    |   attribute    |
+| ï¿½creator_user_ref |user-created-by:created |      Optional       |embedded |relation |
+| ï¿½number_of_subkeys |number-subkeys |      Optional       |  stix-attribute-integer    |   attribute    |
 
 ## The Example Windows-Registry-Key in JSON
 The original JSON, accessible in the Python environment
@@ -69,7 +69,8 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stix.module.typedb_lib import TypeDBSink, TypeDBSource
+
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -91,6 +92,7 @@ import_type = {
 }
 
 typedb = TypeDBSource(connection, import_type)
-stix_obj = typedb.get"windows-registry-key--9d60798d-4e3e-5fe4-af8a-0e4986f0f90b")
+stix_obj = typedb.get
+"windows-registry-key--9d60798d-4e3e-5fe4-af8a-0e4986f0f90b")
 ```
 

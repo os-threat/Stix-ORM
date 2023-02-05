@@ -63,7 +63,7 @@ The original JSON, accessible in the Python environment
     }
   ],
   "abstract": "Tracking Team Note#1",
-  "content": "This note indicates the various steps taken by the threat analyst team to investigate this specific campaign. Step 1) Do a scan 2) Review scanned results for identified hosts not known by external intel…etc.",
+  "content": "This note indicates the various steps taken by the threat analyst team to investigate this specific campaign. Step 1) Do a scan 2) Review scanned results for identified hosts not known by external intelï¿½etc.",
   "authors": ["John Doe"],
   "object_refs": ["campaign--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f"]
 }
@@ -94,7 +94,7 @@ insert
     $created 2016-05-12T08:17:27.000;
     $modified 2016-05-12T08:17:27.000;
     $note-abstract "Tracking Team Note#1";
-    $content "This note indicates the various steps taken by the threat analyst team to investigate this specific campaign. Step 1) Do a scan 2) Review scanned results for identified hosts not known by external intel…etc.";
+    $content "This note indicates the various steps taken by the threat analyst team to investigate this specific campaign. Step 1) Do a scan 2) Review scanned results for identified hosts not known by external intelï¿½etc.";
     $authors0 "John Doe";
     
     $obj-refs0 (object:$note, referred:$campaign00) isa obj-refs;
@@ -128,7 +128,8 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stix.module.typedb_lib import TypeDBSink, TypeDBSource
+
 connection = {
     "uri": "localhost",
     "port": "1729",

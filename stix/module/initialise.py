@@ -23,6 +23,7 @@ from typedb.client import *
 import logging
 
 logger = logging.getLogger(__name__)
+attack_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
 
 # make sure the four TLP Markings are loaded when the database initialises
 initial_markings = [[

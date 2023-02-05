@@ -3,8 +3,9 @@ import os
 from stix.module.typedb import TypeDBSink, TypeDBSource
 from typedb.client import *
 from stix2 import (parse)
-from stix.module.orm.import_stix_to_typeql import raw_stix2_to_typeql
-from stix.module.orm.delete_stix_to_typeql import delete_stix_object
+from stix.module.orm.import_objects import raw_stix2_to_typeql
+from stix.module.orm.delete_object import delete_stix_object
+from stix.module.authorise import authorised_mappings
 
 import logging
 
@@ -25,16 +26,17 @@ connection = {
 
 import_type = {
     "STIX21": True,
+    "ATT&CK": False,
     "os-intel": False,
     "os-hunt": False,
+    "kestrel": False,
+    "CACAO": False,
     "CVE": False,
     "identity": False,
     "location": False,
     "rules": False,
-    "ATT&CK": False,
-    "ATT&CK_Versions": ["12.0"],
-    "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
-    "CACAO": False
+    "ATT&CK_Versions": ["12.1"],
+    "ATT&CK_Domains": ["Enterprise ATT&CK", "Mobile ATT&CK", "ICS ATT&CK"]
 }
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
@@ -115,7 +117,7 @@ def query_id(stixid):
 
 
 def get_stix_ids():
-    """ Get all the stix-ids in a database, should be moved to typedb file
+    """ Get all the stix-ids in a database, should be moved to typedb_lib file
 
     Returns:
         id_list : list of the stix-ids in the database
@@ -309,6 +311,18 @@ def test_get_ids(connection, import_type):
     print(f'myidlist {my_id_list}')
 
 
+def test_auth():
+    import_type["ATT&CK"] = True
+    import_type["os-threat"] = True
+
+    import_type["os-intel"] = True
+    import_type["CACAO"] = True
+    auth = authorised_mappings(import_type)
+    print("===========================================")
+    #print(auth)
+
+
+
 # if this file is run directly, then start here
 if __name__ == '__main__':
 
@@ -399,7 +413,7 @@ if __name__ == '__main__':
     print("=====")
     print("=====")
     #query_id(test_id)
-    check_dir_ids(path1)
+    #check_dir_ids(path1)
     #check_dir(path1)
     #test_delete(path1+files10)
     #test_initialise()
@@ -409,3 +423,4 @@ if __name__ == '__main__':
     #cert_dict(cert_root, certs)
     #test_get_ids(connection, import_type)
     #test_ids_loaded(id_list2, connection)
+    test_auth()

@@ -70,6 +70,41 @@ for file_path in glob(f'{dir_path}/sub_objects/*.json'):
 
         attack_models["sub_objects"][key] = json.load(json_file)
 
+from classes import (
+    Matrix, Tactic, Technique, SubTechnique, Mitigation, Group, SoftwareMalware,
+    SoftwareTool, DataSource, DataComponent, AttackCampaign, Collection,
+    ObjectVersion
+)
+attack_models["classes"] = {}
+attack_models["classes"]["sdo"] = {
+    "Matrix": Matrix,
+    "Tactic": Tactic,
+    "Technique": Technique,
+    "SubTechnique": SubTechnique,
+    "Mitigation": Mitigation,
+    "Group": Group,
+    "SoftwareMalware": SoftwareMalware,
+    "SoftwareTool": SoftwareTool,
+    "DataSource": DataSource,
+    "DataComponent": DataComponent,
+    "AttackCampaign": AttackCampaign,
+    "Collection": Collection
+}
+attack_models["classes"]["sub"] = {
+    "ObjectVersion": ObjectVersion
+}
+attack_models["classes"]["sco"] = {}
+attack_models["classes"]["sro"] = {}
 
+__all__ = """
+    Matrix, Tactic, Technique, SubTechnique, 
+    Mitigation, Group, SoftwareMalware,
+    SoftwareTool, DataSource, DataComponent, 
+    AttackCampaign, Collection, ObjectVersion
+""".replace(",", " ").split()
 
-logger.debug('Loaded %d attack dictionary objects' % len(attack_models))
+total_len = len(attack_models["data"])+len(attack_models["base"])+len(attack_models["mappings"])
+total_len += len(attack_models["sub_objects"])+len(attack_models["classes"]["sdo"])
+total_len += len(attack_models["classes"]["sub"])
+
+logger.debug('Loaded %d attack dictionary objects' % total_len)

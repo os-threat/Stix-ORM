@@ -19,7 +19,7 @@
   },
   {
     "type":  "attack-pattern",
-    "typeql": "sub-technique",
+    "typeql": "subtechnique",
     "class": "SubTechnique",
     "object": "sdo"
   },

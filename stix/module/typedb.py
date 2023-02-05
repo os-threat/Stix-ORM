@@ -9,10 +9,10 @@ from returns.result import safe, Result, Failure, Success
 from returns.unsafe import unsafe_perform_io
 from typedb.client import *
 
-from stix.module.orm.import_stix_to_typeql import raw_stix2_to_typeql
-from stix.module.orm.delete_stix_to_typeql import delete_stix_object, add_delete_layers
-from stix.module.orm.import_stix_utilities import get_embedded_match
-from stix.module.orm.export_intermediate_to_stix import convert_ans_to_stix
+from stix.module.orm.import_objects import raw_stix2_to_typeql
+from stix.module.orm.delete_object import delete_stix_object, add_delete_layers
+from stix.module.orm.import_utilities import get_embedded_match
+from stix.module.orm.export_object import convert_ans_to_stix
 from .initialise import setup_database, load_schema, sort_layers, load_markings
 
 from stix2 import v21
@@ -24,14 +24,14 @@ from stix2.parsing import parse
 
 import logging
 
-from stix.module.typedb.handlers import handle_result
-from stix.module.typedb.logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers, \
+from stix.module.typedb_lib.handlers import handle_result
+from stix.module.typedb_lib.logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers, \
     log_add_instruction_update_layer
-from stix.module.typedb.queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query, \
+from stix.module.typedb_lib.queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query, \
     add_layers_to_typedb, \
     build_insert_query, query_id
-from stix.module.typedb.file import write_to_file
-from stix.module.typedb.instructions import Instructions
+from stix.module.typedb_lib.file import write_to_file
+from stix.module.typedb_lib.instructions import Instructions
 
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
@@ -232,7 +232,7 @@ class TypeDBSink(DataSink):
         return Success(unwrap_or_failure(extracted_output))
 
     def get_stix_ids(self):
-        """ Get all the stix-ids in a database, should be moved to typedb file
+        """ Get all the stix-ids in a database, should be moved to typedb_lib file
 
         Returns:
             id_list : list of the stix-ids in the database
@@ -327,7 +327,7 @@ class TypeDBSink(DataSink):
         return delete_instructions
 
     def delete(self, stixid_list: List[str]) -> Instructions:
-        """ Delete a list of STIX objects from the typedb server. Must include all related objects and relations
+        """ Delete a list of STIX objects from the typedb_lib server. Must include all related objects and relations
 
         Args:
             stixid_list (): The list of Stix-id's of the object's to delete
@@ -466,7 +466,7 @@ class TypeDBSink(DataSink):
 
 
     def add(self, stix_data: Optional[List[dict]] = None) -> bool:
-        """Add STIX objects to the typedb server.
+        """Add STIX objects to the typedb_lib server.
             1. Gather objects into a list
             2. For each object
                 a. get raw stix to tql

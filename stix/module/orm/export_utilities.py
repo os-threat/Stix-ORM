@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 def convert_ans_to_res(answer_iterator, r_tx, import_type):
     """
-    Take the response from TypeDB to a query, and start the process to use GRPC (typedb-client) commands
+    Take the response from TypeDB to a query, and start the process to use GRPC (typedb_lib-client) commands
     to expand on the returned data to some potential object shape (i.e. mandatory and optional),
     and report it back in some intermediate form that can then be reprocessed into Stix 2.1 format.
     This depends on the shape of the Stix object involved.
@@ -84,11 +84,11 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type):
 
 def process_entity(thing, r_tx, stix_id):
     """
-        If the current returned object from typedb contains an entity then unpack it using grpc commands
+        If the current returned object from typedb_lib contains an entity then unpack it using grpc commands
         into an interim list
     Args:
         thing (): the grpc entity reference
-        r_tx (): the typedb transaction
+        r_tx (): the typedb_lib transaction
         stix_id (): the stix object id
 
     Returns:
@@ -270,7 +270,7 @@ def get_granular_marking(r, r_tx):
     """
         Process a granular marking sub object through grpc
     Args:
-        r (): the typedb object
+        r (): the typedb_lib object
         r_tx (): the transaction
 
     Returns:
@@ -287,7 +287,7 @@ def get_hashes(r, r_tx):
     """
         Process a get hashes sub object through grpc
     Args:
-        r (): the typedb object
+        r (): the typedb_lib object
         r_tx (): the transaction
 
     Returns:
@@ -328,7 +328,7 @@ def get_key_value_relations(r, r_tx):
     """
         Process a key-value sub object through grpc
     Args:
-        r (): the typedb object
+        r (): the typedb_lib object
         r_tx (): the transaction
 
     Returns:
@@ -345,7 +345,7 @@ def get_list_of_objects(r, r_tx, import_type):
     """
         Process a list of objects sub object through grpc
     Args:
-        r (): the typedb object
+        r (): the typedb_lib object
         r_tx (): the transaction
 
     Returns:
@@ -445,7 +445,7 @@ def get_extension_relations(r, r_tx, import_type):
     """
         Process a Stix extension sub object through grpc
     Args:
-        r (): the typedb object
+        r (): the typedb_lib object
         r_tx (): the transaction
 
     Returns:

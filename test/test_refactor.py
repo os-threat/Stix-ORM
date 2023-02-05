@@ -2,12 +2,12 @@ import json
 import pathlib
 import unittest
 from parameterized import parameterized
-from stix.module.typedb import TypeDBSink
+from stix.module.typedb_lib import TypeDBSink
 from typedb.client import *
 
 import logging
 
-from stix.module.typedb.instructions import ResultStatus
+from stix.module.typedb_lib.instructions import ResultStatus
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)

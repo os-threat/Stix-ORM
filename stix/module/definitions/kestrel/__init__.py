@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Loader module for all os_threat data model
+Loader module for all kestrel data model
 """
 
 __author__ = "Brett Forbes"
@@ -22,8 +22,8 @@ from pathlib import Path
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
 
-os_threat_models = {}
-os_threat_models["data"] = {}
+kestrel_models = {}
+kestrel_models["data"] = {}
 for file_path in glob(f'{dir_path}/data/*.json'):
     # Opening JSON file
     file_name = Path(file_path).stem
@@ -32,10 +32,10 @@ for file_path in glob(f'{dir_path}/data/*.json'):
         # create well formed key
         key = f'{file_name}'
 
-        os_threat_models["data"][key] = json.load(json_file)
+        kestrel_models["data"][key] = json.load(json_file)
         
 
-os_threat_models["base"] = {}
+kestrel_models["base"] = {}
 for file_path in glob(f'{dir_path}/base/*.json'):
     # Opening JSON file
     file_name = Path(file_path).stem
@@ -44,10 +44,10 @@ for file_path in glob(f'{dir_path}/base/*.json'):
         # create well formed key
         key = f'{file_name}'
 
-        os_threat_models["base"][key] = json.load(json_file)
+        kestrel_models["base"][key] = json.load(json_file)
         
 
-os_threat_models["mappings"] = {}
+kestrel_models["mappings"] = {}
 for file_path in glob(f'{dir_path}/mappings/*.json'):
     # Opening JSON file
     file_name = Path(file_path).stem
@@ -56,10 +56,10 @@ for file_path in glob(f'{dir_path}/mappings/*.json'):
         # create well formed key
         key = f'{file_name}'
 
-        os_threat_models["mappings"][key] = json.load(json_file)
+        kestrel_models["mappings"][key] = json.load(json_file)
 
 
-os_threat_models["sub_objects"] = {}
+kestrel_models["sub_objects"] = {}
 for file_path in glob(f'{dir_path}/sub_objects/*.json'):
     # Opening JSON file
     file_name = Path(file_path).stem
@@ -68,10 +68,16 @@ for file_path in glob(f'{dir_path}/sub_objects/*.json'):
         # create well formed key
         key = f'{file_name}'
 
-        os_threat_models["sub_objects"][key] = json.load(json_file)
+        kestrel_models["sub_objects"][key] = json.load(json_file)
 
+kestrel_models["classes"] = {}
+kestrel_models["classes"]["sdo"] = {}
+kestrel_models["classes"]["sco"] = {}
+kestrel_models["classes"]["sro"] = {}
+kestrel_models["classes"]["sub"] = {}
 
-
-total_len = len(os_threat_models["data"])+len(os_threat_models["base"])+len(os_threat_models["mappings"])+len(os_threat_models["sub_objects"])
-
-logger.debug('Loaded %d os-threat dictionary objects' % total_len)
+total_len = len(kestrel_models["data"])+len(kestrel_models["base"])+len(kestrel_models["mappings"])
+total_len += len(kestrel_models["sub_objects"])+len(kestrel_models["classes"]["sdo"])
+total_len += len(kestrel_models["classes"]["sub"])+len(kestrel_models["classes"]["sco"])
+total_len += len(kestrel_models["classes"]["sro"])
+logger.debug('Loaded %d kestrel dictionary objects' % total_len)

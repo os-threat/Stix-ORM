@@ -3,7 +3,7 @@
 import os,json,sys
 import logging
 import re
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stix.module.typedb_lib import TypeDBSink, TypeDBSource
 from dbconfig import connection
 from stix2 import (v21, parse)
 from pathlib import Path

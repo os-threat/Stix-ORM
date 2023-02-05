@@ -12,13 +12,13 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 
 |  Stix 2.1 Property    |           Schema Name             | Required  Optional  |      Schema Object Type | Schema Parent  |
 |:--------------------|:--------------------------------:|:------------------:|:------------------------:|:-------------:|
-| aslr_enabled  |aslr-enabled |Optional |  stix-attribute-string    |   attribute    |
-| dep_enabled  |dep-enabled |Optional |  stix-attribute-boolean    |   attribute    |
-| priority  |priority |Optional |  stix-attribute-string    |   attribute    |
-| owner_sid  |owner-sid |Optional |  stix-attribute-string    |   attribute    |
-| window_title  |window-title |Optional |  stix-attribute-string    |   attribute    |
-| startup_info  |startup-info:process |Optional |embedded |relation |
-| integrity_level   |integrity-level |Optional |  stix-attribute-string    |   attribute    |
+| aslr_enabledï¿½ |aslr-enabled |Optional |  stix-attribute-string    |   attribute    |
+| dep_enabledï¿½ |dep-enabled |Optional |  stix-attribute-boolean    |   attribute    |
+| priorityï¿½ |priority |Optional |  stix-attribute-string    |   attribute    |
+| owner_sidï¿½ |owner-sid |Optional |  stix-attribute-string    |   attribute    |
+| window_titleï¿½ |window-title |Optional |  stix-attribute-string    |   attribute    |
+| startup_infoï¿½ |startup-info:process |Optional |embedded |relation |
+| integrity_levelï¿½ï¿½ |integrity-level |Optional |  stix-attribute-string    |   attribute    |
 
 ## The Example Process-Windows-Process in JSON
 The original JSON, accessible in the Python environment
@@ -90,7 +90,8 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stix.module.typedb_lib import TypeDBSink, TypeDBSource
+
 connection = {
     "uri": "localhost",
     "port": "1729",

@@ -1,29 +1,15 @@
 from stix.module.definitions.stix21 import stix_models
 from stix.module.definitions.attack import attack_models
 from stix.module.definitions.os_threat import os_threat_models
-from stix.module.authorise import authorised_mappings
+from stix.module.authorise import authorised_mappings, default_import_type
 
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-default_import_type = {
-    'STIX21': True,
-    "os-intel": False,
-    "os-hunt": False,
-    "CVE": False,
-    "identity": False,
-    "location": False,
-    "rules": False,
-    "ATT&CK": False,
-    "ATT&CK_Versions": ["12.0"],
-    "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
-    "CACAO": False
-}
-
-
-def sdo_type_to_tql(sdo_type, import_type=None, attack_object=False, subtechnique=False):
+def sdo_type_to_tql(sdo_type, import_type=default_import_type,
+                    attack_object=False, subtechnique=False) -> [dict, str, list]:
     """ convert Stix object into a data model for processing
 
     Args:
@@ -33,14 +19,14 @@ def sdo_type_to_tql(sdo_type, import_type=None, attack_object=False, subtechniqu
     Returns:
         obj_tql : the dict of the tql properties
         tql_name : the typeql name of the object
+        is_list: a list of all the porperties that are lists
 
     """
     auth = authorised_mappings(import_type)
     obj_tql = {}
+    is_list =[]
     tql_name = sdo_type
     # If import_type is deaful None, then assign to default)
-    if not import_type:
-        import_type = default_import_type
 
     # 1. get the specific typeql names for an object into a dictionary
     #print(f'through to decisions, attack is {attack_object}, sub technqiue {subtechnique}')
@@ -55,66 +41,77 @@ def sdo_type_to_tql(sdo_type, import_type=None, attack_object=False, subtechniqu
             obj_tql = os_threat_models["data"][sdo_type]
         else:
             logger.error(f'obj_type type {sdo_type} not supported')
-            return "", ""
+            return {}, "", []
     # - mitre attack_setting import
     elif auth['STIX21'] and auth["ATT&CK"]:
         if attack_object:
+            is_list.extend(auth["is_lists"]["sdo"]["attack"])
             attack_type = ''
-            obj_tql = attack_models["base"][sdo_type]
+            obj_tql = attack_models["base"]["attack_base"]
             # Convert from stix-type to attack-tql-entity
             for model in attack_models["mappings"]["object_conversion"]:
                 if model["type"] == sdo_type:
                     attack_type = model["typeql"]
-                    if attack_type == "technique":
-                        if subtechnique:
-                            attack_type = "sub-technique"
+                    if attack_type == "technique" and subtechnique:
+                        attack_type = "sub-technique"
                     obj_tql.update(attack_models["data"][attack_type])
                     break
             # Else log an error
             if not attack_type:
                 logger.error(f'obj_type type {sdo_type} not in attack type conversion dict, type_to_tql_name')
-                return "", ""
+                return {}, "", []
             else:
                 tql_name = attack_type
 
         else:
             # its a Stix object, not an AT&CK one
-            if sdo_type in stix_models:
+            if sdo_type in stix_models["data"]:
                 # dispatch specific stix properties plus mitre properties plus generic sdo properties
-                obj_tql = stix_models[sdo_type]
-            elif sdo_type in os_threat_models:
+                obj_tql = stix_models["data"][sdo_type]
+            elif sdo_type in os_threat_models["data"]:
                 # dispatch specific stix properties plus later on, generic sdo properties
-                obj_tql = os_threat_models[sdo_type]
+                obj_tql = os_threat_models["data"][sdo_type]
             else:
                 logger.error(f'obj_type type {sdo_type} not in stix_models["dispatch_stix"] or dispatch mitre')
-                return "", ""
+                return {}, "", []
 
     else:
         logger.error(f'import type {import_type} not supported')
-        return "", ""
+        return {}, "", []
 
     # 1.C) Add the standard object properties to the specific ones, and split them into properties and relations
     obj_tql.update(stix_models["base"]["base_sdo"])
+    is_list.update(auth["is_lists"]["sdo"][sdo_type])
+    is_list.update(auth["is_lists"]["sdo"]["sdo"])
 
-    return obj_tql, tql_name
+    return obj_tql, tql_name, is_list
 
 
-def sro_type_to_tql(sro_type, import_type=None, attack_object=False, uses_relation=False, is_procedure=False):
+def sro_type_to_tql(sro_type, sro_sub_type,import_type=default_import_type,
+                    attack_object=False, uses_relation=False, is_procedure=False) -> [dict, str, list]:
     """ convert Stix object into a data model for processing
 
         Args:
             sro_type: the Stix2 type
+            sro_sub_type: the relationship type
             import_type (): the type of import to use
+
 
         Returns:
             obj_tql : the dict of the tql properties
             tql_name : the typeql name of the object
+            is_list: a list of all the porperties that are lists
 
     """
     # - list of property names that have values, and do not include False values
     auth = authorised_mappings(import_type)
     obj_tql = {}
     sro_tql_name = sro_type
+    if sro_sub_type != "":
+        sro_tql_name = sro_sub_type
+    is_list = auth["is_lists"]["sro"]["sro"]
+    if sro_type == "sighting":
+        is_list.extend(auth["is_lists"]["sro"]["sighting"])
     # If import_type is deaful None, then assign to default)
     if not import_type:
         import_type = default_import_type
@@ -128,14 +125,15 @@ def sro_type_to_tql(sro_type, import_type=None, attack_object=False, uses_relati
             obj_tql = os_threat_models["data"][sro_type]
         else:
             logger.error(f'obj_type type {sro_type} not supported stix relation')
-            return "", ""
+            return {}, "", []
     # - mitre attack_setting import
     elif auth['STIX21'] and auth["ATT&CK"]:
         if attack_object:
+            is_list.extend(auth["is_lists"]["sro"]["attack"])
             attack_type = ''
             obj_tql = attack_models["base"]["attack_base"]
             # Convert from stix-type to attack-tql-entity
-            for model in attack_models["mappings"]["type_to_tql_name"]:
+            for model in attack_models["mappings"]["object_conversion"]:
                 if model["type"] == sro_type:
                     attack_type = model["typeql"]
                     obj_tql.update(attack_models["data"][attack_type])
@@ -145,7 +143,7 @@ def sro_type_to_tql(sro_type, import_type=None, attack_object=False, uses_relati
             # Else log an error
             if not attack_type:
                 logger.error(f'obj_type type {sro_type} not in attack type conversion dict, type_to_tql_name')
-                return "", ""
+                return {}, "", []
             else:
                 sro_tql_name = attack_type
 
@@ -159,19 +157,19 @@ def sro_type_to_tql(sro_type, import_type=None, attack_object=False, uses_relati
                 obj_tql = os_threat_models["data"][sro_type]
             else:
                 logger.error(f'obj_type type {sro_type} not in not any supported stix relation ')
-                return "", ""
+                return {}, "", []
 
     else:
         logger.error(f'import type {import_type} not supported')
-        return "", ""
+        return {}, "", []
 
     # - add on the generic sro properties
     obj_tql.update(stix_models["base"]["base_sro"])
 
-    return obj_tql, sro_tql_name
+    return obj_tql, sro_tql_name, is_list
 
 
-def sco__type_to_tql(sco_type, import_type=None):
+def sco__type_to_tql(sco_type, import_type=default_import_type) -> [dict, str, list]:
     """ convert Stix object into a data model for processing
 
         Args:
@@ -179,17 +177,20 @@ def sco__type_to_tql(sco_type, import_type=None):
             import_type (): the type of import to use
 
         Returns:
-            : a list of all properties
+            obj_tql : a list of all properties
             obj_tql : the dict of the twl proeprties
+            is_list: a list of all the porperties that are lists
 
     """
-    # If import_type is deaful None, then assign to default)
-    if not import_type:
-        import_type = default_import_type
+    # Based on import type setup observables
+    auth = authorised_mappings(import_type)
+    is_list = auth["is_lists"]["sco"]["sco"]
+    is_list.extend(auth["is_lists"]["sco"][sco_type])
+
     # - get the object-specific typeql names, sighting or relationship
     sco_tql_name = sco_type
     obj_tql = stix_models["data"][sco_type]
     # - add on the generic sro properties
     obj_tql.update(stix_models["base"]["base_sco"])
 
-    return obj_tql, sco_tql_name
+    return obj_tql, sco_tql_name, is_list

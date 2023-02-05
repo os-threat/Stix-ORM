@@ -18,16 +18,16 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 | defanged |defanged |      Optional       |stix-attribute-boolean |   attribute    |
 |  extensions           |               n/a                 |        n/a          |           n/a             |      n/a       |
 | is_hidden |is-hidden |      Optional       |  stix-attribute-boolean    |   attribute    |
-|  pid |pid |      Optional       |  stix-attribute-string    |   attribute    |
-|  created_time |created-time |      Optional       |  stix-attribute-timestamp    |   attribute    |
-|  cwd |cwd |      Optional       |  stix-attribute-string    |   attribute    |
-|  command_line |command-line |      Optional       |  stix-attribute-string    |   attribute    |
-|  environment_variables |environment-variables:process |      Optional       |   embedded     |relation |
-|  opened_connection_refs |open-connections:process |      Optional       |   embedded     |relation |
-|  creator_user_ref |user-created-by:created |      Optional       |   embedded     |relation |
-|  image_ref |process-image:process |      Optional       |   embedded     |relation |
-|  parent_ref |process-parent:parent |      Optional       |   embedded     |relation |
-|  child_refs |process-child:process |      Optional       |   embedded     |relation |
+| ï¿½pid |pid |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½created_time |created-time |      Optional       |  stix-attribute-timestamp    |   attribute    |
+| ï¿½cwd |cwd |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½command_line |command-line |      Optional       |  stix-attribute-string    |   attribute    |
+| ï¿½environment_variables |environment-variables:process |      Optional       |   embedded     |relation |
+| ï¿½opened_connection_refs |open-connections:process |      Optional       |   embedded     |relation |
+| ï¿½creator_user_ref |user-created-by:created |      Optional       |   embedded     |relation |
+| ï¿½image_ref |process-image:process |      Optional       |   embedded     |relation |
+| ï¿½parent_ref |process-parent:parent |      Optional       |   embedded     |relation |
+| ï¿½child_refs |process-child:process |      Optional       |   embedded     |relation |
 
 ## The Example Process in JSON
 The original JSON, accessible in the Python environment
@@ -88,7 +88,8 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stix.module.typedb_lib import TypeDBSink, TypeDBSource
+
 connection = {
     "uri": "localhost",
     "port": "1729",

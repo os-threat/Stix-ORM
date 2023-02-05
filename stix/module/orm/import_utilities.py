@@ -9,7 +9,7 @@ from stix2.parsing import parse
 from stix.module.definitions.stix21 import stix_models
 from stix.module.definitions.attack import attack_models
 from stix.module.definitions.os_threat import os_threat_models
-from stix.module.authorise import authorised_mappings
+from stix.module.authorise import authorised_mappings, default_import_type
 
 import logging
 
@@ -52,7 +52,7 @@ def add_property_to_typeql(prop, obj_tql, obj, prop_var_list):
     """
     type_ql = type_ql_props = ''
     tql_prop_name = obj_tql[prop]
-    # if property is defanged, summary or revoked, and the value is false, then don't add it to typedb description
+    # if property is defanged, summary or revoked, and the value is false, then don't add it to typedb_lib description
     if prop == "defanged" and obj.defanged == False:
         return type_ql, type_ql_props, prop_var_list
     elif prop == "revoked" and obj.revoked == False:
@@ -93,7 +93,7 @@ def add_property_to_typeql(prop, obj_tql, obj, prop_var_list):
 # --------------------------------------------------
 # Giant Switch statement to add the embedded relations to the typeql statement
 
-def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], import_type=None, inc=-1):
+def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], import_type=default_import_type, inc=-1):
     """
         Top level function to add one of the sub objects to the stix object
     Args:

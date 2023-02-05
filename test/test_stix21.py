@@ -2,7 +2,7 @@ import pathlib
 import unittest
 import json
 import os
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stix.module.typedb_lib import TypeDBSink, TypeDBSource
 import itertools as it
 import glob
 import logging

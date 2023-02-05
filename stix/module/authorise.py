@@ -10,91 +10,191 @@ from stix2.utils import is_object, is_stix_type, get_type_from_id, is_sdo, is_sc
 from stix.module.definitions.stix21 import stix_models
 from stix.module.definitions.attack import attack_models
 from stix.module.definitions.os_threat import os_threat_models
+from stix.module.definitions.cacao import cacao_models
+from stix.module.definitions.kestrel import kestrel_models
 
 import logging
 
-logger = logging.getLogger(__name__)
+#logger = logging.getLogger(__name__)
+
+
+##############################################################
+#  1.) Default Import Type at only Stix Objects, all else False
+############################################################
+
 
 default_import_type = {
     "STIX21": True,
+    "ATT&CK": False,
     "os-intel": False,
     "os-hunt": False,
+    "kestrel": False,
+    "CACAO": False,
     "CVE": False,
     "identity": False,
     "location": False,
     "rules": False,
-    "ATT&CK": False,
-    "ATT&CK_Versions": ["12.0"],
-    "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
-    "CACAO": False
+    "ATT&CK_Versions": ["12.1"],
+    "ATT&CK_Domains": ["Enterprise ATT&CK", "Mobile ATT&CK", "ICS ATT&CK"]
 }
 
 
 ##############################################################
-#  1.) Methods to Add 2_tql() Capability to all Stix Objects
+#  2.) References used to Categorise Choices and Shapes for all Objects
 ############################################################
+process_maps = [{
+    "name": "reln_name",
+    "keys": ["embedded_relations", "standard_relations", "list_of_objects", "key_value_relations", "extension_relations", "relations_sro_roles"],
+    "match":["relations_embedded", "relations_sro_roles", "relations_list_of_objects", "relations_key_value", "relations_extensions_and_objects", "relations_sro_roles"],
+    "cond": ["rel", "stix", "name", "name", "stix", "stix"]
+},{
+    "name": "reln",
+    "keys": ["embedded_relations", "standard_relations", "list_of_objects", "key_value_relations", "extension_relations", "relations_sro_roles"],
+    "match":["relations_embedded", "relations_sro_roles", "relations_list_of_objects", "relations_key_value", "relations_extensions_and_objects", "relations_sro_roles"],
+    "cond": []
+}, {
+    "name": "tql_types",
+    "keys": ["sdo", "sdo", "sco", "sub", "meta"],
+    "match":["object_conversion", "object_conversion", "object_conversion", "object_conversion", "object_conversion"],
+    "cond": ["sdo", "sdo", "sco", "sub", "meta" ]
+}, {
+    "name": "is_lists",
+    "keys": ["sdo", "sdo", "sco", "sub"],
+    "match":["is_list_sdo", "is_list_sro", "is_list_sco", "is_list_sub_objects"],
+    "cond": ["sdo", "sdo", "sco", "sub"]
+}, {
+    "name": "direct",
+    "keys": ["sub_objects", "objects"],
+    "match":["sub_objects", "data"],
+    "cond": []
+}, {
+    "name": "conv",
+    "keys": ["sdo", "sdo", "sco", "sub"],
+    "match":["object", "object", "object", "object"],
+    "cond": ["sdo", "sdo", "sco", "sub"]
+}]
+
+domains = {
+    "stix": stix_models,
+    "attack": attack_models,
+    "os-threat": os_threat_models,
+    "cacao": cacao_models
+}
 
 
-def authorised_mappings(import_type=None):
+def authorised_mappings(import_type=default_import_type):
     auth = {}
     auth["reln_name"] = {}
     auth["reln"] = {}
     auth["tql_types"] = {}
     auth["is_lists"] = {}
 
-    if import_type is None:
-        import_type = default_import_type
-
-    # stix baselines
-    if import_type["STIX21"]:
-        auth["reln_name"]["embedded_relations"] = [x["rel"] for x in stix_models["mappings"]["relations_embedded"]]
-        auth["reln_name"]["standard_relations"] = [x["stix"] for x in stix_models["mappings"]["relations_sro_roles"]]
-        auth["reln_name"]["list_of_objects"] = [x["name"] for x in stix_models["mappings"]["relations_list_of_objects"]]
-        auth["reln_name"]["key_value_relations"] = [x["name"] for x in stix_models["mappings"]["relations_key_value"]]
-        auth["reln_name"]["extension_relations"] = [x["stix"] for x in stix_models["mappings"]["relations_extensions_and_objects"]]
-        auth["reln"]["embedded_relations"] = stix_models["mappings"]["relations_embedded"]
-        auth["reln"]["standard_relations"] = stix_models["mappings"]["relations_sro_roles"]
-        auth["reln"]["list_of_objects"] = stix_models["mappings"]["relations_list_of_objects"]
-        auth["reln"]["key_value_relations"] = stix_models["mappings"]["relations_key_value"]
-        auth["reln"]["extension_relations"] = stix_models["mappings"]["relations_extensions_and_objects"]
-        auth["reln"]["relations_sro_roles"] = stix_models["mappings"]["relations_sro_roles"]
-        auth["tql_types"]["sdo"] = [x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sdo"]
-        auth["tql_types"]["sro"] = [x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sro"]
-        auth["tql_types"]["sco"] = [x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sco"]
-        auth["tql_types"]["sub"] = [x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sub"]
-        auth["tql_types"]["meta"] = stix_models["mappings"]["types_meta"]
-        auth["is_lists"]["sdo"] = stix_models["mappings"]["is_list_sdo"]
-        auth["is_lists"]["sro"] = stix_models["mappings"]["is_list_sro"]
-        auth["is_lists"]["sco"] = stix_models["mappings"]["is_list_sco"]
-        auth["is_lists"]["sub"] = stix_models["mappings"]["is_list_sub_objects"]
-        auth["sub_objects"] = stix_models["sub_objects"]
-        auth["objects"] = stix_models["data"]
-
-    #
+    # setup Stix by default
+    auth_domains = [domains["stix"]]
+    # setup "ATT&CK" if selected
     if import_type["ATT&CK"]:
-        auth["reln_name"]["embedded_relations"].extend([x["typeql"] for x in attack_models["mappings"]["relations_embedded"]])
-        auth["reln_name"]["standard_relations"].extend([x["typeql"] for x in attack_models["mappings"]["relations_sro_roles"]])
-        auth["reln_name"]["list_of_objects"].extend([x["typeql"] for x in attack_models["mappings"]["relations_list_of_objects"]])
-        auth["reln_name"]["key_value_relations"].extend([x["typeql"] for x in attack_models["mappings"]["relations_key_value"]])
-        auth["reln_name"]["extension_relations"].extend([x["relation"] for x in attack_models["mappings"]["relations_extensions_and_objects"]])
-        auth["reln"]["embedded_relations"].extend(attack_models["mappings"]["relations_embedded"])
-        auth["reln"]["standard_relations"].extend(attack_models["mappings"]["relations_sro_roles"])
-        auth["reln"]["list_of_objects"].extend(attack_models["mappings"]["relations_list_of_objects"])
-        auth["reln"]["key_value_relations"].extend(attack_models["mappings"]["relations_key_value"])
-        auth["reln"]["extension_relations"].extend(attack_models["mappings"]["relations_extensions_and_objects"])
-        auth["reln"]["relations_sro_roles"].extend(attack_models["mappings"]["relations_sro_roles"])
-        auth["tql_types"]["sdo"].extend([x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sdo"])
-        auth["tql_types"]["sro"].extend([x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sro"])
-        auth["tql_types"]["sco"].extend([x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sco"])
-        auth["tql_types"]["sub"].extend([x["type"] for x in stix_models["mappings"]["object_conversion"] if x["object"]=="sub"])
-        auth["tql_types"]["meta"].extend(attack_models["mappings"]["types_meta"])
-        auth["is_lists"]["sdo"].update(attack_models["mappings"]["is_list_sdo"])
-        auth["is_lists"]["sro"].update(attack_models["mappings"]["is_list_sro"])
-        auth["is_lists"]["sco"].update(attack_models["mappings"]["is_list_sco"])
-        auth["is_lists"]["sub"].update(attack_models["mappings"]["is_list_sub_objects"])
-        auth["sub_objects"].update(attack_models["sub_objects"])
-        auth["objects"].update(attack_models["data"])
-    # if os-threat, implement here
+        auth_domains.append(domains["attack"])
+    # setup "ATT&CK" if selected
+    if import_type["os-intel"] or import_type["os-hunt"]:
+        auth_domains.append(domains["os-threat"])
+    # setup "ATT&CK" if selected
+    if import_type["CACAO"]:
+        auth_domains.append(domains["cacao"])
+
+    dom=["stix","attack","os-threat", "cacao"]
+    # initialise authorisation object, for documentation purposes
+    auth["reln_name"]["embedded_relations"] = []
+    auth["reln_name"]["standard_relations"] = []
+    auth["reln_name"]["list_of_objects"] = []
+    auth["reln_name"]["key_value_relations"] = []
+    auth["reln_name"]["extension_relations"] = []
+    auth["reln_name"]["relations_sro_roles"] = []
+    auth["reln"]["embedded_relations"] = []
+    auth["reln"]["standard_relations"] = []
+    auth["reln"]["list_of_objects"] = []
+    auth["reln"]["key_value_relations"] = []
+    auth["reln"]["extension_relations"] = []
+    auth["reln"]["relations_sro_roles"] = []
+    auth["tql_types"]["sdo"] = []
+    auth["tql_types"]["sro"] = []
+    auth["tql_types"]["sco"] = []
+    auth["tql_types"]["sub"] = []
+    auth["tql_types"]["meta"] = []
+    auth["is_lists"]["sdo"] = {}
+    auth["is_lists"]["sro"] = {}
+    auth["is_lists"]["sco"] = {}
+    auth["is_lists"]["sub"] = {}
+    auth["sub_objects"] = {}
+    auth["objects"] = {}
+    auth["conv"] = {}
+    auth["conv"]["sdo"] = []
+    auth["conv"]["sro"] = []
+    auth["conv"]["sco"] = []
+    auth["conv"]["sub"] = []
+    auth["classes"] = {}
+    auth["classes"]["sdo"] = {}
+    auth["classes"]["sro"] = {}
+    auth["classes"]["sco"] = {}
+    auth["classes"]["sub"] = {}
+
+    for j, domain in enumerate(auth_domains):
+        for process in process_maps:
+            name = process["name"]
+            keys = process["keys"]
+            matches = process["match"]
+            conds = process["cond"]
+            if name == "reln_name":
+                #logger.debug("----------- reln_name ------------")
+                for i, key in enumerate(keys):
+                    if domain["mappings"].get(matches[i], False):
+                        #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}, cond->{conds[i]}')
+                        value_list = [x[conds[i]] for x in domain["mappings"][matches[i]]]
+                        auth[name][key].extend(value_list)
+            elif name == "reln":
+                #logger.debug("--------- reln--------------")
+                for i, key in enumerate(keys):
+                    if domain["mappings"].get(matches[i], False):
+                        #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{key}, match->{matches[i]}')
+                        value_list = domain["mappings"][matches[i]]
+                        auth[name][key].extend(value_list)
+            elif name == "tql_types":
+                #logger.debug("---------- tql_types -------------")
+                for i, key in enumerate(keys):
+                    if domain["mappings"].get("object_conversion", False):
+                        #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}, cond->{conds[i]}')
+                        value_list = [x["type"] for x in domain["mappings"][matches[i]] if x["object"] == conds[i]]
+                        auth[name][key].extend(value_list)
+            elif name == "is_lists":
+                #logger.debug("--------- is_lists --------------")
+                for i, key in enumerate(keys):
+                    if domain["mappings"].get(matches[i], False):
+                        #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}, cond->{conds[i]}')
+                        value_dict = domain["mappings"][matches[i]]
+                        auth[name][key].update(value_dict)
+            elif name == "direct":
+                #logger.debug("-------- direct ---------------")
+                for i, key in enumerate(keys):
+                    if domain.get(matches[i], False):
+                        #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}')
+                        value_dict = domain[matches[i]]
+                        auth[key].update(value_dict)
+            elif name == "conv":
+                #logger.debug("-------- conv ---------------")
+                for i, key in enumerate(keys):
+                    if domain["mappings"].get("object_conversion", False):
+                        #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}, cond->{conds[i]}')
+                        value_list = [x for x in domain["mappings"]["object_conversion"] if x["object"] == conds[i]]
+                        auth[name][key].extend(value_list)
+            elif name == "classes":
+                #logger.debug("-------- conv ---------------")
+                for i, key in enumerate(keys):
+                    if domain["classes"].get(key, False):
+                        #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}, cond->{conds[i]}')
+                        value_dict = domain["classes"][key]
+                        auth[name][key].update(value_dict)
+
+            else:
+                pass
 
     # finally add the import type to the auth object
     auth.update(import_type)

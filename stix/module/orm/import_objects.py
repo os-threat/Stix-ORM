@@ -1,33 +1,21 @@
-from stix.module.authorise import authorised_mappings
-from stix.module.orm.decisions_type_to_typeql import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
+from stix.module.authorise import authorised_mappings, default_import_type
+from stix.module.orm.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
 
-from stix.module.orm.import_stix_utilities import clean_props, get_embedded_match, split_on_activity_type, \
+from stix.module.orm.import_utilities import clean_props, get_embedded_match, split_on_activity_type, \
     add_property_to_typeql, add_relation_to_typeql, val_tql
 
 import logging
 
 logger = logging.getLogger(__name__)
 
-default_import_type = {
-    "STIX21": True,
-    "os-intel": False,
-    "os-hunt": False,
-    "CVE": False,
-    "identity": False,
-    "location": False,
-    "rules": False,
-    "ATT&CK": False,
-    "ATT&CK_Versions": ["12.0"],
-    "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
-    "CACAO": False
-}
+
 
 # ---------------------------------------------------
 # 1.0) Helper method to direct the right typeql method to an incoming Stix object
 # ---------------------------------------------------
 
 
-def stix2_to_typeql(stix_object, import_type=None):
+def stix2_to_typeql(stix_object, import_type=default_import_type):
     """
     Initial function to convert Stix into typeql, it adds together the match and insert statements
 
@@ -36,7 +24,7 @@ def stix2_to_typeql(stix_object, import_type=None):
         import_type (): string, either Stix2 or ATT&CK
 
     Returns:
-        typeql: a string of typeql to match and insert the object int typedb
+        typeql: a string of typeql to match and insert the object int typedb_lib
 
     """
     match, insert, dep_obj = stix2_to_match_insert(stix_object, import_type)
@@ -45,7 +33,7 @@ def stix2_to_typeql(stix_object, import_type=None):
     return typeql, dep_obj
 
 
-def stix2_to_match_insert(stix_object, import_type=None):
+def stix2_to_match_insert(stix_object, import_type=default_import_type):
     """
     Initial function to convert Stix into match/insert statments
 
@@ -113,7 +101,7 @@ def raw_stix2_to_typeql(stix_object,
 # 1.1) SDO Object Method to convert a Python object --> typeql string
 #                 -   
 # -------------------------------------------------------------
-def sdo_to_data(sdo, import_type=None):
+def sdo_to_data(sdo, import_type=default_import_type):
     """ convert Stix object into a data model for processing
 
     Args:
@@ -137,13 +125,13 @@ def sdo_to_data(sdo, import_type=None):
     if attack_object:
         sub_technique = False if not sdo.get("x_mitre_is_subtechnique", False) else True
 
-    obj_tql, sdo_tql_name = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique)
+    obj_tql, sdo_tql_name, is_list = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique)
     print(f'object tql {obj_tql}, sdo tql name {sdo_tql_name}')
 
     return total_props, obj_tql, sdo_tql_name
 
 
-def sdo_to_typeql(sdo, import_type=None):
+def sdo_to_typeql(sdo, import_type=default_import_type):
     """
     Initial function to convert Stix2 SDO object into typeql
 
@@ -203,7 +191,7 @@ def sdo_to_typeql(sdo, import_type=None):
 # 1.2) SRO Object Method to convert a Python object --> typeql string
 #                 -   
 # -----------------------------------------------------
-def sro_to_data(sro, import_type='STIX21'):
+def sro_to_data(sro, import_type=default_import_type):
     """ convert Stix object into a data model for processing
 
         Args:
@@ -230,14 +218,15 @@ def sro_to_data(sro, import_type='STIX21'):
         is_procedure = False if not sro.get("target_ref", False) == "attack-pattern" else True
     obj_tql = {}
     sro_tql_name = sro.type
+    sro_sub_rel = "" if not sro.get("relationship_type", False) else sro["relationship_type"]
 
-    obj_tql, sro_tql_name = sro_type_to_tql(sro.type, import_type, attack_object, uses_relation, is_procedure)
+    obj_tql, sro_tql_name, is_list = sro_type_to_tql(sro_tql_name, sro_sub_rel, import_type, attack_object, uses_relation, is_procedure)
     print(f'object tql {obj_tql}, sro tql name {sro_tql_name}')
 
     return total_props, obj_tql, sro_tql_name
 
 
-def sro_to_typeql(sro, import_type='STIX21'):
+def sro_to_typeql(sro, import_type=default_import_type):
     """
     Initial function to convert Stix2 SRO object into typeql
 
@@ -277,12 +266,12 @@ def sro_to_typeql(sro, import_type='STIX21'):
         dep_match += source_match + target_match
         # 3.)  then setup the typeql statement to insert the specific sro relation, from the dict, with the matches
         for record in auth["reln"]["standard_relations"]:
-            if record['stix'] == sro["relationship_type"]:
+            if record['stix'] == sro_tql_name:
                 dep_insert += '\n' + sro_var
                 dep_insert += ' (' + record['source'] + ':' + source_var
                 dep_insert += ', ' + record['target'] + ':' + target_var + ')'
                 dep_insert += ' isa ' + record['typeql']
-                core_ql = sro_var + ' isa ' + record['typeql']
+                core_ql = sro_var + ' isa ' + sro_tql_name
                 core_ql += ', has stix-id $stix-id;\n$stix-id ' + val_tql(sro.id) + ';\n'
                 break
                 # B. If it is a Sighting then match the object to the sighting
@@ -349,7 +338,7 @@ def sro_to_typeql(sro, import_type='STIX21'):
 # 1.3) SCO Object Method to convert a Python object --> typeql string
 #                 -
 # --------------------------------------------------
-def sco_to_data(sco, import_type='STIX21'):
+def sco_to_data(sco, import_type=default_import_type):
     """ convert Stix object into a data model for processing
 
         Args:
@@ -373,7 +362,7 @@ def sco_to_data(sco, import_type='STIX21'):
     return total_props, obj_tql, sco_tql_name
 
 
-def sco_to_typeql(sco, import_type=None):
+def sco_to_typeql(sco, import_type=default_import_type):
     """
     Initial function to convert Stix2 SCO object into typeql
 
@@ -434,7 +423,7 @@ def sco_to_typeql(sco, import_type=None):
 # --------------------------------------------------
 
 
-def marking_definition_to_typeql(stix_object, import_type=None):
+def marking_definition_to_typeql(stix_object, import_type=default_import_type):
     """
     Initial function to convert Stix2 marking object into typeql
 

@@ -1,9 +1,5 @@
 {
-  "relationship": [
-    "x_mitre_contributors",
-    "x_mitre_domains"
-  ],
-  "procedure": [
+  "attack": [
     "x_mitre_contributors",
     "x_mitre_domains"
   ]
