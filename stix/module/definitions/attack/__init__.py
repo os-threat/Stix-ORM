@@ -19,6 +19,12 @@ from loguru import logger
 import os
 from pathlib import Path
 
+from stix.module.definitions.attack.classes import (
+    Matrix, Tactic, Technique, SubTechnique, Mitigation, Group, SoftwareMalware,
+    SoftwareTool, DataSource, DataComponent, AttackCampaign, Collection,
+    ObjectVersion
+)
+
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
 
@@ -70,11 +76,7 @@ for file_path in glob(f'{dir_path}/sub_objects/*.json'):
 
         attack_models["sub_objects"][key] = json.load(json_file)
 
-from classes import (
-    Matrix, Tactic, Technique, SubTechnique, Mitigation, Group, SoftwareMalware,
-    SoftwareTool, DataSource, DataComponent, AttackCampaign, Collection,
-    ObjectVersion
-)
+
 attack_models["classes"] = {}
 attack_models["classes"]["sdo"] = {
     "Matrix": Matrix,

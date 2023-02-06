@@ -88,30 +88,31 @@ class Technique(AttackPattern):
     """For more detailed information on this object's properties, see
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
-
-    _type = 'attack-pattern'
-    _properties = super()._properties.update(OrderedDict([
-        ('x_mitre_detection', StringProperty()),
-        ('x_mitre_platforms', ListProperty(StringProperty)),
-        ('x_mitre_data_sources', ListProperty(StringProperty)),
-        ('x_mitre_is_subtechnique', BooleanProperty(default=lambda: False)),
-        ('x_mitre_system_requirements', ListProperty(StringProperty)),
-        ('x_mitre_tactic_type', ListProperty(StringProperty)),
-        ('x_mitre_permissions_required', ListProperty(StringProperty)),
-        ('x_mitre_effective_permissions', ListProperty(StringProperty)),
-        ('x_mitre_defense_bypassed', ListProperty(StringProperty)),
-        ('x_mitre_remote_support', BooleanProperty(default=lambda: False)),
-        ('x_mitre_impact_type', ListProperty(StringProperty)),
-    ]))
+    def __init__(self):
+        super().__init__()
+        _type = 'attack-pattern'
+        _properties = self._properties.update(OrderedDict([
+            ('x_mitre_detection', StringProperty()),
+            ('x_mitre_platforms', ListProperty(StringProperty)),
+            ('x_mitre_data_sources', ListProperty(StringProperty)),
+            ('x_mitre_is_subtechnique', BooleanProperty(default=lambda: False)),
+            ('x_mitre_system_requirements', ListProperty(StringProperty)),
+            ('x_mitre_tactic_type', ListProperty(StringProperty)),
+            ('x_mitre_permissions_required', ListProperty(StringProperty)),
+            ('x_mitre_effective_permissions', ListProperty(StringProperty)),
+            ('x_mitre_defense_bypassed', ListProperty(StringProperty)),
+            ('x_mitre_remote_support', BooleanProperty(default=lambda: False)),
+            ('x_mitre_impact_type', ListProperty(StringProperty)),
+        ]))
 
 
 class SubTechnique(Technique):
     """For more detailed information on this object's properties, see
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
-
-    _type = 'attack-pattern'
-    _properties = super()._properties
+    def __init__(self):
+        _type = 'attack-pattern'
+        _properties = self._properties
 
 
 class Mitigation(CourseOfAction):
@@ -119,14 +120,16 @@ class Mitigation(CourseOfAction):
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
 
-    _type = 'course-of-action'
-    _properties = super()._properties.update(OrderedDict([
-        ('x_mitre_version', StringProperty()),
-        ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', StringProperty()),
-        ('x_mitre_domains', ListProperty(StringProperty)),
-        ('x_mitre_attack_spec_version', StringProperty()),
-    ]))
+    def __init__(self):
+        super().__init__()
+        _type = 'course-of-action'
+        _properties = self._properties.update(OrderedDict([
+            ('x_mitre_version', StringProperty()),
+            ('x_mitre_contributors', ListProperty(StringProperty)),
+            ('x_mitre_modified_by_ref', StringProperty()),
+            ('x_mitre_domains', ListProperty(StringProperty)),
+            ('x_mitre_attack_spec_version', StringProperty()),
+        ]))
 
 
 class Group(IntrusionSet):
@@ -134,14 +137,16 @@ class Group(IntrusionSet):
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
 
-    _type = 'intrusion-set'
-    _properties = super()._properties.update(OrderedDict([
-        ('x_mitre_version', StringProperty()),
-        ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', StringProperty()),
-        ('x_mitre_domains', ListProperty(StringProperty)),
-        ('x_mitre_attack_spec_version', StringProperty())
-    ]))
+    def __init__(self):
+        super().__init__()
+        _type = 'intrusion-set'
+        _properties = self._properties.update(OrderedDict([
+            ('x_mitre_version', StringProperty()),
+            ('x_mitre_contributors', ListProperty(StringProperty)),
+            ('x_mitre_modified_by_ref', StringProperty()),
+            ('x_mitre_domains', ListProperty(StringProperty)),
+            ('x_mitre_attack_spec_version', StringProperty())
+        ]))
 
     def _check_object_constraints(self):
         super(Group, self)._check_object_constraints()
@@ -159,17 +164,18 @@ class SoftwareMalware(Malware):
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
 
-    _type = 'malware'
-    _properties = super()._properties.update(OrderedDict([
-        ('x_mitre_version', StringProperty()),
-        ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', StringProperty()),
-        ('x_mitre_domains', ListProperty(StringProperty)),
-        ('x_mitre_attack_spec_version', StringProperty()),
-        ('malware_types', ListProperty(OpenVocabProperty(MALWARE_TYPE))),
-        ('x_mitre_platforms', ListProperty(StringProperty)),
-        ('x_mitre_aliases', ListProperty(StringProperty)),
-    ]))
+    def __init__(self):
+        _type = 'malware'
+        _properties = self._properties.update(OrderedDict([
+            ('x_mitre_version', StringProperty()),
+            ('x_mitre_contributors', ListProperty(StringProperty)),
+            ('x_mitre_modified_by_ref', StringProperty()),
+            ('x_mitre_domains', ListProperty(StringProperty)),
+            ('x_mitre_attack_spec_version', StringProperty()),
+            ('malware_types', ListProperty(OpenVocabProperty(MALWARE_TYPE))),
+            ('x_mitre_platforms', ListProperty(StringProperty)),
+            ('x_mitre_aliases', ListProperty(StringProperty)),
+        ]))
 
     def _check_object_constraints(self):
         super(SoftwareMalware, self)._check_object_constraints()
@@ -192,17 +198,17 @@ class SoftwareTool(Tool):
     """For more detailed information on this object's properties, see
     `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_z4voa9ndw8v>`__.
     """
-
-    _type = 'tool'
-    _properties = super()._properties.update(OrderedDict([
-        ('x_mitre_version', StringProperty()),
-        ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', StringProperty()),
-        ('x_mitre_domains', ListProperty(StringProperty)),
-        ('x_mitre_attack_spec_version', StringProperty()),
-        ('x_mitre_platforms', ListProperty(StringProperty)),
-        ('x_mitre_aliases', ListProperty(StringProperty)),
-    ]))
+    def __init__(self):
+        _type = 'tool'
+        _properties = self._properties.update(OrderedDict([
+            ('x_mitre_version', StringProperty()),
+            ('x_mitre_contributors', ListProperty(StringProperty)),
+            ('x_mitre_modified_by_ref', StringProperty()),
+            ('x_mitre_domains', ListProperty(StringProperty)),
+            ('x_mitre_attack_spec_version', StringProperty()),
+            ('x_mitre_platforms', ListProperty(StringProperty)),
+            ('x_mitre_aliases', ListProperty(StringProperty)),
+        ]))
 
 
 class DataSource(_DomainObject):
@@ -275,23 +281,24 @@ class AttackCampaign(Campaign):
         `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
 
-    _type = 'campaign'
-    _properties = super()._properties.update(OrderedDict([
-        ('x_mitre_version', StringProperty()),
-        ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', StringProperty()),
-        ('x_mitre_domains', ListProperty(StringProperty)),
-        ('x_mitre_attack_spec_version', StringProperty()),
-        ('x_mitre_first_seen_citation', StringProperty()),
-        ('x_mitre_aliases', StringProperty()),
-    ]))
+    def __init__(self):
+        _type = 'campaign'
+        _properties = self._properties.update(OrderedDict([
+            ('x_mitre_version', StringProperty()),
+            ('x_mitre_contributors', ListProperty(StringProperty)),
+            ('x_mitre_modified_by_ref', StringProperty()),
+            ('x_mitre_domains', ListProperty(StringProperty)),
+            ('x_mitre_attack_spec_version', StringProperty()),
+            ('x_mitre_first_seen_citation', StringProperty()),
+            ('x_mitre_aliases', StringProperty()),
+        ]))
 
 
 class ObjectVersion(_STIXBase21):
     """For more detailed information on this object's properties, see
     `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_i4tjv75ce50h>`__.
     """
-
+    # TODO: Fix ReferenceProperty(required=True) - missing type
     _properties = OrderedDict([
         ('object_ref', ReferenceProperty(required=True)),
         ('object_modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
