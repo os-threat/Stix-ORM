@@ -26,7 +26,7 @@ connection = {
 
 import_type = {
     "STIX21": True,
-    "ATT&CK": False,
+    "ATT&CK": True,
     "os-intel": False,
     "os-hunt": False,
     "kestrel": False,
@@ -398,7 +398,8 @@ if __name__ == '__main__':
     file9 = "threat_actor.json"
     mitre_data = "data/mitre/enterprise-attack.json"
 
-    mitre = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack-12.0.json"
+    mitre_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
+    mitre = "data/mitre/"
 
     id_list = ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46', 'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265', 'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559', 'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6', 'attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5', 'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
     # 019fde1c-
@@ -407,7 +408,7 @@ if __name__ == '__main__':
     #test_initialise()
     #load_file_list(path1, group_list)
     #load_file(mitre_data)
-    #load_file(path1 + f22)
+    load_file(mitre + "test.json")
     #load_file(data_path + file7)
     print("=====")
     print("=====")

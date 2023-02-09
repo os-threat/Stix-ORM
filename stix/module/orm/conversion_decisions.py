@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def sdo_type_to_tql(sdo_type, import_type=default_import_type,
-                    attack_object=False, subtechnique=False) -> [dict, str, list]:
+                    attack_object=False, subtechnique=False) -> [dict, str, dict]:
     """ convert Stix object into a data model for processing
 
     Args:
@@ -26,6 +26,9 @@ def sdo_type_to_tql(sdo_type, import_type=default_import_type,
     obj_tql = {}
     is_list =[]
     tql_name = sdo_type
+    print("in sdo decisions")
+    print(f'obj tql {obj_tql}')
+    print(f"variables, stix {auth['STIX21']}, attack is {auth['ATT&CK']}")
     # If import_type is deaful None, then assign to default)
 
     # 1. get the specific typeql names for an object into a dictionary
@@ -45,16 +48,20 @@ def sdo_type_to_tql(sdo_type, import_type=default_import_type,
     # - mitre attack_setting import
     elif auth['STIX21'] and auth["ATT&CK"]:
         if attack_object:
+            print("I'm processing an attack decision")
             is_list.extend(auth["is_lists"]["sdo"]["attack"])
             attack_type = ''
             obj_tql = attack_models["base"]["attack_base"]
             # Convert from stix-type to attack-tql-entity
             for model in attack_models["mappings"]["object_conversion"]:
+                print(f'chacking models, type is {model["type"]}')
                 if model["type"] == sdo_type:
                     attack_type = model["typeql"]
+                    print(f'attack tye is {attack_type}')
                     if attack_type == "technique" and subtechnique:
-                        attack_type = "sub-technique"
+                        attack_type = "subtechnique"
                     obj_tql.update(attack_models["data"][attack_type])
+                    print("updated")
                     break
             # Else log an error
             if not attack_type:
@@ -80,9 +87,11 @@ def sdo_type_to_tql(sdo_type, import_type=default_import_type,
         return {}, "", []
 
     # 1.C) Add the standard object properties to the specific ones, and split them into properties and relations
+    print("about to update stuff")
     obj_tql.update(stix_models["base"]["base_sdo"])
-    is_list.update(auth["is_lists"]["sdo"][sdo_type])
-    is_list.update(auth["is_lists"]["sdo"]["sdo"])
+    is_list.extend(auth["is_lists"]["sdo"][sdo_type])
+    is_list.extend(auth["is_lists"]["sdo"]["sdo"])
+    print("about to return from deci9sions")
 
     return obj_tql, tql_name, is_list
 

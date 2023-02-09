@@ -13,6 +13,7 @@ from stix.module.orm.import_objects import raw_stix2_to_typeql
 from stix.module.orm.delete_object import delete_stix_object, add_delete_layers
 from stix.module.orm.import_utilities import get_embedded_match
 from stix.module.orm.export_object import convert_ans_to_stix
+from stix.module.parsing.parse_objects import parse
 from .initialise import setup_database, load_schema, sort_layers, load_markings
 
 from stix2 import v21
@@ -20,7 +21,6 @@ from stix2.base import _STIXBase
 from stix2.datastore import (
     DataSink, DataSource, )
 from stix2.datastore.filters import FilterSet
-from stix2.parsing import parse
 
 import logging
 
@@ -384,7 +384,9 @@ class TypeDBSink(DataSink):
     @safe
     def __add_instruction(self,
                           stix_dict):
-        stix_obj = parse(stix_dict)
+        print(f"\n\nim about to parse {stix_dict}")
+        stix_obj = parse(stix_dict, False, self.import_type)
+        print(f'\n\n i have parsed')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
         print(f'dep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
         dep_obj["dep_match"] = dep_match

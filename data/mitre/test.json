@@ -227,5 +227,14 @@
                 "enterprise-attack"
             ],
             "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
-        }
+        }, {
+          "type": "identity",
+          "spec_version": "2.1",
+          "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+          "created": "2015-05-10T16:27:17.760Z",
+          "modified": "2015-05-10T16:27:17.760Z",
+          "name": "Adversary Bravo",
+          "description": "Adversary Bravo is a threat actor that utilizes phishing attacks.",
+          "identity_class": "unknown"
+}
 ]

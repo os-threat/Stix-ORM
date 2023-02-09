@@ -80,12 +80,18 @@ def raw_stix2_to_typeql(stix_object,
         import_type = default_import_type
 
     auth = authorised_mappings(import_type)
+    print(f'\n\nstix object type {stix_object["type"]}')
+    print(f'\n\nauth object  {auth["tql_types"]}')
+
     auth_types = auth["tql_types"]
     if stix_object.type in auth_types["sdo"]:
+        print(f' going into sdo ---? {stix_object}')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = sdo_to_typeql(stix_object, import_type)
     elif stix_object.type in auth_types["sro"]:
+        print(f' going into sro ---> {stix_object}')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = sro_to_typeql(stix_object, import_type)
     elif stix_object.type in auth_types["sco"]:
+        print(f' going into sco ---> {stix_object}')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = sco_to_typeql(stix_object, import_type)
     elif stix_object.type == 'marking-definition':
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = marking_definition_to_typeql(stix_object, import_type)

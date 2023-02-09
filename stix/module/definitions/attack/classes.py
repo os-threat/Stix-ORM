@@ -7,7 +7,7 @@ from stix2.exceptions import (
 from stix2.properties import (
     BooleanProperty, ExtensionsProperty, IDProperty, IntegerProperty, ListProperty,
     OpenVocabProperty, ReferenceProperty, StringProperty,
-    TimestampProperty, TypeProperty,
+    TimestampProperty, TypeProperty, EmbeddedObjectProperty
 )
 from stix2.utils import NOW
 from stix2.v21.base import _DomainObject, _STIXBase21
@@ -300,7 +300,7 @@ class ObjectVersion(_STIXBase21):
     """
     # TODO: Fix ReferenceProperty(required=True) - missing type
     _properties = OrderedDict([
-        ('object_ref', ReferenceProperty(required=True)),
+        ('object_ref', ListProperty(ReferenceProperty(valid_types=["SCO", "SDO", "SRO"], spec_version='2.1'), required=True)),
         ('object_modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
     ])
 
@@ -333,6 +333,6 @@ class Collection(_DomainObject):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('extensions', ExtensionsProperty(spec_version='2.1')),
-        ('x_mitre_contents', ListProperty(ObjectVersion)),
+        ('x_mitre_contents', ListProperty(EmbeddedObjectProperty(type=ObjectVersion))),
     ])
 

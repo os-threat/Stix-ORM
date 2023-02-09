@@ -72,6 +72,11 @@ process_maps = [{
     "keys": ["sdo", "sdo", "sco", "sub"],
     "match":["object", "object", "object", "object"],
     "cond": ["sdo", "sdo", "sco", "sub"]
+}, {
+    "name": "classes",
+    "keys": ["sdo", "sdo", "sco", "sub"],
+    "match":["object", "object", "object", "object"],
+    "cond": ["sdo", "sdo", "sco", "sub"]
 }]
 
 domains = {

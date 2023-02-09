@@ -18,6 +18,11 @@ from glob import glob
 from loguru import logger
 import os
 from pathlib import Path
+from .classes import (
+    Matrix, Tactic, Technique, SubTechnique, Mitigation, Group, SoftwareMalware,
+    SoftwareTool, DataSource, DataComponent, AttackCampaign, Collection,
+    ObjectVersion
+)
 
 from stix.module.definitions.attack.classes import (
     Matrix, Tactic, Technique, SubTechnique, Mitigation, Group, SoftwareMalware,
