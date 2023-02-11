@@ -90,8 +90,8 @@ for file_path in glob(f'{dir_path}/sub_objects/*.json'):
 
 stix_models["classes"] = {}
 stix_models["classes"]["sro"] = {
-    "Relationship":Relationship,
-    "Sighting":Sighting
+    "Relationship": Relationship,
+    "Sighting": Sighting
 }
 stix_models["classes"]["sdo"] = {
     "AttackPattern":AttackPattern,

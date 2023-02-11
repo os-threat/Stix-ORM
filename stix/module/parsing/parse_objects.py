@@ -98,6 +98,7 @@ def dict_to_stix2(stix_dict, allow_custom=False, import_type=default_import_type
     obj_type = stix_dict["type"]
     print(f'\nin parse, type is --> {obj_type}')
     print(f'\n auth-sdo -->{auth["tql_types"]["sdo"]}\n')
+    print(f'\n\n auth-sro -->{auth["tql_types"]["sro"]}\n')
     if obj_type in auth["tql_types"]["sdo"]:
         print("Im in sdo")
         attack_object = False if not stix_dict.get("x_mitre_version", False) else True
@@ -126,7 +127,8 @@ def dict_to_stix2(stix_dict, allow_custom=False, import_type=default_import_type
         obj_tql, sro_tql_name, is_list = sro_type_to_tql(obj_type, sro_sub_rel, import_type, attack_object,
                                                          uses_relation, is_procedure)
 
-        obj_class = class_for_type(obj_type, import_type, "sro")
+        print(f"~~~~~~~~~~~ sro tql name {sro_tql_name}")
+        obj_class = class_for_type(sro_tql_name, import_type, "sro")
     elif obj_type in auth["tql_types"]["sub"]:
         print("I'm in sub")
         obj_class = class_for_type(obj_type, import_type, "sub")
@@ -153,6 +155,10 @@ def dict_to_stix2(stix_dict, allow_custom=False, import_type=default_import_type
         raise ParseError("Can't parse unknown object type '%s'! For custom types, use the CustomObject decorator." % obj_type)
 
     print(f'object class is finally {obj_class}')
+    print("========================================")
+    for k, v in stix_dict.items():
+        print(k, v)
+    print("=========================================")
     return obj_class(allow_custom, **stix_dict)
 
 

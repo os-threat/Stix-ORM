@@ -88,8 +88,9 @@ def sdo_type_to_tql(sdo_type, import_type=default_import_type,
 
     # 1.C) Add the standard object properties to the specific ones, and split them into properties and relations
     print("about to update stuff")
+    print(f'tql nme {tql_name}, sdo-type {sdo_type}')
     obj_tql.update(stix_models["base"]["base_sdo"])
-    is_list.extend(auth["is_lists"]["sdo"][sdo_type])
+    is_list.extend(auth["is_lists"]["sdo"][tql_name])
     is_list.extend(auth["is_lists"]["sdo"]["sdo"])
     print("about to return from deci9sions")
 

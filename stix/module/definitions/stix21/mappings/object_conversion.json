@@ -222,6 +222,18 @@
     "object": "sco"
   },
   {
+    "type":  "relationship",
+    "typeql": "stix-core-relationship",
+    "class": "Relationship",
+    "object": "sro"
+  },
+  {
+    "type":  "sighting",
+    "typeql": "sighting",
+    "class": "Sighting",
+    "object": "sro"
+  },
+  {
     "type":  "alternate-data-stream",
     "typeql": "alternate-data-stream",
     "class": "",

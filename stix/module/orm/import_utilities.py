@@ -112,11 +112,10 @@ def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], import_type=defa
     print(f'rel {rel}')
     print(f'obj {obj}')
     print(f'obj_Var {obj_var}')
-    print(f'prop var list {prop_var_list}')
-    print(f'import type {import_type}')
+    print(f'\nprop var list {prop_var_list}')
     auth = authorised_mappings(import_type)
     dep_list = []
-    print("starting into choices")
+    print("\nstarting into choices")
     if rel == "granular_markings":
         print("in granular")
         match, insert = granular_markings(rel, obj[rel], obj_var, prop_var_list)

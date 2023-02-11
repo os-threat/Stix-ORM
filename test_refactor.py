@@ -6,6 +6,7 @@ from stix2 import (parse)
 from stix.module.orm.import_objects import raw_stix2_to_typeql
 from stix.module.orm.delete_object import delete_stix_object
 from stix.module.authorise import authorised_mappings
+from stix.module.parsing.parse_objects import parse
 
 import logging
 
@@ -92,6 +93,32 @@ def load_file(fullname):
         typedb = TypeDBSink(connection, True, import_type)
         typedb.add(json_text)
 
+def check_object(fullname):
+    logger.debug(f'inside load file {fullname}')
+    with open(fullname, mode="r", encoding="utf-8") as f:
+        json_text = json.load(f)
+        typedb = TypeDBSink(connection, True, import_type)
+        # first find identity
+        for jt in json_text:
+            if jt["type"] == "relationship":
+                relationship = jt
+            elif jt["type"] == "x-mitre-tactic":
+                tactic =jt
+            elif jt["type"] == "attack-pattern":
+                if jt["x_mitre_is_subtechnique"] == True:
+                    subtechnique = jt
+                else:
+                    technique = jt
+
+        # try to make an object out of identity
+        myobj1 = parse(subtechnique, False, import_type)
+        print(f'\n\n============> my subtechnique = {myobj1}<==================\n\n')
+        myobj2 = parse(technique, False, import_type)
+        print(f'\n\n============> my technique = {myobj2}<==================\n\n')
+        myobj3 = parse(relationship, False, import_type)
+        print(f'\n\n============> my relationship = {myobj3}<==================\n\n')
+        myobj4 = parse(tactic, False, import_type)
+        print(f'\n\n============> my tactic = {myobj4} <==================\n\n')
 
 def query_id(stixid):
     """  Print out the match/insert and match/delete statements for any stix-id
@@ -408,7 +435,8 @@ if __name__ == '__main__':
     #test_initialise()
     #load_file_list(path1, group_list)
     #load_file(mitre_data)
-    load_file(mitre + "test.json")
+    #load_file(mitre + "test.json")
+    check_object(mitre + "test.json")
     #load_file(data_path + file7)
     print("=====")
     print("=====")

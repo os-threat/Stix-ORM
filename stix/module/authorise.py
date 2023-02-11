@@ -54,14 +54,14 @@ process_maps = [{
     "cond": []
 }, {
     "name": "tql_types",
-    "keys": ["sdo", "sdo", "sco", "sub", "meta"],
+    "keys": ["sdo", "sro", "sco", "sub", "meta"],
     "match":["object_conversion", "object_conversion", "object_conversion", "object_conversion", "object_conversion"],
-    "cond": ["sdo", "sdo", "sco", "sub", "meta" ]
+    "cond": ["sdo", "sro", "sco", "sub", "meta" ]
 }, {
     "name": "is_lists",
-    "keys": ["sdo", "sdo", "sco", "sub"],
+    "keys": ["sdo", "sro", "sco", "sub"],
     "match":["is_list_sdo", "is_list_sro", "is_list_sco", "is_list_sub_objects"],
-    "cond": ["sdo", "sdo", "sco", "sub"]
+    "cond": ["sdo", "sro", "sco", "sub"]
 }, {
     "name": "direct",
     "keys": ["sub_objects", "objects"],
@@ -69,21 +69,22 @@ process_maps = [{
     "cond": []
 }, {
     "name": "conv",
-    "keys": ["sdo", "sdo", "sco", "sub"],
+    "keys": ["sdo", "sro", "sco", "sub"],
     "match":["object", "object", "object", "object"],
-    "cond": ["sdo", "sdo", "sco", "sub"]
+    "cond": ["sdo", "sro", "sco", "sub"]
 }, {
     "name": "classes",
-    "keys": ["sdo", "sdo", "sco", "sub"],
+    "keys": ["sdo", "sro", "sco", "sub"],
     "match":["object", "object", "object", "object"],
-    "cond": ["sdo", "sdo", "sco", "sub"]
+    "cond": ["sdo", "sro", "sco", "sub"]
 }]
 
 domains = {
     "stix": stix_models,
     "attack": attack_models,
     "os-threat": os_threat_models,
-    "cacao": cacao_models
+    "cacao": cacao_models,
+    "kestrel": kestrel_models
 }
 
 
@@ -99,12 +100,16 @@ def authorised_mappings(import_type=default_import_type):
     # setup "ATT&CK" if selected
     if import_type["ATT&CK"]:
         auth_domains.append(domains["attack"])
-    # setup "ATT&CK" if selected
+    # setup "os-threat" if selected
     if import_type["os-intel"] or import_type["os-hunt"]:
         auth_domains.append(domains["os-threat"])
-    # setup "ATT&CK" if selected
+    # setup "CACAO" if selected
     if import_type["CACAO"]:
         auth_domains.append(domains["cacao"])
+    # setup "kestrel" if selected
+    if import_type["kestrel"]:
+        auth_domains.append(domains["kestrel"])
+
 
     dom=["stix","attack","os-threat", "cacao"]
     # initialise authorisation object, for documentation purposes

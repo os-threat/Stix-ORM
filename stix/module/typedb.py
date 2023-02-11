@@ -384,11 +384,11 @@ class TypeDBSink(DataSink):
     @safe
     def __add_instruction(self,
                           stix_dict):
-        print(f"\n\nim about to parse {stix_dict}")
+        print(f"\n\nim about to parse \n")
         stix_obj = parse(stix_dict, False, self.import_type)
-        print(f'\n\n i have parsed')
+        print(f'\n\n i have parsed\n')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
-        print(f'dep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+        print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
         dep_obj["dep_match"] = dep_match
         dep_obj["dep_insert"] = dep_insert
         dep_obj["indep_ql"] = indep_ql
@@ -404,7 +404,6 @@ class TypeDBSink(DataSink):
         cyclical = []
 
         instructions = Instructions()
-        print(f'===> obj list {obj_list}')
 
         for stix_dict in obj_list:
             add_result = self.__add_instruction(stix_dict)
@@ -490,7 +489,6 @@ class TypeDBSink(DataSink):
         """
         print("1. starting in add")
         obj_result = self._gather_objects(stix_data)
-        print(f"2. gathered objects -> {obj_result}")
         step_1_instructions_result = obj_result.bind(lambda obj_list: self.__retrieve_add_instructions(obj_list))
         print(f"3. step 1 -> {step_1_instructions_result}")
         step_2_instructions_result = step_1_instructions_result.bind(lambda result: self.__check_missing_data(result))

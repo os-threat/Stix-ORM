@@ -70,7 +70,11 @@ for file_path in glob(f'{dir_path}/sub_objects/*.json'):
 
         os_threat_models["sub_objects"][key] = json.load(json_file)
 
-
+os_threat_models["classes"] = {}
+os_threat_models["classes"]["sdo"] = {}
+os_threat_models["classes"]["sco"] = {}
+os_threat_models["classes"]["sro"] = {}
+os_threat_models["classes"]["sub"] = {}
 
 total_len = len(os_threat_models["data"])+len(os_threat_models["base"])+len(os_threat_models["mappings"])+len(os_threat_models["sub_objects"])
 

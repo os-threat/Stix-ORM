@@ -12,6 +12,7 @@ from stix2.properties import (
 from stix2.utils import NOW
 from stix2.v21.base import _DomainObject, _STIXBase21
 from stix2.v21.sdo import AttackPattern, CourseOfAction, IntrusionSet, Malware, Tool, Campaign
+from stix2.v21.sro import Relationship
 from stix2.v21.common import (
     ExternalReference, GranularMarking, KillChainPhase,
 )
@@ -22,6 +23,25 @@ from stix2.v21.vocab import (
 
 import logging
 logger = logging.getLogger(__name__)
+
+
+class AttackRelation(Relationship):
+    """For more detailed information on this object's properties, see
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    """
+
+    _invalid_source_target_types = ['bundle', 'language-content', 'marking-definition', 'relationship', 'sighting']
+
+    def __init__(self):
+        super().__init__()
+        _type = 'course-of-action'
+        _properties = self._properties.update(OrderedDict([
+            ('x_mitre_version', StringProperty()),
+            ('x_mitre_contributors', ListProperty(StringProperty)),
+            ('x_mitre_modified_by_ref', StringProperty()),
+            ('x_mitre_domains', ListProperty(StringProperty)),
+            ('x_mitre_attack_spec_version', StringProperty()),
+        ]))
 
 
 class Matrix(_DomainObject):
@@ -37,6 +57,8 @@ class Matrix(_DomainObject):
         ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
         ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty(required=True)),
+        ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
         ('x_mitre_modified_by_ref', StringProperty()),
@@ -67,6 +89,8 @@ class Tactic(_DomainObject):
         ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
         ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty(required=True)),
+        ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
         ('x_mitre_modified_by_ref', StringProperty()),
@@ -88,10 +112,20 @@ class Technique(AttackPattern):
     """For more detailed information on this object's properties, see
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
-    def __init__(self):
+    def __init__(self, allow_custom, **stix_dict):
         super().__init__()
+        print("**************************************************************************")
+        print("inside technique or subtechnique classes")
+        for k,v in self._properties.items():
+            print(k, v)
+        print("**************************************************************************")
         _type = 'attack-pattern'
+
         _properties = self._properties.update(OrderedDict([
+            ('x_mitre_contributors', ListProperty(StringProperty)),
+            ('x_mitre_modified_by_ref', StringProperty()),
+            ('x_mitre_domains', ListProperty(StringProperty)),
+            ('x_mitre_attack_spec_version', StringProperty()),
             ('x_mitre_detection', StringProperty()),
             ('x_mitre_platforms', ListProperty(StringProperty)),
             ('x_mitre_data_sources', ListProperty(StringProperty)),
@@ -110,7 +144,7 @@ class SubTechnique(Technique):
     """For more detailed information on this object's properties, see
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
-    def __init__(self):
+    def __init__(self, allow_custom, **stix_dict):
         _type = 'attack-pattern'
         _properties = self._properties
 
@@ -120,7 +154,7 @@ class Mitigation(CourseOfAction):
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
 
-    def __init__(self):
+    def __init__(self, allow_custom, **stix_dict):
         super().__init__()
         _type = 'course-of-action'
         _properties = self._properties.update(OrderedDict([
@@ -240,7 +274,7 @@ class DataSource(_DomainObject):
         ('granular_markings', ListProperty(GranularMarking)),
         ('extensions', ExtensionsProperty(spec_version='2.1')),
         ('x_mitre_platforms', ListProperty(StringProperty)),
-        ('x_mitre_aliases', ListProperty(StringProperty)),
+        ('x_mitre_collection_layers', ListProperty(StringProperty)),
     ])
 
 
@@ -272,8 +306,7 @@ class DataComponent(_DomainObject):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('extensions', ExtensionsProperty(spec_version='2.1')),
-        ('x_mitre_platforms', ListProperty(StringProperty)),
-        ('x_mitre_aliases', ListProperty(StringProperty)),
+        ('x_mitre_data_source_ref', StringProperty())
     ])
 
 class AttackCampaign(Campaign):

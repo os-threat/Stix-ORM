@@ -81,7 +81,6 @@ def raw_stix2_to_typeql(stix_object,
 
     auth = authorised_mappings(import_type)
     print(f'\n\nstix object type {stix_object["type"]}')
-    print(f'\n\nauth object  {auth["tql_types"]}')
 
     auth_types = auth["tql_types"]
     if stix_object.type in auth_types["sdo"]:
@@ -120,7 +119,6 @@ def sdo_to_data(sdo, import_type=default_import_type):
 
     """
     sdo_tql_name = sdo.type
-    print(f'into sdo -> {sdo}')
     # - list of property names that have values
     total_props = sdo._inner
     total_props = clean_props(total_props)
@@ -132,7 +130,7 @@ def sdo_to_data(sdo, import_type=default_import_type):
         sub_technique = False if not sdo.get("x_mitre_is_subtechnique", False) else True
 
     obj_tql, sdo_tql_name, is_list = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique)
-    print(f'object tql {obj_tql}, sdo tql name {sdo_tql_name}')
+    print(f'\nobject tql {obj_tql}, \n\nsdo tql name {sdo_tql_name},\n is_list {is_list}')
 
     return total_props, obj_tql, sdo_tql_name
 
@@ -158,17 +156,20 @@ def sdo_to_typeql(sdo, import_type=default_import_type):
     dep_list = []
     # 1.B) get the data model
     total_props, obj_tql, sdo_tql_name = sdo_to_data(sdo, import_type)
+    print("\n Step 0 I've just gotten through getting data")
+    print(f'\n\n total_props {total_props}\n\nobj_tql {obj_tql}\n\nsdo_tql_name {sdo_tql_name}')
     sdo_var = '$' + sdo_tql_name
     if obj_tql == '':
         return '', '', '', '', {}
     properties, relations = split_on_activity_type(total_props, obj_tql)
+    print("\n----> Step 1 sdo to typeql")
 
     # 2.) setup the typeql statement for the sdo entity
     sdo_var = '$' + sdo_tql_name
     indep_ql = sdo_var + ' isa ' + sdo_tql_name
     core_ql = sdo_var + ' isa ' + sdo_tql_name + ', has stix-id $stix-id;\n$stix-id ' + val_tql(sdo.id) + ';\n'
     indep_ql_props = dep_match = dep_insert = ''
-
+    print("----> Step 2 sdo to typeql")
     # 3.) add each of the properties and values of the properties to the typeql statement
     prop_var_list = []
     for prop in properties:
@@ -179,6 +180,7 @@ def sdo_to_typeql(sdo, import_type=default_import_type):
         indep_ql_props += indep_ql_props2
         # add a terminator on the end of the query statement
     indep_ql += ";\n" + indep_ql_props + "\n\n"
+    print("----> Step 3 sdo to typeql")
 
     # 4.) add each of the relations to the match and insert statements
     for j, rel in enumerate(relations):
@@ -189,6 +191,7 @@ def sdo_to_typeql(sdo, import_type=default_import_type):
         dep_insert = dep_insert + dep_insert2
         dep_list = dep_list + dep_list2
 
+    print("----> Step 4 sdo to typeql")
     dep_obj = {"id": sdo.id, "dep_list": dep_list, "type": sdo.type}
     return dep_match, dep_insert, indep_ql, core_ql, dep_obj
 
