@@ -7,7 +7,7 @@ from stix.module.orm.import_utilities import clean_props, get_embedded_match, sp
 import logging
 
 logger = logging.getLogger(__name__)
-
+logger.setLevel(logging.INFO)
 
 
 # ---------------------------------------------------
@@ -80,17 +80,17 @@ def raw_stix2_to_typeql(stix_object,
         import_type = default_import_type
 
     auth = authorised_mappings(import_type)
-    print(f'\n\nstix object type {stix_object["type"]}')
+    logger.debug(f'stix object type {stix_object["type"]}\n')
 
     auth_types = auth["tql_types"]
     if stix_object.type in auth_types["sdo"]:
-        print(f' going into sdo ---? {stix_object}')
+        logger.debug(f' going into sdo ---? {stix_object}')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = sdo_to_typeql(stix_object, import_type)
     elif stix_object.type in auth_types["sro"]:
-        print(f' going into sro ---> {stix_object}')
+        logger.debug(f' going into sro ---> {stix_object}')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = sro_to_typeql(stix_object, import_type)
     elif stix_object.type in auth_types["sco"]:
-        print(f' going into sco ---> {stix_object}')
+        logger.debug(f' going into sco ---> {stix_object}')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = sco_to_typeql(stix_object, import_type)
     elif stix_object.type == 'marking-definition':
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = marking_definition_to_typeql(stix_object, import_type)
@@ -130,7 +130,7 @@ def sdo_to_data(sdo, import_type=default_import_type):
         sub_technique = False if not sdo.get("x_mitre_is_subtechnique", False) else True
 
     obj_tql, sdo_tql_name, is_list = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique)
-    print(f'\nobject tql {obj_tql}, \n\nsdo tql name {sdo_tql_name},\n is_list {is_list}')
+    logger.debug(f'\nobject tql {obj_tql}, \nsdo tql name {sdo_tql_name},\n is_list {is_list}')
 
     return total_props, obj_tql, sdo_tql_name
 
@@ -156,20 +156,20 @@ def sdo_to_typeql(sdo, import_type=default_import_type):
     dep_list = []
     # 1.B) get the data model
     total_props, obj_tql, sdo_tql_name = sdo_to_data(sdo, import_type)
-    print("\n Step 0 I've just gotten through getting data")
-    print(f'\n\n total_props {total_props}\n\nobj_tql {obj_tql}\n\nsdo_tql_name {sdo_tql_name}')
+    logger.debug("\n Step 0 I've just gotten through getting data")
+    logger.debug(f'\n\n total_props {total_props}\n\nobj_tql {obj_tql}\n\nsdo_tql_name {sdo_tql_name}')
     sdo_var = '$' + sdo_tql_name
     if obj_tql == '':
         return '', '', '', '', {}
     properties, relations = split_on_activity_type(total_props, obj_tql)
-    print("\n----> Step 1 sdo to typeql")
+    logger.debug("\n----> Step 1 sdo to typeql")
 
     # 2.) setup the typeql statement for the sdo entity
     sdo_var = '$' + sdo_tql_name
     indep_ql = sdo_var + ' isa ' + sdo_tql_name
     core_ql = sdo_var + ' isa ' + sdo_tql_name + ', has stix-id $stix-id;\n$stix-id ' + val_tql(sdo.id) + ';\n'
     indep_ql_props = dep_match = dep_insert = ''
-    print("----> Step 2 sdo to typeql")
+    logger.debug("----> Step 2 sdo to typeql")
     # 3.) add each of the properties and values of the properties to the typeql statement
     prop_var_list = []
     for prop in properties:
@@ -180,7 +180,7 @@ def sdo_to_typeql(sdo, import_type=default_import_type):
         indep_ql_props += indep_ql_props2
         # add a terminator on the end of the query statement
     indep_ql += ";\n" + indep_ql_props + "\n\n"
-    print("----> Step 3 sdo to typeql")
+    logger.debug("----> Step 3 sdo to typeql")
 
     # 4.) add each of the relations to the match and insert statements
     for j, rel in enumerate(relations):
@@ -191,7 +191,7 @@ def sdo_to_typeql(sdo, import_type=default_import_type):
         dep_insert = dep_insert + dep_insert2
         dep_list = dep_list + dep_list2
 
-    print("----> Step 4 sdo to typeql")
+    logger.debug("----> Step 4 sdo to typeql")
     dep_obj = {"id": sdo.id, "dep_list": dep_list, "type": sdo.type}
     return dep_match, dep_insert, indep_ql, core_ql, dep_obj
 
@@ -216,7 +216,7 @@ def sro_to_data(sro, import_type=default_import_type):
     total_props = sro._inner
     total_props = clean_props(total_props)
 
-    print(f'into sro -> {sro}')
+    logger.debug(f'into sro -> {sro}')
     # - work out the type of object
     auth = authorised_mappings(import_type)
     uses_relation = False
@@ -230,7 +230,7 @@ def sro_to_data(sro, import_type=default_import_type):
     sro_sub_rel = "" if not sro.get("relationship_type", False) else sro["relationship_type"]
 
     obj_tql, sro_tql_name, is_list = sro_type_to_tql(sro_tql_name, sro_sub_rel, import_type, attack_object, uses_relation, is_procedure)
-    print(f'object tql {obj_tql}, sro tql name {sro_tql_name}')
+    logger.debug(f'object tql {obj_tql}, sro tql name {sro_tql_name}')
 
     return total_props, obj_tql, sro_tql_name
 
@@ -284,7 +284,7 @@ def sro_to_typeql(sro, import_type=default_import_type):
                 core_ql += ', has stix-id $stix-id;\n$stix-id ' + val_tql(sro.id) + ';\n'
                 break
                 # B. If it is a Sighting then match the object to the sighting
-        print(f'dep_insert -> {dep_insert}')
+        logger.debug(f'dep_insert -> {dep_insert}')
     elif obj_type == 'sighting':
         sighting_of_id = sro.sighting_of_ref
         dep_list.append(sighting_of_id)
@@ -362,7 +362,7 @@ def sco_to_data(sco, import_type=default_import_type):
     # - list of property names that have values
     total_props = sco._inner
     total_props = clean_props(total_props)
-    # print(properties)
+    # logger.debug(properties)
     # - work out the type of object
     sco_tql_name = sco.type
     # - get the object-specific typeql names, sighting or relationship

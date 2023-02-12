@@ -14,6 +14,7 @@ from stix.module.authorise import authorised_mappings, default_import_type
 import logging
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 # ---------------------------------------------------
@@ -108,58 +109,58 @@ def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], import_type=defa
         match: the typeql match string
         insert: the typeql insert string
     """
-    print(f'===============\n=====================\n===================\n')
-    print(f'rel {rel}')
-    print(f'obj {obj}')
-    print(f'obj_Var {obj_var}')
-    print(f'\nprop var list {prop_var_list}')
+    logger.debug(f'===============\n=====================\n===================\n')
+    logger.debug(f'rel {rel}')
+    logger.debug(f'obj {obj}')
+    logger.debug(f'obj_Var {obj_var}')
+    logger.debug(f'\nprop var list {prop_var_list}')
     auth = authorised_mappings(import_type)
     dep_list = []
-    print("\nstarting into choices")
+    logger.debug("\nstarting into choices")
     if rel == "granular_markings":
-        print("in granular")
+        logger.debug("in granular")
         match, insert = granular_markings(rel, obj[rel], obj_var, prop_var_list)
 
     # hashes type
     elif (rel == "hashes"
           or rel == "file_header_hashes"):
-        print("in hashes")
+        logger.debug("in hashes")
         match, insert = hashes(rel, obj[rel], obj_var)
 
     # insert key value store
     elif rel in auth["reln_name"]["key_value_relations"]:
-        print("in key value")
+        logger.debug("in key value")
         match, insert = key_value_store(rel, obj[rel], obj_var, import_type)
 
     # insert list of object relation
     elif rel in auth["reln_name"]["list_of_objects"]:
-        print("list of objects")
+        logger.debug("list of objects")
         match, insert, dep_list = list_of_object(rel, obj[rel], obj_var, import_type)
 
     # insert embedded relations based on stix-id
     elif rel in auth["reln_name"]["embedded_relations"]:
-        print("embedded")
+        logger.debug("embedded")
         match, insert, dep_list = embedded_relation(rel, obj[rel], obj_var, inc, import_type)
 
     # insert plain sub-object with relation
     elif (rel == "x509_v3_extensions"
           or rel == "optional_header"):
-        print("X509")
+        logger.debug("X509")
         match, insert, dep_list = load_object(rel, obj[rel], obj_var, import_type)
 
     # insert  SCO Extensions here, a possible dict of sub-objects
     elif rel in auth["reln_name"]["extension_relations"]:
-        print("extension")
+        logger.debug("extension")
         match, insert, dep_list = extensions(rel, obj[rel], obj_var, import_type)
 
     # ignore the following relations as they are already processed, for Relationships, Sightings and Extensions
     elif rel in auth["reln_name"]["standard_relations"]:
-        print("standard")
+        logger.debug("standard")
         match = insert = ''
 
     else:
-        logger.error(f'relation type not known, rel -> {rel}')
-        print("in else")
+        logger.error(f'relation type not known, ignore if "source_ref" or "target_ref" -> {rel}')
+        logger.debug("in else")
         match = insert = ""
 
     return match, insert, dep_list
@@ -477,7 +478,7 @@ def embedded_relation(prop, prop_value, obj_var, inc, import_type):
         match: the typeql match string
         insert: the typeql insert string
     """
-    print("I'm in embedded")
+    logger.debug("I'm in embedded")
     auth = authorised_mappings(import_type)
     for ex in auth["reln"]["embedded_relations"]:
         if ex["rel"] == prop:
@@ -494,10 +495,10 @@ def embedded_relation(prop, prop_value, obj_var, inc, import_type):
     else:
         inc_add = str(inc)
     # if the prop_value is a list, then match in each item
-    print(f'\n1\n')
+    logger.debug(f'\n1\n')
     if isinstance(prop_value, list):
         dep_list = prop_value
-        print(f'deplist {dep_list}')
+        logger.debug(f'deplist {dep_list}')
         for i, prop_v in enumerate(prop_value):
             prop_type = prop_v.split('--')[0]
             if prop_type == 'relationship':
@@ -509,7 +510,7 @@ def embedded_relation(prop, prop_value, obj_var, inc, import_type):
     else:
         dep_list.append(prop_value)
         prop_type = prop_value.split('--')[0]
-        print(f'deplist {dep_list}')
+        logger.debug(f'deplist {dep_list}')
         if prop_type == 'relationship':
             prop_type = 'stix-core-relationship'
         prop_var = '$' + prop_type + inc_add
@@ -517,7 +518,7 @@ def embedded_relation(prop, prop_value, obj_var, inc, import_type):
         match += ' ' + prop_var + ' isa ' + prop_type + ', has stix-id ' + '"' + prop_value + '";\n'
 
     # Then setup and insert the relation
-    print(f'\n2\n')
+    logger.debug(f'\n2\n')
     insert = '\n $' + relation + inc_add + ' (' + owner + ':' + obj_var
     for prop_var in prop_var_list:
         insert += ', ' + pointed_to + ':' + prop_var
@@ -605,8 +606,19 @@ def split_on_activity_type(total_props, obj_tql):
     """
     prop_list = []
     rel_list = []
+    logger.debug("@@@@@@@@@@@@@@@@@@@@@@ splitting @@@@@@@@@@@@@@@")
+    logger.debug("========================================")
+    for k, v in total_props.items():
+        logger.debug(k, v)
+    logger.debug("=========================================")
+    logger.debug("========================================")
+    for k, v in obj_tql.items():
+        logger.debug(k, v)
+    logger.debug("=========================================")
+    logger.debug("@@@@@@@@@@@@@@@@@@@@@@ end splitting @@@@@@@@@@@@@@@")
     for prop in total_props:
         tql_prop_name = obj_tql[prop]
+        logger.debug(f'prop {prop}, object tql -> {tql_prop_name}')
 
         if tql_prop_name == "":
             rel_list.append(prop)

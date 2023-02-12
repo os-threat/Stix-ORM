@@ -384,11 +384,11 @@ class TypeDBSink(DataSink):
     @safe
     def __add_instruction(self,
                           stix_dict):
-        print(f"\n\nim about to parse \n")
+        logger.debug(f"\n\nim about to parse \n")
         stix_obj = parse(stix_dict, False, self.import_type)
-        print(f'\n\n i have parsed\n')
+        logger.debug(f'\n\n i have parsed\n')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
-        print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+        logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
         dep_obj["dep_match"] = dep_match
         dep_obj["dep_insert"] = dep_insert
         dep_obj["indep_ql"] = indep_ql
@@ -407,13 +407,13 @@ class TypeDBSink(DataSink):
 
         for stix_dict in obj_list:
             add_result = self.__add_instruction(stix_dict)
-            print(f'\nadd result {add_result}')
+            logger.debug(f'\nadd result {add_result}')
             update_result = add_result.bind(lambda dep_obj: self.__update_add_layers(layers,
                                                                                      indexes,
                                                                                      missing,
                                                                                      dep_obj,
                                                                                      cyclical))
-            print(f'\nupdate result {update_result}')
+            logger.debug(f'\nupdate result {update_result}')
             if is_successful(update_result):
                 layers, indexes, missing, cyclical = update_result.unwrap()
             else:
@@ -487,12 +487,13 @@ class TypeDBSink(DataSink):
             saved separately; you will be able to retrieve any of the objects
             the Bundle contained, but not the Bundle itself.
         """
-        print("1. starting in add")
+        logger.debug("1. starting in add")
         obj_result = self._gather_objects(stix_data)
+        logger.debug(f'obj result is {obj_result}')
         step_1_instructions_result = obj_result.bind(lambda obj_list: self.__retrieve_add_instructions(obj_list))
-        print(f"3. step 1 -> {step_1_instructions_result}")
+        logger.debug(f"2. step 1 -> {step_1_instructions_result}")
         step_2_instructions_result = step_1_instructions_result.bind(lambda result: self.__check_missing_data(result))
-        print(f"3. step 2 -> {step_2_instructions_result}")
+        logger.debug(f"3. step 2 -> {step_2_instructions_result}")
 
         if not is_successful(step_2_instructions_result):
             raise Exception("failed to check missing dependencies")

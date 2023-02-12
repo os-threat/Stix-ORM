@@ -111,14 +111,17 @@ def check_object(fullname):
                     technique = jt
 
         # try to make an object out of identity
-        myobj1 = parse(subtechnique, False, import_type)
-        print(f'\n\n============> my subtechnique = {myobj1}<==================\n\n')
-        myobj2 = parse(technique, False, import_type)
-        print(f'\n\n============> my technique = {myobj2}<==================\n\n')
-        myobj3 = parse(relationship, False, import_type)
-        print(f'\n\n============> my relationship = {myobj3}<==================\n\n')
-        myobj4 = parse(tactic, False, import_type)
-        print(f'\n\n============> my tactic = {myobj4} <==================\n\n')
+        templist=[]
+        templist.append(relationship)
+        typedb.add(templist)
+        # myobj1 = parse(subtechnique, False, import_type)
+        # print(f'\n\n============> my subtechnique = {myobj1}<==================\n\n')
+        # myobj2 = parse(technique, False, import_type)
+        # print(f'\n\n============> my technique = {myobj2}<==================\n\n')
+        # myobj3 = parse(relationship, False, import_type)
+        # print(f'\n\n============> my relationship = {myobj3}<==================\n\n')
+        # myobj4 = parse(tactic, False, import_type)
+        # print(f'\n\n============> my tactic = {myobj4} <==================\n\n')
 
 def query_id(stixid):
     """  Print out the match/insert and match/delete statements for any stix-id
@@ -434,9 +437,9 @@ if __name__ == '__main__':
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
     #test_initialise()
     #load_file_list(path1, group_list)
-    #load_file(mitre_data)
+    load_file(data_path + file2)
     #load_file(mitre + "test.json")
-    check_object(mitre + "test.json")
+    #check_object(mitre + "test.json")
     #load_file(data_path + file7)
     print("=====")
     print("=====")
@@ -452,4 +455,4 @@ if __name__ == '__main__':
     #cert_dict(cert_root, certs)
     #test_get_ids(connection, import_type)
     #test_ids_loaded(id_list2, connection)
-    test_auth()
+    #test_auth()

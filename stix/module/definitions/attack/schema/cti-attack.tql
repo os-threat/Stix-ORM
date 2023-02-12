@@ -28,6 +28,7 @@ define
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
         owns tactic-refs,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
@@ -43,6 +44,7 @@ define
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-shortname,
+        owns x-mitre-deprecated,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
@@ -65,8 +67,9 @@ define
         owns x-mitre-defense-bypassed,
         owns x-mitre-remote-support,
         owns x-mitre-impact-type,
+        owns x-mitre-deprecated,
         plays subtechnique-of:parent,
-        plays subtechnique-of:child,
+        #plays subtechnique-of:child,
         plays detects:ttp,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
@@ -83,6 +86,7 @@ define
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
@@ -94,6 +98,7 @@ define
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
@@ -107,6 +112,7 @@ define
         owns x-mitre-attack-spec-version,
         owns x-mitre-platforms,
         owns x-mitre-aliases,
+        owns x-mitre-deprecated,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
@@ -119,6 +125,7 @@ define
         owns x-mitre-attack-spec-version,
         owns x-mitre-platforms,
         owns x-mitre-aliases,
+        owns x-mitre-deprecated,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
@@ -134,6 +141,7 @@ define
         owns x-mitre-attack-spec-version,
         owns x-mitre-platforms,
         owns x-mitre-collection-layers,
+        owns x-mitre-deprecated,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-data-source:data-source,
@@ -148,6 +156,7 @@ define
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
         plays detects:sensor,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
@@ -163,6 +172,7 @@ define
         owns x-mitre-attack-spec-version,
         owns x-mitre-first-seen-citation,
         owns x-mitre-last-seen-citation,
+        owns x-mitre-deprecated,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
@@ -177,6 +187,7 @@ define
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
         plays obj-ref:content;
 
     attributed-to
@@ -184,6 +195,7 @@ define
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
         plays obj-ref:content;
 
    mitigates
@@ -191,6 +203,7 @@ define
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
         plays obj-ref:content;
 
     #=================================
@@ -200,6 +213,7 @@ define
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
         plays obj-ref:content,
 		relates child as source,
 		relates parent as target,
@@ -212,6 +226,7 @@ define
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
         plays obj-ref:content,
 		relates sensor as source,
 		relates ttp as target,
@@ -224,6 +239,7 @@ define
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
         plays obj-ref:content,
 		relates revoked as source,
 		relates new-version as target,
@@ -234,6 +250,7 @@ define
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
         plays obj-ref:content,
 		relates user as source,
 		relates technique as target,
@@ -253,6 +270,7 @@ define
         owns x-mitre-contributors,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
         plays x-mitre-modified-by-ref:modified,
         plays x-mitre-content:collector;
 
@@ -302,6 +320,7 @@ define
 
     mitre-attribute-boolean sub stix-attribute-boolean, abstract;
         x-mitre-is-subtechnique sub mitre-attribute-boolean;
+        x-mitre-deprecated sub mitre-attribute-boolean;
         x-mitre-remote-support sub mitre-attribute-boolean;
 
     mitre-attribute-timestamp sub stix-attribute-timestamp, abstract;

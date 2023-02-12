@@ -6,6 +6,7 @@ from stix.module.authorise import authorised_mappings, default_import_type
 import logging
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 def sdo_type_to_tql(sdo_type, import_type=default_import_type,
@@ -26,14 +27,14 @@ def sdo_type_to_tql(sdo_type, import_type=default_import_type,
     obj_tql = {}
     is_list =[]
     tql_name = sdo_type
-    print("in sdo decisions")
-    print(f'obj tql {obj_tql}')
-    print(f"variables, stix {auth['STIX21']}, attack is {auth['ATT&CK']}")
+    logger.debug("in sdo decisions")
+    logger.debug(f'obj tql {obj_tql}')
+    logger.debug(f"variables, stix {auth['STIX21']}, attack is {auth['ATT&CK']}")
     # If import_type is deaful None, then assign to default)
 
     # 1. get the specific typeql names for an object into a dictionary
-    #print(f'through to decisions, attack is {attack_object}, sub technqiue {subtechnique}')
-    #print(f'auth stix {auth["STIX21"]}, attack auth {auth["ATT&CK"]}')
+    #logger.debug(f'through to decisions, attack is {attack_object}, sub technqiue {subtechnique}')
+    #logger.debug(f'auth stix {auth["STIX21"]}, attack auth {auth["ATT&CK"]}')
 
     if auth['STIX21'] and not auth["ATT&CK"]:
         if sdo_type in stix_models["data"]:
@@ -48,20 +49,20 @@ def sdo_type_to_tql(sdo_type, import_type=default_import_type,
     # - mitre attack_setting import
     elif auth['STIX21'] and auth["ATT&CK"]:
         if attack_object:
-            print("I'm processing an attack decision")
+            logger.debug("I'm processing an attack decision")
             is_list.extend(auth["is_lists"]["sdo"]["attack"])
             attack_type = ''
             obj_tql = attack_models["base"]["attack_base"]
             # Convert from stix-type to attack-tql-entity
             for model in attack_models["mappings"]["object_conversion"]:
-                print(f'chacking models, type is {model["type"]}')
+                logger.debug(f'chacking models, type is {model["type"]}')
                 if model["type"] == sdo_type:
                     attack_type = model["typeql"]
-                    print(f'attack tye is {attack_type}')
+                    logger.debug(f'attack tye is {attack_type}')
                     if attack_type == "technique" and subtechnique:
                         attack_type = "subtechnique"
                     obj_tql.update(attack_models["data"][attack_type])
-                    print("updated")
+                    logger.debug("updated")
                     break
             # Else log an error
             if not attack_type:
@@ -87,12 +88,12 @@ def sdo_type_to_tql(sdo_type, import_type=default_import_type,
         return {}, "", []
 
     # 1.C) Add the standard object properties to the specific ones, and split them into properties and relations
-    print("about to update stuff")
-    print(f'tql nme {tql_name}, sdo-type {sdo_type}')
+    logger.debug("about to update stuff")
+    logger.debug(f'tql nme {tql_name}, sdo-type {sdo_type}')
     obj_tql.update(stix_models["base"]["base_sdo"])
     is_list.extend(auth["is_lists"]["sdo"][tql_name])
     is_list.extend(auth["is_lists"]["sdo"]["sdo"])
-    print("about to return from deci9sions")
+    logger.debug("about to return from deci9sions")
 
     return obj_tql, tql_name, is_list
 
@@ -142,6 +143,7 @@ def sro_type_to_tql(sro_type, sro_sub_type,import_type=default_import_type,
             is_list.extend(auth["is_lists"]["sro"]["attack"])
             attack_type = ''
             obj_tql = attack_models["base"]["attack_base"]
+            obj_tql.update(stix_models["data"]["relationship"])
             # Convert from stix-type to attack-tql-entity
             for model in attack_models["mappings"]["object_conversion"]:
                 if model["type"] == sro_type:
