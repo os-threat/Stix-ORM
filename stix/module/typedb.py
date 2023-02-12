@@ -384,9 +384,9 @@ class TypeDBSink(DataSink):
     @safe
     def __add_instruction(self,
                           stix_dict):
-        logger.debug(f"\n\nim about to parse \n")
+        logger.debug(f"\n================================================================\nim about to parse \n")
         stix_obj = parse(stix_dict, False, self.import_type)
-        logger.debug(f'\n\n i have parsed\n')
+        logger.debug(f'\n-------------------------------------------------------------\n i have parsed\n')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
         logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
         dep_obj["dep_match"] = dep_match
@@ -407,13 +407,13 @@ class TypeDBSink(DataSink):
 
         for stix_dict in obj_list:
             add_result = self.__add_instruction(stix_dict)
-            logger.debug(f'\nadd result {add_result}')
+            #logger.debug(f'\nadd result {add_result}')
             update_result = add_result.bind(lambda dep_obj: self.__update_add_layers(layers,
                                                                                      indexes,
                                                                                      missing,
                                                                                      dep_obj,
                                                                                      cyclical))
-            logger.debug(f'\nupdate result {update_result}')
+            #logger.debug(f'\nupdate result {update_result}')
             if is_successful(update_result):
                 layers, indexes, missing, cyclical = update_result.unwrap()
             else:

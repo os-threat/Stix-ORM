@@ -437,8 +437,8 @@ if __name__ == '__main__':
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
     #test_initialise()
     #load_file_list(path1, group_list)
-    load_file(data_path + file2)
-    #load_file(mitre + "test.json")
+    #load_file(data_path + file2)
+    load_file(mitre + "test.json")
     #check_object(mitre + "test.json")
     #load_file(data_path + file7)
     print("=====")

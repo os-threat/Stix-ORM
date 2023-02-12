@@ -159,7 +159,7 @@ def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], import_type=defa
         match = insert = ''
 
     else:
-        logger.error(f'relation type not known, ignore if "source_ref" or "target_ref" -> {rel}')
+        logger.debug(f'relation type not known, ignore if "source_ref" or "target_ref" -> {rel}')
         logger.debug("in else")
         match = insert = ""
 
