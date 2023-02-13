@@ -1,17 +1,18 @@
 import pathlib
 import unittest
 import json
-import os
-from stix.module.typedb_lib import TypeDBSink, TypeDBSource
 import itertools as it
 import glob
 import logging
 
+from stix.module.typedb import TypeDBSource, TypeDBSink
+from test.dbconfig import *
+
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 
-from stix2 import (parse)
-from dbconfig import *
+from stix2 import (v21, parse)
+
 
 import re
 s = "Example String"
