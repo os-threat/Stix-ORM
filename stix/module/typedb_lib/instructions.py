@@ -38,6 +38,7 @@ class Instructions:
                 status = ResultStatus.ALREADY_IN_DB
             elif instruction.status in [DeleteStatus.ERROR, AddStatus.ERROR]:
                 status = ResultStatus.ERROR
+                error = instruction.error
             elif instruction.status == AddStatus.FAILED_CYCLICAL:
                 status = ResultStatus.CYCLICAL_DEPENDENCY
             elif instruction.status == AddStatus.FAILED_MISSING_DEPENDENCY:
