@@ -98,16 +98,16 @@ def authorised_mappings(import_type=default_import_type):
     # setup Stix by default
     auth_domains = [domains["stix"]]
     # setup "ATT&CK" if selected
-    if import_type["ATT&CK"]:
+    if "ATT&CK" in import_type:
         auth_domains.append(domains["attack"])
     # setup "os-threat" if selected
-    if import_type["os-intel"] or import_type["os-hunt"]:
+    if "os-intel" in import_type or "os-hunt" in import_type:
         auth_domains.append(domains["os-threat"])
     # setup "CACAO" if selected
-    if import_type["CACAO"]:
+    if "CACAO" in import_type:
         auth_domains.append(domains["cacao"])
     # setup "kestrel" if selected
-    if import_type["kestrel"]:
+    if "kestrel" in import_type:
         auth_domains.append(domains["kestrel"])
 
 
