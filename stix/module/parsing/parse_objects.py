@@ -169,7 +169,8 @@ def dict_to_stix2(stix_dict, allow_custom=False, import_type=default_import_type
     for k, v in stix_dict.items():
         logger.debug(f'k-> {k}, v->{v}')
     logger.debug("=========================================")
-    return obj_class(allow_custom, **stix_dict)
+    stix_dict['allow_custom'] = allow_custom
+    return obj_class(**stix_dict)
 
 
 def class_for_type(stix_typeql, import_type, category=None):
