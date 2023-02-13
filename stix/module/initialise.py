@@ -18,6 +18,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
+import os
 
 from typedb.client import *
 import logging
@@ -67,6 +68,9 @@ def load_schema(stix_connection: Dict[str, str], rel_path=None, schema_type: str
     logger.debug(f'{stix_connection}')
     logger.debug(rel_path)
     logger.debug(schema_type)
+    assert rel_path is not None, "Need a path to load a schema"
+    assert os.path.exists(rel_path), "File path needs to exist"
+
     url = stix_connection["uri"] + ":" + stix_connection["port"]
     with TypeDB.core_client(url) as client:
         # Stage 1: Create the schema
