@@ -36,7 +36,7 @@ from stix.module.typedb_lib.instructions import Instructions
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 
 @dataclass
@@ -489,7 +489,7 @@ class TypeDBSink(DataSink):
         """
         logger.debug("1. starting in add")
         obj_result = self._gather_objects(stix_data)
-        logger.debug(f'obj result is {obj_result}')
+        #logger.debug(f'obj result is {obj_result}')
         step_1_instructions_result = obj_result.bind(lambda obj_list: self.__retrieve_add_instructions(obj_list))
         logger.debug(f"2. step 1 -> {step_1_instructions_result}")
         step_2_instructions_result = step_1_instructions_result.bind(lambda result: self.__check_missing_data(result))
@@ -522,10 +522,10 @@ class TypeDBSink(DataSink):
         """
           the details for the add details, checking what import_type of data object it is
         """
-        logger.debug(f" gethering ...{stix_data}")
-        logger.debug('----------------------------------------')
-        logger.debug(f'going into separate objects function {stix_data}')
-        logger.debug('-----------------------------------------------------')
+        #logger.debug(f" gethering ...{stix_data}")
+        #logger.debug('----------------------------------------')
+        #logger.debug(f'going into separate objects function {stix_data}')
+        #logger.debug('-----------------------------------------------------')
 
         if isinstance(stix_data, (v21.Bundle)):
             logger.debug(f'isinstance Bundle')
