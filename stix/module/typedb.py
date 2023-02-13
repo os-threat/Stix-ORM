@@ -1,4 +1,5 @@
 """Python STIX2 TypeDB Source/Sink"""
+import pathlib
 from dataclasses import dataclass
 
 from returns._internal.pipeline.pipe import pipe
@@ -166,11 +167,15 @@ class TypeDBSink(DataSink):
 
     @safe
     def __assign_schemas(self):
-        self.cti_schema_stix = "stix/module/definitions/stix21/schema/cti-schema-v2.tql"
-        self.cti_schema_stix_rules = "stix/module/definitions/stix21/schema/cti-rules.tql"
-        self.cti_schema_os_intel = "stix/module/definitions/os_threat/schema/cti-os-intel.tql"
-        self.cti_schema_os_hunt = "stix/module/definitions/os_threat/schema/cti-os-hunt.tql"
-        self.cti_schema_attack = "stix/module/definitions/attack/schema/cti-attack.tql"
+        if self.schema_path is None:
+             self.schema_path = str(pathlib.Path.parent)
+
+        # If relative paths are used it will depend upon the entry point i.e. working directory will need to be same level as typedb.py
+        self.cti_schema_stix = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/stix21/schema/cti-schema-v2.tql")
+        self.cti_schema_stix_rules = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/stix21/schema/cti-rules.tql")
+        self.cti_schema_os_intel = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/os_threat/schema/cti-os-intel.tql")
+        self.cti_schema_os_hunt = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/os_threat/schema/cti-os-hunt.tql")
+        self.cti_schema_attack = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/attack/schema/cti-attack.tql")
         # if self.schema_path is None:
         #     self.schema_path = str(pathlib.Path.parent)
         #
@@ -384,6 +389,7 @@ class TypeDBSink(DataSink):
     @safe
     def __add_instruction(self,
                           stix_dict):
+
         logger.debug(f"\n================================================================\nim about to parse \n")
         stix_obj = parse(stix_dict, False, self.import_type)
         logger.debug(f'\n-------------------------------------------------------------\n i have parsed\n')
@@ -393,6 +399,7 @@ class TypeDBSink(DataSink):
         dep_obj["dep_insert"] = dep_insert
         dep_obj["indep_ql"] = indep_ql
         dep_obj["core_ql"] = core_ql
+
         return dep_obj
 
     @safe
