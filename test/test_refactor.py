@@ -154,43 +154,17 @@ def variables_standard_data_file_paths_success() -> List[str]:
 
 def variables_standard_data_file_paths() -> List[str]:
 
-    data_standard_path = "data/standard/"
-
-    standard_data_file_list = [
-        "aaa_attack_pattern.json",
-        "aaa_identity.json",
-        "aaa_indicator.json",
-        "aaa_malware.json",
-        "artifact_basic.json",
-        "artifact_encrypted.json",
-        "autonomous.json",
-        "attack-campaign.json",
-        "course_action.json",
-        "directory.json",
-        "domain.json",
-        "email_basic_addr.json",
-        "email_headers.json",
-        "email_mime.json",
-        "email_simple.json",
-        "incident.json",
-        'file_archive_unencrypted.json',
-        'file_basic.json',
-        'file_basic_encoding.json',
-        'file_basic_parent.json',
-        'file_binary.json',
-        'file_image_simple.json',
-        'file_ntfs_stream.json',
-        'file_pdf_basic.json',
-        'grouping.json'
-    ]
     top_dir_path = pathlib.Path(__file__).parents[1]
+    data_standard_path = top_dir_path.joinpath("data/standard/")
 
-    paths = []
-    for file in standard_data_file_list:
-        path = top_dir_path.joinpath(data_standard_path).joinpath(file)
-        paths.append(str(path))
+    standard_data_file_list = []
 
-    return paths
+    for root, dirs, files in os.walk(data_standard_path):
+        for file in files:
+            if file.endswith(".json"):
+                standard_data_file_list.append(os.path.join(root, file))
+
+    return standard_data_file_list
 
 def aaa_grouping_path() -> str:
     data_standard_path = "data/standard/"
@@ -330,11 +304,15 @@ def cert_grouped_filepaths() -> List[List[str]]:
 class TestTypeDB(unittest.TestCase):
 
     def get_json_from_file(self,
-                           file_path: str):
+                           file_path: str) -> List[dict]:
         assert pathlib.Path(file_path).is_file()
         print(f'I am about to load {file_path}')
         with open(file_path, mode="r", encoding="utf-8") as f:
             json_text = json.load(f)
+
+        if isinstance(json_text, dict):
+            json_text = [json_text]
+
         return json_text
 
     def test_initialise(self):
@@ -469,13 +447,16 @@ class TestTypeDB(unittest.TestCase):
                                  import_type=import_type,
                                  schema_path=schema_path)
         files = variables_standard_data_file_paths()
+
+        combined = []
         for file in files:
             json_text = self.get_json_from_file(file)
-            result = typedb_sink.add(json_text)
-            if 'grouping' in file:
-                self.validate_contains_error(result)
-            else:
-                self.validate_successful_result(result)
+
+            combined = combined + json_text
+        result = typedb_sink.add(combined)
+        # TODO: Fix failing test
+        #
+        self.validate_successful_result(result)
 
 
 

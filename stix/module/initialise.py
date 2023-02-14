@@ -279,6 +279,7 @@ def reorder(layers, indexes, tree, dep_obj, add_or_del):
     total_tree = tree + dtree
     total_tree.sort(reverse=True)
     # 3. Now delete the elements from layers and indexes
+    # TODO: Error here for test_add_files
     for t in total_tree:
         layers.pop(t)
         indexes.pop(t)
