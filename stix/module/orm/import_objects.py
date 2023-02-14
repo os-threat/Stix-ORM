@@ -366,7 +366,7 @@ def sco_to_data(sco, import_type=default_import_type):
     # - work out the type of object
     sco_tql_name = sco.type
     # - get the object-specific typeql names, sighting or relationship
-    obj_tql, sco_tql_name = sco__type_to_tql(sco_tql_name, import_type)
+    obj_tql, sco_tql_name, is_list = sco__type_to_tql(sco_tql_name, import_type)
 
     return total_props, obj_tql, sco_tql_name
 
