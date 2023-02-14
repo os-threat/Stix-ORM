@@ -1,3 +1,5 @@
+import logging
+import traceback
 from enum import Enum
 from typing import Optional, List
 
@@ -138,13 +140,19 @@ class Instructions:
 
     def insert_delete_instruction_error(self,
                                  id: str,
-                                 error:str):
+                                 error: Exception):
+        if error is None:
+            return
+        logging.exception("\n".join(traceback.format_exception(error)))
         self.instructions.append(AddInstruction(status=DeleteStatus.ERROR, id=id, error=error))
 
     def insert_instruction_error(self,
                                  id: str,
-                                 error:str):
-        self.instructions.append(AddInstruction(status=AddStatus.ERROR, id=id, error=error))
+                                 error: Exception):
+        if error is None:
+            return
+        logging.exception("\n".join(traceback.format_exception(error)))
+        self.instructions.append(AddInstruction(status=AddStatus.ERROR, id=id, error=str(error)))
 
     def insert_add_insert_missing_dependency(self,
                                              id: str):

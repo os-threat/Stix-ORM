@@ -9,7 +9,7 @@ from returns.pointfree import bind
 from returns.result import safe, Result, Failure, Success
 from returns.unsafe import unsafe_perform_io
 from typedb.client import *
-
+import traceback
 from stix.module.orm.import_objects import raw_stix2_to_typeql
 from stix.module.orm.delete_object import delete_stix_object, add_delete_layers
 from stix.module.orm.import_utilities import get_embedded_match
@@ -311,7 +311,7 @@ class TypeDBSink(DataSink):
             if is_successful(update_result):
                 layers, indexes, missing = update_result.unwrap()
             else:
-                instructions.insert_delete_instruction_error(stixid, str(update_result.failure()))
+                instructions.insert_delete_instruction_error(stixid, update_result.failure())
                 log_delete_instruction_update_layer(update_result)
 
         for layer in layers:
@@ -425,7 +425,7 @@ class TypeDBSink(DataSink):
                 layers, indexes, missing, cyclical = update_result.unwrap()
             else:
                 log_add_instruction_update_layer(update_result)
-                instructions.insert_instruction_error(stix_dict['id'], str(update_result.failure()))
+                instructions.insert_instruction_error(stix_dict['id'], update_result.failure())
 
         for id in missing:
             instructions.insert_add_insert_missing_dependency(id)
