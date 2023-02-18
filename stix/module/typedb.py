@@ -1,8 +1,6 @@
 """Python STIX2 TypeDB Source/Sink"""
 import pathlib
 from dataclasses import dataclass
-
-from pydantic import BaseModel
 from returns._internal.pipeline.pipe import pipe
 from returns.methods import unwrap_or_failure
 from returns.pipeline import is_successful
@@ -26,10 +24,9 @@ from stix2.datastore.filters import FilterSet
 import logging
 
 from stix.module.typedb_lib.handlers import handle_result
-from stix.module.typedb_lib.logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers, \
-    log_add_instruction_update_layer
+from stix.module.typedb_lib.logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers
 from stix.module.typedb_lib.queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query,\
-    add_instructions_to_typedb, build_insert_query, query_id, add_instructions_to_typedb
+    build_insert_query, query_id, add_instructions_to_typedb
 from stix.module.typedb_lib.file import write_to_file
 from stix.module.typedb_lib.instructions import Instructions, AddStatus, AddInstruction, TypeQLObject
 
