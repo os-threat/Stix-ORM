@@ -128,7 +128,7 @@ class Instructions:
         for instruction in self.instructions.values():
             if instruction.status != AddStatus.STEP_1_ADDED_ID_FOR_INSERTION:
                 continue
-            result = build_insert_query(instruction.layer)
+            result = build_insert_query(instruction.typeql_obj.dict())
             is_non_empty_insertion = is_successful(result) and result.unwrap() is not None
             if is_non_empty_insertion:
                 instruction.status = AddStatus.STEP_2_CREATED_QUERY
