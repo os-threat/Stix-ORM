@@ -38,7 +38,7 @@ class Instructions:
 
     def __init__(self):
         self.instructions: Dict[str, Instruction] = {}
-        self.dependencies: DiGraph = None
+        self.dependencies: Optional[DiGraph] = None
         self.verified_missing_dependencies = []
         self.order = []
 
