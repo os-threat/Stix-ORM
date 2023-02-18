@@ -1,3 +1,5 @@
+from typing import Dict
+
 from stix.module.authorise import authorised_mappings, default_import_type
 from stix.module.orm.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
 
@@ -106,7 +108,7 @@ def raw_stix2_to_typeql(stix_object,
 # 1.1) SDO Object Method to convert a Python object --> typeql string
 #                 -   
 # -------------------------------------------------------------
-def sdo_to_data(sdo, import_type=default_import_type):
+def sdo_to_data(sdo, import_type=default_import_type) -> [dict, Dict[str, str], str]:
     """ convert Stix object into a data model for processing
 
     Args:
@@ -135,7 +137,7 @@ def sdo_to_data(sdo, import_type=default_import_type):
     return total_props, obj_tql, sdo_tql_name
 
 
-def sdo_to_typeql(sdo, import_type=default_import_type):
+def sdo_to_typeql(sdo, import_type=default_import_type) -> [str, str, str, str, dict]:
     """
     Initial function to convert Stix2 SDO object into typeql
 
@@ -200,7 +202,7 @@ def sdo_to_typeql(sdo, import_type=default_import_type):
 # 1.2) SRO Object Method to convert a Python object --> typeql string
 #                 -   
 # -----------------------------------------------------
-def sro_to_data(sro, import_type=default_import_type):
+def sro_to_data(sro, import_type=default_import_type) -> [dict, Dict[str, str], str]:
     """ convert Stix object into a data model for processing
 
         Args:
@@ -235,7 +237,7 @@ def sro_to_data(sro, import_type=default_import_type):
     return total_props, obj_tql, sro_tql_name
 
 
-def sro_to_typeql(sro, import_type=default_import_type):
+def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, dict]:
     """
     Initial function to convert Stix2 SRO object into typeql
 
