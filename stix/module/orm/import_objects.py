@@ -347,7 +347,7 @@ def sro_to_typeql(sro, import_type=default_import_type):
 # 1.3) SCO Object Method to convert a Python object --> typeql string
 #                 -
 # --------------------------------------------------
-def sco_to_data(sco, import_type=default_import_type):
+def sco_to_data(sco, import_type=default_import_type) -> [dict, dict, str]:
     """ convert Stix object into a data model for processing
 
         Args:
