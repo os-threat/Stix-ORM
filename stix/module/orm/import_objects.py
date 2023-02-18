@@ -295,7 +295,7 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
         dep_insert += '\n' + sro_var + ' (sighting-of:' + sighting_of_var
         # if there is observed data list, then add it to the match statement
         observed_data_list = sro.get("observed_data_refs")
-        if (observed_data_list != None) and (len(observed_data_list) > 0):
+        if (observed_data_list is not None) and (len(observed_data_list) > 0):
             for i, observed_data_id in enumerate(observed_data_list):
                 dep_list.append(observed_data_id)
                 observed_data_var, observed_data_match = get_embedded_match(observed_data_id, i)
@@ -303,7 +303,7 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
                 dep_insert += ', observed:' + observed_data_var
         # if there is a list of who and where the sighting's occured, then match it in
         where_sighted_list = sro.get("where_sighted_refs")
-        if (where_sighted_list != None) and (len(where_sighted_list) > 0):
+        if (where_sighted_list is not None) and (len(where_sighted_list) > 0):
             for where_sighted_id in where_sighted_list:
                 dep_list.append(where_sighted_id)
                 where_sighted_var, where_sighted_match = get_embedded_match(where_sighted_id)
