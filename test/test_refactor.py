@@ -176,6 +176,11 @@ def aaa_indicator_path() -> str:
     top_dir_path = pathlib.Path(__file__).parents[1]
     return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_indicator.json"))
 
+def x509_path() -> str:
+    data_standard_path = "data/standard/"
+    top_dir_path = pathlib.Path(__file__).parents[1]
+    return str(top_dir_path.joinpath(data_standard_path).joinpath("x509_cert_v3_ext.json"))
+
 def aaa_identity_path() -> str:
     data_standard_path = "data/standard/"
     top_dir_path = pathlib.Path(__file__).parents[1]
@@ -459,7 +464,15 @@ class TestTypeDB(unittest.TestCase):
         self.validate_successful_result(result)
 
 
+    def test_add_x509_path(self):
+        typedb_sink = TypeDBSink(connection=connection,
+                                 clear=True,
+                                 import_type=import_type,
+                                 schema_path=schema_path)
+        json_text = self.get_json_from_file(x509_path())
 
+        result = typedb_sink.add(json_text)
+        self.validate_successful_result(result)
 
     def test_add_indicator_path(self):
         typedb_sink = TypeDBSink(connection=connection,
@@ -546,7 +559,7 @@ class TestTypeDB(unittest.TestCase):
 
         self.assertTrue(set(my_id_list) == set(stix_ids_list))
 
-    @parameterized.expand(variables_standard_data_file_paths_success())
+    @parameterized.expand(variables_standard_data_file_paths())
     def test_all_ids_loaded_success(self, path):
         variables_id_list()
         typedb_sink = TypeDBSink(connection=connection,
@@ -559,7 +572,7 @@ class TestTypeDB(unittest.TestCase):
 
         self.validate_successful_result(result)
 
-    @parameterized.expand(variables_standard_data_file_paths_missing())
+    @parameterized.expand(variables_standard_data_file_paths())
     def test_all_ids_loaded_missing_dependencies(self, path):
         variables_id_list()
         typedb_sink = TypeDBSink(connection=connection,

@@ -1,6 +1,7 @@
 import json
 import types
 import datetime
+from typing import List, Dict
 
 from stix2 import *
 from stix2.v21 import *
@@ -202,7 +203,7 @@ def extensions(prop_name, prop_dict, parent_var, import_type):
     return match, insert, dep_list
 
 
-def load_object(prop_name, prop_dict, parent_var, import_type):
+def load_object(prop_name: str, prop_dict, parent_var: str, import_type: dict):
     """
         Create the Typeql for a sub object
     Args:
@@ -231,7 +232,8 @@ def load_object(prop_name, prop_dict, parent_var, import_type):
             rel_pointed_to = prop_type["pointed-to"]
             type_ql += ' ' + obj_var + ' isa ' + obj_type
             # Split them into properties and relations
-            properties, relations = split_on_activity_type(tot_prop_list, obj_tql)
+            total_props = prop_dict._inner
+            properties, relations = split_on_activity_type(total_props, obj_tql)
             prop_var_list = []
             dep_list = []
             for prop in properties:
@@ -593,7 +595,7 @@ def val_tql(val):
         return logger.error(f'value  not supported: {val}')
 
 
-def split_on_activity_type(total_props, obj_tql):
+def split_on_activity_type(total_props: dict, obj_tql: Dict[str, str]) -> [List[str], List[str]]:
     """
         Split the Stix object properties into flat properties and sub objects
     Args:
