@@ -28,16 +28,16 @@ def delete_stix_object(stix_object,
     if stix_object.type in auth.get("types_sdo"):
         total_props, obj_tql, sdo_tql_name = sdo_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(indep_ql)
-        del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sdo_tql_name)
+        del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sdo_tql_name, import_type)
     elif stix_object.type in auth.get("types_sro"):
         total_props, obj_tql, sro_tql_name = sro_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(dep_insert)
-        del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sro_tql_name)
+        del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sro_tql_name, import_type)
     elif stix_object.type in auth.get("types_sco"):
         total_props, obj_tql, sro_tql_name = sco_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(core_ql)
         # Need to change this line to suit scenarios where object name is not type name (e.g. future)
-        del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sro_tql_name)
+        del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sro_tql_name, import_type)
     elif stix_object.type == 'marking-definition':
         del_match, del_tql = delete_marking(stix_object, dep_match, dep_insert, indep_ql, core_ql, import_type)
     else:

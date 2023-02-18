@@ -522,25 +522,25 @@ def validate_get_relns(rel, r_tx, obj_name, import_type):
         for emb in auth["reln"]["embedded_relations"]:
             if emb['typeql'] == reln_name:
                 role_owner = emb['owner']
-        return return_valid_relations(rel, r_tx, obj_name, role_owner)
+        return return_valid_relations(rel, r_tx, obj_name, role_owner, import_type)
 
     elif reln_name in auth["reln_name"]["key_value_relations"]:
         for kvt in auth["reln"]["key_value_relations"]:
             if kvt['typeql'] == reln_name:
                 role_owner = kvt['owner']
-        return return_valid_relations(rel, r_tx, obj_name, role_owner)
+        return return_valid_relations(rel, r_tx, obj_name, role_owner, import_type)
 
     elif reln_name in auth["reln_name"]["extension_relations"]:
         for kvt in auth["reln"]["extension_relations"]:
             if kvt['relation'] == reln_name:
                 role_owner = kvt['owner']
-        return return_valid_relations(rel, r_tx, obj_name, role_owner)
+        return return_valid_relations(rel, r_tx, obj_name, role_owner, import_type)
 
     elif reln_name in auth["reln_name"]["list_of_objects"]:
         for kvt in auth["reln"]["list_of_objects"]:
             if kvt['typeql'] == reln_name:
                 role_owner = kvt['owner']
-        return return_valid_relations(rel, r_tx, obj_name, role_owner)
+        return return_valid_relations(rel, r_tx, obj_name, role_owner, import_type)
 
     elif reln_name == "granular-marking":
         return get_relation_details(rel, r_tx, import_type)
