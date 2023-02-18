@@ -143,7 +143,7 @@ def add_layer(transaction, layer):
     transaction.commit()
 
 @impure_safe
-def add_layers_to_typedb(uri: str, port: str, database: str, instructions: Instructions):
+def add_instructions_to_typedb(uri: str, port: str, database: str, instructions: Instructions):
     with get_core_client(uri, port).unwrap() as client:
         client_session = unsafe_perform_io(get_data_session(client, database))
         if not is_successful(client_session):

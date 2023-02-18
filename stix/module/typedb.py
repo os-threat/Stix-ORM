@@ -2,6 +2,7 @@
 import pathlib
 from dataclasses import dataclass
 
+from pydantic import BaseModel
 from returns._internal.pipeline.pipe import pipe
 from returns.methods import unwrap_or_failure
 from returns.pipeline import is_successful
@@ -9,14 +10,13 @@ from returns.pointfree import bind
 from returns.result import safe, Result, Failure, Success
 from returns.unsafe import unsafe_perform_io
 from typedb.client import *
-import traceback
 from stix.module.orm.import_objects import raw_stix2_to_typeql
 from stix.module.orm.delete_object import delete_stix_object, add_delete_layers
 from stix.module.orm.import_utilities import get_embedded_match
 from stix.module.orm.export_object import convert_ans_to_stix
 from stix.module.parsing.parse_objects import parse
 from .initialise import setup_database, load_schema, sort_layers, load_markings
-
+import networkx as nx
 from stix2 import v21
 from stix2.base import _STIXBase
 from stix2.datastore import (
@@ -28,11 +28,10 @@ import logging
 from stix.module.typedb_lib.handlers import handle_result
 from stix.module.typedb_lib.logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers, \
     log_add_instruction_update_layer
-from stix.module.typedb_lib.queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query, \
-    add_layers_to_typedb, \
-    build_insert_query, query_id
+from stix.module.typedb_lib.queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query,\
+    add_instructions_to_typedb, build_insert_query, query_id, add_instructions_to_typedb
 from stix.module.typedb_lib.file import write_to_file
-from stix.module.typedb_lib.instructions import Instructions
+from stix.module.typedb_lib.instructions import Instructions, AddStatus, AddInstruction, TypeQLObject
 
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
@@ -44,6 +43,7 @@ logger.setLevel(logging.DEBUG)
 class TransactionObject:
     transaction: TypeDBTransaction
     session: TypeDBSession
+
 
 
 class TypeDBSink(DataSink):
@@ -387,81 +387,84 @@ class TypeDBSink(DataSink):
         return layers, indexes, missing, cyclical
 
     @safe
-    def __add_instruction(self,
-                          stix_dict):
+    def __generate_typeql_object(self, stix_dict: dict) -> TypeQLObject:
 
         logger.debug(f"\n================================================================\nim about to parse \n")
         stix_obj = parse(stix_dict, False, self.import_type)
         logger.debug(f'\n-------------------------------------------------------------\n i have parsed\n')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
         logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
-        dep_obj["dep_match"] = dep_match
-        dep_obj["dep_insert"] = dep_insert
-        dep_obj["indep_ql"] = indep_ql
-        dep_obj["core_ql"] = core_ql
+        typeql_obj = TypeQLObject(
+            dep_match=dep_match,
+            dep_insert=dep_insert,
+            indep_ql=indep_ql,
+            core_ql=core_ql,
+            dep_list=dep_obj['dep_list']
+        )
 
-        return dep_obj
+        return typeql_obj
 
     @safe
-    def __retrieve_add_instructions(self,
-                                    obj_list) -> Instructions:
-        layers = []
-        indexes = []
-        missing = []
-        cyclical = []
-
+    def __generate_instructions(self,
+                                obj_list) -> Instructions:
         instructions = Instructions()
-
         for stix_dict in obj_list:
-            add_result = self.__add_instruction(stix_dict)
-            #logger.debug(f'\nadd result {add_result}')
-            update_result = add_result.bind(lambda dep_obj: self.__update_add_layers(layers,
-                                                                                     indexes,
-                                                                                     missing,
-                                                                                     dep_obj,
-                                                                                     cyclical))
-            #logger.debug(f'\nupdate result {update_result}')
-            if is_successful(update_result):
-                layers, indexes, missing, cyclical = update_result.unwrap()
-            else:
-                log_add_instruction_update_layer(update_result)
-                instructions.insert_instruction_error(stix_dict['id'], update_result.failure())
 
-        for id in missing:
-            instructions.insert_add_insert_missing_dependency(id)
-        for layer in layers:
-            if layer['id'] in cyclical:
-                instructions.insert_add_instruction_cyclical(layer['id'], layer)
+            typeql_object_result = self.__generate_typeql_object(stix_dict)
+
+            if not is_successful(typeql_object_result):
+                instructions.insert_instruction_error(stix_dict['id'], typeql_object_result.failure())
             else:
-                instructions.insert_add_instruction(layer['id'], layer)
+                typeql_object: TypeQLObject = typeql_object_result.unwrap()
+                instructions.insert_add_instruction(stix_dict['id'], typeql_object)
+                #typeql_object: TypeQLObject = typeql_object_result.unwrap()
+               # is_missing = len(typeql_object.dep_list) == 0
+                #if is_missing:
+                #    instructions.insert_add_insert_missing_dependency(stix_dict['id'], typeql_object)
+                #else:
+
 
         return instructions
 
-    def __check_missing_data(self,
-                             instructions: Instructions):
+    @safe
+    def __create_instruction_dependency_graph(self,
+                                              instructions: Instructions):
+        directed_graph = nx.DiGraph()
+        instruction: AddInstruction
+        for instruction in instructions.instructions.values():
 
-        missing = instructions.missing_dependency_ids()
+            if instruction.status in [AddStatus.ERROR]:
+                logging.debug("Skipping error " + instruction.id)
+                continue
 
-        if not instructions.exist_missing_dependencies():
-            return Success(instructions)
+            dependencies = instruction.typeql_obj.dep_list
 
-        query_result = build_match_id_query(missing)
+            this_node = instruction.id
+            if directed_graph.has_node(this_node):
+                logging.debug("Already has node id " + this_node)
+            else:
+                logging.debug("Inserting dependency node " + this_node)
+                directed_graph.add_node(this_node)
 
-        data_result = query_result.bind(lambda query:  match_query(uri=self.uri,
-                                                                  port=self.port,
-                                                                  database=self.database,
-                                                                  query=query,
-                                                                  data_query=query_id,
-                                                                  import_type=None))
+            for dependency_node in dependencies:
+                if directed_graph.has_node(dependency_node):
+                    logging.debug("Already has dependency node id " + this_node)
+                else:
+                    logging.debug("Dependency node does not exist id " + this_node)
+                    directed_graph.add_node(this_node)
+                directed_graph.add_edge(dependency_node, this_node)
+        instructions.add_dependencies(directed_graph)
+        return instructions
 
-        if not is_successful(data_result):
-            return Failure(unsafe_perform_io(data_result.failure()))
 
-        data = unsafe_perform_io(data_result.unwrap())
-        instructions.update_ids_in_database(data)
-
-        return Success(instructions)
-
+    @safe
+    def __generate_queries(self,
+                           instructions: Instructions):
+        result = instructions.create_insert_queries(build_insert_query)
+        if is_successful(result):
+            return instructions
+        else:
+            raise Exception(result.failure)
 
     @safe
     def __create_insert_queries(self,
@@ -471,6 +474,43 @@ class TypeDBSink(DataSink):
             return instructions
         else:
             raise Exception(result.failure)
+
+
+    def __check_missing_dependencies(self,
+                                     instructions: Instructions):
+        missing_ids_from_tree = instructions.missing_dependency_ids()
+
+        if len(missing_ids_from_tree) == 0:
+            return Success(instructions)
+
+        query_result = build_match_id_query(missing_ids_from_tree)
+
+        data_result = query_result.bind(lambda query: match_query(uri=self.uri,
+                                                                  port=self.port,
+                                                                  database=self.database,
+                                                                  query=query,
+                                                                  data_query=query_id,
+                                                                  import_type=None))
+
+        if not is_successful(data_result):
+            return Failure(unsafe_perform_io(data_result.failure()))
+
+        missing_ids_found_in_db = unsafe_perform_io(data_result.unwrap())
+        # ids with no record in db and in dependency tree
+        ids_missing = list(set(missing_ids_from_tree) - set(missing_ids_found_in_db))
+        instructions.register_missing_dependencies(ids_missing)
+
+        return Success(instructions)
+
+
+    @safe
+    def __reorder_instructions(self,
+                               instructions: Instructions):
+        order = list(nx.topological_sort(instructions.dependencies))
+        instructions.add_insertion_order(order)
+        return instructions
+
+
 
 
     def add(self, stix_data: Optional[List[dict]] = None) -> bool:
@@ -496,33 +536,35 @@ class TypeDBSink(DataSink):
         """
         logger.debug("1. starting in add")
         obj_result = self._gather_objects(stix_data)
-        #logger.debug(f'obj result is {obj_result}')
-        step_1_instructions_result = obj_result.bind(lambda obj_list: self.__retrieve_add_instructions(obj_list))
-        logger.debug(f"2. step 1 -> {step_1_instructions_result}")
-        step_2_instructions_result = step_1_instructions_result.bind(lambda result: self.__check_missing_data(result))
-        logger.debug(f"3. step 2 -> {step_2_instructions_result}")
 
-        if not is_successful(step_2_instructions_result):
+        generate_instructions_result = obj_result.bind(lambda obj_list: self.__generate_instructions(obj_list))
+        instruction_dependency_graph_result = generate_instructions_result.bind(lambda results: self.__create_instruction_dependency_graph(results))
+        check_missing_dependency_result = instruction_dependency_graph_result.bind(lambda result: self.__check_missing_dependencies(result))
+
+        # check missing results
+        if not is_successful(check_missing_dependency_result):
             raise Exception("failed to check missing dependencies")
-        step_2_instructions = step_1_instructions_result.unwrap()
-        if step_2_instructions.exist_missing_dependencies():
-            return step_2_instructions.convert_to_result()
-        if step_2_instructions.exist_cyclical_ids():
-            return step_2_instructions.convert_to_result()
+        instructions: Instructions = check_missing_dependency_result.unwrap()
+        if instructions.exist_missing_dependencies():
+            return instructions.convert_to_result()
+        if instructions.cyclical_ids():
+            raise Exception("Missing dependencies")
 
-        step_3_generate_query_result = step_2_instructions_result.bind(
-            lambda result: self.__create_insert_queries(result))
-        step_4_insert_int_database_result = step_3_generate_query_result.bind(
-            lambda result: add_layers_to_typedb(self.uri,
-                                                self.port,
-                                                self.database,
-                                                result))
-        if not is_successful(step_4_insert_int_database_result):
-            raise Exception(step_4_insert_int_database_result.failure())
+        reorder_result = self.__reorder_instructions(instructions)
 
-        instructions = unsafe_perform_io(step_4_insert_int_database_result.unwrap())
+        queries_result = reorder_result.bind(lambda result: self.__generate_queries(result))
+
+        add_to_database_result = queries_result.bind(lambda result: add_instructions_to_typedb(self.uri,
+                                                                                               self.port,
+                                                                                               self.database,
+                                                                                               result))
+        if not is_successful(add_to_database_result):
+            raise Exception(add_to_database_result.failure())
+
+        instructions = unsafe_perform_io(add_to_database_result)
 
         return instructions.convert_to_result()
+
 
     @safe
     def _gather_objects(self, stix_data):
