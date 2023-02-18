@@ -139,8 +139,8 @@ class Instructions:
                 log_insert_query(result, instruction.layer)
 
 
-    def getids(self):
-        return range(len(self.instructions))
+    def get_ordered_ids(self):
+        return self.order
 
     def update_instruction_as_success(self,
                                       id: str):

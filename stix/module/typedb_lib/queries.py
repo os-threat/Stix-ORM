@@ -149,7 +149,7 @@ def add_instructions_to_typedb(uri: str, port: str, database: str, instructions:
         if not is_successful(client_session):
             return IOResult.failure(client_session.failure())
         with client_session.unwrap() as session:
-            for instruction_id in instructions.getids():
+            for instruction_id in instructions.get_ordered_ids():
                 if instructions.not_allow_insertion(instruction_id):
                     continue
                 write_transaction = unsafe_perform_io(get_write_transaction(session))
