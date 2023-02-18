@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-def parse(data, allow_custom=False, import_type=default_import_type):
+def parse(data: dict, allow_custom=False, import_type=default_import_type):
     """Convert a string, dict or file-like object into a STIX object.
     Args:
         data (str, dict, file-like object): The STIX 2 content to be parsed.
@@ -64,7 +64,7 @@ def _get_dict(data):
             raise ValueError("Cannot convert '%s' to dictionary." % str(data))
 
 
-def dict_to_stix2(stix_dict, allow_custom=False, import_type=default_import_type):
+def dict_to_stix2(stix_dict: dict, allow_custom=False, import_type=default_import_type):
     """convert dictionary to full python-stix2 object
     Args:
         stix_dict (dict): a python dictionary of a STIX object
