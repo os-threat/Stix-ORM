@@ -34,55 +34,53 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: str):
         res: A list of data objects, in the intermediate form for processing into Stix objects
     """
     res = []
-    try:
-        for answer in answer_iterator:
-            dict_answer = answer.map()
-            for key, thing in dict_answer.items():
-                # pull entity data
-                if thing.is_entity():
-                    # 1. describe entity
-                    ent = {'type': 'entity', 'symbol': key, 'T_id': thing.get_iid(),
-                           'T_name': thing.get_type().get_label().name()}
-                    # 2 get and dsecribe properties
-                    props_obj = thing.as_remote(r_tx).get_has()
-                    ent['has'] = process_props(props_obj)
-                    # 3. get and describe relations
-                    reln_types = thing.as_remote(r_tx).get_relations()
-                    ent['relns'] = process_relns(reln_types, r_tx, import_type)
-                    res.append(ent)
-                    # logger.debug(f'ent -> {ent}')
 
-                # pull relation data
-                elif thing.is_relation():
-                    # 1. setup basis
-                    rel = {'type': 'relation', 'symbol': key, 'T_id': thing.get_iid(),
-                           'T_name': thing.get_type().get_label().name()}
-                    att_obj = thing.as_remote(r_tx).get_has()
-                    rel['has'] = process_props(att_obj)
-                    # 3. get and describe relations
-                    reln_types = thing.as_remote(r_tx).get_relations()
-                    rel['relns'] = process_relns(reln_types, r_tx, import_type)
-                    # 4. get and describe the edges
-                    edges = []
-                    edge_types = thing.as_remote(r_tx).get_players_by_role_type()
-                    stix_id = r_tx.concepts().get_attribute_type("stix-id")
-                    for role, things in edge_types.items():
-                        edge = {"role": role.get_label().name(), 'player': []}
-                        for thing in things:
-                            if thing.is_entity():
-                                edge['player'].append(process_entity(thing, r_tx,stix_id))
+    for answer in answer_iterator:
+        dict_answer = answer.map()
+        for key, thing in dict_answer.items():
+            # pull entity data
+            if thing.is_entity():
+                # 1. describe entity
+                ent = {'type': 'entity', 'symbol': key, 'T_id': thing.get_iid(),
+                       'T_name': thing.get_type().get_label().name()}
+                # 2 get and dsecribe properties
+                props_obj = thing.as_remote(r_tx).get_has()
+                ent['has'] = process_props(props_obj)
+                # 3. get and describe relations
+                reln_types = thing.as_remote(r_tx).get_relations()
+                ent['relns'] = process_relns(reln_types, r_tx, import_type)
+                res.append(ent)
+                # logger.debug(f'ent -> {ent}')
 
-                        edges.append(edge)
+            # pull relation data
+            elif thing.is_relation():
+                # 1. setup basis
+                rel = {'type': 'relation', 'symbol': key, 'T_id': thing.get_iid(),
+                       'T_name': thing.get_type().get_label().name()}
+                att_obj = thing.as_remote(r_tx).get_has()
+                rel['has'] = process_props(att_obj)
+                # 3. get and describe relations
+                reln_types = thing.as_remote(r_tx).get_relations()
+                rel['relns'] = process_relns(reln_types, r_tx, import_type)
+                # 4. get and describe the edges
+                edges = []
+                edge_types = thing.as_remote(r_tx).get_players_by_role_type()
+                stix_id = r_tx.concepts().get_attribute_type("stix-id")
+                for role, things in edge_types.items():
+                    edge = {"role": role.get_label().name(), 'player': []}
+                    for thing in things:
+                        if thing.is_entity():
+                            edge['player'].append(process_entity(thing, r_tx,stix_id))
 
-                    rel['edges'] = edges
-                    res.append(rel)
+                    edges.append(edge)
 
-                # else log out error condition
-                else:
-                    logger.debug(f'Error key is {key}, thing is {thing}')
-    except Exception as e:
-        traceback.print_exc()
-        print(1)
+                rel['edges'] = edges
+                res.append(rel)
+
+            # else log out error condition
+            else:
+                logger.debug(f'Error key is {key}, thing is {thing}')
+
 
     return res
 
