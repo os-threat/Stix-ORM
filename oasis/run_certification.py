@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os,json,sys
+import os, json, sys
 import logging
 import pathlib
 import re
@@ -21,7 +21,7 @@ for l in loggers:
         '''
 
 format = '[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s'
-formatter = logging.Formatter(format )
+formatter = logging.Formatter(format)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
@@ -29,12 +29,13 @@ stdout_handler = logging.StreamHandler(sys.stdout)
 stdout_handler.setLevel(logging.DEBUG)
 stdout_handler.setFormatter(formatter)
 
-file_handler = logging.FileHandler('oasis_cert.log',mode='w')
+file_handler = logging.FileHandler('oasis_cert.log', mode='w')
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
 
 logger.addHandler(file_handler)
 logger.addHandler(stdout_handler)
+
 
 def load_personas(file_path='./data/stix_cert_data/stix_cert_persona_dict.json'):
     logger.info(f'Loading file {file_path}')
@@ -48,13 +49,13 @@ def load_template(file_path='./oasis/cert_template.txt'):
     logger.info(f'Loading file {file_path}')
     with open(file_path, mode="r", encoding="utf-8") as file:
         t = file.read()
-        m = re.findall(r"\[[a-z0-9\.]+\]", t,re.IGNORECASE|re.MULTILINE)
+        m = re.findall(r"\[[a-z0-9\.]+\]", t, re.IGNORECASE | re.MULTILINE)
 
         logger.info(f"Loaded {len(m)} profiles")
-        return t,m
+        return t, m
 
 
-def run_profiles(config:dict,template,tags,out_file):
+def run_profiles(config: dict, template, tags, out_file):
     report = template
 
     for profile in config.keys():
@@ -66,19 +67,19 @@ def run_profiles(config:dict,template,tags,out_file):
         assert len(base_ids) == 0
 
         logger.info(f'Checking profile {profile}')
-        result = run_profile(profile,config[profile])
+        result = run_profile(profile, config[profile])
         logger.info(result)
 
         for code in result.keys():
             if code in tags:
                 logger.info(f'Asserting flag {code}')
-                report = report.replace(code,result[code])
+                report = report.replace(code, result[code])
     # now write the report
-    with open(out_file,'w') as file:
+    with open(out_file, 'w') as file:
         file.write(report)
 
 
-def verify_file(file_path,sink_db):
+def verify_file(file_path, sink_db):
     with open(file_path, mode="r", encoding="utf-8") as file:
 
         check_list = []
@@ -89,7 +90,7 @@ def verify_file(file_path,sink_db):
         if isinstance(json_blob, list):
             input_ids = set()
             for json_dict in json_blob:
-                #stix_obj = parse(item)
+                # stix_obj = parse(item)
                 sink_db.add(json_dict)
                 input_ids.add(json_dict['id'])
                 '''
@@ -119,7 +120,7 @@ def verify_file(file_path,sink_db):
             input_ids = set()
             for stix_obj in bundle.objects:
                 sink_db.add(stix_obj)
-                stix_obj.add(stix_obj ['id'])
+                stix_obj.add(stix_obj['id'])
                 '''
                 return_dict = self._typedbSource.get(stix_obj.id)
                 return_obj = parse(return_dict)
@@ -147,7 +148,8 @@ def verify_file(file_path,sink_db):
 
         return check_list
 
-def verify_files(directory,sink_db,source_db):
+
+def verify_files(directory, sink_db, source_db):
     """ Load and verify the file
 
     Args:
@@ -158,7 +160,7 @@ def verify_files(directory,sink_db,source_db):
     if path.is_dir():
         for file_path in path.iterdir():
             try:
-                file_checks = verify_file(file_path,sink_db)
+                file_checks = verify_file(file_path, sink_db)
             except Exception as ins_e:
                 logger.error(ins_e)
                 sys.exit(1)
@@ -176,10 +178,12 @@ def verify_files(directory,sink_db,source_db):
     else:
         logger.error(f'{directory} not a folder')
 
+
 # contains a cache as most test are repeated between levels
 profile_cache = {}
 
-def run_profile(short,profile):
+
+def run_profile(short, profile):
     logger.info(f'Title {profile["title"]}')
     results = {}
 
@@ -200,9 +204,9 @@ def run_profile(short,profile):
             sink_db = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
             source_db = TypeDBSource(connection=connection, import_type="STIX21")
 
-            sub_dir = Path.cwd()/'data'/'stix_cert_data'/level['dir']/level['sub_dir']
+            sub_dir = Path.cwd() / 'data' / 'stix_cert_data' / level['dir'] / level['sub_dir']
             logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
-            checks = verify_files(sub_dir,sink_db,source_db)
+            checks = verify_files(sub_dir, sink_db, source_db)
 
             if checks is None:
                 logger.warning('No checks were run')
@@ -250,9 +254,9 @@ def run_profile(short,profile):
             # let's reset the database for each level
             sink_db = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
 
-            sub_dir = Path.cwd()/'data'/'stix_cert_data'/level['dir']/level['sub_dir']
+            sub_dir = Path.cwd() / 'data' / 'stix_cert_data' / level['dir'] / level['sub_dir']
             logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
-            checks = verify_files(sub_dir,sink_db,source_db)
+            checks = verify_files(sub_dir, sink_db, source_db)
 
             if checks is None:
                 logger.warning('No checks were run')
@@ -286,7 +290,8 @@ def run_profile(short,profile):
 
     return results
 
-def sanity_check(path:Path):
+
+def sanity_check(path: Path):
     quotes = ['\u201c', '\u201d']
     p = path.glob('**/*.json')
     files = [x for x in p if x.is_file()]
@@ -295,18 +300,18 @@ def sanity_check(path:Path):
     stix_fails = []
     quote_fails = []
     for file_path in files:
-        #print(file_path)
+        # print(file_path)
         with open(file_path, mode="r", encoding="utf-8") as file:
             content = file.read()
             checks = [True for c in quotes if c in content]
             if any(checks): quote_fails.append(file_path)
 
-        if file_path.name!='stix_cert_persona_dict.json':
+        if file_path.name != 'stix_cert_persona_dict.json':
             with open(file_path, mode="r", encoding="utf-8") as file:
                 try:
                     json_blob = json.load(file)
                 except Exception as e:
-                    json_fails.append((file_path,str(e)))
+                    json_fails.append((file_path, str(e)))
                     continue
 
                 try:
@@ -318,7 +323,7 @@ def sanity_check(path:Path):
                     else:
                         logger.error(f'Error on json type {type(json_blob)}')
                 except Exception as e:
-                    stix_fails.append((file_path,str(e)))
+                    stix_fails.append((file_path, str(e)))
                     continue
 
     logger.error(f'Files with unicode quotes =  {len(quote_fails)}')
@@ -326,22 +331,21 @@ def sanity_check(path:Path):
     logger.error(f'Files with broken stix = {len(stix_fails)}')
 
 
-
 if __name__ == '__main__':
-    path = pathlib.Path(__file__).parents[1].joinpath('data','stix_cert_data','stix_cert_persona_dict.json')
+    path = pathlib.Path(__file__).parents[1].joinpath('data', 'stix_cert_data', 'stix_cert_persona_dict.json')
     assert os.path.exists(str(path))
     tests = load_personas(file_path=str(path))
     logger.info(f'Running sanity checks in {path}')
 
-    path = pathlib.Path(__file__).parents[1].joinpath('data','stix_cert_data')
+    path = pathlib.Path(__file__).parents[1].joinpath('data', 'stix_cert_data')
     assert os.path.exists(str(path))
     sanity_check(path=path)
 
-    path = pathlib.Path(__file__).parents[1].joinpath('oasis','cert_template.txt')
+    path = pathlib.Path(__file__).parents[1].joinpath('oasis', 'cert_template.txt')
     assert os.path.exists(str(path))
-    template,tags = load_template(file_path=str(path))
+    template, tags = load_template(file_path=str(path))
     logger.info(f"Profiles: {list(tests.keys())}")
 
-    path = pathlib.Path(__file__).parents[1].joinpath('oasis','report.txt')
+    path = pathlib.Path(__file__).parents[1].joinpath('oasis', 'report.txt')
     assert os.path.exists(str(path))
-    run_profiles(tests,template,tags,out_file=path)
+    run_profiles(tests, template, tags, out_file=path)
