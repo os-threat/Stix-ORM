@@ -226,7 +226,7 @@ def make_sro(res, import_type):
     return stix_dict
 
 
-def make_sco(res, import_type):
+def make_sco(res: dict, import_type):
     """
         High-level function to convert intermediate format into a Stix cyber observable object
     Args:
@@ -244,7 +244,7 @@ def make_sco(res, import_type):
     # - work out the type of object
     sco_tql_name = obj_type
     # - get the object-specific typeql names, sighting or relationship
-    obj_tql, sco_tql_name = sco__type_to_tql(sco_tql_name, import_type)
+    obj_tql, sco_tql_name, is_list = sco__type_to_tql(sco_tql_name, import_type)
 
     # 2.A) get the typeql properties and relations
     props = res["has"]

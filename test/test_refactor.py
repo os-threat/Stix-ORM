@@ -379,6 +379,19 @@ class TestTypeDB(unittest.TestCase):
         result = typedb.delete(local_list)
         self.validate_successful_result(result)
 
+    def test_artifact_basic(self):
+        file_path = artifact_basic_path()
+
+        typedb = TypeDBSink(connection=connection,
+                            clear=True,
+                            import_type=import_type,
+                            schema_path=schema_path)
+        json_text = self.get_json_from_file(file_path)
+        typedb.add(json_text)
+
+        local_list = typedb.get_stix_ids()
+        result = typedb.delete(local_list)
+        self.validate_successful_result(result)
 
 
     def test_delete_attack_pattern(self):
