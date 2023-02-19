@@ -596,9 +596,16 @@ class TypeDBSink(DataSink):
                 return temp_list.append(stix_data)
 
         elif isinstance(stix_data, list):
+            item_list = []
+            for item in stix_data:
+                if item.get("type", '') == 'bundle':
+                    item_list = item_list + item.get("objects", [])
+                else:
+                    item_list.append(item)
+
             logger.debug(f'isinstance list')
             # recursively add individual STIX objects
-            return stix_data
+            return item_list
 
         else:
             raise TypeError(
