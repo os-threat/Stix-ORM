@@ -1,12 +1,3 @@
-import json
-import types
-import datetime
-import re
-from typing import Optional, Dict
-
-from stix2 import *
-from stix2.v21 import *
-from stix2.utils import is_object, is_stix_type, get_type_from_id, is_sdo, is_sco, is_sro
 from stix.module.definitions.stix21 import stix_models
 from stix.module.definitions.attack import attack_models
 from stix.module.definitions.os_threat import os_threat_models
