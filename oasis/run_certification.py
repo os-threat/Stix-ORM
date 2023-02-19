@@ -8,7 +8,7 @@ from dbconfig import connection
 from stix2 import (v21, parse)
 from pathlib import Path
 
-from stix.module.typedb import TypeDBSink
+from stix.module.typedb import TypeDBSink, TypeDBSource
 
 loggers = [logging.getLogger()]  # get the root logger
 loggers = loggers + [logging.getLogger(name) for name in logging.root.manager.loggerDict]
