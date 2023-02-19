@@ -54,4 +54,4 @@ jobs:
           TYPEDB_HOST: 'localhost'
           TYPEDB_PORT: '1729'
         run: |
-          python -m nose2
+          python -m nose2 --verbose
