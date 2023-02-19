@@ -28,7 +28,7 @@ from stix.module.typedb_lib.logging import log_delete_instruction, log_delete_in
 from stix.module.typedb_lib.queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query,\
     build_insert_query, query_id, add_instructions_to_typedb
 from stix.module.typedb_lib.file import write_to_file
-from stix.module.typedb_lib.instructions import Instructions, AddStatus, AddInstruction, TypeQLObject
+from stix.module.typedb_lib.instructions import Instructions, Status, AddInstruction, TypeQLObject
 
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
@@ -430,7 +430,7 @@ class TypeDBSink(DataSink):
         instruction: AddInstruction
         for instruction in instructions.instructions.values():
 
-            if instruction.status in [AddStatus.ERROR]:
+            if instruction.status in [Status.ERROR]:
                 logging.debug("Skipping error " + instruction.id)
                 continue
 
@@ -664,11 +664,27 @@ class TypeDBSource(DataSource):
         obj_var, type_ql = get_embedded_match(stix_id)
         query = 'match ' + type_ql
 
+        import_type = {
+            "STIX21": True,
+            "ATT&CK": False,
+            "os-intel": False,
+            "os-hunt": False,
+            "kestrel": False,
+            "CACAO": False,
+            "CVE": False,
+            "identity": False,
+            "location": False,
+            "rules": False,
+            "ATT&CK_Versions": ["12.1"],
+            "ATT&CK_Domains": ["Enterprise ATT&CK", "Mobile ATT&CK", "ICS ATT&CK"]
+        }
+
         data = match_query(uri=self.uri,
                            port=self.port,
                            database=self.database,
                            query=query,
-                           data_query=convert_ans_to_stix, import_type='STIX21')
+                           data_query=convert_ans_to_stix,
+                           import_type=import_type)
 
         stix_obj = unwrap_or_failure(data).bind(lambda x: parse(x))
 

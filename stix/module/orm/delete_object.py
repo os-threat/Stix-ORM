@@ -25,15 +25,15 @@ def delete_stix_object(stix_object,
                        import_type) -> [str, str]:
 
     auth = authorised_mappings(import_type)
-    if stix_object.type in auth.get("types_sdo"):
+    if stix_object.type in auth["tql_types"]["sdo"]:
         total_props, obj_tql, sdo_tql_name = sdo_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(indep_ql)
         del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sdo_tql_name, import_type)
-    elif stix_object.type in auth.get("types_sro"):
+    elif stix_object.type in auth["tql_types"]["sro"]:
         total_props, obj_tql, sro_tql_name = sro_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(dep_insert)
         del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sro_tql_name, import_type)
-    elif stix_object.type in auth.get("types_sco"):
+    elif stix_object.type in auth["tql_types"]["sco"]:
         total_props, obj_tql, sro_tql_name = sco_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(core_ql)
         # Need to change this line to suit scenarios where object name is not type name (e.g. future)

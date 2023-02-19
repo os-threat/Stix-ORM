@@ -88,7 +88,7 @@ domains = {
 }
 
 
-def authorised_mappings(import_type=default_import_type):
+def authorised_mappings(import_type: dict=default_import_type):
     auth = {}
     auth["reln_name"] = {}
     auth["reln"] = {}

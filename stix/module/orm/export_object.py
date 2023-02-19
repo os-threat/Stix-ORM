@@ -1,4 +1,8 @@
 import json
+import pathlib
+import traceback
+from typing import List
+
 from stix.module.authorise import authorised_mappings
 from stix.module.orm.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
 from stix.module.orm.export_utilities import convert_ans_to_res
@@ -32,7 +36,8 @@ def convert_ans_to_stix(answer_iterator, r_tx, import_type):
         stix_dict {}: a dict containing the stix object
     """
     res = convert_ans_to_res(answer_iterator, r_tx, import_type)
-    with open("stix/module/orm/export_test.json", "w") as outfile:
+    path = pathlib.Path(__file__).parent.joinpath("export_test.json")
+    with open(str(path), 'w') as outfile:
         json.dump(res, outfile)
     logger.debug(f'got res, now for stix')
     stix_dict = convert_res_to_stix(res, import_type)
@@ -43,7 +48,7 @@ def convert_ans_to_stix(answer_iterator, r_tx, import_type):
 #  2. Convert Res to Stix
 # --------------------------------------------------------------------------------------------------------
 
-def convert_res_to_stix(res, import_type):
+def convert_res_to_stix(res: List[dict], import_type: dict):
     """
         High level function to conver the intermediate form into a stix dict
     Args:
@@ -59,13 +64,13 @@ def convert_res_to_stix(res, import_type):
     for obj in res:
         obj_type = obj["T_name"]
         tql_type = obj["type"]
-        if obj_type in auth["tql_types"]["types_sdo"]:
+        if obj_type in auth["tql_types"]["sdo"]:
             stix_dict = make_sdo(obj, import_type)
-        elif obj_type in auth["tql_types"]["types_sco"]:
+        elif obj_type in auth["tql_types"]["sco"]:
             stix_dict = make_sco(obj, import_type)
-        elif obj_type in auth["tql_types"]["types_sro"]:
+        elif obj_type in auth["tql_types"]["sro"]:
             stix_dict = make_sro(obj, import_type)
-        elif obj_type in auth["tql_types"]["types_meta"]:
+        elif obj_type in auth["tql_types"]["meta"]:
             stix_dict = make_meta(obj, import_type)
         else:
             logger.error(f'Unknown object type: {obj}')
@@ -83,34 +88,38 @@ def make_sdo(res, import_type):
     Returns:
         stix_dict {}: a dict containing the stix object
     """
-    auth = authorised_mappings(import_type)
-    stix_dict = {}
-    # 2.A) get the typeql properties and relations
-    sdo_tql_name = res["T_name"]
-    props = res["has"]
-    relns = res["relns"]
-    attack_object = False
-    sub_technique = False
-    for prop in props:
-        if prop["typeql"] == "x_mitre_version":
-            attack_object = True
-        if prop["typeql"] == "x_mitre_is_subtechnique":
-            sub_technique = True
+    try:
+        auth = authorised_mappings(import_type)
+        stix_dict = {}
+        # 2.A) get the typeql properties and relations
+        sdo_tql_name = res["T_name"]
+        props = res["has"]
+        relns = res["relns"]
+        attack_object = False
+        sub_technique = False
+        for prop in props:
+            if prop["typeql"] == "x_mitre_version":
+                attack_object = True
+            if prop["typeql"] == "x_mitre_is_subtechnique":
+                sub_technique = True
 
-    obj_tql, sdo_tql_name = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique)
+        obj_tql, sdo_tql_name, is_list = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique)
 
-    # 2.B) get the is_list list, the list of properties that are lists for that object
-    is_list = auth["is_lists"]["sdo"]["sdo"] + auth["is_lists"]["sdo"][sdo_tql_name]
-    # 3.A) add the properties onto the the object
-    stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
-    logger.debug('sdo, add properties')
-    # 3.B) add the relations onto the object
-    stix_dict = make_relations(relns, obj_tql, stix_dict, is_list, sdo_tql_name, import_type)
-    logger.debug('sdo, add relations')
-    # 4.0 Check for the edge case where an identity creates an identity, but they are the same id
-    if "created_by_ref" in stix_dict and stix_dict["type"] == "identity":
-        if stix_dict["created_by_ref"] == stix_dict["id"]:
-            del stix_dict["created_by_ref"]
+        # 2.B) get the is_list list, the list of properties that are lists for that object
+        is_list = auth["is_lists"]["sdo"]["sdo"] + auth["is_lists"]["sdo"][sdo_tql_name]
+        # 3.A) add the properties onto the the object
+        stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
+        logger.debug('sdo, add properties')
+        # 3.B) add the relations onto the object
+        stix_dict = make_relations(relns, obj_tql, stix_dict, is_list, sdo_tql_name, import_type)
+        logger.debug('sdo, add relations')
+        # 4.0 Check for the edge case where an identity creates an identity, but they are the same id
+        if "created_by_ref" in stix_dict and stix_dict["type"] == "identity":
+            if stix_dict["created_by_ref"] == stix_dict["id"]:
+                del stix_dict["created_by_ref"]
+    except Exception as e:
+        traceback.print_exc()
+        print(e)
 
     return stix_dict
 

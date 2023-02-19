@@ -48,18 +48,18 @@ class Instructions:
         error = None
         status = ResultStatus.UNKNOWN
         for instruction in self.instructions.values():
-            if instruction.status in [DeleteStatus.SUCCESS, AddStatus.SUCCESS]:
+            if instruction.status in [Status.SUCCESS]:
                 status = ResultStatus.SUCCESS
-            elif instruction.status == AddStatus.EXCLUDE_EXISTS_IN_DATABASE:
+            elif instruction.status == Status.EXCLUDE_EXISTS_IN_DATABASE:
                 status = ResultStatus.ALREADY_IN_DB
-            elif instruction.status in [DeleteStatus.ERROR, AddStatus.ERROR]:
+            elif instruction.status in [Status.ERROR]:
                 status = ResultStatus.ERROR
                 error = instruction.error
-            elif instruction.status == AddStatus.FAILED_CYCLICAL:
+            elif instruction.status == Status.FAILED_CYCLICAL:
                 status = ResultStatus.CYCLICAL_DEPENDENCY
-            elif instruction.status == AddStatus.FAILED_MISSING_DEPENDENCY:
+            elif instruction.status == Status.FAILED_MISSING_DEPENDENCY:
                 status = ResultStatus.MISSING_DEPENDENCY
-            elif instruction.status in [DeleteStatus.STEP_1_CREATED_QUERY, AddStatus.STEP_2_CREATED_QUERY]:
+            elif instruction.status in [Status.CREATED_QUERY]:
                 status = ResultStatus.VALID_FOR_DB_COMMIT
 
             results.append(Result(id=instruction.id, error=error, status=status))
@@ -70,12 +70,12 @@ class Instructions:
 
     def not_allow_insertion(self,
                             id: str):
-        return self.instructions[id].status != AddStatus.STEP_2_CREATED_QUERY
+        return self.instructions[id].status != Status.CREATED
 
     def cyclical_ids(self):
         cyclical = []
         for instruction in self.instructions.values():
-            if instruction.status == AddStatus.FAILED_CYCLICAL:
+            if instruction.status == Status.FAILED_CYCLICAL:
                 cyclical.append(instruction.id)
         return cyclical
 
@@ -83,7 +83,7 @@ class Instructions:
                                ids: List[str]):
         for instruction in self.instructions.values():
             if instruction.id in ids:
-                instruction.status = AddStatus.EXCLUDE_EXISTS_IN_DATABASE
+                instruction.status = Status.EXCLUDE_EXISTS_IN_DATABASE
 
     def exist_cyclical_ids(self):
         return len(self.cyclical_ids()) > 0
@@ -119,47 +119,50 @@ class Instructions:
         instruction: AddInstruction
         for instruction in self.instructions.values():
             if len(set(instruction.typeql_obj.dep_list).intersection(set(missing))) > 0:
-                instruction.status = AddStatus.FAILED_MISSING_DEPENDENCY
+                instruction.status = Status.FAILED_MISSING_DEPENDENCY
 
 
     @safe
     def create_insert_queries(self,
                               build_insert_query):
         for instruction in self.instructions.values():
-            if instruction.status != AddStatus.STEP_1_ADDED_ID_FOR_INSERTION:
+            if instruction.status != Status.CREATED:
                 continue
             result = build_insert_query(instruction.typeql_obj.dict())
             is_non_empty_insertion = is_successful(result) and result.unwrap() is not None
             if is_non_empty_insertion:
-                instruction.status = AddStatus.STEP_2_CREATED_QUERY
+                instruction.status = Status.CREATED_QUERY
                 instruction.query = result.unwrap()
             elif not is_successful(result):
-                instruction.status = AddStatus.ERROR
+                instruction.status = Status.ERROR
                 instruction.error = str(result.failure())
                 log_insert_query(result, instruction.layer)
 
 
     def get_ordered_ids(self):
+        if len(self.order) == 0:
+            return self.instructions.keys()
+
         return self.order
 
     def update_instruction_as_success(self,
                                       id: str):
-        self.instructions[id].status = AddStatus.SUCCESS
+        self.instructions[id].status = Status.SUCCESS
 
     def update_delete_instruction_as_success(self,
                                       id: str):
-        self.instructions[id].status = DeleteStatus.SUCCESS
+        self.instructions[id].status = Status.SUCCESS
 
     def update_instruction_as_error(self,
                                     id: str,
                                     error: str):
-        self.instructions[id].status = AddStatus.ERROR
+        self.instructions[id].status = Status.ERROR
         self.instructions[id].error = error
 
     def update_delete_instruction_as_error(self,
                                     id: str,
                                     error: str):
-        self.instructions[id].status = DeleteStatus.ERROR
+        self.instructions[id].status = Status.ERROR
         self.instructions[id].error = error
 
     def get_query_for_id(self,
@@ -169,12 +172,12 @@ class Instructions:
     def insert_add_instruction(self,
                                id: str,
                                typeql_obj: TypeQLObject):
-        self.instructions[id] = AddInstruction(status=AddStatus.STEP_1_ADDED_ID_FOR_INSERTION, id=id, typeql_obj=typeql_obj)
+        self.instructions[id] = AddInstruction(status=Status.CREATED, id=id, typeql_obj=typeql_obj)
 
     def insert_delete_instruction(self,
                                id: str,
                                layer: dict):
-        self.instructions[id] = DeleteInstruction(status=DeleteStatus.STEP_1_CREATED_QUERY,
+        self.instructions[id] = DeleteInstruction(status=Status.CREATED_QUERY,
                                                 id=id,
                                                 layer=layer,
                                                 query=layer['delete'])
@@ -185,7 +188,7 @@ class Instructions:
         if error is None:
             return
         logging.exception("\n".join(traceback.format_exception(error)))
-        self.instructions[id] = AddInstruction(status=DeleteStatus.ERROR, id=id, error=error)
+        self.instructions[id] = AddInstruction(status=Status.ERROR, id=id, error=error)
 
     def insert_instruction_error(self,
                                  id: str,
@@ -193,41 +196,44 @@ class Instructions:
         if error is None:
             return
         logging.exception("\n".join(traceback.format_exception(error)))
-        self.instructions[id] = AddInstruction(status=AddStatus.ERROR, id=id, error=str(error))
+        self.instructions[id] = AddInstruction(status=Status.ERROR, id=id, error=str(error))
 
     def insert_add_insert_missing_dependency(self,
                                              id: str,
                                              typeql_obj: TypeQLObject):
-        self.instructions[id] = AddInstruction(status=AddStatus.FAILED_MISSING_DEPENDENCY, id=id, typeql_obj= typeql_obj)
+        self.instructions[id] = AddInstruction(status=Status.FAILED_MISSING_DEPENDENCY, id=id, typeql_obj= typeql_obj)
 
     def insert_add_instruction_cyclical(self,
                                         id: str,
                                         layer: dict):
-        self.instructions[id] = AddInstruction(status=AddStatus.FAILED_CYCLICAL, id=id, layer=layer)
+        self.instructions[id] = AddInstruction(status=Status.FAILED_CYCLICAL, id=id, layer=layer)
 
 
-class AddStatus(Enum):
-    SUCCESS = 'success'
-    STEP_1_ADDED_ID_FOR_INSERTION= 'added_id_for_insertion'
-    STEP_2_CREATED_QUERY = 'created_query'
+class Status(Enum):
+    ERROR = 'error'
+    SUCCESS = "success"
+    CREATED_QUERY = 'created_query'
     EXCLUDE_EXISTS_IN_DATABASE = 'exists_in_database'
     FAILED_MISSING_DEPENDENCY = 'missing_dependency'
     FAILED_CYCLICAL = 'cyclical'
-    ERROR = 'error'
+    CREATED= "created"
 
-class DeleteStatus(Enum):
-    SUCCESS = "success"
-    STEP_1_CREATED_QUERY = 'created_query'
-    ERROR= 'error'
+
+
+
+
+
+
+
 
 
 class AddInfo(BaseModel):
-    status: AddStatus
+    status: Status
     id: str
     error: Optional[str]
 
 class Instruction(BaseModel):
-    status: AddStatus
+    status: Status
     id: str
     layer: Optional[dict]
     query: Optional[str]

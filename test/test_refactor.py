@@ -140,6 +140,7 @@ def all_standard_data_file_paths() -> List[str]:
     return standard_data_file_list
 
 
+
 def standard_data_file_paths_with_dependencies() -> List[str]:
 
     top_dir_path = pathlib.Path(__file__).parents[1]
@@ -355,6 +356,19 @@ class TestTypeDB(unittest.TestCase):
 
         self.assertTrue('Client Error: Unable to connect to TypeDB server.' in str(context.exception))
 
+    def test_delete_attack_pattern(self):
+        file_path = aaa_identity_path()
+
+        typedb = TypeDBSink(connection=connection,
+                            clear=True,
+                            import_type=import_type,
+                            schema_path=schema_path)
+        json_text = self.get_json_from_file(file_path)
+        typedb.add(json_text)
+
+        local_list = typedb.get_stix_ids()
+        result = typedb.delete(local_list)
+        self.validate_successful_result(result)
 
     def setUp(self):
         self.clean_db()

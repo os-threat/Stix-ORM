@@ -117,7 +117,7 @@ def delete_layers(uri: str, port: str, database: str, instructions: Instructions
         if not is_successful(client_session):
             return IOResult.failure(client_session.failure())
         with client_session.unwrap() as session:
-            for instruction_id in instructions.getids():
+            for instruction_id in instructions.get_ordered_ids():
                 write_transaction = unsafe_perform_io(get_write_transaction(session))
                 if not is_successful(write_transaction):
                     return IOResult.failure(write_transaction.failure())

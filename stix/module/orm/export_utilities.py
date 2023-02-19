@@ -1,4 +1,5 @@
 import json
+import traceback
 from datetime import datetime, timedelta, timezone
 
 from stix.module.definitions.stix21 import stix_models
@@ -15,7 +16,7 @@ logger = logging.getLogger(__name__)
 # --------------------------------------------------------------------------------------------------------
 
 
-def convert_ans_to_res(answer_iterator, r_tx, import_type):
+def convert_ans_to_res(answer_iterator, r_tx, import_type: str):
     """
     Take the response from TypeDB to a query, and start the process to use GRPC (typedb_lib-client) commands
     to expand on the returned data to some potential object shape (i.e. mandatory and optional),
@@ -33,51 +34,55 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type):
         res: A list of data objects, in the intermediate form for processing into Stix objects
     """
     res = []
-    for answer in answer_iterator:
-        dict_answer = answer.map()
-        for key, thing in dict_answer.items():
-            # pull entity data
-            if thing.is_entity():
-                # 1. describe entity
-                ent = {'type': 'entity', 'symbol': key, 'T_id': thing.get_iid(),
-                       'T_name': thing.get_type().get_label().name()}
-                # 2 get and dsecribe properties
-                props_obj = thing.as_remote(r_tx).get_has()
-                ent['has'] = process_props(props_obj)
-                # 3. get and describe relations
-                reln_types = thing.as_remote(r_tx).get_relations()
-                ent['relns'] = process_relns(reln_types, r_tx, import_type)
-                res.append(ent)
-                # logger.debug(f'ent -> {ent}')
+    try:
+        for answer in answer_iterator:
+            dict_answer = answer.map()
+            for key, thing in dict_answer.items():
+                # pull entity data
+                if thing.is_entity():
+                    # 1. describe entity
+                    ent = {'type': 'entity', 'symbol': key, 'T_id': thing.get_iid(),
+                           'T_name': thing.get_type().get_label().name()}
+                    # 2 get and dsecribe properties
+                    props_obj = thing.as_remote(r_tx).get_has()
+                    ent['has'] = process_props(props_obj)
+                    # 3. get and describe relations
+                    reln_types = thing.as_remote(r_tx).get_relations()
+                    ent['relns'] = process_relns(reln_types, r_tx, import_type)
+                    res.append(ent)
+                    # logger.debug(f'ent -> {ent}')
 
-            # pull relation data
-            elif thing.is_relation():
-                # 1. setup basis
-                rel = {'type': 'relation', 'symbol': key, 'T_id': thing.get_iid(),
-                       'T_name': thing.get_type().get_label().name()}
-                att_obj = thing.as_remote(r_tx).get_has()
-                rel['has'] = process_props(att_obj)
-                # 3. get and describe relations
-                reln_types = thing.as_remote(r_tx).get_relations()
-                rel['relns'] = process_relns(reln_types, r_tx, import_type)
-                # 4. get and describe the edges
-                edges = []
-                edge_types = thing.as_remote(r_tx).get_players_by_role_type()
-                stix_id = r_tx.concepts().get_attribute_type("stix-id")
-                for role, things in edge_types.items():
-                    edge = {"role": role.get_label().name(), 'player': []}
-                    for thing in things:
-                        if thing.is_entity():
-                            edge['player'].append(process_entity(thing, r_tx,stix_id))
+                # pull relation data
+                elif thing.is_relation():
+                    # 1. setup basis
+                    rel = {'type': 'relation', 'symbol': key, 'T_id': thing.get_iid(),
+                           'T_name': thing.get_type().get_label().name()}
+                    att_obj = thing.as_remote(r_tx).get_has()
+                    rel['has'] = process_props(att_obj)
+                    # 3. get and describe relations
+                    reln_types = thing.as_remote(r_tx).get_relations()
+                    rel['relns'] = process_relns(reln_types, r_tx, import_type)
+                    # 4. get and describe the edges
+                    edges = []
+                    edge_types = thing.as_remote(r_tx).get_players_by_role_type()
+                    stix_id = r_tx.concepts().get_attribute_type("stix-id")
+                    for role, things in edge_types.items():
+                        edge = {"role": role.get_label().name(), 'player': []}
+                        for thing in things:
+                            if thing.is_entity():
+                                edge['player'].append(process_entity(thing, r_tx,stix_id))
 
-                    edges.append(edge)
+                        edges.append(edge)
 
-                rel['edges'] = edges
-                res.append(rel)
+                    rel['edges'] = edges
+                    res.append(rel)
 
-            # else log out error condition
-            else:
-                logger.debug(f'Error key is {key}, thing is {thing}')
+                # else log out error condition
+                else:
+                    logger.debug(f'Error key is {key}, thing is {thing}')
+    except Exception as e:
+        traceback.print_exc()
+        print(1)
 
     return res
 
@@ -102,7 +107,7 @@ def process_entity(thing, r_tx, stix_id):
     return play
 
 
-def process_relns(reln_types, r_tx, import_type):
+def process_relns(reln_types, r_tx, import_type: str):
     """
         If the current returned object is a list of relations (i.e. a list of embedded objects), then unpack them
     Args:
@@ -188,7 +193,7 @@ def process_value(p):
     return ret_value
 
 
-def get_relation_details(r, r_tx, import_type):
+def get_relation_details(r, r_tx, import_type: str):
     """
         For a given sub-object type, unpack it
     Args:
