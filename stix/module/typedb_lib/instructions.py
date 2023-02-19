@@ -70,7 +70,7 @@ class Instructions:
 
     def not_allow_insertion(self,
                             id: str):
-        return self.instructions[id].status != Status.CREATED
+        return self.instructions[id].status != Status.CREATED_QUERY
 
     def cyclical_ids(self):
         cyclical = []
