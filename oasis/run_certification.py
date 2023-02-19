@@ -2,11 +2,13 @@
 
 import os,json,sys
 import logging
+import pathlib
 import re
-from stix.module.typedb_lib import TypeDBSink, TypeDBSource
 from dbconfig import connection
 from stix2 import (v21, parse)
 from pathlib import Path
+
+from stix.module.typedb import TypeDBSink
 
 loggers = [logging.getLogger()]  # get the root logger
 loggers = loggers + [logging.getLogger(name) for name in logging.root.manager.loggerDict]
@@ -326,12 +328,20 @@ def sanity_check(path:Path):
 
 
 if __name__ == '__main__':
-    cwd = Path.cwd()
+    path = pathlib.Path(__file__).parents[1].joinpath('data','stix_cert_data','stix_cert_persona_dict.json')
+    assert os.path.exists(str(path))
+    tests = load_personas(file_path=str(path))
+    logger.info(f'Running sanity checks in {path}')
 
-    logger.info(f'Running tests in {cwd}')
-    tests = load_personas(file_path=Path.joinpath(cwd,'data','stix_cert_data','stix_cert_persona_dict.json'))
-    logger.info(f'Running sanity checks in {cwd}')
-    sanity_check(path=Path.joinpath(cwd,'data','stix_cert_data'))
-    template,tags = load_template(file_path=Path.joinpath(cwd,'oasis','cert_template.txt'))
+    path = pathlib.Path(__file__).parents[1].joinpath('data','stix_cert_data')
+    assert os.path.exists(str(path))
+    sanity_check(path=path)
+
+    path = pathlib.Path(__file__).parents[1].joinpath('oasis','cert_template.txt')
+    assert os.path.exists(str(path))
+    template,tags = load_template(file_path=str(path))
     logger.info(f"Profiles: {list(tests.keys())}")
-    run_profiles(tests,template,tags,out_file=Path.joinpath(cwd,'oasis','report.txt'))
+
+    path = pathlib.Path(__file__).parents[1].joinpath('oasis','report.txt')
+    assert os.path.exists(str(path))
+    run_profiles(tests,template,tags,out_file=path)
