@@ -68,7 +68,7 @@ def convert_res_to_stix(res: List[dict], import_type: dict):
             stix_dict = make_sdo(obj, import_type)
         elif obj_type in auth["tql_types"]["sco"]:
             stix_dict = make_sco(obj, import_type)
-        elif obj_type in auth["tql_types"]["sro"]:
+        elif tql_type in auth["tql_types"]["sro"]:
             stix_dict = make_sro(obj, import_type)
         elif obj_type in auth["tql_types"]["meta"]:
             stix_dict = make_meta(obj, import_type)
@@ -137,13 +137,13 @@ def make_sro(res, import_type):
     auth = authorised_mappings(import_type)
     stix_dict = {}
     # 2.A) get the typeql properties and relations
-    sro_tql_name = res["T_name"]
+    sro_tql_name = res["type"]
 
     props = res["has"]
     sro_sub_rel = ""
-    if sro_tql_name == "relation":
+    if sro_tql_name == "relationship":
         for has in props:
-            if has["typeql"] == "relationship_type":
+            if has["typeql"] == "relationship-type":
                 sro_sub_rel = has["value"]
                 break
 

@@ -1,5 +1,7 @@
 
 import json
+import traceback
+
 from stix2.parsing import dict_to_stix2
 from stix.module.authorise import authorised_mappings, default_import_type
 from stix2.exceptions import ParseError
@@ -87,6 +89,7 @@ def dict_to_stix2(stix_dict: dict, allow_custom=False, import_type=default_impor
         query a third-party TAXII endpoint that could provide custom STIX
         objects that I don't know about ahead of time)
     """
+    assert len(stix_dict) > 0
     logger.debug("I'm in dict to stix")
     auth = authorised_mappings(import_type)
     if 'type' not in stix_dict:

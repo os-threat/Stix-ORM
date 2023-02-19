@@ -174,6 +174,11 @@ def standard_data_file_paths_with_no_dependencies() -> List[str]:
     return standard_data_file_list
 
 
+def artifact_basic_path() -> str:
+    data_standard_path = "data/standard/"
+    top_dir_path = pathlib.Path(__file__).parents[1]
+    return str(top_dir_path.joinpath(data_standard_path).joinpath("artifact_basic.json"))
+
 def aaa_grouping_path() -> str:
     data_standard_path = "data/standard/"
     top_dir_path = pathlib.Path(__file__).parents[1]
@@ -200,6 +205,10 @@ def aaa_identity_path() -> str:
     top_dir_path = pathlib.Path(__file__).parents[1]
     return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_identity.json"))
 
+def aaa_attack_path() -> str:
+    data_standard_path = "data/standard/"
+    top_dir_path = pathlib.Path(__file__).parents[1]
+    return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_attack_pattern.json"))
 
 def variable_all_standard_data_filepaths() -> List[str]:
     top_dir_path = pathlib.Path(__file__).parents[1]
@@ -356,8 +365,24 @@ class TestTypeDB(unittest.TestCase):
 
         self.assertTrue('Client Error: Unable to connect to TypeDB server.' in str(context.exception))
 
-    def test_delete_attack_pattern(self):
+    def test_delete_identity_pattern(self):
         file_path = aaa_identity_path()
+
+        typedb = TypeDBSink(connection=connection,
+                            clear=True,
+                            import_type=import_type,
+                            schema_path=schema_path)
+        json_text = self.get_json_from_file(file_path)
+        typedb.add(json_text)
+
+        local_list = typedb.get_stix_ids()
+        result = typedb.delete(local_list)
+        self.validate_successful_result(result)
+
+
+
+    def test_delete_attack_pattern(self):
+        file_path = aaa_attack_path()
 
         typedb = TypeDBSink(connection=connection,
                             clear=True,
@@ -507,6 +532,16 @@ class TestTypeDB(unittest.TestCase):
                                  import_type=import_type,
                                  schema_path=schema_path)
         json_text = self.get_json_from_file(x509_path())
+
+        result = typedb_sink.add(json_text)
+        self.validate_successful_result(result)
+
+    def test_add_attack_path(self):
+        typedb_sink = TypeDBSink(connection=connection,
+                                 clear=True,
+                                 import_type=import_type,
+                                 schema_path=schema_path)
+        json_text = self.get_json_from_file(aaa_attack_path())
 
         result = typedb_sink.add(json_text)
         self.validate_successful_result(result)

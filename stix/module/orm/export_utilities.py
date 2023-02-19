@@ -55,7 +55,7 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: str):
             # pull relation data
             elif thing.is_relation():
                 # 1. setup basis
-                rel = {'type': 'relation', 'symbol': key, 'T_id': thing.get_iid(),
+                rel = {'type': 'relationship', 'symbol': key, 'T_id': thing.get_iid(),
                        'T_name': thing.get_type().get_label().name()}
                 att_obj = thing.as_remote(r_tx).get_has()
                 rel['has'] = process_props(att_obj)
@@ -80,7 +80,6 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: str):
             # else log out error condition
             else:
                 logger.debug(f'Error key is {key}, thing is {thing}')
-
 
     return res
 

@@ -188,7 +188,7 @@ class Instructions:
         if error is None:
             return
         logging.exception("\n".join(traceback.format_exception(error)))
-        self.instructions[id] = AddInstruction(status=Status.ERROR, id=id, error=error)
+        self.instructions[id] = DeleteInstruction(status=Status.ERROR, id=id, error=str(error))
 
     def insert_instruction_error(self,
                                  id: str,
