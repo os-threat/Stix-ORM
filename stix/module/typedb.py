@@ -377,23 +377,7 @@ class TypeDBSink(DataSink):
 
         return TypeDBSource(connection, "STIX21")
 
-    @safe
-    def __update_add_layers(self,
-                            layers,
-                            indexes,
-                            missing,
-                            dep_obj,
-                            cyclical):
-        if len(layers) == 0:
-            # 4a. For the first record to order
-            missing = dep_obj['dep_list']
-            indexes.append(dep_obj['id'])
-            layers.append(dep_obj)
-        else:
-            # 4b. Add up and return the layers, indexes, missing and cyclical lists
-            add = 'add'
-            layers, indexes, missing, cyclical = sort_layers(layers, cyclical, indexes, missing, dep_obj, add)
-        return layers, indexes, missing, cyclical
+
 
     @safe
     def __generate_typeql_object(self, stix_dict: dict) -> TypeQLObject:
@@ -469,15 +453,6 @@ class TypeDBSink(DataSink):
     @safe
     def __generate_queries(self,
                            instructions: Instructions):
-        result = instructions.create_insert_queries(build_insert_query)
-        if is_successful(result):
-            return instructions
-        else:
-            raise Exception(result.failure)
-
-    @safe
-    def __create_insert_queries(self,
-                                instructions: Instructions):
         result = instructions.create_insert_queries(build_insert_query)
         if is_successful(result):
             return instructions
