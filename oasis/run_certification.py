@@ -8,6 +8,7 @@ from dbconfig import connection
 from stix2 import (v21, parse)
 from pathlib import Path
 
+from stix.module.authorise import import_type_factory
 from stix.module.typedb import TypeDBSink, TypeDBSource
 
 loggers = [logging.getLogger()]  # get the root logger
@@ -60,7 +61,8 @@ def run_profiles(config: dict, template, tags, out_file):
 
     for profile in config.keys():
         # let's reset the database for each profile
-        sink_db = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
+        import_type=import_type_factory.get_default_import()
+        sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
         # get all the initial STIX IDs (only markings should be there)
         base_ids = sink_db.get_stix_ids()
         # markings should be automatically ignored
@@ -199,12 +201,14 @@ def run_profile(short, profile):
 
                 logger.info('Cache hit level 1')
                 continue
-
+            import_type = import_type_factory.get_default_import()
             # let's reset the database for each level
-            sink_db = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
-            source_db = TypeDBSource(connection=connection, import_type="STIX21")
+            sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
+            source_db = TypeDBSource(connection=connection, import_type=import_type)
 
-            sub_dir = Path.cwd() / 'data' / 'stix_cert_data' / level['dir'] / level['sub_dir']
+            sub_dir= pathlib.Path(__file__).parents[1].joinpath('data', 'stix_cert_data', level['dir'], level['sub_dir'])
+            assert os.path.exists(str(sub_dir))
+
             logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
             checks = verify_files(sub_dir, sink_db, source_db)
 
@@ -251,10 +255,14 @@ def run_profile(short, profile):
                 logger.info('Cache hit level 2')
                 continue
 
+            import_type = import_type_factory.get_default_import()
             # let's reset the database for each level
-            sink_db = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
+            sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
 
-            sub_dir = Path.cwd() / 'data' / 'stix_cert_data' / level['dir'] / level['sub_dir']
+            sub_dir = pathlib.Path(__file__).parents[1].joinpath('data', 'stix_cert_data', level['dir'],
+                                                                 level['sub_dir'])
+            assert os.path.exists(str(sub_dir))
+
             logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
             checks = verify_files(sub_dir, sink_db, source_db)
 
