@@ -111,7 +111,7 @@ class Instructions:
         return missing
 
     def exist_missing_dependencies(self):
-        return len(self.missing_dependency_ids()) > 0
+        return len(self.verified_missing_dependencies) > 0
 
     def register_missing_dependencies(self,
                                       missing: List[str]):
