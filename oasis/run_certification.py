@@ -258,6 +258,7 @@ def run_profile(short, profile):
             import_type = import_type_factory.get_default_import()
             # let's reset the database for each level
             sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
+            source_db = TypeDBSource(connection=connection, import_type=import_type)
 
             sub_dir = pathlib.Path(__file__).parents[1].joinpath('data', 'stix_cert_data', level['dir'],
                                                                  level['sub_dir'])
