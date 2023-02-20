@@ -1,18 +1,18 @@
 
 import json
-import traceback
-
 from stix2.parsing import dict_to_stix2
-from stix.module.authorise import authorised_mappings, default_import_type
+from stix.module.authorise import authorised_mappings, import_type_factory
 from stix2.exceptions import ParseError
 from stix.module.orm.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
 import logging
 
+from stix.module.typedb_lib.import_type_factory import ImportType
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+default_import_type = import_type_factory.get_default_import()
 
-
-def parse(data: dict, allow_custom=False, import_type=default_import_type):
+def parse(data: dict, allow_custom=False, import_type: ImportType=default_import_type):
     """Convert a string, dict or file-like object into a STIX object.
     Args:
         data (str, dict, file-like object): The STIX 2 content to be parsed.
@@ -66,7 +66,9 @@ def _get_dict(data):
             raise ValueError("Cannot convert '%s' to dictionary." % str(data))
 
 
-def dict_to_stix2(stix_dict: dict, allow_custom=False, import_type=default_import_type):
+def dict_to_stix2(stix_dict: dict,
+                  allow_custom=False,
+                  import_type: ImportType=default_import_type):
     """convert dictionary to full python-stix2 object
     Args:
         stix_dict (dict): a python dictionary of a STIX object

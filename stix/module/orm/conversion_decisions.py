@@ -3,15 +3,17 @@ from typing import Dict, List
 from stix.module.definitions.stix21 import stix_models
 from stix.module.definitions.attack import attack_models
 from stix.module.definitions.os_threat import os_threat_models
-from stix.module.authorise import authorised_mappings, default_import_type
+from stix.module.authorise import authorised_mappings, import_type_factory
 
 import logging
 
+from stix.module.typedb_lib.import_type_factory import ImportType
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+default_import_type = import_type_factory.get_default_import()
 
-
-def sdo_type_to_tql(sdo_type, import_type=default_import_type,
+def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
                     attack_object=False, subtechnique=False) -> [dict, str, dict]:
     """ convert Stix object into a data model for processing
 
@@ -100,7 +102,7 @@ def sdo_type_to_tql(sdo_type, import_type=default_import_type,
     return obj_tql, tql_name, is_list
 
 
-def sro_type_to_tql(sro_type, sro_sub_type,import_type=default_import_type,
+def sro_type_to_tql(sro_type, sro_sub_type,import_type:ImportType=default_import_type,
                     attack_object=False, uses_relation=False, is_procedure=False) -> [dict, str, list]:
     """ convert Stix object into a data model for processing
 
