@@ -201,7 +201,7 @@ def run_profile(short, profile):
 
                 logger.info('Cache hit level 1')
                 continue
-            import_type = import_type_factory.get_default_import()
+            import_type = import_type_factory.get_attack_import()
             # let's reset the database for each level
             sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
             source_db = TypeDBSource(connection=connection, import_type=import_type)
@@ -255,7 +255,7 @@ def run_profile(short, profile):
                 logger.info('Cache hit level 2')
                 continue
 
-            import_type = import_type_factory.get_default_import()
+            import_type = import_type_factory.get_attack_import()
             # let's reset the database for each level
             sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
             source_db = TypeDBSource(connection=connection, import_type=import_type)
