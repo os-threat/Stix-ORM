@@ -3,6 +3,7 @@ import pathlib
 import unittest
 from typing import List
 
+from stix.module.authorise import import_type_factory
 from stix.module.typedb import TypeDBSink
 from stix.module.typedb_lib.instructions import ResultStatus
 
@@ -17,20 +18,7 @@ schema_path = path = str(pathlib.Path(__file__).parents[1])
 
 
 
-import_type = {
-    "STIX21": True,
-    "ATT&CK": True,
-    "os-intel": False,
-    "os-hunt": False,
-    "kestrel": False,
-    "CACAO": False,
-    "CVE": False,
-    "identity": False,
-    "location": False,
-    "rules": False,
-    "ATT&CK_Versions": ["12.1"],
-    "ATT&CK_Domains": ["Enterprise ATT&CK", "Mobile ATT&CK", "ICS ATT&CK"]
-}
+import_type = import_type_factory.get_default_import()
 
 def test_path() -> str:
     data_standard_path = "data/mitre/"
