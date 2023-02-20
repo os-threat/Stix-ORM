@@ -5,10 +5,12 @@ from typedb.client import *
 from stix2 import (parse)
 from stix.module.orm.import_objects import raw_stix2_to_typeql
 from stix.module.orm.delete_object import delete_stix_object
-from stix.module.authorise import authorised_mappings
+from stix.module.authorise import authorised_mappings, import_type_factory
 from stix.module.parsing.parse_objects import parse
 
 import logging
+
+from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
@@ -25,20 +27,7 @@ connection = {
     "password": None
 }
 
-import_type = {
-    "STIX21": True,
-    "ATT&CK": True,
-    "os-intel": False,
-    "os-hunt": False,
-    "kestrel": False,
-    "CACAO": False,
-    "CVE": False,
-    "identity": False,
-    "location": False,
-    "rules": False,
-    "ATT&CK_Versions": ["12.1"],
-    "ATT&CK_Domains": ["Enterprise ATT&CK", "Mobile ATT&CK", "ICS ATT&CK"]
-}
+import_type = import_type_factory.get_default_import()
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
@@ -342,11 +331,13 @@ def test_get_ids(connection, import_type):
 
 
 def test_auth():
-    import_type["ATT&CK"] = True
-    import_type["os-threat"] = True
+    import_type = import_type_factory.create_import(stix_21=True,
+                                                    os_hunt=True,
+                                                    os_intel=True,
+                                                    cacao=True,
+                                                    attack_domains=[AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
+                                                    attack_versions=[AttackVersions.V12_1])
 
-    import_type["os-intel"] = True
-    import_type["CACAO"] = True
     auth = authorised_mappings(import_type)
     print("===========================================")
     #print(auth)

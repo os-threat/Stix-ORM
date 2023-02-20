@@ -6,6 +6,8 @@ from stix.module.definitions.kestrel import kestrel_models
 
 import logging
 
+from stix.module.typedb_lib.import_type_factory import ImportTypeFactory, ImportType
+
 #logger = logging.getLogger(__name__)
 
 
@@ -14,20 +16,10 @@ import logging
 ############################################################
 
 
-default_import_type = {
-    "STIX21": True,
-    "ATT&CK": False,
-    "os-intel": False,
-    "os-hunt": False,
-    "kestrel": False,
-    "CACAO": False,
-    "CVE": False,
-    "identity": False,
-    "location": False,
-    "rules": False,
-    "ATT&CK_Versions": ["12.1"],
-    "ATT&CK_Domains": ["Enterprise ATT&CK", "Mobile ATT&CK", "ICS ATT&CK"]
-}
+import_type_factory = ImportTypeFactory.get_import_type_factory()
+default_import_type = import_type_factory.get_default_import()
+
+
 
 
 ##############################################################
@@ -79,7 +71,7 @@ domains = {
 }
 
 
-def authorised_mappings(import_type: dict=default_import_type):
+def authorised_mappings(import_type: ImportType=default_import_type):
     auth = {}
     auth["reln_name"] = {}
     auth["reln"] = {}
@@ -89,16 +81,16 @@ def authorised_mappings(import_type: dict=default_import_type):
     # setup Stix by default
     auth_domains = [domains["stix"]]
     # setup "ATT&CK" if selected
-    if "ATT&CK" in import_type:
+    if import_type.ATTACK:
         auth_domains.append(domains["attack"])
     # setup "os-threat" if selected
-    if "os-intel" in import_type or "os-hunt" in import_type:
+    if import_type.os_intel or import_type.os_hunt:
         auth_domains.append(domains["os-threat"])
     # setup "CACAO" if selected
-    if "CACAO" in import_type:
+    if import_type.CACAO:
         auth_domains.append(domains["cacao"])
     # setup "kestrel" if selected
-    if "kestrel" in import_type:
+    if import_type.kestrel:
         auth_domains.append(domains["kestrel"])
 
 
@@ -197,8 +189,9 @@ def authorised_mappings(import_type: dict=default_import_type):
             else:
                 pass
 
+
     # finally add the import type to the auth object
-    auth.update(import_type)
+    auth.update(ImportTypeFactory.convert_to_dict(import_type))
 
     return auth
 

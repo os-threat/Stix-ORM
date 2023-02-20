@@ -1,3 +1,5 @@
+import traceback
+
 from returns.pipeline import is_successful
 import logging
 logger = logging.getLogger(__name__)
@@ -10,7 +12,7 @@ def handle_result(result,
         try:
             if result_failure:
                 logger.info("Failure in result for: "+ name)
-                logger.error(str(result.failure()))
+                logging.exception("\n".join(traceback.format_exception(result.failure())))
         except Exception as e:
             logger.error(e)
         if strict_failure and result_failure:

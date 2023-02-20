@@ -7,6 +7,7 @@ from typedb.client import *
 
 import logging
 
+from stix.module.authorise import import_type_factory
 from stix.module.typedb import TypeDBSink
 from stix.module.typedb_lib.instructions import ResultStatus
 
@@ -30,17 +31,7 @@ connection = {
     "password": None
 }
 
-import_type = {
-    "STIX21": True,
-    "CVE": False,
-    "identity": False,
-    "location": False,
-    "rules": False,
-    "ATT&CK": False,
-    "ATT&CK_Versions": ["12.0"],
-    "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
-    "CACAO": False
-}
+import_type = import_type_factory.get_default_import()
 
 import_type_attack = {
     "STIX21": False,

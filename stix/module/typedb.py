@@ -1,5 +1,7 @@
 """Python STIX2 TypeDB Source/Sink"""
+import os.path
 import pathlib
+import traceback
 from dataclasses import dataclass
 from returns._internal.pipeline.pipe import pipe
 from returns.methods import unwrap_or_failure
@@ -29,6 +31,7 @@ from stix.module.typedb_lib.queries import delete_database, match_query, query_i
     build_insert_query, query_id, add_instructions_to_typedb
 from stix.module.typedb_lib.file import write_to_file
 from stix.module.typedb_lib.instructions import Instructions, Status, AddInstruction, TypeQLObject
+from .typedb_lib.import_type_factory import ImportType, ImportTypeFactory
 
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
@@ -64,7 +67,7 @@ class TypeDBSink(DataSink):
     def __init__(self,
                  connection: Dict[str, str],
                  clear=False,
-                 import_type=None,
+                 import_type: Optional[ImportType]=None,
                  schema_path: Optional[str] = None,
                  strict_failure: bool = False, **kwargs):
         super(TypeDBSink, self).__init__()
@@ -84,20 +87,24 @@ class TypeDBSink(DataSink):
         self.strict_failure = strict_failure
 
         self.schema_path = schema_path
-        self.import_type = import_type
+        self.import_type: ImportType = import_type
 
         result = self.__initialise()
         if not is_successful(result):
-            logger.error(str(result.failure()))
+            logging.exception("\n".join(traceback.format_exception(result.failure())))
             raise Exception(str(result.failure()))
 
     @safe
     def __initialise(self):
-        self.__assign_schemas()
-        self.__assign_import_type()
+        assign_result = self.__assign_schemas()
+        handle_result(assign_result, "assign result", self.strict_failure)
+
+        assign_import_result = self.__assign_import_type()
+        handle_result(assign_import_result, "assign import result", self.strict_failure)
 
         # Validate database can be connected
-        self.__validate_connect_to_db()
+        validate_connection = self.__validate_connect_to_db()
+        handle_result(validate_connection, "validate connection result", self.strict_failure)
 
         # 1. Setup database
         setup_database(self._stix_connection, self.clear)
@@ -128,7 +135,7 @@ class TypeDBSink(DataSink):
 
     @safe
     def __load_attack_schema(self):
-        if self.clear and self.import_type["ATT&CK"]:
+        if self.clear and self.import_type.ATTACK:
             logger.debug("ATT&CK")
             load_schema(self._stix_connection, str(self.cti_schema_attack), "ATT&CK Schema")
             logger.debug("moving past load schema")
@@ -137,7 +144,7 @@ class TypeDBSink(DataSink):
 
     @safe
     def __load_stix_os_hunt(self):
-        if self.clear and self.import_type["os-hunt"]:
+        if self.clear and self.import_type.os_hunt:
             logger.debug("attack")
             load_schema(self._stix_connection, str(self.cti_schema_os_hunt), "os-hunt Schema ")
             logger.debug("moving past load schema")
@@ -146,7 +153,7 @@ class TypeDBSink(DataSink):
 
     @safe
     def __load_stix_rules(self):
-        if self.clear and self.import_type["rules"]:
+        if self.clear and self.import_type.rules:
             logger.debug("rules")
             load_schema(self._stix_connection, str(self.cti_schema_stix_rules), "Stix 2.1 Rules")
             logger.debug("moving past load rules")
@@ -165,14 +172,19 @@ class TypeDBSink(DataSink):
     @safe
     def __assign_schemas(self):
         if self.schema_path is None:
-             self.schema_path = str(pathlib.Path.parent)
+             self.schema_path = str(pathlib.Path(__file__).parents[2])
 
         # If relative paths are used it will depend upon the entry point i.e. working directory will need to be same level as typedb.py
         self.cti_schema_stix = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/stix21/schema/cti-schema-v2.tql")
+        assert os.path.isfile(self.cti_schema_stix)
         self.cti_schema_stix_rules = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/stix21/schema/cti-rules.tql")
+        assert os.path.isfile(self.cti_schema_stix_rules)
         self.cti_schema_os_intel = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/os_threat/schema/cti-os-intel.tql")
+        assert os.path.isfile(self.cti_schema_os_intel)
         self.cti_schema_os_hunt = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/os_threat/schema/cti-os-hunt.tql")
+        assert os.path.isfile(self.cti_schema_os_hunt)
         self.cti_schema_attack = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/attack/schema/cti-attack.tql")
+        assert os.path.isfile(self.cti_schema_attack)
         # if self.schema_path is None:
         #     self.schema_path = str(pathlib.Path.parent)
         #
@@ -646,20 +658,10 @@ class TypeDBSource(DataSource):
         self.database = connection["database"]
         self.user = connection["user"]
         self.password = connection["password"]
-        self.import_type = self.__default_import_type() if import_type is None else import_type
+        self.import_type: ImportType = self.__default_import_type() if import_type is None else import_type
 
     def __default_import_type(self):
-        import_type = {"STIX21": True,
-                       "CVE": False,
-                       "identity": False,
-                       "location": False,
-                       "rules": False}
-        import_type.update({"ATT&CK": False, "ATT&CK_Versions": ["12.0"],
-                            "ATT&CK_Domains": ["enterprise-attack",
-                                               "mobile-attack",
-                                               "ics-attack"],
-                            "CACAO": False})
-        return import_type
+        return ImportTypeFactory.get_default_import()
 
     @property
     def stix_connection(self):
@@ -671,20 +673,7 @@ class TypeDBSource(DataSource):
         obj_var, type_ql = get_embedded_match(stix_id)
         query = 'match ' + type_ql
 
-        import_type = {
-            "STIX21": True,
-            "ATT&CK": False,
-            "os-intel": False,
-            "os-hunt": False,
-            "kestrel": False,
-            "CACAO": False,
-            "CVE": False,
-            "identity": False,
-            "location": False,
-            "rules": False,
-            "ATT&CK_Versions": ["12.1"],
-            "ATT&CK_Domains": ["Enterprise ATT&CK", "Mobile ATT&CK", "ICS ATT&CK"]
-        }
+        import_type = self.__default_import_type()
 
         data = match_query(uri=self.uri,
                            port=self.port,
