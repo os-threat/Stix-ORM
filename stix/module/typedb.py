@@ -596,7 +596,8 @@ class TypeDBSink(DataSink):
             logger.debug("base")
             logger.debug(f'isinstance _STIXBase')
             temp_list = []
-            return temp_list.append(stix_data)
+            temp_list.append(stix_data)
+            return temp_list
 
         elif isinstance(stix_data, (str, dict)):
             if stix_data.get("type", '') == 'bundle':
@@ -605,7 +606,8 @@ class TypeDBSink(DataSink):
                 logger.debug("dcit")
                 logger.debug(f'isinstance dict')
                 temp_list = []
-                return temp_list.append(stix_data)
+                temp_list.append(stix_data)
+                return temp_list
 
         elif isinstance(stix_data, list):
             item_list = []
