@@ -101,7 +101,7 @@ if __name__ == '__main__':
         return matched
 
     # test granular markings
-    filename = '../data/examples/granular_markings.json'
+    filename = '../../data/examples/granular_markings.json'
     with open(filename, mode="r", encoding="utf-8") as file:
         json_blob = json.load(file)
 

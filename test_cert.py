@@ -1,9 +1,9 @@
-import os,json,sys
+import json
 import logging
 import re
 from stix.module.typedb_lib import TypeDBSink, TypeDBSource
-from oasis.dbconfig import connection
-from stix2 import (v21, parse)
+from test.oasis.dbconfig import connection
+from stix2 import (parse)
 from pathlib import Path
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
@@ -182,6 +182,6 @@ if __name__ == '__main__':
     cwd = Path.cwd()
     logger.info(f'Running tests in {cwd}')
     tests = load_personas(file_path=Path.joinpath(cwd,'data','stix_cert_data','stix_cert_persona_dict.json'))
-    template,tags = load_template(file_path=Path.joinpath(cwd,'oasis','cert_template.txt'))
+    template,tags = load_template(file_path=Path.joinpath(cwd, 'test/oasis', 'cert_template.txt'))
     logger.info(f"Profiles: {list(tests.keys())}")
-    run_profiles(tests,template,tags,out_file=Path.joinpath(cwd,'oasis','report.txt'))
+    run_profiles(tests, template, tags, out_file=Path.joinpath(cwd, 'test/oasis', 'report.txt'))
