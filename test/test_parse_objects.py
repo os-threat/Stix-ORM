@@ -3,6 +3,7 @@ import unittest
 
 from stix2.v20 import Identity
 
+from stix.module.authorise import import_type_factory
 from stix.module.parsing.parse_objects import dict_to_stix2
 
 
@@ -11,15 +12,7 @@ class TestParseObject(unittest.TestCase):
 
     def test_dict_to_stix(self):
 
-        import_type = {'STIX21': True,
-                       'CVE': False,
-                       'identity': False,
-                       'location': False,
-                       'rules': False,
-                       'ATT&CK': False,
-                        'ATT&CK_Versions': ['12.0'],
-                       'ATT&CK_Domains': ['enterprise-attack', 'mobile-attack', 'ics-attack'],
-                        'CACAO': False}
+        import_type = import_type_factory.get_default_import()
 
         stix_dict = {'type': 'identity',
                      'spec_version': '2.1',
@@ -42,9 +35,7 @@ class TestParseObject(unittest.TestCase):
 
     def test_dict_to_stix_2(self):
 
-        import_type = {'STIX21': True, 'CVE': False, 'identity': False, 'location': False, 'rules': False, 'ATT&CK': False, 'ATT&CK_Versions': ['12.0'], 'ATT&CK_Domains': ['enterprise-attack', 'mobile-attack', 'ics-attack'], 'CACAO': False}
-
-
+        import_type = import_type_factory.get_default_import()
         obj = {'type': 'relationship', 'spec_version': '2.1', 'id': 'relationship--44298a74-ba52-4f0c-87a3-1824e67d7fad', 'created_by_ref': 'identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65', 'created': '2016-04-06T20:06:37.000Z', 'modified': '2016-04-06T20:06:37.000Z', 'relationship_type': 'indicates', 'source_ref': 'indicator--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f', 'target_ref': 'malware--31b940d4-6f7f-459a-80ea-9c1f17b5891b'}
         result = dict_to_stix2(obj,
                                allow_custom=False,
