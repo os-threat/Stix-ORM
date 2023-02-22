@@ -4,6 +4,10 @@ import os, json, sys
 import logging
 import pathlib
 import re
+import unittest
+
+from parameterized import parameterized
+
 from dbconfig import connection
 from stix2 import (v21, parse)
 from pathlib import Path
@@ -36,6 +40,7 @@ file_handler.setFormatter(formatter)
 
 logger.addHandler(file_handler)
 logger.addHandler(stdout_handler)
+profile_cache = {}
 
 
 def load_personas(file_path='./data/stix_cert_data/stix_cert_persona_dict.json'):
@@ -54,251 +59,6 @@ def load_template(file_path='./oasis/cert_template.txt'):
 
         logger.info(f"Loaded {len(m)} profiles")
         return t, m
-
-
-def run_profiles(config: dict, template, tags, out_file):
-    report = template
-
-    for profile in config.keys():
-        # let's reset the database for each profile
-        import_type=import_type_factory.get_default_import()
-        sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
-        # get all the initial STIX IDs (only markings should be there)
-        base_ids = sink_db.get_stix_ids()
-        # markings should be automatically ignored
-        assert len(base_ids) == 0
-
-        logger.info(f'Checking profile {profile}')
-        result = run_profile(profile, config[profile])
-        logger.info(result)
-
-        for code in result.keys():
-            if code in tags:
-                logger.info(f'Asserting flag {code}')
-                report = report.replace(code, result[code])
-    # now write the report
-    with open(out_file, 'w') as file:
-        file.write(report)
-
-
-def verify_file(file_path, sink_db):
-    with open(file_path, mode="r", encoding="utf-8") as file:
-
-        check_list = []
-
-        logger.info(f"Run check on file {file_path.name}")
-        json_blob = json.load(file)
-
-        if isinstance(json_blob, list):
-            input_ids = set()
-            for json_dict in json_blob:
-                # stix_obj = parse(item)
-                sink_db.add(json_dict)
-                input_ids.add(json_dict['id'])
-                '''
-                return_dict = source_db.get(stix_obj.id)
-                return_obj = parse(return_dict)
-                cmp = StixComparator()
-                check, p_ok, p_not = cmp.compare(stix_obj, return_obj)
-                return check
-                '''
-
-            output_ids = sink_db.get_stix_ids()
-            tot_insert = len(output_ids)
-            input_list = ','.join(list(input_ids))
-            output_list = ','.join(list(output_ids))
-            logger.debug(f'File = {file_path.name} in {file_path.parent.name}')
-            logger.debug(f'Input IDS = {input_list}')
-            logger.debug(f'Output IDS = {output_list}')
-
-            if input_ids == set(output_ids):
-                check_list.append(True)
-                logger.debug(f'Check STIX ID Passed')
-            else:
-                logger.debug(f'Check STIX ID Failed')
-                check_list.append(False)
-        else:
-            bundle = parse(json_blob)
-            input_ids = set()
-            for stix_obj in bundle.objects:
-                sink_db.add(stix_obj)
-                stix_obj.add(stix_obj['id'])
-                '''
-                return_dict = self._typedbSource.get(stix_obj.id)
-                return_obj = parse(return_dict)
-                cmp = StixComparator()
-                check, p_ok, p_not = cmp.compare(stix_obj, return_obj)
-                logger.info(f'OK properties {p_ok}')
-                logger.info(f'KO properties {p_not}')
-                self.assertTrue(check)
-                '''
-
-            output_ids = sink_db.get_stix_ids()
-            tot_insert = len(output_ids)
-            input_list = ','.join(list(input_ids))
-            output_list = ','.join(list(output_ids))
-            logger.debug(f'File = {file_path.name} in {file_path.parent.name}')
-            logger.debug(f'Input IDS = {input_list}')
-            logger.debug(f'Output IDS = {output_list}')
-
-            if input_ids == set(output_ids):
-                check_list.append(True)
-                logger.debug(f'Check STIX ID Passed')
-            else:
-                check_list.append(False)
-                logger.debug(f'Check STIX ID Failed')
-
-        return check_list
-
-
-def verify_files(directory, sink_db, source_db):
-    """ Load and verify the file
-
-    Args:
-        fullname (): folder path
-    """
-    path = Path(directory)
-    check_list = []
-    if path.is_dir():
-        for file_path in path.iterdir():
-            try:
-                file_checks = verify_file(file_path, sink_db)
-            except Exception as ins_e:
-                logger.error(ins_e)
-                sys.exit(1)
-
-            try:
-                # clean up the database for next test
-                new_ids = sink_db.get_stix_ids()
-                sink_db.delete(new_ids)
-                check_list = check_list + file_checks
-            except Exception as read_e:
-                logger.error(read_e)
-                sys.exit(1)
-
-        return check_list
-    else:
-        logger.error(f'{directory} not a folder')
-
-
-# contains a cache as most test are repeated between levels
-profile_cache = {}
-
-
-def run_profile(short, profile):
-    logger.info(f'Title {profile["title"]}')
-    results = {}
-
-    if 'level1' in profile:
-        count = 0
-        for level in profile['level1']:
-            key = level['dir'] + level['sub_dir']
-            if key in profile_cache:
-                if level['sub_dir'] == 'consumer_test':
-                    results[f'[{short}.C1]'] = profile_cache[key]
-                elif level['sub_dir'] == 'producer_test':
-                    results[f'[{short}.P1]'] = profile_cache[key]
-
-                logger.info('Cache hit level 1')
-                continue
-            import_type = import_type_factory.get_attack_import()
-            # let's reset the database for each level
-            sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
-            source_db = TypeDBSource(connection=connection, import_type=import_type)
-
-            sub_dir= pathlib.Path(__file__).parents[1].joinpath('data', 'stix_cert_data', level['dir'], level['sub_dir'])
-            assert os.path.exists(str(sub_dir))
-
-            logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
-            checks = verify_files(sub_dir, sink_db, source_db)
-
-            if checks is None:
-                logger.warning('No checks were run')
-                continue
-            else:
-                count += 1
-
-            if level['sub_dir'] == 'consumer_test':
-                consumer_passed = all(checks)
-                logger.info(f'Consumer Passed = {consumer_passed}')
-
-                if consumer_passed:
-                    results[f'[{short}.C1]'] = 'Passed'
-                else:
-                    results[f'[{short}.C1]'] = 'Failed'
-
-                profile_cache[key] = results[f'[{short}.C1]']
-
-            elif level['sub_dir'] == 'producer_test':
-                producer_passed = all(checks)
-                logger.info(f'Producer Passed = {producer_passed}')
-
-                if producer_passed:
-                    results[f'[{short}.P1]'] = 'Passed'
-                else:
-                    results[f'[{short}.P1]'] = 'Failed'
-
-                profile_cache[key] = results[f'[{short}.P1]']
-
-        logger.info(f'\tTotal level 1 checks {count}')
-
-    if 'level2' in profile:
-        count = 0
-        for level in profile['level2']:
-            key = level['dir'] + level['sub_dir']
-            if key in profile_cache:
-                if level['sub_dir'] == 'consumer_test':
-                    results[f'[{short}.C2]'] = profile_cache[key]
-                elif level['sub_dir'] == 'producer_test':
-                    results[f'[{short}.P2]'] = profile_cache[key]
-
-                logger.info('Cache hit level 2')
-                continue
-
-            import_type = import_type_factory.get_attack_import()
-            # let's reset the database for each level
-            sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
-            source_db = TypeDBSource(connection=connection, import_type=import_type)
-
-            sub_dir = pathlib.Path(__file__).parents[1].joinpath('data', 'stix_cert_data', level['dir'],
-                                                                 level['sub_dir'])
-            assert os.path.exists(str(sub_dir))
-
-            logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
-            checks = verify_files(sub_dir, sink_db, source_db)
-
-            if checks is None:
-                logger.warning('No checks were run')
-                continue
-            else:
-                count += 1
-
-            if level['sub_dir'] == 'consumer_test':
-                consumer_passed = all(checks)
-                logger.info(f'Consumer Passed = {consumer_passed}')
-
-                if consumer_passed:
-                    results[f'[{short}.C2]'] = 'Passed'
-                else:
-                    results[f'[{short}.C2]'] = 'Failed'
-
-                profile_cache[key] = results[f'[{short}.C2]']
-
-            elif level['sub_dir'] == 'producer_test':
-                producer_passed = all(checks)
-                logger.info(f'Producer Passed = {producer_passed}')
-
-                if producer_passed:
-                    results[f'[{short}.P2]'] = 'Passed'
-                else:
-                    results[f'[{short}.P2]'] = 'Failed'
-
-                profile_cache[key] = results[f'[{short}.P2]']
-
-        logger.info(f'\tTotal level 2 checks {count}')
-
-    return results
-
 
 def sanity_check(path: Path):
     quotes = ['\u201c', '\u201d']
@@ -339,14 +99,13 @@ def sanity_check(path: Path):
     logger.error(f'Files with broken json = {len(json_fails)}')
     logger.error(f'Files with broken stix = {len(stix_fails)}')
 
-
-if __name__ == '__main__':
-    path = pathlib.Path(__file__).parents[1].joinpath('data', 'stix_cert_data', 'stix_cert_persona_dict.json')
+def load_data():
+    path = pathlib.Path(__file__).parents[2].joinpath('data', 'stix_cert_data', 'stix_cert_persona_dict.json')
     assert os.path.exists(str(path))
     tests = load_personas(file_path=str(path))
     logger.info(f'Running sanity checks in {path}')
 
-    path = pathlib.Path(__file__).parents[1].joinpath('data', 'stix_cert_data')
+    path = pathlib.Path(__file__).parents[2].joinpath('data', 'stix_cert_data')
     assert os.path.exists(str(path))
     sanity_check(path=path)
 
@@ -355,6 +114,270 @@ if __name__ == '__main__':
     template, tags = load_template(file_path=str(path))
     logger.info(f"Profiles: {list(tests.keys())}")
 
-    path = pathlib.Path(__file__).parents[1].joinpath('oasis', 'report.txt')
     assert os.path.exists(str(path))
-    run_profiles(tests, template, tags, out_file=path)
+
+    data = []
+    for test in tests.items():
+        path = pathlib.Path(__file__).parents[1].joinpath('oasis', test[0] + '_report.txt')
+        data.append([test[0], test[1], tags, path, template])
+
+    return data
+
+class CertificationTest(unittest.TestCase):
+
+
+
+
+    @parameterized.expand(load_data())
+    def test_run_profile(self, profile_key, profile_value, tags, out_file, template):
+
+        report = template
+
+        # let's reset the database for each profile
+        import_type=import_type_factory.get_default_import()
+        sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
+        # get all the initial STIX IDs (only markings should be there)
+        base_ids = sink_db.get_stix_ids()
+        # markings should be automatically ignored
+        assert len(base_ids) == 0
+
+        logger.info(f'Checking profile {profile_key}')
+        result = self.run_profile(profile_key, profile_value)
+        logger.info(result)
+
+        for code in result.keys():
+            if code in tags:
+                logger.info(f'Asserting flag {code}')
+                report = report.replace(code, result[code])
+        # now write the report
+        with open(out_file, 'w') as file:
+            file.write(report)
+
+
+    def verify_file(self, file_path, sink_db):
+        with open(file_path, mode="r", encoding="utf-8") as file:
+
+            check_list = []
+
+            logger.info(f"Run check on file {file_path.name}")
+            json_blob = json.load(file)
+
+            if isinstance(json_blob, list):
+                input_ids = set()
+                for json_dict in json_blob:
+                    # stix_obj = parse(item)
+                    sink_db.add(json_dict)
+                    input_ids.add(json_dict['id'])
+                    '''
+                    return_dict = source_db.get(stix_obj.id)
+                    return_obj = parse(return_dict)
+                    cmp = StixComparator()
+                    check, p_ok, p_not = cmp.compare(stix_obj, return_obj)
+                    return check
+                    '''
+
+                output_ids = sink_db.get_stix_ids()
+                tot_insert = len(output_ids)
+                input_list = ','.join(list(input_ids))
+                output_list = ','.join(list(output_ids))
+                logger.debug(f'File = {file_path.name} in {file_path.parent.name}')
+                logger.debug(f'Input IDS = {input_list}')
+                logger.debug(f'Output IDS = {output_list}')
+
+                if input_ids == set(output_ids):
+                    check_list.append(True)
+                    logger.debug(f'Check STIX ID Passed')
+                else:
+                    logger.debug(f'Check STIX ID Failed')
+                    check_list.append(False)
+            else:
+                bundle = parse(json_blob)
+                input_ids = set()
+                for stix_obj in bundle.objects:
+                    sink_db.add(stix_obj)
+                    stix_obj.add(stix_obj['id'])
+                    '''
+                    return_dict = self._typedbSource.get(stix_obj.id)
+                    return_obj = parse(return_dict)
+                    cmp = StixComparator()
+                    check, p_ok, p_not = cmp.compare(stix_obj, return_obj)
+                    logger.info(f'OK properties {p_ok}')
+                    logger.info(f'KO properties {p_not}')
+                    self.assertTrue(check)
+                    '''
+
+                output_ids = sink_db.get_stix_ids()
+                tot_insert = len(output_ids)
+                input_list = ','.join(list(input_ids))
+                output_list = ','.join(list(output_ids))
+                logger.debug(f'File = {file_path.name} in {file_path.parent.name}')
+                logger.debug(f'Input IDS = {input_list}')
+                logger.debug(f'Output IDS = {output_list}')
+
+                if input_ids == set(output_ids):
+                    check_list.append(True)
+                    logger.debug(f'Check STIX ID Passed')
+                else:
+                    check_list.append(False)
+                    logger.debug(f'Check STIX ID Failed')
+
+            return check_list
+
+
+    def verify_files(self, directory, sink_db, source_db):
+        """ Load and verify the file
+
+        Args:
+            fullname (): folder path
+        """
+        path = Path(directory)
+        check_list = []
+        if path.is_dir():
+            for file_path in path.iterdir():
+                try:
+                    file_checks = self.verify_file(file_path, sink_db)
+                except Exception as ins_e:
+                    logger.error(ins_e)
+                    sys.exit(1)
+
+                try:
+                    # clean up the database for next test
+                    new_ids = sink_db.get_stix_ids()
+                    sink_db.delete(new_ids)
+                    check_list = check_list + file_checks
+                except Exception as read_e:
+                    logger.error(read_e)
+                    sys.exit(1)
+
+            return check_list
+        else:
+            logger.error(f'{directory} not a folder')
+
+
+
+
+
+    def run_profile(self, short, profile):
+        logger.info(f'Title {profile["title"]}')
+        results = {}
+
+        if 'level1' in profile:
+            count = 0
+            for level in profile['level1']:
+                key = level['dir'] + level['sub_dir']
+                if key in profile_cache:
+                    if level['sub_dir'] == 'consumer_test':
+                        results[f'[{short}.C1]'] = profile_cache[key]
+                    elif level['sub_dir'] == 'producer_test':
+                        results[f'[{short}.P1]'] = profile_cache[key]
+
+                    logger.info('Cache hit level 1')
+                    continue
+                import_type = import_type_factory.get_attack_import()
+                # let's reset the database for each level
+                sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
+                source_db = TypeDBSource(connection=connection, import_type=import_type)
+
+                sub_dir= pathlib.Path(__file__).parents[2].joinpath('data', 'stix_cert_data', level['dir'], level['sub_dir'])
+                assert os.path.exists(str(sub_dir))
+
+                logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
+                checks = self.verify_files(sub_dir, sink_db, source_db)
+
+                if checks is None:
+                    logger.warning('No checks were run')
+                    continue
+                else:
+                    count += 1
+
+                if level['sub_dir'] == 'consumer_test':
+                    consumer_passed = all(checks)
+                    logger.info(f'Consumer Passed = {consumer_passed}')
+
+                    if consumer_passed:
+                        results[f'[{short}.C1]'] = 'Passed'
+                    else:
+                        results[f'[{short}.C1]'] = 'Failed'
+
+                    profile_cache[key] = results[f'[{short}.C1]']
+
+                elif level['sub_dir'] == 'producer_test':
+                    producer_passed = all(checks)
+                    logger.info(f'Producer Passed = {producer_passed}')
+
+                    if producer_passed:
+                        results[f'[{short}.P1]'] = 'Passed'
+                    else:
+                        results[f'[{short}.P1]'] = 'Failed'
+
+                    profile_cache[key] = results[f'[{short}.P1]']
+
+            logger.info(f'\tTotal level 1 checks {count}')
+
+        if 'level2' in profile:
+            count = 0
+            for level in profile['level2']:
+                key = level['dir'] + level['sub_dir']
+                if key in profile_cache:
+                    if level['sub_dir'] == 'consumer_test':
+                        results[f'[{short}.C2]'] = profile_cache[key]
+                    elif level['sub_dir'] == 'producer_test':
+                        results[f'[{short}.P2]'] = profile_cache[key]
+
+                    logger.info('Cache hit level 2')
+                    continue
+
+                import_type = import_type_factory.get_attack_import()
+                # let's reset the database for each level
+                sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
+                source_db = TypeDBSource(connection=connection, import_type=import_type)
+
+                sub_dir = pathlib.Path(__file__).parents[2].joinpath('data', 'stix_cert_data', level['dir'],
+                                                                     level['sub_dir'])
+                assert os.path.exists(str(sub_dir))
+
+                logger.info(f"Test folder {sub_dir.parent.name}/{sub_dir.name}")
+                checks = self.verify_files(sub_dir, sink_db, source_db)
+
+                if checks is None:
+                    logger.warning('No checks were run')
+                    continue
+                else:
+                    count += 1
+
+                if level['sub_dir'] == 'consumer_test':
+                    consumer_passed = all(checks)
+                    logger.info(f'Consumer Passed = {consumer_passed}')
+
+                    if consumer_passed:
+                        results[f'[{short}.C2]'] = 'Passed'
+                    else:
+                        results[f'[{short}.C2]'] = 'Failed'
+
+                    profile_cache[key] = results[f'[{short}.C2]']
+
+                elif level['sub_dir'] == 'producer_test':
+                    producer_passed = all(checks)
+                    logger.info(f'Producer Passed = {producer_passed}')
+
+                    if producer_passed:
+                        results[f'[{short}.P2]'] = 'Passed'
+                    else:
+                        results[f'[{short}.P2]'] = 'Failed'
+
+                    profile_cache[key] = results[f'[{short}.P2]']
+
+            logger.info(f'\tTotal level 2 checks {count}')
+
+        return results
+
+
+
+
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.DEBUG,
+                        filename="test.log")
+    loader = unittest.TestLoader()
+    unittest.main()
+
