@@ -33,17 +33,7 @@ connection = {
 
 import_type = import_type_factory.get_default_import()
 
-import_type_attack = {
-    "STIX21": False,
-    "CVE": False,
-    "identity": False,
-    "location": False,
-    "rules": False,
-    "ATT&CK": True,
-    "ATT&CK_Versions": ["12.0"],
-    "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
-    "CACAO": False
-}
+
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
