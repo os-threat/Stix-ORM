@@ -42,7 +42,7 @@ The documentation system contains the following sections:
 - [Using the Stix-ORM](using/configuration.md)
 - [How the ORM Works](orm/orm_oveview.md)
 - [Protcols Supported](protocols/_orig.md)
-- [Interacting with Stix-ORM](interactions/interactions.md)
+- [Interacting with Stix-ORM](interactions/overview.md)
 
 The current supported objects can be viewed here
 

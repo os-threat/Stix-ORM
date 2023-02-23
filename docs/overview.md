@@ -86,7 +86,7 @@ The documentation system contains the following sections:
 
 - [Protcols Supported](protocols/_orig.md)
 
-- [Interacting with Stix-ORM](interactions/interactions.md)
+- [Interacting with Stix-ORM](interactions/overview.md)
 
 
 
