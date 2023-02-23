@@ -7,6 +7,7 @@ from stix.module.orm.import_objects import raw_stix2_to_typeql
 from stix.module.orm.delete_object import delete_stix_object
 from stix.module.authorise import authorised_mappings, import_type_factory
 from stix.module.parsing.parse_objects import parse
+from stix.module.generate_docs import configure_overview_table_docs, object_tables
 
 import logging
 
@@ -40,6 +41,11 @@ get_ids = 'match $ids isa stix-id;'
 test_id = "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff"
 marking_id = "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
 file_id = 'file--364fe3e5-b1f4-5ba3-b951-ee5983b3538d'
+
+def test_generate_docs():
+    print("================================================================================")
+    print("------------------------ Test Doc Generation ---------------------------------------------")
+    configure_overview_table_docs(object_tables)
 
 
 def test_initialise():
@@ -340,7 +346,7 @@ def test_auth():
 
     auth = authorised_mappings(import_type)
     print("===========================================")
-    #print(auth)
+    print(auth)
 
 
 
@@ -429,7 +435,7 @@ if __name__ == '__main__':
     #test_initialise()
     #load_file_list(path1, group_list)
     #load_file(data_path + file2)
-    load_file(mitre + "test.json")
+    #load_file(mitre + "test.json")
     #check_object(mitre + "test.json")
     #load_file(data_path + file7)
     print("=====")
@@ -447,3 +453,4 @@ if __name__ == '__main__':
     #test_get_ids(connection, import_type)
     #test_ids_loaded(id_list2, connection)
     #test_auth()
+    test_generate_docs()

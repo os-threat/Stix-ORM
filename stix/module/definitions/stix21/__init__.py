@@ -69,12 +69,13 @@ stix_models["mappings"] = {}
 for file_path in glob(f'{dir_path}/mappings/*.json'):
     # Opening JSON file
     file_name = Path(file_path).stem
-
-    with open(file_path) as json_file:
+    #if file_name != "object_conversion":
+    with open(file_path, encoding='utf-8') as json_file:
         # create well formed key
         key = f'{file_name}'
+        file_data = json_file.read()
 
-        stix_models["mappings"][key] = json.load(json_file)
+        stix_models["mappings"][key] = json.loads(file_data)
 
 
 stix_models["sub_objects"] = {}
