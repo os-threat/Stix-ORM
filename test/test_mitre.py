@@ -18,7 +18,7 @@ schema_path = path = str(pathlib.Path(__file__).parents[1])
 
 
 
-import_type = import_type_factory.get_default_import()
+import_type = import_type_factory.get_attack_import()
 
 def test_path() -> str:
     data_standard_path = "data/mitre/"
