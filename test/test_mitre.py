@@ -1,4 +1,5 @@
 import json
+import logging
 import pathlib
 import unittest
 from typing import List
@@ -92,3 +93,9 @@ class TestMitre(unittest.TestCase):
         json_text = self.get_json_from_file(file_path)
         result = typedb.add(json_text)
         self.validate_has_missing_dependencies(result)
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.DEBUG,
+                        filename="test.log")
+    loader = unittest.TestLoader()
+    unittest.main()
