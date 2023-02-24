@@ -28,7 +28,7 @@ connection = {
     "password": None
 }
 
-import_type = import_type_factory.get_default_import()
+import_type = import_type_factory.get_attack_import()
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
@@ -434,8 +434,8 @@ if __name__ == '__main__':
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
     #test_initialise()
     #load_file_list(path1, group_list)
-    #load_file(data_path + file2)
-    #load_file(mitre + "test.json")
+    #load_file(path1 + f1)
+    load_file(mitre + "test.json")
     #check_object(mitre + "test.json")
     #load_file(data_path + file7)
     print("=====")
@@ -453,4 +453,4 @@ if __name__ == '__main__':
     #test_get_ids(connection, import_type)
     #test_ids_loaded(id_list2, connection)
     #test_auth()
-    test_generate_docs()
+    #test_generate_docs()
