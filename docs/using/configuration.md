@@ -1,7 +1,10 @@
 # Installation
 
+## Install the database
 The first step is to install the TypeDB database.
-There are two ways to achieve that:
-* install via package
-* install via docker
+Follow the instructions [here](https://docs.vaticle.com/docs/running-typedb/install-and-run) 
+for your operating system or Docker.
+
+## Install the python env
+We advise you to use a python environment such as pyenv or pipenv or poetry.
 
