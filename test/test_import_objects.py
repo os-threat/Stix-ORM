@@ -4,7 +4,7 @@ import unittest
 
 from stix2.v20 import Identity
 
-from stix.module.parsing.parse_objects import dict_to_stix2
+from stix.module.parsing.parse_objects import dict_to_stix
 
 
 class TestParseObject(unittest.TestCase):

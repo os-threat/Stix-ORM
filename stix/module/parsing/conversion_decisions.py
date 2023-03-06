@@ -62,7 +62,7 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
                 logger.debug(f'chacking models, type is {model["type"]}')
                 if model["type"] == sdo_type:
                     attack_type = model["typeql"]
-                    logger.debug(f'attack tye is {attack_type}')
+                    logger.debug(f'attack type is {attack_type}')
                     if attack_type == "technique" and subtechnique:
                         attack_type = "subtechnique"
                     obj_tql.update(attack_models["data"][attack_type])
@@ -189,7 +189,7 @@ def sco__type_to_tql(sco_type: str, import_type=default_import_type) -> [Dict[st
     """ convert Stix object into a data model for processing
 
         Args:
-            sco (): the Stix2 sco object
+            sco_type (): the Stix2 sco type
             import_type (): the type of import to use
 
         Returns:
@@ -210,3 +210,30 @@ def sco__type_to_tql(sco_type: str, import_type=default_import_type) -> [Dict[st
     obj_tql.update(stix_models["base"]["base_sco"])
 
     return obj_tql, sco_tql_name, is_list
+
+
+def meta_type_to_tql(meta_type: str, import_type=default_import_type) -> [Dict[str, str], str, List[str]]:
+    """ convert Stix object into a data model for processing
+
+        Args:
+            meta_type (): the Stix2 meta type
+            import_type (): the type of import to use
+
+        Returns:
+            obj_tql : a list of all properties
+            obj_tql : the dict of the twl proeprties
+            is_list: a list of all the porperties that are lists
+
+    """
+    # Based on import type setup observables
+    auth = authorised_mappings(import_type)
+    is_list = auth["is_lists"]["sco"]["sco"]
+    is_list.extend(auth["is_lists"]["sco"][meta_type])
+
+    # - get the object-specific typeql names, sighting or relationship
+    meta_tql_name = meta_type
+    obj_tql = stix_models["data"][meta_type]
+    # - add on the generic sro properties
+    obj_tql.update(stix_models["base"]["base_sco"])
+
+    return obj_tql, meta_tql_name, is_list

@@ -35,6 +35,7 @@ from stix2.v21.observables import (
     WindowsServiceExt, X509Certificate, X509V3ExtensionsType,
 )
 from stix2.v21.sro import Relationship, Sighting
+from stix2.v21.common import MarkingDefinition
 
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
@@ -156,6 +157,9 @@ stix_models["classes"]["sco"] = {
     "UserAccount":UserAccount,
     "WindowsRegistryKey":WindowsRegistryKey,
     "X509Certificate":X509Certificate,
+}
+stix_models["classes"]["meta"] = {
+    "MarkingDefinition":MarkingDefinition
 }
 
 total_len = len(stix_models["data"])+len(stix_models["base"])+len(stix_models["mappings"])

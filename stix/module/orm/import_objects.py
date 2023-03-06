@@ -1,7 +1,7 @@
 from typing import Dict
 
 from stix.module.authorise import authorised_mappings, default_import_type
-from stix.module.orm.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
+from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
 
 from stix.module.orm.import_utilities import clean_props, get_embedded_match, split_on_activity_type, \
     add_property_to_typeql, add_relation_to_typeql, val_tql
@@ -451,16 +451,25 @@ def marking_definition_to_typeql(stix_object, import_type=default_import_type):
     """
     dep_list = []
     dep_match = dep_insert = indep_ql = core_ql = ''
+    attack_object = False if not stix_object.get("x_mitre_attack_spec_version", False) else True
     # if the marking is a colour, match it in, else it is a statement type
     if stix_object.definition_type == "statement":
-        indep_ql = '\n $marking isa statement-marking'
+        if attack_object:
+            indep_ql = '\n $marking isa statement-marking'
+            indep_ql += ',\n has x-mitre-attack-spec-version ' + val_tql(stix_object.x_mitre_attack_spec_version)
+            loc_list = stix_object.x_mitre_domains
+            for dom in loc_list:
+                indep_ql += ',\n has x-mitre-domains ' + val_tql(dom)
+            core_ql = '$marking isa statement-marking'
+        else:
+            indep_ql = '\n $marking isa statement-marking'
+            core_ql = '$marking isa statement-marking'
         indep_ql += ',\n has statement ' + val_tql(stix_object.definition.statement)
         indep_ql += ',\n has stix-type "marking-definition"'
         indep_ql += ',\n has stix-id ' + val_tql(stix_object.id)
         indep_ql += ',\n has created ' + val_tql(stix_object.created)
         indep_ql += ',\n has spec-version ' + val_tql(stix_object.spec_version)
         indep_ql += ';\n'
-        core_ql = '$marking isa statement-marking'
         core_ql += ', has stix-id $stix-id;\n$stix-id ' + val_tql(stix_object.id)
         core_ql += ';'
 

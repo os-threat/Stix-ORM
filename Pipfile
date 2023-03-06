@@ -35,6 +35,7 @@ tomli = "==2.0.1"
 typedb-protocol = "==2.9.0"
 urllib3 = "==1.26.12"
 win32-setctime = "==1.1.0"
+networkx = "*"
 
 [requires]
 python_version = "3.10"

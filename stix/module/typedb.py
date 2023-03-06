@@ -36,7 +36,7 @@ from .typedb_lib.import_type_factory import ImportType, ImportTypeFactory
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 
 @dataclass
@@ -147,7 +147,7 @@ class TypeDBSink(DataSink):
         if self.clear and self.import_type.os_hunt:
             logger.debug("attack")
             load_schema(self._stix_connection, str(self.cti_schema_os_hunt), "os-hunt Schema ")
-            logger.debug("moving past load schema")
+            logger.debug("we have loaded os-threat schema")
         else:
             logger.debug("ignoring load  os hunt")
 
@@ -156,7 +156,7 @@ class TypeDBSink(DataSink):
         if self.clear and self.import_type.rules:
             logger.debug("rules")
             load_schema(self._stix_connection, str(self.cti_schema_stix_rules), "Stix 2.1 Rules")
-            logger.debug("moving past load rules")
+            logger.debug("we have loaded Stix rules")
         else:
             logger.debug("ignoring check of stix rules")
 
@@ -165,7 +165,7 @@ class TypeDBSink(DataSink):
         if self.clear:
             load_schema(self._stix_connection, str(self.cti_schema_stix), "Stix 2.1 Schema ")
             self.loaded = load_markings(self._stix_connection)
-            logger.debug("moving past load Stix schema")
+            logger.debug("we have loaded Stix schema")
         else:
             logger.debug("ignoring load stix schema")
 
@@ -522,6 +522,8 @@ class TypeDBSink(DataSink):
         obj_result = self._gather_objects(stix_data)
 
         generate_instructions_result = obj_result.bind(lambda obj_list: self.__generate_instructions(obj_list))
+        print("##########################################################")
+        print(f"generate instructions is {generate_instructions_result}")
         instruction_dependency_graph_result = generate_instructions_result.bind(lambda results: self.__create_instruction_dependency_graph(results))
         check_missing_dependency_result = instruction_dependency_graph_result.bind(lambda result: self.__check_missing_dependencies(result))
 

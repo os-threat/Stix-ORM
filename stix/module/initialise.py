@@ -45,7 +45,10 @@ initial_markings = [[
     ', has stix-id "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"',
     ', has spec-version "2.1", has created 2017-01-20T00:00:00.000;'
 ]]
-
+tlp_ids = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                   "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
+                   "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
+                   "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
 
 def setup_database(stix_connection: Dict[str, str], clear: bool):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
@@ -98,10 +101,7 @@ def load_markings(stix_connection: Dict[str, str]):
             type_ql += line
         type_ql_list.append(type_ql)
     load_typeql_data(type_ql_list, stix_connection)
-    return_list = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
-                   "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
-                   "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
-                   "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
+    return_list = tlp_ids
     return return_list
 
 
