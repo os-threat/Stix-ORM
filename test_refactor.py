@@ -54,11 +54,11 @@ def dict_To_typeql(stix_dict, import_type):
             - convert a stix dict into a Python object, based on import_type
             -   convert the object into TypeQL, with a dpendency object
     """
-    logger.debug(f"im about to parse \n")
+    #logger.debug(f"im about to parse \n")
     stix_obj = parse(stix_dict, False, import_type)
-    logger.debug(f' i have parsed\n')
+    #logger.debug(f' i have parsed\n')
     dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
-    logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+    #logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
     dep_obj["dep_match"] = dep_match
     dep_obj["dep_insert"] = dep_insert
     dep_obj["indep_ql"] = indep_ql
