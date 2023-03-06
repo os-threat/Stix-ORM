@@ -650,7 +650,7 @@ OBJ_MAP_MARKING = {
     'statement': StatementMarking,
 }
 
-def AttackIdentity(_DomainObject):
+class AttackIdentity(_DomainObject):
     """For more detailed information on this object's properties, see
     `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_wh296fiwpklp>`__.
     """
