@@ -1,1 +1,5 @@
-{"name": "name", "description": "description", "action": "action"}
+{
+  "name": "name",
+  "description": "description",
+  "action": "action"
+}

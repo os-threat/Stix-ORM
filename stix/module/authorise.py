@@ -42,9 +42,9 @@ process_maps = [{
     "cond": ["sdo", "sro", "sco", "sub", "meta" ]
 }, {
     "name": "is_lists",
-    "keys": ["sdo", "sro", "sco", "sub"],
-    "match":["is_list_sdo", "is_list_sro", "is_list_sco", "is_list_sub_objects"],
-    "cond": ["sdo", "sro", "sco", "sub"]
+    "keys": ["sdo", "sro", "sco", "sub", "meta"],
+    "match":["is_list_sdo", "is_list_sro", "is_list_sco", "is_list_sub_objects", "is_list_meta"],
+    "cond": ["sdo", "sro", "sco", "sub", "meta"]
 }, {
     "name": "direct",
     "keys": ["sub_objects", "objects"],
@@ -117,6 +117,7 @@ def authorised_mappings(import_type: ImportType=default_import_type):
     auth["is_lists"]["sro"] = {}
     auth["is_lists"]["sco"] = {}
     auth["is_lists"]["sub"] = {}
+    auth["is_lists"]["meta"] = {}
     auth["sub_objects"] = {}
     auth["objects"] = {}
     auth["conv"] = {}
@@ -157,6 +158,8 @@ def authorised_mappings(import_type: ImportType=default_import_type):
                         #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}, cond->{conds[i]}')
                         value_list = [x["type"] for x in domain["mappings"][matches[i]] if x["object"] == conds[i]]
                         auth[name][key].extend(value_list)
+
+                #auth["tql_types"]["meta"] = stix_models["mappings"]["types_meta"]
             elif name == "is_lists":
                 #logger.debug("--------- is_lists --------------")
                 for i, key in enumerate(keys):

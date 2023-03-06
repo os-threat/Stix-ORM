@@ -9,14 +9,17 @@ from stix2.properties import (
     OpenVocabProperty, ReferenceProperty, StringProperty,
     TimestampProperty, TypeProperty, EmbeddedObjectProperty
 )
-from stix2.utils import NOW
+from stix2.utils import NOW, _get_dict
+from stix2.markings import _MarkingsMixin
+from stix2.markings.utils import check_tlp_marking
 from stix2.v21.base import _DomainObject, _STIXBase21, _RelationshipObject
 from stix2.v21.common import (
     ExternalReference, GranularMarking, KillChainPhase,
+    MarkingProperty, TLPMarking, StatementMarking,
 )
 from stix2.v21.vocab import (
     ATTACK_MOTIVATION, ATTACK_RESOURCE_LEVEL, IMPLEMENTATION_LANGUAGE, MALWARE_CAPABILITIES, MALWARE_TYPE,
-    PROCESSOR_ARCHITECTURE, TOOL_TYPE,
+    PROCESSOR_ARCHITECTURE, TOOL_TYPE, IDENTITY_CLASS, INDUSTRY_SECTOR,
 )
 
 import logging
@@ -581,3 +584,102 @@ class Collection(_DomainObject):
         ('x_mitre_contents', ListProperty(EmbeddedObjectProperty(type=ObjectVersion))),
     ])
 
+class AttackMarking(_STIXBase21, _MarkingsMixin):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_k5fndj2c7c1k>`__.
+    """
+
+    _type = 'marking-definition'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('definition_type', StringProperty()),
+        ('name', StringProperty()),
+        ('definition', MarkingProperty()),
+        ('x_mitre_version', StringProperty()),
+        ('x_mitre_contributors', ListProperty(StringProperty)),
+        ('x_mitre_modified_by_ref', StringProperty()),
+        ('x_mitre_domains', ListProperty(StringProperty)),
+        ('x_mitre_attack_spec_version', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ExtensionsProperty(spec_version='2.1')),
+    ])
+
+    def __init__(self, **kwargs):
+        if {'definition_type', 'definition'}.issubset(kwargs.keys()):
+            # Create correct marking type object
+            try:
+                marking_type = OBJ_MAP_MARKING[kwargs['definition_type']]
+            except KeyError:
+                raise ValueError("definition_type must be a valid marking type")
+
+            if not isinstance(kwargs['definition'], marking_type): # noqa
+                defn = _get_dict(kwargs['definition'])
+                kwargs['definition'] = marking_type(**defn)
+
+        super(AttackMarking, self).__init__(**kwargs)
+
+    def _check_object_constraints(self):
+        super(AttackMarking, self)._check_object_constraints()
+
+        definition = self.get("definition")
+        definition_type = self.get("definition_type")
+        extensions = self.get("extensions")
+
+        if not (definition_type and definition) and not extensions:
+            raise PropertyPresenceError(
+                "MarkingDefinition objects must have the properties "
+                "'definition_type' and 'definition' if 'extensions' is not present",
+                AttackMarking,
+            )
+
+        check_tlp_marking(self, '2.1')
+
+    def serialize(self, pretty=False, include_optional_defaults=False, **kwargs):
+        check_tlp_marking(self, '2.1')
+        return super(AttackMarking, self).serialize(pretty, include_optional_defaults, **kwargs)
+
+
+OBJ_MAP_MARKING = {
+    'tlp': TLPMarking,
+    'statement': StatementMarking,
+}
+
+def AttackIdentity(_DomainObject):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_wh296fiwpklp>`__.
+    """
+
+    _type = 'identity'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty(required=True)),
+        ('description', StringProperty()),
+        ('x_mitre_version', StringProperty()),
+        ('x_mitre_contributors', ListProperty(StringProperty)),
+        ('x_mitre_modified_by_ref', StringProperty()),
+        ('x_mitre_domains', ListProperty(StringProperty)),
+        ('x_mitre_attack_spec_version', StringProperty()),
+        ('roles', ListProperty(StringProperty)),
+        ('identity_class', OpenVocabProperty(IDENTITY_CLASS)),
+        ('sectors', ListProperty(OpenVocabProperty(INDUSTRY_SECTOR))),
+        ('contact_information', StringProperty()),
+        ('revoked', BooleanProperty(default=lambda: False)),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ExtensionsProperty(spec_version='2.1')),
+    ])

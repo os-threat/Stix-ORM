@@ -3,10 +3,15 @@ import json
 from stix2.parsing import dict_to_stix2
 from stix.module.authorise import authorised_mappings, import_type_factory
 from stix2.exceptions import ParseError
-from stix.module.orm.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
+from stix2.parsing import dict_to_stix2
+from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
+from stix.module.initialise import tlp_ids
 import logging
+from stix.module.definitions.stix21 import MarkingDefinition
 
 from stix.module.typedb_lib.import_type_factory import ImportType
+from stix.module.initialise import tlp_ids
+from stix.module.definitions.stix21 import stix_models
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -38,7 +43,7 @@ def parse(data: dict, allow_custom=False, import_type: ImportType=default_import
     logger.debug("i'm in parse after get dict")
 
     # convert dict to full python-stix2 obj
-    obj = dict_to_stix2(obj, allow_custom, import_type)
+    obj = dict_to_stix(obj, allow_custom, import_type)
     logger.debug(f"############## obj is {obj} ########")
 
     return obj
@@ -66,9 +71,9 @@ def _get_dict(data):
             raise ValueError("Cannot convert '%s' to dictionary." % str(data))
 
 
-def dict_to_stix2(stix_dict: dict,
-                  allow_custom=False,
-                  import_type: ImportType=default_import_type):
+def dict_to_stix(stix_dict: dict,
+                 allow_custom=False,
+                 import_type: ImportType=default_import_type):
     """convert dictionary to full python-stix2 object
     Args:
         stix_dict (dict): a python dictionary of a STIX object
@@ -108,9 +113,10 @@ def dict_to_stix2(stix_dict: dict,
     logger.debug(f'\nin parse, type is --> {obj_type}')
     logger.debug(f'\n auth-sdo -->{auth["tql_types"]["sdo"]}\n')
     logger.debug(f'\n\n auth-sro -->{auth["tql_types"]["sro"]}\n')
+    attack_object = False if not stix_dict.get("x_mitre_version", False) else True
+    #print(f'auth is {auth["tql_types"]["meta"]}')
     if obj_type in auth["tql_types"]["sdo"]:
         logger.debug("Im in sdo")
-        attack_object = False if not stix_dict.get("x_mitre_version", False) else True
         sub_technique = False
         if attack_object:
             sub_technique = False if not stix_dict.get("x_mitre_is_subtechnique", False) else True
@@ -126,7 +132,6 @@ def dict_to_stix2(stix_dict: dict,
         logger.debug("I'm in sro")
         uses_relation = False
         is_procedure = False
-        attack_object = False if not stix_dict.get("x_mitre_version", False) else True
         if attack_object:
             uses_relation = False if not stix_dict.get("relationship_type", False) == "uses" else True
             is_procedure = False if not stix_dict.get("target_ref", False) == "attack-pattern" else True
@@ -135,7 +140,6 @@ def dict_to_stix2(stix_dict: dict,
 
         obj_tql, sro_tql_name, is_list = sro_type_to_tql(obj_type, sro_sub_rel, import_type, attack_object,
                                                          uses_relation, is_procedure)
-
         logger.debug(f"~~~~~~~~~~~ sro tql name {sro_tql_name}")
         if obj_type == "relationship":
             obj_tql_name = "stix-core-relationship"
@@ -147,6 +151,14 @@ def dict_to_stix2(stix_dict: dict,
     elif obj_type in auth["tql_types"]["sub"]:
         logger.debug("I'm in sub")
         obj_class = class_for_type(obj_type, import_type, "sub")
+    elif obj_type in auth["tql_types"]["meta"]:
+        logger.debug("I'm in meta")
+        if attack_object:
+            obj_class = class_for_type("attack-marking", import_type, "meta")
+        else:
+            obj_class = dict_to_stix2(stix_dict, True)
+            return obj_class
+
     elif allow_custom:
         logger.debug("I'm in custom")
         raise ParseError(f'the object is not known, and custom is enabled but not implemented')

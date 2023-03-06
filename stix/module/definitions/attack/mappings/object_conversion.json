@@ -66,7 +66,29 @@
     "icon":"attack_icon_mitigation.png"
   },
   {
-    "type":  "intrustion-set",
+    "type":  "marking-definition",
+    "typeql": "attack-marking",
+    "class": "AttackMarking",
+    "object": "meta",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#the-attck-spec",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "attack",
+    "icon":""
+  },
+  {
+    "type":  "identity",
+    "typeql": "attack-identity",
+    "class": "AttackIdentity",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#the-attck-spec",
+    "doc_url": "",
+    "summary": "Referenced by created_by_ref and x_mitre_modified_by_ref to convey the creator and most recent modifier of each object",
+    "protocol": "attack",
+    "icon":""
+  },
+  {
+    "type":  "intrusion-set",
     "typeql": "group",
     "class": "Group",
     "object": "sdo",

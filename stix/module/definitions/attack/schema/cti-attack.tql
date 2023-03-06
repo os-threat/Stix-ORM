@@ -1,4 +1,4 @@
-#
+
 # Copyright (C) 2022 OS-Threat
 #
 # Licensed to the Apache Software Foundation (ASF) under one
@@ -177,6 +177,17 @@ define
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
+
+    # Statement Markings - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#the-attck-spec
+    attack-marking sub statement-marking,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version;
+
+    # Attack Identity - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#the-attck-spec
+    attack-identity sub identity,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-version;
 
     # Relations
     #===================

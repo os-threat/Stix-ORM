@@ -8,6 +8,7 @@ from stix.module.orm.delete_object import delete_stix_object
 from stix.module.authorise import authorised_mappings, import_type_factory
 from stix.module.parsing.parse_objects import parse
 from stix.module.generate_docs import configure_overview_table_docs, object_tables
+from stix.module.initialise import sort_layers, load_typeql_data
 
 import logging
 
@@ -46,6 +47,77 @@ def test_generate_docs():
     print("================================================================================")
     print("------------------------ Test Doc Generation ---------------------------------------------")
     configure_overview_table_docs(object_tables)
+
+
+def dict_To_typeql(stix_dict, import_type):
+    """ From the old code base,
+            - convert a stix dict into a Python object, based on import_type
+            -   convert the object into TypeQL, with a dpendency object
+    """
+    logger.debug(f"im about to parse \n")
+    stix_obj = parse(stix_dict, False, import_type)
+    logger.debug(f' i have parsed\n')
+    dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
+    logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+    dep_obj["dep_match"] = dep_match
+    dep_obj["dep_insert"] = dep_insert
+    dep_obj["indep_ql"] = indep_ql
+    dep_obj["core_ql"] = core_ql
+    return dep_obj
+
+
+def update_layers(layers, indexes, missing, dep_obj, cyclical):
+    """ From the old codebase takes a layer and updates it, handling the layer zero case
+
+    """
+    if len(layers) == 0:
+        # 4a. For the first record to order
+        missing = dep_obj['dep_list']
+        indexes.append(dep_obj['id'])
+        layers.append(dep_obj)
+    else:
+        # 4b. Add up and return the layers, indexes, missing and cyclical lists
+        add = 'add'
+        layers, indexes, missing, cyclical = sort_layers(layers, cyclical, indexes, missing, dep_obj, add)
+    return layers, indexes, missing, cyclical
+
+
+def backdoor_add(pahhway):
+    """ Test the database initialisation function
+
+    """
+    typedb = TypeDBSink(connection, True, import_type)
+    layers = []
+    indexes = []
+    missing = []
+    cyclical = []
+    type_ql_list = []
+    with open(pahhway, mode="r", encoding="utf-8") as f:
+        json_text = json.load(f)
+        for stix_dict in json_text:
+            dep_obj = dict_To_typeql(stix_dict, import_type)
+            layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
+            #print(f"layers -> {layers}")
+
+    print(f'missing {missing}, cyclical {cyclical}')
+    if missing == [] and cyclical == []:
+        # add the layers into a list of strings
+        for layer in layers:
+            dep_match = dep_obj["dep_match"]
+            dep_insert = dep_obj["dep_insert"]
+            indep_ql = dep_obj["indep_ql"]
+            core_ql = dep_obj["core_ql"]
+            print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+            prestring = ""
+            if dep_match != "":
+                prestring = "match " + dep_match
+            upload_string = prestring + " insert " + indep_ql + dep_insert
+            type_ql_list.append(upload_string)
+
+        # add list of strings to typedb
+        load_typeql_data(type_ql_list, connection)
+
+
 
 
 def test_initialise():
@@ -435,7 +507,7 @@ if __name__ == '__main__':
     #test_initialise()
     #load_file_list(path1, group_list)
     #load_file(path1 + f1)
-    load_file(mitre + "test.json")
+    #load_file(mitre + "test.json")
     #check_object(mitre + "test.json")
     #load_file(data_path + file7)
     print("=====")
@@ -454,3 +526,4 @@ if __name__ == '__main__':
     #test_ids_loaded(id_list2, connection)
     #test_auth()
     #test_generate_docs()
+    backdoor_add(mitre + "test.json")

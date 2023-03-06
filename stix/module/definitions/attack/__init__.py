@@ -21,7 +21,7 @@ from pathlib import Path
 from .classes import (
     Matrix, Tactic, Technique, SubTechnique, Mitigation, Group, SoftwareMalware,
     SoftwareTool, DataSource, DataComponent, AttackCampaign, Collection,
-    ObjectVersion
+    ObjectVersion, AttackIdentity
 )
 
 from stix.module.definitions.attack.classes import (
@@ -95,7 +95,8 @@ attack_models["classes"]["sdo"] = {
     "DataSource": DataSource,
     "DataComponent": DataComponent,
     "AttackCampaign": AttackCampaign,
-    "Collection": Collection
+    "Collection": Collection,
+    "AttackIdentity": AttackIdentity
 }
 attack_models["classes"]["sub"] = {
     "ObjectVersion": ObjectVersion
