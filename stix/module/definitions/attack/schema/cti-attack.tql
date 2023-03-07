@@ -1,0 +1,338 @@
+
+# Copyright (C) 2022 OS-Threat
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+define
+
+    # Matrices - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#matrices 
+    matrix sub stix-domain-object,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        owns tactic-refs,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
+        plays obj-ref:content;
+
+    # Tactics - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#tactics
+    tactic sub stix-domain-object,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-shortname,
+        owns x-mitre-deprecated,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
+        plays obj-ref:content;
+
+    # Techniques - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#techniques
+    technique sub attack-pattern,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-detection,
+        owns x-mitre-platforms,
+        owns x-mitre-data-sources,
+        owns x-mitre-is-subtechnique,
+        owns x-mitre-system-requirements,
+        owns x-mitre-tactic-type,
+        owns x-mitre-permissions-required,
+        owns x-mitre-effective-permissions,
+        owns x-mitre-defense-bypassed,
+        owns x-mitre-remote-support,
+        owns x-mitre-impact-type,
+        owns x-mitre-deprecated,
+        plays subtechnique-of:parent,
+        #plays subtechnique-of:child,
+        plays detects:ttp,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
+        plays obj-ref:content;
+
+    # Sub Techniques - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#sub-techniques
+    sub-technique sub technique,
+        plays subtechnique-of:child;
+
+    # Mitigations - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#mitigations
+    mitigation sub course-of-action,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
+        plays obj-ref:content;
+
+    # Groups - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#groups
+    attack-group sub intrusion-set,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
+        plays obj-ref:content;
+
+    # Software- Malware and Tool - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#software
+    software-malware sub malware,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-platforms,
+        owns x-mitre-aliases,
+        owns x-mitre-deprecated,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
+        plays obj-ref:content;
+
+    software-tool sub tool,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-platforms,
+        owns x-mitre-aliases,
+        owns x-mitre-deprecated,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
+        plays obj-ref:content;
+
+    # Data Sources and Components - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#data-sources-and-data-components
+    data-source  sub stix-domain-object,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-platforms,
+        owns x-mitre-collection-layers,
+        owns x-mitre-deprecated,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version,
+        plays x-mitre-data-source:data-source,
+        plays x-mitre-modified-by-ref:modified,
+        plays obj-ref:content;
+
+    # Data Components - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#data-components
+    data-component  sub stix-domain-object,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        plays detects:sensor,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version,
+        plays x-mitre-data-source:component,
+        plays x-mitre-modified-by-ref:modified,
+        plays obj-ref:content;
+
+    # Campaigns - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#campaigns
+    attack-campaign sub campaign,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-first-seen-citation,
+        owns x-mitre-last-seen-citation,
+        owns x-mitre-deprecated,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
+        plays obj-ref:content;
+
+    # Statement Markings - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#the-attck-spec
+    attack-marking sub statement-marking,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version;
+
+    # Attack Identity - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#the-attck-spec
+    attack-identity sub identity,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-version;
+
+    # Relations
+    #===================
+    # Existing Stix Relations,now with ATT&CK properties -
+    # https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#relationships
+    uses
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        plays obj-ref:content;
+
+    attributed-to
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        plays obj-ref:content;
+
+   mitigates
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        plays obj-ref:content;
+
+    #=================================
+    # Custom ATT&CK Relations -https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#relationships
+	subtechnique-of sub stix-core-relationship,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        plays obj-ref:content,
+		relates child as source,
+		relates parent as target,
+        plays obj-ref:content,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version;
+
+	detects sub  stix-core-relationship,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        plays obj-ref:content,
+		relates sensor as source,
+		relates ttp as target,
+        plays obj-ref:content,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version;
+
+	revoked-by sub stix-core-relationship,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        plays obj-ref:content,
+		relates revoked as source,
+		relates new-version as target,
+        plays obj-ref:content;
+
+    procedure sub  stix-core-relationship,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        plays obj-ref:content,
+		relates user as source,
+		relates technique as target,
+        plays obj-ref:content;
+
+    # Built-in Embedded Relations for Mitre Attack objects
+	x-mitre-data-source sub embedded,
+		relates data-source as pointed-to,
+		relates component as owner,
+        plays obj-ref:content;
+
+    # ATT&CK Collection Object
+    collection   sub stix-domain-object,
+        owns name,
+        owns description,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        plays x-mitre-modified-by-ref:modified,
+        plays x-mitre-content:collector;
+
+    # Collection External Reference
+    attack-sub-object sub stix-sub-object;
+    object-version sub attack-sub-object,
+        owns object-modified,
+        plays obj-ref:container,
+        plays x-mitre-content:collected;
+
+    # Collection embedded Relation
+    obj-ref sub embedded,
+		relates content as pointed-to,
+		relates container as owner;
+
+    x-mitre-content sub embedded,
+		relates collector as owner,
+		relates collected as pointed-to;
+
+	x-mitre-modified-by-ref sub created-by,
+	    relates modified as created,
+	    relates modifier as creator,
+        plays obj-ref:content;
+
+
+    # Attribute Definitions
+    mitre-attribute-string sub stix-attribute-string, abstract;
+        x-mitre-version sub mitre-attribute-string;
+        x-mitre-domains sub mitre-attribute-string;
+        x-mitre-contributors sub mitre-attribute-string;
+        x-mitre-attack-spec-version sub mitre-attribute-string;
+        tactic-refs sub mitre-attribute-string;
+        x-mitre-shortname sub mitre-attribute-string;
+        x-mitre-detection sub mitre-attribute-string;
+        x-mitre-platforms sub mitre-attribute-string;
+        x-mitre-data-sources sub mitre-attribute-string;
+        x-mitre-system-requirements sub mitre-attribute-string;
+        x-mitre-tactic-type sub mitre-attribute-string;
+        x-mitre-permissions-required sub mitre-attribute-string;
+        x-mitre-effective-permissions sub mitre-attribute-string;
+        x-mitre-defense-bypassed sub mitre-attribute-string;
+        x-mitre-impact-type sub mitre-attribute-string;
+        x-mitre-aliases sub mitre-attribute-string;
+        x-mitre-collection-layers sub mitre-attribute-string;
+        x-mitre-first-seen-citation sub mitre-attribute-string;
+        x-mitre-last-seen-citation sub mitre-attribute-string;
+
+    mitre-attribute-boolean sub stix-attribute-boolean, abstract;
+        x-mitre-is-subtechnique sub mitre-attribute-boolean;
+        x-mitre-deprecated sub mitre-attribute-boolean;
+        x-mitre-remote-support sub mitre-attribute-boolean;
+
+    mitre-attribute-timestamp sub stix-attribute-timestamp, abstract;
+        object-modified sub mitre-attribute-timestamp;

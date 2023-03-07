@@ -1,0 +1,17 @@
+{
+  "is_multipart": "is-multipart",
+  "date": "date",
+  "content_type": "content-type",
+  "from_ref": "",
+  "sender_ref": "",
+  "to_refs": "",
+  "cc_refs": "",
+  "bcc_refs": "",
+  "message_id": "message-id",
+  "subject": "subject",
+  "received_lines": "received-lines",
+  "additional_header_fields": "",
+  "body": "body",
+  "body_multipart": "",
+  "raw_email_ref": ""
+}

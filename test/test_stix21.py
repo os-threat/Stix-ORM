@@ -1,15 +1,11 @@
 import pathlib
 import unittest
 import json
-import os
-from stix.module.typedb import TypeDBSink, TypeDBSource
-from stix.module.import_stix_to_typeql import stix2_to_typeql
-from typedb.client import *
 import itertools as it
 import glob
-from hamcrest import *
 import logging
 
+from stix.module.typedb import TypeDBSource, TypeDBSink
 from test.dbconfig import *
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')

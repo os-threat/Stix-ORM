@@ -1,0 +1,8 @@
+{
+  "relationship_type": "relationship-type",
+  "description": "description",
+  "source_ref": "",
+  "target_ref": "",
+  "start_time": "start-time",
+  "stop_time": "stop-time"
+}

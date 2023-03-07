@@ -1,19 +1,22 @@
 import json
 import os
 from stix.module.typedb import TypeDBSink, TypeDBSource
-from stix.module.import_stix_to_typeql import stix2_to_typeql
 from typedb.client import *
-from stix2 import (v21, parse)
-from stix.module.import_stix_to_typeql import raw_stix2_to_typeql, stix2_to_match_insert
-from stix.module.delete_stix_to_typeql import delete_stix_object, add_delete_layers
-
-
+from stix2 import (parse)
+from stix.module.orm.import_objects import raw_stix2_to_typeql
+from stix.module.orm.delete_object import delete_stix_object
+from stix.module.authorise import authorised_mappings, import_type_factory
+from stix.module.parsing.parse_objects import parse
+from stix.module.generate_docs import configure_overview_table_docs, object_tables
+from stix.module.initialise import sort_layers, load_typeql_data
 
 import logging
 
+from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
+
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 #logger.addHandler(logging.StreamHandler())
 
 
@@ -26,17 +29,7 @@ connection = {
     "password": None
 }
 
-import_type = {
-    "STIX21": True,
-    "CVE": False,
-    "identity": False,
-    "location": False,
-    "rules": False,
-    "ATT&CK": False,
-    "ATT&CK_Versions": ["12.0"],
-    "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
-    "CACAO": False
-}
+import_type = import_type_factory.get_attack_import()
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
@@ -49,6 +42,82 @@ get_ids = 'match $ids isa stix-id;'
 test_id = "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff"
 marking_id = "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
 file_id = 'file--364fe3e5-b1f4-5ba3-b951-ee5983b3538d'
+
+def test_generate_docs():
+    print("================================================================================")
+    print("------------------------ Test Doc Generation ---------------------------------------------")
+    configure_overview_table_docs(object_tables)
+
+
+def dict_To_typeql(stix_dict, import_type):
+    """ From the old code base,
+            - convert a stix dict into a Python object, based on import_type
+            -   convert the object into TypeQL, with a dpendency object
+    """
+    #logger.debug(f"im about to parse \n")
+    stix_obj = parse(stix_dict, False, import_type)
+    #logger.debug(f' i have parsed\n')
+    dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
+    #logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+    dep_obj["dep_match"] = dep_match
+    dep_obj["dep_insert"] = dep_insert
+    dep_obj["indep_ql"] = indep_ql
+    dep_obj["core_ql"] = core_ql
+    return dep_obj
+
+
+def update_layers(layers, indexes, missing, dep_obj, cyclical):
+    """ From the old codebase takes a layer and updates it, handling the layer zero case
+
+    """
+    if len(layers) == 0:
+        # 4a. For the first record to order
+        missing = dep_obj['dep_list']
+        indexes.append(dep_obj['id'])
+        layers.append(dep_obj)
+    else:
+        # 4b. Add up and return the layers, indexes, missing and cyclical lists
+        add = 'add'
+        layers, indexes, missing, cyclical = sort_layers(layers, cyclical, indexes, missing, dep_obj, add)
+    return layers, indexes, missing, cyclical
+
+
+def backdoor_add(pahhway):
+    """ Test the database initialisation function
+
+    """
+    typedb = TypeDBSink(connection, True, import_type)
+    layers = []
+    indexes = []
+    missing = []
+    cyclical = []
+    type_ql_list = []
+    with open(pahhway, mode="r", encoding="utf-8") as f:
+        json_text = json.load(f)
+        for stix_dict in json_text:
+            dep_obj = dict_To_typeql(stix_dict, import_type)
+            layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
+            #print(f"layers -> {layers}")
+
+    print(f'missing {missing}, cyclical {cyclical}')
+    if missing == [] and cyclical == []:
+        # add the layers into a list of strings
+        for layer in layers:
+            dep_match = dep_obj["dep_match"]
+            dep_insert = dep_obj["dep_insert"]
+            indep_ql = dep_obj["indep_ql"]
+            core_ql = dep_obj["core_ql"]
+            print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+            prestring = ""
+            if dep_match != "":
+                prestring = "match " + dep_match
+            upload_string = prestring + " insert " + indep_ql + dep_insert
+            type_ql_list.append(upload_string)
+
+        # add list of strings to typedb
+        load_typeql_data(type_ql_list, connection)
+
+
 
 
 def test_initialise():
@@ -67,14 +136,14 @@ def load_file_list(path1, file_list):
     """
     logger.debug(f' connection {connection}')
     typedb = TypeDBSink(connection, True, import_type)
-    print(f'files {file_list}')
+    #print(f'files {file_list}')
     for i, f in enumerate(file_list):
         logger.debug(f'i have entered the file loop, time {i}')
         if i > 100:
             break
         else:
             with open((path1+f), mode="r", encoding="utf-8") as df:
-                print(f'I am about to load {f}')
+                #print(f'I am about to load {f}')
                 json_text = json.load(df)
                 typedb.add(json_text)
 
@@ -91,6 +160,35 @@ def load_file(fullname):
         typedb = TypeDBSink(connection, True, import_type)
         typedb.add(json_text)
 
+def check_object(fullname):
+    logger.debug(f'inside load file {fullname}')
+    with open(fullname, mode="r", encoding="utf-8") as f:
+        json_text = json.load(f)
+        typedb = TypeDBSink(connection, True, import_type)
+        # first find identity
+        for jt in json_text:
+            if jt["type"] == "relationship":
+                relationship = jt
+            elif jt["type"] == "x-mitre-tactic":
+                tactic =jt
+            elif jt["type"] == "attack-pattern":
+                if jt["x_mitre_is_subtechnique"] == True:
+                    subtechnique = jt
+                else:
+                    technique = jt
+
+        # try to make an object out of identity
+        templist=[]
+        templist.append(relationship)
+        typedb.add(templist)
+        # myobj1 = parse(subtechnique, False, import_type)
+        # print(f'\n\n============> my subtechnique = {myobj1}<==================\n\n')
+        # myobj2 = parse(technique, False, import_type)
+        # print(f'\n\n============> my technique = {myobj2}<==================\n\n')
+        # myobj3 = parse(relationship, False, import_type)
+        # print(f'\n\n============> my relationship = {myobj3}<==================\n\n')
+        # myobj4 = parse(tactic, False, import_type)
+        # print(f'\n\n============> my tactic = {myobj4} <==================\n\n')
 
 def query_id(stixid):
     """  Print out the match/insert and match/delete statements for any stix-id
@@ -116,7 +214,7 @@ def query_id(stixid):
 
 
 def get_stix_ids():
-    """ Get all the stix-ids in a database, should be moved to typedb file
+    """ Get all the stix-ids in a database, should be moved to typedb_lib file
 
     Returns:
         id_list : list of the stix-ids in the database
@@ -192,13 +290,13 @@ def test_delete(path):
     local_list = get_stix_ids()
     typedb.delete(local_list)
 
-
-def check_dir(dirpath):
+def check_dir_ids(dirpath):
     """ Open a directory and load all the files, optionally printing them
 
     Args:
         dirpath ():
     """
+    id_list = []
     dirFiles = os.listdir(dirpath)
     sorted_files = sorted(dirFiles)
     print(sorted_files)
@@ -212,6 +310,46 @@ def check_dir(dirpath):
             print(f'==================== {s_file} ===================================')
             print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
+                json_text = json.load(f)
+                for element in json_text:
+                    print(f'**********==={element}')
+                    temp_id = element.get('id', False)
+                    if temp_id:
+                        id_list.append(temp_id)
+                typedb_sink.add(json_text)
+    id_set = set(id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> {id_diff}')
+
+
+def check_dir(dirpath):
+    """ Open a directory and load all the files, optionally printing them
+
+    Args:
+        dirpath ():
+    """
+    id_list = []
+    dirFiles = os.listdir(dirpath)
+    sorted_files = sorted(dirFiles)
+    print(sorted_files)
+    typedb_sink = TypeDBSink(connection, True, import_type)
+    typedb_source = TypeDBSource(connection, import_type)
+    for s_file in sorted_files:
+        if os.path.isdir(os.path.join(dirpath, s_file)):
+            continue
+        else:
+            print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            print(f'==================== {s_file} ===================================')
+            print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
+                for element in f:
+                    temp_id = element.get('id', False)
+                    if temp_id:
+                        id_list.append(temp_id)
                 json_text = json.load(f)
                 typedb_sink.add(json_text)
 
@@ -270,6 +408,20 @@ def test_get_ids(connection, import_type):
     print(f'myidlist {my_id_list}')
 
 
+def test_auth():
+    import_type = import_type_factory.create_import(stix_21=True,
+                                                    os_hunt=True,
+                                                    os_intel=True,
+                                                    cacao=True,
+                                                    attack_domains=[AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
+                                                    attack_versions=[AttackVersions.V12_1])
+
+    auth = authorised_mappings(import_type)
+    print("===========================================")
+    print(auth)
+
+
+
 # if this file is run directly, then start here
 if __name__ == '__main__':
 
@@ -280,7 +432,7 @@ if __name__ == '__main__':
     f5 = "artifact_basic.json"
     f6 = "artifact_encrypted.json"
     f7 = "autonomous.json"
-    f8 = "campaign.json"
+    f8 = "attack-campaign.json"
     f9 = "course_action.json"
     f10 = "directory.json"
     f11 = "domain.json"
@@ -299,6 +451,8 @@ if __name__ == '__main__':
     f24 = 'file_pdf_basic.json'
     f25 = 'grouping.json'
     f26 = 'note.json'
+    f27 = 'process_ext_win_service.json'
+    f28 = 'threat_actor.json'
     file_list = [f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,f21,f22,f23,f24,f25]
     group_list = [f2, f3, f21, f25]
     note_list = [f2, f8, f26]
@@ -344,23 +498,25 @@ if __name__ == '__main__':
     file9 = "threat_actor.json"
     mitre_data = "data/mitre/enterprise-attack.json"
 
-    mitre = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack-12.0.json"
+    mitre_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
+    mitre = "data/mitre/"
 
     id_list = ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46', 'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265', 'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559', 'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6', 'attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5', 'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
     # 019fde1c-
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
     #test_initialise()
-    #load_file_list(path1, note_list)
-    #load_file(mitre_data)
-    load_file(data_path + file7)
-    #load_file(data_path + file7)
+    load_file_list(path1, [f2, f28])
+    #load_file(path1 + f28)
+    #load_file(mitre + "test.json")
+    #check_object(mitre + "test.json")
+    #load_file(data_path + file1)
     print("=====")
     print("=====")
     print("=====")
     #query_id(test_id)
+    #check_dir_ids(path1)
     #check_dir(path1)
-    check_dir(path1)
     #test_delete(path1+files10)
     #test_initialise()
     #test_delete_dir(path1)
@@ -369,3 +525,6 @@ if __name__ == '__main__':
     #cert_dict(cert_root, certs)
     #test_get_ids(connection, import_type)
     #test_ids_loaded(id_list2, connection)
+    #test_auth()
+    #test_generate_docs()
+    #backdoor_add(mitre + "test.json")

@@ -1,0 +1,83 @@
+{
+  "sco": [
+    "labels",
+    "external_references",
+    "object_marking_refs",
+    "granular_markings"
+  ],
+  "artifact": [],
+  "autonomous-system": [],
+  "directory": [
+    "contains_refs"
+  ],
+  "domain-name": [
+    "resolves_to_refs"
+  ],
+  "email-addr": [],
+  "email-message": [
+    "to_refs",
+    "cc_refs",
+    "bcc_refs",
+    "received_lines",
+    "body_multipart"
+  ],
+  "email-mime-part": [],
+  "file": [
+    "contains_refs"
+  ],
+  "archive-ext": [
+    "contains_refs"
+  ],
+  "ntfs-ext": [
+    "alternate_data_streams"
+  ],
+  "alternate-data-stream-type": [],
+  "pdf-ext": [],
+  "raster-image-ext": [],
+  "windows-pebinary-ext": [
+    "sections"
+  ],
+  "windows-pe-optional-header-type": [],
+  "windows-pe-section-type": [],
+  "ipv4-addr": [
+    "resolves_to_refs",
+    "belongs_to_refs"
+  ],
+  "ipv6-addr": [
+    "resolves_to_refs",
+    "belongs_to_refs"
+  ],
+  "mac-addr": [],
+  "mutex": [],
+  "network-traffic": [
+    "protocols",
+    "encapsulates_refs"
+  ],
+  "http-request-ext": [],
+  "icmp-ext": [],
+  "socket-ext": [],
+  "tcp-ext": [],
+  "process": [
+    "opened_connection_refs",
+    "child_refs"
+  ],
+  "windows-process-ext": [],
+  "windows-service-ext": [
+    "descriptions",
+    "service_dll_refs"
+  ],
+  "software": [
+    "languages"
+  ],
+  "url": [],
+  "user-account": [],
+  "unix-account-ext": [
+    "groups"
+  ],
+  "windows-registry-key": [
+    "values"
+  ],
+  "windows-registry-value-type": [],
+  "x509-certificate": [],
+  "x509-v3-extensions-type": []
+}

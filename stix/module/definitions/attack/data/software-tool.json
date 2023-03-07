@@ -1,0 +1,10 @@
+{
+  "name": "name",
+  "description": "description",
+  "tool_types": "tool-type",
+  "aliases": "aliases",
+  "kill_chain_phases": "",
+  "tool_version": "tool-version",
+  "x_mitre_platforms": "x-mitre-platforms",
+  "x_mitre_aliases": "x-mitre-aliases"
+}

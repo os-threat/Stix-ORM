@@ -3,12 +3,13 @@ import os
 import pathlib
 import unittest
 from parameterized import parameterized
-from stix.module.typedb import TypeDBSink
 from typedb.client import *
 
 import logging
 
-from stix.module.typedb_instructions import ResultStatus
+from stix.module.authorise import import_type_factory
+from stix.module.typedb import TypeDBSink
+from stix.module.typedb_lib.instructions import ResultStatus
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
@@ -30,29 +31,9 @@ connection = {
     "password": None
 }
 
-import_type = {
-    "STIX21": True,
-    "CVE": False,
-    "identity": False,
-    "location": False,
-    "rules": False,
-    "ATT&CK": False,
-    "ATT&CK_Versions": ["12.0"],
-    "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
-    "CACAO": False
-}
+import_type = import_type_factory.get_default_import()
 
-import_type_attack = {
-    "STIX21": False,
-    "CVE": False,
-    "identity": False,
-    "location": False,
-    "rules": False,
-    "ATT&CK": True,
-    "ATT&CK_Versions": ["12.0"],
-    "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
-    "CACAO": False
-}
+
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
@@ -84,113 +65,100 @@ def mitre_path():
     top_dir_path = pathlib.Path(__file__).parents[1]
     return str(top_dir_path.joinpath(data_mitre_path).joinpath("enterprise-attack.json"))
 
-def variables_failing_standard_data_file_paths() -> List[str]:
-    data_standard_path = "data/standard/"
-
-    standard_data_file_list = [
-        'grouping.json']
-
-    top_dir_path = pathlib.Path(__file__).parents[1]
-
-    paths = []
-    for file in standard_data_file_list:
-        path = top_dir_path.joinpath(data_standard_path).joinpath(file)
-        paths.append(str(path))
-
-    return paths
 
 
-def variables_standard_data_file_paths_missing() -> List[str]:
-    data_standard_path = "data/standard/"
+def standard_data_files_with_dependencies() -> List[str]:
+
 
     standard_data_file_list = [
         "aaa_indicator.json",
-        "campaign.json",
-        "course_action.json",
-        'grouping.json'
+        "standard_campaign.json",
+        "standard_grouping.json",
+        "standard_incident.json",
+        "standard_intrusion_set.json",
+        "standard_locations.json",
+        "standard_note.json",
+        "standard_observed.json",
+        "standard_opinion.json",
+        "standard_process_basic.json",
+        "process_ext_win_service.json",
+        "threat_actor.json",
+        "tool.json",
+        "vulnerability.json",
+        "note.json",
+        "report.json",
+        "sighting.json",
+        "sighting_no_observed.json",
+        "sighting_with_observed.json",
+        "network_tunnel_basic.json",
+        "network_tunnel_DNS.json"
     ]
+
+    return standard_data_file_list
+
+
+def excluded_files() -> List[str]:
+    return [
+        'course_action.json',
+        'translation_campaign.json'
+    ]
+
+
+def all_standard_data_file_paths() -> List[str]:
+
     top_dir_path = pathlib.Path(__file__).parents[1]
+    data_standard_path = top_dir_path.joinpath("data/standard/")
 
-    paths = []
-    for file in standard_data_file_list:
-        path = top_dir_path.joinpath(data_standard_path).joinpath(file)
-        paths.append(str(path))
+    standard_data_file_list = []
 
-    return paths
+    for root, dirs, files in os.walk(data_standard_path):
+        for file in files:
+            if file.endswith(".json") and file not in excluded_files():
+                standard_data_file_list.append(os.path.join(root, file))
+            else:
+                logger.debug("Excluding from test: " + file)
 
-def variables_standard_data_file_paths_success() -> List[str]:
+    return standard_data_file_list
+
+
+
+def standard_data_file_paths_with_dependencies() -> List[str]:
+
+    top_dir_path = pathlib.Path(__file__).parents[1]
+    data_standard_path = top_dir_path.joinpath("data/standard/")
+
+    standard_data_file_list = []
+
+    for root, dirs, files in os.walk(data_standard_path):
+        for file in files:
+            if file.endswith(".json") and file not in excluded_files() and file in standard_data_files_with_dependencies() :
+                standard_data_file_list.append(os.path.join(root, file))
+            else:
+                logger.debug("Excluding from test: " + file)
+
+    return standard_data_file_list
+
+def standard_data_file_paths_with_no_dependencies() -> List[str]:
+
+    top_dir_path = pathlib.Path(__file__).parents[1]
+    data_standard_path = top_dir_path.joinpath("data/standard/")
+
+    standard_data_file_list = []
+
+    for root, dirs, files in os.walk(data_standard_path):
+        for file in files:
+            if file.endswith(".json") and file not in excluded_files() and file not in standard_data_files_with_dependencies() :
+                standard_data_file_list.append(os.path.join(root, file))
+            else:
+                logger.debug("Excluding from test: " + file)
+
+    return standard_data_file_list
+
+
+def artifact_basic_path() -> str:
     data_standard_path = "data/standard/"
-
-    standard_data_file_list = [
-        "aaa_attack_pattern.json",
-        "aaa_identity.json",
-        "aaa_malware.json",
-        "artifact_basic.json",
-        "artifact_encrypted.json",
-        "autonomous.json",
-        "directory.json",
-        "domain.json",
-        "email_basic_addr.json",
-        "email_headers.json",
-        "email_mime.json",
-        "email_simple.json",
-        'file_archive_unencrypted.json',
-        'file_basic.json',
-        'file_basic_encoding.json',
-        'file_basic_parent.json',
-        'file_binary.json',
-        'file_image_simple.json',
-        'file_ntfs_stream.json',
-        'file_pdf_basic.json',
-    ]
     top_dir_path = pathlib.Path(__file__).parents[1]
-
-    paths = []
-    for file in standard_data_file_list:
-        path = top_dir_path.joinpath(data_standard_path).joinpath(file)
-        paths.append(str(path))
-
-    return paths
-
-def variables_standard_data_file_paths() -> List[str]:
-
-    data_standard_path = "data/standard/"
-
-    standard_data_file_list = [
-        "aaa_attack_pattern.json",
-        "aaa_identity.json",
-        "aaa_indicator.json",
-        "aaa_malware.json",
-        "artifact_basic.json",
-        "artifact_encrypted.json",
-        "autonomous.json",
-        "campaign.json",
-        "course_action.json",
-        "directory.json",
-        "domain.json",
-        "email_basic_addr.json",
-        "email_headers.json",
-        "email_mime.json",
-        "email_simple.json",
-        "incident.json",
-        'file_archive_unencrypted.json',
-        'file_basic.json',
-        'file_basic_encoding.json',
-        'file_basic_parent.json',
-        'file_binary.json',
-        'file_image_simple.json',
-        'file_ntfs_stream.json',
-        'file_pdf_basic.json',
-        'grouping.json'
-    ]
-    top_dir_path = pathlib.Path(__file__).parents[1]
-
-    paths = []
-    for file in standard_data_file_list:
-        path = top_dir_path.joinpath(data_standard_path).joinpath(file)
-        paths.append(str(path))
-
-    return paths
+    return str(top_dir_path.joinpath(data_standard_path).joinpath("artifact_basic.json"))
 
 def aaa_grouping_path() -> str:
     data_standard_path = "data/standard/"
@@ -202,11 +170,26 @@ def aaa_indicator_path() -> str:
     top_dir_path = pathlib.Path(__file__).parents[1]
     return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_indicator.json"))
 
+def translation_campaign_path() -> str:
+    data_standard_path = "data/standard/"
+    top_dir_path = pathlib.Path(__file__).parents[1]
+    return str(top_dir_path.joinpath(data_standard_path).joinpath("issues").joinpath("translation_campaign.json"))
+
+
+def x509_path() -> str:
+    data_standard_path = "data/standard/"
+    top_dir_path = pathlib.Path(__file__).parents[1]
+    return str(top_dir_path.joinpath(data_standard_path).joinpath("x509_cert_v3_ext.json"))
+
 def aaa_identity_path() -> str:
     data_standard_path = "data/standard/"
     top_dir_path = pathlib.Path(__file__).parents[1]
     return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_identity.json"))
 
+def aaa_attack_path() -> str:
+    data_standard_path = "data/standard/"
+    top_dir_path = pathlib.Path(__file__).parents[1]
+    return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_attack_pattern.json"))
 
 def variable_all_standard_data_filepaths() -> List[str]:
     top_dir_path = pathlib.Path(__file__).parents[1]
@@ -330,11 +313,15 @@ def cert_grouped_filepaths() -> List[List[str]]:
 class TestTypeDB(unittest.TestCase):
 
     def get_json_from_file(self,
-                           file_path: str):
+                           file_path: str) -> List[dict]:
         assert pathlib.Path(file_path).is_file()
         print(f'I am about to load {file_path}')
         with open(file_path, mode="r", encoding="utf-8") as f:
             json_text = json.load(f)
+
+        if isinstance(json_text, dict):
+            json_text = [json_text]
+
         return json_text
 
     def test_initialise(self):
@@ -359,6 +346,48 @@ class TestTypeDB(unittest.TestCase):
 
         self.assertTrue('Client Error: Unable to connect to TypeDB server.' in str(context.exception))
 
+    def test_delete_identity_pattern(self):
+        file_path = aaa_identity_path()
+
+        typedb = TypeDBSink(connection=connection,
+                            clear=True,
+                            import_type=import_type,
+                            schema_path=schema_path)
+        json_text = self.get_json_from_file(file_path)
+        typedb.add(json_text)
+
+        local_list = typedb.get_stix_ids()
+        result = typedb.delete(local_list)
+        self.validate_successful_result(result)
+
+    def test_artifact_basic(self):
+        file_path = artifact_basic_path()
+
+        typedb = TypeDBSink(connection=connection,
+                            clear=True,
+                            import_type=import_type,
+                            schema_path=schema_path)
+        json_text = self.get_json_from_file(file_path)
+        typedb.add(json_text)
+
+        local_list = typedb.get_stix_ids()
+        result = typedb.delete(local_list)
+        self.validate_successful_result(result)
+
+
+    def test_delete_attack_pattern(self):
+        file_path = aaa_attack_path()
+
+        typedb = TypeDBSink(connection=connection,
+                            clear=True,
+                            import_type=import_type,
+                            schema_path=schema_path)
+        json_text = self.get_json_from_file(file_path)
+        typedb.add(json_text)
+
+        local_list = typedb.get_stix_ids()
+        result = typedb.delete(local_list)
+        self.validate_successful_result(result)
 
     def setUp(self):
         self.clean_db()
@@ -395,7 +424,9 @@ class TestTypeDB(unittest.TestCase):
         typedb_sink.delete(stix_id_list)
 
 
-    @parameterized.expand(variables_standard_data_file_paths_success())
+
+
+    @parameterized.expand(standard_data_file_paths_with_no_dependencies())
     def test_delete(self, file_path: str):
         """ Load a single file and delete it
 
@@ -468,17 +499,46 @@ class TestTypeDB(unittest.TestCase):
                                  clear=True,
                                  import_type=import_type,
                                  schema_path=schema_path)
-        files = variables_standard_data_file_paths()
+        files = all_standard_data_file_paths()
+
+        combined = []
         for file in files:
             json_text = self.get_json_from_file(file)
-            result = typedb_sink.add(json_text)
-            if 'grouping' in file:
-                self.validate_contains_error(result)
-            else:
-                self.validate_successful_result(result)
+
+            combined = combined + json_text
+        result = typedb_sink.add(combined)
+        self.validate_successful_result(result)
+
+    def test_translation_campaign(self):
+        typedb_sink = TypeDBSink(connection=connection,
+                                 clear=True,
+                                 import_type=import_type,
+                                 schema_path=schema_path)
+        json_text = self.get_json_from_file(translation_campaign_path())
+
+        result = typedb_sink.add(json_text)
+        self.validate_successful_result(result)
 
 
+    def test_add_x509_path(self):
+        typedb_sink = TypeDBSink(connection=connection,
+                                 clear=True,
+                                 import_type=import_type,
+                                 schema_path=schema_path)
+        json_text = self.get_json_from_file(x509_path())
 
+        result = typedb_sink.add(json_text)
+        self.validate_successful_result(result)
+
+    def test_add_attack_path(self):
+        typedb_sink = TypeDBSink(connection=connection,
+                                 clear=True,
+                                 import_type=import_type,
+                                 schema_path=schema_path)
+        json_text = self.get_json_from_file(aaa_attack_path())
+
+        result = typedb_sink.add(json_text)
+        self.validate_successful_result(result)
 
     def test_add_indicator_path(self):
         typedb_sink = TypeDBSink(connection=connection,
@@ -544,7 +604,7 @@ class TestTypeDB(unittest.TestCase):
         self.assertTrue(set(my_id_list) == {'identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65',
                                    'identity--f431f809-377b-45e0-aa1c-6a4751cae5ff'})
 
-    @parameterized.expand(variables_standard_data_file_paths_success())
+    @parameterized.expand(standard_data_file_paths_with_no_dependencies())
     def test_get_all_ids_loaded(self, path):
         variables_id_list()
         typedb_sink = TypeDBSink(connection=connection,
@@ -565,7 +625,7 @@ class TestTypeDB(unittest.TestCase):
 
         self.assertTrue(set(my_id_list) == set(stix_ids_list))
 
-    @parameterized.expand(variables_standard_data_file_paths_success())
+    @parameterized.expand(standard_data_file_paths_with_no_dependencies())
     def test_all_ids_loaded_success(self, path):
         variables_id_list()
         typedb_sink = TypeDBSink(connection=connection,
@@ -578,7 +638,7 @@ class TestTypeDB(unittest.TestCase):
 
         self.validate_successful_result(result)
 
-    @parameterized.expand(variables_standard_data_file_paths_missing())
+    @parameterized.expand(standard_data_file_paths_with_dependencies())
     def test_all_ids_loaded_missing_dependencies(self, path):
         variables_id_list()
         typedb_sink = TypeDBSink(connection=connection,

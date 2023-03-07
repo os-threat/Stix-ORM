@@ -18,11 +18,14 @@
 # specific language governing permissions and limitations
 # under the License.
 #
+import os
 
 from typedb.client import *
 import logging
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+attack_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
 
 # make sure the four TLP Markings are loaded when the database initialises
 initial_markings = [[
@@ -42,7 +45,10 @@ initial_markings = [[
     ', has stix-id "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"',
     ', has spec-version "2.1", has created 2017-01-20T00:00:00.000;'
 ]]
-
+tlp_ids = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+                   "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
+                   "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
+                   "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
 
 def setup_database(stix_connection: Dict[str, str], clear: bool):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
@@ -65,6 +71,9 @@ def load_schema(stix_connection: Dict[str, str], rel_path=None, schema_type: str
     logger.debug(f'{stix_connection}')
     logger.debug(rel_path)
     logger.debug(schema_type)
+    assert rel_path is not None, "Need a path to load a schema"
+    assert os.path.exists(rel_path), "File path needs to exist"
+
     url = stix_connection["uri"] + ":" + stix_connection["port"]
     with TypeDB.core_client(url) as client:
         # Stage 1: Create the schema
@@ -92,10 +101,7 @@ def load_markings(stix_connection: Dict[str, str]):
             type_ql += line
         type_ql_list.append(type_ql)
     load_typeql_data(type_ql_list, stix_connection)
-    return_list = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
-                   "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
-                   "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
-                   "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
+    return_list = tlp_ids
     return return_list
 
 
@@ -105,13 +111,13 @@ def load_typeql_data(data_list, stix_connection: Dict[str, str]):
         # Stage 1: Create the schema
         with client.session(stix_connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.WRITE) as write_transaction:
+                logger.info(f'inside initial data loader and ready to load')
                 for data in data_list:
-                    logger.debug(f'inside session and ready to load')
                     insert_iterator = write_transaction.query().insert(data)
 
-                    logger.debug(f'insert_iterator response ->\n{insert_iterator}')
+                    logger.info(f'insert_iterator response ->\n{insert_iterator}')
                     for result in insert_iterator:
-                        logger.debug(f'typedb response ->\n{result}')
+                        logger.info(f'typedb response ->\n{result}')
 
                 write_transaction.commit()
 
@@ -273,6 +279,7 @@ def reorder(layers, indexes, tree, dep_obj, add_or_del):
     total_tree = tree + dtree
     total_tree.sort(reverse=True)
     # 3. Now delete the elements from layers and indexes
+    # TODO: Error here for test_add_files
     for t in total_tree:
         layers.pop(t)
         indexes.pop(t)

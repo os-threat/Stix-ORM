@@ -1,0 +1,26 @@
+[
+  {
+    "stix": "subtechnique-of",
+    "typeql": "subtechnique-of",
+    "source": "child",
+    "target": "parent"
+  },
+  {
+    "stix": "detects",
+    "typeql": "detects",
+    "source": "sensor",
+    "target": "ttp"
+  },
+  {
+    "stix": "revoked-by",
+    "typeql": "revoked-by",
+    "source": "revoked",
+    "target": "new-version"
+  },
+  {
+    "stix": "uses",
+    "typeql": "procedure",
+    "source": "user",
+    "target": "technique"
+  }
+]

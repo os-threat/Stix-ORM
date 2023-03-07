@@ -17,7 +17,7 @@ import json
 import definitions
 import os
 
-os.makedirs('./data',exist_ok=True)
+os.makedirs('data', exist_ok=True)
 
 for id in dir(definitions):
     obj = getattr(definitions,id)
@@ -25,11 +25,11 @@ for id in dir(definitions):
     # filter the dictionary objects only
     if isinstance(obj, dict) and id!='__builtins__':
         # save the object as dictionary
-        with open(f'./data/{id}.json','w') as file:
+        with open(f'data/{id}.json', 'w') as file:
             json.dump(obj,file)
 
     if isinstance(obj, list) and id!='__builtins__':
         # save the object as dictionary
-        with open(f'./data/{id}.json','w') as file:
+        with open(f'data/{id}.json', 'w') as file:
             json.dump(obj,file)
 

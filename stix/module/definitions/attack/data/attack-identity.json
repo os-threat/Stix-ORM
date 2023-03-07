@@ -1,0 +1,8 @@
+{
+  "name": "name",
+  "description": "description",
+  "roles": "stix-role",
+  "identity_class": "identity-class",
+  "sectors": "sector",
+  "contact_information": "contact-information"
+}

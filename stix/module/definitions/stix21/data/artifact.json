@@ -1,0 +1,8 @@
+{
+  "mime_type": "mime-type",
+  "payload_bin": "payload-bin",
+  "url": "url-link",
+  "hashes": "",
+  "encryption_algorithm": "encryption-algorithm",
+  "decryption_key": "decryption-key"
+}

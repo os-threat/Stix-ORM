@@ -1,0 +1,10 @@
+{
+  "name": "name",
+  "description": "description",
+  "aliases": "aliases",
+  "first_seen": "first-seen",
+  "last_seen": "last-seen",
+  "objective": "objective",
+  "x_mitre_first_seen_citation": "x-mitre-first-seen-citation",
+  "x_mitre_last_seen_citation": "x-mitre-last-seen-citation"
+}

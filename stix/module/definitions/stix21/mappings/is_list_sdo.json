@@ -1,0 +1,84 @@
+{
+  "sdo": [
+    "labels",
+    "external_references",
+    "object_marking_refs",
+    "granular_markings"
+  ],
+  "attack-pattern": [
+    "aliases",
+    "kill_chain_phases"
+  ],
+  "campaign": [
+    "aliases"
+  ],
+  "course-of-action": [],
+  "grouping": [
+    "object_refs"
+  ],
+  "identity": [
+    "roles",
+    "sectors"
+  ],
+  "incident": [],
+  "indicator": [
+    "indicator_types",
+    "kill_chain_phases"
+  ],
+  "infrastructure": [
+    "infrastructure_types",
+    "aliases",
+    "kill_chain_phases"
+  ],
+  "intrusion-set": [
+    "aliases",
+    "goals",
+    "secondary_motivations"
+  ],
+  "location": [],
+  "malware": [
+    "malware_types",
+    "kill_chain_phases",
+    "aliases",
+    "operating_system_refs",
+    "architecture_execution_envs",
+    "implementation_languages",
+    "capabilities",
+    "sample_refs"
+  ],
+  "malware-analysis": [
+    "installed_software_refs",
+    "modules",
+    "analysis_sco_refs"
+  ],
+  "note": [
+    "authors",
+    "object_refs"
+  ],
+  "observed-data": [
+    "object_refs"
+  ],
+  "opinion": [
+    "authors",
+    "object_refs"
+  ],
+  "report": [
+    "report_types",
+    "object_refs"
+  ],
+  "threat-actor": [
+    "threat_actor_types",
+    "aliases",
+    "roles",
+    "goals",
+    "resource-level",
+    "secondary_motivations",
+    "personal_motivations"
+  ],
+  "tool": [
+    "tool_types",
+    "kill_chain_phases",
+    "aliases"
+  ],
+  "vulnerability": []
+}

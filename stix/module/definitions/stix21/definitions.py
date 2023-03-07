@@ -617,7 +617,7 @@ ext_typeql_dict_list = [
     {   "stix": "alternate_data_streams",
         "dict": alternate_data_stream_ext_typeql_dict,
         "object": "alternate-data-stream",
-        "relation": "alt-data-streams", 
+        "relation": "alt-data-streams",
         "owner": "ntfs-ext",
         "pointed-to": "alt-data-stream"},
     {   "stix": "pdf-ext",
@@ -938,10 +938,10 @@ list_of_object_typeql = [
         "object": "kill-chain-phase"
     },{
         "name": "alternate_data_streams", 
-        "typeql": "alt-data-streams", 
+        "typeql": "alt-data-streams",
         "typeql_props": alternate_data_stream_ext_typeql_dict, 
         "owner": "ntfs-ext", 
-        "pointed_to": "alt-data-stream", 
+        "pointed_to": "alt-data-stream",
         "object": "alternate-data-stream"
     },{
         "name": "sections",

@@ -1,0 +1,178 @@
+[
+  {
+    "type":  "x-mitre-matrix",
+    "typeql": "matrix",
+    "class": "Matrix",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#matrices",
+    "doc_url": "",
+    "summary": "The overall layout of the ATT&CK Matrices is stored in x-mitre-matrix objects. As a custom STIX type they follow only the generic STIX Domain Object pattern.",
+    "protocol": "attack",
+    "icon":"attack_icon_matrix.png"
+  },
+  {
+    "type":  "x-mitre-tactic",
+    "typeql": "tactic",
+    "class": "Tactic",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#tactics",
+    "doc_url": "",
+    "summary": "A Tactic in ATT&CK is defined by an x-mitre-tactic object. As a custom STIX type they follow only the generic STIX Domain Object pattern.",
+    "protocol": "attack",
+    "icon":"attack_icon_tactic.png"
+  },
+  {
+    "type":  "attack-pattern",
+    "typeql": "technique",
+    "class": "Technique",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#techniques",
+    "doc_url": "",
+    "summary": "A Technique in ATT&CK is defined as an attack-pattern object.",
+    "protocol": "attack",
+    "icon":"attack_icon_technique.png"
+  },
+  {
+    "type":  "attack-pattern",
+    "typeql": "subtechnique",
+    "class": "SubTechnique",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#sub-techniques",
+    "doc_url": "",
+    "summary": "A sub-technique in ATT&CK is represented as an attack-pattern and follows the same format as techniques. They differ in that they have a boolean field (x_mitre_is_subtechnique) marking them as sub-techniques, and a relationship of the type subtechnique-of where the source_ref is the sub-technique and the target_ref is the parent technique. A sub-technique can only have 1 parent technique, but techniques can have multiple sub-techniques.",
+    "protocol": "attack",
+    "icon":"attack_icon_subtechnique.png"
+  },
+  {
+    "type":  "relationship",
+    "typeql": "attack-relation",
+    "class": "AttackRelation",
+    "object": "sro",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#relationships",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "attack",
+    "icon":""
+  },
+  {
+    "type":  "course-of-action",
+    "typeql": "mitigation",
+    "class": "Mitigation",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#mitigations",
+    "doc_url": "",
+    "summary": "A Mitigation in ATT&CK is defined as a course-of-action object. ATT&CK Mitigations do not depart from the STIX course-of-action spec.",
+    "protocol": "attack",
+    "icon":"attack_icon_mitigation.png"
+  },
+  {
+    "type":  "marking-definition",
+    "typeql": "attack-marking",
+    "class": "AttackMarking",
+    "object": "meta",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#the-attck-spec",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "attack",
+    "icon":""
+  },
+  {
+    "type":  "identity",
+    "typeql": "attack-identity",
+    "class": "AttackIdentity",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#the-attck-spec",
+    "doc_url": "",
+    "summary": "Referenced by created_by_ref and x_mitre_modified_by_ref to convey the creator and most recent modifier of each object",
+    "protocol": "attack",
+    "icon":""
+  },
+  {
+    "type":  "intrusion-set",
+    "typeql": "group",
+    "class": "Group",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#groups",
+    "doc_url": "",
+    "summary": "A Group in ATT&CK is defined as an intrusion-set object. ATT&CK Groups do not depart from the STIX intrusion-set spec.",
+    "protocol": "attack",
+    "icon":"attack_icon_group.png"
+  },
+  {
+    "type":  "malware",
+    "typeql": "software-malware",
+    "class": "SoftwareMalware",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#software",
+    "doc_url": "",
+    "summary": "Software in ATT&CK is the union of two distinct STIX types: malware and tool.",
+    "protocol": "attack",
+    "icon":"attack_icon_software.png"
+  },
+  {
+    "type":  "tool",
+    "typeql": "software-tool",
+    "class": "SoftwareTool",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#software",
+    "doc_url": "",
+    "summary": "Software in ATT&CK is the union of two distinct STIX types: malware and tool.",
+    "protocol": "attack",
+    "icon":"attack_icon_software.png"
+  },
+  {
+    "type":  "x-mitre-collection",
+    "typeql": "collection",
+    "class": "Collection",
+    "object": "sdo",
+    "url": "https://github.com/center-for-threat-informed-defense/attack-workbench-frontend/blob/master/docs/collections.md",
+    "doc_url": "",
+    "summary": "A collection is a set of related ATT&CK objects; collections may be used to represent specific releases of a dataset such as \"Enterprise ATT&CK v7.2\", or any other set of objects one may want to share with someone else. Collections are meant to be shared. Collections can be shared as STIX bundles, uploaded to the internet, or sent through email.",
+    "protocol": "attack",
+    "icon":"attack_icon_collection.png"
+  },
+  {
+    "type":  "x-mitre-data-source",
+    "typeql": "data-source",
+    "class": "DataSource",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#data-sources-and-data-components",
+    "doc_url": "",
+    "summary": "A Data Source in ATT&CK is defined by an x-mitre-data-source object. As a custom STIX type they follow only the generic STIX Domain Object pattern.",
+    "protocol": "attack",
+    "icon":"attack_icon_data_source.png"
+  },
+  {
+    "type":  "x-mitre-data-component",
+    "typeql": "data-component",
+    "class": "DataComponent",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#data-sources-and-data-components",
+    "doc_url": "",
+    "summary": "A Data Component in ATT&CK is represented as an x-mitre-data-component object. As a custom STIX type they follow only the generic STIX Domain Object pattern.",
+    "protocol": "attack",
+    "icon":"attack_icon_data_component.png"
+  },
+  {
+    "type":  "campaign",
+    "typeql": "attack-campaign",
+    "class": "AttackCampaign",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#campaigns",
+    "doc_url": "",
+    "summary": "A Campaign in ATT&CK is defined as a campaign object.",
+    "protocol": "attack",
+    "icon":"attack_icon_campaign.png"
+  },
+  {
+    "type":  "object-version-ref",
+    "typeql": "object-version",
+    "class": "ObjectVersion",
+    "object": "sub",
+    "url": "https://github.com/center-for-threat-informed-defense/attack-workbench-frontend/blob/master/docs/collections.md",
+    "doc_url": "",
+    "summary": "Object version references are used to refer to a specific version of a STIX object. They do this by combining a STIX ID of the object with the modified timestamp of the given version.",
+    "protocol": "attack",
+    "icon":""
+  }
+]

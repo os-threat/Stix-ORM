@@ -1,0 +1,51 @@
+[
+  {
+    "name": "body_multipart",
+    "typeql": "body-multipart",
+    "owner": "email",
+    "pointed_to": "mime-part",
+    "object": "email-mime-part"
+  },
+  {
+    "name": "external_references",
+    "typeql": "external-references",
+    "owner": "referenced",
+    "pointed_to": "referencing",
+    "object": "external-reference"
+  },
+  {
+    "name": "kill_chain_phases",
+    "typeql": "kill-chain-usage",
+    "owner": "kill-chain-used",
+    "pointed_to": "kill-chain-using",
+    "object": "kill-chain-phase"
+  },
+  {
+    "name": "alternate_data_streams",
+    "typeql": "alt-data-streams",
+    "owner": "ntfs-ext",
+    "pointed_to": "alt-data-stream",
+    "object": "alternate-data-stream"
+  },
+  {
+    "name": "sections",
+    "object": "windows-pe-section",
+    "typeql": "sections",
+    "owner": "pebinary",
+    "pointed_to": "pe-section"
+  },
+  {
+    "name": "values",
+    "object": "windows-registry-value-type",
+    "typeql": "reg-val",
+    "owner": "reg-key",
+    "pointed_to": "reg-value"
+  },
+  {
+    "name": "x_mitre_contents",
+    "object": "object-version",
+    "typeql": "x-mitre-content",
+    "owner": "collector",
+    "pointed_to": "collected"
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "type": "stix-type",
+  "spec_version": "spec-version",
+  "id": "stix-id",
+  "created_by_ref": "",
+  "created": "created",
+  "modified": "modified",
+  "revoked": "revoked",
+  "labels": "labels",
+  "confidence": "confidence",
+  "lang": "langs",
+  "external_references": "",
+  "object_marking_refs": "",
+  "granular_markings": "",
+  "extensions": ""
+}

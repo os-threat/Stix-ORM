@@ -1,0 +1,12 @@
+{
+  "sro": [
+    "labels",
+    "external_references",
+    "object_marking_refs",
+    "granular_markings"
+  ],
+  "sighting": [
+    "observed_data_refs",
+    "where_sighted_refs"
+  ]
+}

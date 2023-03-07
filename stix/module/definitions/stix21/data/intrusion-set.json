@@ -1,0 +1,11 @@
+{
+  "name": "name",
+  "description": "description",
+  "aliases": "aliases",
+  "first_seen": "first-seen",
+  "last_seen": "last-seen",
+  "goals": "goals",
+  "resource_level": "resource-level",
+  "primary_motivation": "primary-motivation",
+  "secondary_motivations": "secondary-motivations"
+}

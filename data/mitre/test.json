@@ -1,231 +1,464 @@
 [
-  {
-            "type": "attack-pattern",
-            "modified": "2021-04-29T14:49:39.188Z",
-            "name": "/etc/passwd and /etc/shadow",
-            "x_mitre_data_sources": [
-                "Command: Command Execution",
-                "File: File Access"
-            ],
-            "x_mitre_version": "1.0",
-            "created": "2020-02-11T18:46:56.263Z",
-            "x_mitre_permissions_required": [
-                "root"
-            ],
-            "x_mitre_platforms": [
-                "Linux"
-            ],
-            "x_mitre_is_subtechnique": true,
-            "id": "attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4",
-            "description": "Adversaries may attempt to dump the contents of <code>/etc/passwd</code> and <code>/etc/shadow</code> to enable offline password cracking. Most modern Linux operating systems use a combination of <code>/etc/passwd</code> and <code>/etc/shadow</code> to store user account information including password hashes in <code>/etc/shadow</code>. By default, <code>/etc/shadow</code> is only readable by the root user.(Citation: Linux Password and Shadow File Formats)\n\nThe Linux utility, unshadow, can be used to combine the two files in a format suited for password cracking utilities such as John the Ripper:(Citation: nixCraft - John the Ripper) <code># /usr/bin/unshadow /etc/passwd /etc/shadow > /tmp/crack.password.db</code>\n",
-            "object_marking_refs": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-            ],
-            "kill_chain_phases": [
-                {
-                    "kill_chain_name": "mitre-attack",
-                    "phase_name": "credential-access"
-                }
-            ],
-            "x_mitre_detection": "The AuditD monitoring tool, which ships stock in many Linux distributions, can be used to watch for hostile processes attempting to access <code>/etc/passwd</code> and <code>/etc/shadow</code>, alerting on the pid, process name, and arguments of such programs.",
-            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "external_references": [
-                {
-                    "source_name": "mitre-attack",
-                    "external_id": "T1003.008",
-                    "url": "https://attack.mitre.org/techniques/T1003/008"
-                },
-                {
-                    "source_name": "Linux Password and Shadow File Formats",
-                    "description": "The Linux Documentation Project. (n.d.). Linux Password and Shadow File Formats. Retrieved February 19, 2020.",
-                    "url": "https://www.tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html"
-                },
-                {
-                    "source_name": "nixCraft - John the Ripper",
-                    "description": "Vivek Gite. (2014, September 17). Linux Password Cracking: Explain unshadow and john Commands (John the Ripper Tool). Retrieved February 19, 2020.",
-                    "url": "https://www.cyberciti.biz/faq/unix-linux-password-cracking-john-the-ripper/"
-                }
-            ],
-            "spec_version": "2.1",
-            "x_mitre_attack_spec_version": "2.1.0",
-            "x_mitre_domains": [
-                "enterprise-attack"
-            ],
-            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
-        },{
-            "object_marking_refs": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-            ],
-            "type": "attack-pattern",
-            "name": "Abuse Elevation Control Mechanism",
-            "x_mitre_data_sources": [
-                "Process: Process Metadata",
-                "Process: Process Creation",
-                "Windows Registry: Windows Registry Key Modification",
-                "Command: Command Execution",
-                "File: File Metadata",
-                "File: File Modification",
-                "Process: OS API Execution"
-            ],
-            "x_mitre_version": "1.0",
-            "modified": "2021-04-29T14:49:39.188Z",
-            "created": "2020-01-30T13:58:14.373Z",
-            "x_mitre_permissions_required": [
-                "Administrator",
-                "User"
-            ],
-            "x_mitre_platforms": [
-                "Linux",
-                "macOS",
-                "Windows"
-            ],
-            "x_mitre_is_subtechnique": false,
-            "id": "attack-pattern--67720091-eee3-4d2d-ae16-8264567f6f5b",
-            "description": "Adversaries may circumvent mechanisms designed to control elevate privileges to gain higher-level permissions. Most modern systems contain native elevation control mechanisms that are intended to limit privileges that a user can perform on a machine. Authorization has to be granted to specific users in order to perform tasks that can be considered of higher risk. An adversary can perform several methods to take advantage of built-in control mechanisms in order to escalate privileges on a system.",
-            "kill_chain_phases": [
-                {
-                    "kill_chain_name": "mitre-attack",
-                    "phase_name": "privilege-escalation"
-                },
-                {
-                    "kill_chain_name": "mitre-attack",
-                    "phase_name": "defense-evasion"
-                }
-            ],
-            "x_mitre_detection": "Monitor the file system for files that have the setuid or setgid bits set. Also look for any process API calls for behavior that may be indicative of [Process Injection](https://attack.mitre.org/techniques/T1055) and unusual loaded DLLs through [DLL Search Order Hijacking](https://attack.mitre.org/techniques/T1574/001), which indicate attempts to gain access to higher privileged processes. On Linux, auditd can alert every time a user's actual ID and effective ID are different (this is what happens when you sudo).\n\nConsider monitoring for <code>/usr/libexec/security_authtrampoline</code> executions which may indicate that AuthorizationExecuteWithPrivileges is being executed. MacOS system logs may also indicate when AuthorizationExecuteWithPrivileges is being called. Monitoring OS API callbacks for the execution can also be a way to detect this behavior but requires specialized security tooling.\n\nOn Linux, auditd can alert every time a user's actual ID and effective ID are different (this is what happens when you sudo). This technique is abusing normal functionality in macOS and Linux systems, but sudo has the ability to log all input and output based on the <code>LOG_INPUT</code> and <code>LOG_OUTPUT</code> directives in the <code>/etc/sudoers</code> file.\n\nThere are many ways to perform UAC bypasses when a user is in the local administrator group on a system, so it may be difficult to target detection on all variations. Efforts should likely be placed on mitigation and collecting enough information on process launches and actions that could be performed before and after a UAC bypass is performed. Some UAC bypass methods rely on modifying specific, user-accessible Registry settings. Analysts should monitor Registry settings for unauthorized changes.",
-            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "external_references": [
-                {
-                    "url": "https://attack.mitre.org/techniques/T1548",
-                    "external_id": "T1548",
-                    "source_name": "mitre-attack"
-                }
-            ],
-            "spec_version": "2.1",
-            "x_mitre_attack_spec_version": "2.1.0",
-            "x_mitre_domains": [
-                "enterprise-attack"
-            ],
-            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
-        },{
-            "object_marking_refs": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-            ],
-            "type": "x-mitre-tactic",
-            "name": "Collection",
-            "description": "The adversary is trying to gather data of interest to their goal.\n\nCollection consists of techniques adversaries may use to gather information and the sources information is collected from that are relevant to following through on the adversary's objectives. Frequently, the next goal after collecting data is to steal (exfiltrate) the data. Common target sources include various drive types, browsers, audio, video, and email. Common collection methods include capturing screenshots and keyboard input.",
-            "x_mitre_shortname": "collection",
-            "modified": "2019-07-19T17:44:53.176Z",
-            "id": "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
-            "created": "2018-10-17T00:14:20.652Z",
-            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "external_references": [
-                {
-                    "source_name": "mitre-attack",
-                    "external_id": "TA0009",
-                    "url": "https://attack.mitre.org/tactics/TA0009"
-                }
-            ],
-            "spec_version": "2.1",
-            "x_mitre_attack_spec_version": "2.1.0",
-            "x_mitre_domains": [
-                "enterprise-attack"
-            ],
-            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "x_mitre_version": "1.0"
-        },{
-            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "object_marking_refs": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-            ],
-            "source_ref": "course-of-action--93e7968a-9074-4eac-8ae9-9f5200ec3317",
-            "target_ref": "attack-pattern--d10cbd34-42e3-45c0-84d2-535a09849584",
-            "relationship_type": "mitigates",
-            "description": "Restrict user's abilities to create Launch Agents with group policy.",
-            "id": "relationship--d7360dcb-fd97-4775-90fe-a892b9b24b54",
-            "type": "relationship",
-            "modified": "2021-11-10T14:00:00.188Z",
-            "created": "2020-01-17T16:13:40.018Z",
-            "spec_version": "2.1",
-            "x_mitre_attack_spec_version": "2.1.0",
-            "x_mitre_domains": [
-                "enterprise-attack"
-            ],
-            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "x_mitre_version": "1.0",
-            "x_mitre_deprecated": true
-        },{
-            "id": "relationship--b427e519-8ec0-4ae3-9dda-273cc71f00eb",
-            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "description": "[Leviathan](https://attack.mitre.org/groups/G0065) uses a backdoor known as BADFLICK that is is capable of generating a reverse shell, and has used multiple types of scripting for execution, including JavaScript and JavaScript Scriptlets in XML.(Citation: Proofpoint Leviathan Oct 2017).(Citation: FireEye Periscope March 2018)",
-            "object_marking_refs": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-            ],
-            "external_references": [
-                {
-                    "source_name": "Proofpoint Leviathan Oct 2017",
-                    "description": "Axel F, Pierre T. (2017, October 16). Leviathan: Espionage actor spearphishes maritime and defense targets. Retrieved February 15, 2018.",
-                    "url": "https://www.proofpoint.com/us/threat-insight/post/leviathan-espionage-actor-spearphishes-maritime-and-defense-targets"
-                },
-                {
-                    "source_name": "FireEye Periscope March 2018",
-                    "description": "FireEye. (2018, March 16). Suspected Chinese Cyber Espionage Group (TEMP.Periscope) Targeting U.S. Engineering and Maritime Industries. Retrieved April 11, 2018.",
-                    "url": "https://www.fireeye.com/blog/threat-research/2018/03/suspected-chinese-espionage-group-targeting-maritime-and-engineering-industries.html"
-                }
-            ],
-            "source_ref": "intrusion-set--7113eaa5-ba79-4fb3-b68a-398ee9cd698e",
-            "relationship_type": "uses",
-            "target_ref": "attack-pattern--d1fcf083-a721-4223-aedf-bf8960798d62",
-            "type": "relationship",
-            "modified": "2021-10-21T14:00:00.188Z",
-            "created": "2018-04-18T17:59:24.739Z",
-            "spec_version": "2.1",
-            "x_mitre_attack_spec_version": "2.1.0",
-            "x_mitre_domains": [
-                "enterprise-attack"
-            ],
-            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "x_mitre_version": "1.0",
-            "x_mitre_deprecated": true
+{
+        "type": "attack-pattern",
+        "modified": "2021-04-29T14:49:39.188Z",
+        "name": "/etc/passwd and /etc/shadow",
+        "x_mitre_data_sources": [
+            "Command: Command Execution",
+            "File: File Access"
+        ],
+        "x_mitre_version": "1.0",
+        "created": "2020-02-11T18:46:56.263Z",
+        "x_mitre_permissions_required": [
+            "root"
+        ],
+        "x_mitre_platforms": [
+            "Linux"
+        ],
+        "x_mitre_is_subtechnique": true,
+        "id": "attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4",
+        "description": "Adversaries may attempt to dump the contents of <code>/etc/passwd</code> and <code>/etc/shadow</code> to enable offline password cracking. Most modern Linux operating systems use a combination of <code>/etc/passwd</code> and <code>/etc/shadow</code> to store user account information including password hashes in <code>/etc/shadow</code>. By default, <code>/etc/shadow</code> is only readable by the root user.(Citation: Linux Password and Shadow File Formats)\n\nThe Linux utility, unshadow, can be used to combine the two files in a format suited for password cracking utilities such as John the Ripper:(Citation: nixCraft - John the Ripper) <code># /usr/bin/unshadow /etc/passwd /etc/shadow > /tmp/crack.password.db</code>\n",
+        "object_marking_refs": [
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "kill_chain_phases": [
+            {
+                "kill_chain_name": "mitre-attack",
+                "phase_name": "credential-access"
+            }
+        ],
+        "x_mitre_detection": "The AuditD monitoring tool, which ships stock in many Linux distributions, can be used to watch for hostile processes attempting to access <code>/etc/passwd</code> and <code>/etc/shadow</code>, alerting on the pid, process name, and arguments of such programs.",
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "external_references": [
+            {
+                "source_name": "mitre-attack",
+                "external_id": "T1003.008",
+                "url": "https://attack.mitre.org/techniques/T1003/008"
+            },
+            {
+                "source_name": "Linux Password and Shadow File Formats",
+                "description": "The Linux Documentation Project. (n.d.). Linux Password and Shadow File Formats. Retrieved February 19, 2020.",
+                "url": "https://www.tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html"
+            },
+            {
+                "source_name": "nixCraft - John the Ripper",
+                "description": "Vivek Gite. (2014, September 17). Linux Password Cracking: Explain unshadow and john Commands (John the Ripper Tool). Retrieved February 19, 2020.",
+                "url": "https://www.cyberciti.biz/faq/unix-linux-password-cracking-john-the-ripper/"
+            }
+        ],
+        "spec_version": "2.1",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "x_mitre_domains": [
+            "enterprise-attack"
+        ],
+        "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+    },{
+        "object_marking_refs": [
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "type": "attack-pattern",
+        "name": "Abuse Elevation Control Mechanism",
+        "x_mitre_data_sources": [
+            "Process: Process Metadata",
+            "Process: Process Creation",
+            "Windows Registry: Windows Registry Key Modification",
+            "Command: Command Execution",
+            "File: File Metadata",
+            "File: File Modification",
+            "Process: OS API Execution"
+        ],
+        "x_mitre_version": "1.0",
+        "modified": "2021-04-29T14:49:39.188Z",
+        "created": "2020-01-30T13:58:14.373Z",
+        "x_mitre_permissions_required": [
+            "Administrator",
+            "User"
+        ],
+        "x_mitre_platforms": [
+            "Linux",
+            "macOS",
+            "Windows"
+        ],
+        "x_mitre_is_subtechnique": false,
+        "id": "attack-pattern--67720091-eee3-4d2d-ae16-8264567f6f5b",
+        "description": "Adversaries may circumvent mechanisms designed to control elevate privileges to gain higher-level permissions. Most modern systems contain native elevation control mechanisms that are intended to limit privileges that a user can perform on a machine. Authorization has to be granted to specific users in order to perform tasks that can be considered of higher risk. An adversary can perform several methods to take advantage of built-in control mechanisms in order to escalate privileges on a system.",
+        "kill_chain_phases": [
+            {
+                "kill_chain_name": "mitre-attack",
+                "phase_name": "privilege-escalation"
+            },
+            {
+                "kill_chain_name": "mitre-attack",
+                "phase_name": "defense-evasion"
+            }
+        ],
+        "x_mitre_detection": "Monitor the file system for files that have the setuid or setgid bits set. Also look for any process API calls for behavior that may be indicative of [Process Injection](https://attack.mitre.org/techniques/T1055) and unusual loaded DLLs through [DLL Search Order Hijacking](https://attack.mitre.org/techniques/T1574/001), which indicate attempts to gain access to higher privileged processes. On Linux, auditd can alert every time a user's actual ID and effective ID are different (this is what happens when you sudo).\n\nConsider monitoring for <code>/usr/libexec/security_authtrampoline</code> executions which may indicate that AuthorizationExecuteWithPrivileges is being executed. MacOS system logs may also indicate when AuthorizationExecuteWithPrivileges is being called. Monitoring OS API callbacks for the execution can also be a way to detect this behavior but requires specialized security tooling.\n\nOn Linux, auditd can alert every time a user's actual ID and effective ID are different (this is what happens when you sudo). This technique is abusing normal functionality in macOS and Linux systems, but sudo has the ability to log all input and output based on the <code>LOG_INPUT</code> and <code>LOG_OUTPUT</code> directives in the <code>/etc/sudoers</code> file.\n\nThere are many ways to perform UAC bypasses when a user is in the local administrator group on a system, so it may be difficult to target detection on all variations. Efforts should likely be placed on mitigation and collecting enough information on process launches and actions that could be performed before and after a UAC bypass is performed. Some UAC bypass methods rely on modifying specific, user-accessible Registry settings. Analysts should monitor Registry settings for unauthorized changes.",
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "external_references": [
+            {
+                "url": "https://attack.mitre.org/techniques/T1548",
+                "external_id": "T1548",
+                "source_name": "mitre-attack"
+            }
+        ],
+        "spec_version": "2.1",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "x_mitre_domains": [
+            "enterprise-attack"
+        ],
+        "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+    },{
+        "object_marking_refs": [
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "type": "x-mitre-tactic",
+        "name": "Collection",
+        "description": "The adversary is trying to gather data of interest to their goal.\n\nCollection consists of techniques adversaries may use to gather information and the sources information is collected from that are relevant to following through on the adversary's objectives. Frequently, the next goal after collecting data is to steal (exfiltrate) the data. Common target sources include various drive types, browsers, audio, video, and email. Common collection methods include capturing screenshots and keyboard input.",
+        "x_mitre_shortname": "collection",
+        "modified": "2019-07-19T17:44:53.176Z",
+        "id": "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
+        "created": "2018-10-17T00:14:20.652Z",
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "external_references": [
+            {
+                "source_name": "mitre-attack",
+                "external_id": "TA0009",
+                "url": "https://attack.mitre.org/tactics/TA0009"
+            }
+        ],
+        "spec_version": "2.1",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "x_mitre_domains": [
+            "enterprise-attack"
+        ],
+        "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "x_mitre_version": "1.0"
+    },
+    {
+        "object_marking_refs": [
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "modified": "2021-10-14T20:34:57.289Z",
+        "name": "Leviathan",
+        "x_mitre_version": "3.0",
+        "created": "2018-04-18T17:59:24.739Z",
+        "type": "intrusion-set",
+        "id": "intrusion-set--7113eaa5-ba79-4fb3-b68a-398ee9cd698e",
+        "description": "[Leviathan](https://attack.mitre.org/groups/G0065) is a Chinese state-sponsored cyber espionage group that has been attributed to the Ministry of State Security's (MSS) Hainan State Security Department and an affiliated front company.(Citation: CISA AA21-200A APT40 July 2021) Active since at least 2009, [Leviathan](https://attack.mitre.org/groups/G0065) has targeted the following sectors: academia, aerospace/aviation, biomedical, defense industrial base, government, healthcare, manufacturing, maritime, and transportation across the US, Canada, Europe, the Middle East, and Southeast Asia.(Citation: CISA AA21-200A APT40 July 2021)(Citation: Proofpoint Leviathan Oct 2017)(Citation: FireEye Periscope March 2018)",
+        "x_mitre_contributors": [
+            "Valerii Marchuk, Cybersecurity Help s.r.o."
+        ],
+        "external_references": [
+            {
+                "url": "https://attack.mitre.org/groups/G0065",
+                "external_id": "G0065",
+                "source_name": "mitre-attack"
+            },
+            {
+                "description": "(Citation: Proofpoint Leviathan Oct 2017)",
+                "source_name": "Leviathan"
+            },
+            {
+                "description": "(Citation: CISA AA21-200A APT40 July 2021)(Citation: Accenture MUDCARP March 2019)",
+                "source_name": "MUDCARP"
+            },
+            {
+                "description": "(Citation: CISA AA21-200A APT40 July 2021)(Citation: Crowdstrike KRYPTONITE PANDA August 2018)",
+                "source_name": "Kryptonite Panda"
+            },
+            {
+                "description": "(Citation: CISA AA21-200A APT40 July 2021)(Citation: MSTIC GADOLINIUM September 2020)",
+                "source_name": "Gadolinium"
+            },
+            {
+                "description": "(Citation: CISA AA21-200A APT40 July 2021)(Citation: SecureWorks BRONZE MOHAWK n.d.)",
+                "source_name": "BRONZE MOHAWK"
+            },
+            {
+                "description": "Leviathan was previously reported upon by FireEye as TEMP.Periscope and TEMP.Jumper.(Citation: CISA AA21-200A APT40 July 2021)(Citation: FireEye APT40 March 2019)",
+                "source_name": "TEMP.Jumper"
+            },
+            {
+                "description": "FireEye reporting on TEMP.Periscope (which was combined into APT40) indicated TEMP.Periscope was reported upon as Leviathan.(Citation: CISA AA21-200A APT40 July 2021)(Citation: Proofpoint Leviathan Oct 2017)(Citation: FireEye Periscope March 2018)(Citation: FireEye APT40 March 2019)",
+                "source_name": "APT40"
+            },
+            {
+                "description": "Leviathan was previously reported upon by FireEye as TEMP.Periscope and TEMP.Jumper.(Citation: CISA AA21-200A APT40 July 2021)(Citation: FireEye Periscope March 2018)(Citation: FireEye APT40 March 2019)",
+                "source_name": "TEMP.Periscope"
+            },
+            {
+                "url": "https://us-cert.cisa.gov/ncas/alerts/aa21-200a",
+                "description": "CISA. (2021, July 19). (AA21-200A) Joint Cybersecurity Advisory \u2013 Tactics, Techniques, and Procedures of Indicted APT40 Actors Associated with China\u2019s MSS Hainan State Security Department.. Retrieved August 12, 2021.",
+                "source_name": "CISA AA21-200A APT40 July 2021"
+            },
+            {
+                "source_name": "Proofpoint Leviathan Oct 2017",
+                "description": "Axel F, Pierre T. (2017, October 16). Leviathan: Espionage actor spearphishes maritime and defense targets. Retrieved February 15, 2018.",
+                "url": "https://www.proofpoint.com/us/threat-insight/post/leviathan-espionage-actor-spearphishes-maritime-and-defense-targets"
+            },
+            {
+                "url": "https://www.fireeye.com/blog/threat-research/2018/03/suspected-chinese-espionage-group-targeting-maritime-and-engineering-industries.html",
+                "description": "FireEye. (2018, March 16). Suspected Chinese Cyber Espionage Group (TEMP.Periscope) Targeting U.S. Engineering and Maritime Industries. Retrieved April 11, 2018.",
+                "source_name": "FireEye Periscope March 2018"
+            },
+            {
+                "url": "https://www.accenture.com/us-en/blogs/cyber-defense/mudcarps-focus-on-submarine-technologies",
+                "description": "Accenture iDefense Unit. (2019, March 5). Mudcarp's Focus on Submarine Technologies. Retrieved August 24, 2021.",
+                "source_name": "Accenture MUDCARP March 2019"
+            },
+            {
+                "url": "https://www.crowdstrike.com/blog/two-birds-one-stone-panda/",
+                "description": "Adam Kozy. (2018, August 30). Two Birds, One Stone Panda. Retrieved August 24, 2021.",
+                "source_name": "Crowdstrike KRYPTONITE PANDA August 2018"
+            },
+            {
+                "url": "https://www.microsoft.com/security/blog/2020/09/24/gadolinium-detecting-empires-cloud/",
+                "description": "Ben Koehl, Joe Hannon. (2020, September 24). Microsoft Security - Detecting Empires in the Cloud. Retrieved August 24, 2021.",
+                "source_name": "MSTIC GADOLINIUM September 2020"
+            },
+            {
+                "url": "https://www.secureworks.com/research/threat-profiles/bronze-mohawk",
+                "description": "SecureWorks. (n.d.). Threat Profile - BRONZE MOHAWK. Retrieved August 24, 2021.",
+                "source_name": "SecureWorks BRONZE MOHAWK n.d."
+            },
+            {
+                "url": "https://www.fireeye.com/blog/threat-research/2019/03/apt40-examining-a-china-nexus-espionage-actor.html",
+                "description": "Plan, F., et al. (2019, March 4). APT40: Examining a China-Nexus Espionage Actor. Retrieved March 18, 2019.",
+                "source_name": "FireEye APT40 March 2019"
+            }
+        ],
+        "aliases": [
+            "Leviathan",
+            "MUDCARP",
+            "Kryptonite Panda",
+            "Gadolinium",
+            "BRONZE MOHAWK",
+            "TEMP.Jumper",
+            "APT40",
+            "TEMP.Periscope"
+        ],
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "spec_version": "2.1",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "x_mitre_domains": [
+            "enterprise-attack"
+        ],
+        "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+    },
+    {
+        "object_marking_refs": [
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "type": "course-of-action",
+        "id": "course-of-action--93e7968a-9074-4eac-8ae9-9f5200ec3317",
+        "description": "Manage the creation, modification, use, and permissions associated to user accounts.",
+        "x_mitre_version": "1.1",
+        "modified": "2020-05-20T13:49:12.270Z",
+        "created": "2019-06-06T16:50:58.767Z",
+        "name": "User Account Management",
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "external_references": [
+            {
+                "url": "https://attack.mitre.org/mitigations/M1018",
+                "external_id": "M1018",
+                "source_name": "mitre-attack"
+            }
+        ],
+        "spec_version": "2.1",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "x_mitre_domains": [
+            "enterprise-attack"
+        ],
+        "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+    },{
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "object_marking_refs": [
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "source_ref": "course-of-action--93e7968a-9074-4eac-8ae9-9f5200ec3317",
+        "target_ref": "attack-pattern--67720091-eee3-4d2d-ae16-8264567f6f5b",
+        "relationship_type": "mitigates",
+        "description": "Restrict user's abilities to create Launch Agents with group policy.",
+        "id": "relationship--d7360dcb-fd97-4775-90fe-a892b9b24b54",
+        "type": "relationship",
+        "modified": "2021-11-10T14:00:00.188Z",
+        "created": "2020-01-17T16:13:40.018Z",
+        "spec_version": "2.1",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "x_mitre_domains": [
+            "enterprise-attack"
+        ],
+        "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "x_mitre_version": "1.0",
+        "x_mitre_deprecated": true
+    },{
+        "id": "relationship--b427e519-8ec0-4ae3-9dda-273cc71f00eb",
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "description": "[Leviathan](https://attack.mitre.org/groups/G0065) uses a backdoor known as BADFLICK that is is capable of generating a reverse shell, and has used multiple types of scripting for execution, including JavaScript and JavaScript Scriptlets in XML.(Citation: Proofpoint Leviathan Oct 2017).(Citation: FireEye Periscope March 2018)",
+        "object_marking_refs": [
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "external_references": [
+            {
+                "source_name": "Proofpoint Leviathan Oct 2017",
+                "description": "Axel F, Pierre T. (2017, October 16). Leviathan: Espionage actor spearphishes maritime and defense targets. Retrieved February 15, 2018.",
+                "url": "https://www.proofpoint.com/us/threat-insight/post/leviathan-espionage-actor-spearphishes-maritime-and-defense-targets"
+            },
+            {
+                "source_name": "FireEye Periscope March 2018",
+                "description": "FireEye. (2018, March 16). Suspected Chinese Cyber Espionage Group (TEMP.Periscope) Targeting U.S. Engineering and Maritime Industries. Retrieved April 11, 2018.",
+                "url": "https://www.fireeye.com/blog/threat-research/2018/03/suspected-chinese-espionage-group-targeting-maritime-and-engineering-industries.html"
+            }
+        ],
+        "source_ref": "intrusion-set--7113eaa5-ba79-4fb3-b68a-398ee9cd698e",
+        "relationship_type": "uses",
+        "target_ref": "attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4",
+        "type": "relationship",
+        "modified": "2021-10-21T14:00:00.188Z",
+        "created": "2018-04-18T17:59:24.739Z",
+        "spec_version": "2.1",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "x_mitre_domains": [
+            "enterprise-attack"
+        ],
+        "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "x_mitre_version": "1.0",
+        "x_mitre_deprecated": true
+    },
+    {
+        "object_marking_refs": [
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "modified": "2021-10-20T15:05:19.274137Z",
+        "id": "x-mitre-data-component--18b236d8-7224-488f-9d2f-50076a0f653a",
+        "description": "Initial construction of a new active directory object (ex: Windows EID 5137)",
+        "x_mitre_version": "1.0",
+        "x_mitre_data_source_ref": "x-mitre-data-source--d6188aac-17db-4861-845f-57c369f9b4c8",
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "name": "Active Directory Object Creation",
+        "created": "2021-10-20T15:05:19.274137Z",
+        "type": "x-mitre-data-component",
+        "spec_version": "2.1",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "x_mitre_domains": [
+            "enterprise-attack"
+        ],
+        "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+    },
+    {
+        "object_marking_refs": [
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "modified": "2021-11-10T09:30:48.693951Z",
+        "name": "Active Directory",
+        "x_mitre_version": "1.0",
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "type": "x-mitre-data-source",
+        "x_mitre_platforms": [
+            "Windows",
+            "Azure AD"
+        ],
+        "id": "x-mitre-data-source--d6188aac-17db-4861-845f-57c369f9b4c8",
+        "description": "A database and set of services that allows administrators to manage permissions, access to network resources, and stored data objects (user, group, application, or devices)(Citation: Microsoft AD DS Getting Started)",
+        "x_mitre_collection_layers": [
+            "Host",
+            "Cloud Control Plane"
+        ],
+        "x_mitre_contributors": [
+            "Center for Threat-Informed Defense (CTID)"
+        ],
+        "created": "2021-10-20T15:05:19.274110Z",
+        "external_references": [
+            {
+                "url": "https://attack.mitre.org/datasources/DS0026",
+                "external_id": "DS0026",
+                "source_name": "mitre-attack"
+            },
+            {
+                "url": "https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/ad-ds-getting-started",
+                "description": "Foulds, I. et al. (2018, August 7). AD DS Getting Started. Retrieved September 23, 2021.",
+                "source_name": "Microsoft AD DS Getting Started"
+            }
+        ],
+        "spec_version": "2.1",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "x_mitre_domains": [
+            "enterprise-attack"
+        ],
+        "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+    },
+    {
+        "object_marking_refs": [
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "type": "x-mitre-matrix",
+        "name": "Enterprise ATT&CK",
+        "description": "Below are the tactics and technique representing the MITRE ATT&CK Matrix for Enterprise. The Matrix contains information for the following platforms: Windows, macOS, Linux, AWS, GCP, Azure, Azure AD, Office 365, SaaS.",
+        "modified": "2021-11-03T20:11:51.915Z",
+        "id": "x-mitre-matrix--eafc1b4c-5e56-4965-bd4e-66a6a89c88cc",
+        "created": "2018-10-17T00:14:20.652Z",
+        "tactic_refs": [
+            "x-mitre-tactic--daa4cbb1-b4f4-4723-a824-7f1efd6e0592",
+            "x-mitre-tactic--d679bca2-e57d-4935-8650-8031c87a4400",
+            "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
+            "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+            "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+            "x-mitre-tactic--5e29b093-294e-49e9-a803-dab3d73b77dd",
+            "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+            "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
+            "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+            "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
+            "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
+            "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+            "x-mitre-tactic--9a4e74ab-5008-408c-84bf-a10dfbc53462",
+            "x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8"
+        ],
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "external_references": [
+            {
+                "url": "https://attack.mitre.org/matrices/enterprise",
+                "external_id": "enterprise-attack",
+                "source_name": "mitre-attack"
+            }
+        ],
+        "spec_version": "2.1",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "x_mitre_domains": [
+            "enterprise-attack"
+        ],
+        "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "x_mitre_version": "1.0"
+    },
+    {
+        "type": "marking-definition",
+        "definition": {
+            "statement": "Copyright 2015-2021, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
         },
-        {
-            "object_marking_refs": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-            ],
-            "modified": "2021-10-20T15:05:19.274137Z",
-            "id": "x-mitre-data-component--18b236d8-7224-488f-9d2f-50076a0f653a",
-            "description": "Initial construction of a new active directory object (ex: Windows EID 5137)",
-            "x_mitre_version": "1.0",
-            "x_mitre_data_source_ref": "x-mitre-data-source--d6188aac-17db-4861-845f-57c369f9b4c8",
-            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "name": "Active Directory Object Creation",
-            "created": "2021-10-20T15:05:19.274137Z",
-            "type": "x-mitre-data-component",
-            "spec_version": "2.1",
-            "x_mitre_attack_spec_version": "2.1.0",
-            "x_mitre_domains": [
-                "enterprise-attack"
-            ],
-            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
-        },
-        {
-            "object_marking_refs": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-            ],
-            "modified": "2021-10-20T15:05:19.274137Z",
-            "id": "x-mitre-data-component--18b236d8-7224-488f-9d2f-50076a0f653a",
-            "description": "Initial construction of a new active directory object (ex: Windows EID 5137)",
-            "x_mitre_version": "1.0",
-            "x_mitre_data_source_ref": "x-mitre-data-source--d6188aac-17db-4861-845f-57c369f9b4c8",
-            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "name": "Active Directory Object Creation",
-            "created": "2021-10-20T15:05:19.274137Z",
-            "type": "x-mitre-data-component",
-            "spec_version": "2.1",
-            "x_mitre_attack_spec_version": "2.1.0",
-            "x_mitre_domains": [
-                "enterprise-attack"
-            ],
-            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
-        }
+        "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+        "created": "2017-06-01T00:00:00Z",
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "definition_type": "statement",
+        "spec_version": "2.1",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "x_mitre_domains": [
+            "enterprise-attack"
+        ]
+    },
+    {
+        "object_marking_refs": [
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "type": "identity",
+        "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "identity_class": "organization",
+        "modified": "2017-06-01T00:00:00.000Z",
+        "created": "2017-06-01T00:00:00.000Z",
+        "name": "The MITRE Corporation",
+        "spec_version": "2.1",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "x_mitre_domains": [
+            "enterprise-attack"
+        ],
+        "x_mitre_version": "1.0"
+    }
 ]

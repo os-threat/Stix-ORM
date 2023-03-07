@@ -1,0 +1,8 @@
+{
+  "name": "name",
+  "description": "description",
+  "tool_types": "tool-type",
+  "aliases": "aliases",
+  "kill_chain_phases": "",
+  "tool_version": "tool-version"
+}
