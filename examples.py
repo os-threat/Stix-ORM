@@ -55,19 +55,19 @@ def check_in_out(fullname, stixid):
 # if this file is run directly, then start here
 if __name__ == '__main__':
 
+    std_path = "data/standard/"
+    file1 = 'file_basic.json'  # hashes example
+    file2 = 'file_binary.json'  # extensions, sub-object
+
     ex_path = "data/examples/"
-    file1 = "granular_markings.json"  # specific object
+    file3 = "granular_markings.json"  # specific object
     stixid = "indicator--1ed8caa7-a708-4706-b651-f1186ede6ca1"
 
-    file2 = "attack_pattern_malware.json"  # list of objects
-
-    std_path = "data/standard/"
-    file3 = 'file_basic.json'  # hashes example
-    file4 = 'file_binary.json' # extensions, sub-object
+    file4 = "attack_pattern_malware.json"  # list of objects
 
     report_data = "data/threat_reports/"
     file5 = "apt1.json"
 
     #test_initialise()
-    #load_file(report_data + file5)
+    load_file(std_path + file1)
     #check_in_out(ex_path + file1, stixid)
