@@ -76,8 +76,6 @@ def get_write_transaction(session: TypeDBSession):
 @impure_safe
 def match_query(uri: str, port: str, database: str, query: str, data_query, **data_query_args):
     data = []
-    logger.debug(f' Matching query on db {database}')
-    logger.debug(f' typeql -->: {query}')
 
     with get_core_client(uri, port).unwrap() as client:
         client_session = unsafe_perform_io(get_data_session(client, database))
