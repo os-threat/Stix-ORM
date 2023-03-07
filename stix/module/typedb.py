@@ -434,16 +434,16 @@ class TypeDBSink(DataSink):
 
             this_node = instruction.id
             if directed_graph.has_node(this_node):
-                logging.debug("Already has node id " + this_node)
+                logging.info("Already has node id " + this_node)
             else:
-                logging.debug("Inserting dependency node " + this_node)
+                logging.info("Inserting dependency node " + this_node)
                 directed_graph.add_node(this_node)
 
             for dependency_node in dependencies:
                 if directed_graph.has_node(dependency_node):
-                    logging.debug("Already has dependency node id " + this_node)
+                    logging.info("Already has dependency node id " + this_node)
                 else:
-                    logging.debug("Dependency node does not exist id " + this_node)
+                    logging.info("Dependency node does not exist id " + this_node)
                     directed_graph.add_node(this_node)
                 directed_graph.add_edge(dependency_node, this_node)
         instructions.add_dependencies(directed_graph)

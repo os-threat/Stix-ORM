@@ -29,9 +29,8 @@ def build_insert_query(layer):
         insert_tql = ''
     else:
         insert_tql = 'insert ' + indep_ql + dep_insert
-    logger.debug(f'match_tql string?-> {match_tql}')
-    logger.debug(f'insert_tql string?-> {insert_tql}')
-    logger.debug(f'----------------------------- Get Ready to Load Object -----------------------------')
+    logger.info(f'match_tql string?-> {match_tql}')
+    logger.info(f'insert_tql string?-> {insert_tql}')
     typeql_string = match_tql + insert_tql
 
     insertion_is_empty = len(insert_tql) == 0
@@ -76,8 +75,6 @@ def get_write_transaction(session: TypeDBSession):
 @impure_safe
 def match_query(uri: str, port: str, database: str, query: str, data_query, **data_query_args):
     data = []
-    logger.debug(f' Matching query on db {database}')
-    logger.debug(f' typeql -->: {query}')
 
     with get_core_client(uri, port).unwrap() as client:
         client_session = unsafe_perform_io(get_data_session(client, database))
