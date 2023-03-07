@@ -2,6 +2,7 @@ import logging
 from typing import List
 
 from returns.io import impure_safe, IOResult
+from returns.methods import unwrap_or_failure
 from returns.pipeline import is_successful
 from returns.result import safe
 from returns.unsafe import unsafe_perform_io
@@ -132,11 +133,17 @@ def delete_layers(uri: str, port: str, database: str, instructions: Instructions
 @impure_safe
 def delete_layer(transaction, query):
     query_future = transaction.query().delete(query)
+    logger.info(f'delete_iterator response ->\n{query_future}')
+    for result in query_future:
+        logger.info(f'typedb response ->\n{result}')
     transaction.commit()
 
 @impure_safe
 def add_layer(transaction, layer):
     query_future = transaction.query().insert(layer)
+    logger.info(f'insert_iterator response ->\n{query_future}')
+    for result in query_future:
+        logger.info(f'typedb response ->\n{result}')
     transaction.commit()
 
 @impure_safe
