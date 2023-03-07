@@ -2,8 +2,13 @@ import json
 from stix.module.typedb import TypeDBSink, TypeDBSource
 from stix.module.authorise import import_type_factory
 from stix.module.parsing.parse_objects import parse
+import logging
+logger = logging.getLogger(__name__)
 
 import_type = import_type_factory.get_attack_import()
+logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 connection = {
     "uri": "localhost",
@@ -28,16 +33,18 @@ def load_file(fullname):
 def check_in_out(fullname, stixid):
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
+        typedb = TypeDBSink(connection, True, import_type)
+        typedb.add(json_text)
 
-        #  print granulaar marking
+        #  print original object
         obj_list = json_text.get('objects', False)
         for obj in obj_list:
-            if obj.get('type', False) == "indicator":
+            if obj.get('id', False) == stixid:
                 stix_obj = parse(obj)
                 print(' ---------------------------Original Object----------------------')
                 print(stix_obj.serialize(pretty=True))
 
-        # retrieve granular marking object from TypeDB
+        # retrieve object from TypeDB
         typedb = TypeDBSource(connection, import_type)
         stix_dict = typedb.get(stixid)
         stix_obj = parse(stix_dict)
@@ -62,5 +69,5 @@ if __name__ == '__main__':
     file5 = "apt1.json"
 
     #test_initialise()
-    #load_file(ex_path + file1)
+    #load_file(report_data + file5)
     #check_in_out(ex_path + file1, stixid)

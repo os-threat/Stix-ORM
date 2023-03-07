@@ -522,7 +522,7 @@ class TypeDBSink(DataSink):
         obj_result = self._gather_objects(stix_data)
 
         generate_instructions_result = obj_result.bind(lambda obj_list: self.__generate_instructions(obj_list))
-        print("/n##########################################################/n")
+        print("\n##########################################################\n")
         #print(f"generate instructions is {generate_instructions_result}")
         instruction_dependency_graph_result = generate_instructions_result.bind(lambda results: self.__create_instruction_dependency_graph(results))
         check_missing_dependency_result = instruction_dependency_graph_result.bind(lambda result: self.__check_missing_dependencies(result))
