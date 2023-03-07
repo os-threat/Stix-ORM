@@ -30,7 +30,7 @@ def build_insert_query(layer):
     else:
         insert_tql = 'insert ' + indep_ql + dep_insert
     logger.info(f'match_tql string?-> {match_tql}')
-    logger.info(f'insert_tql string?-> {insert_tql}')
+    logger.info(f'insert_tql string?-> \n {insert_tql}')
     typeql_string = match_tql + insert_tql
 
     insertion_is_empty = len(insert_tql) == 0
