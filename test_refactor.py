@@ -16,7 +16,7 @@ from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVers
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 #logger.addHandler(logging.StreamHandler())
 
 
@@ -136,14 +136,14 @@ def load_file_list(path1, file_list):
     """
     logger.debug(f' connection {connection}')
     typedb = TypeDBSink(connection, True, import_type)
-    print(f'files {file_list}')
+    #print(f'files {file_list}')
     for i, f in enumerate(file_list):
         logger.debug(f'i have entered the file loop, time {i}')
         if i > 100:
             break
         else:
             with open((path1+f), mode="r", encoding="utf-8") as df:
-                print(f'I am about to load {f}')
+                #print(f'I am about to load {f}')
                 json_text = json.load(df)
                 typedb.add(json_text)
 
@@ -452,6 +452,7 @@ if __name__ == '__main__':
     f25 = 'grouping.json'
     f26 = 'note.json'
     f27 = 'process_ext_win_service.json'
+    f28 = 'threat_actor.json'
     file_list = [f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,f21,f22,f23,f24,f25]
     group_list = [f2, f3, f21, f25]
     note_list = [f2, f8, f26]
@@ -505,11 +506,11 @@ if __name__ == '__main__':
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
     #test_initialise()
-    #load_file_list(path1, group_list)
-    #load_file(path1 + f1)
+    load_file_list(path1, [f2, f28])
+    #load_file(path1 + f28)
     #load_file(mitre + "test.json")
     #check_object(mitre + "test.json")
-    #load_file(data_path + file7)
+    #load_file(data_path + file1)
     print("=====")
     print("=====")
     print("=====")
@@ -526,4 +527,4 @@ if __name__ == '__main__':
     #test_ids_loaded(id_list2, connection)
     #test_auth()
     #test_generate_docs()
-    backdoor_add(mitre + "test.json")
+    #backdoor_add(mitre + "test.json")
