@@ -1,0 +1,1 @@
+from stix2patterns.validator import run_validator
