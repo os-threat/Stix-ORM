@@ -660,9 +660,10 @@ class TypeDBSource(DataSource):
                            data_query=convert_ans_to_stix,
                            import_type=import_type)
 
+        logger.debug(f'data is -> {data}')
         stix_obj = unwrap_or_failure(data).bind(lambda x: parse(x))
 
-        result = write_to_file("export_final.json", stix_obj)
+        result = write_to_file("stix/module/orm/export_final.json", stix_obj)
         if not is_successful(result):
             logger.error(str(result.failure()))
 

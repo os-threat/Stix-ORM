@@ -8,6 +8,7 @@ from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_t
 from stix.module.orm.export_utilities import convert_ans_to_res
 import logging
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 ###################################################################################################
 #
@@ -75,6 +76,8 @@ def convert_res_to_stix(res: List[dict], import_type: dict):
         else:
             logger.error(f'Unknown object type: {obj}')
 
+    logger.debug(f'\n\n')
+    logger.debug(f'stix dict -> {stix_dict}\n')
     return stix_dict
 
 
@@ -100,19 +103,20 @@ def make_sdo(res, import_type):
         for prop in props:
             if prop["typeql"] == "x_mitre_version":
                 attack_object = True
-            if prop["typeql"] == "x_mitre_is_subtechnique":
+            if prop["typeql"] == "x_mitre_is_subtechnique" and prop["value"] is True:
                 sub_technique = True
 
         obj_tql, sdo_tql_name, is_list = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique)
 
+        #logger.debug(f"obj tql -> {obj_tql}\n sdo tql name -> {sdo_tql_name}")
         # 2.B) get the is_list list, the list of properties that are lists for that object
-        is_list = auth["is_lists"]["sdo"]["sdo"] + auth["is_lists"]["sdo"][sdo_tql_name]
+        #is_list = auth["is_lists"]["sdo"]["sdo"] + auth["is_lists"]["sdo"][sdo_tql_name]
         # 3.A) add the properties onto the the object
         stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
-        logger.debug('sdo, add properties')
+        #logger.debug(f'sdo, add properties, stix_dict -> {stix_dict}\n')
         # 3.B) add the relations onto the object
         stix_dict = make_relations(relns, obj_tql, stix_dict, is_list, sdo_tql_name, import_type)
-        logger.debug('sdo, add relations')
+        #logger.debug(f'sdo, add relations, , stix_dict -> {stix_dict}\n')
         # 4.0 Check for the edge case where an identity creates an identity, but they are the same id
         if "created_by_ref" in stix_dict and stix_dict["type"] == "identity":
             if stix_dict["created_by_ref"] == stix_dict["id"]:
@@ -363,28 +367,28 @@ def make_relations(relns, obj_tql, stix_dict, is_list, obj_name=None, import_typ
     auth = authorised_mappings(import_type)
     for reln in relns:
         reln_name = reln["T_name"]
-        if reln_name in auth["reln_name"]["embedded_relations"]:
+        if reln_name in auth["tql_types"]["embedded_relations"]:
             stix_dict = make_embedded_relations(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
-        elif reln_name in auth["reln_name"]["standard_relations"] or reln_name == "sighting":
+        elif reln_name in auth["tql_types"]["standard_relations"] or reln_name == "sighting":
             stix_dict = make_standard_relations(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
-        elif reln_name in auth["reln_name"]["key_value_relations"]:
+        elif reln_name in auth["tql_types"]["key_value_relations"]:
             stix_dict = make_key_value_relations(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
-        elif reln_name in auth["reln_name"]["extension_relations"]:
+        elif reln_name in auth["tql_types"]["extension_relations"]:
             stix_dict = make_extension_relations(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
-        elif reln_name in auth["reln_name"]["list_of_objects"]:
+        elif reln_name in auth["tql_types"]["list_of_objects"]:
             stix_dict = make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
-        elif reln_name == "x509_v3_extensions" or reln_name == "optional_header":
+        elif reln_name == "x509-v3-extensions" or reln_name == "optional-_header":
             stix_dict = make_object(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
         elif reln_name == "granular-marking":
             stix_dict = make_granular_marking(reln, reln_name, stix_dict, is_list, obj_tql, obj_name)
 
-        elif reln_name == "hashes" or reln_name == "file_header_hashes":
+        elif reln_name == "hashes" or reln_name == "file-header-hashes":
             stix_dict = make_hashes(reln, reln_name, stix_dict)
 
         else:
@@ -452,7 +456,7 @@ def make_embedded_relations(reln, reln_name, stix_dict, is_list, obj_name, impor
 
 
 def make_standard_relations(reln, reln_name, stix_dict, is_list, obj_name=None, import_type=None):
-    logger.warning(" make standard relations visited, but not implemented")
+    #logger.warning(" make standard relations visited, but not implemented")
     auth = authorised_mappings(import_type)
     return stix_dict
 

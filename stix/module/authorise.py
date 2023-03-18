@@ -8,7 +8,8 @@ import logging
 
 from stix.module.typedb_lib.import_type_factory import ImportTypeFactory, ImportType
 
-#logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 ##############################################################
@@ -35,6 +36,11 @@ process_maps = [{
     "keys": ["embedded_relations", "standard_relations", "list_of_objects", "key_value_relations", "extension_relations", "relations_sro_roles"],
     "match":["relations_embedded", "relations_sro_roles", "relations_list_of_objects", "relations_key_value", "relations_extensions_and_objects", "relations_sro_roles"],
     "cond": []
+},{
+    "name": "tql_types1",
+    "keys": ["embedded_relations", "standard_relations", "list_of_objects", "key_value_relations", "extension_relations", "relations_sro_roles"],
+    "match":["relations_embedded", "relations_sro_roles", "relations_list_of_objects", "relations_key_value", "relations_extensions_and_objects", "relations_sro_roles"],
+    "cond": ["typeql", "typeql", "typeql", "typeql", "relation", "typeql"]
 }, {
     "name": "tql_types",
     "keys": ["sdo", "sro", "sco", "sub", "meta"],
@@ -108,6 +114,12 @@ def authorised_mappings(import_type: ImportType=default_import_type):
     auth["reln"]["key_value_relations"] = []
     auth["reln"]["extension_relations"] = []
     auth["reln"]["relations_sro_roles"] = []
+    auth["tql_types"]["embedded_relations"] = []
+    auth["tql_types"]["standard_relations"] = []
+    auth["tql_types"]["list_of_objects"] = []
+    auth["tql_types"]["key_value_relations"] = []
+    auth["tql_types"]["extension_relations"] = []
+    auth["tql_types"]["relations_sro_roles"] = []
     auth["tql_types"]["sdo"] = []
     auth["tql_types"]["sro"] = []
     auth["tql_types"]["sco"] = []
@@ -151,6 +163,14 @@ def authorised_mappings(import_type: ImportType=default_import_type):
                         #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{key}, match->{matches[i]}')
                         value_list = domain["mappings"][matches[i]]
                         auth[name][key].extend(value_list)
+            elif name == "tql_types1":
+                #logger.debug("--------- reln--------------")
+                for i, key in enumerate(keys):
+                    if domain["mappings"].get(matches[i], False):
+                        logger.debug(f'\nAuth Loading: domain->{dom[j]}, name->{name}, key->{key}, match->{matches[i]}')
+                        value_list = [x[conds[i]] for x in domain["mappings"][matches[i]]]
+                        logger.debug(f'value list -> {value_list}')
+                        auth["tql_types"][key].extend(value_list)
             elif name == "tql_types":
                 #logger.debug("---------- tql_types -------------")
                 for i, key in enumerate(keys):

@@ -10,6 +10,7 @@ from stix.module.authorise import authorised_mappings
 import logging
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 # --------------------------------------------------------------------------------------------------------
 #  1. Convert TypeQl Ans to Res
@@ -205,25 +206,25 @@ def get_relation_details(r, r_tx, import_type: str):
     reln_name = r.get_type().get_label().name()
     reln['T_name'] = reln_name
     reln['T_id'] = r.get_iid()
-    if reln_name in auth["reln_name"]["embedded_relations"]:
+    if reln_name in auth["tql_types"]["embedded_relations"]:
         reln['roles'] = get_embedded_relations(r, r_tx)
 
-    elif reln_name in auth["reln_name"]["standard_relations"] or reln_name == "sighting":
+    elif reln_name in auth["tql_types"]["standard_relations"] or reln_name == "sighting":
         reln['roles'] = get_standard_relations(r, r_tx)
 
-    elif reln_name in auth["reln_name"]["key_value_relations"]:
+    elif reln_name in auth["tql_types"]["key_value_relations"]:
         reln['roles'] = get_key_value_relations(r, r_tx)
 
-    elif reln_name in auth["reln_name"]["extension_relations"]:
+    elif reln_name in auth["tql_types"]["extension_relations"]:
         reln['roles'] = get_extension_relations(r, r_tx, import_type)
 
-    elif reln_name in auth["reln_name"]["list_of_objects"]:
+    elif reln_name in auth["tql_types"]["list_of_objects"]:
         reln['roles'] = get_list_of_objects(r, r_tx, import_type)
 
     elif reln_name == "granular-marking":
         reln['roles'] = get_granular_marking(r, r_tx)
 
-    elif reln_name == "hashes" or reln_name == "file_header_hashes":
+    elif reln_name == "hashes" or reln_name == "file-header-hashes":
         reln['roles'] = get_hashes(r, r_tx)
 
     else:
