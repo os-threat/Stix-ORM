@@ -451,7 +451,8 @@ def test_get_ids(connection, import_type):
 
 def test_get(stixid):
     typedb_source = TypeDBSource(connection, import_type)
-    typedb_source.get(stixid, None)
+    stix_obj = typedb_source.get(stixid, None)
+    return stix_obj
 
 
 def test_get_file(fullname):
@@ -459,7 +460,7 @@ def test_get_file(fullname):
     typedb_sink = TypeDBSink(connection, False, import_type)
     stid_list = typedb_sink.get_stix_ids()
     for stid in stid_list:
-        test_get(stid)
+        stix_obj = test_get(stid)
 
 
 def test_auth():
