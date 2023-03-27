@@ -1,15 +1,15 @@
 [
     {
-        "type": "ipv4-addr",      
-        "spec_version": "2.1",      
-        "id": "ipv4-addr--4d22aae0-2bf9-2754-8819-e4f6abf20a53",
-        "value": "198.51.100.2"      
-    },
+    "type": "ipv6-addr",
+    "spec_version": "2.1",
+    "id": "ipv6-addr--1e61d36c-a16c-53b7-a80f-2a00161c96b1",
+    "value": "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+  },
     {      
         "type": "network-traffic",      
         "spec_version": "2.1",      
         "id": "network-traffic--c95e972a-20a4-5307-b00d-b8393faf02c5",      
-        "src_ref": "ipv4-addr--4d22aae0-2bf9-2754-8819-e4f6abf20a53",
+        "src_ref": "ipv6-addr--1e61d36c-a16c-53b7-a80f-2a00161c96b1",
         "src_port": 223,      
         "protocols": [      
           "ip",      

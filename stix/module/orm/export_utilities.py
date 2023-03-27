@@ -10,7 +10,7 @@ from stix.module.authorise import authorised_mappings
 import logging
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 # --------------------------------------------------------------------------------------------------------
 #  1. Convert TypeQl Ans to Res
@@ -117,6 +117,7 @@ def process_relns(reln_types, r_tx, import_type: str):
     """
     relns = []
     for r in reln_types:
+        logger.debug(f'r  - >{r}, rtx -> {r_tx}')
         reln = get_relation_details(r, r_tx, import_type)
         relns.append(reln)
 
@@ -521,25 +522,26 @@ def validate_get_relns(rel, r_tx, obj_name, import_type):
     auth = authorised_mappings(import_type)
     reln={}
     reln_name = rel.get_type().get_label().name()
-    if reln_name in auth["reln_name"]["embedded_relations"]:
+    if reln_name in auth["tql_types"]["embedded_relations"]:
         for emb in auth["reln"]["embedded_relations"]:
             if emb['typeql'] == reln_name:
                 role_owner = emb['owner']
         return return_valid_relations(rel, r_tx, obj_name, role_owner, import_type)
 
-    elif reln_name in auth["reln_name"]["key_value_relations"]:
+    elif reln_name in auth["tql_types"]["key_value_relations"]:
         for kvt in auth["reln"]["key_value_relations"]:
             if kvt['typeql'] == reln_name:
                 role_owner = kvt['owner']
         return return_valid_relations(rel, r_tx, obj_name, role_owner, import_type)
 
-    elif reln_name in auth["reln_name"]["extension_relations"]:
+    elif reln_name in auth["tql_types"]["extension_relations"]:
+        logger.debug(f'reln name {reln_name}')
         for kvt in auth["reln"]["extension_relations"]:
             if kvt['relation'] == reln_name:
                 role_owner = kvt['owner']
         return return_valid_relations(rel, r_tx, obj_name, role_owner, import_type)
 
-    elif reln_name in auth["reln_name"]["list_of_objects"]:
+    elif reln_name in auth["tql_types"]["list_of_objects"]:
         for kvt in auth["reln"]["list_of_objects"]:
             if kvt['typeql'] == reln_name:
                 role_owner = kvt['owner']

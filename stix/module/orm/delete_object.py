@@ -8,6 +8,7 @@ from stix.module.orm.import_utilities import split_on_activity_type, val_tql
 
 import logging
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 ##############################################################
 #  1.) Methods to Delete any Stix Objects
 ############################################################
@@ -220,13 +221,14 @@ def del_key_value_store(rel_name, rel_object, obj_var, i, import_type):
 
 def del_list_of_object(rel_name, prop_value_list, parent_var, i, import_type):
     auth = authorised_mappings(import_type)
+    logger.debug(f'rl name -> {rel_name}')
     for config in auth["reln"]["list_of_objects"]:
         if config["name"] == rel_name:
             rel_typeql = config["typeql"]
-            obj_props_tql = config["typeql_props"]
             role_owner = config["owner"]
             role_pointed = config["pointed_to"]
             typeql_obj = config["object"]
+            obj_props_tql = auth["sub_objects"][typeql_obj]
             break
     lod_list = []
     match = delete = ''
@@ -264,7 +266,7 @@ def del_list_of_object(rel_name, prop_value_list, parent_var, i, import_type):
 
 def del_embedded_relation(rel_name, rel_object, obj_var, i, import_type):
     auth = authorised_mappings(import_type)
-    for ex in auth["reln"]["relations_embedded"]:
+    for ex in auth["reln"]["embedded_relations"]:
       if ex["rel"] == rel_name:
         owner = ex["owner"]
         relation = ex["typeql"]
@@ -280,11 +282,13 @@ def del_load_object(prop_name, prop_dict, parent_var, i, import_type):
     # as long as it is predefined, load the object
     #logger.debug('------------------- load object ------------------------------')
     auth = authorised_mappings(import_type)
+    logger.debug(f'prop dict {prop_dict}')
     for prop_type in auth["reln"]["extension_relations"]:
         if prop_name == prop_type["stix"]:
             tot_prop_list = [tot for tot in prop_dict.keys()]
-            obj_tql = prop_type["dict"]
-            obj_var = '$' + prop_type["object"]
+            obj_name = prop_type["object"]
+            obj_tql = auth["sub_objects"][obj_name]
+            obj_var = '$' + obj_name
             reln = prop_type["relation"]
             rel_var = '$' + reln
             rel_owner = prop_type["owner"]
@@ -300,7 +304,7 @@ def del_load_object(prop_name, prop_dict, parent_var, i, import_type):
             match += ' isa ' + reln + ';\n'
 
             # Split them into properties and relations
-            properties, relations = split_on_activity_type(tot_prop_list, obj_tql)
+            properties, relations = split_on_activity_type(prop_dict, obj_tql)
             delete = ''
 
             # add each of the relations to the match and insert statements

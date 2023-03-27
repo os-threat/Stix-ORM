@@ -1,5 +1,6 @@
 
 import json
+import pathlib
 from stix2.parsing import dict_to_stix2
 from stix.module.authorise import authorised_mappings, import_type_factory
 from stix2.exceptions import ParseError
@@ -105,10 +106,6 @@ def dict_to_stix(stix_dict: dict,
     version = "2.1"
     logger.debug(f"my version is {version}")
     logger.debug(f'my type is {stix_dict["type"]}')
-    # if stix_dict["version"] != "2.1":
-    #     logger.debug("I am exiting because of my version number")
-    #     raise ParseError("Can't parse versions other than v2.1 '%s'! For custom types, use the CustomObject decorator." % stix_dict["version"])
-
     obj_type = stix_dict["type"]
     logger.debug(f'\nin parse, type is --> {obj_type}')
     logger.debug(f'\n auth-sdo -->{auth["tql_types"]["sdo"]}\n')
@@ -215,13 +212,13 @@ def class_for_type(stix_typeql, import_type, category=None):
     # find the conversion record
     if category is not None:
         for obj in auth["conv"][category]:
-            logger.debug(f'object tql is {obj["typeql"]}, wanted {stix_typeql}')
+            #logger.debug(f'object tql is {obj["typeql"]}, wanted {stix_typeql}')
             if obj["typeql"] == stix_typeql:
-                logger.debug("found the right type")
+                #logger.debug("found the right type")
                 conv_cls = obj["class"]
-                logger.debug(f'classs is {conv_cls}')
+                #logger.debug(f'classs is {conv_cls}')
                 cls = auth["classes"][category][conv_cls]
-                logger.debug(f'classs 2 is {cls}')
+                #logger.debug(f'classs 2 is {cls}')
                 return cls
 
     return cls
