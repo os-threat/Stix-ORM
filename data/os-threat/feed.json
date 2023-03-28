@@ -1,13 +1,28 @@
 [
  {
     "id": "feed-402e24b4-436e-4936-b19b-2038648f489",
-    "type": "feed",
+    "type": "feeds",
     "spec_version": "2.1",
-    "name": "My Feed 1",
+    "name": "Phishing Database",
+    "paid": false,
+    "free": true,
     "description": "Example Feed containing multiple slice's",
     "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
     "created": "2018-10-17T00:14:20.652Z",
     "modified": "2019-10-11T19:30:42.406Z",
+    "labels": ["phishing","url"],
+    "external_references": [
+      {
+        "source_name": "Phishing Database ACTIVE",
+        "external_id": "phishing-IPs-ACTIVE.txt",
+        "url": "https://github.com/mitchellkrogza/Phishing.Database/blob/master/phishing-IPs-ACTIVE.txt"
+      },
+      {
+        "source_name": "Phishing Database TODAY",
+        "external_id": "phishing-links-ACTIVE-TODAY.txt",
+        "url": "https://github.com/mitchellkrogza/Phishing.Database/blob/master/phishing-links-ACTIVE-TODAY.txt"
+      }
+    ],
     "object_marking_refs": [
         "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
     ],
@@ -17,15 +32,25 @@
   },
   {
     "id": "slice-402e24b4-436e-4936-b19b-2038648f489",
-    "type": "slice",
+    "type": "feed",
     "spec_version": "2.1",
-    "name": "My Slice 1",
-    "description": "Example Slice 1 dataset",
+    "name": "phishing-IPs-ACTIVE",
+    "paid": false,
+    "free": true,
+    "description": "Phishing IPs that are active",
+    "labels": ["ipv4"],
     "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
     "created": "2018-10-17T00:14:20.652Z",
     "modified": "2019-10-11T19:30:42.406Z",
     "object_marking_refs": [
         "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+    ],
+    "external_references": [
+      {
+        "source_name": "Phishing Database ACTIVE",
+        "external_id": "phishing-IPs-ACTIVE.txt",
+        "url": "https://github.com/mitchellkrogza/Phishing.Database/blob/master/phishing-IPs-ACTIVE.txt"
+      }
     ],
     "contents": [
         {
