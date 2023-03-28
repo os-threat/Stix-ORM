@@ -189,7 +189,7 @@ define
         owns x-mitre-attack-spec-version,
         owns x-mitre-version,
         plays obj-ref:content,
-        plays x-mitre-modified-by-ref:modified-by;
+        plays x-mitre-modified-by-ref:modified;
 
     # Relations
     #===================
