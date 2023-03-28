@@ -528,6 +528,7 @@ class TypeDBSink(DataSink):
 
         # check missing results
         if not is_successful(check_missing_dependency_result):
+            logging.exception("\n".join(traceback.format_exception(check_missing_dependency_result.failure())))
             raise Exception("failed to check missing dependencies")
         instructions: Instructions = check_missing_dependency_result.unwrap()
         if instructions.exist_missing_dependencies():
@@ -544,6 +545,7 @@ class TypeDBSink(DataSink):
                                                                                                self.database,
                                                                                                result))
         if not is_successful(add_to_database_result):
+            logging.exception("\n".join(traceback.format_exception(add_to_database_result.failure())))
             raise Exception(add_to_database_result.failure())
 
         instructions = unsafe_perform_io(add_to_database_result).unwrap()
