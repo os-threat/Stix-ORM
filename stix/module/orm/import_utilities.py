@@ -11,6 +11,7 @@ from stix.module.definitions.stix21 import stix_models
 from stix.module.definitions.attack import attack_models
 from stix.module.definitions.os_threat import os_threat_models
 from stix.module.authorise import authorised_mappings, default_import_type
+import copy
 
 import logging
 
@@ -224,7 +225,7 @@ def load_object(prop_name: str, prop_dict, parent_var: str, import_type: dict):
         if prop_name == prop_type["stix"]:
             tot_prop_list = [tot for tot in prop_dict.keys()]
             obj_type = prop_type["object"]
-            obj_tql = auth["sub_objects"][obj_type]
+            obj_tql = copy.deepcopy(auth["sub_objects"][obj_type])
             obj_var = '$' + obj_type
             reln = prop_type["relation"]
             rel_var = '$' + reln
@@ -288,7 +289,7 @@ def list_of_object(prop_name, prop_value_list, parent_var, import_type):
             break
 
     if typeql_obj in auth["sub_objects"]:
-        obj_props_tql = auth["sub_objects"][typeql_obj]
+        obj_props_tql = copy.deepcopy(auth["sub_objects"][typeql_obj])
     else:
         raise ValueError("no sub-object available")
 

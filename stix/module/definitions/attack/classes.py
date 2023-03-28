@@ -49,6 +49,7 @@ class AttackRelation(_RelationshipObject):
         ('x_mitre_modified_by_ref', StringProperty()),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
+        ('x_mitre_platforms', ListProperty(StringProperty)),
         ('source_ref', ReferenceProperty(invalid_types=_invalid_source_target_types, spec_version='2.1', required=True)),
         ('target_ref', ReferenceProperty(invalid_types=_invalid_source_target_types, spec_version='2.1', required=True)),
         ('start_time', TimestampProperty()),

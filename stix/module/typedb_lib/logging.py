@@ -4,7 +4,7 @@ import logging
 from returns.result import safe
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 def log_delete_layers(result):
     try:

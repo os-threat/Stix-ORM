@@ -34,7 +34,7 @@
   },
   {
     "type":  "attack-pattern",
-    "typeql": "subtechnique",
+    "typeql": "sub-technique",
     "class": "SubTechnique",
     "object": "sdo",
     "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#sub-techniques",
@@ -89,7 +89,7 @@
   },
   {
     "type":  "intrusion-set",
-    "typeql": "group",
+    "typeql": "attack-group",
     "class": "Group",
     "object": "sdo",
     "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#groups",

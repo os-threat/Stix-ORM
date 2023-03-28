@@ -1,5 +1,6 @@
 import re
 from typing import List
+import copy
 
 from stix.module.authorise import authorised_mappings
 
@@ -228,7 +229,7 @@ def del_list_of_object(rel_name, prop_value_list, parent_var, i, import_type):
             role_owner = config["owner"]
             role_pointed = config["pointed_to"]
             typeql_obj = config["object"]
-            obj_props_tql = auth["sub_objects"][typeql_obj]
+            obj_props_tql = copy.deepcopy(auth["sub_objects"][typeql_obj])
             break
     lod_list = []
     match = delete = ''
@@ -287,7 +288,7 @@ def del_load_object(prop_name, prop_dict, parent_var, i, import_type):
         if prop_name == prop_type["stix"]:
             tot_prop_list = [tot for tot in prop_dict.keys()]
             obj_name = prop_type["object"]
-            obj_tql = auth["sub_objects"][obj_name]
+            obj_tql = copy.deepcopy(auth["sub_objects"][obj_name])
             obj_var = '$' + obj_name
             reln = prop_type["relation"]
             rel_var = '$' + reln

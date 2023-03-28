@@ -1,5 +1,6 @@
 
 import json
+import copy
 import pathlib
 from stix2.parsing import dict_to_stix2
 from stix.module.authorise import authorised_mappings, import_type_factory
@@ -69,7 +70,7 @@ def _get_dict(data):
         try:
             return dict(data)
         except (ValueError, TypeError):
-            raise ValueError("Cannot convert '%s' to dictionary." % str(data))
+            raise ValueError(f"Cannot convert {str(data)} to dictionary.")
 
 
 def dict_to_stix(stix_dict: dict,
@@ -101,7 +102,7 @@ def dict_to_stix(stix_dict: dict,
     logger.debug("I'm in dict to stix")
     auth = authorised_mappings(import_type)
     if 'type' not in stix_dict:
-        raise ParseError("Can't parse object with no 'type' property: %s" % str(stix_dict))
+        raise ParseError(f"Can't parse object with no 'type' property: {str(stix_dict)}")
 
     version = "2.1"
     logger.debug(f"my version is {version}")
@@ -139,7 +140,10 @@ def dict_to_stix(stix_dict: dict,
                                                          uses_relation, is_procedure)
         logger.debug(f"~~~~~~~~~~~ sro tql name {sro_tql_name}")
         if obj_type == "relationship":
-            obj_tql_name = "stix-core-relationship"
+            if attack_object:
+                obj_tql_name = "attack-relation"
+            else:
+                obj_tql_name = "stix-core-relationship"
         elif obj_type == "sighting":
             obj_tql_name = "sighting"
         if sro_tql_name == "attack-relation":
@@ -176,7 +180,7 @@ def dict_to_stix(stix_dict: dict,
                 # prevents ParseError for unregistered objects when
                 # allow_custom=False and the extension defines a new object
                 return stix_dict
-        raise ParseError("Can't parse unknown object type '%s'! For custom types, use the CustomObject decorator." % obj_type)
+        raise ParseError(f"Can't parse unknown object type {obj_type}! For custom types, use the CustomObject decorator.", obj_type)
 
     logger.debug(f'object class is finally {obj_class}')
     logger.debug("========================================")
@@ -217,7 +221,7 @@ def class_for_type(stix_typeql, import_type, category=None):
                 #logger.debug("found the right type")
                 conv_cls = obj["class"]
                 #logger.debug(f'classs is {conv_cls}')
-                cls = auth["classes"][category][conv_cls]
+                cls = copy.deepcopy(auth["classes"][category][conv_cls])
                 #logger.debug(f'classs 2 is {cls}')
                 return cls
 

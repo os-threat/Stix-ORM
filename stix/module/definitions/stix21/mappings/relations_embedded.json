@@ -208,29 +208,5 @@
     "owner": "process",
     "pointed-to": "loaded-dll",
     "typeql": "service-dll"
-  },
-  {
-    "rel": "x_mitre_modified_by_ref",
-    "owner": "modified",
-    "pointed-to": "modified-by",
-    "typeql": "x-mitre-modified-by"
-  },
-  {
-    "rel": "x_mitre_data_source_ref",
-    "owner": "component",
-    "pointed-to": "data-source",
-    "typeql": "x-mitre-data-source"
-  },
-  {
-    "rel": "x_mitre_modified_by_ref",
-    "owner": "modified",
-    "pointed-to": "modifier",
-    "typeql": "mitre-modified-by-ref"
-  },
-  {
-    "rel": "object_ref",
-    "owner": "container",
-    "pointed-to": "content",
-    "typeql": "obj-ref"
   }
 ]

@@ -66,6 +66,15 @@ def dict_to_typeql(stix_dict, import_type):
     return dep_obj
 
 
+def test_insert_statements(pahhway, stid):
+    with open(pahhway, mode="r", encoding="utf-8") as f:
+        json_text = json.load(f)
+        for stix_dict in json_text:
+            if True: #stix_dict['id'] == stid:
+                dep_obj = dict_to_typeql(stix_dict, import_type)
+                print(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
+
+
 def update_layers(layers, indexes, missing, dep_obj, cyclical):
     """ From the old codebase takes a layer and updates it, handling the layer zero case
 
@@ -312,9 +321,9 @@ def test_delete_dir(dirpath):
     print("============= Add is complete =====================================================")
     print("**********************************************************************************")
     stix_id_list = set(get_stix_ids())
-    for stid in stix_id_list:
-        print(f"\nid is -> {stid}\n")
-        query_id(stid)
+    # for stid in stix_id_list:
+    #     print(f"\nid is -> {stid}\n")
+    #     query_id(stid)
 
     print("**********************************************************************************")
     print("----------------------------------------------------------------------------------")
@@ -571,11 +580,12 @@ if __name__ == '__main__':
     # 019fde1c-
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
-    stid1 = "relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa60266ef"
+    stid1 = "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe"
+    stid2 = "relationship--57b56a43-b8b0-4cba-9deb-34e3e1faed9e"
     #test_initialise()
     #load_file_list(path1, [f2, f28])
     #load_file(path1 + f14)
-    #load_file(mitre + "test.json")
+    load_file(mitre + "test.json")
     #check_object(mitre + "test.json")
     #load_file(data_path + file1)
     print("=====")
@@ -586,9 +596,9 @@ if __name__ == '__main__':
     #check_dir(path1)
     #test_delete(data_path+file1)
     #test_get(stid1)
-    #test_get_delete(data_path+file1)
+    #test_get_delete(mitre + "test.json")
     #test_initialise()
-    test_delete_dir(path1)
+    #test_delete_dir(path1)
     #clean_db()
     #cert_test(cert_root+cert11)
     #cert_dict(cert_root, certs)
@@ -598,3 +608,5 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "test.json")
     #test_get_file(data_path + file1)
+    #test_insert_statements(mitre + "test.json", stid1)
+    #test_insert_statements(path1 + f1, stid2)

@@ -19,7 +19,7 @@
     "x_mitre_defense_bypassed",
     "x_mitre_impact_type"
   ],
-  "subtechnique": [
+  "sub-technique": [
     "aliases",
     "kill_chain_phases",
     "x_mitre_platforms",
@@ -32,7 +32,7 @@
     "x_mitre_impact_type"
   ],
   "mitigation": [],
-  "group": [
+  "attack-group": [
     "aliases",
     "goals",
     "secondary_motivations"

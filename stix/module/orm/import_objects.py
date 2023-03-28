@@ -1,3 +1,4 @@
+import copy
 from typing import Dict
 
 from stix.module.authorise import authorised_mappings, default_import_type
@@ -9,7 +10,7 @@ from stix.module.orm.import_utilities import clean_props, get_embedded_match, sp
 import logging
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 
 # ---------------------------------------------------
@@ -84,7 +85,7 @@ def raw_stix2_to_typeql(stix_object,
     auth = authorised_mappings(import_type)
     logger.debug(f'stix object type {stix_object["type"]}\n')
 
-    auth_types = auth["tql_types"]
+    auth_types = copy.deepcopy(auth["tql_types"])
     if stix_object.type in auth_types["sdo"]:
         logger.debug(f' going into sdo ---? {stix_object}')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = sdo_to_typeql(stix_object, import_type)
@@ -455,12 +456,12 @@ def marking_definition_to_typeql(stix_object, import_type=default_import_type):
     # if the marking is a colour, match it in, else it is a statement type
     if stix_object.definition_type == "statement":
         if attack_object:
-            indep_ql = '\n $marking isa statement-marking'
+            indep_ql = '\n $marking isa attack-marking'
             indep_ql += ',\n has x-mitre-attack-spec-version ' + val_tql(stix_object.x_mitre_attack_spec_version)
             loc_list = stix_object.x_mitre_domains
             for dom in loc_list:
                 indep_ql += ',\n has x-mitre-domains ' + val_tql(dom)
-            core_ql = '$marking isa statement-marking'
+            core_ql = '$marking isa attack-marking'
         else:
             indep_ql = '\n $marking isa statement-marking'
             core_ql = '$marking isa statement-marking'

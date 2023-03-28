@@ -2,13 +2,14 @@ import json
 import pathlib
 import traceback
 from typing import List
+import copy
 
 from stix.module.authorise import authorised_mappings
 from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
 from stix.module.orm.export_utilities import convert_ans_to_res
 import logging
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 ###################################################################################################
 #
@@ -201,7 +202,7 @@ def make_sro(res, import_type):
 
     # B. If it is a Sighting then match the object to the sighting
     elif sro_tql_name == 'sighting':
-        is_list = auth["is_lists"]["sro"]["sro"] + auth["is_lists"]["sro"]["sighting"]
+        is_list = copy.deepcopy(auth["is_lists"]["sro"]["sro"]) + copy.deepcopy(auth["is_lists"]["sro"]["sighting"])
         for edge in edges:
             players = edge["player"]
             if edge["role"] == "sighting-of":
@@ -261,7 +262,7 @@ def make_sco(res: dict, import_type):
     props = res["has"]
     relns = res["relns"]
 
-    is_list = auth["is_lists"]["sco"]["sco"] + auth["is_lists"]["sco"][obj_type]
+    is_list = copy.deepcopy(auth["is_lists"]["sco"]["sco"]) + copy.deepcopy(auth["is_lists"]["sco"][obj_type])
     # 3.A) add the properties onto the the object
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
     # 3.B) add the relations onto the object
@@ -557,11 +558,11 @@ def make_object(reln, reln_name, stix_dict, is_list, obj_type, import_type):
             role_owner = ext_obj["owner"]
             ext_object = ext_obj["object"]
             stix_ext_name = ext_obj["stix"]
-            obj_is_list =auth["is_lists"]["sub"][ext_object]
+            obj_is_list = copy.deepcopy(auth["is_lists"]["sub"][ext_object])
             break
 
     if ext_object in auth["sub_objects"]:
-        obj_props_tql = auth["sub_objects"][ext_object]
+        obj_props_tql = copy.deepcopy(auth["sub_objects"][ext_object])
     else:
         raise ValueError("no sub-object available")
     roles = reln["roles"]
@@ -596,7 +597,7 @@ def make_object(reln, reln_name, stix_dict, is_list, obj_type, import_type):
                 # now look to see if there are relations
                 obj_relns = [k for k, v in obj_props_tql.items() if v == ""]
                 sub_relns = p['relns']
-                obj_tql = auth["sub_objects"][ext_object]
+                obj_tql = copy.deepcopy(auth["sub_objects"][ext_object])
                 new_dict = {}
                 new_dict = make_relations(sub_relns, obj_tql, new_dict, is_list, ext_object, import_type)
                 for k, v in new_dict.items():
@@ -625,7 +626,7 @@ def make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_type, import_t
             role_pointed = l_obj["pointed_to"]
             reln_object = l_obj["object"]
             stix_field_name = l_obj["name"]
-            obj_is_list = auth["is_lists"]["sub"][reln_object]
+            obj_is_list = copy.deepcopy(auth["is_lists"]["sub"][reln_object])
             logger.debug("obj_is_list: {}".format(obj_is_list))
             logger.debug("reln_object: {}".format(reln_object))
             logger.debug("stix_field_name: {}".format(stix_field_name))
@@ -633,7 +634,7 @@ def make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_type, import_t
             break
 
     if reln_object in auth["sub_objects"]:
-        obj_props_tql = auth["sub_objects"][reln_object]
+        obj_props_tql = copy.deepcopy(auth["sub_objects"][reln_object])
     else:
         raise ValueError("no sub-object available")
     roles = reln["roles"]

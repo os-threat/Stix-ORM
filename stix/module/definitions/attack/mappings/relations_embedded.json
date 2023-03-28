@@ -3,13 +3,13 @@
     "rel": "x_mitre_modified_by_ref",
     "owner": "modified",
     "pointed-to": "modified-by",
-    "typeql": "x-mitre-modified-by"
+    "typeql": "x-mitre-modified-by-ref"
   },
   {
     "rel": "x_mitre_data_source_ref",
     "owner": "component",
     "pointed-to": "data-source",
-    "typeql": "x-mitre-data-source"
+    "typeql": "x-mitre-data-source-ref"
   },
   {
     "rel": "object_ref",
