@@ -1,15 +1,19 @@
 import logging
-from typing import List
+from typing import List, Iterator
 
 from returns.io import impure_safe, IOResult
 from returns.methods import unwrap_or_failure
 from returns.pipeline import is_successful
 from returns.result import safe
 from returns.unsafe import unsafe_perform_io
+from typedb.api.answer.concept_map import ConceptMap
 from typedb.api.connection.client import TypeDBClient
 from typedb.api.connection.session import SessionType, TypeDBSession
-from typedb.api.connection.transaction import TransactionType
+from typedb.api.connection.transaction import TransactionType, TypeDBTransaction
+from typedb.api.query.future import QueryFuture
+from typedb.api.query.query_manager import QueryManager
 from typedb.client import TypeDB
+
 
 from stix.module.typedb_lib.logging import log_delete_layer, log_add_layer
 from stix.module.typedb_lib.instructions import Instructions
@@ -131,16 +135,17 @@ def delete_layers(uri: str, port: str, database: str, instructions: Instructions
 
 
 @impure_safe
-def delete_layer(transaction, query):
-    query_future = transaction.query().delete(query)
+def delete_layer(transaction: TypeDBTransaction, query: str):
+    transaction_query: QueryManager = transaction.query()
+    query_future: QueryFuture = transaction_query.delete(query)
     logger.info(f'delete_iterator response ->\n{query_future}')
-    for result in query_future:
-        logger.info(f'typedb response ->\n{result}')
+    logger.info(f'typedb response ->\n{query_future}')
     transaction.commit()
 
 @impure_safe
-def add_layer(transaction, layer):
-    query_future = transaction.query().insert(layer)
+def add_layer(transaction: TypeDBTransaction, layer: str):
+    transaction_query: QueryManager = transaction.query()
+    query_future: Iterator[ConceptMap] = transaction_query.insert(layer)
     logger.info(f'insert_iterator response ->\n{query_future}')
     for result in query_future:
         logger.info(f'typedb response ->\n{result}')
