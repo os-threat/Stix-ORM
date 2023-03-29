@@ -13,7 +13,7 @@ from typedb.api.connection.transaction import TransactionType, TypeDBTransaction
 from typedb.api.query.future import QueryFuture
 from typedb.api.query.query_manager import QueryManager
 from typedb.client import TypeDB
-
+from typedb.stream.bidirectional_stream import BidirectionalStream
 
 from stix.module.typedb_lib.logging import log_delete_layer, log_add_layer
 from stix.module.typedb_lib.instructions import Instructions
@@ -77,6 +77,9 @@ def get_read_transaction(session: TypeDBSession):
 def get_write_transaction(session: TypeDBSession):
     return session.transaction(TransactionType.WRITE)
 
+
+
+
 @impure_safe
 def match_query(uri: str, port: str, database: str, query: str, data_query, **data_query_args):
     data = []
@@ -90,7 +93,7 @@ def match_query(uri: str, port: str, database: str, query: str, data_query, **da
                 return IOResult.failure(read_transaction.failure())
             with read_transaction.unwrap() as transaction:
                 answer_iterator = transaction.query().match(query)
-                data = data_query(answer_iterator, transaction, **data_query_args)
+                data = data_query(query, answer_iterator, transaction, **data_query_args)
                 return data
 
 @impure_safe
@@ -105,10 +108,62 @@ def delete_database(uri: str, port: str, database: str):
                 return IOResult.failure(read_transaction.failure())
             session.database().delete()
 
-def query_ids(generator, transaction, **data_query_args):
+def query_ids(query, generator, transaction, **data_query_args):
+    logger.info(
+        '\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n' + \
+        '---------------------------------------------------------------------------------------- Query ids ------------------------------------------------------------------------------\n' + \
+        '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
+
+    logger.info(query)
+
+    number = 0
+    for result in generator:
+        logger.info(
+            '\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' + \
+            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    Query IDs Concept Map ' + str(
+                number) + 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' + \
+            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
+        for concept in enumerate(result.concepts()):
+            if concept[1].is_type():
+                logger.info('   Type:' + concept[1].as_type().get_label())
+            if concept[1].is_relation():
+                logger.info('   Relation: iid ' + concept[1].as_relation().get_iid())
+            if concept[1].is_attribute():
+                logger.info('   Attribute iid: ' + concept[1].as_attribute().get_iid())
+                logger.info('           value: ' + str(concept[1].as_attribute().get_value()))
+        number = number + 1
+
+    logger.info('\n')
+
     return [ans.get("ids") for ans in generator]
 
-def query_id(generator, transaction, **data_query_args):
+def query_id(query, generator, transaction, **data_query_args):
+    logger.info(
+        '\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n' + \
+        '---------------------------------------------------------------------------------------- Query ids ------------------------------------------------------------------------------\n' + \
+        '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
+
+    logger.info(query)
+
+    number = 0
+    for result in generator:
+        logger.info(
+            '\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' + \
+            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    Query ID Concept Map ' + str(
+                number) + 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' + \
+            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
+        for concept in enumerate(result.concepts()):
+            if concept[1].is_type():
+                logger.info('   Type:' + concept[1].as_type().get_label())
+            if concept[1].is_relation():
+                logger.info('   Relation: iid ' + concept[1].as_relation().get_iid())
+            if concept[1].is_attribute():
+                logger.info('   Attribute iid: ' + concept[1].as_attribute().get_iid())
+                logger.info('           value: ' + str(concept[1].as_attribute().get_value()))
+        number = number + 1
+
+    logger.info('\n')
+
     return [ans.get("id").get_value() for ans in generator]
 
 @impure_safe
@@ -137,8 +192,21 @@ def delete_layers(uri: str, port: str, database: str, instructions: Instructions
 def delete_layer(transaction: TypeDBTransaction, query: str):
     transaction_query: QueryManager = transaction.query()
     query_future: QueryFuture = transaction_query.delete(query)
-    #logger.info(f'delete_iterator response ->\n{query_future}')
-    #logger.info(f'typedb response ->\n{query_future}')
+    bi_d: BidirectionalStream = query_future.get()
+    logger.info(
+        '\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n' + \
+        '---------------------------------------------------------------------------------------- Delete Layer Query ------------------------------------------------------------------------------\n' + \
+        '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
+
+    logger.info(query)
+
+    logger.info(
+        '\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' + \
+        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    Delete Result ' + 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' + \
+        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
+
+    logger.info(str(bi_d))
+
     transaction.commit()
 
 @impure_safe
