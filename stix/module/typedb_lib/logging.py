@@ -1,3 +1,5 @@
+import traceback
+
 from returns.pipeline import is_successful
 import logging
 
@@ -12,7 +14,7 @@ def log_delete_layers(result):
             logger.debug("Successfully deleted layer")
         else:
             logger.debug("Failed to delete layers")
-            logger.error(str(result.failure()))
+            logger.exception("\n".join(traceback.format_exception(result.failure())))
     except Exception as e:
         logger.error(e)
 
@@ -20,7 +22,7 @@ def log_delete_layer(result, layer):
     try:
         if not is_successful(result):
             logger.debug("Failed to delete layer")
-            logger.error(str(result.failure()))
+            logger.exception("\n".join(traceback.format_exception(result.failure())))
             logger.debug(layer)
     except Exception as e:
         logger.error(e)
@@ -29,7 +31,7 @@ def log_add_layer(result, layer):
     try:
         if not is_successful(result):
             logger.debug("Failed to add layer")
-            logger.error(str(result.failure()))
+            logger.exception("\n".join(traceback.format_exception(result.failure())))
             logger.debug(layer)
     except Exception as e:
         logger.error(e)
@@ -68,7 +70,7 @@ def log_delete_instruction_outcome(result):
 
         else:
             logger.debug("Failed to add the instruction")
-            logger.error(str(result.failure()))
+            logger.exception("\n".join(traceback.format_exception(result.failure())))
         logger.debug("============================================================================================")
 
     except Exception as e:
