@@ -80,7 +80,6 @@ def get_write_transaction(session: TypeDBSession):
 @impure_safe
 def match_query(uri: str, port: str, database: str, query: str, data_query, **data_query_args):
     data = []
-
     with get_core_client(uri, port).unwrap() as client:
         client_session = unsafe_perform_io(get_data_session(client, database))
         if not is_successful(client_session):
@@ -138,17 +137,38 @@ def delete_layers(uri: str, port: str, database: str, instructions: Instructions
 def delete_layer(transaction: TypeDBTransaction, query: str):
     transaction_query: QueryManager = transaction.query()
     query_future: QueryFuture = transaction_query.delete(query)
-    logger.info(f'delete_iterator response ->\n{query_future}')
-    logger.info(f'typedb response ->\n{query_future}')
+    #logger.info(f'delete_iterator response ->\n{query_future}')
+    #logger.info(f'typedb response ->\n{query_future}')
     transaction.commit()
 
 @impure_safe
 def add_layer(transaction: TypeDBTransaction, layer: str):
     transaction_query: QueryManager = transaction.query()
     query_future: Iterator[ConceptMap] = transaction_query.insert(layer)
-    logger.info(f'insert_iterator response ->\n{query_future}')
+
+    logger.info('\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n' + \
+                   '---------------------------------------------------------------------------------------- Add Layer Query ------------------------------------------------------------------------------\n' + \
+                    '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
+
+    logger.info(layer)
+
+    number = 0
     for result in query_future:
-        logger.info(f'typedb response ->\n{result}')
+        logger.info('\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' + \
+         'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    Add Layer Concept Map ' + str(number) +      'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' + \
+         'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
+        for concept in enumerate(result.concepts()):
+            if concept[1].is_type():
+                logger.info('   Type:' + concept[1].as_type().get_label())
+            if concept[1].is_relation():
+                logger.info('   Relation: iid ' + concept[1].as_relation().get_iid() )
+            if concept[1].is_attribute():
+                logger.info('   Attribute iid: ' + concept[1].as_attribute().get_iid())
+                logger.info('           value: ' + str(concept[1].as_attribute().get_value()))
+        number = number + 1
+
+    logger.info('\n')
+
     transaction.commit()
 
 @impure_safe

@@ -241,6 +241,7 @@ class TypeDBSink(DataSink):
                                  get_ids_tql,
                                  data_query)
         if not is_successful(query_data):
+            logging.exception("\n".join(traceback.format_exception(query_data.failure())))
             return Failure(query_data.failure())
         extracted_output = unsafe_perform_io(query_data)
         return Success(unwrap_or_failure(extracted_output))
@@ -261,7 +262,7 @@ class TypeDBSink(DataSink):
         if is_successful(result):
             return result.unwrap()
         else:
-            logger.error(str(result.failure()))
+            logging.exception("\n".join(traceback.format_exception(result.failure())))
             raise Exception(str(result.failure()))
 
     @safe
@@ -355,6 +356,7 @@ class TypeDBSink(DataSink):
                                                                                                             order_instruction))
         log_delete_layers(delete_from_database_result)
         if not is_successful(delete_from_database_result):
+            logging.exception("\n".join(traceback.format_exception(delete_from_database_result.failure())))
             raise Exception(delete_from_database_result.failure())
 
         instructions = unsafe_perform_io(delete_from_database_result.unwrap())
@@ -456,6 +458,7 @@ class TypeDBSink(DataSink):
         if is_successful(result):
             return instructions
         else:
+            logging.exception("\n".join(traceback.format_exception(result.failure())))
             raise Exception(result.failure)
 
 
@@ -521,7 +524,7 @@ class TypeDBSink(DataSink):
         obj_result = self._gather_objects(stix_data)
 
         generate_instructions_result = obj_result.bind(lambda obj_list: self.__generate_instructions(obj_list))
-        print("\n##########################################################\n")
+        logger.info("\n##########################################################################################################################################################\n")
         #print(f"generate instructions is {generate_instructions_result}")
         instruction_dependency_graph_result = generate_instructions_result.bind(lambda results: self.__create_instruction_dependency_graph(results))
         check_missing_dependency_result = instruction_dependency_graph_result.bind(lambda result: self.__check_missing_dependencies(result))
@@ -667,6 +670,7 @@ class TypeDBSource(DataSource):
 
         result = write_to_file("stix/module/orm/export_final.json", stix_obj)
         if not is_successful(result):
+            logging.exception("\n".join(traceback.format_exception(result.failure())))
             logger.error(str(result.failure()))
 
         return stix_obj
@@ -690,7 +694,7 @@ class TypeDBSource(DataSource):
         if is_successful(result):
             return result.unwrap()
         else:
-            logger.error(str(result.failure()))
+            logging.exception("\n".join(traceback.format_exception(result.failure())))
             raise Exception(str(result.failure()))
 
     def query(self, query=None, version=None, _composite_filters=None):
