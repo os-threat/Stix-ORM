@@ -2,7 +2,7 @@
   {
     "rel": "x_mitre_modified_by_ref",
     "owner": "modified",
-    "pointed-to": "modified-by",
+    "pointed-to": "modifier",
     "typeql": "x-mitre-modified-by-ref"
   },
   {

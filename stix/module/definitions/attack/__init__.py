@@ -27,7 +27,7 @@ from .classes import (
 from stix.module.definitions.attack.classes import (
     Matrix, Tactic, Technique, SubTechnique, Mitigation, Group, SoftwareMalware,
     SoftwareTool, DataSource, DataComponent, AttackCampaign, Collection,
-    ObjectVersion, AttackRelation
+    ObjectVersion, AttackRelation, AttackMarking
 )
 
 path = os.path.abspath(__file__)
@@ -102,6 +102,9 @@ attack_models["classes"]["sub"] = {
     "ObjectVersion": ObjectVersion
 }
 attack_models["classes"]["sco"] = {}
+attack_models["classes"]["meta"] = {
+    "AttackMarking": AttackMarking
+}
 attack_models["classes"]["sro"] = {
     "AttackRelation": AttackRelation
 }

@@ -9,7 +9,7 @@ from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_t
 from stix.module.orm.export_utilities import convert_ans_to_res
 import logging
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 ###################################################################################################
 #

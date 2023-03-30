@@ -189,7 +189,7 @@ define
         owns x-mitre-attack-spec-version,
         owns x-mitre-version,
         plays obj-ref:content,
-        plays x-mitre-modified-by-ref:modified-by;
+        plays x-mitre-modified-by-ref:modifier;
 
     # Relations
     #===================
@@ -202,6 +202,7 @@ define
         owns x-mitre-attack-spec-version,
         owns x-mitre-deprecated,
         owns x-mitre-platforms,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     attributed-to
@@ -211,6 +212,7 @@ define
         owns x-mitre-attack-spec-version,
         owns x-mitre-deprecated,
         owns x-mitre-platforms,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
    mitigates
@@ -220,6 +222,7 @@ define
         owns x-mitre-attack-spec-version,
         owns x-mitre-deprecated,
         owns x-mitre-platforms,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     #=================================
@@ -234,6 +237,7 @@ define
         plays obj-ref:content,
 		relates child as source,
 		relates parent as target,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content,
         plays revoked-by:revoked,
         plays revoked-by:new-version;
@@ -248,6 +252,7 @@ define
         plays obj-ref:content,
 		relates sensor as source,
 		relates ttp as target,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content,
         plays revoked-by:revoked,
         plays revoked-by:new-version;
@@ -262,6 +267,7 @@ define
         plays obj-ref:content,
 		relates revoked as source,
 		relates new-version as target,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     procedure sub  stix-core-relationship,
@@ -274,6 +280,7 @@ define
         plays obj-ref:content,
 		relates user as source,
 		relates technique as target,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     # Built-in Embedded Relations for Mitre Attack objects

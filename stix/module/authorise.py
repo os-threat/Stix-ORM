@@ -58,14 +58,14 @@ process_maps = [{
     "cond": []
 }, {
     "name": "conv",
-    "keys": ["sdo", "sro", "sco", "sub"],
+    "keys": ["sdo", "sro", "sco", "sub", "meta"],
     "match":["object", "object", "object", "object"],
-    "cond": ["sdo", "sro", "sco", "sub"]
+    "cond": ["sdo", "sro", "sco", "sub", "meta"]
 }, {
     "name": "classes",
-    "keys": ["sdo", "sro", "sco", "sub"],
+    "keys": ["sdo", "sro", "sco", "sub", "meta"],
     "match":["object", "object", "object", "object"],
-    "cond": ["sdo", "sro", "sco", "sub"]
+    "cond": ["sdo", "sro", "sco", "sub", "meta"]
 }]
 
 domains = {
@@ -137,11 +137,13 @@ def authorised_mappings(import_type: ImportType=default_import_type):
     auth["conv"]["sro"] = []
     auth["conv"]["sco"] = []
     auth["conv"]["sub"] = []
+    auth["conv"]["meta"] = []
     auth["classes"] = {}
     auth["classes"]["sdo"] = {}
     auth["classes"]["sro"] = {}
     auth["classes"]["sco"] = {}
     auth["classes"]["sub"] = {}
+    auth["classes"]["meta"] = {}
 
     for j, domain in enumerate(auth_domains):
         for process in process_maps:

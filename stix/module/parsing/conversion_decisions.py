@@ -15,7 +15,7 @@ logger.setLevel(logging.INFO)
 default_import_type = import_type_factory.get_default_import()
 
 def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
-                    attack_object=False, subtechnique=False) -> [dict, str, dict]:
+                    attack_object=False, subtechnique=False) -> [dict, str, dict, str]:
     """ convert Stix object into a data model for processing
 
     Args:
@@ -31,6 +31,7 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
     auth = authorised_mappings(import_type)
     obj_tql = {}
     is_list =[]
+    protocl = ""
     tql_name = sdo_type
     logger.debug("in sdo decisions")
     logger.debug(f'obj tql {obj_tql}')
@@ -44,9 +45,11 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
     if auth['STIX21'] and not auth["ATT&CK"]:
         if sdo_type in stix_models["data"]:
             # dispatch specific stix properties plus later on, generic sdo properties
+            protocol = "stix21"
             obj_tql = copy.deepcopy(stix_models["data"][sdo_type])
         elif auth["case"] or auth["feed"] and sdo_type in os_threat_models:
             # dispatch specific stix properties plus later on, generic sdo properties
+            protocl = "os-threat"
             obj_tql = copy.deepcopy(os_threat_models["data"][sdo_type])
         else:
             logger.error(f'obj_type type {sdo_type} not supported')
@@ -56,6 +59,7 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
         if attack_object:
             logger.debug("I'm processing an attack decision")
             is_list.extend(auth["is_lists"]["sdo"]["attack"])
+            protocl = "attack"
             attack_type = ''
             obj_tql = copy.deepcopy(attack_models["base"]["attack_base"])
             # Convert from stix-type to attack-tql-entity
@@ -80,9 +84,11 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
             # its a Stix object, not an AT&CK one
             if sdo_type in stix_models["data"]:
                 # dispatch specific stix properties plus mitre properties plus generic sdo properties
+                protocl = "stix21"
                 obj_tql = copy.deepcopy(stix_models["data"][sdo_type])
             elif sdo_type in os_threat_models["data"]:
                 # dispatch specific stix properties plus later on, generic sdo properties
+                protocl = "os-threat"
                 obj_tql = copy.deepcopy(os_threat_models["data"][sdo_type])
             else:
                 logger.error(f'obj_type type {sdo_type} not in stix_models["dispatch_stix"] or dispatch mitre')
@@ -100,11 +106,11 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
     is_list.extend(auth["is_lists"]["sdo"]["sdo"])
     logger.debug("about to return from deci9sions")
 
-    return obj_tql, tql_name, is_list
+    return obj_tql, tql_name, is_list, protocl
 
 
 def sro_type_to_tql(sro_type, sro_sub_type,import_type:ImportType=default_import_type,
-                    attack_object=False, uses_relation=False, is_procedure=False) -> [dict, str, list]:
+                    attack_object=False, uses_relation=False, is_procedure=False) -> [dict, str, list, str]:
     """ convert Stix object into a data model for processing
 
         Args:
@@ -122,6 +128,7 @@ def sro_type_to_tql(sro_type, sro_sub_type,import_type:ImportType=default_import
     # - list of property names that have values, and do not include False values
     auth = authorised_mappings(import_type)
     obj_tql = {}
+    protocol = ""
     sro_tql_name = sro_type
     if sro_sub_type != "":
         sro_tql_name = sro_sub_type
@@ -135,9 +142,11 @@ def sro_type_to_tql(sro_type, sro_sub_type,import_type:ImportType=default_import
     if auth['STIX21'] and not auth["ATT&CK"]:
         if sro_type in stix_models["data"]:
             # dispatch specific stix properties plus later on, generic sdo properties
+            protocol = "stix21"
             obj_tql = copy.deepcopy(stix_models["data"][sro_type])
         elif auth["os-intel"] or auth["os-hunt"] and sro_type in os_threat_models["data"]:
             # dispatch specific stix properties plus later on, generic sdo properties
+            protocol = "os-threat"
             obj_tql = copy.deepcopy(os_threat_models["data"][sro_type])
         else:
             logger.error(f'stixobj_type type {sro_type} not supported stix relation')
@@ -146,6 +155,7 @@ def sro_type_to_tql(sro_type, sro_sub_type,import_type:ImportType=default_import
     elif auth['STIX21'] and auth["ATT&CK"]:
         if attack_object:
             is_list.extend(auth["is_lists"]["sro"]["attack"])
+            protocol = "attack"
             attack_type = ''
             obj_tql = copy.deepcopy(attack_models["base"]["attack_base"])
             obj_tql.update(stix_models["data"]["relationship"])
@@ -169,9 +179,11 @@ def sro_type_to_tql(sro_type, sro_sub_type,import_type:ImportType=default_import
             # its a Stix object, not an AT&CK one
             if sro_type in stix_models["data"]:
                 # dispatch specific stix properties plus mitre properties plus generic sdo properties
+                protocol = "stix21"
                 obj_tql = copy.deepcopy(stix_models["data"][sro_type])
             elif sro_type in os_threat_models["data"] and auth["os-intel"] or auth["os-hunt"]:
                 # dispatch specific stix properties plus later on, generic sdo properties
+                protocol = "os-threat"
                 obj_tql = copy.deepcopy(os_threat_models["data"][sro_type])
             else:
                 logger.error(f'obj_type type {sro_type} not in not any supported stix relation ')
@@ -184,10 +196,10 @@ def sro_type_to_tql(sro_type, sro_sub_type,import_type:ImportType=default_import
     # - add on the generic sro properties
     obj_tql.update(stix_models["base"]["base_sro"])
 
-    return obj_tql, sro_tql_name, is_list
+    return obj_tql, sro_tql_name, is_list, protocol
 
 
-def sco__type_to_tql(sco_type: str, import_type=default_import_type) -> [Dict[str, str], str, List[str]]:
+def sco__type_to_tql(sco_type: str, import_type=default_import_type) -> [Dict[str, str], str, List[str], str]:
     """ convert Stix object into a data model for processing
 
         Args:
@@ -202,16 +214,18 @@ def sco__type_to_tql(sco_type: str, import_type=default_import_type) -> [Dict[st
     """
     # Based on import type setup observables
     auth = authorised_mappings(import_type)
+    protocol = ""
     is_list = copy.deepcopy(auth["is_lists"]["sco"]["sco"])
     is_list.extend(auth["is_lists"]["sco"][sco_type])
 
     # - get the object-specific typeql names, sighting or relationship
     sco_tql_name = sco_type
+    protocol = "stix21"
     obj_tql = copy.deepcopy(auth["objects"][sco_type])
     # - add on the generic sro properties
     obj_tql.update(stix_models["base"]["base_sco"])
 
-    return obj_tql, sco_tql_name, is_list
+    return obj_tql, sco_tql_name, is_list, protocol
 
 
 def meta_type_to_tql(meta_type: str, import_type=default_import_type) -> [Dict[str, str], str, List[str]]:

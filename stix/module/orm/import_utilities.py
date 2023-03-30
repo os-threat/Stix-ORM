@@ -16,7 +16,7 @@ import copy
 import logging
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 
 # ---------------------------------------------------
@@ -96,7 +96,7 @@ def add_property_to_typeql(prop, obj_tql, obj, prop_var_list):
 # --------------------------------------------------
 # Giant Switch statement to add the embedded relations to the typeql statement
 
-def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], import_type=default_import_type, inc=-1):
+def add_relation_to_typeql(rel, obj, obj_var, prop_var_list, import_type, inc, protocol):
     """
         Top level function to add one of the sub objects to the stix object
     Args:
@@ -108,7 +108,7 @@ def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], import_type=defa
         inc (): an incrementing variable that is used to add to the var string
 
     Returns:
-        match: the typeql match string
+        match: the typeql match strings
         insert: the typeql insert string
     """
     logger.debug(f'===============\n=====================\n===================\n')
@@ -137,23 +137,23 @@ def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], import_type=defa
     # insert list of object relation
     elif rel in auth["reln_name"]["list_of_objects"]:
         logger.debug("list of objects")
-        match, insert, dep_list = list_of_object(rel, obj[rel], obj_var, import_type)
+        match, insert, dep_list = list_of_object(rel, obj[rel], obj_var, import_type, protocol)
 
     # insert embedded relations based on stix-id
     elif rel in auth["reln_name"]["embedded_relations"]:
         logger.debug("embedded")
-        match, insert, dep_list = embedded_relation(rel, obj[rel], obj_var, inc, import_type)
+        match, insert, dep_list = embedded_relation(rel, obj[rel], obj_var, inc, import_type, protocol)
 
     # insert plain sub-object with relation
     elif (rel == "x509_v3_extensions"
           or rel == "optional_header"):
         logger.debug("X509")
-        match, insert, dep_list = load_object(rel, obj[rel], obj_var, import_type)
+        match, insert, dep_list = load_object(rel, obj[rel], obj_var, import_type, protocol)
 
     # insert  SCO Extensions here, a possible dict of sub-objects
     elif rel in auth["reln_name"]["extension_relations"]:
         logger.debug("extension")
-        match, insert, dep_list = extensions(rel, obj[rel], obj_var, import_type)
+        match, insert, dep_list = extensions(rel, obj[rel], obj_var, import_type, protocol)
 
     # ignore the following relations as they are already processed, for Relationships, Sightings and Extensions
     elif rel in auth["reln_name"]["standard_relations"]:
@@ -174,7 +174,7 @@ def add_relation_to_typeql(rel, obj, obj_var, prop_var_list=[], import_type=defa
 # generic methods
 
 
-def extensions(prop_name, prop_dict, parent_var, import_type):
+def extensions(prop_name, prop_dict, parent_var, import_type, protocol):
     """
         Create the Typeql for the extensions sub object
     Args:
@@ -195,7 +195,7 @@ def extensions(prop_name, prop_dict, parent_var, import_type):
     for ext_type in prop_dict:
         for ext_type_ql in auth["reln"]["extension_relations"]:
             if ext_type == ext_type_ql["stix"]:
-                match2, insert2, dep_list2 = load_object(ext_type, prop_dict[ext_type], parent_var)
+                match2, insert2, dep_list2 = load_object(ext_type, prop_dict[ext_type], parent_var, import_type, protocol)
                 match = match + match2
                 insert = insert + insert2
                 dep_list = dep_list + dep_list2
@@ -204,7 +204,7 @@ def extensions(prop_name, prop_dict, parent_var, import_type):
     return match, insert, dep_list
 
 
-def load_object(prop_name: str, prop_dict, parent_var: str, import_type: dict):
+def load_object(prop_name: str, prop_dict, parent_var: str, import_type: dict, protocol: str):
     """
         Create the Typeql for a sub object
     Args:
@@ -250,7 +250,7 @@ def load_object(prop_name: str, prop_dict, parent_var: str, import_type: dict):
             # add each of the relations to the match and insert statements
             for rel in relations:
                 # split off for relation processing
-                match2, insert2, dep_list2 = add_relation_to_typeql(rel, prop_dict, obj_var, prop_var_list, import_type)
+                match2, insert2, dep_list2 = add_relation_to_typeql(rel, prop_dict, obj_var, prop_var_list, import_type, protocol)
                 # then add it back together    
                 match = match + match2
                 insert = insert + "\n" + insert2
@@ -266,7 +266,7 @@ def load_object(prop_name: str, prop_dict, parent_var: str, import_type: dict):
     return match, insert, dep_list
 
 
-def list_of_object(prop_name, prop_value_list, parent_var, import_type):
+def list_of_object(prop_name, prop_value_list, parent_var, import_type, protocol):
     """
         Create the Typeql for the list of object sub object
     Args:
@@ -303,7 +303,7 @@ def list_of_object(prop_name, prop_value_list, parent_var, import_type):
         for key in dict_instance:
             typeql_prop = obj_props_tql[key]
             if typeql_prop == '':
-                rel_match2, rel_insert2, dep_list2 = add_relation_to_typeql(key, dict_instance, lod_var, [], import_type, i)
+                rel_match2, rel_insert2, dep_list2 = add_relation_to_typeql(key, dict_instance, lod_var, [], import_type, i, protocol)
                 rel_insert += rel_insert2
                 rel_match += rel_match2
                 dep_list = dep_list + dep_list2
@@ -469,7 +469,7 @@ def get_selector_var(selector, prop_var_list):
 # analysis_sco_refs
 # etc.
 
-def embedded_relation(prop, prop_value, obj_var, inc, import_type):
+def embedded_relation(prop, prop_value, obj_var, inc, import_type, protocol):
     """
         Create the Typeql for the embedded relation sub object
     Args:
@@ -503,7 +503,7 @@ def embedded_relation(prop, prop_value, obj_var, inc, import_type):
         dep_list = prop_value
         logger.debug(f'deplist {dep_list}')
         for i, prop_v in enumerate(prop_value):
-            prop_type = prop_v.split('--')[0]
+            prop_type = get_source_from_id(prop_v, protocol, import_type)
             if prop_type == 'relationship':
                 prop_type = 'stix-core-relationship'
             prop_var = '$' + prop_type + str(i) + inc_add
@@ -512,7 +512,7 @@ def embedded_relation(prop, prop_value, obj_var, inc, import_type):
     # else, match in the single prop_value
     else:
         dep_list.append(prop_value)
-        prop_type = prop_value.split('--')[0]
+        prop_type = get_source_from_id(prop_value, protocol, import_type)
         logger.debug(f'deplist {dep_list}')
         if prop_type == 'relationship':
             prop_type = 'stix-core-relationship'
@@ -529,7 +529,54 @@ def embedded_relation(prop, prop_value, obj_var, inc, import_type):
     return match, insert, dep_list
 
 
-def get_embedded_match(source_id, i=1):
+def get_source_from_id(stid, protocol, import_type):
+    """
+        Get the source of the stix object
+    Args:
+        stid (): the stix-id of the object
+
+    Returns:
+        source: the source of the object
+    """
+    tmp_source = stid.split('--')[0]
+    auth = authorised_mappings(import_type)
+    source = ""
+    for model in auth["conv"]["sdo"]:
+        if model["protocol"] == protocol and model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    for model in auth["conv"]["sro"]:
+        if model["protocol"] == protocol and model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    for model in auth["conv"]["sco"]:
+        if model["protocol"] == protocol and model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    for model in auth["conv"]["meta"]:
+        if model["protocol"] == protocol and model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    for model in auth["conv"]["sdo"]:
+        if model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    for model in auth["conv"]["sro"]:
+        if model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    for model in auth["conv"]["sco"]:
+        if model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    for model in auth["conv"]["meta"]:
+        if model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    return source
+
+
+def get_embedded_match(source_id, i, protocol, import_type):
     """
         Assemble the typeql variable and match statement given the stix-id, and the increment
     Args:
@@ -540,7 +587,7 @@ def get_embedded_match(source_id, i=1):
         source_var, the typeql string of the variable
         match, the typeql match statement
     """
-    source_type = source_id.split('--')[0]
+    source_type = get_source_from_id(source_id, protocol, import_type)
     source_var = '$' + source_type + str(i)
     if source_type == 'relationship':
         source_type = 'stix-core-relationship'
@@ -548,7 +595,7 @@ def get_embedded_match(source_id, i=1):
     return source_var, match
 
 
-def get_full_object_match(source_id):
+def get_full_object_match(source_id, protocol, import_type):
     """
         Return a typeql match statement for this stix object
     Args:
@@ -558,7 +605,7 @@ def get_full_object_match(source_id):
         source_var, the typeql string of the variable
         match, the typeql match statement
     """
-    source_var, match = get_embedded_match(source_id)
+    source_var, match = get_embedded_match(source_id, 0, protocol, import_type)
     match += source_var + ' has $properties;\n'
     # match += '$embedded (owner:' + source_var + ', pointed-to:$point ) isa embedded;\n'
     return source_var, match
@@ -611,13 +658,15 @@ def split_on_activity_type(total_props: dict, obj_tql: Dict[str, str]) -> [List[
     rel_list = []
     logger.debug("@@@@@@@@@@@@@@@@@@@@@@ splitting @@@@@@@@@@@@@@@")
     logger.debug("========================================")
-    for k, v in total_props.items():
-        logger.debug(k, v)
-    logger.debug("=========================================")
+    logger.debug(f'total props: {total_props}')
+    # for k, v in total_props.items():
+    #     logger.debug(k, v)
+    # logger.debug("=========================================")
     logger.debug("========================================")
-    for k, v in obj_tql.items():
-        logger.debug(k, v)
-    logger.debug("=========================================")
+    logger.debug(f'obj tql: {obj_tql}')
+    # for k, v in obj_tql.items():
+    #     logger.debug(k, v)
+    # logger.debug("=========================================")
     logger.debug("@@@@@@@@@@@@@@@@@@@@@@ end splitting @@@@@@@@@@@@@@@")
     for prop in total_props:
         tql_prop_name = obj_tql[prop]

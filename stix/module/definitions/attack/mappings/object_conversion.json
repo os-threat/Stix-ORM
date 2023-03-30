@@ -174,5 +174,16 @@
     "summary": "Object version references are used to refer to a specific version of a STIX object. They do this by combining a STIX ID of the object with the modified timestamp of the given version.",
     "protocol": "attack",
     "icon":""
+  },
+  {
+    "type":  "marking-definition",
+    "typeql": "attack-marking",
+    "class": "AttackMarking",
+    "object": "meta",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#the-attck-spec",
+    "doc_url": "",
+    "summary": "Referenced in the object_marking_refs of all objects to express the MITRE Corporation copyright",
+    "protocol": "attack",
+    "icon":""
   }
 ]

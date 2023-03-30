@@ -132,10 +132,10 @@ def sdo_to_data(sdo, import_type=default_import_type) -> [dict, Dict[str, str], 
     if attack_object:
         sub_technique = False if not sdo.get("x_mitre_is_subtechnique", False) else True
 
-    obj_tql, sdo_tql_name, is_list = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique)
+    obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique)
     logger.debug(f'\nobject tql {obj_tql}, \nsdo tql name {sdo_tql_name},\n is_list {is_list}')
 
-    return total_props, obj_tql, sdo_tql_name
+    return total_props, obj_tql, sdo_tql_name, protocol
 
 
 def sdo_to_typeql(sdo, import_type=default_import_type) -> [str, str, str, str, dict]:
@@ -158,7 +158,7 @@ def sdo_to_typeql(sdo, import_type=default_import_type) -> [str, str, str, str, 
     auth = authorised_mappings(import_type)
     dep_list = []
     # 1.B) get the data model
-    total_props, obj_tql, sdo_tql_name = sdo_to_data(sdo, import_type)
+    total_props, obj_tql, sdo_tql_name, protocol = sdo_to_data(sdo, import_type)
     logger.debug("\n Step 0 I've just gotten through getting data")
     logger.debug(f'\n\n total_props {total_props}\n\nobj_tql {obj_tql}\n\nsdo_tql_name {sdo_tql_name}')
     sdo_var = '$' + sdo_tql_name
@@ -188,7 +188,7 @@ def sdo_to_typeql(sdo, import_type=default_import_type) -> [str, str, str, str, 
     # 4.) add each of the relations to the match and insert statements
     for j, rel in enumerate(relations):
         # split off for relation processing
-        dep_match2, dep_insert2, dep_list2 = add_relation_to_typeql(rel, sdo, sdo_var, prop_var_list, import_type, j)
+        dep_match2, dep_insert2, dep_list2 = add_relation_to_typeql(rel, sdo, sdo_var, prop_var_list, import_type, j, protocol)
         # then add it back together
         dep_match = dep_match + dep_match2
         dep_insert = dep_insert + dep_insert2
@@ -232,10 +232,10 @@ def sro_to_data(sro, import_type=default_import_type) -> [dict, Dict[str, str], 
     sro_tql_name = sro.type
     sro_sub_rel = "" if not sro.get("relationship_type", False) else sro["relationship_type"]
 
-    obj_tql, sro_tql_name, is_list = sro_type_to_tql(sro_tql_name, sro_sub_rel, import_type, attack_object, uses_relation, is_procedure)
+    obj_tql, sro_tql_name, is_list, protocol = sro_type_to_tql(sro_tql_name, sro_sub_rel, import_type, attack_object, uses_relation, is_procedure)
     logger.debug(f'object tql {obj_tql}, sro tql name {sro_tql_name}')
 
-    return total_props, obj_tql, sro_tql_name
+    return total_props, obj_tql, sro_tql_name, protocol
 
 
 def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, dict]:
@@ -259,7 +259,7 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
     dep_list = []
     # - work out the type of object
     obj_type = sro.type
-    total_props, obj_tql, sro_tql_name = sro_to_data(sro, import_type)
+    total_props, obj_tql, sro_tql_name, protocol = sro_to_data(sro, import_type)
     sro_var = '$' + sro_tql_name
     if obj_tql == '':
         return '', '', '', '', {}
@@ -271,10 +271,10 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
     if obj_type == 'relationship':
         source_id = sro.source_ref
         dep_list.append(source_id)
-        source_var, source_match = get_embedded_match(source_id)
+        source_var, source_match = get_embedded_match(source_id, 0,protocol, import_type)
         target_id = sro.target_ref
         dep_list.append(target_id)
-        target_var, target_match = get_embedded_match(target_id)
+        target_var, target_match = get_embedded_match(target_id, 0,protocol, import_type)
         dep_match += source_match + target_match
         # 3.)  then setup the typeql statement to insert the specific sro relation, from the dict, with the matches
         for record in auth["reln"]["standard_relations"]:
@@ -291,7 +291,7 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
     elif obj_type == 'sighting':
         sighting_of_id = sro.sighting_of_ref
         dep_list.append(sighting_of_id)
-        sighting_of_var, sighting_of_match = get_embedded_match(sighting_of_id)
+        sighting_of_var, sighting_of_match = get_embedded_match(sighting_of_id, 0,protocol, import_type)
         dep_match += ' \n' + sighting_of_match
         dep_insert += '\n' + sro_var + ' (sighting-of:' + sighting_of_var
         # if there is observed data list, then add it to the match statement
@@ -299,7 +299,7 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
         if (observed_data_list is not None) and (len(observed_data_list) > 0):
             for i, observed_data_id in enumerate(observed_data_list):
                 dep_list.append(observed_data_id)
-                observed_data_var, observed_data_match = get_embedded_match(observed_data_id, i)
+                observed_data_var, observed_data_match = get_embedded_match(observed_data_id, i, protocol, import_type)
                 dep_match += observed_data_match
                 dep_insert += ', observed:' + observed_data_var
         # if there is a list of who and where the sighting's occured, then match it in
@@ -307,7 +307,7 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
         if (where_sighted_list is not None) and (len(where_sighted_list) > 0):
             for where_sighted_id in where_sighted_list:
                 dep_list.append(where_sighted_id)
-                where_sighted_var, where_sighted_match = get_embedded_match(where_sighted_id)
+                where_sighted_var, where_sighted_match = get_embedded_match(where_sighted_id, 1, protocol, import_type)
                 dep_match += where_sighted_match
                 dep_insert += ', where-sighted:' + where_sighted_var
 
@@ -336,7 +336,7 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
     # 6.) add each of the relations to the match and insert statements
     for j, rel in enumerate(relations):
         # split off for relation processing
-        dep_match2, dep_insert2, dep_list2 = add_relation_to_typeql(rel, sro, sro_var, prop_var_list, import_type, j)
+        dep_match2, dep_insert2, dep_list2 = add_relation_to_typeql(rel, sro, sro_var, prop_var_list, import_type, j, protocol)
         # then add it back together
         dep_match = dep_match + dep_match2
         dep_insert = dep_insert + dep_insert2
@@ -369,9 +369,9 @@ def sco_to_data(sco, import_type=default_import_type) -> [dict, dict, str]:
     # - work out the type of object
     sco_tql_name = sco.type
     # - get the object-specific typeql names, sighting or relationship
-    obj_tql, sco_tql_name, is_list = sco__type_to_tql(sco_tql_name, import_type)
+    obj_tql, sco_tql_name, is_list, protocol = sco__type_to_tql(sco_tql_name, import_type)
 
-    return total_props, obj_tql, sco_tql_name
+    return total_props, obj_tql, sco_tql_name, protocol
 
 
 def sco_to_typeql(sco, import_type=default_import_type):
@@ -397,7 +397,7 @@ def sco_to_typeql(sco, import_type=default_import_type):
     dep_match = dep_insert = indep_ql = core_ql = dep_insert_props = ''
 
     # 1.C) Split them into properties and relations
-    total_props, obj_tql, sco_tql_name = sco_to_data(sco, import_type)
+    total_props, obj_tql, sco_tql_name, protocol = sco_to_data(sco, import_type)
     properties, relations = split_on_activity_type(total_props, obj_tql)
 
     # 2.) setup the typeql statement for the sco entity
@@ -419,7 +419,7 @@ def sco_to_typeql(sco, import_type=default_import_type):
     # 6.) add each of the relations to the match and insert statements
     for j, rel in enumerate(relations):
         # split off for relation processing
-        dep_match2, dep_insert2, dep_list2 = add_relation_to_typeql(rel, sco, sco_var, prop_var_list, import_type, j)
+        dep_match2, dep_insert2, dep_list2 = add_relation_to_typeql(rel, sco, sco_var, prop_var_list, import_type, j, protocol)
         # then add it back together
         dep_match = dep_match + dep_match2
         dep_insert = dep_insert + dep_insert2

@@ -16,7 +16,7 @@ from stix.module.initialise import tlp_ids
 from stix.module.definitions.stix21 import stix_models
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 default_import_type = import_type_factory.get_default_import()
 
 def parse(data: dict, allow_custom=False, import_type: ImportType=default_import_type):
@@ -119,7 +119,7 @@ def dict_to_stix(stix_dict: dict,
         if attack_object:
             sub_technique = False if not stix_dict.get("x_mitre_is_subtechnique", False) else True
         logger.debug(f'subtechnique {sub_technique}, attack {attack_object}')
-        obj_tql, sdo_tql_name, is_list = sdo_type_to_tql(obj_type, import_type, attack_object, sub_technique)
+        obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(obj_type, import_type, attack_object, sub_technique)
         logger.debug(f"tql name {sdo_tql_name}, obj tql {obj_tql}")
         obj_class = class_for_type(sdo_tql_name, import_type, "sdo")
         logger.debug(f'output  object class is {obj_class}')
@@ -136,7 +136,7 @@ def dict_to_stix(stix_dict: dict,
         obj_tql = {}
         sro_sub_rel = "" if not stix_dict.get("relationship_type", False) else stix_dict["relationship_type"]
 
-        obj_tql, sro_tql_name, is_list = sro_type_to_tql(obj_type, sro_sub_rel, import_type, attack_object,
+        obj_tql, sro_tql_name, is_list, protocol = sro_type_to_tql(obj_type, sro_sub_rel, import_type, attack_object,
                                                          uses_relation, is_procedure)
         logger.debug(f"~~~~~~~~~~~ sro tql name {sro_tql_name}")
         if obj_type == "relationship":

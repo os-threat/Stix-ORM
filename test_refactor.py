@@ -70,7 +70,7 @@ def test_insert_statements(pahhway, stid):
     with open(pahhway, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         for stix_dict in json_text:
-            if True: #stix_dict['id'] == stid:
+            if stix_dict['id'] == stid:
                 dep_obj = dict_to_typeql(stix_dict, import_type)
                 print(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
 
@@ -199,6 +199,23 @@ def check_object(fullname):
         # print(f'\n\n============> my tactic = {myobj4} <==================\n\n')
 
 
+def test_get_del_dir_statements(dirpath):
+    dirFiles = os.listdir(dirpath)
+    sorted_files = sorted(dirFiles)
+    for i, s_file in enumerate(sorted_files):
+        if os.path.isdir(os.path.join(dirpath, s_file)) or i<0:
+            continue
+        else:
+            file_list.append(s_file)
+            #print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            #print(f'==================== {s_file} ===================================')
+            with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
+                json_text = json.load(f)
+                for jt in json_text:
+                    stid = jt["id"]
+                    query_id(stid)
+
+
 def test_get_delete(fullname):
     load_file(fullname)
     id_list = get_stix_ids()
@@ -321,15 +338,15 @@ def test_delete_dir(dirpath):
     print("============= Add is complete =====================================================")
     print("**********************************************************************************")
     stix_id_list = set(get_stix_ids())
-    # for stid in stix_id_list:
-    #     print(f"\nid is -> {stid}\n")
-    #     query_id(stid)
+    for stid in stix_id_list:
+        print(f"\nid is -> {stid}\n")
+        query_id(stid)
 
     print("**********************************************************************************")
     print("----------------------------------------------------------------------------------")
     print("============= Get is complete =====================================================")
     print("**********************************************************************************")
-    typedb_sink.delete(stix_id_list)
+    #typedb_sink.delete(stix_id_list)
     #clean_db()
     #print(f' files-> {file_list}')
     print(f"\n\nlen input ids -> {len(set(input_id_list))} ")
@@ -580,18 +597,19 @@ if __name__ == '__main__':
     # 019fde1c-
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
-    stid1 = "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe"
-    stid2 = "relationship--57b56a43-b8b0-4cba-9deb-34e3e1faed9e"
+    stid1 = "grouping--84e4d88f-44ea-4bcd-bbf3-b2c1c320bcb3"
+    stid2 = "intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6"
+    stid3 = "email-message--cf9b4b7f-14c8-5955-8065-020e0316b559"
     #test_initialise()
     #load_file_list(path1, [f2, f28])
-    #load_file(path1 + f14)
-    load_file(mitre + "test.json")
+    #load_file(path1 + f1)
+    #load_file(mitre + "test.json")
     #check_object(mitre + "test.json")
     #load_file(data_path + file1)
     print("=====")
     print("=====")
     print("=====")
-    #query_id(stid1)
+    query_id(stid1)
     #check_dir_ids(path1)
     #check_dir(path1)
     #test_delete(data_path+file1)
@@ -609,4 +627,5 @@ if __name__ == '__main__':
     #backdoor_add(mitre + "test.json")
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "test.json", stid1)
-    #test_insert_statements(path1 + f1, stid2)
+    #test_insert_statements(path1 + f14, stid3)
+    #test_get_del_dir_statements(path1)
