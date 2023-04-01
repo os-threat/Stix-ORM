@@ -308,7 +308,7 @@ def test_get_del_dir_statements(dirpath):
 
 
 def test_get_delete(fullname):
-    load_file(fullname)
+    #load_file(fullname)
     id_list = get_stix_ids()
     print("\n\n=============\n-------------\n$$$$$$$$$$$$$$$$$$$$$\n")
     for obj_id in id_list:
@@ -322,6 +322,7 @@ def query_id(stixid):
         stixid ():
     """
     typedb = TypeDBSource(connection, import_type)
+    print(f'stixid -> {stixid}')
     stix_dict = typedb.get(stixid)
     stix_obj = stix_dict #parse(stix_dict)
     print(' ---------------------------Query Object----------------------')
@@ -750,11 +751,11 @@ if __name__ == '__main__':
     print("=====")
     #query_id(stid1)
     #check_dir_ids2(path1)
-    check_dir_ids(path1)
+    #check_dir_ids(path1)
     #check_dir(path1)
     #test_delete(data_path+file1)
     #test_get(stid1)
-    #test_get_delete(mitre + "test.json")
+    test_get_delete(mitre + "test.json")
     #test_initialise()
     #test_delete_dir(path1)
     #clean_db()
