@@ -91,6 +91,73 @@ def update_layers(layers, indexes, missing, dep_obj, cyclical):
     return layers, indexes, missing, cyclical
 
 
+def backdoor_add_dir(dirpath):
+    """ Test the database initialisation function
+
+    """
+    typedb = TypeDBSink(connection, True, import_type)
+    layers = []
+    indexes = []
+    missing = []
+    cyclical = []
+    type_ql_list = []
+    id_list = []
+    obj_list = []
+    dirFiles = os.listdir(dirpath)
+    sorted_files = sorted(dirFiles)
+    print(sorted_files)
+    typedb_sink = TypeDBSink(connection, True, import_type)
+    typedb_source = TypeDBSource(connection, import_type)
+    for s_file in sorted_files:
+        if os.path.isdir(os.path.join(dirpath, s_file)):
+            continue
+        else:
+            with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
+                json_text = json.load(f)
+                for element in json_text:
+                    print(f'**********==={element}')
+                    obj_list.append(element)
+                    temp_id = element.get('id', False)
+                    if temp_id:
+                        id_list.append(temp_id)
+
+                    dep_obj = dict_to_typeql(element, import_type)
+                    layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
+
+    print(f'missing {missing}, cyclical {cyclical}')
+    newlist = []
+    duplist = []
+    if missing == [] and cyclical == []:
+        # add the layers into a list of strings
+        for layer in layers:
+            stid = layer["id"]
+            if stid not in newlist:
+                newlist.append(stid)
+                dep_match = layer["dep_match"]
+                dep_insert = layer["dep_insert"]
+                indep_ql = layer["indep_ql"]
+                core_ql = layer["core_ql"]
+                print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+                prestring = ""
+                if dep_match != "":
+                    prestring = "match " + dep_match
+                upload_string = prestring + " insert " + indep_ql + dep_insert
+                type_ql_list.append(upload_string)
+            else:
+                duplist.append(stid)
+
+        # add list of strings to typedb
+        load_typeql_data(type_ql_list, connection)
+    id_set = set(id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    print(f'\n\n\n===========================\nduplist -> {duplist}')
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> {id_diff}')
+
+
 def backdoor_add(pahhway):
     """ Test the database initialisation function
 
@@ -101,6 +168,7 @@ def backdoor_add(pahhway):
     missing = []
     cyclical = []
     type_ql_list = []
+    id_list = []
     with open(pahhway, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         for stix_dict in json_text:
@@ -112,6 +180,8 @@ def backdoor_add(pahhway):
     if missing == [] and cyclical == []:
         # add the layers into a list of strings
         for layer in layers:
+            stid = layer["id"]
+            id_list.append(stid)
             dep_match = dep_obj["dep_match"]
             dep_insert = dep_obj["dep_insert"]
             indep_ql = dep_obj["indep_ql"]
@@ -125,6 +195,14 @@ def backdoor_add(pahhway):
 
         # add list of strings to typedb
         load_typeql_data(type_ql_list, connection)
+
+    id_set = set(id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> {id_diff}')
 
 
 def test_initialise():
@@ -141,6 +219,7 @@ def load_file_list(path1, file_list):
         path1 (): path
         file_list (): list of files
     """
+    obj_list = []
     logger.debug(f' connection {connection}')
     typedb = TypeDBSink(connection, True, import_type)
     #print(f'files {file_list}')
@@ -152,7 +231,9 @@ def load_file_list(path1, file_list):
             with open((path1+f), mode="r", encoding="utf-8") as df:
                 #print(f'I am about to load {f}')
                 json_text = json.load(df)
-                typedb.add(json_text)
+                obj_list.extend(json_text)
+
+    typedb.add(obj_list)
 
 
 def load_file(fullname):
@@ -162,10 +243,20 @@ def load_file(fullname):
         fullname (): path and filename
     """
     logger.debug(f'inside load file {fullname}')
+    input_id_list=[]
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         typedb = TypeDBSink(connection, True, import_type)
+        for stix_dict in json_text:
+            input_id_list.append(stix_dict.get("id", False))
         typedb.add(json_text)
+    id_set = set(input_id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> {id_diff}')
 
 
 def check_object(fullname):
@@ -371,7 +462,8 @@ def test_delete(path):
 
 
 def check_dir_ids(dirpath):
-    """ Open a directory and load all the files, optionally printing them
+    """ Open a directory and load all the files,
+    one at a time to the database and then check the ids
 
     Args:
         dirpath ():
@@ -397,6 +489,45 @@ def check_dir_ids(dirpath):
                     if temp_id:
                         id_list.append(temp_id)
                 typedb_sink.add(json_text)
+    id_set = set(id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> {id_diff}')
+
+
+def check_dir_ids2(dirpath):
+    """ Open a directory and load all the files,
+    creating a list of objects first and then adding them to the db
+
+    Args:
+        dirpath ():
+    """
+    id_list = []
+    obj_list = []
+    dirFiles = os.listdir(dirpath)
+    sorted_files = sorted(dirFiles)
+    print(sorted_files)
+    typedb_sink = TypeDBSink(connection, True, import_type)
+    typedb_source = TypeDBSource(connection, import_type)
+    for s_file in sorted_files:
+        if os.path.isdir(os.path.join(dirpath, s_file)):
+            continue
+        else:
+            print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            print(f'==================== {s_file} ===================================')
+            print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
+                json_text = json.load(f)
+                for element in json_text:
+                    print(f'**********==={element}')
+                    obj_list.append(element)
+                    temp_id = element.get('id', False)
+                    if temp_id:
+                        id_list.append(temp_id)
+    typedb_sink.add(obj_list)
     id_set = set(id_list)
     id_typedb = set(get_stix_ids())
     len_files = len(id_set)
@@ -432,6 +563,13 @@ def check_dir(dirpath):
                         id_list.append(temp_id)
                 json_text = json.load(f)
                 typedb_sink.add(json_text)
+    id_set = set(id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> {id_diff}')
 
 
 def cert_dict(cert_root, certs):
@@ -545,6 +683,7 @@ if __name__ == '__main__':
     f26 = 'note.json'
     f27 = 'process_ext_win_service.json'
     f28 = 'threat_actor.json'
+    f29 = "observed.json"
     file_list = [f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,f21,f22,f23,f24,f25]
     group_list = [f2, f3, f21, f25]
     note_list = [f2, f8, f26]
@@ -597,19 +736,20 @@ if __name__ == '__main__':
     # 019fde1c-
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
-    stid1 = "grouping--84e4d88f-44ea-4bcd-bbf3-b2c1c320bcb3"
-    stid2 = "intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6"
-    stid3 = "email-message--cf9b4b7f-14c8-5955-8065-020e0316b559"
+    stid1 = "domain-name--ecb120bf-2694-4902-a737-62b74539a41b"
+    stid2 = "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"
+    stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     #test_initialise()
-    #load_file_list(path1, [f2, f28])
-    #load_file(path1 + f1)
-    #load_file(mitre + "test.json")
+    #load_file_list(path1, [f2, f29])
+    #load_file(path1 + f29)
+    load_file(mitre + "test.json")
     #check_object(mitre + "test.json")
     #load_file(data_path + file1)
     print("=====")
     print("=====")
     print("=====")
-    query_id(stid1)
+    #query_id(stid1)
+    #check_dir_ids2(path1)
     #check_dir_ids(path1)
     #check_dir(path1)
     #test_delete(data_path+file1)
@@ -625,7 +765,8 @@ if __name__ == '__main__':
     #test_auth()
     #test_generate_docs()
     #backdoor_add(mitre + "test.json")
+    #backdoor_add_dir(path1)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "test.json", stid1)
-    #test_insert_statements(path1 + f14, stid3)
+    #test_insert_statements(path1 + f29, stid2)
     #test_get_del_dir_statements(path1)

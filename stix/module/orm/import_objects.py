@@ -10,7 +10,7 @@ from stix.module.orm.import_utilities import clean_props, get_embedded_match, sp
 import logging
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 
 # ---------------------------------------------------

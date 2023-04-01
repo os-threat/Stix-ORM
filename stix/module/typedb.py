@@ -522,6 +522,9 @@ class TypeDBSink(DataSink):
         """
         logger.debug("1. starting in add")
         obj_result = self._gather_objects(stix_data)
+        if not is_successful(obj_result):
+            logging.exception("\n".join(traceback.format_exception(obj_result.failure())))
+
 
         generate_instructions_result = obj_result.bind(lambda obj_list: self.__generate_instructions(obj_list))
         logger.info("\n##########################################################################################################################################################\n")
