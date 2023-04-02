@@ -15,6 +15,7 @@ from stix.module.orm.delete_object import delete_stix_object, add_delete_layers
 from stix.module.orm.import_utilities import get_embedded_match
 from stix.module.orm.export_object import convert_ans_to_stix
 from stix.module.parsing.parse_objects import parse
+from .authorise import authorised_mappings
 from .initialise import setup_database, load_schema, load_markings
 import networkx as nx
 from stix2 import v21
@@ -656,7 +657,9 @@ class TypeDBSource(DataSource):
     @safe
     def __retrieve_stix_object(self,
                                stix_id: str):
-        obj_var, type_ql = get_embedded_match(stix_id, 0, None, self.import_type)
+        #TODO: Fix. Either pass in the protocol or dervice it
+        protocol ="stix21"
+        obj_var, type_ql = get_embedded_match(stix_id, 0, protocol, self.import_type)
         query = 'match ' + type_ql
 
         import_type = self.__default_import_type()
