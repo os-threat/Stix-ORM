@@ -28,7 +28,7 @@ logger.setLevel(logging.DEBUG)
 # --------------------------------------------------------------------------------------------------------
 
 
-def convert_ans_to_stix(answer_iterator, r_tx, import_type: ImportType):
+def convert_ans_to_stix(query, answer_iterator, r_tx, import_type: ImportType):
     """
         High level function to convert the typedb_lib return into a Stix object.
         Firstly, drive the grpc to make an intermediate format, then convert that to a Stix dict

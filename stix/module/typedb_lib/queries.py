@@ -1,4 +1,5 @@
 import logging
+import traceback
 from typing import List, Iterator
 
 from returns.io import impure_safe, IOResult
@@ -86,10 +87,12 @@ def match_query(uri: str, port: str, database: str, query: str, data_query, **da
     with get_core_client(uri, port).unwrap() as client:
         client_session = unsafe_perform_io(get_data_session(client, database))
         if not is_successful(client_session):
+            logging.exception("\n".join(traceback.format_exception(client_session.failure())))
             return IOResult.failure(client_session.failure())
         with client_session.unwrap() as session:
             read_transaction = unsafe_perform_io(get_read_transaction(session))
             if not is_successful(read_transaction):
+                logging.exception("\n".join(traceback.format_exception(read_transaction.failure())))
                 return IOResult.failure(read_transaction.failure())
             with read_transaction.unwrap() as transaction:
                 answer_iterator = transaction.query().match(query)
