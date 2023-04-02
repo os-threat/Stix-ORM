@@ -466,13 +466,13 @@ def make_embedded_relations(reln, reln_name, stix_dict, is_list, obj_name, impor
     return stix_dict
 
 
-def make_standard_relations(reln, reln_name, stix_dict, is_list, obj_name, import_type):
+def make_standard_relations(reln, reln_name, stix_dict, is_list, obj_name, import_type: ImportType):
     #logger.warning(" make standard relations visited, but not implemented")
     auth = authorised_mappings(import_type)
     return stix_dict
 
 
-def make_key_value_relations(reln, reln_name, stix_dict, is_list, obj_type, import_type):
+def make_key_value_relations(reln, reln_name, stix_dict, is_list, obj_type, import_type: ImportType):
     """
         Setup embedded relations based on stix-id's
     Args:
@@ -540,7 +540,7 @@ def make_extension_relations(reln, reln_name, stix_dict, is_list, obj_type, impo
     return stix_dict
 
 
-def make_object(reln, reln_name, stix_dict, is_list, obj_type, import_type):
+def make_object(reln, reln_name, stix_dict, is_list, obj_type, import_type: ImportType):
     """
         Setup a sub object
     Args:
@@ -610,7 +610,7 @@ def make_object(reln, reln_name, stix_dict, is_list, obj_type, import_type):
     return stix_dict
 
 
-def make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_type, import_type):
+def make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_type, import_type: ImportType):
     """
     Args:
         Setup a list of sub objects
