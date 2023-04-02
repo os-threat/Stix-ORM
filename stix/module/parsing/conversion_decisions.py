@@ -31,7 +31,7 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
     auth = authorised_mappings(import_type)
     obj_tql = {}
     is_list =[]
-    protocl = ""
+    protocol = ""
     tql_name = sdo_type
     logger.debug("in sdo decisions")
     logger.debug(f'obj tql {obj_tql}')
@@ -49,7 +49,7 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
             obj_tql = copy.deepcopy(stix_models["data"][sdo_type])
         elif auth["case"] or auth["feed"] and sdo_type in os_threat_models:
             # dispatch specific stix properties plus later on, generic sdo properties
-            protocl = "os-threat"
+            protocol = "os-threat"
             obj_tql = copy.deepcopy(os_threat_models["data"][sdo_type])
         else:
             logger.error(f'obj_type type {sdo_type} not supported')
@@ -59,7 +59,7 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
         if attack_object:
             logger.debug("I'm processing an attack decision")
             is_list.extend(auth["is_lists"]["sdo"]["attack"])
-            protocl = "attack"
+            protocol = "attack"
             attack_type = ''
             obj_tql = copy.deepcopy(attack_models["base"]["attack_base"])
             # Convert from stix-type to attack-tql-entity
@@ -84,11 +84,11 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
             # its a Stix object, not an AT&CK one
             if sdo_type in stix_models["data"]:
                 # dispatch specific stix properties plus mitre properties plus generic sdo properties
-                protocl = "stix21"
+                protocol = "stix21"
                 obj_tql = copy.deepcopy(stix_models["data"][sdo_type])
             elif sdo_type in os_threat_models["data"]:
                 # dispatch specific stix properties plus later on, generic sdo properties
-                protocl = "os-threat"
+                protocol = "os-threat"
                 obj_tql = copy.deepcopy(os_threat_models["data"][sdo_type])
             else:
                 logger.error(f'obj_type type {sdo_type} not in stix_models["dispatch_stix"] or dispatch mitre')
@@ -106,7 +106,7 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
     is_list.extend(auth["is_lists"]["sdo"]["sdo"])
     logger.debug("about to return from deci9sions")
 
-    return obj_tql, tql_name, is_list, protocl
+    return obj_tql, tql_name, is_list, protocol
 
 
 def sro_type_to_tql(sro_type: str,
