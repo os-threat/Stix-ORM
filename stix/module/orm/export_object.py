@@ -90,7 +90,7 @@ def convert_res_to_stix(res: List[dict], import_type: ImportType):
     return stix_dict
 
 
-def make_sdo(res, import_type):
+def make_sdo(res, import_type: ImportType):
     """
         High-level function to convert intermediate format into a Stix domain object
     Args:
@@ -137,7 +137,7 @@ def make_sdo(res, import_type):
     return stix_dict
 
 
-def make_sro(res, import_type):
+def make_sro(res, import_type: ImportType):
     """
         High-level function to convert intermediate format into a Stix relationship object
     Args:
@@ -241,7 +241,7 @@ def make_sro(res, import_type):
     return stix_dict
 
 
-def make_sco(res: dict, import_type):
+def make_sco(res: dict, import_type: ImportType):
     """
         High-level function to convert intermediate format into a Stix cyber observable object
     Args:
@@ -293,7 +293,7 @@ colours_dict = {
 }
 
 
-def make_meta(res, import_type):
+def make_meta(res, import_type: ImportType):
     """
         High-level function to convert intermediate format into a Stix meta object
     Args:
@@ -329,7 +329,7 @@ def make_meta(res, import_type):
     return stix_dict
 
 
-def make_properties(props, obj_tql, stix_dict, is_list):
+def make_properties(props, obj_tql, stix_dict, is_list: bool):
     """
         Unpack properties for a stix object (i.e. values at the 'has' level)
     Args:
@@ -362,7 +362,7 @@ def make_properties(props, obj_tql, stix_dict, is_list):
     return stix_dict
 
 
-def make_relations(relns, obj_tql, stix_dict, is_list, obj_name, import_type):
+def make_relations(relns, obj_tql, stix_dict, is_list, obj_name, import_type: ImportType):
     """
         Overall branching function for processing all the sub objects
     Args:
@@ -409,7 +409,7 @@ def make_relations(relns, obj_tql, stix_dict, is_list, obj_name, import_type):
     return stix_dict
 
 
-def make_embedded_relations(reln, reln_name, stix_dict, is_list, obj_name, import_type):
+def make_embedded_relations(reln, reln_name, stix_dict, is_list: bool, obj_name, import_type: ImportType):
     """
         Setup embedded relations based on stix-id's
     Args:
@@ -519,7 +519,7 @@ def make_key_value_relations(reln, reln_name, stix_dict, is_list, obj_type, impo
     return stix_dict
 
 
-def make_extension_relations(reln, reln_name, stix_dict, is_list, obj_type, import_type):
+def make_extension_relations(reln, reln_name, stix_dict, is_list, obj_type, import_type: ImportType):
     """
         Setup extension relations based on stix-id's
     Args:
