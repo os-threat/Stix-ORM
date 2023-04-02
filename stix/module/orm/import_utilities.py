@@ -98,7 +98,10 @@ def add_property_to_typeql(prop, obj_tql, obj, prop_var_list):
 # --------------------------------------------------
 # Giant Switch statement to add the embedded relations to the typeql statement
 
-def add_relation_to_typeql(rel, obj, obj_var, prop_var_list,
+def add_relation_to_typeql(rel,
+                           obj,
+                           obj_var,
+                           prop_var_list,
                            import_type: ImportType,
                            inc,
                            protocol: str):
@@ -213,7 +216,7 @@ def extensions(prop_name: str,
     return match, insert, dep_list
 
 
-def load_object(prop_name: str, prop_dict, parent_var: str, import_type: dict, protocol: str):
+def load_object(prop_name: str, prop_dict, parent_var: str, import_type: ImportType, protocol: str):
     """
         Create the Typeql for a sub object
     Args:
@@ -482,7 +485,10 @@ def get_selector_var(selector, prop_var_list):
 # analysis_sco_refs
 # etc.
 
-def embedded_relation(prop, prop_value, obj_var, inc,
+def embedded_relation(prop,
+                      prop_value,
+                      obj_var,
+                      inc: int,
                       import_type: ImportType,
                       protocol: str):
     """
@@ -544,7 +550,9 @@ def embedded_relation(prop, prop_value, obj_var, inc,
     return match, insert, dep_list
 
 
-def get_source_from_id(stid: str, protocol: str, import_type: ImportType):
+def get_source_from_id(stid: str,
+                       protocol: str,
+                       import_type: ImportType):
     """
         Get the source of the stix object
     Args:
@@ -591,7 +599,10 @@ def get_source_from_id(stid: str, protocol: str, import_type: ImportType):
     return source
 
 
-def get_embedded_match(source_id: str, i: int, protocol: str, import_type: ImportType):
+def get_embedded_match(source_id: str,
+                       i: int,
+                       protocol: str,
+                       import_type: ImportType):
     """
         Assemble the typeql variable and match statement given the stix-id, and the increment
     Args:

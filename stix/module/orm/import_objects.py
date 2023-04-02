@@ -271,10 +271,10 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
     if obj_type == 'relationship':
         source_id = sro.source_ref
         dep_list.append(source_id)
-        source_var, source_match = get_embedded_match(source_id, 0,protocol, import_type)
+        source_var, source_match = get_embedded_match(source_id, 0, protocol, import_type)
         target_id = sro.target_ref
         dep_list.append(target_id)
-        target_var, target_match = get_embedded_match(target_id, 0,protocol, import_type)
+        target_var, target_match = get_embedded_match(target_id, 0, protocol, import_type)
         dep_match += source_match + target_match
         # 3.)  then setup the typeql statement to insert the specific sro relation, from the dict, with the matches
         for record in auth["reln"]["standard_relations"]:
@@ -291,7 +291,7 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
     elif obj_type == 'sighting':
         sighting_of_id = sro.sighting_of_ref
         dep_list.append(sighting_of_id)
-        sighting_of_var, sighting_of_match = get_embedded_match(sighting_of_id, 0,protocol, import_type)
+        sighting_of_var, sighting_of_match = get_embedded_match(sighting_of_id, 0, protocol, import_type)
         dep_match += ' \n' + sighting_of_match
         dep_insert += '\n' + sro_var + ' (sighting-of:' + sighting_of_var
         # if there is observed data list, then add it to the match statement
@@ -336,7 +336,13 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
     # 6.) add each of the relations to the match and insert statements
     for j, rel in enumerate(relations):
         # split off for relation processing
-        dep_match2, dep_insert2, dep_list2 = add_relation_to_typeql(rel, sro, sro_var, prop_var_list, import_type, j, protocol)
+        dep_match2, dep_insert2, dep_list2 = add_relation_to_typeql(rel,
+                                                                    sro,
+                                                                    sro_var,
+                                                                    prop_var_list,
+                                                                    import_type,
+                                                                    j,
+                                                                    protocol)
         # then add it back together
         dep_match = dep_match + dep_match2
         dep_insert = dep_insert + dep_insert2

@@ -8,6 +8,9 @@ from stix.module.authorise import authorised_mappings
 from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
 from stix.module.orm.export_utilities import convert_ans_to_res
 import logging
+
+from stix.module.typedb_lib.import_type_factory import ImportType
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
@@ -55,7 +58,7 @@ def convert_ans_to_stix(answer_iterator, r_tx, import_type):
 #  2. Convert Res to Stix
 # --------------------------------------------------------------------------------------------------------
 
-def convert_res_to_stix(res: List[dict], import_type: dict):
+def convert_res_to_stix(res: List[dict], import_type: ImportType):
     """
         High level function to conver the intermediate form into a stix dict
     Args:
