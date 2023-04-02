@@ -216,7 +216,11 @@ def extensions(prop_name: str,
     return match, insert, dep_list
 
 
-def load_object(prop_name: str, prop_dict, parent_var: str, import_type: ImportType, protocol: str):
+def load_object(prop_name: str,
+                prop_dict,
+                parent_var: str,
+                import_type: ImportType,
+                protocol: str):
     """
         Create the Typeql for a sub object
     Args:
@@ -336,7 +340,10 @@ def list_of_object(prop_name: str,
     return match, insert, dep_list
 
 
-def key_value_store(prop, prop_value_dict, obj_var,import_type):
+def key_value_store(prop,
+                    prop_value_dict,
+                    obj_var,
+                    import_type: ImportType):
     """
         Create the Typeql for the key-value store sub object
     Args:
