@@ -109,8 +109,12 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
     return obj_tql, tql_name, is_list, protocl
 
 
-def sro_type_to_tql(sro_type, sro_sub_type,import_type:ImportType=default_import_type,
-                    attack_object=False, uses_relation=False, is_procedure=False) -> [dict, str, list, str]:
+def sro_type_to_tql(sro_type: str,
+                    sro_sub_type: str,
+                    import_type:ImportType=default_import_type,
+                    attack_object=False,
+                    uses_relation=False,
+                    is_procedure=False) -> [dict, str, list, str]:
     """ convert Stix object into a data model for processing
 
         Args:

@@ -15,6 +15,8 @@ import copy
 
 import logging
 
+from stix.module.typedb_lib.import_type_factory import ImportType
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
@@ -96,7 +98,10 @@ def add_property_to_typeql(prop, obj_tql, obj, prop_var_list):
 # --------------------------------------------------
 # Giant Switch statement to add the embedded relations to the typeql statement
 
-def add_relation_to_typeql(rel, obj, obj_var, prop_var_list, import_type, inc, protocol):
+def add_relation_to_typeql(rel, obj, obj_var, prop_var_list,
+                           import_type: ImportType,
+                           inc,
+                           protocol: str):
     """
         Top level function to add one of the sub objects to the stix object
     Args:
@@ -174,7 +179,11 @@ def add_relation_to_typeql(rel, obj, obj_var, prop_var_list, import_type, inc, p
 # generic methods
 
 
-def extensions(prop_name, prop_dict, parent_var, import_type, protocol):
+def extensions(prop_name: str,
+               prop_dict,
+               parent_var,
+               import_type: ImportType,
+               protocol: str):
     """
         Create the Typeql for the extensions sub object
     Args:
@@ -266,7 +275,11 @@ def load_object(prop_name: str, prop_dict, parent_var: str, import_type: dict, p
     return match, insert, dep_list
 
 
-def list_of_object(prop_name, prop_value_list, parent_var, import_type, protocol):
+def list_of_object(prop_name: str,
+                   prop_value_list: List[str],
+                   parent_var,
+                   import_type: ImportType,
+                   protocol: str):
     """
         Create the Typeql for the list of object sub object
     Args:
@@ -469,7 +482,9 @@ def get_selector_var(selector, prop_var_list):
 # analysis_sco_refs
 # etc.
 
-def embedded_relation(prop, prop_value, obj_var, inc, import_type, protocol):
+def embedded_relation(prop, prop_value, obj_var, inc,
+                      import_type: ImportType,
+                      protocol: str):
     """
         Create the Typeql for the embedded relation sub object
     Args:
@@ -529,7 +544,7 @@ def embedded_relation(prop, prop_value, obj_var, inc, import_type, protocol):
     return match, insert, dep_list
 
 
-def get_source_from_id(stid, protocol, import_type):
+def get_source_from_id(stid: str, protocol: str, import_type: ImportType):
     """
         Get the source of the stix object
     Args:
@@ -576,7 +591,7 @@ def get_source_from_id(stid, protocol, import_type):
     return source
 
 
-def get_embedded_match(source_id, i, protocol, import_type):
+def get_embedded_match(source_id: str, i: int, protocol: str, import_type: ImportType):
     """
         Assemble the typeql variable and match statement given the stix-id, and the increment
     Args:
@@ -595,7 +610,7 @@ def get_embedded_match(source_id, i, protocol, import_type):
     return source_var, match
 
 
-def get_full_object_match(source_id, protocol, import_type):
+def get_full_object_match(source_id: str, protocol: str, import_type: ImportType):
     """
         Return a typeql match statement for this stix object
     Args:
