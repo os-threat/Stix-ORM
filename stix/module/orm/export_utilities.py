@@ -10,6 +10,8 @@ from stix.module.authorise import authorised_mappings
 
 import logging
 
+from stix.module.typedb_lib.import_type_factory import ImportType
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
@@ -18,7 +20,7 @@ logger.setLevel(logging.DEBUG)
 # --------------------------------------------------------------------------------------------------------
 
 
-def convert_ans_to_res(answer_iterator, r_tx, import_type: str):
+def convert_ans_to_res(answer_iterator, r_tx, import_type: ImportType):
     """
     Take the response from TypeDB to a query, and start the process to use GRPC (typedb_lib-client) commands
     to expand on the returned data to some potential object shape (i.e. mandatory and optional),
@@ -86,7 +88,7 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: str):
     return res
 
 
-def process_entity(thing, r_tx, stix_id):
+def process_entity(thing, r_tx, stix_id: str):
     """
         If the current returned object from typedb_lib contains an entity then unpack it using grpc commands
         into an interim list
@@ -106,7 +108,7 @@ def process_entity(thing, r_tx, stix_id):
     return play
 
 
-def process_relns(reln_types, r_tx, import_type: str):
+def process_relns(reln_types, r_tx, import_type: ImportType):
     """
         If the current returned object is a list of relations (i.e. a list of embedded objects), then unpack them
     Args:
@@ -193,7 +195,7 @@ def process_value(p):
     return ret_value
 
 
-def get_relation_details(r, r_tx, import_type: str):
+def get_relation_details(r, r_tx, import_type: ImportType):
     """
         For a given sub-object type, unpack it
     Args:
@@ -235,7 +237,7 @@ def get_relation_details(r, r_tx, import_type: str):
     return reln
 
 
-def reln_map_entity_attribute(reln_map, r_tx, stix_id, is_kv):
+def reln_map_entity_attribute(reln_map, r_tx, stix_id: str, is_kv):
     """
         Process a map of Player by Role types, and unpack entity and attribute
     Args:
@@ -346,7 +348,9 @@ def get_key_value_relations(r, r_tx):
     return roles
 
 
-def get_list_of_objects(r, r_tx, import_type):
+def get_list_of_objects(r,
+                        r_tx,
+                        import_type: ImportType):
     """
         Process a list of objects sub object through grpc
     Args:
@@ -401,7 +405,9 @@ def get_list_of_objects(r, r_tx, import_type):
     return roles
 
 
-def reln_map_entity_relation(reln_map, r_tx, stix_id):
+def reln_map_entity_relation(reln_map,
+                             r_tx,
+                             stix_id: str):
     """
 
     Args:
@@ -446,7 +452,9 @@ def get_embedded_relations(r, r_tx):
     return roles
 
 
-def get_extension_relations(r, r_tx, import_type):
+def get_extension_relations(r,
+                            r_tx,
+                            import_type: ImportType):
     """
         Process a Stix extension sub object through grpc
     Args:
@@ -508,7 +516,10 @@ def get_extension_relations(r, r_tx, import_type):
     return roles
 
 
-def validate_get_relns(rel, r_tx, obj_name, import_type):
+def validate_get_relns(rel,
+                       r_tx,
+                       obj_name,
+                       import_type: ImportType):
     """
         When processing relations for an object, ensure we only access relations for sub objects,
         and not Stix relations or sightings
@@ -558,7 +569,11 @@ def validate_get_relns(rel, r_tx, obj_name, import_type):
         logger.error(f'Error, relation name is {reln_name}')
 
 
-def return_valid_relations(rel, r_tx, obj_name, role_owner, import_type):
+def return_valid_relations(rel,
+                           r_tx,
+                           obj_name,
+                           role_owner,
+                           import_type: ImportType):
     """
         return only the valid relations to the relation check
     Args:
