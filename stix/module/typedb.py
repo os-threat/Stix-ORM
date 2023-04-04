@@ -671,7 +671,7 @@ class TypeDBSource(DataSource):
                            import_type=self.import_type)
 
         logger.debug(f'data is -> {data}')
-        stix_obj = unwrap_or_failure(data).bind(lambda x: parse(x))
+        stix_obj = unwrap_or_failure(data).bind(lambda x: parse(data=x, import_type=self.import_type))
 
         result = write_to_file("stix/module/orm/export_final.json", stix_obj)
         if not is_successful(result):
