@@ -85,7 +85,7 @@ def raw_stix2_to_typeql(stix_object,
     auth = authorised_mappings(import_type)
     logger.debug(f'stix object type {stix_object["type"]}\n')
 
-    auth_types = copy.deepcopy(auth["tql_types"])
+    auth_types = copy.deepcopy(auth["types"])
     if stix_object.type in auth_types["sdo"]:
         logger.debug(f' going into sdo ---? {stix_object}')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = sdo_to_typeql(stix_object, import_type)

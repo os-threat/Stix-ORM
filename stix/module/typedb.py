@@ -12,7 +12,6 @@ from returns.unsafe import unsafe_perform_io
 from typedb.client import *
 from stix.module.orm.import_objects import raw_stix2_to_typeql
 from stix.module.orm.delete_object import delete_stix_object, add_delete_layers
-from stix.module.orm.import_utilities import get_embedded_match
 from stix.module.orm.export_object import convert_ans_to_stix
 from stix.module.parsing.parse_objects import parse
 from .authorise import authorised_mappings
@@ -657,10 +656,10 @@ class TypeDBSource(DataSource):
     @safe
     def __retrieve_stix_object(self,
                                stix_id: str):
-        #TODO: Fix. Either pass in the protocol or dervice it
-        protocol ="stix21"
-        obj_var, type_ql = get_embedded_match(stix_id, 0, protocol, self.import_type)
+        logger.debug(f'__retrieve_stix_object: {stix_id}')
+        obj_var, type_ql = get_embedded_match(stix_id, self.import_type)
         query = 'match ' + type_ql
+        logger.debug(f'query is {query}')
 
         import_type = self.__default_import_type()
 
@@ -669,7 +668,7 @@ class TypeDBSource(DataSource):
                            database=self.database,
                            query=query,
                            data_query=convert_ans_to_stix,
-                           import_type=import_type)
+                           import_type=self.import_type)
 
         logger.debug(f'data is -> {data}')
         stix_obj = unwrap_or_failure(data).bind(lambda x: parse(x))
@@ -747,3 +746,51 @@ class TypeDBSource(DataSource):
 
         """
         pass
+
+
+
+def get_embedded_match(source_id, import_type):
+    """
+        Assemble the typeql variable and match statement given the stix-id, and the increment
+    Args:
+        source_id (): stix-id to use
+        i (): number of times this type of object has been used
+    Returns:
+        source_var, the typeql string of the variable
+        match, the typeql match statement
+    """
+    source_type = get_source_type(source_id, import_type)
+    source_var = '$' + source_type
+    if source_type == 'relationship':
+        source_type = 'stix-core-relationship'
+    match = f' {source_var} isa {source_type}, has stix-id "{source_id}";\n'
+    return source_var, match
+
+def get_source_type(source_id, import_type):
+    """
+        Get the type of the source_id
+    Args:
+        source_id (): stix-id to use
+    Returns:
+        source_type, the type of the source_id
+    """
+    auth = authorised_mappings(import_type)
+    tmp_source = source_id.split('--')[0]
+    source = ""
+    for model in auth["conv"]["sdo"]:
+        if model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    for model in auth["conv"]["sro"]:
+        if model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    for model in auth["conv"]["sco"]:
+        if model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    for model in auth["conv"]["meta"]:
+        if model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    return source

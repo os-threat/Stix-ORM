@@ -99,21 +99,18 @@ def dict_to_stix(stix_dict: dict,
         objects that I don't know about ahead of time)
     """
     assert len(stix_dict) > 0
-    logger.debug("I'm in dict to stix")
+    logger.debug(f"I'm in dict to stix, {stix_dict}")
     auth = authorised_mappings(import_type)
     if 'type' not in stix_dict:
         raise ParseError(f"Can't parse object with no 'type' property: {str(stix_dict)}")
 
-    version = "2.1"
-    logger.debug(f"my version is {version}")
-    logger.debug(f'my type is {stix_dict["type"]}')
     obj_type = stix_dict["type"]
-    logger.debug(f'\nin parse, type is --> {obj_type}')
+    logger.debug(f'\nin parse, raw type is --> {obj_type}')
     logger.debug(f'\n auth-sdo -->{auth["tql_types"]["sdo"]}\n')
     logger.debug(f'\n\n auth-sro -->{auth["tql_types"]["sro"]}\n')
     attack_object = False if not stix_dict.get("x_mitre_version", False) else True
     #print(f'auth is {auth["tql_types"]["meta"]}')
-    if obj_type in auth["tql_types"]["sdo"]:
+    if obj_type in auth["types"]["sdo"]:
         logger.debug("Im in sdo")
         sub_technique = False
         if attack_object:
@@ -123,10 +120,10 @@ def dict_to_stix(stix_dict: dict,
         logger.debug(f"tql name {sdo_tql_name}, obj tql {obj_tql}")
         obj_class = class_for_type(sdo_tql_name, import_type, "sdo")
         logger.debug(f'output  object class is {obj_class}')
-    elif obj_type in auth["tql_types"]["sco"]:
+    elif obj_type in auth["types"]["sco"]:
         logger.debug("I'm in sco")
         obj_class = class_for_type(obj_type, import_type, "sco")
-    elif obj_type in auth["tql_types"]["sro"]:
+    elif obj_type in auth["types"]["sro"]:
         logger.debug("I'm in sro")
         uses_relation = False
         is_procedure = False
@@ -149,10 +146,10 @@ def dict_to_stix(stix_dict: dict,
         if sro_tql_name == "attack-relation":
             obj_tql_name = sro_tql_name
         obj_class = class_for_type(obj_tql_name, import_type, "sro")
-    elif obj_type in auth["tql_types"]["sub"]:
+    elif obj_type in auth["types"]["sub"]:
         logger.debug("I'm in sub")
         obj_class = class_for_type(obj_type, import_type, "sub")
-    elif obj_type in auth["tql_types"]["meta"]:
+    elif obj_type in auth["types"]["meta"]:
         logger.debug("I'm in meta")
         if attack_object:
             obj_class = class_for_type("attack-marking", import_type, "meta")

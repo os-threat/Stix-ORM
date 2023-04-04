@@ -82,6 +82,7 @@ def authorised_mappings(import_type: ImportType=default_import_type):
     auth["reln_name"] = {}
     auth["reln"] = {}
     auth["tql_types"] = {}
+    auth["types"] = {}
     auth["is_lists"] = {}
 
     # setup Stix by default
@@ -125,6 +126,11 @@ def authorised_mappings(import_type: ImportType=default_import_type):
     auth["tql_types"]["sco"] = []
     auth["tql_types"]["sub"] = []
     auth["tql_types"]["meta"] = []
+    auth["types"]["sdo"] = []
+    auth["types"]["sro"] = []
+    auth["types"]["sco"] = []
+    auth["types"]["sub"] = []
+    auth["types"]["meta"] = []
     auth["is_lists"]["sdo"] = {}
     auth["is_lists"]["sro"] = {}
     auth["is_lists"]["sco"] = {}
@@ -178,8 +184,11 @@ def authorised_mappings(import_type: ImportType=default_import_type):
                 for i, key in enumerate(keys):
                     if domain["mappings"].get("object_conversion", False):
                         #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}, cond->{conds[i]}')
-                        value_list = [x["type"] for x in domain["mappings"][matches[i]] if x["object"] == conds[i]]
-                        auth[name][key].extend(value_list)
+                        value_list_type = [x["type"] for x in domain["mappings"][matches[i]] if x["object"] == conds[i]]
+                        value_list_typeql = [x["typeql"] for x in domain["mappings"][matches[i]] if x["object"] == conds[i]]
+                        logger.debug(f' value_list_type -> {value_list_type}\n\n value_list_typeql -> {value_list_typeql}')
+                        auth["tql_types"][key].extend(value_list_typeql)
+                        auth["types"][key].extend(value_list_type)
 
                 #auth["tql_types"]["meta"] = stix_models["mappings"]["types_meta"]
             elif name == "is_lists":

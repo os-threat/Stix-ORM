@@ -105,17 +105,21 @@ def make_sdo(res, import_type: ImportType):
         stix_dict = {}
         # 2.A) get the typeql properties and relations
         sdo_tql_name = res["T_name"]
+        sdo_type = ""
+        for model in auth["conv"]["sdo"]:
+            if model["typeql"] == sdo_tql_name:
+                sdo_type = model["type"]
         props = res["has"]
         relns = res["relns"]
         attack_object = False
         sub_technique = False
         for prop in props:
-            if prop["typeql"] == "x_mitre_version":
+            if prop["typeql"] == "x-mitre-version":
                 attack_object = True
-            if prop["typeql"] == "x_mitre_is_subtechnique" and prop["value"] is True:
+            if prop["typeql"] == "x-mitre-is-subtechnique" and prop["value"] is True:
                 sub_technique = True
 
-        obj_tql, sdo_tql_name, is_list = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique)
+        obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(sdo_type, import_type, attack_object, sub_technique)
 
         #logger.debug(f"obj tql -> {obj_tql}\n sdo tql name -> {sdo_tql_name}")
         # 2.B) get the is_list list, the list of properties that are lists for that object
@@ -151,28 +155,37 @@ def make_sro(res, import_type: ImportType):
     stix_dict = {}
     # 2.A) get the typeql properties and relations
     sro_tql_name = res["type"]
-
+    sro_type = ""
     props = res["has"]
+    relns = res["relns"]
     sro_sub_rel = ""
-    if sro_tql_name == "relationship":
+    if sro_tql_name in auth["tql_types"]["relations_sro_roles"]:
+        sro_sub_rel = sro_tql_name
+        sro_type = "relationship"
+    elif sro_tql_name == "relationship":
+        sro_type = "relationship"
         for has in props:
             if has["typeql"] == "relationship-type":
                 sro_sub_rel = has["value"]
                 logger.debug(f'found relationship type -> {sro_sub_rel}\n')
                 break
-
-    relns = res["relns"]
+    else:
+        sro_type = "sighting"
     #
     # Note, Issue, cannot yet tell what to do with a procedure
     #
     attack_object = False
     uses_relation = False
-    is_procedure = False
+    if sro_tql_name == "procedire":
+        sro_sub_rel = sro_tql_name
+        is_procedure = True
+    else:
+        is_procedure = False
     for prop in props:
-        if prop["typeql"] == "x_mitre_version":
+        if prop["typeql"] == "x-mitre-_version":
             attack_object = True
 
-    obj_tql, sro_tql_name, is_list = sro_type_to_tql(sro_tql_name, sro_sub_rel, import_type, attack_object, uses_relation, is_procedure)
+    obj_tql, sro_tql_name, is_list, protocol = sro_type_to_tql(sro_type, sro_sub_rel, import_type, attack_object, uses_relation, is_procedure)
 
     logger.debug(f'make sro obj_tql ->{obj_tql}\n sro tql name ->{sro_tql_name}')
     # 2.A) get the typeql properties and relations
@@ -259,7 +272,7 @@ def make_sco(res: dict, import_type: ImportType):
     # - work out the type of object
     sco_tql_name = obj_type
     # - get the object-specific typeql names, sighting or relationship
-    obj_tql, sco_tql_name, is_list = sco__type_to_tql(sco_tql_name, import_type)
+    obj_tql, sco_tql_name, is_list, protocol = sco__type_to_tql(sco_tql_name, import_type)
 
     # 2.A) get the typeql properties and relations
     props = res["has"]
