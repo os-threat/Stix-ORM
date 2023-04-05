@@ -539,8 +539,9 @@ class TypeDBSink(DataSink):
         instructions: Instructions = check_missing_dependency_result.unwrap()
         if instructions.exist_missing_dependencies():
             return instructions.convert_to_result()
-        if instructions.cyclical_ids():
-            raise Exception("Missing dependencies")
+        if instructions.exist_cyclical_ids():
+            cycles = instructions.cyclical_ids()
+            raise Exception("Cycles exist in " + str(cycles))
 
         reorder_result = self.__reorder_instructions(instructions)
 
