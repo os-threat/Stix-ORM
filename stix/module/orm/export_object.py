@@ -5,7 +5,7 @@ from typing import List
 import copy
 
 from stix.module.authorise import authorised_mappings
-from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
+from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql, meta_type_to_tql
 from stix.module.orm.export_utilities import convert_ans_to_res
 import logging
 
@@ -78,7 +78,7 @@ def convert_res_to_stix(res: List[dict], import_type: ImportType):
             stix_dict = make_sdo(obj, import_type)
         elif obj_type in auth["tql_types"]["sco"]:
             stix_dict = make_sco(obj, import_type)
-        elif tql_type in auth["tql_types"]["sro"]:
+        elif tql_type in auth["tql_types"]["sro"] or tql_type == 'relationship':
             stix_dict = make_sro(obj, import_type)
         elif obj_type in auth["tql_types"]["meta"]:
             stix_dict = make_meta(obj, import_type)
@@ -182,7 +182,7 @@ def make_sro(res, import_type: ImportType):
     else:
         is_procedure = False
     for prop in props:
-        if prop["typeql"] == "x-mitre-_version":
+        if prop["typeql"] == "x-mitre-version":
             attack_object = True
 
     obj_tql, sro_tql_name, is_list, protocol = sro_type_to_tql(sro_type, sro_sub_rel, import_type, attack_object, uses_relation, is_procedure)
@@ -317,27 +317,25 @@ def make_meta(res, import_type: ImportType):
         stix_dict {}: a dict containing the stix object
     """
     stix_dict = {}
+    auth = authorised_mappings(import_type)
     obj_type = res["T_name"]
     props = res["has"]
+    relns = res["relns"]
+    attack_object = False
     if obj_type == "tlp-white" or obj_type == "tlp-green" or obj_type == "tlp-amber" or obj_type == "tlp-red":
         return colours_dict[obj_type]
-    elif obj_type == "statement-marking":
-        stix_dict["definition_type"] = "statement"
-        stix_dict["type"] = "marking-definition"
-        for prop in props:
-            if prop["typeql"] == "stix-id":
-                stix_dict["id"] = prop["value"]
-            elif prop["typeql"] == "spec-version":
-                stix_dict["spec_version"] = prop["value"]
-            elif prop["typeql"] == "created":
-                stix_dict["created"] = prop["value"]
-            elif prop["typeql"] == "statement":
-                temp_dict = {}
-                temp_dict["statement"] = prop["value"]
-                stix_dict["definition"] = temp_dict
 
-    else:
-        logger.error(f' make meta type not implemented {obj_type}')
+    for prop in props:
+        if prop["typeql"] == "x-mitre-attack-spec-version":
+            attack_object = True
+            break
+
+    obj_tql, sdo_tql_name, is_list, protocol = meta_type_to_tql(obj_type, import_type, attack_object)
+
+    # Add the properties onto the the object
+    stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
+    # Add the relations onto the object
+    stix_dict = make_relations(relns, obj_tql, stix_dict, is_list, obj_type, import_type)
 
     return stix_dict
 

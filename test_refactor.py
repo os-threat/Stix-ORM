@@ -737,13 +737,13 @@ if __name__ == '__main__':
     # 019fde1c-
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
-    stid1 = "domain-name--ecb120bf-2694-4902-a737-62b74539a41b"
+    stid1 = "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
     stid2 = "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"
     stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     #test_initialise()
     #load_file_list(path1, [f2, f29])
     #load_file(path1 + f29)
-    #load_file(mitre + "test.json")
+    load_file(mitre + "test.json")
     #check_object(mitre + "test.json")
     #load_file(data_path + file1)
     print("=====")
@@ -755,7 +755,7 @@ if __name__ == '__main__':
     #check_dir(path1)
     #test_delete(data_path+file1)
     #test_get(stid1)
-    test_get_delete(mitre + "test.json")
+    #test_get_delete(mitre + "test.json")
     #test_initialise()
     #test_delete_dir(path1)
     #clean_db()

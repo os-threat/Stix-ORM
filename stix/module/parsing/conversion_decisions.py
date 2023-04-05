@@ -232,7 +232,7 @@ def sco__type_to_tql(sco_type: str, import_type=default_import_type) -> [Dict[st
     return obj_tql, sco_tql_name, is_list, protocol
 
 
-def meta_type_to_tql(meta_type: str, import_type=default_import_type) -> [Dict[str, str], str, List[str]]:
+def meta_type_to_tql(meta_type: str, import_type=default_import_type, attack_object=False) -> [Dict[str, str], str, List[str]]:
     """ convert Stix object into a data model for processing
 
         Args:
@@ -247,13 +247,20 @@ def meta_type_to_tql(meta_type: str, import_type=default_import_type) -> [Dict[s
     """
     # Based on import type setup observables
     auth = authorised_mappings(import_type)
-    is_list = copy.deepcopy(auth["is_lists"]["sco"]["sco"])
-    is_list.extend(auth["is_lists"]["sco"][meta_type])
+    is_list = copy.deepcopy(auth["is_lists"]["sdo"]["sdo"])
+    is_list.extend(auth["is_lists"]["meta"]["marking-definition"])
+    meta_tql_name = meta_type
+    obj_tql = copy.deepcopy(auth["objects"]["marking-definition"])
+    # - add on the generic sro properties
+    obj_tql.update(stix_models["base"]["base_sdo"])
 
     # - get the object-specific typeql names, sighting or relationship
-    meta_tql_name = meta_type
-    obj_tql = copy.deepcopy(auth["objects"][meta_type])
-    # - add on the generic sro properties
-    obj_tql.update(stix_models["base"]["base_sco"])
+    if attack_object:
+        is_list.extend(auth["is_lists"]["sdo"]["attack"])
+        obj_tql.update(attack_models["base"]["attack_base"])
+        protocol = "attack"
+        meta_tql_name = "attack-marking"
+    else:
+        protocol = "stix21"
 
-    return obj_tql, meta_tql_name, is_list
+    return obj_tql, meta_tql_name, is_list, protocol

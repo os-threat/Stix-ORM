@@ -2,7 +2,7 @@ import copy
 from typing import Dict
 
 from stix.module.authorise import authorised_mappings, default_import_type
-from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
+from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql, meta_type_to_tql
 
 from stix.module.orm.import_utilities import clean_props, get_embedded_match, split_on_activity_type, \
     add_property_to_typeql, add_relation_to_typeql, val_tql
@@ -12,6 +12,11 @@ import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+
+marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+          "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
+          "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
+          "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
 
 # ---------------------------------------------------
 # 1.0) Helper method to direct the right typeql method to an incoming Stix object
@@ -441,12 +446,12 @@ def sco_to_typeql(sco, import_type=default_import_type):
 # --------------------------------------------------
 
 
-def marking_definition_to_typeql(stix_object, import_type=default_import_type):
+def marking_definition_to_typeql(meta, import_type=default_import_type):
     """
     Initial function to convert Stix2 marking object into typeql
 
     Args:
-        stix_object (): valid Stix2 object
+        meta (): valid Stix2 object
         import_type (): string, either Stix2 or ATT&CK
 
     Returns:
@@ -456,29 +461,77 @@ def marking_definition_to_typeql(stix_object, import_type=default_import_type):
         core_ql: a typeql insert statement that describes the object head, so the independent and dependent parts can be injected seaparately
 
     """
+    total_props = meta._inner
+    total_props = clean_props(total_props)
     dep_list = []
+    statement = {}
     dep_match = dep_insert = indep_ql = core_ql = ''
-    attack_object = False if not stix_object.get("x_mitre_attack_spec_version", False) else True
-    # if the marking is a colour, match it in, else it is a statement type
-    if stix_object.definition_type == "statement":
-        if attack_object:
-            indep_ql = '\n $marking isa attack-marking'
-            indep_ql += ',\n has x-mitre-attack-spec-version ' + val_tql(stix_object.x_mitre_attack_spec_version)
-            loc_list = stix_object.x_mitre_domains
-            for dom in loc_list:
-                indep_ql += ',\n has x-mitre-domains ' + val_tql(dom)
-            core_ql = '$marking isa attack-marking'
-        else:
-            indep_ql = '\n $marking isa statement-marking'
-            core_ql = '$marking isa statement-marking'
-        indep_ql += ',\n has statement ' + val_tql(stix_object.definition.statement)
-        indep_ql += ',\n has stix-type "marking-definition"'
-        indep_ql += ',\n has stix-id ' + val_tql(stix_object.id)
-        indep_ql += ',\n has created ' + val_tql(stix_object.created)
-        indep_ql += ',\n has spec-version ' + val_tql(stix_object.spec_version)
-        indep_ql += ';\n'
-        core_ql += ', has stix-id $stix-id;\n$stix-id ' + val_tql(stix_object.id)
-        core_ql += ';'
+    # 1.A) if one of the existing colours, return an empty string
+    if meta.id in marking:
+        return dep_match, dep_insert, indep_ql, core_ql, dep_list
+    # 1.B) Test for attack object and handle statement if a statement marking
+    attack_object = False if not meta.get("x_mitre_attack_spec_version", False) else True
+    if total_props.get("definition", False):
+        statement = total_props.pop("definition")
+        del total_props["definition_type"]
+        total_props.update(statement)
 
-    dep_obj = {"id": stix_object.id, "dep_list": dep_list, "type": "marking"}
+    obj_tql, meta_tql_name, is_list, protocol = meta_type_to_tql(meta.type, import_type, attack_object)
+
+    properties, relations = split_on_activity_type(total_props, obj_tql)
+
+    # 2.) setup the typeql statement for the sdo entity
+    meta_var = '$' + meta_tql_name
+    indep_ql = meta_var + ' isa ' + meta_tql_name
+    core_ql = meta_var + ' isa ' + meta_tql_name + ', has stix-id $stix-id;\n$stix-id ' + val_tql(meta.id) + ';\n'
+    indep_ql_props = dep_match = dep_insert = ''
+    logger.debug("----> Step 2 meta to typeql")
+    # 3.) add each of the properties and values of the properties to the typeql statement
+    prop_var_list = []
+    for prop in properties:
+        # split off for properties processing
+        indep_ql2, indep_ql_props2, prop_var_list = add_property_to_typeql(prop, obj_tql, meta, prop_var_list)
+        # then add them all together
+        indep_ql += indep_ql2
+        indep_ql_props += indep_ql_props2
+        # add a terminator on the end of the query statement
+    indep_ql += ";\n" + indep_ql_props + "\n\n"
+    logger.debug("----> Step 3 sdo to typeql")
+
+    # 4.) add each of the relations to the match and insert statements
+    for j, rel in enumerate(relations):
+        # split off for relation processing
+        dep_match2, dep_insert2, dep_list2 = add_relation_to_typeql(rel, meta, meta_var, prop_var_list, import_type, j,
+                                                                    protocol)
+        # then add it back together
+        dep_match = dep_match + dep_match2
+        dep_insert = dep_insert + dep_insert2
+        dep_list = dep_list + dep_list2
+
+    logger.debug("----> Step 4 sdo to typeql")
+    dep_obj = {"id": meta.id, "dep_list": dep_list, "type": meta.type}
     return dep_match, dep_insert, indep_ql, core_ql, dep_obj
+
+    # # if the marking is a colour, match it in, else it is a statement type
+    # if stix_object.definition_type == "statement":
+    #     if attack_object:
+    #         indep_ql = '\n $marking isa attack-marking'
+    #         indep_ql += ',\n has x-mitre-attack-spec-version ' + val_tql(stix_object.x_mitre_attack_spec_version)
+    #         loc_list = stix_object.x_mitre_domains
+    #         for dom in loc_list:
+    #             indep_ql += ',\n has x-mitre-domains ' + val_tql(dom)
+    #         core_ql = '$marking isa attack-marking'
+    #     else:
+    #         indep_ql = '\n $marking isa statement-marking'
+    #         core_ql = '$marking isa statement-marking'
+    #     indep_ql += ',\n has statement ' + val_tql(stix_object.definition.statement)
+    #     indep_ql += ',\n has stix-type "marking-definition"'
+    #     indep_ql += ',\n has stix-id ' + val_tql(stix_object.id)
+    #     indep_ql += ',\n has created ' + val_tql(stix_object.created)
+    #     indep_ql += ',\n has spec-version ' + val_tql(stix_object.spec_version)
+    #     indep_ql += ';\n'
+    #     core_ql += ', has stix-id $stix-id;\n$stix-id ' + val_tql(stix_object.id)
+    #     core_ql += ';'
+    #
+    # dep_obj = {"id": stix_object.id, "dep_list": dep_list, "type": "marking"}
+    # return dep_match, dep_insert, indep_ql, core_ql, dep_obj

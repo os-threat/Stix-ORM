@@ -9,7 +9,7 @@ from stix.module.orm.import_utilities import split_on_activity_type, val_tql
 
 import logging
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 ##############################################################
 #  1.) Methods to Delete any Stix Objects
 ############################################################
@@ -28,15 +28,15 @@ def delete_stix_object(stix_object,
 
     auth = authorised_mappings(import_type)
     if stix_object.type in auth["types"]["sdo"]:
-        total_props, obj_tql, sdo_tql_name = sdo_to_data(stix_object, import_type)
+        total_props, obj_tql, sdo_tql_name, protocol = sdo_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(indep_ql)
         del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sdo_tql_name, import_type)
     elif stix_object.type in auth["types"]["sro"]:
-        total_props, obj_tql, sro_tql_name = sro_to_data(stix_object, import_type)
+        total_props, obj_tql, sro_tql_name, protocol = sro_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(dep_insert)
         del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sro_tql_name, import_type)
     elif stix_object.type in auth["types"]["sco"]:
-        total_props, obj_tql, sro_tql_name = sco_to_data(stix_object, import_type)
+        total_props, obj_tql, sro_tql_name, protocol = sco_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(core_ql)
         # Need to change this line to suit scenarios where object name is not type name (e.g. future)
         del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sro_tql_name, import_type)

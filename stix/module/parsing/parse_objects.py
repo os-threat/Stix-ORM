@@ -16,7 +16,7 @@ from stix.module.initialise import tlp_ids
 from stix.module.definitions.stix21 import stix_models
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 default_import_type = import_type_factory.get_default_import()
 
 def parse(data: dict, allow_custom=False, import_type: ImportType=default_import_type):
