@@ -40,12 +40,42 @@
     "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
     "created": "2018-10-17T00:14:20.652Z",
     "modified": "2019-10-11T19:30:42.406Z",
+    "userid": "user-1",
+    "tags": [
+        "tag1",
+        "tag2"
+    ],
+    "status": "open",
+    "case_type": "incident",
+    "case_priority": "high",
+    "case_source": "email",
     "object_marking_refs": [
         "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
     ],
     "contents": [
         {
             "object_refs": "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",
+            "created": "2019-07-17T20:04:40.297Z",
+            "modified": "2019-07-17T20:04:40.297Z"
+        }
+    ],
+    "enrichments": [
+        {
+            "object_refs": "enrichment--bc69bdf3-586c-433e-9301-982b79a4068a",
+            "created": "2019-07-17T20:04:40.297Z",
+            "modified": "2019-07-17T20:04:40.297Z"
+        }
+    ],
+    "notes": [
+        {
+            "object_refs": "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061",
+            "created": "2019-07-17T20:04:40.297Z",
+            "modified": "2019-07-17T20:04:40.297Z"
+        }
+    ],
+    "tasks": [
+        {
+            "object_refs": "task--ef7cd0bd-2e83-4869-b35f-c0f0e9d13547",
             "created": "2019-07-17T20:04:40.297Z",
             "modified": "2019-07-17T20:04:40.297Z"
         }
@@ -80,5 +110,60 @@
     "object_refs": [
       "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     ]
-  }
+  },
+  {
+    "type": "domain-name",
+    "spec_version": "2.1",
+    "id": "domain-name--3c10e93f-798e-52a6-a0c1-08156efab7f5",
+    "value": "site.of.interest.zaz",
+    "resolves_to_refs": ["ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"]
+  },
+  {
+    "type": "enrichment",
+    "spec_version": "2.1",
+    "id": "enrichment--bc69bdf3-586c-433e-9301-982b79a4068a",
+    "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
+    "created": "2016-04-07T19:58:16.000Z",
+    "modified": "2016-04-07T19:58:16.000Z",
+    "first_observed": "2015-12-21T19:00:00Z",
+    "last_observed": "2015-12-21T19:00:00Z",
+    "number_observed": 50,
+    "object_refs": [
+      "domain-name--3c10e93f-798e-52a6-a0c1-08156efab7f5"
+    ]
+  },
+  {
+  "type": "note",
+  "spec_version": "2.1",
+  "id": "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061",
+  "created": "2016-05-12T08:17:27.000Z",
+  "modified": "2016-05-12T08:17:27.000Z",
+  "external_references": [
+    {
+      "source_name": "job-tracker",
+      "external_id": "job-id-1234"
+    }
+  ],
+  "abstract": "Tracking Team Note#1",
+  "content": "This note indicates the various steps taken by the threat analyst team to investigate this specific campaign. Step 1) Do a scan 2) Review scanned results for identified hosts not known by external intel…etc.",
+  "authors": ["John Doe"],
+  "object_refs": ["enrichment--bc69bdf3-586c-433e-9301-982b79a4068a"]
+},
+  {
+  "type": "task",
+  "spec_version": "2.1",
+  "id": "task--ef7cd0bd-2e83-4869-b35f-c0f0e9d13547",
+  "created": "2016-05-12T08:17:27.000Z",
+  "modified": "2016-05-12T08:17:27.000Z",
+  "external_references": [
+    {
+      "source_name": "firewall-logs",
+      "external_id": "log#1234"
+    }
+  ],
+  "abstract": "Task1",
+  "content": "task details here",
+  "authors": ["John Doe"],
+  "object_refs": ["ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"]
+}
 ]

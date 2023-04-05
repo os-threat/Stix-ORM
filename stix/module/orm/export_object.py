@@ -324,11 +324,17 @@ def make_meta(res, import_type: ImportType):
     attack_object = False
     if obj_type == "tlp-white" or obj_type == "tlp-green" or obj_type == "tlp-amber" or obj_type == "tlp-red":
         return colours_dict[obj_type]
-
-    for prop in props:
+    j=0
+    tmp_val = ""
+    for i, prop in enumerate(props):
         if prop["typeql"] == "x-mitre-attack-spec-version":
             attack_object = True
-            break
+        elif prop["typeql"] == "statement":
+            tmp_val = prop["value"]
+            j = i
+
+    if tmp_val != "":
+        del props[j]
 
     obj_tql, sdo_tql_name, is_list, protocol = meta_type_to_tql(obj_type, import_type, attack_object)
 
@@ -336,6 +342,10 @@ def make_meta(res, import_type: ImportType):
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
     # Add the relations onto the object
     stix_dict = make_relations(relns, obj_tql, stix_dict, is_list, obj_type, import_type)
+
+    if tmp_val != "":
+        stix_dict["definition"] = {"statement": tmp_val}
+        stix_dict["definition_type"] = "statement"
 
     return stix_dict
 

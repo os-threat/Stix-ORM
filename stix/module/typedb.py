@@ -247,7 +247,7 @@ class TypeDBSink(DataSink):
         return Success(unwrap_or_failure(extracted_output))
 
     def get_stix_ids(self):
-        """ Get all the stix-ids in a database, should be moved to typedb_lib file
+        """ Get all the stix-ids in a database, should be moved to DataSource object
 
         Returns:
             id_list : list of the stix-ids in the database
