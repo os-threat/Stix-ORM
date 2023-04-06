@@ -108,7 +108,8 @@ def dict_to_stix(stix_dict: dict,
     logger.debug(f'\nin parse, raw type is --> {obj_type}')
     logger.debug(f'\n auth-sdo -->{auth["tql_types"]["sdo"]}\n')
     logger.debug(f'\n\n auth-sro -->{auth["tql_types"]["sro"]}\n')
-    attack_object = False if not stix_dict.get("x_mitre_version", False) else True
+    attack_object = False if not stix_dict.get("x_mitre_domains", False) else True
+    logger.debug(f'attack object {attack_object}')
     #print(f'auth is {auth["tql_types"]["meta"]}')
     if obj_type in auth["types"]["sdo"]:
         logger.debug("Im in sdo")
@@ -155,6 +156,7 @@ def dict_to_stix(stix_dict: dict,
             obj_class = class_for_type("attack-marking", import_type, "meta")
         else:
             obj_class = dict_to_stix2(stix_dict, True)
+            logger.debug(f'object class is finally {obj_class}')
             return obj_class
 
     elif allow_custom:

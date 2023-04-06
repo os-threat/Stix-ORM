@@ -72,7 +72,7 @@ def test_insert_statements(pahhway, stid):
         for stix_dict in json_text:
             if stix_dict['id'] == stid:
                 dep_obj = dict_to_typeql(stix_dict, import_type)
-                print(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
+                logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
 
 
 def update_layers(layers, indexes, missing, dep_obj, cyclical):
@@ -105,7 +105,7 @@ def backdoor_add_dir(dirpath):
     obj_list = []
     dirFiles = os.listdir(dirpath)
     sorted_files = sorted(dirFiles)
-    print(sorted_files)
+    logger.debug(sorted_files)
     typedb_sink = TypeDBSink(connection, True, import_type)
     typedb_source = TypeDBSource(connection, import_type)
     for s_file in sorted_files:
@@ -115,16 +115,19 @@ def backdoor_add_dir(dirpath):
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 json_text = json.load(f)
                 for element in json_text:
-                    print(f'**********==={element}')
+                    logger.debug(f'**********==={element}')
                     obj_list.append(element)
                     temp_id = element.get('id', False)
                     if temp_id:
                         id_list.append(temp_id)
 
                     dep_obj = dict_to_typeql(element, import_type)
+                    # logger.debug('----------------------------------------------------------------------------------------------------')
+                    # logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
+                    # logger.debug('----------------------------------------------------------------------------------------------------')
                     layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
 
-    print(f'missing {missing}, cyclical {cyclical}')
+    logger.debug(f'missing {missing}, cyclical {cyclical}')
     newlist = []
     duplist = []
     if missing == [] and cyclical == []:
@@ -137,7 +140,7 @@ def backdoor_add_dir(dirpath):
                 dep_insert = layer["dep_insert"]
                 indep_ql = layer["indep_ql"]
                 core_ql = layer["core_ql"]
-                print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+                #print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
                 prestring = ""
                 if dep_match != "":
                     prestring = "match " + dep_match
@@ -174,7 +177,9 @@ def backdoor_add(pahhway):
         for stix_dict in json_text:
             dep_obj = dict_to_typeql(stix_dict, import_type)
             layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
-            #print(f"layers -> {layers}")
+            print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+            print(f"layers -> {layers}")
+            print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
 
     print(f'missing {missing}, cyclical {cyclical}')
     if missing == [] and cyclical == []:
@@ -186,7 +191,7 @@ def backdoor_add(pahhway):
             dep_insert = dep_obj["dep_insert"]
             indep_ql = dep_obj["indep_ql"]
             core_ql = dep_obj["core_ql"]
-            print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+            #print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
             prestring = ""
             if dep_match != "":
                 prestring = "match " + dep_match
@@ -691,6 +696,7 @@ if __name__ == '__main__':
 
     data_path = "data/examples/"
     path1 = "data/standard/"
+    path2 = "data/mitre/load/"
     cert_root = "data/stix_cert_data"
     cert1 = "/attack_pattern_sharing/"
     cert2 = "/campaign_sharing/"
@@ -743,7 +749,7 @@ if __name__ == '__main__':
     #test_initialise()
     #load_file_list(path1, [f2, f29])
     #load_file(path1 + f29)
-    load_file(mitre + "test.json")
+    #load_file(mitre + "test.json")
     #check_object(mitre + "test.json")
     #load_file(data_path + file1)
     print("=====")
@@ -766,7 +772,7 @@ if __name__ == '__main__':
     #test_auth()
     #test_generate_docs()
     #backdoor_add(mitre + "test.json")
-    #backdoor_add_dir(path1)
+    backdoor_add_dir(path2)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "test.json", stid1)
     #test_insert_statements(path1 + f29, stid2)

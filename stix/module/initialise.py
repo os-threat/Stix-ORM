@@ -113,6 +113,7 @@ def load_typeql_data(data_list, stix_connection: Dict[str, str]):
             with session.transaction(TransactionType.WRITE) as write_transaction:
                 logger.info(f'inside initial data loader and ready to load')
                 for data in data_list:
+                    logger.info(f'\n\n{data}\n\n')
                     insert_iterator = write_transaction.query().insert(data)
 
                     logger.info(f'insert_iterator response ->\n{insert_iterator}')
