@@ -72,6 +72,9 @@ def _get_dict(data):
         except (ValueError, TypeError):
             raise ValueError(f"Cannot convert {str(data)} to dictionary.")
 
+def is_attack_object(stix_dict):
+    #TODO: Fix - x-mitre-collection returns false with this definition
+    return len(stix_dict.get("x_mitre_domains", [])) > 0
 
 def dict_to_stix(stix_dict: dict,
                  allow_custom=False,
@@ -108,7 +111,7 @@ def dict_to_stix(stix_dict: dict,
     logger.debug(f'\nin parse, raw type is --> {obj_type}')
     logger.debug(f'\n auth-sdo -->{auth["tql_types"]["sdo"]}\n')
     logger.debug(f'\n\n auth-sro -->{auth["tql_types"]["sro"]}\n')
-    attack_object = len(stix_dict.get("x_mitre_domains", [])) > 0
+    attack_object = is_attack_object(stix_dict)
     logger.debug(f'attack object {attack_object}')
     #print(f'auth is {auth["tql_types"]["meta"]}')
     if obj_type in auth["types"]["sdo"]:
