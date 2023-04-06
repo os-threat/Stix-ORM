@@ -179,7 +179,7 @@ def dict_to_stix(stix_dict: dict,
                 # prevents ParseError for unregistered objects when
                 # allow_custom=False and the extension defines a new object
                 return stix_dict
-        raise ParseError(f"Can't parse unknown object type {obj_type}! For custom types, use the CustomObject decorator.", obj_type)
+        raise ParseError(f"Can't parse unknown object type {obj_type}! For custom types, use the CustomObject decorator." + str(obj_type))
 
     logger.debug(f'object class is finally {obj_class}')
     logger.debug("========================================")
