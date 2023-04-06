@@ -192,7 +192,7 @@ class Instructions:
         if error is None:
             return
         logging.exception("\n".join(traceback.format_exception(error)))
-        self.instructions[id] = AddInstruction(status=Status.ERROR, id=id, error=str(error), typeql_obj={})
+        self.instructions[id] = AddInstruction(status=Status.ERROR, id=id, error=str(error))
 
     def insert_add_insert_missing_dependency(self,
                                              id: str,
