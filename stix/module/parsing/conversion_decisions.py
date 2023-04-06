@@ -14,7 +14,8 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 default_import_type = import_type_factory.get_default_import()
 
-def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
+def sdo_type_to_tql(sdo_type: str,
+                    import_type:ImportType=default_import_type,
                     attack_object=False, subtechnique=False) -> [dict, str, dict, str]:
     """ convert Stix object into a data model for processing
 
