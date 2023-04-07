@@ -472,8 +472,7 @@ def marking_definition_to_typeql(meta, import_type=default_import_type):
     # 1.B) Test for attack object and handle statement if a statement marking
     attack_object = False if not meta.get("x_mitre_attack_spec_version", False) else True
     if total_props.get("definition", False):
-        statement = total_props.pop("definition")
-        del total_props["definition_type"]
+        statement = total_props["definition"]
         total_props.update(statement)
 
     obj_tql, meta_tql_name, is_list, protocol = meta_type_to_tql(meta.type, import_type, attack_object)

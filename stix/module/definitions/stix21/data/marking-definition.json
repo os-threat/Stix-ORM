@@ -1,4 +1,6 @@
 {
   "name": "name",
-  "statement": "statement"
+  "statement": "statement",
+  "definition": "",
+  "definition_type": ""
 }

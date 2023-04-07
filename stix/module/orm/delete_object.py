@@ -168,7 +168,9 @@ def delete_sub_reln(rel, obj, obj_var, i, import_type):
           or rel == "observed_data_refs"
           or rel == "where_sighted_refs"
           or rel == "source_ref"
-          or rel == "target_ref"):
+          or rel == "target_ref"
+          or rel == "definition"
+          or rel == "definition_type"):
         match = delete = ''
 
     else:

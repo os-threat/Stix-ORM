@@ -1,9 +1,10 @@
 import json
 import os
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stix.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
 from typedb.client import *
 from stix.module.orm.import_objects import raw_stix2_to_typeql
 from stix.module.orm.delete_object import delete_stix_object
+from stix.module.orm.export_object import convert_ans_to_stix
 from stix.module.authorise import authorised_mappings, import_type_factory
 from stix.module.parsing.parse_objects import parse
 from stix.module.generate_docs import configure_overview_table_docs, object_tables
@@ -47,6 +48,40 @@ def test_generate_docs():
     print("================================================================================")
     print("------------------------ Test Doc Generation ---------------------------------------------")
     configure_overview_table_docs(object_tables)
+
+
+def backdoor_get(stix_id, _composite_filters=None):
+    """Retrieve STIX object from file directory via STIX ID.
+    Args:
+        stix_id (str): The STIX ID of the STIX object to be retrieved.
+        _composite_filters (FilterSet): collection of filters passed from the parent
+            CompositeDataSource, not user supplied
+    Returns:
+        (STIX object): STIX object that has the supplied STIX ID.
+            The STIX object is loaded from its json file, parsed into
+            a python STIX object and then returned
+    """
+    try:
+        obj_var, type_ql = get_embedded_match(stix_id, import_type)
+        match = 'match ' + type_ql
+        #logger.debug(f' typeql -->: {match}')
+        g_uri = connection["uri"] + ':' + connection["port"]
+        with TypeDB.core_client(g_uri) as client:
+            with client.session(connection["database"], SessionType.DATA) as session:
+                with session.transaction(TransactionType.READ) as read_transaction:
+                    answer_iterator = read_transaction.query().match(match)
+                    #logger.debug((f'have read the query -> {answer_iterator}'))
+                    stix_dict = convert_ans_to_stix(match, answer_iterator, read_transaction, import_type)
+                    stix_obj = parse(stix_dict, import_type=import_type)
+                    #logger.debug(f'stix_obj -> {stix_obj}')
+                    with open("export_final.json", "w") as outfile:
+                        json.dump(stix_dict, outfile)
+
+    except Exception as e:
+        logger.error(f'Stix Object Retrieval Error: {e}')
+        stix_obj = None
+
+    return stix_obj
 
 
 def dict_to_typeql(stix_dict, import_type):
@@ -318,6 +353,7 @@ def test_get_delete(fullname):
     print("\n\n=============\n-------------\n$$$$$$$$$$$$$$$$$$$$$\n")
     for obj_id in id_list:
         query_id(obj_id)
+    print(f'id list -> {id_list}')
 
 
 def query_id(stixid):
@@ -328,7 +364,8 @@ def query_id(stixid):
     """
     typedb = TypeDBSource(connection, import_type)
     print(f'stixid -> {stixid}')
-    stix_dict = typedb.get(stixid)
+    #stix_dict = typedb.get(stixid)
+    stix_dict = backdoor_get(stixid)
     stix_obj = stix_dict #parse(stix_dict)
     print(' ---------------------------Query Object----------------------')
     print(stix_obj.serialize(pretty=True))
@@ -761,7 +798,7 @@ if __name__ == '__main__':
     #check_dir(path1)
     #test_delete(data_path+file1)
     #test_get(stid1)
-    #test_get_delete(mitre + "test.json")
+    test_get_delete(path2 + "test.json")
     #test_initialise()
     #test_delete_dir(path1)
     #clean_db()
@@ -772,7 +809,7 @@ if __name__ == '__main__':
     #test_auth()
     #test_generate_docs()
     #backdoor_add(mitre + "test.json")
-    backdoor_add_dir(path2)
+    #backdoor_add_dir(path2)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "test.json", stid1)
     #test_insert_statements(path1 + f29, stid2)

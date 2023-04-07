@@ -164,7 +164,7 @@ def add_relation_to_typeql(rel,
         match, insert, dep_list = extensions(rel, obj[rel], obj_var, import_type, protocol)
 
     # ignore the following relations as they are already processed, for Relationships, Sightings and Extensions
-    elif rel in auth["reln_name"]["standard_relations"]:
+    elif rel in auth["reln_name"]["standard_relations"] or rel == "definition" or "definition_type":
         logger.debug("standard")
         match = insert = ''
 

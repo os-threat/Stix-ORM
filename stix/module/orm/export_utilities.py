@@ -13,7 +13,7 @@ import logging
 from stix.module.typedb_lib.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 # --------------------------------------------------------------------------------------------------------
 #  1. Convert TypeQl Ans to Res
