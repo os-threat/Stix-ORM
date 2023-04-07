@@ -72,6 +72,9 @@ def _get_dict(data):
         except (ValueError, TypeError):
             raise ValueError(f"Cannot convert {str(data)} to dictionary.")
 
+def is_attack_object(stix_dict):
+    #TODO: Fix - x-mitre-collection returns false with this definition
+    return len(stix_dict.get("x_mitre_domains", [])) > 0
 
 def dict_to_stix(stix_dict: dict,
                  allow_custom=False,
@@ -108,14 +111,14 @@ def dict_to_stix(stix_dict: dict,
     logger.debug(f'\nin parse, raw type is --> {obj_type}')
     logger.debug(f'\n auth-sdo -->{auth["tql_types"]["sdo"]}\n')
     logger.debug(f'\n\n auth-sro -->{auth["tql_types"]["sro"]}\n')
-    attack_object = False if not stix_dict.get("x_mitre_domains", False) else True
+    attack_object = is_attack_object(stix_dict)
     logger.debug(f'attack object {attack_object}')
     #print(f'auth is {auth["tql_types"]["meta"]}')
     if obj_type in auth["types"]["sdo"]:
         logger.debug("Im in sdo")
         sub_technique = False
         if attack_object:
-            sub_technique = False if not stix_dict.get("x_mitre_is_subtechnique", False) else True
+            sub_technique = stix_dict.get("x_mitre_is_subtechnique", False)
         logger.debug(f'subtechnique {sub_technique}, attack {attack_object}')
         obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(obj_type, import_type, attack_object, sub_technique)
         logger.debug(f"tql name {sdo_tql_name}, obj tql {obj_tql}")
@@ -179,7 +182,7 @@ def dict_to_stix(stix_dict: dict,
                 # prevents ParseError for unregistered objects when
                 # allow_custom=False and the extension defines a new object
                 return stix_dict
-        raise ParseError(f"Can't parse unknown object type {obj_type}! For custom types, use the CustomObject decorator.", obj_type)
+        raise ParseError(f"Can't parse unknown object type {obj_type}! For custom types, use the CustomObject decorator." + str(obj_type))
 
     logger.debug(f'object class is finally {obj_class}')
     logger.debug("========================================")

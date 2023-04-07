@@ -236,7 +236,7 @@ class Instruction(BaseModel):
     error: Optional[str]
 
 class AddInstruction(Instruction):
-    typeql_obj: TypeQLObject
+    typeql_obj: Optional[TypeQLObject]
 
 class DeleteInstruction(Instruction):
     pass

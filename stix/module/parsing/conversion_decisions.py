@@ -14,7 +14,8 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 default_import_type = import_type_factory.get_default_import()
 
-def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
+def sdo_type_to_tql(sdo_type: str,
+                    import_type:ImportType=default_import_type,
                     attack_object=False, subtechnique=False) -> [dict, str, dict, str]:
     """ convert Stix object into a data model for processing
 
@@ -53,7 +54,7 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
             obj_tql = copy.deepcopy(os_threat_models["data"][sdo_type])
         else:
             logger.error(f'obj_type type {sdo_type} not supported')
-            return {}, "", []
+            return {}, "", {}, ""
     # - mitre attack_setting import
     elif auth['STIX21'] and auth["ATT&CK"]:
         if attack_object:
@@ -76,7 +77,7 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
             # Else log an error
             if not attack_type:
                 logger.error(f'obj_type type {sdo_type} not in attack type conversion dict, type_to_tql_name')
-                return {}, "", []
+                return {}, "", {}, ""
             else:
                 tql_name = attack_type
 
@@ -92,11 +93,11 @@ def sdo_type_to_tql(sdo_type, import_type:ImportType=default_import_type,
                 obj_tql = copy.deepcopy(os_threat_models["data"][sdo_type])
             else:
                 logger.error(f'obj_type type {sdo_type} not in stix_models["dispatch_stix"] or dispatch mitre')
-                return {}, "", []
+                return {}, "", {}, ""
 
     else:
         logger.error(f'import type {import_type} not supported')
-        return {}, "", []
+        return {}, "", {}, ""
 
     # 1.C) Add the standard object properties to the specific ones, and split them into properties and relations
     logger.debug("about to update stuff")
