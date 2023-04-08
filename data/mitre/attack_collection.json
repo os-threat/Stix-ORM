@@ -1,0 +1,65 @@
+[{
+  "type": "x-mitre-collection",
+  "id": "x-mitre-collection--b76ed159-6b5c-4d89-8286-ccf339d38ad0",
+  "spec_version": "2.1",
+  "x_mitre_attack_spec_version": "2.1.0",
+  "name": "Enterprise ATT&CK",
+  "x_mitre_version": "10.1",
+  "description": "ATT&CK for Enterprise provides a knowledge base of real-world adversary behavior targeting traditional enterprise networks. ATT&CK for Enterprise covers the following platforms: Windows, macOS, Linux, PRE, Office 365, Google Workspace, IaaS, Network, and Containers.",
+  "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+  "created": "2018-01-17T12:56:55.080Z",
+  "modified": "2021-11-10T14:00:00.188Z",
+  "object_marking_refs": [
+    "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+  ],
+  "x_mitre_contents": [
+    {
+      "object_ref": "attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4",
+      "object_modified": "2021-04-29T14:49:39.188Z"
+    },
+    {
+      "object_ref": "attack-pattern--67720091-eee3-4d2d-ae16-8264567f6f5b",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "intrusion-set--7113eaa5-ba79-4fb3-b68a-398ee9cd698e",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "course-of-action--93e7968a-9074-4eac-8ae9-9f5200ec3317",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "relationship--d7360dcb-fd97-4775-90fe-a892b9b24b54",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "relationship--b427e519-8ec0-4ae3-9dda-273cc71f00eb",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "x-mitre-data-component--18b236d8-7224-488f-9d2f-50076a0f653a",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "x-mitre-data-source--d6188aac-17db-4861-845f-57c369f9b4c8",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "x-mitre-matrix--eafc1b4c-5e56-4965-bd4e-66a6a89c88cc",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "malware--0f1ad2ef-41d4-4b7a-9304-ddae68ea3005",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "tool--f59508a6-3615-47c3-b493-6676e1a39a87",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    }
+  ]
+}]

@@ -130,7 +130,6 @@ def backdoor_add_dir(dirpath):
     """ Test the database initialisation function
 
     """
-    typedb = TypeDBSink(connection, True, import_type)
     layers = []
     indexes = []
     missing = []
@@ -140,9 +139,9 @@ def backdoor_add_dir(dirpath):
     obj_list = []
     dirFiles = os.listdir(dirpath)
     sorted_files = sorted(dirFiles)
-    logger.debug(sorted_files)
     typedb_sink = TypeDBSink(connection, True, import_type)
     typedb_source = TypeDBSource(connection, import_type)
+    logger.debug(sorted_files)
     for s_file in sorted_files:
         if os.path.isdir(os.path.join(dirpath, s_file)):
             continue
@@ -269,7 +268,7 @@ def load_file_list(path1, file_list):
             break
         else:
             with open((path1+f), mode="r", encoding="utf-8") as df:
-                #print(f'I am about to load {f}')
+                #print(f'I am about to history {f}')
                 json_text = json.load(df)
                 obj_list.extend(json_text)
 
@@ -282,7 +281,7 @@ def load_file(fullname):
     Args:
         fullname (): path and filename
     """
-    logger.debug(f'inside load file {fullname}')
+    logger.debug(f'inside history file {fullname}')
     input_id_list=[]
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
@@ -300,7 +299,7 @@ def load_file(fullname):
 
 
 def check_object(fullname):
-    logger.debug(f'inside load file {fullname}')
+    logger.debug(f'inside history file {fullname}')
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         typedb = TypeDBSink(connection, True, import_type)
@@ -505,7 +504,7 @@ def test_delete(path):
 
 
 def check_dir_ids(dirpath):
-    """ Open a directory and load all the files,
+    """ Open a directory and history all the files,
     one at a time to the database and then check the ids
 
     Args:
@@ -542,7 +541,7 @@ def check_dir_ids(dirpath):
 
 
 def check_dir_ids2(dirpath):
-    """ Open a directory and load all the files,
+    """ Open a directory and history all the files,
     creating a list of objects first and then adding them to the db
 
     Args:
@@ -581,7 +580,7 @@ def check_dir_ids2(dirpath):
 
 
 def check_dir(dirpath):
-    """ Open a directory and load all the files, optionally printing them
+    """ Open a directory and history all the files, optionally printing them
 
     Args:
         dirpath ():
@@ -733,7 +732,7 @@ if __name__ == '__main__':
 
     data_path = "data/examples/"
     path1 = "data/standard/"
-    path2 = "data/mitre/load/"
+    path2 = "data/mitre/history/"
     cert_root = "data/stix_cert_data"
     cert1 = "/attack_pattern_sharing/"
     cert2 = "/campaign_sharing/"
@@ -786,8 +785,8 @@ if __name__ == '__main__':
     #test_initialise()
     #load_file_list(path1, [f2, f29])
     #load_file(path1 + f29)
-    #load_file(mitre + "test.json")
-    #check_object(mitre + "test.json")
+    #load_file(mitre + "attack_objects.json")
+    #check_object(mitre + "attack_objects.json")
     #load_file(data_path + file1)
     print("=====")
     print("=====")
@@ -798,7 +797,7 @@ if __name__ == '__main__':
     #check_dir(path1)
     #test_delete(data_path+file1)
     #test_get(stid1)
-    test_get_delete(path2 + "test.json")
+    #test_get_delete(path2 + "attack_objects.json")
     #test_initialise()
     #test_delete_dir(path1)
     #clean_db()
@@ -808,9 +807,9 @@ if __name__ == '__main__':
     #test_ids_loaded(id_list2, connection)
     #test_auth()
     #test_generate_docs()
-    #backdoor_add(mitre + "test.json")
-    #backdoor_add_dir(path2)
+    #backdoor_add(mitre + "attack_objects.json")
+    backdoor_add_dir(mitre)
     #test_get_file(data_path + file1)
-    #test_insert_statements(mitre + "test.json", stid1)
+    #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)
     #test_get_del_dir_statements(path1)

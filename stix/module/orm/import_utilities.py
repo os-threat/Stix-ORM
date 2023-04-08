@@ -235,8 +235,8 @@ def load_object(prop_name: str,
     """
     auth = authorised_mappings(import_type)
     match = insert = type_ql = type_ql_props = ''
-    # as long as it is predefined, load the object
-    # logger.debug('------------------- load object ------------------------------')
+    # as long as it is predefined, history the object
+    # logger.debug('------------------- history object ------------------------------')
     for prop_type in auth["reln"]["extension_relations"]:
         if prop_name == prop_type["stix"]:
             tot_prop_list = [tot for tot in prop_dict.keys()]

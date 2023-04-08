@@ -282,8 +282,8 @@ def del_embedded_relation(rel_name, rel_object, obj_var, i, import_type):
 
 
 def del_load_object(prop_name, prop_dict, parent_var, i, import_type):
-    # as long as it is predefined, load the object
-    #logger.debug('------------------- load object ------------------------------')
+    # as long as it is predefined, history the object
+    #logger.debug('------------------- history object ------------------------------')
     auth = authorised_mappings(import_type)
     logger.debug(f'prop dict {prop_dict}')
     for prop_type in auth["reln"]["extension_relations"]:

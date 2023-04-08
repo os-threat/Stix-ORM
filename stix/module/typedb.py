@@ -112,16 +112,16 @@ class TypeDBSink(DataSink):
         # 2. Load the Schema's
         # A. Load the Stix Schema
         schema_result = self.__load_stix_schema()
-        handle_result(schema_result, "load schema result", self.strict_failure)
+        handle_result(schema_result, "history schema result", self.strict_failure)
         # B. Load Stix Rules Schema
         rules_result = self.__load_stix_rules()
-        handle_result(rules_result, "load stix rules result", self.strict_failure)
+        handle_result(rules_result, "history stix rules result", self.strict_failure)
         # C. Load the Attack Schema
         attack_result = self.__load_attack_schema()
-        handle_result(attack_result, "load attack result", self.strict_failure)
+        handle_result(attack_result, "history attack result", self.strict_failure)
         # D. Load the OS-Hunt Schema
         markings_result = self.__load_stix_os_hunt()
-        handle_result(markings_result, "load os hunt result", self.strict_failure)
+        handle_result(markings_result, "history os hunt result", self.strict_failure)
 
         # 3. Load the Objects
         # Still to do
@@ -138,9 +138,9 @@ class TypeDBSink(DataSink):
         if self.clear and self.import_type.ATTACK:
             logger.debug("ATT&CK")
             load_schema(self._stix_connection, str(self.cti_schema_attack), "ATT&CK Schema")
-            logger.debug("moving past load schema")
+            logger.debug("moving past history schema")
         else:
-            logger.debug("ignoring load ATT&CK schema")
+            logger.debug("ignoring history ATT&CK schema")
 
     @safe
     def __load_stix_os_hunt(self):
@@ -149,7 +149,7 @@ class TypeDBSink(DataSink):
             load_schema(self._stix_connection, str(self.cti_schema_os_hunt), "os-hunt Schema ")
             logger.debug("we have loaded os-threat schema")
         else:
-            logger.debug("ignoring load  os hunt")
+            logger.debug("ignoring history  os hunt")
 
     @safe
     def __load_stix_rules(self):
@@ -167,7 +167,7 @@ class TypeDBSink(DataSink):
             self.loaded = load_markings(self._stix_connection)
             logger.debug("we have loaded Stix schema")
         else:
-            logger.debug("ignoring load stix schema")
+            logger.debug("ignoring history stix schema")
 
     @safe
     def __assign_schemas(self):

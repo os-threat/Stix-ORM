@@ -16,7 +16,7 @@ from stix.module.initialise import tlp_ids
 from stix.module.definitions.stix21 import stix_models
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 default_import_type = import_type_factory.get_default_import()
 
 def parse(data: dict, allow_custom=False, import_type: ImportType=default_import_type):
@@ -73,8 +73,10 @@ def _get_dict(data):
             raise ValueError(f"Cannot convert {str(data)} to dictionary.")
 
 def is_attack_object(stix_dict):
-    #TODO: Fix - x-mitre-collection returns false with this definition
-    return len(stix_dict.get("x_mitre_domains", [])) > 0
+    if stix_dict.get("x_mitre_domains", False) or stix_dict.get("x_mitre_attack_spec_version", False):
+        return True
+    else:
+        return False
 
 def dict_to_stix(stix_dict: dict,
                  allow_custom=False,

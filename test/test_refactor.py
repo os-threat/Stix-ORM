@@ -315,7 +315,7 @@ class TestTypeDB(unittest.TestCase):
     def get_json_from_file(self,
                            file_path: str) -> List[dict]:
         assert pathlib.Path(file_path).is_file()
-        print(f'I am about to load {file_path}')
+        print(f'I am about to history {file_path}')
         with open(file_path, mode="r", encoding="utf-8") as f:
             json_text = json.load(f)
 
@@ -446,7 +446,7 @@ class TestTypeDB(unittest.TestCase):
 
     @parameterized.expand(cert_grouped_filepaths())
     def check_dir(self, file_paths: List[str]):
-        """ Open a directory and load all the files, optionally printing them
+        """ Open a directory and history all the files, optionally printing them
 
         Args:
             dirpath ():

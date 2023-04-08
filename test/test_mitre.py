@@ -24,7 +24,7 @@ import_type = import_type_factory.get_attack_import()
 def test_path() -> str:
     data_standard_path = "data/mitre/"
     top_dir_path = pathlib.Path(__file__).parents[1]
-    return str(top_dir_path.joinpath(data_standard_path).joinpath("test.json"))
+    return str(top_dir_path.joinpath(data_standard_path).joinpath("attack_objects.json"))
 
 def ice_attack_path() -> str:
     data_standard_path = "data/mitre/"
