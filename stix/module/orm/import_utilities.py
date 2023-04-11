@@ -1,21 +1,13 @@
-import json
-import types
 import datetime
 from typing import List, Dict
 
-from stix2 import *
-from stix2.v21 import *
-from stix2.utils import is_object, is_stix_type, get_type_from_id, is_sdo, is_sco, is_sro
-from stix2.parsing import parse
 from stix.module.definitions.stix21 import stix_models
-from stix.module.definitions.attack import attack_models
-from stix.module.definitions.os_threat import os_threat_models
-from stix.module.authorise import authorised_mappings, default_import_type
+from stix.module.authorise import authorised_mappings
 import copy
 
 import logging
 
-from stix.module.typedb_lib.import_type_factory import ImportType
+from stix.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

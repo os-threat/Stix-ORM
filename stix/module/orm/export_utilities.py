@@ -1,16 +1,11 @@
-import json
-import traceback
 import copy
-from datetime import datetime, timedelta, timezone
+from datetime import timezone
 
-from stix.module.definitions.stix21 import stix_models
-from stix.module.definitions.attack import attack_models
-from stix.module.definitions.os_threat import os_threat_models
 from stix.module.authorise import authorised_mappings
 
 import logging
 
-from stix.module.typedb_lib.import_type_factory import ImportType
+from stix.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

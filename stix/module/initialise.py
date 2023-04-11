@@ -241,6 +241,7 @@ def sort_layers(layers,
     return layers, indexes, list(mset), cyclical
 
 
+
 def reorder(layers, indexes, tree, dep_obj, add_or_del):
     """ Reorder the layers list of objects based on dependencies
     Args:

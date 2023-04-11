@@ -73,7 +73,10 @@ class Instructions:
         return self.instructions[id].status != Status.CREATED_QUERY
 
     def cyclical_ids(self):
-        return find_cycle(self.dependencies, orientation="original")
+        try:
+            return find_cycle(self.dependencies, orientation="original")
+        except Exception as e:
+            return []
 
     def update_ids_in_database(self,
                                ids: List[str]):

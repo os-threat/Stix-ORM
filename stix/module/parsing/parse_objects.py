@@ -1,19 +1,13 @@
 
 import json
 import copy
-import pathlib
-from stix2.parsing import dict_to_stix2
 from stix.module.authorise import authorised_mappings, import_type_factory
 from stix2.exceptions import ParseError
 from stix2.parsing import dict_to_stix2
-from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
-from stix.module.initialise import tlp_ids
+from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql
 import logging
-from stix.module.definitions.stix21 import MarkingDefinition
 
-from stix.module.typedb_lib.import_type_factory import ImportType
-from stix.module.initialise import tlp_ids
-from stix.module.definitions.stix21 import stix_models
+from stix.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

@@ -15,9 +15,13 @@ __status__ = "Production"
 
 import json
 from glob import glob
+
+import pathlib
 from loguru import logger
 import os
 from pathlib import Path
+
+
 from .classes import (
     Matrix, Tactic, Technique, SubTechnique, Mitigation, Group, SoftwareMalware,
     SoftwareTool, DataSource, DataComponent, AttackCampaign, Collection,
@@ -29,6 +33,8 @@ from stix.module.definitions.attack.classes import (
     SoftwareTool, DataSource, DataComponent, AttackCampaign, Collection,
     ObjectVersion, AttackRelation, AttackMarking
 )
+from ..definitions import get_definitions, DefinitionNames
+from ..domain_definition import DomainDefinition
 
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
@@ -58,16 +64,12 @@ for file_path in glob(f'{dir_path}/base/*.json'):
         attack_models["base"][key] = json.load(json_file)
         
 
-attack_models["mappings"] = {}
-for file_path in glob(f'{dir_path}/mappings/*.json'):
-    # Opening JSON file
-    file_name = Path(file_path).stem
+attack_definitions_dir = pathlib.Path(__file__).parent
+attack_definition = DomainDefinition(DefinitionNames.ATTACK.value,
+                                        attack_definitions_dir)
 
-    with open(file_path) as json_file:
-        # create well formed key
-        key = f'{file_name}'
+attack_models["mappings"] = attack_definition.get_mappings()
 
-        attack_models["mappings"][key] = json.load(json_file)
 
 
 attack_models["sub_objects"] = {}

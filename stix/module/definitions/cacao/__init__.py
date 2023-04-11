@@ -15,9 +15,14 @@ __status__ = "Production"
 
 import json
 from glob import glob
+
+import pathlib
 from loguru import logger
 import os
 from pathlib import Path
+
+from stix.module.definitions.definitions import get_definitions, DefinitionNames
+from stix.module.definitions.domain_definition import DomainDefinition
 
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
@@ -47,16 +52,11 @@ for file_path in glob(f'{dir_path}/base/*.json'):
         cacao_models["base"][key] = json.load(json_file)
         
 
-cacao_models["mappings"] = {}
-for file_path in glob(f'{dir_path}/mappings/*.json'):
-    # Opening JSON file
-    file_name = Path(file_path).stem
+cacao_definitions_dir = pathlib.Path(__file__).parent
+cacao_definition = DomainDefinition(DefinitionNames.CACAO.value,
+                                            cacao_definitions_dir)
+cacao_models["mappings"] = cacao_definition.get_mappings()
 
-    with open(file_path) as json_file:
-        # create well formed key
-        key = f'{file_name}'
-
-        cacao_models["mappings"][key] = json.load(json_file)
 
 
 cacao_models["sub_objects"] = {}

@@ -79,6 +79,23 @@ class ImportTypeFactory:
         )
 
     @staticmethod
+    def get_all_imports():
+        return ImportType(
+            STIX21=True,
+            CVE=True,
+            identity=True,
+            location=True,
+            os_hunt=True,
+            kestrel=True,
+            os_intel=True,
+            rules=True,
+            ATTACK=True,
+            ATTACK_Versions=[AttackVersions.V12_1],
+            ATTACK_Domains=[AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
+            CACAO=True,
+        )
+
+    @staticmethod
     def get_default_import():
         return ImportType(
             STIX21 = True,

@@ -1,12 +1,10 @@
-from stix.module.definitions.stix21 import stix_models
-from stix.module.definitions.attack import attack_models
-from stix.module.definitions.os_threat import os_threat_models
-from stix.module.definitions.cacao import cacao_models
-from stix.module.definitions.kestrel import kestrel_models
 
 import logging
 
-from stix.module.typedb_lib.import_type_factory import ImportTypeFactory, ImportType
+from stix.module.definitions.definitions import get_libraries
+from stix.module.typedb_lib.factories.domain_factory import DomainFactory
+from stix.module.typedb_lib.factories.import_type_factory import ImportTypeFactory, ImportType
+from stix.module.typedb_lib.factories.process_map_factory import ProcessMapFactory
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -21,62 +19,6 @@ import_type_factory = ImportTypeFactory.get_import_type_factory()
 default_import_type = import_type_factory.get_default_import()
 
 
-
-
-##############################################################
-#  2.) References used to Categorise Choices and Shapes for all Objects
-############################################################
-process_maps = [{
-    "name": "reln_name",
-    "keys": ["embedded_relations", "standard_relations", "list_of_objects", "key_value_relations", "extension_relations", "relations_sro_roles"],
-    "match":["relations_embedded", "relations_sro_roles", "relations_list_of_objects", "relations_key_value", "relations_extensions_and_objects", "relations_sro_roles"],
-    "cond": ["rel", "stix", "name", "name", "stix", "stix"]
-},{
-    "name": "reln",
-    "keys": ["embedded_relations", "standard_relations", "list_of_objects", "key_value_relations", "extension_relations", "relations_sro_roles"],
-    "match":["relations_embedded", "relations_sro_roles", "relations_list_of_objects", "relations_key_value", "relations_extensions_and_objects", "relations_sro_roles"],
-    "cond": []
-},{
-    "name": "tql_types1",
-    "keys": ["embedded_relations", "standard_relations", "list_of_objects", "key_value_relations", "extension_relations", "relations_sro_roles"],
-    "match":["relations_embedded", "relations_sro_roles", "relations_list_of_objects", "relations_key_value", "relations_extensions_and_objects", "relations_sro_roles"],
-    "cond": ["typeql", "typeql", "typeql", "typeql", "relation", "typeql"]
-}, {
-    "name": "tql_types",
-    "keys": ["sdo", "sro", "sco", "sub", "meta"],
-    "match":["object_conversion", "object_conversion", "object_conversion", "object_conversion", "object_conversion"],
-    "cond": ["sdo", "sro", "sco", "sub", "meta" ]
-}, {
-    "name": "is_lists",
-    "keys": ["sdo", "sro", "sco", "sub", "meta"],
-    "match":["is_list_sdo", "is_list_sro", "is_list_sco", "is_list_sub_objects", "is_list_meta"],
-    "cond": ["sdo", "sro", "sco", "sub", "meta"]
-}, {
-    "name": "direct",
-    "keys": ["sub_objects", "objects"],
-    "match":["sub_objects", "data"],
-    "cond": []
-}, {
-    "name": "conv",
-    "keys": ["sdo", "sro", "sco", "sub", "meta"],
-    "match":["object", "object", "object", "object"],
-    "cond": ["sdo", "sro", "sco", "sub", "meta"]
-}, {
-    "name": "classes",
-    "keys": ["sdo", "sro", "sco", "sub", "meta"],
-    "match":["object", "object", "object", "object"],
-    "cond": ["sdo", "sro", "sco", "sub", "meta"]
-}]
-
-domains = {
-    "stix": stix_models,
-    "attack": attack_models,
-    "os-threat": os_threat_models,
-    "cacao": cacao_models,
-    "kestrel": kestrel_models
-}
-
-
 def authorised_mappings(import_type: ImportType=default_import_type):
     auth = {}
     auth["reln_name"] = {}
@@ -84,24 +26,11 @@ def authorised_mappings(import_type: ImportType=default_import_type):
     auth["tql_types"] = {}
     auth["types"] = {}
     auth["is_lists"] = {}
-
-    # setup Stix by default
-    auth_domains = [domains["stix"]]
-    # setup "ATT&CK" if selected
-    if import_type.ATTACK:
-        auth_domains.append(domains["attack"])
-    # setup "os-threat" if selected
-    if import_type.os_intel or import_type.os_hunt:
-        auth_domains.append(domains["os-threat"])
-    # setup "CACAO" if selected
-    if import_type.CACAO:
-        auth_domains.append(domains["cacao"])
-    # setup "kestrel" if selected
-    if import_type.kestrel:
-        auth_domains.append(domains["kestrel"])
+    domain_factory = DomainFactory.get_domain_factory()
+    auth_domains = domain_factory.get_domains_for_import(import_type)
 
 
-    dom=["stix","attack","os-threat", "cacao"]
+    dom= get_libraries()
     # initialise authorisation object, for documentation purposes
     auth["reln_name"]["embedded_relations"] = []
     auth["reln_name"]["standard_relations"] = []
@@ -151,12 +80,15 @@ def authorised_mappings(import_type: ImportType=default_import_type):
     auth["classes"]["sub"] = {}
     auth["classes"]["meta"] = {}
 
+    process_map_factory = ProcessMapFactory.process_map_factory()
+    process_maps = process_map_factory.all_process_maps()
+
     for j, domain in enumerate(auth_domains):
         for process in process_maps:
-            name = process["name"]
-            keys = process["keys"]
-            matches = process["match"]
-            conds = process["cond"]
+            name = process.name
+            keys = process.keys
+            matches = process.match
+            conds = process.cond
             if name == "reln_name":
                 #logger.debug("----------- reln_name ------------")
                 for i, key in enumerate(keys):

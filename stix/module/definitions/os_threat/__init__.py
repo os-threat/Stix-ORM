@@ -15,9 +15,14 @@ __status__ = "Production"
 
 import json
 from glob import glob
+
+import pathlib
 from loguru import logger
 import os
 from pathlib import Path
+
+from stix.module.definitions.definitions import DefinitionNames
+from stix.module.definitions.domain_definition import DomainDefinition
 
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
@@ -47,16 +52,12 @@ for file_path in glob(f'{dir_path}/base/*.json'):
         os_threat_models["base"][key] = json.load(json_file)
         
 
-os_threat_models["mappings"] = {}
-for file_path in glob(f'{dir_path}/mappings/*.json'):
-    # Opening JSON file
-    file_name = Path(file_path).stem
+os_threat_definitions_dir = pathlib.Path(__file__).parent
+os_threat_definition = DomainDefinition(DefinitionNames.OS_THREAT.value,
+                                            os_threat_definitions_dir)
 
-    with open(file_path) as json_file:
-        # create well formed key
-        key = f'{file_name}'
+os_threat_models["mappings"] = os_threat_definition.get_mappings()
 
-        os_threat_models["mappings"][key] = json.load(json_file)
 
 
 os_threat_models["sub_objects"] = {}

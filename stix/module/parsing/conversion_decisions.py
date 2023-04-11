@@ -8,7 +8,7 @@ from stix.module.authorise import authorised_mappings, import_type_factory
 
 import logging
 
-from stix.module.typedb_lib.import_type_factory import ImportType
+from stix.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

@@ -31,7 +31,7 @@ from stix.module.typedb_lib.queries import delete_database, match_query, query_i
     build_insert_query, query_id, add_instructions_to_typedb
 from stix.module.typedb_lib.file import write_to_file
 from stix.module.typedb_lib.instructions import Instructions, Status, AddInstruction, TypeQLObject
-from .typedb_lib.import_type_factory import ImportType, ImportTypeFactory
+from stix.module.typedb_lib.factories.import_type_factory import ImportType, ImportTypeFactory
 
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
