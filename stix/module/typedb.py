@@ -631,7 +631,7 @@ class TypeDBSource(DataSource):
 
     """
 
-    def __init__(self, connection: Dict[str, str], import_type=None, **kwargs):
+    def __init__(self, connection: Dict[str, str], import_type: Optional[ImportType]=None, **kwargs):
         super(TypeDBSource, self).__init__()
         logger.debug(f'TypeDBSource: {connection}')
 
