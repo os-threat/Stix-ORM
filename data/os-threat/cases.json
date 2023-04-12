@@ -4,7 +4,7 @@
     "type": "pallet",
     "spec_version": "2.1",
     "name": "My Pallet 1",
-    "description": "Example Pallet containing cases for an entire team/organisation",
+    "description": "Example Pallet containing cartons for an entire organisation",
     "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
     "created": "2018-10-17T00:14:20.652Z",
     "modified": "2019-10-11T19:30:42.406Z",
@@ -20,7 +20,7 @@
     "type": "carton",
     "spec_version": "2.1",
     "name": "My Carton 1",
-    "description": "Example Carton ontaining multiple case's for a person",
+    "description": "Example Carton containing multiple cases for a team",
     "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
     "created": "2018-10-17T00:14:20.652Z",
     "modified": "2019-10-11T19:30:42.406Z",
@@ -28,6 +28,23 @@
         "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
     ],
     "cases": [
+        "case-402e24b4-436e-4936-b19b-2038648f489"
+    ]
+  },
+  {
+    "id": "cases-402e24b4-436e-4936-b19b-2038648f489",
+    "type": "cases",
+    "spec_version": "2.1",
+    "name": "My Cases 1",
+    "description": "Example Carton containing multiple cases for a team",
+    "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
+    "created": "2018-10-17T00:14:20.652Z",
+    "modified": "2019-10-11T19:30:42.406Z",
+    "userid": "user-1",
+    "object_marking_refs": [
+        "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+    ],
+    "case_list": [
         "case-402e24b4-436e-4936-b19b-2038648f489"
     ]
   },
@@ -161,9 +178,10 @@
       "external_id": "log#1234"
     }
   ],
-  "abstract": "Task1",
-  "content": "task details here",
+  "summary": "Task1",
+  "details": "task details here",
   "authors": ["John Doe"],
+  "assigned": ["Jane Doe"],
   "object_refs": ["ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"]
 }
 ]

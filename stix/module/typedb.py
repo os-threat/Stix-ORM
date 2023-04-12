@@ -119,9 +119,9 @@ class TypeDBSink(DataSink):
         # C. Load the Attack Schema
         attack_result = self.__load_attack_schema()
         handle_result(attack_result, "history attack result", self.strict_failure)
-        # D. Load the OS-Hunt Schema
-        markings_result = self.__load_stix_os_hunt()
-        handle_result(markings_result, "history os hunt result", self.strict_failure)
+        # D. Load the OS-Threat Schema
+        markings_result = self.__load_stix_os_threat()
+        handle_result(markings_result, "history os threat result", self.strict_failure)
 
         # 3. Load the Objects
         # Still to do
@@ -138,16 +138,16 @@ class TypeDBSink(DataSink):
         if self.clear and self.import_type.ATTACK:
             logger.debug("ATT&CK")
             load_schema(self._stix_connection, str(self.cti_schema_attack), "ATT&CK Schema")
-            logger.debug("moving past history schema")
+            logger.info("we have loaded ATT&CK schema")
         else:
             logger.debug("ignoring history ATT&CK schema")
 
     @safe
-    def __load_stix_os_hunt(self):
-        if self.clear and self.import_type.os_hunt:
-            logger.debug("attack")
-            load_schema(self._stix_connection, str(self.cti_schema_os_hunt), "os-hunt Schema ")
-            logger.debug("we have loaded os-threat schema")
+    def __load_stix_os_threat(self):
+        if self.clear and self.import_type.os_threat:
+            logger.debug("os-threat")
+            load_schema(self._stix_connection, str(self.cti_schema_os_threat), "os-threat Schema ")
+            logger.info("we have loaded os-threat schema")
         else:
             logger.debug("ignoring history  os hunt")
 
@@ -156,7 +156,7 @@ class TypeDBSink(DataSink):
         if self.clear and self.import_type.rules:
             logger.debug("rules")
             load_schema(self._stix_connection, str(self.cti_schema_stix_rules), "Stix 2.1 Rules")
-            logger.debug("we have loaded Stix rules")
+            logger.info("we have loaded Stix rules")
         else:
             logger.debug("ignoring check of stix rules")
 
@@ -165,7 +165,7 @@ class TypeDBSink(DataSink):
         if self.clear:
             load_schema(self._stix_connection, str(self.cti_schema_stix), "Stix 2.1 Schema ")
             self.loaded = load_markings(self._stix_connection)
-            logger.debug("we have loaded Stix schema")
+            logger.info("we have loaded Stix schema")
         else:
             logger.debug("ignoring history stix schema")
 
@@ -179,8 +179,8 @@ class TypeDBSink(DataSink):
         assert os.path.isfile(self.cti_schema_stix)
         self.cti_schema_stix_rules = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/stix21/schema/cti-rules.tql")
         assert os.path.isfile(self.cti_schema_stix_rules)
-        self.cti_schema_os_intel = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/os_threat/schema/cti-os-intel.tql")
-        assert os.path.isfile(self.cti_schema_os_intel)
+        self.cti_schema_os_threat = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/os_threat/schema/cti-os-threat.tql")
+        assert os.path.isfile(self.cti_schema_os_threat)
         self.cti_schema_os_hunt = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/os_threat/schema/cti-os-hunt.tql")
         assert os.path.isfile(self.cti_schema_os_hunt)
         self.cti_schema_attack = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/attack/schema/cti-attack.tql")

@@ -28,7 +28,7 @@ class DomainFactory:
         if import_type.ATTACK:
             auth_domains.append(self.domains["attack"])
         # setup "os-threat" if selected
-        if import_type.os_intel or import_type.os_hunt:
+        if import_type.os_threat:
             auth_domains.append(self.domains["os-threat"])
         # setup "CACAO" if selected
         if import_type.CACAO:

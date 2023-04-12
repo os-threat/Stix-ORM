@@ -50,7 +50,8 @@
     "contents": [
         {
             "object_refs": "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",
-            "object_modified": "2019-07-17T20:04:40.297Z"
+            "created": "2019-07-17T20:04:40.297Z",
+            "modified": "2019-07-17T20:04:40.297Z"
         }
     ]
   },

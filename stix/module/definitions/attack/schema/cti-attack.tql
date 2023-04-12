@@ -181,6 +181,7 @@ define
     # Statement Markings - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#the-attck-spec
     attack-marking sub statement-marking,
         owns x-mitre-domains,
+        owns x-mitre-version,
         owns x-mitre-attack-spec-version;
 
     # Attack Identity - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#the-attck-spec

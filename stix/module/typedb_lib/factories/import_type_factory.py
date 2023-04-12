@@ -16,8 +16,7 @@ class ImportType(BaseModel):
     CVE: bool
     identity: bool
     location: bool
-    os_intel: bool
-    os_hunt: bool
+    os_threat: bool
     kestrel: bool
     rules: bool
     ATTACK: bool
@@ -39,9 +38,8 @@ class ImportTypeFactory:
                       cve=False,
                       identity=False,
                       location=False,
-                      os_hunt=False,
+                      os_threat=False,
                       kestrel=False,
-                      os_intel=False,
                       rules=False,
                       attack_versions=[],
                       attack_domains=[],
@@ -51,9 +49,8 @@ class ImportTypeFactory:
             CVE=cve,
             identity=identity,
             location=location,
-            os_hunt=os_hunt,
+            os_threat=os_threat,
             kestral=kestrel,
-            os_intel=os_intel,
             rules=rules,
             ATTACK=attack,
             ATTACK_Versions=attack_versions,
@@ -68,9 +65,8 @@ class ImportTypeFactory:
             CVE=False,
             identity=False,
             location=False,
-            os_hunt=False,
+            os_threat=False,
             kestrel=False,
-            os_intel=False,
             rules=False,
             ATTACK=True,
             ATTACK_Versions=[AttackVersions.V12_1],
@@ -85,9 +81,8 @@ class ImportTypeFactory:
             CVE=True,
             identity=True,
             location=True,
-            os_hunt=True,
+            os_threat=True,
             kestrel=True,
-            os_intel=True,
             rules=True,
             ATTACK=True,
             ATTACK_Versions=[AttackVersions.V12_1],
@@ -102,9 +97,8 @@ class ImportTypeFactory:
             CVE = False,
             identity = False,
             location = False,
-            os_hunt = False,
+            os_threat = False,
             kestrel = False,
-            os_intel = False,
             rules = False,
             ATTACK = False,
             ATTACK_Versions = [AttackVersions.V12_1],
@@ -127,8 +121,7 @@ class ImportTypeFactory:
         return {
             "STIX21": import_type.STIX21,
             "ATT&CK": import_type.ATTACK,
-            "os-intel": import_type.os_intel,
-            "os-hunt": import_type.os_hunt,
+            "os-threat": import_type.os_threat,
             "kestrel": import_type.kestrel,
             "CACAO": import_type.CACAO,
             "CVE": import_type.CVE,

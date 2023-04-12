@@ -25,7 +25,7 @@ from stix2.v21.vocab import (
 
 import logging
 
-from stix.module.definitions.definitions import get_definitions
+from stix.module.definitions.definitions import get_definitions, ThreatReference
 from stix.module.typedb_lib.auth_types import all_auth_types
 
 logger = logging.getLogger(__name__)
@@ -555,7 +555,7 @@ class ObjectVersion(_STIXBase21):
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
     _properties = OrderedDict([
-        ('object_ref', ListProperty(ReferenceProperty(valid_types=valid_obj, spec_version='2.1'), required=True)),
+        ('object_ref', ListProperty(ThreatReference(valid_types=valid_obj, spec_version='2.1'), required=True)),
         ('object_modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
     ])
 

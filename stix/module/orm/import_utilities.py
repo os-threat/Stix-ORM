@@ -570,6 +570,8 @@ def get_source_from_id(stid: str,
     for model in auth["conv"]["sro"]:
         if model["protocol"] == protocol and model["type"] == tmp_source:
             source = model["typeql"]
+            if source == 'relationship' or source == "attack-relation":
+                source = 'stix-core-relationship'
             return source
     for model in auth["conv"]["sco"]:
         if model["protocol"] == protocol and model["type"] == tmp_source:
@@ -614,7 +616,7 @@ def get_embedded_match(source_id: str,
     """
     source_type = get_source_from_id(source_id, protocol, import_type)
     source_var = '$' + source_type + str(i)
-    if source_type == 'relationship':
+    if source_type == 'relationship' or source_type == "attack-relation":
         source_type = 'stix-core-relationship'
     match = f' {source_var} isa {source_type}, has stix-id "{source_id}";\n'
     return source_var, match

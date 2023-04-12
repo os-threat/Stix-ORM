@@ -113,7 +113,7 @@ def load_typeql_data(data_list, stix_connection: Dict[str, str]):
         # Stage 1: Create the schema
         with client.session(stix_connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.WRITE) as write_transaction:
-                logger.info(f'Loading TLP markings')
+                logger.debug(f'Loading TLP markings')
                 for data in data_list:
                     logger.debug(f'\n\n{data}\n\n')
                     insert_iterator = write_transaction.query().insert(data)

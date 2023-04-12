@@ -12,11 +12,11 @@ from stix.module.initialise import sort_layers, load_typeql_data
 
 import logging
 
-from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
+#from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 #logger.addHandler(logging.StreamHandler())
 
 
@@ -792,7 +792,7 @@ if __name__ == '__main__':
     print("=====")
     print("=====")
     #query_id(stid1)
-    #check_dir_ids2(path1)
+    check_dir_ids2(mitre)
     #check_dir_ids(path1)
     #check_dir(path1)
     #test_delete(data_path+file1)
@@ -807,8 +807,8 @@ if __name__ == '__main__':
     #test_ids_loaded(id_list2, connection)
     #test_auth()
     #test_generate_docs()
-    #backdoor_add(mitre + "attack_objects.json")
-    backdoor_add_dir(mitre)
+    #backdoor_add(mitre + "attack_collection.json")
+    #backdoor_add_dir(mitre)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)
