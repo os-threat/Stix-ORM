@@ -16,7 +16,7 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 #logger.addHandler(logging.StreamHandler())
 
 
@@ -408,7 +408,11 @@ def clean_db():
     """
     local_list = get_stix_ids()
     print(f'list -> {local_list}')
+    for stid in local_list:
+        print(f"\nid is -> {stid}\n")
+        query_id(stid)
     typedb = TypeDBSink(connection, False, import_type)
+    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$ Ready for Delete $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     typedb.delete(local_list)
 
 
@@ -479,7 +483,7 @@ def test_delete_dir(dirpath):
     print("----------------------------------------------------------------------------------")
     print("============= Get is complete =====================================================")
     print("**********************************************************************************")
-    #typedb_sink.delete(stix_id_list)
+    typedb_sink.delete(stix_id_list)
     #clean_db()
     #print(f' files-> {file_list}')
     print(f"\n\nlen input ids -> {len(set(input_id_list))} ")
@@ -551,20 +555,20 @@ def check_dir_ids2(dirpath):
     obj_list = []
     dirFiles = os.listdir(dirpath)
     sorted_files = sorted(dirFiles)
-    print(sorted_files)
+    #print(sorted_files)
     typedb_sink = TypeDBSink(connection, True, import_type)
     typedb_source = TypeDBSource(connection, import_type)
     for s_file in sorted_files:
         if os.path.isdir(os.path.join(dirpath, s_file)):
             continue
         else:
-            print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
-            print(f'==================== {s_file} ===================================')
-            print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            # print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            # print(f'==================== {s_file} ===================================')
+            # print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 json_text = json.load(f)
                 for element in json_text:
-                    print(f'**********==={element}')
+                    #print(f'**********==={element}')
                     obj_list.append(element)
                     temp_id = element.get('id', False)
                     if temp_id:
@@ -792,7 +796,7 @@ if __name__ == '__main__':
     print("=====")
     print("=====")
     #query_id(stid1)
-    check_dir_ids2(mitre)
+    #check_dir_ids2(path1)
     #check_dir_ids(path1)
     #check_dir(path1)
     #test_delete(data_path+file1)
@@ -800,7 +804,7 @@ if __name__ == '__main__':
     #test_get_delete(path2 + "attack_objects.json")
     #test_initialise()
     #test_delete_dir(path1)
-    #clean_db()
+    clean_db()
     #cert_test(cert_root+cert11)
     #cert_dict(cert_root, certs)
     #test_get_ids(connection, import_type)

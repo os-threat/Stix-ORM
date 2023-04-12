@@ -20,6 +20,7 @@ from stix.module.typedb_lib.logging import log_delete_layer, log_add_layer
 from stix.module.typedb_lib.instructions import Instructions
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 @safe
@@ -35,8 +36,8 @@ def build_insert_query(layer):
         insert_tql = ''
     else:
         insert_tql = 'insert ' + indep_ql + dep_insert
-    logger.info(f'\n match_tql string?-> {match_tql}')
-    logger.info(f'\n insert_tql string?-> {insert_tql}')
+    #logger.info(f'\n match_tql string?-> {match_tql}')
+    #logger.info(f'\n insert_tql string?-> {insert_tql}')
     typeql_string = match_tql + insert_tql
 
     insertion_is_empty = len(insert_tql) == 0
@@ -217,28 +218,33 @@ def add_layer(transaction: TypeDBTransaction, layer: str):
     transaction_query: QueryManager = transaction.query()
     query_future: Iterator[ConceptMap] = transaction_query.insert(layer)
 
-    logger.info('\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n' + \
-                   '---------------------------------------------------------------------------------------- Add Layer Query ------------------------------------------------------------------------------\n' + \
-                    '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
+    logger.debug('\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
+    logger.info('\n------------------------------------------------ Add Layer Query ----------------------------------------------\n')
+    logger.debug('-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
 
     logger.info(layer)
 
     number = 0
+    logger.info('\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    Add Layer Response     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
+    logger.info(f'insert_iterator response ->\n{query_future}')
     for result in query_future:
-        logger.info('\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' + \
-         'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    Add Layer Concept Map ' + str(number) +      'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' + \
-         'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
+        logger.debug('\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' )
+        logger.debug('\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    Add Layer Concept Map ' + str(number) +      'xxxxxxxxxxxxxxxxxxxxxx\n')
+        logger.debug('\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
+
+        logger.debug(f'typedb response ->\n{result}')
+
         for concept in enumerate(result.concepts()):
             if concept[1].is_type():
-                logger.info('   Type:' + concept[1].as_type().get_label())
+                logger.debug('   Type:' + concept[1].as_type().get_label())
             if concept[1].is_relation():
-                logger.info('   Relation: iid ' + concept[1].as_relation().get_iid() )
+                logger.debug('   Relation: iid ' + concept[1].as_relation().get_iid() )
             if concept[1].is_attribute():
-                logger.info('   Attribute iid: ' + concept[1].as_attribute().get_iid())
-                logger.info('           value: ' + str(concept[1].as_attribute().get_value()))
+                logger.debug('   Attribute iid: ' + concept[1].as_attribute().get_iid())
+                logger.debug('           value: ' + str(concept[1].as_attribute().get_value()))
         number = number + 1
 
-    logger.info('\n')
+    logger.info('\n\n')
 
     transaction.commit()
 
