@@ -377,7 +377,7 @@ class TypeDBSink(DataSink):
                       'user': self.user,
                       'password': self.password}
 
-        return TypeDBSource(connection, "STIX21")
+        return TypeDBSource(connection)
 
 
 
@@ -638,6 +638,7 @@ class TypeDBSource(DataSource):
         assert connection["uri"] is not None
         assert connection["port"] is not None
         assert connection["database"] is not None
+        assert import_type is None or isinstance(import_type, ImportType)
 
         self._stix_connection = connection
         self.uri = connection["uri"]
