@@ -796,7 +796,7 @@ if __name__ == '__main__':
     print("=====")
     print("=====")
     #query_id(stid1)
-    #check_dir_ids2(path1)
+    check_dir_ids2(mitre)
     #check_dir_ids(path1)
     #check_dir(path1)
     #test_delete(data_path+file1)
