@@ -269,7 +269,7 @@ class TypeDBSink(DataSink):
     def __retrieve_stix_id(self,
                            stix_id: str):
         type_db_source = unwrap_or_failure(self.__get_source_client())
-        return type_db_source.get(stix_id)
+        return type_db_source.get(stix_id, self.import_type)
 
     @safe
     def __delete_instruction(self,
