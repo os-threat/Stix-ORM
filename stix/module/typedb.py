@@ -276,6 +276,10 @@ class TypeDBSink(DataSink):
                              stixid: str):
 
         stix_obj = self.__retrieve_stix_id(stixid)
+        if not is_successful(stix_obj):
+            logging.exception("\n".join(traceback.format_exception(stix_obj.failure())))
+            raise Exception(stix_obj.failure())
+
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = stix_obj.bind(
             lambda x: raw_stix2_to_typeql(x, self.import_type))
         del_match, del_tql = stix_obj.bind(
@@ -662,8 +666,6 @@ class TypeDBSource(DataSource):
         obj_var, type_ql = get_embedded_match(stix_id, self.import_type)
         query = 'match ' + type_ql
         logger.debug(f'query is {query}')
-
-        import_type = self.__default_import_type()
 
         data = match_query(uri=self.uri,
                            port=self.port,
