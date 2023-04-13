@@ -381,7 +381,7 @@ class TypeDBSink(DataSink):
                       'user': self.user,
                       'password': self.password}
 
-        return TypeDBSource(connection)
+        return TypeDBSource(connection, self.import_type)
 
 
 
