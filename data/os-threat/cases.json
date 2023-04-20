@@ -71,35 +71,35 @@
     ],
     "observed": [
         {
-            "object_refs": "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",
+            "object_ref": "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",
             "created": "2019-07-17T20:04:40.297Z",
             "modified": "2019-07-17T20:04:40.297Z"
         }
     ],
     "enrichments": [
         {
-            "object_refs": "enrichment--bc69bdf3-586c-433e-9301-982b79a4068a",
+            "object_ref": "enrichment--bc69bdf3-586c-433e-9301-982b79a4068a",
             "created": "2019-07-17T20:04:40.297Z",
             "modified": "2019-07-17T20:04:40.297Z"
         }
     ],
     "notes": [
         {
-            "object_refs": "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061",
+            "object_ref": "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061",
             "created": "2019-07-17T20:04:40.297Z",
             "modified": "2019-07-17T20:04:40.297Z"
         }
     ],
     "tasks": [
         {
-            "object_refs": "task--ef7cd0bd-2e83-4869-b35f-c0f0e9d13547",
+            "object_ref": "task--ef7cd0bd-2e83-4869-b35f-c0f0e9d13547",
             "created": "2019-07-17T20:04:40.297Z",
             "modified": "2019-07-17T20:04:40.297Z"
         }
     ],
     "opinions": [
         {
-            "object_refs": "opinion--b01efc25-77b4-4003-b18b-f6e24b5cd9f7",
+            "object_ref": "opinion--b01efc25-77b4-4003-b18b-f6e24b5cd9f7",
             "created": "2019-07-17T20:04:40.297Z",
             "modified": "2019-07-17T20:04:40.297Z"
         }
