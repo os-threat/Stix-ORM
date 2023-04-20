@@ -269,13 +269,17 @@ class TypeDBSink(DataSink):
     def __retrieve_stix_id(self,
                            stix_id: str):
         type_db_source = unwrap_or_failure(self.__get_source_client())
-        return type_db_source.get(stix_id)
+        return type_db_source.get(stix_id, self.import_type)
 
     @safe
     def __delete_instruction(self,
                              stixid: str):
 
         stix_obj = self.__retrieve_stix_id(stixid)
+        if not is_successful(stix_obj):
+            logging.exception("\n".join(traceback.format_exception(stix_obj.failure())))
+            raise Exception(stix_obj.failure())
+
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = stix_obj.bind(
             lambda x: raw_stix2_to_typeql(x, self.import_type))
         del_match, del_tql = stix_obj.bind(
@@ -377,7 +381,7 @@ class TypeDBSink(DataSink):
                       'user': self.user,
                       'password': self.password}
 
-        return TypeDBSource(connection, "STIX21")
+        return TypeDBSource(connection, self.import_type)
 
 
 
@@ -631,13 +635,14 @@ class TypeDBSource(DataSource):
 
     """
 
-    def __init__(self, connection: Dict[str, str], import_type=None, **kwargs):
+    def __init__(self, connection: Dict[str, str], import_type: Optional[ImportType]=None, **kwargs):
         super(TypeDBSource, self).__init__()
         logger.debug(f'TypeDBSource: {connection}')
 
         assert connection["uri"] is not None
         assert connection["port"] is not None
         assert connection["database"] is not None
+        assert import_type is None or isinstance(import_type, ImportType)
 
         self._stix_connection = connection
         self.uri = connection["uri"]
@@ -661,8 +666,6 @@ class TypeDBSource(DataSource):
         obj_var, type_ql = get_embedded_match(stix_id, self.import_type)
         query = 'match ' + type_ql
         logger.debug(f'query is {query}')
-
-        import_type = self.__default_import_type()
 
         data = match_query(uri=self.uri,
                            port=self.port,
