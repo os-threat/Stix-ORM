@@ -1,6 +1,6 @@
 [
  {
-    "id": "feeds-402e24b4-436e-4936-b19b-2038648f489",
+    "id": "feeds--402e24b4-436e-4936-b19b-2038648f489",
     "type": "feeds",
     "spec_version": "2.1",
     "name": "MPhishing Database",
@@ -22,11 +22,11 @@
         "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
     ],
     "contained": [
-        "feed-402e24b4-436e-4936-b19b-2038648f489"
+        "feed--402e24b4-436e-4936-b19b-2038648f489"
     ]
   },
   {
-    "id": "feed-402e24b4-436e-4936-b19b-2038648f489",
+    "id": "feed--402e24b4-436e-4936-b19b-2038648f489",
     "type": "feed",
     "spec_version": "2.1",
     "name": "phishing-IPs-ACTIVE",

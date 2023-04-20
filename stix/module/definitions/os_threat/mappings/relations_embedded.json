@@ -1,0 +1,32 @@
+[
+  {
+    "rel": "contained",
+    "owner": "feed-list-owner",
+    "pointed-to": "single-feed",
+    "typeql": "list-of-feeds"
+  },
+  {
+    "rel": "cartons",
+    "owner": "carton-list-owner",
+    "pointed-to": "single-carton",
+    "typeql": "list-of-cartons"
+  },
+  {
+    "rel": "cases",
+    "owner": "cases-list-owner",
+    "pointed-to": "single-cases",
+    "typeql": "list-of-cases"
+  },
+  {
+    "rel": "case_list",
+    "owner": "case-list-owner",
+    "pointed-to": "single-case",
+    "typeql": "case-list"
+  },
+  {
+    "rel": "assigned",
+    "owner": "assigned-owner",
+    "pointed-to": "assignee",
+    "typeql": "assigned"
+  }
+]

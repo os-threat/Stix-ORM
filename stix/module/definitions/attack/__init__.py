@@ -22,16 +22,10 @@ import os
 from pathlib import Path
 
 
-from .classes import (
-    Matrix, Tactic, Technique, SubTechnique, Mitigation, Group, SoftwareMalware,
-    SoftwareTool, DataSource, DataComponent, AttackCampaign, Collection,
-    ObjectVersion, AttackIdentity
-)
-
 from stix.module.definitions.attack.classes import (
     Matrix, Tactic, Technique, SubTechnique, Mitigation, Group, SoftwareMalware,
     SoftwareTool, DataSource, DataComponent, AttackCampaign, Collection,
-    ObjectVersion, AttackRelation, AttackMarking
+    ObjectVersion, AttackRelation, AttackMarking, AttackIdentity
 )
 from ..definitions import get_definitions, DefinitionNames
 from ..domain_definition import DomainDefinition
@@ -115,7 +109,8 @@ __all__ = """
     Matrix, Tactic, Technique, SubTechnique, 
     Mitigation, Group, SoftwareMalware,
     SoftwareTool, DataSource, DataComponent, 
-    AttackCampaign, Collection, ObjectVersion
+    AttackCampaign, Collection, ObjectVersion,
+    AttackMarking, AttackRelation, AttackIdentity
 """.replace(",", " ").split()
 
 total_len = len(attack_models["data"])+len(attack_models["base"])+len(attack_models["mappings"])

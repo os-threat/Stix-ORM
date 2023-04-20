@@ -21,6 +21,12 @@ from loguru import logger
 import os
 from pathlib import Path
 
+from stix.module.definitions.os_threat.classes import (
+    Feeds, Feed, Pallet, Carton, Cases, Case, ThreatSubObject,
+    ObservedSubObject, EnrichmentSubObject, NoteSubObject,
+    TaskSubObject, OpinionSubObject, Enrichment, Task
+)
+
 from stix.module.definitions.definitions import DefinitionNames
 from stix.module.definitions.domain_definition import DomainDefinition
 
@@ -59,7 +65,6 @@ os_threat_definition = DomainDefinition(DefinitionNames.OS_THREAT.value,
 os_threat_models["mappings"] = os_threat_definition.get_mappings()
 
 
-
 os_threat_models["sub_objects"] = {}
 for file_path in glob(f'{dir_path}/sub_objects/*.json'):
     # Opening JSON file
@@ -72,10 +77,32 @@ for file_path in glob(f'{dir_path}/sub_objects/*.json'):
         os_threat_models["sub_objects"][key] = json.load(json_file)
 
 os_threat_models["classes"] = {}
-os_threat_models["classes"]["sdo"] = {}
+os_threat_models["classes"]["sdo"] = {
+    "Feeds": Feeds,
+    "Feed": Feed,
+    "Pallet": Pallet,
+    "Carton": Carton,
+    "Cases": Cases,
+    "Case": Case,
+    "Enrichment": Enrichment,
+    "Task": Task
+}
 os_threat_models["classes"]["sco"] = {}
 os_threat_models["classes"]["sro"] = {}
-os_threat_models["classes"]["sub"] = {}
+os_threat_models["classes"]["sub"] = {
+    "ThreatSubObject" : ThreatSubObject,
+    "ObservedSubObject": ObservedSubObject,
+    "EnrichmentSubObject": EnrichmentSubObject,
+    "NoteSubObject": NoteSubObject,
+    "TaskSubObject": TaskSubObject,
+    "OpinionSubObject": OpinionSubObject,
+}
+
+__all__ = """
+    Feeds, Feed, Pallet, Carton, Cases, Case, ThreatSubObject,
+    ObservedSubObject, EnrichmentSubObject, NoteSubObject,
+    TaskSubObject, OpinionSubObject, Enrichment, Task
+""".replace(",", " ").split()
 
 total_len = len(os_threat_models["data"])+len(os_threat_models["base"])+len(os_threat_models["mappings"])+len(os_threat_models["sub_objects"])
 

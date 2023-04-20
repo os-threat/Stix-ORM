@@ -1,0 +1,101 @@
+[
+  {
+    "type":  "carton",
+    "typeql": "carton",
+    "class": "Carton",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "case",
+    "typeql": "case",
+    "class": "Case",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "cases",
+    "typeql": "cases",
+    "class": "Cases",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "enrichment",
+    "typeql": "enrichment",
+    "class": "Enrichment",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "feed",
+    "typeql": "feed",
+    "class": "Feed",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "feeds",
+    "typeql": "feeds",
+    "class": "Feeds",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "pallet",
+    "typeql": "pallet",
+    "class": "Pallet",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "task",
+    "typeql": "task",
+    "class": "Task",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "threat-sub-object",
+    "typeql": "threat-sub-object",
+    "class": "ThreatSubObject",
+    "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  }
+]

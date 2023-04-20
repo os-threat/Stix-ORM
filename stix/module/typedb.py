@@ -120,8 +120,8 @@ class TypeDBSink(DataSink):
         attack_result = self.__load_attack_schema()
         handle_result(attack_result, "history attack result", self.strict_failure)
         # D. Load the OS-Threat Schema
-        markings_result = self.__load_stix_os_threat()
-        handle_result(markings_result, "history os threat result", self.strict_failure)
+        os_threat_result = self.__load_os_threat_schema()
+        handle_result(os_threat_result, "history os threat result", self.strict_failure)
 
         # 3. Load the Objects
         # Still to do
@@ -143,7 +143,7 @@ class TypeDBSink(DataSink):
             logger.debug("ignoring history ATT&CK schema")
 
     @safe
-    def __load_stix_os_threat(self):
+    def __load_os_threat_schema(self):
         if self.clear and self.import_type.os_threat:
             logger.debug("os-threat")
             load_schema(self._stix_connection, str(self.cti_schema_os_threat), "os-threat Schema ")

@@ -1,0 +1,33 @@
+{
+  "feed": [
+    "contents"
+  ],
+  "feeds": [
+    "contained"
+  ],
+  "pallet": [
+    "cartons"
+  ],
+  "carton": [
+    "cases"
+  ],
+  "cases": [
+    "case_list"
+  ],
+  "case": [
+    "assigned",
+    "observed",
+    "entrichments",
+    "notes",
+    "tasks",
+    "opinions"
+  ],
+  "enrichment": [
+    "object_refs"
+  ],
+  "task": [
+    "authors",
+    "assigned",
+    "object_refs"
+  ]
+}

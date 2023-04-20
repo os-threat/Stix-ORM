@@ -10,7 +10,7 @@ from stix.module.orm.import_utilities import clean_props, get_embedded_match, sp
 import logging
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",

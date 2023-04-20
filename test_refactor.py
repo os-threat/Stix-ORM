@@ -29,7 +29,7 @@ connection = {
     "password": None
 }
 
-import_type = import_type_factory.get_attack_import()
+import_type = import_type_factory.get_all_imports()
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
@@ -778,6 +778,7 @@ if __name__ == '__main__':
 
     mitre_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
     mitre = "data/mitre/"
+    osthreat = "data/os-threat/"
 
     id_list = ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46', 'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265', 'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559', 'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6', 'attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5', 'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
     # 019fde1c-
@@ -796,7 +797,7 @@ if __name__ == '__main__':
     print("=====")
     print("=====")
     #query_id(stid1)
-    check_dir_ids2(mitre)
+    #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
     #check_dir(path1)
     #test_delete(data_path+file1)
@@ -804,7 +805,7 @@ if __name__ == '__main__':
     #test_get_delete(path2 + "attack_objects.json")
     #test_initialise()
     #test_delete_dir(path1)
-    clean_db()
+    #clean_db()
     #cert_test(cert_root+cert11)
     #cert_dict(cert_root, certs)
     #test_get_ids(connection, import_type)
@@ -812,7 +813,7 @@ if __name__ == '__main__':
     #test_auth()
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
-    #backdoor_add_dir(mitre)
+    backdoor_add_dir(osthreat)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)
