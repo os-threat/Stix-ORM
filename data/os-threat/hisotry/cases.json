@@ -9,7 +9,7 @@
     "created": "2018-10-17T00:14:20.652Z",
     "modified": "2019-10-11T19:30:42.406Z",
     "object_marking_refs": [
-        "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+        "marking-definition--4e5406e6-f0ff-4d3b-a44c-942df630da32"
     ],
     "cartons": [
         "carton--fcc9c988-a1eb-497f-9351-b7c5cd384401"
@@ -25,7 +25,7 @@
     "created": "2018-10-17T00:14:20.652Z",
     "modified": "2019-10-11T19:30:42.406Z",
     "object_marking_refs": [
-        "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+        "marking-definition--4e5406e6-f0ff-4d3b-a44c-942df630da32"
     ],
     "cases": [
         "cases--dd89363b-0c03-483e-b4a2-0fc7043b4125"
@@ -42,7 +42,7 @@
     "modified": "2019-10-11T19:30:42.406Z",
     "userid": "user-1",
     "object_marking_refs": [
-        "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+        "marking-definition--4e5406e6-f0ff-4d3b-a44c-942df630da32"
     ],
     "case_list": [
         "case--3955751b-d8a8-4373-8473-29a865ded0e1"
@@ -67,7 +67,7 @@
     "case_priority": "high",
     "case_source": "email",
     "object_marking_refs": [
-        "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+        "marking-definition--4e5406e6-f0ff-4d3b-a44c-942df630da32"
     ],
     "observed": [
         {

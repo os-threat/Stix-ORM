@@ -20,6 +20,7 @@ class DefinitionNames(str, Enum):
     KESTREL = "kestrel"
     OS_THREAT = "os-threat"
     STIX_21 = "stix"
+    US_DoD = "us-dod"
 
 
 class Definitions:
@@ -47,10 +48,15 @@ class Definitions:
         stix_21_definition = DomainDefinition(DefinitionNames.STIX_21.value,
                                               stix_21_definitions_dir)
 
+        us_dod_definitions_dir = definitions_dir.joinpath("us_dod")
+        us_dod_definition = DomainDefinition(DefinitionNames.US_DoD.value,
+                                              us_dod_definitions_dir)
+
         self.definitions = {}
         self.definitions[DefinitionNames.ATTACK] = attack_definition
         self.definitions[DefinitionNames.CACAO] = cacao_definition
         self.definitions[DefinitionNames.KESTREL] = kestrel_definition
+        self.definitions[DefinitionNames.US_DoD] = us_dod_definition
         self.definitions[DefinitionNames.OS_THREAT] = os_threat_definition
         self.definitions[DefinitionNames.STIX_21] = stix_21_definition
 

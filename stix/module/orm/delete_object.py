@@ -9,7 +9,7 @@ from stix.module.orm.import_utilities import split_on_activity_type, val_tql
 
 import logging
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 ##############################################################
 #  1.) Methods to Delete any Stix Objects
 ############################################################

@@ -23,6 +23,7 @@ class ImportType(BaseModel):
     ATTACK_Versions: List[AttackVersions]
     ATTACK_Domains: List[AttackDomains]
     CACAO: bool
+    US_DoD: bool
 
 
 
@@ -41,6 +42,7 @@ class ImportTypeFactory:
                       os_threat=False,
                       kestrel=False,
                       rules=False,
+                      us_dod=False,
                       attack_versions=[],
                       attack_domains=[],
                       cacao=False):
@@ -55,7 +57,8 @@ class ImportTypeFactory:
             ATTACK=attack,
             ATTACK_Versions=attack_versions,
             ATTACK_Domains=attack_domains,
-            CACAO=cacao
+            CACAO=cacao,
+            US_DoD=us_dod
         )
 
     @staticmethod
@@ -71,7 +74,8 @@ class ImportTypeFactory:
             ATTACK=True,
             ATTACK_Versions=[AttackVersions.V12_1],
             ATTACK_Domains=[AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
-            CACAO=False
+            CACAO=False,
+            US_DoD=False
         )
 
     @staticmethod
@@ -88,6 +92,7 @@ class ImportTypeFactory:
             ATTACK_Versions=[AttackVersions.V12_1],
             ATTACK_Domains=[AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
             CACAO=True,
+            US_DoD=True
         )
 
     @staticmethod
@@ -103,7 +108,8 @@ class ImportTypeFactory:
             ATTACK = False,
             ATTACK_Versions = [AttackVersions.V12_1],
             ATTACK_Domains = [AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
-            CACAO= False
+            CACAO= False,
+            US_DoD= False
         )
 
     @staticmethod
@@ -124,6 +130,7 @@ class ImportTypeFactory:
             "os-threat": import_type.os_threat,
             "kestrel": import_type.kestrel,
             "CACAO": import_type.CACAO,
+            "US_DoD": import_type.US_DoD,
             "CVE": import_type.CVE,
             "identity": import_type.identity,
             "location": import_type.location,

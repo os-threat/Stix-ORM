@@ -93,7 +93,7 @@ def dict_to_typeql(stix_dict, import_type):
     stix_obj = parse(stix_dict, False, import_type)
     #logger.debug(f' i have parsed\n')
     dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
-    #logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+    logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
     dep_obj["dep_match"] = dep_match
     dep_obj["dep_insert"] = dep_insert
     dep_obj["indep_ql"] = indep_ql
@@ -149,7 +149,7 @@ def backdoor_add_dir(dirpath):
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 json_text = json.load(f)
                 for element in json_text:
-                    logger.debug(f'**********==={element}')
+                    #logger.debug(f'**********==={element}')
                     obj_list.append(element)
                     temp_id = element.get('id', False)
                     if temp_id:
@@ -408,12 +408,14 @@ def clean_db():
     """
     local_list = get_stix_ids()
     print(f'list -> {local_list}')
-    for stid in local_list:
-        print(f"\nid is -> {stid}\n")
-        query_id(stid)
+    # for stid in local_list:
+    #     print(f"\nid is -> {stid}\n")
+    #     query_id(stid)
     typedb = TypeDBSink(connection, False, import_type)
     print("$$$$$$$$$$$$$$$$$$$$$$$$$$$ Ready for Delete $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     typedb.delete(local_list)
+    print(f"len db ids before delete -> {len(local_list)}")
+    print(f"db ids after delete -> {len(get_stix_ids())}")
 
 
 def test_delete_dir(dirpath):
@@ -574,6 +576,9 @@ def check_dir_ids2(dirpath):
                     if temp_id:
                         id_list.append(temp_id)
     typedb_sink.add(obj_list)
+    print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    print(f'==================== Add is Complete ===================================')
+    print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
     id_set = set(id_list)
     id_typedb = set(get_stix_ids())
     len_files = len(id_set)
@@ -683,6 +688,15 @@ def test_get_file(fullname):
     stid_list = typedb_sink.get_stix_ids()
     for stid in stid_list:
         stix_obj = test_get(stid)
+
+
+def test_json(fullname):
+    with open(fullname, mode="r", encoding="utf-8") as f:
+        json_text = json.load(f)
+        for jt in json_text:
+            print("===========================================")
+            print(jt)
+
 
 
 def test_auth():
@@ -797,7 +811,7 @@ if __name__ == '__main__':
     print("=====")
     print("=====")
     #query_id(stid1)
-    #check_dir_ids2(osthreat)
+    #check_dir_ids2(mitre)
     #check_dir_ids(path1)
     #check_dir(path1)
     #test_delete(data_path+file1)
@@ -805,7 +819,7 @@ if __name__ == '__main__':
     #test_get_delete(path2 + "attack_objects.json")
     #test_initialise()
     #test_delete_dir(path1)
-    #clean_db()
+    clean_db()
     #cert_test(cert_root+cert11)
     #cert_dict(cert_root, certs)
     #test_get_ids(connection, import_type)
@@ -813,8 +827,9 @@ if __name__ == '__main__':
     #test_auth()
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
-    backdoor_add_dir(osthreat)
+    #backdoor_add_dir(osthreat)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)
-    #test_get_del_dir_statements(path1)
+    #test_get_del_dir_statements(mitre)
+    #test_json(osthreat + "feed.json")

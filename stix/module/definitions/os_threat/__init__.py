@@ -22,9 +22,7 @@ import os
 from pathlib import Path
 
 from stix.module.definitions.os_threat.classes import (
-    Feeds, Feed, Pallet, Carton, Cases, Case, ThreatSubObject,
-    ObservedSubObject, EnrichmentSubObject, NoteSubObject,
-    TaskSubObject, OpinionSubObject, Enrichment, Task
+    Feeds, Feed, ThreatSubObject
 )
 
 from stix.module.definitions.definitions import DefinitionNames
@@ -79,29 +77,16 @@ for file_path in glob(f'{dir_path}/sub_objects/*.json'):
 os_threat_models["classes"] = {}
 os_threat_models["classes"]["sdo"] = {
     "Feeds": Feeds,
-    "Feed": Feed,
-    "Pallet": Pallet,
-    "Carton": Carton,
-    "Cases": Cases,
-    "Case": Case,
-    "Enrichment": Enrichment,
-    "Task": Task
+    "Feed": Feed
 }
 os_threat_models["classes"]["sco"] = {}
 os_threat_models["classes"]["sro"] = {}
 os_threat_models["classes"]["sub"] = {
     "ThreatSubObject" : ThreatSubObject,
-    "ObservedSubObject": ObservedSubObject,
-    "EnrichmentSubObject": EnrichmentSubObject,
-    "NoteSubObject": NoteSubObject,
-    "TaskSubObject": TaskSubObject,
-    "OpinionSubObject": OpinionSubObject,
 }
 
 __all__ = """
-    Feeds, Feed, Pallet, Carton, Cases, Case, ThreatSubObject,
-    ObservedSubObject, EnrichmentSubObject, NoteSubObject,
-    TaskSubObject, OpinionSubObject, Enrichment, Task
+    Feeds, Feed, TaskSubObject
 """.replace(",", " ").split()
 
 total_len = len(os_threat_models["data"])+len(os_threat_models["base"])+len(os_threat_models["mappings"])+len(os_threat_models["sub_objects"])

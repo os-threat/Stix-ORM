@@ -1,13 +1,13 @@
 [
  {
-    "id": "feeds--402e24b4-436e-4936-b19b-2038648f489",
+    "id": "feeds--2e5c0491-0d3f-49cd-ad79-05328ba8c7cb",
     "type": "feeds",
     "spec_version": "2.1",
     "name": "MPhishing Database",
     "paid": false,
     "free": true,
     "description": "Example group containing multiple feed's",
-    "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
+    "created_by_ref": "identity--a79c8cab-1af3-4dd8-91a7-bc767eb48f22",
     "created": "2018-10-17T00:14:20.652Z",
     "modified": "2019-10-11T19:30:42.406Z",
     "labels": ["phishing","url"],
@@ -19,14 +19,14 @@
       }
     ],
     "object_marking_refs": [
-        "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+        "marking-definition--4e5406e6-f0ff-4d3b-a44c-942df630da32"
     ],
     "contained": [
-        "feed--402e24b4-436e-4936-b19b-2038648f489"
+        "feed--84807cc0-23ef-4ee7-bd76-988872a44a7a"
     ]
   },
   {
-    "id": "feed--402e24b4-436e-4936-b19b-2038648f489",
+    "id": "feed--84807cc0-23ef-4ee7-bd76-988872a44a7a",
     "type": "feed",
     "spec_version": "2.1",
     "name": "phishing-IPs-ACTIVE",
@@ -34,11 +34,11 @@
     "free": true,
     "description": "Phishing IPs that are active",
     "labels": ["ipv4"],
-    "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
+    "created_by_ref": "identity--a79c8cab-1af3-4dd8-91a7-bc767eb48f22",
     "created": "2018-10-17T00:14:20.652Z",
     "modified": "2019-10-11T19:30:42.406Z",
     "object_marking_refs": [
-        "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"
+        "marking-definition--4e5406e6-f0ff-4d3b-a44c-942df630da32"
     ],
     "external_references": [
       {
@@ -49,7 +49,7 @@
     ],
     "contents": [
         {
-            "object_refs": "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",
+            "object_ref": "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",
             "created": "2019-07-17T20:04:40.297Z",
             "modified": "2019-07-17T20:04:40.297Z"
         }
@@ -64,18 +64,17 @@
   {
     "type": "identity",
     "spec_version": "2.1",
-    "id": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
-    "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+    "id": "identity--a79c8cab-1af3-4dd8-91a7-bc767eb48f22",
     "created": "2016-04-06T20:03:00.000Z",
     "modified": "2016-04-06T20:03:00.000Z",
-    "name": "ACME Widget, Inc.",
+    "name": "Forbes Widget, Inc.",
     "identity_class": "organization"
   },
   {
     "type": "observed-data",
     "spec_version": "2.1",
     "id": "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",
-    "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
+    "created_by_ref": "identity--a79c8cab-1af3-4dd8-91a7-bc767eb48f22",
     "created": "2016-04-06T19:58:16.000Z",
     "modified": "2016-04-06T19:58:16.000Z",
     "first_observed": "2015-12-21T19:00:00Z",
@@ -84,5 +83,15 @@
     "object_refs": [
       "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     ]
+  },
+  {
+  "type": "marking-definition",
+  "spec_version": "2.1",
+  "id": "marking-definition--4e5406e6-f0ff-4d3b-a44c-942df630da32",
+  "created": "2016-08-01T00:00:00.000Z",
+  "definition_type": "statement",
+  "definition": {
+    "statement": "Copyright 2019, Example Corp"
+    }
   }
 ]
