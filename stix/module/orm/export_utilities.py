@@ -1,22 +1,21 @@
-import json
-import traceback
-from datetime import datetime, timedelta, timezone
+import copy
+from datetime import timezone
 
-from stix.module.definitions.stix21 import stix_models
-from stix.module.definitions.attack import attack_models
-from stix.module.definitions.os_threat import os_threat_models
 from stix.module.authorise import authorised_mappings
 
 import logging
 
+from stix.module.typedb_lib.factories.import_type_factory import ImportType
+
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 # --------------------------------------------------------------------------------------------------------
 #  1. Convert TypeQl Ans to Res
 # --------------------------------------------------------------------------------------------------------
 
 
-def convert_ans_to_res(answer_iterator, r_tx, import_type: str):
+def convert_ans_to_res(answer_iterator, r_tx, import_type: ImportType):
     """
     Take the response from TypeDB to a query, and start the process to use GRPC (typedb_lib-client) commands
     to expand on the returned data to some potential object shape (i.e. mandatory and optional),
@@ -84,7 +83,7 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: str):
     return res
 
 
-def process_entity(thing, r_tx, stix_id):
+def process_entity(thing, r_tx, stix_id: str):
     """
         If the current returned object from typedb_lib contains an entity then unpack it using grpc commands
         into an interim list
@@ -104,7 +103,7 @@ def process_entity(thing, r_tx, stix_id):
     return play
 
 
-def process_relns(reln_types, r_tx, import_type: str):
+def process_relns(reln_types, r_tx, import_type: ImportType):
     """
         If the current returned object is a list of relations (i.e. a list of embedded objects), then unpack them
     Args:
@@ -116,6 +115,7 @@ def process_relns(reln_types, r_tx, import_type: str):
     """
     relns = []
     for r in reln_types:
+        logger.debug(f'r  - >{r}, rtx -> {r_tx}')
         reln = get_relation_details(r, r_tx, import_type)
         relns.append(reln)
 
@@ -190,7 +190,7 @@ def process_value(p):
     return ret_value
 
 
-def get_relation_details(r, r_tx, import_type: str):
+def get_relation_details(r, r_tx, import_type: ImportType):
     """
         For a given sub-object type, unpack it
     Args:
@@ -205,25 +205,25 @@ def get_relation_details(r, r_tx, import_type: str):
     reln_name = r.get_type().get_label().name()
     reln['T_name'] = reln_name
     reln['T_id'] = r.get_iid()
-    if reln_name in auth["reln_name"]["embedded_relations"]:
+    if reln_name in auth["tql_types"]["embedded_relations"]:
         reln['roles'] = get_embedded_relations(r, r_tx)
 
-    elif reln_name in auth["reln_name"]["standard_relations"] or reln_name == "sighting":
+    elif reln_name in auth["tql_types"]["standard_relations"] or reln_name == "sighting":
         reln['roles'] = get_standard_relations(r, r_tx)
 
-    elif reln_name in auth["reln_name"]["key_value_relations"]:
+    elif reln_name in auth["tql_types"]["key_value_relations"]:
         reln['roles'] = get_key_value_relations(r, r_tx)
 
-    elif reln_name in auth["reln_name"]["extension_relations"]:
+    elif reln_name in auth["tql_types"]["extension_relations"]:
         reln['roles'] = get_extension_relations(r, r_tx, import_type)
 
-    elif reln_name in auth["reln_name"]["list_of_objects"]:
+    elif reln_name in auth["tql_types"]["list_of_objects"]:
         reln['roles'] = get_list_of_objects(r, r_tx, import_type)
 
     elif reln_name == "granular-marking":
         reln['roles'] = get_granular_marking(r, r_tx)
 
-    elif reln_name == "hashes" or reln_name == "file_header_hashes":
+    elif reln_name == "hashes" or reln_name == "file-header-hashes":
         reln['roles'] = get_hashes(r, r_tx)
 
     else:
@@ -232,7 +232,7 @@ def get_relation_details(r, r_tx, import_type: str):
     return reln
 
 
-def reln_map_entity_attribute(reln_map, r_tx, stix_id, is_kv):
+def reln_map_entity_attribute(reln_map, r_tx, stix_id: str, is_kv):
     """
         Process a map of Player by Role types, and unpack entity and attribute
     Args:
@@ -343,7 +343,9 @@ def get_key_value_relations(r, r_tx):
     return roles
 
 
-def get_list_of_objects(r, r_tx, import_type):
+def get_list_of_objects(r,
+                        r_tx,
+                        import_type: ImportType):
     """
         Process a list of objects sub object through grpc
     Args:
@@ -359,7 +361,7 @@ def get_list_of_objects(r, r_tx, import_type):
         if reln_name == lot["typeql"]:
             reln_pointed_to = lot["pointed_to"]
             reln_object = lot["object"]
-            reln_object_props = auth["sub_objects"][reln_object]
+            reln_object_props = copy.deepcopy(auth["sub_objects"][reln_object])
             reln_stix = lot["name"]
 
     stix_id = r_tx.concepts().get_attribute_type("stix-id")
@@ -398,7 +400,9 @@ def get_list_of_objects(r, r_tx, import_type):
     return roles
 
 
-def reln_map_entity_relation(reln_map, r_tx, stix_id):
+def reln_map_entity_relation(reln_map,
+                             r_tx,
+                             stix_id: str):
     """
 
     Args:
@@ -443,7 +447,9 @@ def get_embedded_relations(r, r_tx):
     return roles
 
 
-def get_extension_relations(r, r_tx, import_type):
+def get_extension_relations(r,
+                            r_tx,
+                            import_type: ImportType):
     """
         Process a Stix extension sub object through grpc
     Args:
@@ -505,7 +511,10 @@ def get_extension_relations(r, r_tx, import_type):
     return roles
 
 
-def validate_get_relns(rel, r_tx, obj_name, import_type):
+def validate_get_relns(rel,
+                       r_tx,
+                       obj_name,
+                       import_type: ImportType):
     """
         When processing relations for an object, ensure we only access relations for sub objects,
         and not Stix relations or sightings
@@ -520,25 +529,26 @@ def validate_get_relns(rel, r_tx, obj_name, import_type):
     auth = authorised_mappings(import_type)
     reln={}
     reln_name = rel.get_type().get_label().name()
-    if reln_name in auth["reln_name"]["embedded_relations"]:
+    if reln_name in auth["tql_types"]["embedded_relations"]:
         for emb in auth["reln"]["embedded_relations"]:
             if emb['typeql'] == reln_name:
                 role_owner = emb['owner']
         return return_valid_relations(rel, r_tx, obj_name, role_owner, import_type)
 
-    elif reln_name in auth["reln_name"]["key_value_relations"]:
+    elif reln_name in auth["tql_types"]["key_value_relations"]:
         for kvt in auth["reln"]["key_value_relations"]:
             if kvt['typeql'] == reln_name:
                 role_owner = kvt['owner']
         return return_valid_relations(rel, r_tx, obj_name, role_owner, import_type)
 
-    elif reln_name in auth["reln_name"]["extension_relations"]:
+    elif reln_name in auth["tql_types"]["extension_relations"]:
+        logger.debug(f'reln name {reln_name}')
         for kvt in auth["reln"]["extension_relations"]:
             if kvt['relation'] == reln_name:
                 role_owner = kvt['owner']
         return return_valid_relations(rel, r_tx, obj_name, role_owner, import_type)
 
-    elif reln_name in auth["reln_name"]["list_of_objects"]:
+    elif reln_name in auth["tql_types"]["list_of_objects"]:
         for kvt in auth["reln"]["list_of_objects"]:
             if kvt['typeql'] == reln_name:
                 role_owner = kvt['owner']
@@ -554,7 +564,11 @@ def validate_get_relns(rel, r_tx, obj_name, import_type):
         logger.error(f'Error, relation name is {reln_name}')
 
 
-def return_valid_relations(rel, r_tx, obj_name, role_owner, import_type):
+def return_valid_relations(rel,
+                           r_tx,
+                           obj_name,
+                           role_owner,
+                           import_type: ImportType):
     """
         return only the valid relations to the relation check
     Args:

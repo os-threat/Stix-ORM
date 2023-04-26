@@ -3,7 +3,7 @@ import traceback
 from enum import Enum
 from typing import Optional, List, Dict
 
-from networkx import DiGraph
+from networkx import DiGraph, find_cycle
 from pydantic import BaseModel
 from returns.pipeline import is_successful
 from returns.result import safe
@@ -73,11 +73,10 @@ class Instructions:
         return self.instructions[id].status != Status.CREATED_QUERY
 
     def cyclical_ids(self):
-        cyclical = []
-        for instruction in self.instructions.values():
-            if instruction.status == Status.FAILED_CYCLICAL:
-                cyclical.append(instruction.id)
-        return cyclical
+        try:
+            return find_cycle(self.dependencies, orientation="original")
+        except Exception as e:
+            return []
 
     def update_ids_in_database(self,
                                ids: List[str]):
@@ -240,7 +239,7 @@ class Instruction(BaseModel):
     error: Optional[str]
 
 class AddInstruction(Instruction):
-    typeql_obj: TypeQLObject
+    typeql_obj: Optional[TypeQLObject]
 
 class DeleteInstruction(Instruction):
     pass

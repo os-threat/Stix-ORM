@@ -1,0 +1,14 @@
+{
+  "name": "name",
+  "description": "description",
+  "assigned": "",
+  "status": "status",
+  "case_type": "case-type",
+  "case_priority": "case-priority",
+  "case_source": "case-source",
+  "observed": "",
+  "enrichments": "",
+  "notes": "",
+  "tasks": "",
+  "opinions": ""
+}

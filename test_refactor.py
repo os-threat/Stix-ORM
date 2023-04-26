@@ -1,10 +1,10 @@
 import json
 import os
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stix.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
 from typedb.client import *
-from stix2 import (parse)
 from stix.module.orm.import_objects import raw_stix2_to_typeql
 from stix.module.orm.delete_object import delete_stix_object
+from stix.module.orm.export_object import convert_ans_to_stix
 from stix.module.authorise import authorised_mappings, import_type_factory
 from stix.module.parsing.parse_objects import parse
 from stix.module.generate_docs import configure_overview_table_docs, object_tables
@@ -12,11 +12,11 @@ from stix.module.initialise import sort_layers, load_typeql_data
 
 import logging
 
-from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
+#from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 #logger.addHandler(logging.StreamHandler())
 
 
@@ -29,7 +29,7 @@ connection = {
     "password": None
 }
 
-import_type = import_type_factory.get_attack_import()
+import_type = import_type_factory.get_all_imports()
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
@@ -43,13 +43,48 @@ test_id = "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff"
 marking_id = "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
 file_id = 'file--364fe3e5-b1f4-5ba3-b951-ee5983b3538d'
 
+
 def test_generate_docs():
     print("================================================================================")
     print("------------------------ Test Doc Generation ---------------------------------------------")
     configure_overview_table_docs(object_tables)
 
 
-def dict_To_typeql(stix_dict, import_type):
+def backdoor_get(stix_id, _composite_filters=None):
+    """Retrieve STIX object from file directory via STIX ID.
+    Args:
+        stix_id (str): The STIX ID of the STIX object to be retrieved.
+        _composite_filters (FilterSet): collection of filters passed from the parent
+            CompositeDataSource, not user supplied
+    Returns:
+        (STIX object): STIX object that has the supplied STIX ID.
+            The STIX object is loaded from its json file, parsed into
+            a python STIX object and then returned
+    """
+    try:
+        obj_var, type_ql = get_embedded_match(stix_id, import_type)
+        match = 'match ' + type_ql
+        #logger.debug(f' typeql -->: {match}')
+        g_uri = connection["uri"] + ':' + connection["port"]
+        with TypeDB.core_client(g_uri) as client:
+            with client.session(connection["database"], SessionType.DATA) as session:
+                with session.transaction(TransactionType.READ) as read_transaction:
+                    answer_iterator = read_transaction.query().match(match)
+                    #logger.debug((f'have read the query -> {answer_iterator}'))
+                    stix_dict = convert_ans_to_stix(match, answer_iterator, read_transaction, import_type)
+                    stix_obj = parse(stix_dict, import_type=import_type)
+                    #logger.debug(f'stix_obj -> {stix_obj}')
+                    with open("export_final.json", "w") as outfile:
+                        json.dump(stix_dict, outfile)
+
+    except Exception as e:
+        logger.error(f'Stix Object Retrieval Error: {e}')
+        stix_obj = None
+
+    return stix_obj
+
+
+def dict_to_typeql(stix_dict, import_type):
     """ From the old code base,
             - convert a stix dict into a Python object, based on import_type
             -   convert the object into TypeQL, with a dpendency object
@@ -58,12 +93,21 @@ def dict_To_typeql(stix_dict, import_type):
     stix_obj = parse(stix_dict, False, import_type)
     #logger.debug(f' i have parsed\n')
     dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
-    #logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+    logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
     dep_obj["dep_match"] = dep_match
     dep_obj["dep_insert"] = dep_insert
     dep_obj["indep_ql"] = indep_ql
     dep_obj["core_ql"] = core_ql
     return dep_obj
+
+
+def test_insert_statements(pahhway, stid):
+    with open(pahhway, mode="r", encoding="utf-8") as f:
+        json_text = json.load(f)
+        for stix_dict in json_text:
+            if stix_dict['id'] == stid:
+                dep_obj = dict_to_typeql(stix_dict, import_type)
+                logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
 
 
 def update_layers(layers, indexes, missing, dep_obj, cyclical):
@@ -82,6 +126,75 @@ def update_layers(layers, indexes, missing, dep_obj, cyclical):
     return layers, indexes, missing, cyclical
 
 
+def backdoor_add_dir(dirpath):
+    """ Test the database initialisation function
+
+    """
+    layers = []
+    indexes = []
+    missing = []
+    cyclical = []
+    type_ql_list = []
+    id_list = []
+    obj_list = []
+    dirFiles = os.listdir(dirpath)
+    sorted_files = sorted(dirFiles)
+    typedb_sink = TypeDBSink(connection, True, import_type)
+    typedb_source = TypeDBSource(connection, import_type)
+    logger.debug(sorted_files)
+    for s_file in sorted_files:
+        if os.path.isdir(os.path.join(dirpath, s_file)):
+            continue
+        else:
+            with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
+                json_text = json.load(f)
+                for element in json_text:
+                    #logger.debug(f'**********==={element}')
+                    obj_list.append(element)
+                    temp_id = element.get('id', False)
+                    if temp_id:
+                        id_list.append(temp_id)
+
+                    dep_obj = dict_to_typeql(element, import_type)
+                    # logger.debug('----------------------------------------------------------------------------------------------------')
+                    # logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
+                    # logger.debug('----------------------------------------------------------------------------------------------------')
+                    layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
+
+    logger.debug(f'missing {missing}, cyclical {cyclical}')
+    newlist = []
+    duplist = []
+    if missing == [] and cyclical == []:
+        # add the layers into a list of strings
+        for layer in layers:
+            stid = layer["id"]
+            if stid not in newlist:
+                newlist.append(stid)
+                dep_match = layer["dep_match"]
+                dep_insert = layer["dep_insert"]
+                indep_ql = layer["indep_ql"]
+                core_ql = layer["core_ql"]
+                #print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+                prestring = ""
+                if dep_match != "":
+                    prestring = "match " + dep_match
+                upload_string = prestring + " insert " + indep_ql + dep_insert
+                type_ql_list.append(upload_string)
+            else:
+                duplist.append(stid)
+
+        # add list of strings to typedb
+        load_typeql_data(type_ql_list, connection)
+    id_set = set(id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    print(f'\n\n\n===========================\nduplist -> {duplist}')
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> {id_diff}')
+
+
 def backdoor_add(pahhway):
     """ Test the database initialisation function
 
@@ -92,22 +205,27 @@ def backdoor_add(pahhway):
     missing = []
     cyclical = []
     type_ql_list = []
+    id_list = []
     with open(pahhway, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         for stix_dict in json_text:
-            dep_obj = dict_To_typeql(stix_dict, import_type)
+            dep_obj = dict_to_typeql(stix_dict, import_type)
             layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
-            #print(f"layers -> {layers}")
+            print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+            print(f"layers -> {layers}")
+            print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
 
     print(f'missing {missing}, cyclical {cyclical}')
     if missing == [] and cyclical == []:
         # add the layers into a list of strings
         for layer in layers:
+            stid = layer["id"]
+            id_list.append(stid)
             dep_match = dep_obj["dep_match"]
             dep_insert = dep_obj["dep_insert"]
             indep_ql = dep_obj["indep_ql"]
             core_ql = dep_obj["core_ql"]
-            print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+            #print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
             prestring = ""
             if dep_match != "":
                 prestring = "match " + dep_match
@@ -117,7 +235,13 @@ def backdoor_add(pahhway):
         # add list of strings to typedb
         load_typeql_data(type_ql_list, connection)
 
-
+    id_set = set(id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> {id_diff}')
 
 
 def test_initialise():
@@ -134,6 +258,7 @@ def load_file_list(path1, file_list):
         path1 (): path
         file_list (): list of files
     """
+    obj_list = []
     logger.debug(f' connection {connection}')
     typedb = TypeDBSink(connection, True, import_type)
     #print(f'files {file_list}')
@@ -143,9 +268,11 @@ def load_file_list(path1, file_list):
             break
         else:
             with open((path1+f), mode="r", encoding="utf-8") as df:
-                #print(f'I am about to load {f}')
+                #print(f'I am about to history {f}')
                 json_text = json.load(df)
-                typedb.add(json_text)
+                obj_list.extend(json_text)
+
+    typedb.add(obj_list)
 
 
 def load_file(fullname):
@@ -154,14 +281,25 @@ def load_file(fullname):
     Args:
         fullname (): path and filename
     """
-    logger.debug(f'inside load file {fullname}')
+    logger.debug(f'inside history file {fullname}')
+    input_id_list=[]
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         typedb = TypeDBSink(connection, True, import_type)
+        for stix_dict in json_text:
+            input_id_list.append(stix_dict.get("id", False))
         typedb.add(json_text)
+    id_set = set(input_id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> {id_diff}')
+
 
 def check_object(fullname):
-    logger.debug(f'inside load file {fullname}')
+    logger.debug(f'inside history file {fullname}')
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         typedb = TypeDBSink(connection, True, import_type)
@@ -190,6 +328,33 @@ def check_object(fullname):
         # myobj4 = parse(tactic, False, import_type)
         # print(f'\n\n============> my tactic = {myobj4} <==================\n\n')
 
+
+def test_get_del_dir_statements(dirpath):
+    dirFiles = os.listdir(dirpath)
+    sorted_files = sorted(dirFiles)
+    for i, s_file in enumerate(sorted_files):
+        if os.path.isdir(os.path.join(dirpath, s_file)) or i<0:
+            continue
+        else:
+            file_list.append(s_file)
+            #print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            #print(f'==================== {s_file} ===================================')
+            with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
+                json_text = json.load(f)
+                for jt in json_text:
+                    stid = jt["id"]
+                    query_id(stid)
+
+
+def test_get_delete(fullname):
+    #load_file(fullname)
+    id_list = get_stix_ids()
+    print("\n\n=============\n-------------\n$$$$$$$$$$$$$$$$$$$$$\n")
+    for obj_id in id_list:
+        query_id(obj_id)
+    print(f'id list -> {id_list}')
+
+
 def query_id(stixid):
     """  Print out the match/insert and match/delete statements for any stix-id
 
@@ -197,18 +362,20 @@ def query_id(stixid):
         stixid ():
     """
     typedb = TypeDBSource(connection, import_type)
-    stix_dict = typedb.get(stixid)
-    stix_obj = parse(stix_dict)
+    print(f'stixid -> {stixid}')
+    #stix_dict = typedb.get(stixid)
+    stix_dict = backdoor_get(stixid)
+    stix_obj = stix_dict #parse(stix_dict)
     print(' ---------------------------Query Object----------------------')
     print(stix_obj.serialize(pretty=True))
-    dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, "STIX21")
-    del_match, del_tql = delete_stix_object(stix_obj, dep_match, dep_insert, indep_ql, core_ql, "STIX21")
+    dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
     print(' ---------------------------Delete Object----------------------')
     print(f'dep_match -> {dep_match}')
     print(f'dep_insert -> {dep_insert}')
     print(f'indep_ql -> {indep_ql}')
     print(f'core_ql -> {core_ql}')
     print("=========================== delete typeql below ====================================")
+    del_match, del_tql = delete_stix_object(stix_obj, dep_match, dep_insert, indep_ql, core_ql, import_type)
     print(f'del_match -> {del_match}')
     print(f'del_tql -> {del_tql}')
 
@@ -241,8 +408,14 @@ def clean_db():
     """
     local_list = get_stix_ids()
     print(f'list -> {local_list}')
+    # for stid in local_list:
+    #     print(f"\nid is -> {stid}\n")
+    #     query_id(stid)
     typedb = TypeDBSink(connection, False, import_type)
+    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$ Ready for Delete $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     typedb.delete(local_list)
+    print(f"len db ids before delete -> {len(local_list)}")
+    print(f"db ids after delete -> {len(get_stix_ids())}")
 
 
 def test_delete_dir(dirpath):
@@ -255,24 +428,69 @@ def test_delete_dir(dirpath):
     sorted_files = sorted(dirFiles)
     typedb_sink = TypeDBSink(connection, True, import_type)
     print(sorted_files)
+    layers = []
+    indexes = []
+    missing = []
+    cyclical = []
+    obj_list = []
+    input_id_list = []
     file_list = []
     for i, s_file in enumerate(sorted_files):
-        if os.path.isdir(os.path.join(dirpath, s_file)) or i<51:
+        if os.path.isdir(os.path.join(dirpath, s_file)) or i<0:
             continue
         else:
             file_list.append(s_file)
-            print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
-            print(f'==================== {s_file} ===================================')
+            #print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            #print(f'==================== {s_file} ===================================')
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 json_text = json.load(f)
-                typedb_sink.add(json_text)
-                #print(json.dumps(json_text, indent=4))
-                print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+                for stix_dict in json_text:
+                    input_id_list.append(stix_dict.get("id", False))
+                    obj_list.append(stix_dict)
+                    # dep_obj = dict_to_typeql(stix_dict, import_type)
+                    # layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
 
-    stix_id_list = get_stix_ids()
+                #typedb_sink.add(json_text)
+                #print(json.dumps(json_text, indent=4))
+                #print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+
+    # print(f'missing {missing}, cyclical {cyclical}')
+    # if missing == [] and cyclical == []:
+    #     # add the layers into a list of strings
+    #     for layer in layers:
+    #         dep_match = dep_obj["dep_match"]
+    #         dep_insert = dep_obj["dep_insert"]
+    #         indep_ql = dep_obj["indep_ql"]
+    #         core_ql = dep_obj["core_ql"]
+    #         print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+    #         prestring = ""
+    #         if dep_match != "":
+    #             prestring = "match " + dep_match
+    #         upload_string = prestring + " insert " + indep_ql + dep_insert
+    #         type_ql_list.append(upload_string)
+    #
+    #     # add list of strings to typedb
+    #     load_typeql_data(type_ql_list, connection)
+    typedb_sink.add(obj_list)
+    print("**********************************************************************************")
+    print("----------------------------------------------------------------------------------")
+    print("============= Add is complete =====================================================")
+    print("**********************************************************************************")
+    stix_id_list = set(get_stix_ids())
+    for stid in stix_id_list:
+        print(f"\nid is -> {stid}\n")
+        query_id(stid)
+
+    print("**********************************************************************************")
+    print("----------------------------------------------------------------------------------")
+    print("============= Get is complete =====================================================")
+    print("**********************************************************************************")
     typedb_sink.delete(stix_id_list)
     #clean_db()
-    print(f' files-> {file_list}')
+    #print(f' files-> {file_list}')
+    print(f"\n\nlen input ids -> {len(set(input_id_list))} ")
+    print(f"len db ids before delete -> {len(stix_id_list)}")
+    print(f"db ids after delete -> {len(get_stix_ids())}")
 
 
 def test_delete(path):
@@ -290,8 +508,10 @@ def test_delete(path):
     local_list = get_stix_ids()
     typedb.delete(local_list)
 
+
 def check_dir_ids(dirpath):
-    """ Open a directory and load all the files, optionally printing them
+    """ Open a directory and history all the files,
+    one at a time to the database and then check the ids
 
     Args:
         dirpath ():
@@ -326,8 +546,50 @@ def check_dir_ids(dirpath):
     print(f'difference -> {id_diff}')
 
 
+def check_dir_ids2(dirpath):
+    """ Open a directory and history all the files,
+    creating a list of objects first and then adding them to the db
+
+    Args:
+        dirpath ():
+    """
+    id_list = []
+    obj_list = []
+    dirFiles = os.listdir(dirpath)
+    sorted_files = sorted(dirFiles)
+    #print(sorted_files)
+    typedb_sink = TypeDBSink(connection, True, import_type)
+    typedb_source = TypeDBSource(connection, import_type)
+    for s_file in sorted_files:
+        if os.path.isdir(os.path.join(dirpath, s_file)):
+            continue
+        else:
+            # print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            # print(f'==================== {s_file} ===================================')
+            # print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
+                json_text = json.load(f)
+                for element in json_text:
+                    #print(f'**********==={element}')
+                    obj_list.append(element)
+                    temp_id = element.get('id', False)
+                    if temp_id:
+                        id_list.append(temp_id)
+    typedb_sink.add(obj_list)
+    print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    print(f'==================== Add is Complete ===================================')
+    print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    id_set = set(id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> {id_diff}')
+
+
 def check_dir(dirpath):
-    """ Open a directory and load all the files, optionally printing them
+    """ Open a directory and history all the files, optionally printing them
 
     Args:
         dirpath ():
@@ -352,6 +614,13 @@ def check_dir(dirpath):
                         id_list.append(temp_id)
                 json_text = json.load(f)
                 typedb_sink.add(json_text)
+    id_set = set(id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> {id_diff}')
 
 
 def cert_dict(cert_root, certs):
@@ -407,19 +676,40 @@ def test_get_ids(connection, import_type):
     my_id_list = typedb_sink.get_stix_ids()
     print(f'myidlist {my_id_list}')
 
+def test_get(stixid):
+    typedb_source = TypeDBSource(connection, import_type)
+    stix_obj = typedb_source.get(stixid, None)
+    return stix_obj
+
+
+def test_get_file(fullname):
+    load_file(fullname)
+    typedb_sink = TypeDBSink(connection, False, import_type)
+    stid_list = typedb_sink.get_stix_ids()
+    for stid in stid_list:
+        stix_obj = test_get(stid)
+
+
+def test_json(fullname):
+    with open(fullname, mode="r", encoding="utf-8") as f:
+        json_text = json.load(f)
+        for jt in json_text:
+            print("===========================================")
+            print(jt)
+
+
 
 def test_auth():
-    import_type = import_type_factory.create_import(stix_21=True,
-                                                    os_hunt=True,
-                                                    os_intel=True,
-                                                    cacao=True,
-                                                    attack_domains=[AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
-                                                    attack_versions=[AttackVersions.V12_1])
+    # import_type = import_type_factory.create_import(stix_21=True,
+    #                                                 os_hunt=True,
+    #                                                 os_intel=True,
+    #                                                 cacao=True,
+    #                                                 attack_domains=[AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
+    #                                                 attack_versions=[AttackVersions.V12_1])
 
     auth = authorised_mappings(import_type)
     print("===========================================")
     print(auth)
-
 
 
 # if this file is run directly, then start here
@@ -453,12 +743,14 @@ if __name__ == '__main__':
     f26 = 'note.json'
     f27 = 'process_ext_win_service.json'
     f28 = 'threat_actor.json'
+    f29 = "observed.json"
     file_list = [f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,f21,f22,f23,f24,f25]
     group_list = [f2, f3, f21, f25]
     note_list = [f2, f8, f26]
 
     data_path = "data/examples/"
     path1 = "data/standard/"
+    path2 = "data/mitre/history/"
     cert_root = "data/stix_cert_data"
     cert1 = "/attack_pattern_sharing/"
     cert2 = "/campaign_sharing/"
@@ -500,31 +792,44 @@ if __name__ == '__main__':
 
     mitre_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
     mitre = "data/mitre/"
+    osthreat = "data/os-threat/"
 
     id_list = ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46', 'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265', 'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559', 'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6', 'attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5', 'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
     # 019fde1c-
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
+    stid1 = "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+    stid2 = "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"
+    stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     #test_initialise()
-    load_file_list(path1, [f2, f28])
-    #load_file(path1 + f28)
-    #load_file(mitre + "test.json")
-    #check_object(mitre + "test.json")
+    #load_file_list(path1, [f2, f29])
+    #load_file(path1 + f29)
+    #load_file(mitre + "attack_objects.json")
+    #check_object(mitre + "attack_objects.json")
     #load_file(data_path + file1)
     print("=====")
     print("=====")
     print("=====")
-    #query_id(test_id)
+    #query_id(stid1)
+    #check_dir_ids2(mitre)
     #check_dir_ids(path1)
     #check_dir(path1)
-    #test_delete(path1+files10)
+    #test_delete(data_path+file1)
+    #test_get(stid1)
+    #test_get_delete(path2 + "attack_objects.json")
     #test_initialise()
     #test_delete_dir(path1)
-    #clean_db()
+    clean_db()
     #cert_test(cert_root+cert11)
     #cert_dict(cert_root, certs)
     #test_get_ids(connection, import_type)
     #test_ids_loaded(id_list2, connection)
     #test_auth()
     #test_generate_docs()
-    #backdoor_add(mitre + "test.json")
+    #backdoor_add(mitre + "attack_collection.json")
+    #backdoor_add_dir(osthreat)
+    #test_get_file(data_path + file1)
+    #test_insert_statements(mitre + "attack_objects.json", stid1)
+    #test_insert_statements(path1 + f29, stid2)
+    #test_get_del_dir_statements(mitre)
+    #test_json(osthreat + "feed.json")

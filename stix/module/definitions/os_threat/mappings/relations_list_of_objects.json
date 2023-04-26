@@ -1,0 +1,44 @@
+[
+  {
+    "name": "contents",
+    "typeql": "feed-content",
+    "owner": "feed-owner",
+    "pointed_to": "content",
+    "object": "threat-sub-object"
+  },
+  {
+    "name": "opinions",
+    "typeql": "list-of-opinions",
+    "owner": "opinion-list-owner",
+    "pointed_to": "single-opinion",
+    "object": "threat-sub-object"
+  },
+  {
+    "name": "observed",
+    "typeql": "list-of-observed",
+    "owner": "observed-list-owner",
+    "pointed_to": "single-observed",
+    "object": "threat-sub-object"
+  },
+  {
+    "name": "enrichments",
+    "typeql": "list-of-enrichments",
+    "owner": "enrichment-list-owner",
+    "pointed_to": "single-enrichment",
+    "object": "threat-sub-object"
+  },
+  {
+    "name": "notes",
+    "typeql": "list-of-notes",
+    "owner": "notes-list-owner",
+    "pointed_to": "single-note",
+    "object": "threat-sub-object"
+  },
+  {
+    "name": "tasks",
+    "typeql": "list-of-tasks",
+    "owner": "task-list-owner",
+    "pointed_to": "single-task",
+    "object": "threat-sub-object"
+  }
+]

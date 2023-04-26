@@ -1,0 +1,187 @@
+#
+# Copyright (C) 2022 OS-Threat
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+define
+
+    # Feeds Collection Object
+    feeds sub stix-domain-object,
+        owns name,
+        owns description,
+        owns paid,
+        owns free,
+        plays list-of-feeds:feed-list-owner;
+
+    # Individual Feed Object
+    feed sub stix-domain-object,
+        owns name,
+        owns description,
+        owns paid,
+        owns free,
+        plays list-of-feeds:single-feed,
+        plays feed-content:feed-owner;
+
+    # Pallet All of the cartons for an organisation
+#    pallet sub stix-domain-object,
+#        owns name,
+#        owns description,
+#        plays list-of-cartons:carton-list-owner;
+#
+#    # Carton all of the cases for a team
+#    carton sub stix-domain-object,
+#        owns name,
+#        owns description,
+#        plays list-of-cartons:single-carton,
+#        plays list-of-cases:cases-list-owner;
+#
+#    # Cases all of the cases for an individual
+#    cases sub stix-domain-object,
+#        owns name,
+#        owns description,
+#        owns userid,
+#        plays list-of-cases:single-cases,
+#        plays case-list:case-list-owner;
+#
+#    # Case an individual case
+#    case sub stix-domain-object,
+#        owns name,
+#        owns description,
+#        owns userid,
+#        owns status,
+#        owns case-type,
+#        owns case-priority,
+#        owns case-source,
+#        plays list-of-opinions:opinion-list-owner,
+#        plays assigned:assigned-owner,
+#        plays list-of-observed:observed-list-owner,
+#        plays list-of-enrichments:enrichment-list-owner,
+#        plays list-of-notes:notes-list-owner,
+#        plays list-of-tasks:task-list-owner,
+#        plays case-list:single-case;
+#
+#    # task an individual task
+#    task sub stix-domain-object,
+#        owns name,
+#        owns description,
+#        owns authors,
+#        plays assigned:assigned-owner,
+#        plays obj-refs:object,
+#        plays list-of-tasks:single-task;
+#
+#    # Case an individual case
+#    enrichment sub stix-domain-object,
+#        owns name,
+#        owns description,
+#        owns paid,
+#        owns free,
+#        owns userid,
+#        plays obj-refs:object,
+#        plays list-of-enrichments:single-entichment;
+#
+#    # Sub Object Reference, sub object includes created and modified
+#    threat-sub-object sub stix-sub-object,
+#        plays obj-refs:object,
+#        plays feed-content:content,
+#        plays list-of-observed:single-observed,
+#        plays list-of-enrichments:single-entichment,
+#        plays list-of-notes:single-note,
+#        plays list-of-tasks:single-task,
+#        plays list-of-opinions:single-opinion;
+#
+#    # Case Content Embedded Relations
+#    list-of-observed sub embedded,
+#        relates observed-list-owner as owner,
+#        relates single-observed as pointed-to;
+#
+#    list-of-enrichments sub embedded,
+#        relates enrichment-list-owner as owner,
+#        relates single-entichment as pointed-to;
+#
+#    list-of-notes sub embedded,
+#        relates notes-list-owner as owner,
+#        relates single-note as pointed-to;
+#
+#    list-of-tasks sub embedded,
+#        relates task-list-owner as owner,
+#        relates single-task as pointed-to;
+#
+#    list-of-opinions sub embedded,
+#        relates opinion-list-owner as owner,
+#        relates single-opinion as pointed-to;
+#
+#    # Cases Embedded Relation
+#    list-of-cartons sub embedded,
+#        relates carton-list-owner as owner,
+#        relates single-carton as pointed-to;
+#
+#    list-of-cases sub embedded,
+#        relates cases-list-owner as owner,
+#        relates single-cases as pointed-to;
+#
+#    case-list sub embedded,
+#        relates case-list-owner as owner,
+#        relates single-case as pointed-to;
+
+    # Feed Embedded Relations
+    list-of-feeds sub embedded,
+		relates feed-list-owner as owner,
+		relates single-feed as pointed-to;
+
+    feed-content sub embedded,
+		relates feed-owner as owner,
+		relates content as pointed-to;
+
+#    # Case Embedded Relations
+#    assigned sub embedded,
+#        relates assigned-owner as owner,
+#        relates assignee as pointed-to;
+#
+#    list-of-cartons sub embedded,
+#		relates carton-list-owner as owner,
+#		relates single-carton as pointed-to;
+
+    feed-content sub embedded,
+		relates feed-owner as owner,
+		relates content as pointed-to;
+
+	# Feed Contained References, can contain SDO, SCO or SRO, or Meta
+	stix-domain-object
+	    plays feed-content:content;
+
+	stix-cyber-observable-object
+	    plays feed-content:content;
+
+	stix-core-relationship
+	    plays feed-content:content;
+
+    marking-definition
+	    plays feed-content:content;
+
+#	identity
+#        plays assigned:assignee;
+
+    # Attribute Definitions
+    paid sub stix-attribute-boolean;
+    free sub stix-attribute-boolean;
+
+#    userid sub stix-attribute-string;
+#    status sub stix-attribute-string;
+#    case-type sub stix-attribute-string;
+#    case-priority sub stix-attribute-string;
+#    case-source sub stix-attribute-string;

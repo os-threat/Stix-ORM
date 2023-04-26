@@ -1,17 +1,13 @@
 
 import json
-from stix2.parsing import dict_to_stix2
+import copy
 from stix.module.authorise import authorised_mappings, import_type_factory
 from stix2.exceptions import ParseError
 from stix2.parsing import dict_to_stix2
-from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql
-from stix.module.initialise import tlp_ids
+from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql
 import logging
-from stix.module.definitions.stix21 import MarkingDefinition
 
-from stix.module.typedb_lib.import_type_factory import ImportType
-from stix.module.initialise import tlp_ids
-from stix.module.definitions.stix21 import stix_models
+from stix.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -68,8 +64,13 @@ def _get_dict(data):
         try:
             return dict(data)
         except (ValueError, TypeError):
-            raise ValueError("Cannot convert '%s' to dictionary." % str(data))
+            raise ValueError(f"Cannot convert {str(data)} to dictionary.")
 
+def is_attack_object(stix_dict):
+    if stix_dict.get("x_mitre_domains", False) or stix_dict.get("x_mitre_attack_spec_version", False):
+        return True
+    else:
+        return False
 
 def dict_to_stix(stix_dict: dict,
                  allow_custom=False,
@@ -97,38 +98,32 @@ def dict_to_stix(stix_dict: dict,
         objects that I don't know about ahead of time)
     """
     assert len(stix_dict) > 0
-    logger.debug("I'm in dict to stix")
+    logger.debug(f"I'm in dict to stix, {stix_dict}")
     auth = authorised_mappings(import_type)
     if 'type' not in stix_dict:
-        raise ParseError("Can't parse object with no 'type' property: %s" % str(stix_dict))
-
-    version = "2.1"
-    logger.debug(f"my version is {version}")
-    logger.debug(f'my type is {stix_dict["type"]}')
-    # if stix_dict["version"] != "2.1":
-    #     logger.debug("I am exiting because of my version number")
-    #     raise ParseError("Can't parse versions other than v2.1 '%s'! For custom types, use the CustomObject decorator." % stix_dict["version"])
+        raise ParseError(f"Can't parse object with no 'type' property: {str(stix_dict)}")
 
     obj_type = stix_dict["type"]
-    logger.debug(f'\nin parse, type is --> {obj_type}')
+    logger.debug(f'\nin parse, raw type is --> {obj_type}')
     logger.debug(f'\n auth-sdo -->{auth["tql_types"]["sdo"]}\n')
     logger.debug(f'\n\n auth-sro -->{auth["tql_types"]["sro"]}\n')
-    attack_object = False if not stix_dict.get("x_mitre_version", False) else True
+    attack_object = is_attack_object(stix_dict)
+    logger.debug(f'attack object {attack_object}')
     #print(f'auth is {auth["tql_types"]["meta"]}')
-    if obj_type in auth["tql_types"]["sdo"]:
+    if obj_type in auth["types"]["sdo"]:
         logger.debug("Im in sdo")
         sub_technique = False
         if attack_object:
-            sub_technique = False if not stix_dict.get("x_mitre_is_subtechnique", False) else True
+            sub_technique = stix_dict.get("x_mitre_is_subtechnique", False)
         logger.debug(f'subtechnique {sub_technique}, attack {attack_object}')
-        obj_tql, sdo_tql_name, is_list = sdo_type_to_tql(obj_type, import_type, attack_object, sub_technique)
+        obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(obj_type, import_type, attack_object, sub_technique)
         logger.debug(f"tql name {sdo_tql_name}, obj tql {obj_tql}")
         obj_class = class_for_type(sdo_tql_name, import_type, "sdo")
         logger.debug(f'output  object class is {obj_class}')
-    elif obj_type in auth["tql_types"]["sco"]:
+    elif obj_type in auth["types"]["sco"]:
         logger.debug("I'm in sco")
         obj_class = class_for_type(obj_type, import_type, "sco")
-    elif obj_type in auth["tql_types"]["sro"]:
+    elif obj_type in auth["types"]["sro"]:
         logger.debug("I'm in sro")
         uses_relation = False
         is_procedure = False
@@ -138,25 +133,29 @@ def dict_to_stix(stix_dict: dict,
         obj_tql = {}
         sro_sub_rel = "" if not stix_dict.get("relationship_type", False) else stix_dict["relationship_type"]
 
-        obj_tql, sro_tql_name, is_list = sro_type_to_tql(obj_type, sro_sub_rel, import_type, attack_object,
+        obj_tql, sro_tql_name, is_list, protocol = sro_type_to_tql(obj_type, sro_sub_rel, import_type, attack_object,
                                                          uses_relation, is_procedure)
         logger.debug(f"~~~~~~~~~~~ sro tql name {sro_tql_name}")
         if obj_type == "relationship":
-            obj_tql_name = "stix-core-relationship"
+            if attack_object:
+                obj_tql_name = "attack-relation"
+            else:
+                obj_tql_name = "stix-core-relationship"
         elif obj_type == "sighting":
             obj_tql_name = "sighting"
         if sro_tql_name == "attack-relation":
             obj_tql_name = sro_tql_name
         obj_class = class_for_type(obj_tql_name, import_type, "sro")
-    elif obj_type in auth["tql_types"]["sub"]:
+    elif obj_type in auth["types"]["sub"]:
         logger.debug("I'm in sub")
         obj_class = class_for_type(obj_type, import_type, "sub")
-    elif obj_type in auth["tql_types"]["meta"]:
+    elif obj_type in auth["types"]["meta"]:
         logger.debug("I'm in meta")
         if attack_object:
             obj_class = class_for_type("attack-marking", import_type, "meta")
         else:
             obj_class = dict_to_stix2(stix_dict, True)
+            logger.debug(f'object class is finally {obj_class}')
             return obj_class
 
     elif allow_custom:
@@ -179,7 +178,7 @@ def dict_to_stix(stix_dict: dict,
                 # prevents ParseError for unregistered objects when
                 # allow_custom=False and the extension defines a new object
                 return stix_dict
-        raise ParseError("Can't parse unknown object type '%s'! For custom types, use the CustomObject decorator." % obj_type)
+        raise ParseError(f"Can't parse unknown object type {obj_type}! For custom types, use the CustomObject decorator." + str(obj_type))
 
     logger.debug(f'object class is finally {obj_class}')
     logger.debug("========================================")
@@ -217,11 +216,11 @@ def class_for_type(stix_typeql, import_type, category=None):
         for obj in auth["conv"][category]:
             logger.debug(f'object tql is {obj["typeql"]}, wanted {stix_typeql}')
             if obj["typeql"] == stix_typeql:
-                logger.debug("found the right type")
+                #logger.debug("found the right type")
                 conv_cls = obj["class"]
                 logger.debug(f'classs is {conv_cls}')
-                cls = auth["classes"][category][conv_cls]
-                logger.debug(f'classs 2 is {cls}')
+                cls = copy.deepcopy(auth["classes"][category][conv_cls])
+                #logger.debug(f'classs 2 is {cls}')
                 return cls
 
     return cls

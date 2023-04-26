@@ -16,14 +16,14 @@ class ImportType(BaseModel):
     CVE: bool
     identity: bool
     location: bool
-    os_intel: bool
-    os_hunt: bool
+    os_threat: bool
     kestrel: bool
     rules: bool
     ATTACK: bool
     ATTACK_Versions: List[AttackVersions]
     ATTACK_Domains: List[AttackDomains]
     CACAO: bool
+    US_DoD: bool
 
 
 
@@ -39,10 +39,10 @@ class ImportTypeFactory:
                       cve=False,
                       identity=False,
                       location=False,
-                      os_hunt=False,
+                      os_threat=False,
                       kestrel=False,
-                      os_intel=False,
                       rules=False,
+                      us_dod=False,
                       attack_versions=[],
                       attack_domains=[],
                       cacao=False):
@@ -51,14 +51,14 @@ class ImportTypeFactory:
             CVE=cve,
             identity=identity,
             location=location,
-            os_hunt=os_hunt,
+            os_threat=os_threat,
             kestral=kestrel,
-            os_intel=os_intel,
             rules=rules,
             ATTACK=attack,
             ATTACK_Versions=attack_versions,
             ATTACK_Domains=attack_domains,
-            CACAO=cacao
+            CACAO=cacao,
+            US_DoD=us_dod
         )
 
     @staticmethod
@@ -68,14 +68,31 @@ class ImportTypeFactory:
             CVE=False,
             identity=False,
             location=False,
-            os_hunt=False,
+            os_threat=False,
             kestrel=False,
-            os_intel=False,
             rules=False,
             ATTACK=True,
             ATTACK_Versions=[AttackVersions.V12_1],
             ATTACK_Domains=[AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
-            CACAO=False
+            CACAO=False,
+            US_DoD=False
+        )
+
+    @staticmethod
+    def get_all_imports():
+        return ImportType(
+            STIX21=True,
+            CVE=True,
+            identity=True,
+            location=True,
+            os_threat=True,
+            kestrel=True,
+            rules=True,
+            ATTACK=True,
+            ATTACK_Versions=[AttackVersions.V12_1],
+            ATTACK_Domains=[AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
+            CACAO=True,
+            US_DoD=True
         )
 
     @staticmethod
@@ -85,14 +102,14 @@ class ImportTypeFactory:
             CVE = False,
             identity = False,
             location = False,
-            os_hunt = False,
+            os_threat = False,
             kestrel = False,
-            os_intel = False,
             rules = False,
             ATTACK = False,
             ATTACK_Versions = [AttackVersions.V12_1],
             ATTACK_Domains = [AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
-            CACAO= False
+            CACAO= False,
+            US_DoD= False
         )
 
     @staticmethod
@@ -110,10 +127,10 @@ class ImportTypeFactory:
         return {
             "STIX21": import_type.STIX21,
             "ATT&CK": import_type.ATTACK,
-            "os-intel": import_type.os_intel,
-            "os-hunt": import_type.os_hunt,
+            "os-threat": import_type.os_threat,
             "kestrel": import_type.kestrel,
             "CACAO": import_type.CACAO,
+            "US_DoD": import_type.US_DoD,
             "CVE": import_type.CVE,
             "identity": import_type.identity,
             "location": import_type.location,

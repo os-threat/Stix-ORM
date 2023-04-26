@@ -6,6 +6,7 @@ import glob
 import logging
 
 from stix.module.typedb import TypeDBSource, TypeDBSink
+from stix.module.typedb_lib.factories.import_type_factory import ImportTypeFactory
 from test.dbconfig import *
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
@@ -119,8 +120,17 @@ class TestDatabase(unittest.TestCase):
         '''
         Create a connection to the database and reset it
         '''
-        cls._typedbSink = TypeDBSink(connection=connection, clear=True, import_type="STIX21")
-        cls._typedbSource = TypeDBSource(connection=connection, import_type="STIX21")
+        connection = {
+            "uri": "localhost",
+            "port": "1729",
+            "database": "stix",
+            "user": None,
+            "password": None
+        }
+
+        import_type = ImportTypeFactory().get_default_import()
+        cls._typedbSink = TypeDBSink(connection=connection, clear=True, import_type=import_type)
+        cls._typedbSource = TypeDBSource(connection=connection, import_type=import_type)
         cls._data_folder = pathlib.Path(__file__).parents[1].joinpath("data/examples/")
         cls._example = str(pathlib.Path(__file__).parents[1].joinpath("data/examples/"))
 

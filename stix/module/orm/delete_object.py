@@ -1,5 +1,6 @@
 import re
 from typing import List
+import copy
 
 from stix.module.authorise import authorised_mappings
 
@@ -8,6 +9,7 @@ from stix.module.orm.import_utilities import split_on_activity_type, val_tql
 
 import logging
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 ##############################################################
 #  1.) Methods to Delete any Stix Objects
 ############################################################
@@ -25,16 +27,16 @@ def delete_stix_object(stix_object,
                        import_type) -> [str, str]:
 
     auth = authorised_mappings(import_type)
-    if stix_object.type in auth["tql_types"]["sdo"]:
-        total_props, obj_tql, sdo_tql_name = sdo_to_data(stix_object, import_type)
+    if stix_object.type in auth["types"]["sdo"]:
+        total_props, obj_tql, sdo_tql_name, protocol = sdo_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(indep_ql)
         del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sdo_tql_name, import_type)
-    elif stix_object.type in auth["tql_types"]["sro"]:
-        total_props, obj_tql, sro_tql_name = sro_to_data(stix_object, import_type)
+    elif stix_object.type in auth["types"]["sro"]:
+        total_props, obj_tql, sro_tql_name, protocol = sro_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(dep_insert)
         del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sro_tql_name, import_type)
-    elif stix_object.type in auth["tql_types"]["sco"]:
-        total_props, obj_tql, sro_tql_name = sco_to_data(stix_object, import_type)
+    elif stix_object.type in auth["types"]["sco"]:
+        total_props, obj_tql, sro_tql_name, protocol = sco_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(core_ql)
         # Need to change this line to suit scenarios where object name is not type name (e.g. future)
         del_match, del_tql = delete_object(stix_object, core_ql, total_props, obj_tql, var_name, sro_tql_name, import_type)
@@ -166,7 +168,9 @@ def delete_sub_reln(rel, obj, obj_var, i, import_type):
           or rel == "observed_data_refs"
           or rel == "where_sighted_refs"
           or rel == "source_ref"
-          or rel == "target_ref"):
+          or rel == "target_ref"
+          or rel == "definition"
+          or rel == "definition_type"):
         match = delete = ''
 
     else:
@@ -220,13 +224,14 @@ def del_key_value_store(rel_name, rel_object, obj_var, i, import_type):
 
 def del_list_of_object(rel_name, prop_value_list, parent_var, i, import_type):
     auth = authorised_mappings(import_type)
+    logger.debug(f'rl name -> {rel_name}')
     for config in auth["reln"]["list_of_objects"]:
         if config["name"] == rel_name:
             rel_typeql = config["typeql"]
-            obj_props_tql = config["typeql_props"]
             role_owner = config["owner"]
             role_pointed = config["pointed_to"]
             typeql_obj = config["object"]
+            obj_props_tql = copy.deepcopy(auth["sub_objects"][typeql_obj])
             break
     lod_list = []
     match = delete = ''
@@ -264,7 +269,7 @@ def del_list_of_object(rel_name, prop_value_list, parent_var, i, import_type):
 
 def del_embedded_relation(rel_name, rel_object, obj_var, i, import_type):
     auth = authorised_mappings(import_type)
-    for ex in auth["reln"]["relations_embedded"]:
+    for ex in auth["reln"]["embedded_relations"]:
       if ex["rel"] == rel_name:
         owner = ex["owner"]
         relation = ex["typeql"]
@@ -277,14 +282,16 @@ def del_embedded_relation(rel_name, rel_object, obj_var, i, import_type):
 
 
 def del_load_object(prop_name, prop_dict, parent_var, i, import_type):
-    # as long as it is predefined, load the object
-    #logger.debug('------------------- load object ------------------------------')
+    # as long as it is predefined, history the object
+    #logger.debug('------------------- history object ------------------------------')
     auth = authorised_mappings(import_type)
+    logger.debug(f'prop dict {prop_dict}')
     for prop_type in auth["reln"]["extension_relations"]:
         if prop_name == prop_type["stix"]:
             tot_prop_list = [tot for tot in prop_dict.keys()]
-            obj_tql = prop_type["dict"]
-            obj_var = '$' + prop_type["object"]
+            obj_name = prop_type["object"]
+            obj_tql = copy.deepcopy(auth["sub_objects"][obj_name])
+            obj_var = '$' + obj_name
             reln = prop_type["relation"]
             rel_var = '$' + reln
             rel_owner = prop_type["owner"]
@@ -300,7 +307,7 @@ def del_load_object(prop_name, prop_dict, parent_var, i, import_type):
             match += ' isa ' + reln + ';\n'
 
             # Split them into properties and relations
-            properties, relations = split_on_activity_type(tot_prop_list, obj_tql)
+            properties, relations = split_on_activity_type(prop_dict, obj_tql)
             delete = ''
 
             # add each of the relations to the match and insert statements

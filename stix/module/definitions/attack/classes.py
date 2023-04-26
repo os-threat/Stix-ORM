@@ -1,5 +1,6 @@
 """Python Mitre ATT&CK Stix Class Definitions """
-
+import json
+import pathlib
 from collections import OrderedDict
 
 from stix2.exceptions import (
@@ -23,6 +24,10 @@ from stix2.v21.vocab import (
 )
 
 import logging
+
+from stix.module.definitions.definitions import get_definitions, ThreatReference
+from stix.module.typedb_lib.auth_types import all_auth_types
+
 logger = logging.getLogger(__name__)
 
 
@@ -49,6 +54,7 @@ class AttackRelation(_RelationshipObject):
         ('x_mitre_modified_by_ref', StringProperty()),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
+        ('x_mitre_platforms', ListProperty(StringProperty)),
         ('source_ref', ReferenceProperty(invalid_types=_invalid_source_target_types, spec_version='2.1', required=True)),
         ('target_ref', ReferenceProperty(invalid_types=_invalid_source_target_types, spec_version='2.1', required=True)),
         ('start_time', TimestampProperty()),
@@ -537,17 +543,16 @@ class AttackCampaign(_DomainObject):
             msg = "{0.id} 'last_seen' must be greater than or equal to 'first_seen'"
             raise ValueError(msg.format(self))
 
-# TODO: Find a better def
-#auth = authorised_mappings()
-# valid_obj = auth["tql_types"]["sdo"] + auth["tql_types"]["sro"] + auth["tql_types"]["sco"]
-valid_obj = ['attack-pattern', 'campaign', 'course-of-action', 'grouping', 'identity', 'incident', 'indicator', 'infrastructure', 'intrusion-set', 'location', 'malware', 'malware-analysis', 'note', 'observed-data', 'opinion', 'report', 'threat-actor', 'tool', 'vulnerability', 'x-mitre-matrix', 'x-mitre-tactic', 'attack-pattern', 'attack-pattern', 'course-of-action', 'intrustion-set', 'malware', 'tool', 'x-mitre-collection', 'x-mitre-data-source', 'x-mitre-data-component', 'campaign', 'relationship', 'sighting', 'relationship', 'artifact', 'autonomous-system', 'directory', 'domain-name', 'email-addr', 'email-message', 'file', 'ipv4-addr', 'ipv6-addr', 'mac-addr', 'mutex', 'network-traffic', 'process', 'software', 'url', 'user-account', 'windows-registry-key', 'x509-certificate']
 
+valid_obj =  list(get_definitions().get_all_types())
+# i) allows x- prefix see properties.py line 592 obj_type.startswith("x-") and
+# ii) allows non stix definitiosn to be added see properties.py line 592 is_object(obj_type, self.spec_version)
 class ObjectVersion(_STIXBase21):
     """For more detailed information on this object's properties, see
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
     _properties = OrderedDict([
-        ('object_ref', ListProperty(ReferenceProperty(valid_types=valid_obj, spec_version='2.1'), required=True)),
+        ('object_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1')),
         ('object_modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
     ])
 

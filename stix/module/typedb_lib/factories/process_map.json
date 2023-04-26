@@ -1,0 +1,41 @@
+[{
+    "name": "reln_name",
+    "keys": ["embedded_relations", "standard_relations", "list_of_objects", "key_value_relations", "extension_relations", "relations_sro_roles"],
+    "match":["relations_embedded", "relations_sro_roles", "relations_list_of_objects", "relations_key_value", "relations_extensions_and_objects", "relations_sro_roles"],
+    "cond": ["rel", "stix", "name", "name", "stix", "stix"]
+},{
+    "name": "reln",
+    "keys": ["embedded_relations", "standard_relations", "list_of_objects", "key_value_relations", "extension_relations", "relations_sro_roles"],
+    "match":["relations_embedded", "relations_sro_roles", "relations_list_of_objects", "relations_key_value", "relations_extensions_and_objects", "relations_sro_roles"],
+    "cond": []
+},{
+    "name": "tql_types1",
+    "keys": ["embedded_relations", "standard_relations", "list_of_objects", "key_value_relations", "extension_relations", "relations_sro_roles"],
+    "match":["relations_embedded", "relations_sro_roles", "relations_list_of_objects", "relations_key_value", "relations_extensions_and_objects", "relations_sro_roles"],
+    "cond": ["typeql", "typeql", "typeql", "typeql", "relation", "typeql"]
+}, {
+    "name": "tql_types",
+    "keys": ["sdo", "sro", "sco", "sub", "meta"],
+    "match":["object_conversion", "object_conversion", "object_conversion", "object_conversion", "object_conversion"],
+    "cond": ["sdo", "sro", "sco", "sub", "meta" ]
+}, {
+    "name": "is_lists",
+    "keys": ["sdo", "sro", "sco", "sub", "meta"],
+    "match":["is_list_sdo", "is_list_sro", "is_list_sco", "is_list_sub_objects", "is_list_meta"],
+    "cond": ["sdo", "sro", "sco", "sub", "meta"]
+}, {
+    "name": "direct",
+    "keys": ["sub_objects", "objects"],
+    "match":["sub_objects", "data"],
+    "cond": []
+}, {
+    "name": "conv",
+    "keys": ["sdo", "sro", "sco", "sub", "meta"],
+    "match":["object", "object", "object", "object"],
+    "cond": ["sdo", "sro", "sco", "sub", "meta"]
+}, {
+    "name": "classes",
+    "keys": ["sdo", "sro", "sco", "sub", "meta"],
+    "match":["object", "object", "object", "object"],
+    "cond": ["sdo", "sro", "sco", "sub", "meta"]
+}]

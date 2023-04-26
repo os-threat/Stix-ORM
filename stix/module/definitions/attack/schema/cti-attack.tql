@@ -144,7 +144,7 @@ define
         owns x-mitre-deprecated,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
-        plays x-mitre-data-source:data-source,
+        plays x-mitre-data-source-ref:data-source,
         plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
@@ -160,7 +160,7 @@ define
         plays detects:sensor,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
-        plays x-mitre-data-source:component,
+        plays x-mitre-data-source-ref:component,
         plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
@@ -181,13 +181,16 @@ define
     # Statement Markings - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#the-attck-spec
     attack-marking sub statement-marking,
         owns x-mitre-domains,
+        owns x-mitre-version,
         owns x-mitre-attack-spec-version;
 
     # Attack Identity - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#the-attck-spec
     attack-identity sub identity,
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
-        owns x-mitre-version;
+        owns x-mitre-version,
+        plays obj-ref:content,
+        plays x-mitre-modified-by-ref:modifier;
 
     # Relations
     #===================
@@ -199,6 +202,8 @@ define
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-deprecated,
+        owns x-mitre-platforms,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     attributed-to
@@ -207,6 +212,8 @@ define
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-deprecated,
+        owns x-mitre-platforms,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
    mitigates
@@ -215,6 +222,8 @@ define
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-deprecated,
+        owns x-mitre-platforms,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     #=================================
@@ -225,9 +234,11 @@ define
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-deprecated,
+        owns x-mitre-platforms,
         plays obj-ref:content,
 		relates child as source,
 		relates parent as target,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content,
         plays revoked-by:revoked,
         plays revoked-by:new-version;
@@ -238,9 +249,11 @@ define
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-deprecated,
+        owns x-mitre-platforms,
         plays obj-ref:content,
 		relates sensor as source,
 		relates ttp as target,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content,
         plays revoked-by:revoked,
         plays revoked-by:new-version;
@@ -251,9 +264,11 @@ define
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-deprecated,
+        owns x-mitre-platforms,
         plays obj-ref:content,
 		relates revoked as source,
 		relates new-version as target,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     procedure sub  stix-core-relationship,
@@ -262,13 +277,15 @@ define
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-deprecated,
+        owns x-mitre-platforms,
         plays obj-ref:content,
 		relates user as source,
 		relates technique as target,
+        plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
 
     # Built-in Embedded Relations for Mitre Attack objects
-	x-mitre-data-source sub embedded,
+	x-mitre-data-source-ref sub embedded,
 		relates data-source as pointed-to,
 		relates component as owner,
         plays obj-ref:content;

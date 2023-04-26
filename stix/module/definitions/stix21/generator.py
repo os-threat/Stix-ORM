@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-This load all the dictionary definitions and save them as JSON objects
+This history all the dictionary definitions and save them as JSON objects
 """
 
 __author__ = "Paolo Di Prodi"

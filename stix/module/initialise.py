@@ -71,7 +71,7 @@ def load_schema(stix_connection: Dict[str, str], rel_path=None, schema_type: str
     logger.debug(f'{stix_connection}')
     logger.debug(rel_path)
     logger.debug(schema_type)
-    assert rel_path is not None, "Need a path to load a schema"
+    assert rel_path is not None, "Need a path to history a schema"
     assert os.path.exists(rel_path), "File path needs to exist"
 
     url = stix_connection["uri"] + ":" + stix_connection["port"]
@@ -95,12 +95,14 @@ def load_schema(stix_connection: Dict[str, str], rel_path=None, schema_type: str
 
 def load_markings(stix_connection: Dict[str, str]):
     type_ql_list = []
+    logger.info(f"========================== Database initialisation ============================")
     for mark_list in initial_markings:
         type_ql = " insert "
         for line in mark_list:
             type_ql += line
         type_ql_list.append(type_ql)
     load_typeql_data(type_ql_list, stix_connection)
+    logger.info(f"===============================================================================\n\n")
     return_list = tlp_ids
     return return_list
 
@@ -111,11 +113,12 @@ def load_typeql_data(data_list, stix_connection: Dict[str, str]):
         # Stage 1: Create the schema
         with client.session(stix_connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.WRITE) as write_transaction:
-                logger.info(f'inside initial data loader and ready to load')
+                logger.debug(f'Loading TLP markings')
                 for data in data_list:
+                    logger.debug(f'\n\n{data}\n\n')
                     insert_iterator = write_transaction.query().insert(data)
 
-                    logger.info(f'insert_iterator response ->\n{insert_iterator}')
+                    logger.debug(f'insert_iterator response ->\n{insert_iterator}')
                     for result in insert_iterator:
                         logger.info(f'typedb response ->\n{result}')
 
@@ -236,6 +239,7 @@ def sort_layers(layers,
 
     logger.debug("theres a massive problem")
     return layers, indexes, list(mset), cyclical
+
 
 
 def reorder(layers, indexes, tree, dep_obj, add_or_del):

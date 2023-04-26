@@ -12,10 +12,10 @@ from returns.unsafe import unsafe_perform_io
 from typedb.client import *
 from stix.module.orm.import_objects import raw_stix2_to_typeql
 from stix.module.orm.delete_object import delete_stix_object, add_delete_layers
-from stix.module.orm.import_utilities import get_embedded_match
 from stix.module.orm.export_object import convert_ans_to_stix
 from stix.module.parsing.parse_objects import parse
-from .initialise import setup_database, load_schema, sort_layers, load_markings
+from .authorise import authorised_mappings
+from .initialise import setup_database, load_schema, load_markings
 import networkx as nx
 from stix2 import v21
 from stix2.base import _STIXBase
@@ -31,7 +31,7 @@ from stix.module.typedb_lib.queries import delete_database, match_query, query_i
     build_insert_query, query_id, add_instructions_to_typedb
 from stix.module.typedb_lib.file import write_to_file
 from stix.module.typedb_lib.instructions import Instructions, Status, AddInstruction, TypeQLObject
-from .typedb_lib.import_type_factory import ImportType, ImportTypeFactory
+from stix.module.typedb_lib.factories.import_type_factory import ImportType, ImportTypeFactory
 
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
@@ -112,16 +112,16 @@ class TypeDBSink(DataSink):
         # 2. Load the Schema's
         # A. Load the Stix Schema
         schema_result = self.__load_stix_schema()
-        handle_result(schema_result, "load schema result", self.strict_failure)
+        handle_result(schema_result, "history schema result", self.strict_failure)
         # B. Load Stix Rules Schema
         rules_result = self.__load_stix_rules()
-        handle_result(rules_result, "load stix rules result", self.strict_failure)
+        handle_result(rules_result, "history stix rules result", self.strict_failure)
         # C. Load the Attack Schema
         attack_result = self.__load_attack_schema()
-        handle_result(attack_result, "load attack result", self.strict_failure)
-        # D. Load the OS-Hunt Schema
-        markings_result = self.__load_stix_os_hunt()
-        handle_result(markings_result, "load os hunt result", self.strict_failure)
+        handle_result(attack_result, "history attack result", self.strict_failure)
+        # D. Load the OS-Threat Schema
+        os_threat_result = self.__load_os_threat_schema()
+        handle_result(os_threat_result, "history os threat result", self.strict_failure)
 
         # 3. Load the Objects
         # Still to do
@@ -138,25 +138,25 @@ class TypeDBSink(DataSink):
         if self.clear and self.import_type.ATTACK:
             logger.debug("ATT&CK")
             load_schema(self._stix_connection, str(self.cti_schema_attack), "ATT&CK Schema")
-            logger.debug("moving past load schema")
+            logger.info("we have loaded ATT&CK schema")
         else:
-            logger.debug("ignoring load ATT&CK schema")
+            logger.debug("ignoring history ATT&CK schema")
 
     @safe
-    def __load_stix_os_hunt(self):
-        if self.clear and self.import_type.os_hunt:
-            logger.debug("attack")
-            load_schema(self._stix_connection, str(self.cti_schema_os_hunt), "os-hunt Schema ")
-            logger.debug("we have loaded os-threat schema")
+    def __load_os_threat_schema(self):
+        if self.clear and self.import_type.os_threat:
+            logger.debug("os-threat")
+            load_schema(self._stix_connection, str(self.cti_schema_os_threat), "os-threat Schema ")
+            logger.info("we have loaded os-threat schema")
         else:
-            logger.debug("ignoring load  os hunt")
+            logger.debug("ignoring history  os hunt")
 
     @safe
     def __load_stix_rules(self):
         if self.clear and self.import_type.rules:
             logger.debug("rules")
             load_schema(self._stix_connection, str(self.cti_schema_stix_rules), "Stix 2.1 Rules")
-            logger.debug("we have loaded Stix rules")
+            logger.info("we have loaded Stix rules")
         else:
             logger.debug("ignoring check of stix rules")
 
@@ -165,9 +165,9 @@ class TypeDBSink(DataSink):
         if self.clear:
             load_schema(self._stix_connection, str(self.cti_schema_stix), "Stix 2.1 Schema ")
             self.loaded = load_markings(self._stix_connection)
-            logger.debug("we have loaded Stix schema")
+            logger.info("we have loaded Stix schema")
         else:
-            logger.debug("ignoring load stix schema")
+            logger.debug("ignoring history stix schema")
 
     @safe
     def __assign_schemas(self):
@@ -179,8 +179,8 @@ class TypeDBSink(DataSink):
         assert os.path.isfile(self.cti_schema_stix)
         self.cti_schema_stix_rules = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/stix21/schema/cti-rules.tql")
         assert os.path.isfile(self.cti_schema_stix_rules)
-        self.cti_schema_os_intel = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/os_threat/schema/cti-os-intel.tql")
-        assert os.path.isfile(self.cti_schema_os_intel)
+        self.cti_schema_os_threat = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/os_threat/schema/cti-os-threat.tql")
+        assert os.path.isfile(self.cti_schema_os_threat)
         self.cti_schema_os_hunt = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/os_threat/schema/cti-os-hunt.tql")
         assert os.path.isfile(self.cti_schema_os_hunt)
         self.cti_schema_attack = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/attack/schema/cti-attack.tql")
@@ -241,12 +241,13 @@ class TypeDBSink(DataSink):
                                  get_ids_tql,
                                  data_query)
         if not is_successful(query_data):
+            logging.exception("\n".join(traceback.format_exception(query_data.failure())))
             return Failure(query_data.failure())
         extracted_output = unsafe_perform_io(query_data)
         return Success(unwrap_or_failure(extracted_output))
 
     def get_stix_ids(self):
-        """ Get all the stix-ids in a database, should be moved to typedb_lib file
+        """ Get all the stix-ids in a database, should be moved to DataSource object
 
         Returns:
             id_list : list of the stix-ids in the database
@@ -261,20 +262,24 @@ class TypeDBSink(DataSink):
         if is_successful(result):
             return result.unwrap()
         else:
-            logger.error(str(result.failure()))
+            logging.exception("\n".join(traceback.format_exception(result.failure())))
             raise Exception(str(result.failure()))
 
     @safe
     def __retrieve_stix_id(self,
                            stix_id: str):
         type_db_source = unwrap_or_failure(self.__get_source_client())
-        return type_db_source.get(stix_id)
+        return type_db_source.get(stix_id, self.import_type)
 
     @safe
     def __delete_instruction(self,
                              stixid: str):
 
         stix_obj = self.__retrieve_stix_id(stixid)
+        if not is_successful(stix_obj):
+            logging.exception("\n".join(traceback.format_exception(stix_obj.failure())))
+            raise Exception(stix_obj.failure())
+
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = stix_obj.bind(
             lambda x: raw_stix2_to_typeql(x, self.import_type))
         del_match, del_tql = stix_obj.bind(
@@ -355,6 +360,7 @@ class TypeDBSink(DataSink):
                                                                                                             order_instruction))
         log_delete_layers(delete_from_database_result)
         if not is_successful(delete_from_database_result):
+            logging.exception("\n".join(traceback.format_exception(delete_from_database_result.failure())))
             raise Exception(delete_from_database_result.failure())
 
         instructions = unsafe_perform_io(delete_from_database_result.unwrap())
@@ -375,7 +381,7 @@ class TypeDBSink(DataSink):
                       'user': self.user,
                       'password': self.password}
 
-        return TypeDBSource(connection, "STIX21")
+        return TypeDBSource(connection, self.import_type)
 
 
 
@@ -433,17 +439,16 @@ class TypeDBSink(DataSink):
             dependencies = instruction.typeql_obj.dep_list
 
             this_node = instruction.id
-            if directed_graph.has_node(this_node):
-                logging.info("Already has node id " + this_node)
-            else:
-                logging.info("Inserting dependency node " + this_node)
+            if not directed_graph.has_node(this_node):
+                # logging.info("Already has node id " + this_node)
+                # logging.info("Inserting dependency node " + this_node)
                 directed_graph.add_node(this_node)
 
             for dependency_node in dependencies:
-                if directed_graph.has_node(dependency_node):
-                    logging.info("Already has dependency node id " + this_node)
-                else:
-                    logging.info("Dependency node does not exist id " + this_node)
+                if not directed_graph.has_node(dependency_node):
+                   # logging.info("Already has dependency node id " + this_node)
+
+                   # logging.info("Dependency node does not exist id " + this_node)
                     directed_graph.add_node(this_node)
                 directed_graph.add_edge(dependency_node, this_node)
         instructions.add_dependencies(directed_graph)
@@ -457,6 +462,7 @@ class TypeDBSink(DataSink):
         if is_successful(result):
             return instructions
         else:
+            logging.exception("\n".join(traceback.format_exception(result.failure())))
             raise Exception(result.failure)
 
 
@@ -520,21 +526,26 @@ class TypeDBSink(DataSink):
         """
         logger.debug("1. starting in add")
         obj_result = self._gather_objects(stix_data)
+        if not is_successful(obj_result):
+            logging.exception("\n".join(traceback.format_exception(obj_result.failure())))
+
 
         generate_instructions_result = obj_result.bind(lambda obj_list: self.__generate_instructions(obj_list))
-        print("/n##########################################################/n")
+        logger.info("\n##########################################################################################################################################################\n")
         #print(f"generate instructions is {generate_instructions_result}")
         instruction_dependency_graph_result = generate_instructions_result.bind(lambda results: self.__create_instruction_dependency_graph(results))
         check_missing_dependency_result = instruction_dependency_graph_result.bind(lambda result: self.__check_missing_dependencies(result))
 
         # check missing results
         if not is_successful(check_missing_dependency_result):
+            logging.exception("\n".join(traceback.format_exception(check_missing_dependency_result.failure())))
             raise Exception("failed to check missing dependencies")
         instructions: Instructions = check_missing_dependency_result.unwrap()
         if instructions.exist_missing_dependencies():
             return instructions.convert_to_result()
-        if instructions.cyclical_ids():
-            raise Exception("Missing dependencies")
+        if instructions.exist_cyclical_ids():
+            cycles = instructions.cyclical_ids()
+            raise Exception("Cycles exist in " + str(cycles))
 
         reorder_result = self.__reorder_instructions(instructions)
 
@@ -545,7 +556,9 @@ class TypeDBSink(DataSink):
                                                                                                self.database,
                                                                                                result))
         if not is_successful(add_to_database_result):
-            raise Exception(add_to_database_result.failure())
+            exception = unsafe_perform_io(add_to_database_result.failure())
+            logging.exception("\n".join(traceback.format_exception(exception)))
+            raise exception
 
         instructions = unsafe_perform_io(add_to_database_result).unwrap()
 
@@ -623,13 +636,14 @@ class TypeDBSource(DataSource):
 
     """
 
-    def __init__(self, connection: Dict[str, str], import_type=None, **kwargs):
+    def __init__(self, connection: Dict[str, str], import_type: Optional[ImportType]=None, **kwargs):
         super(TypeDBSource, self).__init__()
         logger.debug(f'TypeDBSource: {connection}')
 
         assert connection["uri"] is not None
         assert connection["port"] is not None
         assert connection["database"] is not None
+        assert import_type is None or isinstance(import_type, ImportType)
 
         self._stix_connection = connection
         self.uri = connection["uri"]
@@ -649,22 +663,24 @@ class TypeDBSource(DataSource):
     @safe
     def __retrieve_stix_object(self,
                                stix_id: str):
-        obj_var, type_ql = get_embedded_match(stix_id)
+        logger.debug(f'__retrieve_stix_object: {stix_id}')
+        obj_var, type_ql = get_embedded_match(stix_id, self.import_type)
         query = 'match ' + type_ql
-
-        import_type = self.__default_import_type()
+        logger.debug(f'query is {query}')
 
         data = match_query(uri=self.uri,
                            port=self.port,
                            database=self.database,
                            query=query,
                            data_query=convert_ans_to_stix,
-                           import_type=import_type)
+                           import_type=self.import_type)
 
-        stix_obj = unwrap_or_failure(data).bind(lambda x: parse(x))
+        logger.debug(f'data is -> {data}')
+        stix_obj = unwrap_or_failure(data).bind(lambda x: parse(data=x, allow_custom=False, import_type=self.import_type))
 
-        result = write_to_file("export_final.json", stix_obj)
+        result = write_to_file("stix/module/orm/export_final.json", stix_obj)
         if not is_successful(result):
+            logging.exception("\n".join(traceback.format_exception(result.failure())))
             logger.error(str(result.failure()))
 
         return stix_obj
@@ -688,7 +704,7 @@ class TypeDBSource(DataSource):
         if is_successful(result):
             return result.unwrap()
         else:
-            logger.error(str(result.failure()))
+            logging.exception("\n".join(traceback.format_exception(result.failure())))
             raise Exception(str(result.failure()))
 
     def query(self, query=None, version=None, _composite_filters=None):
@@ -735,3 +751,51 @@ class TypeDBSource(DataSource):
 
         """
         pass
+
+
+
+def get_embedded_match(source_id, import_type):
+    """
+        Assemble the typeql variable and match statement given the stix-id, and the increment
+    Args:
+        source_id (): stix-id to use
+        i (): number of times this type of object has been used
+    Returns:
+        source_var, the typeql string of the variable
+        match, the typeql match statement
+    """
+    source_type = get_source_type(source_id, import_type)
+    source_var = '$' + source_type
+    if source_type == 'relationship':
+        source_type = 'stix-core-relationship'
+    match = f' {source_var} isa {source_type}, has stix-id "{source_id}";\n'
+    return source_var, match
+
+def get_source_type(source_id, import_type):
+    """
+        Get the type of the source_id
+    Args:
+        source_id (): stix-id to use
+    Returns:
+        source_type, the type of the source_id
+    """
+    auth = authorised_mappings(import_type)
+    tmp_source = source_id.split('--')[0]
+    source = ""
+    for model in auth["conv"]["sdo"]:
+        if model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    for model in auth["conv"]["sro"]:
+        if model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    for model in auth["conv"]["sco"]:
+        if model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    for model in auth["conv"]["meta"]:
+        if model["type"] == tmp_source:
+            source = model["typeql"]
+            return source
+    return source

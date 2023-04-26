@@ -15,13 +15,18 @@ __status__ = "Production"
 
 import json
 from glob import glob
+
+import pathlib
 from loguru import logger
 import os
 from pathlib import Path
+from stix.module.definitions.stix21.classes import (
+    Note, ObservedData
+)
 from stix2.v21.sdo import (
     AttackPattern, Campaign, CourseOfAction, CustomObject, Grouping, Identity,
     Incident, Indicator, Infrastructure, IntrusionSet, Location, Malware,
-    MalwareAnalysis, Note, ObservedData, Opinion, Report, ThreatActor, Tool,
+    MalwareAnalysis, Opinion, Report, ThreatActor, Tool,
     Vulnerability,
 )
 from stix2.v21.observables import (
@@ -36,6 +41,10 @@ from stix2.v21.observables import (
 )
 from stix2.v21.sro import Relationship, Sighting
 from stix2.v21.common import MarkingDefinition
+
+
+from stix.module.definitions.definitions import get_definitions, DefinitionNames
+from stix.module.definitions.domain_definition import DomainDefinition
 
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
@@ -65,18 +74,10 @@ for file_path in glob(f'{dir_path}/base/*.json'):
 
         stix_models["base"][key] = json.load(json_file)
 
-
-stix_models["mappings"] = {}
-for file_path in glob(f'{dir_path}/mappings/*.json'):
-    # Opening JSON file
-    file_name = Path(file_path).stem
-    #if file_name != "object_conversion":
-    with open(file_path, encoding='utf-8') as json_file:
-        # create well formed key
-        key = f'{file_name}'
-        file_data = json_file.read()
-
-        stix_models["mappings"][key] = json.loads(file_data)
+stix_21_definitions_dir = pathlib.Path(__file__).parent
+stix_21_definition = DomainDefinition(DefinitionNames.STIX_21.value,
+                                              stix_21_definitions_dir)
+stix_models["mappings"] = stix_21_definition.get_mappings()
 
 
 stix_models["sub_objects"] = {}
