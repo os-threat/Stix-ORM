@@ -556,8 +556,9 @@ class TypeDBSink(DataSink):
                                                                                                self.database,
                                                                                                result))
         if not is_successful(add_to_database_result):
-            logging.exception("\n".join(traceback.format_exception(add_to_database_result.failure())))
-            raise Exception(add_to_database_result.failure())
+            exception = unsafe_perform_io(add_to_database_result.failure())
+            logging.exception("\n".join(traceback.format_exception(exception)))
+            raise exception
 
         instructions = unsafe_perform_io(add_to_database_result).unwrap()
 
