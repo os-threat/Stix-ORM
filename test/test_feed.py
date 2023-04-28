@@ -81,6 +81,7 @@ def create_feed():
         id="indicator--33fe3b22-0201-47cf-85d0-97c02164528d",
         created_by_ref="identity--611d9d41-dba5-4e13-9b29-e22488058ffc",
         name="Known malicious IP Address",
+        pattern_type="stix",
         description="Detected malicious activity from this address",
         indicator_types=["malicious-activity"],
         pattern="[ipv4-addr:value = '10.0.0.0']",
@@ -96,15 +97,15 @@ def create_feed():
         size=83968
     )
 
-    observedDataFile = ObservedData(
-        first_observed="2017-02-27T21:37:11.213Z",
-        last_observed="2017-02-27T21:37:11.213Z",
-        number_observed=1,
-        created_by_ref=identity.id,
-        object_refs=[
-            fileMalicious.id
-        ],
+    # TODO: Check this - I think it should be a list of ThreatSubObjects from the definitions
+    threat_sub_object = ThreatSubObject(
+        created="2017-02-27T21:37:11.213Z",
+        modified="2017-02-27T21:37:11.213Z",
+        object_ref=fileMalicious.id
     )
+
+
+
     a_feed = Feed(name='phishing-db',
                   description="the phishing database",
                   paid=False,
@@ -113,4 +114,8 @@ def create_feed():
                   lang="en",
                   external_references=[info],
                   object_marking_refs = [marking_def_statement],
-                  contents=[observedDataFile])
+                  contents=[threat_sub_object])
+
+# TODO: Not sure if you wanted to test the above. It needs to be added as a test if so.
+def test_create_feed(create_feed):
+    print("Example")
