@@ -182,7 +182,7 @@ def test_database_initialization(database:TypeDBSink):
     pass
 
 
-def test_create_feed(database:TypeDBSink,empty_feed:Bundle):
+def test_create_feed(database:TypeDBSink,empty_feed_bundle:Bundle):
     '''
 
     Now create the feed for the first time, there is no content to begin with...
@@ -193,7 +193,7 @@ def test_create_feed(database:TypeDBSink,empty_feed:Bundle):
     Returns:
 
     '''
-    result = database.add(empty_feed)
+    result = database.add(empty_feed_bundle)
     print(result)
 
 def test_create_feed_list(database:TypeDBSink,empty_feed_list):
