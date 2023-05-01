@@ -24,7 +24,7 @@ schema_path = path = str(pathlib.Path(__file__).parents[1])
 import_type = import_type_factory.get_attack_import()
 
 @pytest.fixture
-def typedb():
+def database():
     db = TypeDBSink(
         connection=connection,
         clear=True,
@@ -43,9 +43,37 @@ def typedb():
 
 from stix.module.definitions.os_threat.classes import ThreatReference,ThreatSubObject,Feed,Feeds
 from stix2.v21.common import ExternalReference,MarkingDefinition,StatementMarking
-from stix2.v21 import Identity,ObservedData,Indicator,IPv4Address,File
+from stix2.v21 import Identity,ObservedData,Indicator,IPv4Address,File,Bundle
+
 @pytest.fixture
-def create_feed():
+def empty_feed():
+
+    info = ExternalReference(source_name="Phishing Database ACTIVE",
+                             external_id="phishing-IPs-ACTIVE.txt",
+                             url="https://github.com/mitchellkrogza/Phishing.Database/blob/master/phishing-IPs-ACTIVE.txt")
+
+    marking_def_statement = MarkingDefinition(
+        id="marking-definition--d81f86b9-975b-4c0b-875e-810c5ad45a4f",
+        created="2017-04-14T13:07:49.812Z",
+        definition_type="statement",
+        definition=StatementMarking("Copyright (c) Stark Industries 2017.")
+    )
+
+
+    a_feed = Feed(name='phishing-db',
+                  description="the phishing database",
+                  paid=False,
+                  free=False,
+                  labels=[],
+                  lang="en",
+                  external_references=[info],
+                  object_marking_refs = [marking_def_statement],
+                  contents=[])
+
+    return Bundle([info,marking_def_statement,a_feed])
+
+@pytest.fixture
+def simple_feed():
 
     info = ExternalReference(source_name="Phishing Database ACTIVE",
                              external_id="phishing-IPs-ACTIVE.txt",
@@ -97,14 +125,11 @@ def create_feed():
         size=83968
     )
 
-    # TODO: Check this - I think it should be a list of ThreatSubObjects from the definitions
     threat_sub_object = ThreatSubObject(
         created="2017-02-27T21:37:11.213Z",
         modified="2017-02-27T21:37:11.213Z",
         object_ref=fileMalicious.id
     )
-
-
 
     a_feed = Feed(name='phishing-db',
                   description="the phishing database",
@@ -116,6 +141,30 @@ def create_feed():
                   object_marking_refs = [marking_def_statement],
                   contents=[threat_sub_object])
 
-# TODO: Not sure if you wanted to test the above. It needs to be added as a test if so.
-def test_create_feed(create_feed):
-    print("Example")
+    return [info,identity,marking_def_statement,marking_def_amber,fileMalicious,threat_sub_object,a_feed]
+
+def test_database_initialization(database:TypeDBSink):
+    '''
+    First initialize the database...
+    Args:
+        database:
+
+    Returns:
+
+    '''
+    pass
+
+
+def test_create_feed(database:TypeDBSink,empty_feed:Bundle):
+    '''
+
+    Now create the feed for the first time, there is no content to begin with...
+    Args:
+        database:
+        simple_feed:
+
+    Returns:
+
+    '''
+    result = database.add(empty_feed)
+    print(result)
