@@ -46,7 +46,7 @@ from stix2.v21.common import ExternalReference,MarkingDefinition,StatementMarkin
 from stix2.v21 import Identity,ObservedData,Indicator,IPv4Address,File,Bundle
 
 @pytest.fixture
-def empty_feed():
+def empty_feed_list():
 
     info = ExternalReference(source_name="Phishing Database ACTIVE",
                              external_id="phishing-IPs-ACTIVE.txt",
@@ -70,7 +70,34 @@ def empty_feed():
                   object_marking_refs = [marking_def_statement],
                   contents=[])
 
-    return Bundle([info,marking_def_statement,a_feed])
+    return [info,marking_def_statement,a_feed]
+
+@pytest.fixture
+def empty_feed_bundle():
+
+    info = ExternalReference(source_name="Phishing Database ACTIVE",
+                             external_id="phishing-IPs-ACTIVE.txt",
+                             url="https://github.com/mitchellkrogza/Phishing.Database/blob/master/phishing-IPs-ACTIVE.txt")
+
+    marking_def_statement = MarkingDefinition(
+        id="marking-definition--d81f86b9-975b-4c0b-875e-810c5ad45a4f",
+        created="2017-04-14T13:07:49.812Z",
+        definition_type="statement",
+        definition=StatementMarking("Copyright (c) Stark Industries 2017.")
+    )
+
+
+    a_feed = Feed(name='phishing-db',
+                  description="the phishing database",
+                  paid=False,
+                  free=False,
+                  labels=[],
+                  lang="en",
+                  external_references=[info],
+                  object_marking_refs = [marking_def_statement],
+                  contents=[])
+
+    return Bundle(info,marking_def_statement,a_feed,allow_custom=True)
 
 @pytest.fixture
 def simple_feed():
@@ -167,4 +194,18 @@ def test_create_feed(database:TypeDBSink,empty_feed:Bundle):
 
     '''
     result = database.add(empty_feed)
+    print(result)
+
+def test_create_feed_list(database:TypeDBSink,empty_feed_list):
+    '''
+
+    Now create the feed for the first time, there is no content to begin with...
+    Args:
+        database:
+        simple_feed:
+
+    Returns:
+
+    '''
+    result = database.add(empty_feed_list)
     print(result)
