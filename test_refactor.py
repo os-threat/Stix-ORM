@@ -1,18 +1,18 @@
 import json
 import os
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 from typedb.client import *
 from stix2 import (parse)
-from stix.module.orm.import_objects import raw_stix2_to_typeql
-from stix.module.orm.delete_object import delete_stix_object
-from stix.module.authorise import authorised_mappings, import_type_factory
-from stix.module.parsing.parse_objects import parse
-from stix.module.generate_docs import configure_overview_table_docs, object_tables
-from stix.module.initialise import sort_layers, load_typeql_data
+from stixorm.module.orm.import_objects import raw_stix2_to_typeql
+from stixorm.module.orm.delete_object import delete_stix_object
+from stixorm.module.authorise import authorised_mappings, import_type_factory
+from stixorm.module.parsing.parse_objects import parse
+from stixorm.module.generate_docs import configure_overview_table_docs, object_tables
+from stixorm.module.initialise import sort_layers, load_typeql_data
 
 import logging
 
-from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
+from stixorm.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)

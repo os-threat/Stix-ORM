@@ -2,10 +2,10 @@ import json
 import traceback
 from datetime import datetime, timedelta, timezone
 
-from stix.module.definitions.stix21 import stix_models
-from stix.module.definitions.attack import attack_models
-from stix.module.definitions.os_threat import os_threat_models
-from stix.module.authorise import authorised_mappings
+from stixorm.module.definitions.stix21 import stix_models
+from stixorm.module.definitions.attack import attack_models
+from stixorm.module.definitions.os_threat import os_threat_models
+from stixorm.module.authorise import authorised_mappings
 
 import logging
 

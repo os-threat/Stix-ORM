@@ -3,8 +3,8 @@ import unittest
 
 from stix2.v20 import Identity
 
-from stix.module.authorise import import_type_factory
-from stix.module.parsing.parse_objects import dict_to_stix
+from stixorm.module.authorise import import_type_factory
+from stixorm.module.parsing.parse_objects import dict_to_stix
 
 
 class TestParseObject(unittest.TestCase):

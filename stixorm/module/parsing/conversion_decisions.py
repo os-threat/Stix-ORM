@@ -1,13 +1,13 @@
 from typing import Dict, List
 
-from stix.module.definitions.stix21 import stix_models
-from stix.module.definitions.attack import attack_models
-from stix.module.definitions.os_threat import os_threat_models
-from stix.module.authorise import authorised_mappings, import_type_factory
+from stixorm.module.definitions.stix21 import stix_models
+from stixorm.module.definitions.attack import attack_models
+from stixorm.module.definitions.os_threat import os_threat_models
+from stixorm.module.authorise import authorised_mappings, import_type_factory
 
 import logging
 
-from stix.module.typedb_lib.import_type_factory import ImportType
+from stixorm.module.typedb_lib.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

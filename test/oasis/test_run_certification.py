@@ -12,8 +12,8 @@ from dbconfig import connection
 from stix2 import (v21, parse)
 from pathlib import Path
 
-from stix.module.authorise import import_type_factory
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stixorm.module.authorise import import_type_factory
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 
 loggers = [logging.getLogger()]  # get the root logger
 loggers = loggers + [logging.getLogger(name) for name in logging.root.manager.loggerDict]

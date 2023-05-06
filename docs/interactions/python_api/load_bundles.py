@@ -1,7 +1,7 @@
 import logging
-from stix.module.authorise import import_type_factory
-from stix.module.typedb import TypeDBSink,TypeDBSource
-from stix.module.typedb_lib.instructions import ResultStatus
+from stixorm.module.authorise import import_type_factory
+from stixorm.module.typedb import TypeDBSink,TypeDBSource
+from stixorm.module.typedb_lib.instructions import ResultStatus
 import json
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
