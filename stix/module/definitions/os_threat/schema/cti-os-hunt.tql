@@ -50,3 +50,11 @@ define
 		relates collector as owner,
 		relates collected as pointed-to;
 
+
+match
+    $obs isa observed-data, has stix-id "observed-data--c7186ad7-2a3f-4433-88ac-8949033d8fed";
+    $feed isa feed, has stix-id "feed--6b80d36e-fc82-42fa-b9a6-6ef3d58556d4";
+insert
+    $sub isa threat-sub-object, has created 2020-10-20T01:01:01.000Z,has modified 2020-10-20T01:01:01.000Z;
+    $objref (container:$sub,content:$obs) isa object-ref;
+    $content (content:$sub, feed-owner:$feed) isa feed-content;

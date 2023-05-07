@@ -80,7 +80,7 @@ def convert_res_to_stix(res: List[dict], import_type: ImportType):
             stix_dict = make_sco(obj, import_type)
         elif tql_type in auth["tql_types"]["sro"] or tql_type == 'relationship':
             stix_dict = make_sro(obj, import_type)
-        elif obj_type in auth["tql_types"]["meta"]:
+        elif obj_type in auth["tql_types"]["meta"] or obj_type == "statement-marking":
             stix_dict = make_meta(obj, import_type)
         else:
             logger.error(f'Unknown object type: {obj}')

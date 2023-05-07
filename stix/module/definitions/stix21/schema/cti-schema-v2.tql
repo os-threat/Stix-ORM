@@ -1858,6 +1858,7 @@ stix-attribute-integer sub attribute, value long, abstract,
 	size-of-heap-reserve sub stix-attribute-integer;
 	size-of-heap-commit sub stix-attribute-integer;
 	number-of-rva-and-sizes sub stix-attribute-integer;
+	number-observed sub stix-attribute-integer;
 	size sub stix-attribute-integer; 
 
 	src-port sub stix-attribute-integer; 
@@ -1876,8 +1877,7 @@ stix-attribute-double sub attribute, value double, abstract,
 	longitude sub stix-attribute-double;
 	precision sub stix-attribute-double;
 	
-	count sub stix-attribute-double; 
-	number-observed sub stix-attribute-double; 
+	count sub stix-attribute-double;
 	number sub stix-attribute-double;
 	
 	entropy sub stix-attribute-double;

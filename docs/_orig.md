@@ -2,7 +2,7 @@
 
 The Stix-ORM Library is an open-source Python Library built on top of the [OASIS Stix2 Python Library](https://stix2.readthedocs.io/en/latest/index.html) in order to make it simple to use TypeDB as a [DataStore](https://stix2.readthedocs.io/en/latest/guide/datastore.html), and extend it to suit additional protocols, such as Mitre ATT&CK, OASIS CACAO, OCA Kestrel, and custom objects (e.g. case management, feed management etc).
 
-## What is it?
+## What is the Stix-ORM?
 The [OASIS Stix2 Python Library](https://stix2.readthedocs.io/en/latest/index.html) is designed to make it as easy as possible to produce and consume Stix 2.1 content. It is comprised of three layers:
 1. Object Layer: Is where Python objects representing the Stix 2,1 data types (SDO, SCO and SRO), and sub-objects (external references, kill-chain phases, extensions etc.) are create and can be sereialised and deserialised to and from their JSON representation
 2. Environment Layer: Components that make it easier to handle Stix 2.1 data as part of alarger applications, including DataSink's for storing data, DataSource's for retrieving data, and Object Factory's to create al of the common properties and markings
@@ -19,6 +19,15 @@ The OS-Threat Stix-ORM library can be installed using pip, and is well documente
 
 An image of these concepts is shown below.
 ![](img/Library_overview.png)
+
+## Stix ORM has an Apache 2 Client, and an AGPL3 Server
+The OS-Threat Stix-ORM Library is split into two repos:
+1. The object definitions and documents ("the client") as a github sub module under an Apache 2 license
+2. The ORM (Object Role Modelling) code and associated libraries ("the server") under an AGPL3 license
+
+This intentional splitting of the code base enables users to freely modify objects, or create their own objects and extensions, without any license restriction. Ideally, users make their own documentation for these customisations as well.
+
+It is not exected that users will ever want to or need to customise the ORM code, although they are fully able to do so under the open source license. In short, this arrangement enables all users to make ad-hoc changes as required without cany concern about copy left licensing.
 
 ## What are the Benefits?
 [TypeDB is without a doubt, the most powerful datastore for cybersecurity](typedb_benefits.md), because:
