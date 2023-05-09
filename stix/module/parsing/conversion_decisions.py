@@ -263,5 +263,6 @@ def meta_type_to_tql(meta_type: str, import_type=default_import_type, attack_obj
         meta_tql_name = "attack-marking"
     else:
         protocol = "stix21"
+        meta_tql_name = "statement-marking"
 
     return obj_tql, meta_tql_name, is_list, protocol

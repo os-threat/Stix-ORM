@@ -3,18 +3,24 @@
     "rel": "x_mitre_modified_by_ref",
     "owner": "modified",
     "pointed-to": "modifier",
-    "typeql": "x-mitre-modified-by-ref"
+    "typeql": "x-mitre-modified-by-ref",
+    "label": "modified-by",
+    "owner-is-source": false
   },
   {
     "rel": "x_mitre_data_source_ref",
     "owner": "component",
     "pointed-to": "data-source",
-    "typeql": "x-mitre-data-source-ref"
+    "typeql": "x-mitre-data-source-ref",
+    "label": "parent-of",
+    "owner-is-source": false
   },
   {
     "rel": "object_ref",
     "owner": "container",
     "pointed-to": "content",
-    "typeql": "obj-ref"
+    "typeql": "obj-ref",
+    "label": "parent-of",
+    "owner-is-source": false
   }
 ]

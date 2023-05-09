@@ -3,210 +3,280 @@
     "rel": "object_refs",
     "owner": "object",
     "pointed-to": "referred",
-    "typeql": "obj-refs"
+    "typeql": "obj-refs",
+    "label": "refers-to",
+    "owner-is-source": true
   },
   {
     "rel": "created_by_ref",
     "owner": "created",
     "pointed-to": "creator",
-    "typeql": "created-by"
+    "typeql": "created-by",
+    "label": "created-by",
+    "owner-is-source": true
   },
   {
     "rel": "object_marking_refs",
     "owner": "marked",
     "pointed-to": "marking",
-    "typeql": "object-marking"
+    "typeql": "object-marking",
+    "label": "applies-to",
+    "owner-is-source": false
   },
   {
     "rel": "sample_refs",
     "owner": "sample-for",
     "pointed-to": "sco-sample",
-    "typeql": "malware-sample"
+    "typeql": "malware-sample",
+    "label": "sample-of",
+    "owner-is-source": false
   },
   {
     "rel": "sample_ref",
     "owner": "sample-for",
     "pointed-to": "sco-sample",
-    "typeql": "malware-analysis-sample"
+    "typeql": "malware-analysis-sample",
+    "label": "sample-for",
+    "owner-is-source": false
   },
   {
     "rel": "host_vm_ref",
     "owner": "object",
     "pointed-to": "env",
-    "typeql": "host-vm-ref"
+    "typeql": "host-vm-ref",
+    "label": "virtual-machine-of",
+    "owner-is-source": false
   },
   {
     "rel": "operating_system_ref",
     "owner": "object",
     "pointed-to": "env",
-    "typeql": "operating-system"
+    "typeql": "operating-system",
+    "label": "operating-system-of",
+    "owner-is-source": false
   },
   {
     "rel": "installed_software_refs",
     "owner": "object",
     "pointed-to": "env",
-    "typeql": "installed-software"
+    "typeql": "installed-software",
+    "label": "installed-on",
+    "owner-is-source": false
   },
   {
     "rel": "contains_refs",
     "owner": "container",
     "pointed-to": "contained",
-    "typeql": "directory-contains"
+    "typeql": "directory-contains",
+    "label": "contains",
+    "owner-is-source": true
   },
   {
     "rel": "parent_directory_ref",
     "owner": "contained",
     "pointed-to": "container",
-    "typeql": "directory-parent"
+    "typeql": "directory-parent",
+    "label": "parent-of",
+    "owner-is-source": false
   },
   {
     "rel": "resolves_to_refs",
     "owner": "from-ref",
     "pointed-to": "to-ref",
-    "typeql": "resolves-to-ref"
+    "typeql": "resolves-to-ref",
+    "label": "resolves-to",
+    "owner-is-source": true
   },
   {
     "rel": "belongs_to_ref",
     "owner": "belonged",
     "pointed-to": "belongs-to",
-    "typeql": "belongs"
+    "typeql": "belongs",
+    "label": "belongs-to",
+    "owner-is-source": true
   },
   {
     "rel": "belongs_to_refs",
     "owner": "belonged",
     "pointed-to": "belongs-to",
-    "typeql": "belongs-to-autonomous"
+    "typeql": "belongs-to-autonomous",
+    "label": "belongs-to",
+    "owner-is-source": true
   },
   {
     "rel": "analysis_sco_refs",
     "owner": "object",
     "pointed-to": "env",
-    "typeql": "captured-objects"
+    "typeql": "captured-objects",
+    "label": "analysed-by",
+    "owner-is-source": false
   },
   {
     "rel": "raw_email_ref",
     "owner": "email",
     "pointed-to": "binary",
-    "typeql": "raw-email-references"
+    "typeql": "raw-email-references",
+    "label": "raw-binary-of",
+    "owner-is-source": false
   },
   {
     "rel": "from_ref",
     "owner": "email",
     "pointed-to": "email-address",
-    "typeql": "from-email"
+    "typeql": "from-email",
+    "label": "from",
+    "owner-is-source": true
   },
   {
     "rel": "sender_ref",
     "owner": "email",
     "pointed-to": "email-address",
-    "typeql": "sender-email"
+    "typeql": "sender-email",
+    "label": "sent-by",
+    "owner-is-source": true
   },
   {
     "rel": "to_refs",
     "owner": "email",
     "pointed-to": "email-address",
-    "typeql": "to-email"
+    "typeql": "to-email",
+    "label": "to",
+    "owner-is-source": true
   },
   {
     "rel": "cc_refs",
     "owner": "email",
     "pointed-to": "email-address",
-    "typeql": "cc-email"
+    "typeql": "cc-email",
+    "label": "cc",
+    "owner-is-source": true
   },
   {
     "rel": "bcc_refs",
     "owner": "email",
     "pointed-to": "email-address",
-    "typeql": "bcc-email"
+    "typeql": "bcc-email",
+    "label": "bcc",
+    "owner-is-source": true
   },
   {
     "rel": "body_raw_ref",
     "owner": "containing-mime",
     "pointed-to": "non-textual",
-    "typeql": "body-raw-references"
+    "typeql": "body-raw-references",
+    "label": "raw-component-of",
+    "owner-is-source": false
   },
   {
     "rel": "content_ref",
     "owner": "containing-file",
     "pointed-to": "content",
-    "typeql": "content-file"
+    "typeql": "content-file",
+    "label": "raw-content-for",
+    "owner-is-source": false
   },
   {
     "rel": "src_ref",
     "owner": "traffic",
     "pointed-to": "source",
-    "typeql": "traffic-src"
+    "typeql": "traffic-src",
+    "label": "source-of",
+    "owner-is-source": false
   },
   {
     "rel": "src_payload_ref",
     "owner": "traffic",
     "pointed-to": "source",
-    "typeql": "payload-src"
+    "typeql": "payload-src",
+    "label": "source-payload-of",
+    "owner-is-source": false
   },
   {
     "rel": "dst_ref",
     "owner": "traffic",
     "pointed-to": "destination",
-    "typeql": "traffic-dst"
+    "typeql": "traffic-dst",
+    "label": "destination-of",
+    "owner-is-source": false
   },
   {
     "rel": "dst_payload_ref",
     "owner": "traffic",
     "pointed-to": "payload",
-    "typeql": "payload-dst"
+    "typeql": "payload-dst",
+    "label": "destination-payload-of",
+    "owner-is-source": false
   },
   {
     "rel": "encapsulates_refs",
     "owner": "container",
     "pointed-to": "contained",
-    "typeql": "encapsulate"
+    "typeql": "encapsulate",
+    "label": "encapsulated-by",
+    "owner-is-source": false
   },
   {
     "rel": "encapsulated_by_ref",
     "owner": "contained",
     "pointed-to": "container",
-    "typeql": "encapsulated"
+    "typeql": "encapsulated",
+    "label": "encapsulated-by",
+    "owner-is-source": true
   },
   {
     "rel": "message_body_data_ref",
     "owner": "HTPP-message",
     "pointed-to": "container",
-    "typeql": "HTTP-body-data"
+    "typeql": "HTTP-body-data",
+    "label": "data-contained-in",
+    "owner-is-source": false
   },
   {
     "rel": "opened_connection_refs",
     "owner": "process",
     "pointed-to": "opened-connection",
-    "typeql": "open-connections"
+    "typeql": "open-connections",
+    "label": "opened-by",
+    "owner-is-source": false
   },
   {
     "rel": "creator_user_ref",
     "owner": "created",
     "pointed-to": "creator",
-    "typeql": "user-created-by"
+    "typeql": "user-created-by",
+    "label": "created-by",
+    "owner-is-source": true
   },
   {
     "rel": "image_ref",
     "owner": "process",
     "pointed-to": "executed-image",
-    "typeql": "process-image"
+    "typeql": "process-image",
+    "label": "image-of",
+    "owner-is-source": false
   },
   {
     "rel": "parent_ref",
     "owner": "process",
     "pointed-to": "parent",
-    "typeql": "process-parent"
+    "typeql": "process-parent",
+    "label": "parent-of",
+    "owner-is-source": false
   },
   {
     "rel": "child_refs",
     "owner": "process",
     "pointed-to": "child",
-    "typeql": "process-child"
+    "typeql": "process-child",
+    "label": "child-of",
+    "owner-is-source": false
   },
   {
     "rel": "service_dll_refs",
     "owner": "process",
     "pointed-to": "loaded-dll",
-    "typeql": "service-dll"
+    "typeql": "service-dll",
+    "label": "loaded-by",
+    "owner-is-source": false
   }
 ]

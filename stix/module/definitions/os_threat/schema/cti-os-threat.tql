@@ -94,10 +94,11 @@ define
 #        plays obj-refs:object,
 #        plays list-of-enrichments:single-entichment;
 #
-#    # Sub Object Reference, sub object includes created and modified
-#    threat-sub-object sub stix-sub-object,
-#        plays obj-refs:object,
-#        plays feed-content:content,
+    # Sub Object Reference, sub object includes created and modified
+    threat-sub-object sub stix-sub-object,
+        plays obj-refs:object,
+        plays obj-ref:container,
+        plays feed-content:content;
 #        plays list-of-observed:single-observed,
 #        plays list-of-enrichments:single-entichment,
 #        plays list-of-notes:single-note,
@@ -156,16 +157,18 @@ define
 #		relates carton-list-owner as owner,
 #		relates single-carton as pointed-to;
 
-    feed-content sub embedded,
-		relates feed-owner as owner,
-		relates content as pointed-to;
+#    feed-content sub embedded,
+#		relates feed-owner as owner,
+#		relates content as pointed-to;
 
 	# Feed Contained References, can contain SDO, SCO or SRO, or Meta
 	stix-domain-object
-	    plays feed-content:content;
+	    plays feed-content:content,
+	    plays obj-ref:content;
 
 	stix-cyber-observable-object
-	    plays feed-content:content;
+	    plays feed-content:content,
+	    plays obj-ref:content;
 
 	stix-core-relationship
 	    plays feed-content:content;
