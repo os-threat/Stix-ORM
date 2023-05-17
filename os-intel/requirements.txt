@@ -1,0 +1,7 @@
+requests
+stix2
+validators
+pandas
+psycopg2-binary
+sqlalchemy
+tabulate
