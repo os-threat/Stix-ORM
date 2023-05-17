@@ -287,7 +287,7 @@ if __name__ == '__main__':
     }
     init_cache()
 
-    import_type = import_type_factory.get_default_import()
+    import_type = import_type_factory.get_all_imports()
 
     typedb_source = TypeDBSource(connection, import_type)
     typedb_sink = TypeDBSink(connection, True, import_type)
