@@ -3,11 +3,11 @@ import logging
 import pathlib
 
 import pytest
-from stix.module.authorise import import_type_factory
-from stix.module.typedb import TypeDBSink,TypeDBSource
-from stix.module.typedb_lib.instructions import ResultStatus
+from stixorm.module.authorise import import_type_factory
+from stixorm.module.typedb import TypeDBSink,TypeDBSource
+from stixorm.module.typedb_lib.instructions import ResultStatus
 
-from stix.module.definitions.os_threat.classes import ThreatReference,ThreatSubObject,Feed,Feeds
+from stixorm.module.definitions.os_threat.classes import ThreatReference,ThreatSubObject,Feed,Feeds
 from stix2.v21.common import ExternalReference,MarkingDefinition,StatementMarking
 from stix2.v21 import Identity,ObservedData,Indicator,IPv4Address,File,Bundle
 
@@ -15,7 +15,7 @@ from helpers import get_storage
 
 import logging
 
-#from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
+#from stixorm.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 

@@ -4,12 +4,12 @@ import traceback
 from typing import List
 import copy
 
-from stix.module.authorise import authorised_mappings
-from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql, meta_type_to_tql
-from stix.module.orm.export_utilities import convert_ans_to_res
+from stixorm.module.authorise import authorised_mappings
+from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql, meta_type_to_tql
+from stixorm.module.orm.export_utilities import convert_ans_to_res
 import logging
 
-from stix.module.typedb_lib.factories.import_type_factory import ImportType
+from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

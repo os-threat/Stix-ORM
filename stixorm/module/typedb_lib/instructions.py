@@ -9,7 +9,7 @@ from returns.pipeline import is_successful
 from returns.result import safe
 
 
-from stix.module.typedb_lib.logging import log_insert_query
+from stixorm.module.typedb_lib.logging import log_insert_query
 
 class TypeQLObject(BaseModel):
     dep_match: str

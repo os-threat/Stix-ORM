@@ -20,7 +20,7 @@ import pathlib
 from loguru import logger
 import os
 from pathlib import Path
-from stix.module.definitions.stix21.classes import (
+from stixorm.module.definitions.stix21.classes import (
     Note, ObservedData
 )
 from stix2.v21.sdo import (
@@ -43,8 +43,8 @@ from stix2.v21.sro import Relationship, Sighting
 from stix2.v21.common import MarkingDefinition
 
 
-from stix.module.definitions.definitions import get_definitions, DefinitionNames
-from stix.module.definitions.domain_definition import DomainDefinition
+from stixorm.module.definitions.definitions import get_definitions, DefinitionNames
+from stixorm.module.definitions.domain_definition import DomainDefinition
 
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)

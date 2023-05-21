@@ -4,11 +4,11 @@ import glob
 import csv
 import json
 
-from stix.module.definitions.stix21 import stix_models
-from stix.module.definitions.attack import attack_models
-from stix.module.definitions.os_threat import os_threat_models
-from stix.module.definitions.cacao import cacao_models
-from stix.module.definitions.kestrel import kestrel_models
+from stixorm.module.definitions.stix21 import stix_models
+from stixorm.module.definitions.attack import attack_models
+from stixorm.module.definitions.os_threat import os_threat_models
+from stixorm.module.definitions.cacao import cacao_models
+from stixorm.module.definitions.kestrel import kestrel_models
 
 heading_align = [
     ":--------------------|",

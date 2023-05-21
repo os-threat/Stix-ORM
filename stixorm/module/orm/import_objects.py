@@ -1,10 +1,10 @@
 import copy
 from typing import Dict
 
-from stix.module.authorise import authorised_mappings, default_import_type
-from stix.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql, meta_type_to_tql
+from stixorm.module.authorise import authorised_mappings, default_import_type
+from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql, meta_type_to_tql
 
-from stix.module.orm.import_utilities import clean_props, get_embedded_match, split_on_activity_type, \
+from stixorm.module.orm.import_utilities import clean_props, get_embedded_match, split_on_activity_type, \
     add_property_to_typeql, add_relation_to_typeql, val_tql
 
 import logging

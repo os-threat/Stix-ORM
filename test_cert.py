@@ -2,8 +2,8 @@ import json
 import logging
 import re
 
-from stix.module.typedb import TypeDBSink, TypeDBSource
-from stix.module.typedb_lib.factories.import_type_factory import ImportTypeFactory
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
+from stixorm.module.typedb_lib.factories.import_type_factory import ImportTypeFactory
 from test.oasis.dbconfig import connection
 from stix2 import (parse)
 from pathlib import Path

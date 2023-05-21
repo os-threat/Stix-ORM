@@ -5,8 +5,8 @@ import itertools as it
 import glob
 import logging
 
-from stix.module.typedb import TypeDBSource, TypeDBSink
-from stix.module.typedb_lib.factories.import_type_factory import ImportTypeFactory
+from stixorm.module.typedb import TypeDBSource, TypeDBSink
+from stixorm.module.typedb_lib.factories.import_type_factory import ImportTypeFactory
 from test.dbconfig import *
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')

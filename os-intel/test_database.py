@@ -1,7 +1,7 @@
 import pytest
 import sqlstorage
 import pgstorage
-from stix.module.definitions.os_threat import Feed, Feeds, ThreatSubObject
+from stixorm.module.definitions.os_threat import Feed, Feeds, ThreatSubObject
 
 from helpers import tmp_storage
 

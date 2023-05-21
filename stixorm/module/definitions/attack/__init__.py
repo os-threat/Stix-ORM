@@ -22,7 +22,7 @@ import os
 from pathlib import Path
 
 
-from stix.module.definitions.attack.classes import (
+from stixorm.module.definitions.attack.classes import (
     Matrix, Tactic, Technique, SubTechnique, Mitigation, Group, SoftwareMalware,
     SoftwareTool, DataSource, DataComponent, AttackCampaign, Collection,
     ObjectVersion, AttackRelation, AttackMarking, AttackIdentity

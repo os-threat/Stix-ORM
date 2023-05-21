@@ -10,10 +10,10 @@ from returns.pointfree import bind
 from returns.result import safe, Result, Failure, Success
 from returns.unsafe import unsafe_perform_io
 from typedb.client import *
-from stix.module.orm.import_objects import raw_stix2_to_typeql
-from stix.module.orm.delete_object import delete_stix_object, add_delete_layers
-from stix.module.orm.export_object import convert_ans_to_stix
-from stix.module.parsing.parse_objects import parse
+from stixorm.module.orm.import_objects import raw_stix2_to_typeql
+from stixorm.module.orm.delete_object import delete_stix_object, add_delete_layers
+from stixorm.module.orm.export_object import convert_ans_to_stix
+from stixorm.module.parsing.parse_objects import parse
 from .authorise import authorised_mappings, import_type_factory
 from .initialise import setup_database, load_schema, load_markings
 import networkx as nx
@@ -25,13 +25,13 @@ from stix2.datastore.filters import FilterSet
 
 import logging
 
-from stix.module.typedb_lib.handlers import handle_result
-from stix.module.typedb_lib.logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers
-from stix.module.typedb_lib.queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query,\
+from stixorm.module.typedb_lib.handlers import handle_result
+from stixorm.module.typedb_lib.logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers
+from stixorm.module.typedb_lib.queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query,\
     build_insert_query, query_id, add_instructions_to_typedb
-from stix.module.typedb_lib.file import write_to_file
-from stix.module.typedb_lib.instructions import Instructions, Status, AddInstruction, TypeQLObject
-from stix.module.typedb_lib.factories.import_type_factory import ImportType, ImportTypeFactory
+from stixorm.module.typedb_lib.file import write_to_file
+from stixorm.module.typedb_lib.instructions import Instructions, Status, AddInstruction, TypeQLObject
+from stixorm.module.typedb_lib.factories.import_type_factory import ImportType, ImportTypeFactory
 
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 

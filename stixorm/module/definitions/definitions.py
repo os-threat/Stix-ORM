@@ -11,7 +11,7 @@ DEFAULT_VERSION = '2.1'
 ERROR_INVALID_ID = (
     "not a valid STIX identifier, must match <object-type>--<UUID>: {}"
 )
-from stix.module.definitions.domain_definition import DomainDefinition
+from stixorm.module.definitions.domain_definition import DomainDefinition
 
 
 class DefinitionNames(str, Enum):

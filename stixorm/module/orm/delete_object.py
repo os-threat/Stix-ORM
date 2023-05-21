@@ -2,10 +2,10 @@ import re
 from typing import List
 import copy
 
-from stix.module.authorise import authorised_mappings
+from stixorm.module.authorise import authorised_mappings
 
-from stix.module.orm.import_objects import sdo_to_data, sro_to_data, sco_to_data
-from stix.module.orm.import_utilities import split_on_activity_type, val_tql
+from stixorm.module.orm.import_objects import sdo_to_data, sro_to_data, sco_to_data
+from stixorm.module.orm.import_utilities import split_on_activity_type, val_tql
 
 import logging
 logger = logging.getLogger(__name__)

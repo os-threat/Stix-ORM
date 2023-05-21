@@ -16,8 +16,8 @@ from typedb.api.query.query_manager import QueryManager
 from typedb.client import TypeDB
 from typedb.stream.bidirectional_stream import BidirectionalStream
 
-from stix.module.typedb_lib.logging import log_delete_layer, log_add_layer
-from stix.module.typedb_lib.instructions import Instructions
+from stixorm.module.typedb_lib.logging import log_delete_layer, log_add_layer
+from stixorm.module.typedb_lib.instructions import Instructions
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

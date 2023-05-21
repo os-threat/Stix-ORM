@@ -1,13 +1,13 @@
 import datetime
 from typing import List, Dict
 
-from stix.module.definitions.stix21 import stix_models
-from stix.module.authorise import authorised_mappings
+from stixorm.module.definitions.stix21 import stix_models
+from stixorm.module.authorise import authorised_mappings
 import copy
 
 import logging
 
-from stix.module.typedb_lib.factories.import_type_factory import ImportType
+from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
