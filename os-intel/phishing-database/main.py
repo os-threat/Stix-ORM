@@ -261,21 +261,6 @@ def load_ip_feed():
 
     return bundle
 
-def init_cache():
-    db_local = sqlite3.connect("feeds.db")
-    cursor = db_local.cursor()
-    cursor.execute("DROP TABLE IF EXISTS feeds")
-    cursor.execute("CREATE TABLE feeds (name TEXT, id TEXT)")
-
-    db_local.close()
-
-def add_obj(feeds:Feeds):
-    db_local = sqlite3.connect("feeds.db")
-    cursor = db_local.cursor()
-    cursor.execute("INSERT INTO feeds VALUES ('{feeds.name}', '{feeds.id}')")
-
-    db_local.close()
-
 if __name__ == '__main__':
     # define the database data and import details
     connection = {
@@ -285,7 +270,6 @@ if __name__ == '__main__':
         "user": None,
         "password": None
     }
-    init_cache()
 
     import_type = import_type_factory.get_all_imports()
 
@@ -323,6 +307,6 @@ if __name__ == '__main__':
 
     for result in results:
         print(f"Status = {result.status} ID = {result.id} Error = {result.error}")
-        add_obj(feeds)
+
 
 
