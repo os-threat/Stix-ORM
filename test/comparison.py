@@ -11,7 +11,7 @@ import itertools as it
 class StixComparator(object):
 
     def __init__(self):
-        with open('../stix/module/definitions/common/data/is_list_sro.json', 'r') as file:
+        with open('../stixorm/module/definitions/common/data/is_list_sro.json', 'r') as file:
             self._sro_list = json.load(file)
 
     def property_check(self,a,b,key,property_type):
