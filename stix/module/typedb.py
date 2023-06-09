@@ -172,18 +172,18 @@ class TypeDBSink(DataSink):
     @safe
     def __assign_schemas(self):
         if self.schema_path is None:
-             self.schema_path = str(pathlib.Path(__file__).parents[2])
+             self.schema_path = str(pathlib.Path(__file__).parent)
 
         # If relative paths are used it will depend upon the entry point i.e. working directory will need to be same level as typedb.py
-        self.cti_schema_stix = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/stix21/schema/cti-schema-v2.tql")
+        self.cti_schema_stix = pathlib.Path(self.schema_path).joinpath("definitions/stix21/schema/cti-schema-v2.tql")
         assert os.path.isfile(self.cti_schema_stix)
-        self.cti_schema_stix_rules = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/stix21/schema/cti-rules.tql")
+        self.cti_schema_stix_rules = pathlib.Path(self.schema_path).joinpath("definitions/stix21/schema/cti-rules.tql")
         assert os.path.isfile(self.cti_schema_stix_rules)
-        self.cti_schema_os_threat = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/os_threat/schema/cti-os-threat.tql")
+        self.cti_schema_os_threat = pathlib.Path(self.schema_path).joinpath("definitions/os_threat/schema/cti-os-threat.tql")
         assert os.path.isfile(self.cti_schema_os_threat)
-        self.cti_schema_os_hunt = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/os_threat/schema/cti-os-hunt.tql")
+        self.cti_schema_os_hunt = pathlib.Path(self.schema_path).joinpath("definitions/os_threat/schema/cti-os-hunt.tql")
         assert os.path.isfile(self.cti_schema_os_hunt)
-        self.cti_schema_attack = pathlib.Path(self.schema_path).joinpath("stix/module/definitions/attack/schema/cti-attack.tql")
+        self.cti_schema_attack = pathlib.Path(self.schema_path).joinpath("definitions/attack/schema/cti-attack.tql")
         assert os.path.isfile(self.cti_schema_attack)
         # if self.schema_path is None:
         #     self.schema_path = str(pathlib.Path.parent)

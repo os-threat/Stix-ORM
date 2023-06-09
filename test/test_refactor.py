@@ -47,8 +47,6 @@ marking_id = "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
 file_id = 'file--364fe3e5-b1f4-5ba3-b951-ee5983b3538d'
 
 
-schema_path = path = str(pathlib.Path(__file__).parents[1])
-
 
 def variables_id_list():
     return ['file--94ca-5967-8b3c-a906a51d87ac',
@@ -330,8 +328,7 @@ class TestTypeDB(unittest.TestCase):
         """
         TypeDBSink(connection=connection,
                    clear=True,
-                   import_type=import_type,
-                   schema_path=schema_path)
+                   import_type=import_type)
 
 
     def test_failed_initialise(self):
@@ -341,8 +338,7 @@ class TestTypeDB(unittest.TestCase):
         with self.assertRaises(Exception) as context:
             TypeDBSink(connection=failed_connection,
                        clear=True,
-                       import_type=import_type,
-                       schema_path=schema_path)
+                       import_type=import_type)
 
         self.assertTrue('Client Error: Unable to connect to TypeDB server.' in str(context.exception))
 
@@ -351,8 +347,7 @@ class TestTypeDB(unittest.TestCase):
 
         typedb = TypeDBSink(connection=connection,
                             clear=True,
-                            import_type=import_type,
-                            schema_path=schema_path)
+                            import_type=import_type)
         json_text = self.get_json_from_file(file_path)
         typedb.add(json_text)
 
@@ -365,8 +360,7 @@ class TestTypeDB(unittest.TestCase):
 
         typedb = TypeDBSink(connection=connection,
                             clear=True,
-                            import_type=import_type,
-                            schema_path=schema_path)
+                            import_type=import_type)
         json_text = self.get_json_from_file(file_path)
         typedb.add(json_text)
 
@@ -380,8 +374,7 @@ class TestTypeDB(unittest.TestCase):
 
         typedb = TypeDBSink(connection=connection,
                             clear=True,
-                            import_type=import_type,
-                            schema_path=schema_path)
+                            import_type=import_type)
         json_text = self.get_json_from_file(file_path)
         typedb.add(json_text)
 
@@ -401,8 +394,7 @@ class TestTypeDB(unittest.TestCase):
         """
         typedb = TypeDBSink(connection=connection,
                             clear=False,
-                            import_type=import_type,
-                            schema_path=schema_path)
+                            import_type=import_type)
 
         typedb.clear_db()
 
@@ -414,8 +406,7 @@ class TestTypeDB(unittest.TestCase):
         file_paths = variable_all_standard_data_filepaths()
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
+                                 import_type=import_type)
         for file_path in file_paths:
             json_text = self.get_json_from_file(file_path)
             typedb_sink.add(json_text)
@@ -435,8 +426,7 @@ class TestTypeDB(unittest.TestCase):
         """
         typedb = TypeDBSink(connection=connection,
                             clear=True,
-                            import_type=import_type,
-                            schema_path=schema_path)
+                            import_type=import_type)
         json_text = self.get_json_from_file(file_path)
         typedb.add(json_text)
 
@@ -455,8 +445,7 @@ class TestTypeDB(unittest.TestCase):
         for file_path in file_paths:
             typedb_sink = TypeDBSink(connection=connection,
                                      clear=True,
-                                     import_type=import_type,
-                                     schema_path=schema_path)
+                                     import_type=import_type)
             json_text = self.get_json_from_file(file_path)
             typedb_sink.add(json_text)
 
@@ -471,8 +460,7 @@ class TestTypeDB(unittest.TestCase):
 
         typedb = TypeDBSink(connection=connection,
                             clear=True,
-                            import_type=import_type,
-                            schema_path=schema_path)
+                            import_type=import_type)
         typedb.add(json_text)
 
         local_list_prior = typedb.get_stix_ids()
@@ -484,8 +472,7 @@ class TestTypeDB(unittest.TestCase):
     def test_add_grouping_path(self):
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
+                                 import_type=import_type)
         json_text = self.get_json_from_file(aaa_grouping_path())
 
         result = typedb_sink.add(json_text)
@@ -497,8 +484,7 @@ class TestTypeDB(unittest.TestCase):
 
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
+                                 import_type=import_type)
         files = all_standard_data_file_paths()
 
         combined = []
@@ -512,8 +498,7 @@ class TestTypeDB(unittest.TestCase):
     def test_translation_campaign(self):
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
+                                 import_type=import_type)
         json_text = self.get_json_from_file(translation_campaign_path())
 
         result = typedb_sink.add(json_text)
@@ -523,8 +508,7 @@ class TestTypeDB(unittest.TestCase):
     def test_add_x509_path(self):
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
+                                 import_type=import_type)
         json_text = self.get_json_from_file(x509_path())
 
         result = typedb_sink.add(json_text)
@@ -533,8 +517,7 @@ class TestTypeDB(unittest.TestCase):
     def test_add_attack_path(self):
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
+                                 import_type=import_type)
         json_text = self.get_json_from_file(aaa_attack_path())
 
         result = typedb_sink.add(json_text)
@@ -543,8 +526,7 @@ class TestTypeDB(unittest.TestCase):
     def test_add_indicator_path(self):
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
+                                 import_type=import_type)
         json_text = self.get_json_from_file(aaa_indicator_path())
 
         result = typedb_sink.add(json_text)
@@ -572,8 +554,7 @@ class TestTypeDB(unittest.TestCase):
     def test_add_identity_path(self):
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
+                                 import_type=import_type)
         json_text = self.get_json_from_file(aaa_identity_path())
 
         result = typedb_sink.add(json_text)
@@ -584,8 +565,7 @@ class TestTypeDB(unittest.TestCase):
     def test_add_mitre(self):
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
+                                 import_type=import_type)
         json_text = self.get_json_from_file(mitre_path())
 
         result = typedb_sink.add(json_text)
@@ -594,8 +574,7 @@ class TestTypeDB(unittest.TestCase):
     def test_get_ids(self):
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
+                                 import_type=import_type)
         json_text = self.get_json_from_file(aaa_identity_path())
 
         typedb_sink.add(json_text)
@@ -609,8 +588,7 @@ class TestTypeDB(unittest.TestCase):
         variables_id_list()
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
+                                 import_type=import_type)
         json_text = self.get_json_from_file(path)
         typedb_sink.add(json_text)
 
@@ -630,8 +608,7 @@ class TestTypeDB(unittest.TestCase):
         variables_id_list()
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
+                                 import_type=import_type)
         json_text = self.get_json_from_file(path)
 
         result = typedb_sink.add(json_text)
@@ -643,8 +620,7 @@ class TestTypeDB(unittest.TestCase):
         variables_id_list()
         typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
+                                 import_type=import_type)
         json_text = self.get_json_from_file(path)
 
 
