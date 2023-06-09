@@ -14,7 +14,7 @@ from stix.module.orm.import_objects import raw_stix2_to_typeql
 from stix.module.orm.delete_object import delete_stix_object, add_delete_layers
 from stix.module.orm.export_object import convert_ans_to_stix
 from stix.module.parsing.parse_objects import parse
-from .authorise import authorised_mappings
+from .authorise import authorised_mappings, import_type_factory
 from .initialise import setup_database, load_schema, load_markings
 import networkx as nx
 from stix2 import v21
@@ -197,10 +197,7 @@ class TypeDBSink(DataSink):
     @safe
     def __assign_import_type(self):
         if self.import_type is None:
-            self.import_type = {"STIX21": True, "CVE": False, "identity": False, "location": False, "rules": False}
-            self.import_type.update({"ATT&CK": False, "ATT&CK_Versions": ["12.0"],
-                                     "ATT&CK_Domains": ["enterprise-attack", "mobile-attack", "ics-attack"],
-                                     "CACAO": False})
+            self.import_type = import_type_factory.get_default_import()
 
     @property
     def stix_connection(self):
