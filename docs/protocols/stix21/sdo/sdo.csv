@@ -57,7 +57,7 @@ attack-pattern.png,attack-pattern-table.csv,attack-pattern,Attack-Pattern,"Attac
         has $b;
     $c isa stix-sub-object,
         has $d;
-    $e (owner:$a, pointed-to:$c) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -126,7 +126,7 @@ For example, a Campaign could be used to describe a crime syndicate's attack usi
         $objective ""Flood www.bpp.bn"";","match
     $a isa campaign,
         has stix-id ""campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -187,7 +187,7 @@ insert
     $a isa course-of-action,
         has stix-id ""course-of-action--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f"",
         has $b;
-    $c (owner:$a, pointed-to:$d) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $c (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -260,7 +260,7 @@ insert
     $a isa grouping,
         has stix-id ""grouping--84e4d88f-44ea-4bcd-bbf3-b2c1c320bcb3"",
         has $b;
-    $c (owner:$a, pointed-to:$d) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $c (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -312,7 +312,7 @@ identity.png,identity-table.csv,identity,Identity,"Identities can represent actu
  $identity-class ""organization"";","match
     $a isa identity,
         has stix-id ""identity--8c6af861-7b20-41ef-9b59-6344fd872a8f"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -369,7 +369,7 @@ insert
     $a isa incident,
         has stix-id ""incident--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f"",
         has $b;
-    $c (owner:$a, pointed-to:$d) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $c (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -447,7 +447,7 @@ insert
     $a isa indicator,
         has stix-id ""indicator--9299f726-ce06-492e-8472-2b52ccb53191"",
         has $b;
-    $e (owner:$a, pointed-to:$c) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -496,7 +496,7 @@ infrastructure.png,infrastructure-table.csv,infrastructure,Infrastructure,"The I
  $infrastructure_types0 ""command-and-control"";","match
     $a isa infrastructure,
         has stix-id ""infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -576,7 +576,7 @@ Where a Campaign is a set of attacks over a period of time against a specific se
  $secondary_motivations0 ""dominance"";","match
     $a isa intrusion-set,
         has stix-id ""intrusion-set--ed69450a-f067-4b51-9ba2-c4616b9a6713"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -661,7 +661,7 @@ insert
     $a isa location,
         has stix-id ""location--a6e9345f-5a15-4c29-8bb3-7dcc5d168d64"",
         has $b;
-    $c (owner:$a, pointed-to:$d) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $c (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -723,7 +723,7 @@ The Indicator SDO provides intelligence producers with the ability to define, us
  $is-family false;","match
     $a isa malware,
         has stix-id ""malware--fdd60b30-b67c-41e3-b0b9-f01faf20d111"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -785,7 +785,7 @@ malware-analysis.png,malware-analysis.csv,malware-analysis,Malware-Analysis,Malw
     $result ""malicious"";","match
     $a isa malware-analysis,
         has stix-id ""malware-analysis--d25167b7-fed0-4068-9ccd-a73dd2c5b07c"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -837,7 +837,7 @@ For example, an analyst may add a Note to a Campaign object created by another o
     }
   ],
   ""abstract"": ""Tracking Team Note#1"",
-  ""content"": ""This note indicates the various steps taken by the threat analyst team to investigate this specific campaign. Step 1) Do a scan 2) Review scanned results for identified hosts not known by external intel…etc."",
+  ""content"": ""This note indicates the various steps taken by the threat analyst team to investigate this specific campaign. Step 1) Do a scan 2) Review scanned results for identified hosts not known by external intelï¿½etc."",
   ""authors"": [""John Doe""],
   ""object_refs"": [""campaign--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f""]
 }","match  
@@ -861,7 +861,7 @@ insert
     $created 2016-05-12T08:17:27.000;
     $modified 2016-05-12T08:17:27.000;
     $note-abstract ""Tracking Team Note#1"";
-    $content ""This note indicates the various steps taken by the threat analyst team to investigate this specific campaign. Step 1) Do a scan 2) Review scanned results for identified hosts not known by external intel…etc."";
+    $content ""This note indicates the various steps taken by the threat analyst team to investigate this specific campaign. Step 1) Do a scan 2) Review scanned results for identified hosts not known by external intelï¿½etc."";
     $authors0 ""John Doe"";
     
     $obj-refs0 (object:$note, referred:$campaign00) isa obj-refs;
@@ -877,7 +877,7 @@ insert
     $c isa stix-sub-object,
         has $d;
     $e (owner:$a, pointed-to:$c) isa embedded;
-    $f (owner:$a, pointed-to:$g) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $f (owner:$a, pointed-to:$g) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -956,7 +956,7 @@ insert
     $a isa observed-data,
         has stix-id ""observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"",
         has $b;
-    $c (owner:$a, pointed-to:$d) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $c (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1021,7 +1021,7 @@ insert
     $a isa opinion,
         has stix-id ""opinion--b01efc25-77b4-4003-b18b-f6e24b5cd9f7"",
         has $b;
-    $c (owner:$a, pointed-to:$d) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $c (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1110,7 +1110,7 @@ insert
     $a isa report,
         has stix-id ""report--84e4d88f-44ea-4bcd-bbf3-b2c1c320bcbd"",
         has $b;
-    $c (owner:$a, pointed-to:$d) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $c (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1189,7 +1189,7 @@ Threat Actors leverage their resources, and possibly the resources of an Intrusi
  $secondary_motivations0 ""dominance"";","match
     $a isa threat-actor,
         has stix-id ""threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1251,7 +1251,7 @@ insert
     $a isa tool,
         has stix-id ""tool--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f"",
         has $b;
-    $c (owner:$a, pointed-to:$d) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $c (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1323,7 +1323,7 @@ insert
     $c isa stix-sub-object,
         has $d;
     $e (owner:$a, pointed-to:$c) isa embedded;
-    $f (owner:$a, pointed-to:$g) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $f (owner:$a, pointed-to:$g) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",

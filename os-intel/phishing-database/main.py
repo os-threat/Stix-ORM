@@ -247,10 +247,10 @@ def full_load():
     with open(file_path, 'w') as file:
         file.write(bundle.serialize())
 
-from stix.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
-from stix.module.authorise import authorised_mappings, import_type_factory
-from stix.module.definitions.os_threat import Feed, Feeds, ThreatSubObject
-from stix.module.typedb_lib.instructions import ResultStatus
+from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
+from stixorm.module.authorise import authorised_mappings, import_type_factory
+from stixorm.module.definitions.os_threat import Feed, Feeds, ThreatSubObject
+from stixorm.module.typedb_lib.instructions import ResultStatus
 from stix2.v21.common import ExternalReference,MarkingDefinition,StatementMarking
 import sqlite3
 def load_ip_feed():

@@ -3,22 +3,22 @@ import os
 
 import dateutil.parser
 from dateutil.parser import *
-from stix.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
+from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
 from typedb.client import *
-from stix.module.orm.import_objects import raw_stix2_to_typeql
-from stix.module.orm.delete_object import delete_stix_object
-from stix.module.orm.export_object import convert_ans_to_stix
-from stix.module.authorise import authorised_mappings, import_type_factory
-from stix.module.parsing.parse_objects import parse
-from stix.module.generate_docs import configure_overview_table_docs, object_tables
-from stix.module.initialise import sort_layers, load_typeql_data
-from stix.module.definitions.stix21 import ObservedData, IPv4Address
-from stix.module.definitions.os_threat import Feed, ThreatSubObject
-from stix.module.orm.import_utilities import val_tql
+from stixorm.module.orm.import_objects import raw_stix2_to_typeql
+from stixorm.module.orm.delete_object import delete_stix_object
+from stixorm.module.orm.export_object import convert_ans_to_stix
+from stixorm.module.authorise import authorised_mappings, import_type_factory
+from stixorm.module.parsing.parse_objects import parse
+from stixorm.module.generate_docs import configure_overview_table_docs, object_tables
+from stixorm.module.initialise import sort_layers, load_typeql_data
+from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
+from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
+from stixorm.module.orm.import_utilities import val_tql
 
 import logging
 
-#from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
+#from stixorm.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)

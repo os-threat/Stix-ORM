@@ -12,14 +12,14 @@ from dbconfig import connection
 from stix2 import (v21, parse)
 from pathlib import Path
 
-from stix.module.authorise import import_type_factory
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stixorm.module.authorise import import_type_factory
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 
 loggers = [logging.getLogger()]  # get the root logger
 loggers = loggers + [logging.getLogger(name) for name in logging.root.manager.loggerDict]
 
 for l in loggers:
-    if l.name.startswith('stix.module'):
+    if l.name.startswith('stixorm.module'):
         # you can change verbosity here if needed
         '''
         l.setLevel(logging.DEBUG)
