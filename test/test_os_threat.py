@@ -17,7 +17,8 @@ connection = {
     "password": None
 }
 
-import_type = import_type_factory.get_all_imports()
+import_type = import_type_factory.create_import(stix_21=False,
+                                                os_threat=True)
 
 def variable_all_standard_data_filepaths() -> List[str]:
     top_dir_path = pathlib.Path(__file__).parents[0]
@@ -39,7 +40,6 @@ def typedb_sink():
         "user": None,
         "password": None
     }
-    import_type = ImportTypeFactory().get_default_import()
     schema_path = "path/to/schema.json"
     typedb = TypeDBSink(connection=connection, clear=False, import_type=import_type)
     yield typedb
