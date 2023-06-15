@@ -41,12 +41,12 @@ def load_file(fullname):
 # if this file is run directly, then start here
 if __name__ == '__main__':
 
-    std_path = "data/standard/"
+    std_path = "test/data/standard/"
     file1 = 'file_basic.json'  # hashes example
     file2 = 'x509_cert_v3_ext.json' # extension
     file2b = 'email_mime.json' # extensions, sub-object
 
-    ex_path = "data/examples/"
+    ex_path = "test/data/examples/"
     file4 = "attack_pattern_malware.json"  # list of objects
 
     report_data = "data/threat_reports/"
