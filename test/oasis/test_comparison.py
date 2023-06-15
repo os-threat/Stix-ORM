@@ -1,3 +1,4 @@
+import pathlib
 import pytest
 from hamcrest import *
 import pickle
@@ -12,7 +13,10 @@ import itertools as it
 class StixComparator(object):
 
     def __init__(self):
-        with open('../stixorm/module/definitions/common/mappings/is_list_sro.json', 'r') as file:
+        folder_path = pathlib.Path(__file__).parents[2]
+        file_path = folder_path.joinpath('stixorm/module/definitions/common/mappings/is_list_sro.json')
+        file_path.exists()
+        with open(str(file_path),  'r') as file:
             self._sro_list = json.load(file)
 
     def property_check(self,a,b,key,property_type):
@@ -82,6 +86,9 @@ class StixComparator(object):
             return len(not_equals)==0,equals,not_equals
 
 def test_compare_objects():
+    folder_path = pathlib.Path(__file__).parents[0]
+
+
     with open('../debug/indicator--26ffb872-1dd9-446e-b6f5-d58527e5b5d2_o.pl', 'rb') as handle:
         stix_obj = pickle.load(handle)
 
@@ -102,8 +109,13 @@ def test_granular_markings():
                 matched += 1
         return matched
 
-    filename = '../data/examples/granular_markings.json'
-    with open(filename, mode="r", encoding="utf-8") as file:
+    top_dir_path = pathlib.Path(__file__).parents[1]
+    file_path = 'data/examples/granular_markings.json'
+    filename = top_dir_path.joinpath(file_path)
+
+    assert filename.exists()
+
+    with open(str(filename), mode="r", encoding="utf-8") as file:
         json_blob = json.load(file)
 
         stix_obj = parse(json_blob)
