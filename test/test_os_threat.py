@@ -16,14 +16,11 @@ connection = {
     "user": None,
     "password": None
 }
-schema_path = path = str(pathlib.Path(__file__).parents[1])
-
-
 
 import_type = import_type_factory.get_all_imports()
 
 def variable_all_standard_data_filepaths() -> List[str]:
-    top_dir_path = pathlib.Path(__file__).parents[1]
+    top_dir_path = pathlib.Path(__file__).parents[0]
     standard_data_path = top_dir_path.joinpath("data/os-threat/")
     paths = []
 
@@ -44,7 +41,7 @@ def typedb_sink():
     }
     import_type = ImportTypeFactory().get_default_import()
     schema_path = "path/to/schema.json"
-    typedb = TypeDBSink(connection=connection, clear=False, import_type=import_type, schema_path=schema_path)
+    typedb = TypeDBSink(connection=connection, clear=False, import_type=import_type)
     yield typedb
     typedb.clear_db()
 
