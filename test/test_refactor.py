@@ -578,7 +578,7 @@ class TestTypeDB:
         typedb_sink.add(json_text)
 
         my_id_list = typedb_sink.get_stix_ids()
-        self.assertTrue(set(my_id_list) == {'identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65',
+        assert (set(my_id_list) == {'identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65',
                                    'identity--f431f809-377b-45e0-aa1c-6a4751cae5ff'})
 
     @pytest.mark.parametrize("path", standard_data_file_paths_with_no_dependencies())

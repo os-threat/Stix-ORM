@@ -99,7 +99,9 @@ def query_ids(query, generator, transaction, **data_query_args):
     logger.info(query)
 
     number = 0
+    ids = []
     for result in generator:
+        ids.append(result.get("ids"))
         logger.info(
             '\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' + \
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    Query IDs Concept Map ' + str(
@@ -117,7 +119,7 @@ def query_ids(query, generator, transaction, **data_query_args):
 
     logger.info('\n')
 
-    return [ans.get("ids") for ans in generator]
+    return ids
 
 def query_id(query, generator, transaction, **data_query_args):
     logger.info(
@@ -128,7 +130,9 @@ def query_id(query, generator, transaction, **data_query_args):
     logger.info(query)
 
     number = 0
+    ids = []
     for result in generator:
+        ids.append(result.get("id").get_value())
         logger.info(
             '\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' + \
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    Query ID Concept Map ' + str(
@@ -146,7 +150,7 @@ def query_id(query, generator, transaction, **data_query_args):
 
     logger.info('\n')
 
-    return [ans.get("id").get_value() for ans in generator]
+    return ids
 
 
 def delete_layers(uri: str, port: str, database: str, instructions: Instructions):
