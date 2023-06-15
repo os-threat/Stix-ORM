@@ -18,8 +18,6 @@ connection = {
     "password": None
 }
 
-schema_path = path = str(pathlib.Path(__file__).parents[1])
-
 import_type = import_type_factory.get_attack_import()
 
 
@@ -29,14 +27,12 @@ def typedb():
         connection=connection,
         clear=True,
         import_type=import_type,
-        schema_path=schema_path
     )
     db.clear_db()
     db = TypeDBSink(
         connection=connection,
         clear=True,
         import_type=import_type,
-        schema_path=schema_path
     )
     yield db
     db.clear_db()
@@ -45,7 +41,7 @@ def typedb():
 @pytest.fixture
 def json_data():
     data_standard_path = "data/mitre/"
-    top_dir_path = pathlib.Path(__file__).parents[1]
+    top_dir_path = pathlib.Path(__file__).parents[0]
     file_path = str(top_dir_path.joinpath(data_standard_path).joinpath("attack_objects.json"))
     with open(file_path, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
@@ -59,7 +55,7 @@ def json_data():
 @pytest.fixture
 def ics_attack_data():
     data_standard_path = "data/mitre/"
-    top_dir_path = pathlib.Path(__file__).parents[1]
+    top_dir_path = pathlib.Path(__file__).parents[0]
     file_path = str(top_dir_path.joinpath(data_standard_path).joinpath("history").joinpath("ics-attack.json"))
     with open(file_path, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
