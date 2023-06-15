@@ -51,7 +51,7 @@ jobs:
       - name: Run pytest with coverage
         run: |
           pip install pytest-cov
-          pytest --cov=my_module --html=report.html --self-contained-html test/
+          pytest  --verbose --cov=my_module --html=report.html --self-contained-html test/
 
       - name: Generate coverage report
         run: |
