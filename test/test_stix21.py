@@ -126,8 +126,8 @@ def typedb_connection():
     import_type = ImportTypeFactory().get_default_import()
     typedb_sink = TypeDBSink(connection=connection, clear=True, import_type=import_type)
     typedb_source = TypeDBSource(connection=connection, import_type=import_type)
-    data_folder = pathlib.Path(__file__).parents[1].joinpath("data/examples/")
-    example = str(pathlib.Path(__file__).parents[1].joinpath("data/examples/"))
+    data_folder = pathlib.Path(__file__).parents[0].joinpath("data/examples/")
+    example = str(pathlib.Path(__file__).parents[0].joinpath("data/examples/"))
 
     yield typedb_sink, typedb_source, data_folder, example
 
