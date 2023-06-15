@@ -476,7 +476,7 @@ class TypeDBSink(DataSink):
         instruction_dependency_graph_result =  self.__create_instruction_dependency_graph(generate_instructions_result)
         check_missing_dependency_result = self.__check_missing_dependencies(instruction_dependency_graph_result)
 
-        instructions: Instructions = check_missing_dependency_result.unwrap()
+        instructions: Instructions = check_missing_dependency_result
         if instructions.exist_missing_dependencies():
             return instructions.convert_to_result()
         if instructions.exist_cyclical_ids():
@@ -490,7 +490,7 @@ class TypeDBSink(DataSink):
         add_to_database_result = add_instructions_to_typedb(self.uri,
                                                             self.port,
                                                             self.database,
-                                                            queries_result)
+                                                            reorder_result)
 
         instructions = add_to_database_result
 

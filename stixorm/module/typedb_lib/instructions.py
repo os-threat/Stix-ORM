@@ -5,8 +5,6 @@ from typing import Optional, List, Dict
 
 from networkx import DiGraph, find_cycle
 from pydantic import BaseModel
-from returns.pipeline import is_successful
-from returns.result import safe
 
 
 from stixorm.module.typedb_lib.logging import log_insert_query
@@ -121,21 +119,20 @@ class Instructions:
                 instruction.status = Status.FAILED_MISSING_DEPENDENCY
 
 
-    @safe
     def create_insert_queries(self,
                               build_insert_query):
         for instruction in self.instructions.values():
             if instruction.status != Status.CREATED:
                 continue
-            result = build_insert_query(instruction.typeql_obj.dict())
-            is_non_empty_insertion = is_successful(result) and result.unwrap() is not None
-            if is_non_empty_insertion:
+            try:
+                result = build_insert_query(instruction.typeql_obj.dict())
                 instruction.status = Status.CREATED_QUERY
-                instruction.query = result.unwrap()
-            elif not is_successful(result):
+                instruction.query = result
+            except Exception as e:
                 instruction.status = Status.ERROR
-                instruction.error = str(result.failure())
+                instruction.error = str(e)
                 log_insert_query(result, instruction.layer)
+
 
 
     def get_ordered_ids(self):

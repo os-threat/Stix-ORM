@@ -1,16 +1,13 @@
 import traceback
 
-from returns.pipeline import is_successful
+
 import logging
-
-from returns.result import safe
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 def log_delete_layers(result):
     try:
-        if is_successful(result):
+        if result is None:
             logger.debug("Successfully deleted layer")
         else:
             logger.debug("Failed to delete layers")
@@ -20,7 +17,7 @@ def log_delete_layers(result):
 
 def log_delete_layer(result, layer):
     try:
-        if not is_successful(result):
+        if result is None:
             logger.debug("Failed to delete layer")
             logger.exception("\n".join(traceback.format_exception(result.failure())))
             logger.debug(layer)
@@ -29,7 +26,7 @@ def log_delete_layer(result, layer):
 
 def log_add_layer(result, layer):
     try:
-        if not is_successful(result):
+        if result is None:
             logger.debug("Failed to add layer")
             logger.exception("\n".join(traceback.format_exception(result.failure())))
             logger.debug(layer)
@@ -38,7 +35,7 @@ def log_add_layer(result, layer):
 
 def log_insert_query(result, layer):
     try:
-        if not is_successful(result):
+        if result is None:
             logger.debug("Failed to creare insert query")
             logger.error(str(result.failure()))
             logger.debug(layer)
@@ -47,7 +44,7 @@ def log_insert_query(result, layer):
 
 def log_delete_instruction_update_layer(result):
     try:
-        if not is_successful(result):
+        if result is None:
             logger.debug("Failed to delete layer")
             logger.error(str(result.failure()))
     except Exception as e:
@@ -55,7 +52,7 @@ def log_delete_instruction_update_layer(result):
 
 def log_add_instruction_update_layer(result):
     try:
-        if not is_successful(result):
+        if result is None:
             logger.debug("Failed to update layer")
             logger.error(str(result.failure()))
     except Exception as e:
@@ -65,7 +62,7 @@ def log_add_instruction_update_layer(result):
 def log_delete_instruction_outcome(result):
     try:
         logger.debug("=========================== delete typeql instruction ====================================")
-        if is_successful(result):
+        if result is None:
             logger.debug("Successfully added instruction")
 
         else:

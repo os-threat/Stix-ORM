@@ -1,9 +1,6 @@
 import json
 
-from returns.io import impure_safe
 
-
-@impure_safe
 def write_to_file(file_name: str,
                   obj):
     json_object = json.loads(obj.serialize())
