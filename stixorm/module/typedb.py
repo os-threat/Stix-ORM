@@ -3,12 +3,6 @@ import os.path
 import pathlib
 import traceback
 from dataclasses import dataclass
-from returns._internal.pipeline.pipe import pipe
-from returns.methods import unwrap_or_failure
-from returns.pipeline import is_successful
-from returns.pointfree import bind
-from returns.result import safe, Result, Failure, Success
-from returns.unsafe import unsafe_perform_io
 from typedb.client import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
 from stixorm.module.orm.delete_object import delete_stix_object, add_delete_layers
@@ -89,12 +83,10 @@ class TypeDBSink(DataSink):
         self.schema_path = schema_path
         self.import_type: ImportType = import_type
 
-        result = self.__initialise()
-        if not is_successful(result):
-            logging.exception("\n".join(traceback.format_exception(result.failure())))
-            raise Exception(str(result.failure()))
+        self.__initialise()
 
-    @safe
+
+
     def __initialise(self):
         assign_result = self.__assign_schemas()
         handle_result(assign_result, "assign result", self.strict_failure)
@@ -126,14 +118,12 @@ class TypeDBSink(DataSink):
         # 3. Load the Objects
         # Still to do
 
-    @safe
     def __validate_connect_to_db(self):
         logger.debug("Attempting DB Connection")
-        result: Result[TypeDBClient, Exception] = self.__get_core_client()
-        result.bind(lambda client: client.databases().all())
+        self.__get_core_client()
         logger.debug("DB Connection Successful")
 
-    @safe
+
     def __load_attack_schema(self):
         if self.clear and self.import_type.ATTACK:
             logger.debug("ATT&CK")
@@ -142,7 +132,7 @@ class TypeDBSink(DataSink):
         else:
             logger.debug("ignoring history ATT&CK schema")
 
-    @safe
+
     def __load_os_threat_schema(self):
         if self.clear and self.import_type.os_threat:
             logger.debug("os-threat")
@@ -151,7 +141,7 @@ class TypeDBSink(DataSink):
         else:
             logger.debug("ignoring history  os hunt")
 
-    @safe
+
     def __load_stix_rules(self):
         if self.clear and self.import_type.rules:
             logger.debug("rules")
@@ -160,7 +150,7 @@ class TypeDBSink(DataSink):
         else:
             logger.debug("ignoring check of stix rules")
 
-    @safe
+
     def __load_stix_schema(self):
         if self.clear:
             load_schema(self._stix_connection, str(self.cti_schema_stix), "Stix 2.1 Schema ")
@@ -169,7 +159,7 @@ class TypeDBSink(DataSink):
         else:
             logger.debug("ignoring history stix schema")
 
-    @safe
+
     def __assign_schemas(self):
         if self.schema_path is None:
              self.schema_path = str(pathlib.Path(__file__).parent)
@@ -194,7 +184,6 @@ class TypeDBSink(DataSink):
         # self.cti_schema_rules_path = pathlib.Path(self.schema_path).joinpath("stix/schema/cti-rules.tql")
         # assert self.cti_schema_rules_path.is_file(), "The schema does not exist: " + str(self.cti_schema_rules_path)
 
-    @safe
     def __assign_import_type(self):
         if self.import_type is None:
             self.import_type = import_type_factory.get_default_import()
@@ -203,19 +192,12 @@ class TypeDBSink(DataSink):
     def stix_connection(self):
         return self._stix_connection
 
-    def clear_db(self) -> bool:
+    def clear_db(self):
 
         result = delete_database(self.uri, self.port, self.database)
+        logger.debug("Successfully cleared database")
 
-        if is_successful(result):
-            logger.debug("Successfully cleared database")
-            return True
-        else:
-            logger.debug("Failed to clear cleared database")
-            logger.warning(str(result.failure()))
-            return False
 
-    @safe
     def __filter_markings(self, stix_ids: List[StringAttribute]) -> List[str]:
         marking = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
                    "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
@@ -237,11 +219,9 @@ class TypeDBSink(DataSink):
                                  self.database,
                                  get_ids_tql,
                                  data_query)
-        if not is_successful(query_data):
-            logging.exception("\n".join(traceback.format_exception(query_data.failure())))
-            return Failure(query_data.failure())
-        extracted_output = unsafe_perform_io(query_data)
-        return Success(unwrap_or_failure(extracted_output))
+
+        return query_data
+
 
     def get_stix_ids(self):
         """ Get all the stix-ids in a database, should be moved to DataSource object
@@ -251,36 +231,23 @@ class TypeDBSink(DataSink):
         """
         stix_ids_query = self.__query_stix_ids()
 
-        transaction = pipe(
-            bind(self.__filter_markings)
-        )
+        result = self.__filter_markings(stix_ids_query)
+        return result
 
-        result = transaction(stix_ids_query)
-        if is_successful(result):
-            return result.unwrap()
-        else:
-            logging.exception("\n".join(traceback.format_exception(result.failure())))
-            raise Exception(str(result.failure()))
 
-    @safe
     def __retrieve_stix_id(self,
                            stix_id: str):
-        type_db_source = unwrap_or_failure(self.__get_source_client())
-        return type_db_source.get(stix_id, self.import_type)
+        type_db_source = self.__get_source_client()
+        return type_db_source.get(stix_id)
 
-    @safe
+
     def __delete_instruction(self,
                              stixid: str):
 
         stix_obj = self.__retrieve_stix_id(stixid)
-        if not is_successful(stix_obj):
-            logging.exception("\n".join(traceback.format_exception(stix_obj.failure())))
-            raise Exception(stix_obj.failure())
 
-        dep_match, dep_insert, indep_ql, core_ql, dep_obj = stix_obj.bind(
-            lambda x: raw_stix2_to_typeql(x, self.import_type))
-        del_match, del_tql = stix_obj.bind(
-            lambda x: delete_stix_object(x, dep_match, dep_insert, indep_ql, core_ql, self.import_type))
+        dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
+        del_match, del_tql = delete_stix_object(stix_obj, dep_match, dep_insert, indep_ql, core_ql, self.import_type)
         dep_obj["delete"] = del_match + '\n' + del_tql
 
         log_delete_instruction(del_match, dep_insert, indep_ql, dep_obj, del_match, del_tql)
@@ -289,7 +256,7 @@ class TypeDBSink(DataSink):
         else:
             return dep_obj
 
-    @safe
+
     def __update_delete_layers(self,
                                layers,
                                indexes,
@@ -305,7 +272,7 @@ class TypeDBSink(DataSink):
             layers, indexes, missing = add_delete_layers(layers, dep_obj, indexes, missing)
         return layers, indexes, missing
 
-    @safe
+
     def __retrieve_delete_instructions(self,
                                        stixids: List[str]) -> Instructions:
 
@@ -317,19 +284,13 @@ class TypeDBSink(DataSink):
 
         for stixid in stixids:
             del_result = self.__delete_instruction(stixid)
-            update_result = del_result.bind(
-                lambda dep_obj: self.__update_delete_layers(layers, indexes, missing, dep_obj))
-            if is_successful(update_result):
-                layers, indexes, missing = update_result.unwrap()
-            else:
-                instructions.insert_delete_instruction_error(stixid, update_result.failure())
-                log_delete_instruction_update_layer(update_result)
+            layers, indexes, missing = self.__update_delete_layers(layers, indexes, missing, del_result)
 
         for layer in layers:
             instructions.insert_delete_instruction(layer['id'], layer)
         return instructions
 
-    @safe
+
     def __order_delete_instructions(self,
                                     delete_instructions: Instructions):
         layer = {}
@@ -350,27 +311,23 @@ class TypeDBSink(DataSink):
         """
 
         delete_instruction_result = self.__retrieve_delete_instructions(stixid_list)
-        order_instruction_result = delete_instruction_result.bind(lambda x: self.__order_delete_instructions(x))
-        delete_from_database_result = order_instruction_result.bind(lambda order_instruction: delete_layers(self.uri,
-                                                                                                            self.port,
-                                                                                                            self.database,
-                                                                                                            order_instruction))
-        log_delete_layers(delete_from_database_result)
-        if not is_successful(delete_from_database_result):
-            logging.exception("\n".join(traceback.format_exception(delete_from_database_result.failure())))
-            raise Exception(delete_from_database_result.failure())
+        order_instruction_result = self.__order_delete_instructions(delete_instruction_result)
+        delete_from_database_result = delete_layers(self.uri,
+                                                    self.port,
+                                                    self.database,
+                                                    order_instruction_result)
 
-        instructions = unsafe_perform_io(delete_from_database_result.unwrap())
+        instructions = delete_from_database_result
 
         return instructions.convert_to_result()
 
 
-    @safe
+
     def __get_core_client(self) -> TypeDBClient:
         typedb_url = self.uri + ":" + self.port
         return TypeDB.core_client(typedb_url)
 
-    @safe
+
     def __get_source_client(self):
         connection = {'uri': self.uri,
                       'port': self.port,
@@ -382,7 +339,7 @@ class TypeDBSink(DataSink):
 
 
 
-    @safe
+
     def __generate_typeql_object(self, stix_dict: dict) -> TypeQLObject:
 
         logger.debug(f"\n================================================================\nim about to parse \n")
@@ -400,7 +357,7 @@ class TypeDBSink(DataSink):
 
         return typeql_obj
 
-    @safe
+
     def __generate_instructions(self,
                                 obj_list) -> Instructions:
         instructions = Instructions()
@@ -408,21 +365,19 @@ class TypeDBSink(DataSink):
 
             typeql_object_result = self.__generate_typeql_object(stix_dict)
 
-            if not is_successful(typeql_object_result):
-                instructions.insert_instruction_error(stix_dict['id'], typeql_object_result.failure())
-            else:
-                typeql_object: TypeQLObject = typeql_object_result.unwrap()
-                instructions.insert_add_instruction(stix_dict['id'], typeql_object)
-                #typeql_object: TypeQLObject = typeql_object_result.unwrap()
-               # is_missing = len(typeql_object.dep_list) == 0
-                #if is_missing:
-                #    instructions.insert_add_insert_missing_dependency(stix_dict['id'], typeql_object)
-                #else:
+            typeql_object: TypeQLObject = typeql_object_result
+            instructions.insert_add_instruction(stix_dict['id'], typeql_object)
+
+            #typeql_object: TypeQLObject = typeql_object_result.unwrap()
+           # is_missing = len(typeql_object.dep_list) == 0
+            #if is_missing:
+            #    instructions.insert_add_insert_missing_dependency(stix_dict['id'], typeql_object)
+            #else:
 
 
         return instructions
 
-    @safe
+
     def __create_instruction_dependency_graph(self,
                                               instructions: Instructions):
         directed_graph = nx.DiGraph()
@@ -452,45 +407,36 @@ class TypeDBSink(DataSink):
         return instructions
 
 
-    @safe
+
     def __generate_queries(self,
                            instructions: Instructions):
         result = instructions.create_insert_queries(build_insert_query)
-        if is_successful(result):
-            return instructions
-        else:
-            logging.exception("\n".join(traceback.format_exception(result.failure())))
-            raise Exception(result.failure)
+        return result
 
 
     def __check_missing_dependencies(self,
                                      instructions: Instructions):
         missing_ids_from_tree = instructions.missing_dependency_ids()
 
-        if len(missing_ids_from_tree) == 0:
-            return Success(instructions)
-
         query_result = build_match_id_query(missing_ids_from_tree)
 
-        data_result = query_result.bind(lambda query: match_query(uri=self.uri,
-                                                                  port=self.port,
-                                                                  database=self.database,
-                                                                  query=query,
-                                                                  data_query=query_id,
-                                                                  import_type=None))
+        data_result = match_query(uri=self.uri,
+                                  port=self.port,
+                                  database=self.database,
+                                  query=query_result,
+                                  data_query=query_id,
+                                  import_type=None)
 
-        if not is_successful(data_result):
-            return Failure(unsafe_perform_io(data_result.failure()))
 
-        missing_ids_found_in_db = unsafe_perform_io(data_result.unwrap())
+        missing_ids_found_in_db = data_result
         # ids with no record in db and in dependency tree
         ids_missing = list(set(missing_ids_from_tree) - set(missing_ids_found_in_db))
         instructions.register_missing_dependencies(ids_missing)
 
-        return Success(instructions)
+        return instructions
 
 
-    @safe
+
     def __reorder_instructions(self,
                                instructions: Instructions):
         order = list(nx.topological_sort(instructions.dependencies))
@@ -523,20 +469,13 @@ class TypeDBSink(DataSink):
         """
         logger.debug("1. starting in add")
         obj_result = self._gather_objects(stix_data)
-        if not is_successful(obj_result):
-            logging.exception("\n".join(traceback.format_exception(obj_result.failure())))
 
-
-        generate_instructions_result = obj_result.bind(lambda obj_list: self.__generate_instructions(obj_list))
+        generate_instructions_result = self.__generate_instructions(obj_result)
         logger.info("\n##########################################################################################################################################################\n")
         #print(f"generate instructions is {generate_instructions_result}")
-        instruction_dependency_graph_result = generate_instructions_result.bind(lambda results: self.__create_instruction_dependency_graph(results))
-        check_missing_dependency_result = instruction_dependency_graph_result.bind(lambda result: self.__check_missing_dependencies(result))
+        instruction_dependency_graph_result =  self.__create_instruction_dependency_graph(generate_instructions_result)
+        check_missing_dependency_result = self.__check_missing_dependencies(instruction_dependency_graph_result)
 
-        # check missing results
-        if not is_successful(check_missing_dependency_result):
-            logging.exception("\n".join(traceback.format_exception(check_missing_dependency_result.failure())))
-            raise Exception("failed to check missing dependencies")
         instructions: Instructions = check_missing_dependency_result.unwrap()
         if instructions.exist_missing_dependencies():
             return instructions.convert_to_result()
@@ -546,23 +485,19 @@ class TypeDBSink(DataSink):
 
         reorder_result = self.__reorder_instructions(instructions)
 
-        queries_result = reorder_result.bind(lambda result: self.__generate_queries(result))
+        queries_result = self.__generate_queries(reorder_result)
 
-        add_to_database_result = queries_result.bind(lambda result: add_instructions_to_typedb(self.uri,
-                                                                                               self.port,
-                                                                                               self.database,
-                                                                                               result))
-        if not is_successful(add_to_database_result):
-            exception = unsafe_perform_io(add_to_database_result.failure())
-            logging.exception("\n".join(traceback.format_exception(exception)))
-            raise exception
+        add_to_database_result = add_instructions_to_typedb(self.uri,
+                                                            self.port,
+                                                            self.database,
+                                                            queries_result)
 
-        instructions = unsafe_perform_io(add_to_database_result).unwrap()
+        instructions = add_to_database_result
 
         return instructions.convert_to_result()
 
 
-    @safe
+
     def _gather_objects(self, stix_data):
         """
           the details for the add details, checking what import_type of data object it is
@@ -657,7 +592,7 @@ class TypeDBSource(DataSource):
     def stix_connection(self):
         return self._stix_connection
 
-    @safe
+
     def __retrieve_stix_object(self,
                                stix_id: str):
         logger.debug(f'__retrieve_stix_object: {stix_id}')
@@ -673,7 +608,7 @@ class TypeDBSource(DataSource):
                            import_type=self.import_type)
 
         logger.debug(f'data is -> {data}')
-        stix_obj = unwrap_or_failure(data).bind(lambda x: parse(data=x, allow_custom=False, import_type=self.import_type))
+        stix_obj = parse(data=data, allow_custom=False, import_type=self.import_type)
 
         # result = write_to_file("stixorm/module/orm/export_final.json", stix_obj)
         # if not is_successful(result):
@@ -698,11 +633,7 @@ class TypeDBSource(DataSource):
         """
 
         result = self.__retrieve_stix_object(stix_id)
-        if is_successful(result):
-            return result.unwrap()
-        else:
-            logging.exception("\n".join(traceback.format_exception(result.failure())))
-            raise Exception(str(result.failure()))
+        return result
 
     def query(self, query=None, version=None, _composite_filters=None):
         """Search and retrieve STIX objects based on the complete query.
