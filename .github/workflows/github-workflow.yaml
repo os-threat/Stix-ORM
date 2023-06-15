@@ -29,28 +29,49 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install flake8 nose2[coverage_plugin] nose2-html-report
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --exit-zero --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Install nose2
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --format=html --htmldir=flake8_report
+
+      - name: Run pytest with coverage
         run: |
-          python -m pip install --upgrade pip
-          pip install nose2 nose2-html-report
-      - name: Test with nose2
-        env:
-          TYPEDB_HOST: 'localhost'
-          TYPEDB_PORT: '1729'
+          pip install pytest-cov
+          pytest --cov=my_module --html=report.html --self-contained-html test/
+
+      - name: Generate coverage report
         run: |
-          python -m nose2 --verbose
+          pip install coverage
+          coverage html -d coverage_report
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Coverage Report
+          path: coverage_report
+
+      - name: Upload pytest report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Pytest Report
+          path: report.html
+
+      - name: Upload Flake8 report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Flake8 Report
+          path: flake8_report
