@@ -20,7 +20,6 @@ connection = {
     "password": None
 }
 
-schema_path = path = str(pathlib.Path(__file__).parents[1])
 
 import_type = import_type_factory.get_attack_import()
 
@@ -30,14 +29,12 @@ def database():
         connection=connection,
         clear=True,
         import_type=import_type,
-        schema_path=schema_path
     )
     db.clear_db()
     db = TypeDBSink(
         connection=connection,
         clear=True,
-        import_type=import_type,
-        schema_path=schema_path
+        import_type=import_type
     )
     yield db
     db.clear_db()
