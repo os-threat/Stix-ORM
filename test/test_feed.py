@@ -7,6 +7,7 @@ import logging
 import pathlib
 
 import pytest
+
 from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink
 from stixorm.module.typedb_lib.instructions import ResultStatus
@@ -97,7 +98,9 @@ def empty_feed_bundle():
                   object_marking_refs = [marking_def_statement],
                   contents=[])
 
-    return Bundle(info,marking_def_statement,a_feed,allow_custom=True)
+    return Bundle(info,marking_def_statement,
+                  a_feed,
+                  allow_custom=True)
 
 @pytest.fixture
 def simple_feed():

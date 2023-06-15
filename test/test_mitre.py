@@ -3,6 +3,8 @@ import logging
 import pathlib
 
 import pytest
+import requests
+
 from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink
 from stixorm.module.typedb_lib.instructions import ResultStatus
@@ -82,6 +84,15 @@ def test_database_initialization(typedb, json_data):
     result = typedb.add(json_data)
     validate_is_successful(result)
 
+
+def test_load_attack_stix_data(typedb):
+    url = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
+
+    response = requests.get(url)
+    data = response.json()
+
+    result = typedb.add([data])
+    validate_is_successful(result)
 
 def test_ics_attack_database_initialization(typedb, ics_attack_data):
 
