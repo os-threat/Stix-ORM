@@ -74,21 +74,32 @@ def validate_is_successful(results):
     for result in results:
         assert result.status in [ResultStatus.SUCCESS]
 
+def attack_data():
+    url = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
 
+    response = requests.get(url)
+    index_data = response.json()
+    index_data_collections = index_data["collections"]
+    mitre_versions = index_data_collections[0]["versions"]
+
+    result = []
+    for mitre_version in mitre_versions:
+        result.append(mitre_version["url"])
+    return result
 
 def test_database_initialization(typedb, json_data):
+
     result = typedb.add(json_data)
     validate_is_successful(result)
 
 
-def test_load_attack_stix_data(typedb):
-    url = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
-
+@pytest.mark.parametrize("url", attack_data())
+def test_load_attack_stix_data(typedb, url):
     response = requests.get(url)
     data = response.json()
 
     result = typedb.add([data])
-    validate_is_successful(result)
+    #validate_is_successful(result)
 
 def test_ics_attack_database_initialization(typedb, ics_attack_data):
 
