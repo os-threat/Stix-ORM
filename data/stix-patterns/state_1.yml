@@ -1,0 +1,12 @@
+pattern:
+  observation:
+    objects: {domain-name}
+    join:
+    qualifiers:
+    expressions:
+      - comparison:
+          object: domain-name
+          path: [value]
+          negated:
+          operator: '='
+          value: site.of.interest.zaz

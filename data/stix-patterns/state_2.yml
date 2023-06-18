@@ -1,0 +1,14 @@
+pattern:
+  observation:
+    objects: {file}
+    join:
+    qualifiers:
+    expressions:
+      - comparison:
+          object: file
+          path:
+            - parent_directory_ref
+            - path
+          negated:
+          operator: '='
+          value: C:\Windows\System32

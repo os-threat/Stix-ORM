@@ -1,0 +1,18 @@
+pattern:
+  observation:
+    objects: {url}
+    join: OR
+    qualifiers:
+    expressions:
+      - comparison:
+          object: url
+          path: [value]
+          negated:
+          operator: '='
+          value: http://example.com/foo
+      - comparison:
+          object: url
+          path: [value]
+          negated:
+          operator: '='
+          value: https://example.com/research/index.html

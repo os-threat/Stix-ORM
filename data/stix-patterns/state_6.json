@@ -1,0 +1,34 @@
+{
+  "observation": {
+    "objects": [
+      "domain-name"
+    ],
+    "join": "AND",
+    "qualifiers": null,
+    "expressions": [
+      {
+        "comparison": {
+          "object": "domain-name",
+          "path": [
+            "value"
+          ],
+          "negated": null,
+          "operator": "=",
+          "value": "site.of.interest.zaz"
+        }
+      },
+      {
+        "comparison": {
+          "object": "domain-name",
+          "path": [
+            "resolves_to_refs",
+            "value"
+          ],
+          "negated": null,
+          "operator": "=",
+          "value": "198.51.100.3"
+        }
+      }
+    ]
+  }
+}

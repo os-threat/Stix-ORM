@@ -1,0 +1,4 @@
+==================== state_5 ======================
+statement 5 (AND) 
+[email-message:sender_ref.value = 'jdoe@example.com' AND email-message:subject = 'Conference Info']
+

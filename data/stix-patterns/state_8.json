@@ -1,0 +1,93 @@
+{
+  "expression": {
+    "join": "OR",
+    "qualifiers": null,
+    "expressions": [
+      {
+        "expression": {
+          "join": "AND",
+          "qualifiers": null,
+          "expressions": [
+            {
+              "observation": {
+                "objects": [
+                  "file"
+                ],
+                "join": null,
+                "qualifiers": null,
+                "expressions": [
+                  {
+                    "comparison": {
+                      "object": "file",
+                      "path": [
+                        "name"
+                      ],
+                      "negated": null,
+                      "operator": "=",
+                      "value": "foo.dll"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "observation": {
+                "objects": [
+                  "win-registry-key"
+                ],
+                "join": null,
+                "qualifiers": null,
+                "expressions": [
+                  {
+                    "comparison": {
+                      "object": "win-registry-key",
+                      "path": [
+                        "key"
+                      ],
+                      "negated": null,
+                      "operator": "=",
+                      "value": "hkey_local_machine\\system\bar\foo"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "observation": {
+          "objects": [
+            "process"
+          ],
+          "join": "OR",
+          "qualifiers": null,
+          "expressions": [
+            {
+              "comparison": {
+                "object": "process",
+                "path": [
+                  "name"
+                ],
+                "negated": null,
+                "operator": "=",
+                "value": "fooproc"
+              }
+            },
+            {
+              "comparison": {
+                "object": "process",
+                "path": [
+                  "name"
+                ],
+                "negated": null,
+                "operator": "=",
+                "value": "procfoo"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+==================== state_3 ======================
+statement 3	[file:extensions.'windows-pebinary-ext'.sections[*].entropy > 7.0]
+

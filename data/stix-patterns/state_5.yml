@@ -1,0 +1,20 @@
+pattern:
+  observation:
+    objects: {email-message}
+    join: AND
+    qualifiers:
+    expressions:
+      - comparison:
+          object: email-message
+          path:
+            - sender_ref
+            - value
+          negated:
+          operator: '='
+          value: jdoe@example.com
+      - comparison:
+          object: email-message
+          path: [subject]
+          negated:
+          operator: '='
+          value: Conference Info

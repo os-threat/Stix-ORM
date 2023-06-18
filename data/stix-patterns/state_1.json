@@ -1,0 +1,22 @@
+{
+  "observation": {
+    "objects": [
+      "domain-name"
+    ],
+    "join": null,
+    "qualifiers": null,
+    "expressions": [
+      {
+        "comparison": {
+          "object": "domain-name",
+          "path": [
+            "value"
+          ],
+          "negated": null,
+          "operator": "=",
+          "value": "site.of.interest.zaz"
+        }
+      }
+    ]
+  }
+}

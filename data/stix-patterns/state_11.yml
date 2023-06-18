@@ -1,0 +1,27 @@
+pattern:
+  observation:
+    objects: {network-traffic}
+    join: AND
+    qualifiers:
+      - repeats:
+          value: 5
+      - within:
+          value: 180
+          unit: SECONDS
+    expressions:
+      - comparison:
+          object: network-traffic
+          path:
+            - dst_ref
+            - type
+          negated:
+          operator: '='
+          value: domain-name
+      - comparison:
+          object: network-traffic
+          path:
+            - dst_ref
+            - value
+          negated:
+          operator: '='
+          value: example.com

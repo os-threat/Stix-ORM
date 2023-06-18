@@ -15,8 +15,12 @@ from stix.module.initialise import sort_layers, load_typeql_data
 from stix.module.definitions.stix21 import ObservedData, IPv4Address
 from stix.module.definitions.os_threat import Feed, ThreatSubObject
 from stix.module.orm.import_utilities import val_tql
+from stix.module.definitions.attack import attack_models
+import copy
 
 import logging
+
+from timeit import default_timer as timer
 
 #from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
@@ -288,20 +292,21 @@ def load_file(fullname):
         fullname (): path and filename
     """
     logger.debug(f'inside history file {fullname}')
+    typedb = TypeDBSink(connection, True, import_type)
     input_id_list=[]
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
-        typedb = TypeDBSink(connection, True, import_type)
-        for stix_dict in json_text:
-            input_id_list.append(stix_dict.get("id", False))
+        # print(json_text)
+        # for stix_dict in json_text:
+        #     input_id_list.append(stix_dict.get("id", False))
         typedb.add(json_text)
-    id_set = set(input_id_list)
-    id_typedb = set(get_stix_ids())
-    len_files = len(id_set)
-    len_typedb = len(id_typedb)
-    id_diff = id_set - id_typedb
-    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
-    print(f'difference -> {id_diff}')
+    # id_set = set(input_id_list)
+    # id_typedb = set(get_stix_ids())
+    # len_files = len(id_set)
+    # len_typedb = len(id_typedb)
+    # id_diff = id_set - id_typedb
+    # print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    # print(f'difference -> {id_diff}')
 
 
 def check_object(fullname):
@@ -718,6 +723,11 @@ def test_auth():
     print(auth)
 
 # ObservedData, IPv4Address, Feed, ThreatSubObject
+###################################################################################
+#
+# Setup Feeds import and update code
+#
+##################################################################################
 def test_feeds():
     osthreat = "data/os-threat/feed-example/example.json"
     datetime1 = dateutil.parser.isoparse("2020-10-19T01:01:01.000Z")
@@ -924,6 +934,558 @@ def insert_typeql_data(data_list, stix_connection: Dict[str, str]):
 
                 insert_transaction.commit()
 
+###############################################################################
+#
+#  Generic Subgraph -get
+#  Runs a bit slow, needs optimising
+##################################################################################
+def try_subgraph_get(fullname):
+    check_id = "report--f2b63e80-b523-4747-a069-35c002c690db"
+    #connection["database"] = "local"
+    typedb_sink = TypeDBSink(connection, True, import_type)
+    typedb = TypeDBSource(connection, import_type)
+    input_id_list=[]
+    check_id_list=[]
+    subgraph_objs=[]
+    subgraph_ids=[]
+    with open(fullname, mode="r", encoding="utf-8") as f:
+        json_text = json.load(f)
+        # for stix_dict in json_text:
+        #     input_id_list.append(stix_dict.get("id", False))
+        file_length = len(json_text["objects"])
+        typedb_sink.add(json_text)
+    check_id_list = typedb_sink.get_stix_ids()
+    start = timer()
+    subgraph_objs, obj_id_set, i=get_subgraph(check_id, connection)
+    end = timer()
+    for obj in subgraph_objs:
+        subgraph_ids.append(obj.get("id", False))
+
+    print("************** Report ****************************")
+    print(end - start)  # Time in seconds
+    print(f"file length is {file_length}")
+    print(f"subgraph_objs length is {len(subgraph_objs)}")
+    print(f"increment number is {i}")
+    print(f"obj_id_set length is {len(obj_id_set)}")
+    print(f'\n\nmy initial list is -> {input_id_list}')
+    print(f'\n\nmy check list is -> {check_id_list}')
+    print(f'\n\nmy subgraph list is -> {subgraph_ids}')
+    print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+
+    check_id = "malware--69101c2f-da92-47af-b402-7c60a39a982f"
+    start2 = timer()
+    subgraph_objs, obj_id_set, i=get_subgraph(check_id, connection)
+    end2 = timer()
+    for obj in subgraph_objs:
+        subgraph_ids.append(obj.get("id", False))
+
+    print("************** malware ****************************")
+    print(end2 - start2)  # Time in seconds
+    print(f"file length is {file_length}")
+    print(f"subgraph_objs length is {len(subgraph_objs)}")
+    print(f"increment number is {i}")
+    print(f"obj_id_set length is {len(obj_id_set)}")
+    print(f'\n\nmy initial list is -> {input_id_list}')
+    print(f'\n\nmy check list is -> {check_id_list}')
+    print(f'\n\nmy subgraph list is -> {subgraph_ids}')
+    print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+
+
+def get_subgraph(obj_id, connection):
+    i=0
+    typedb = TypeDBSource(connection, import_type)
+    obj_list = []
+    obj_id_set = set()
+    # get initial object
+    init_obj = typedb.get(obj_id)
+    obj_list, obj_id_set, i = expand_subgraph(init_obj, obj_list, obj_id_set, connection, i)
+    return obj_list, obj_id_set, i
+
+
+unique_types = ["relationship","grouping","incident","note","observed-data", "opinion","report"]
+
+
+def expand_subgraph(local_obj, obj_list, obj_id_set, connection, i):
+    typedb = TypeDBSource(connection, import_type)
+    if local_obj.get("id", False) not in obj_id_set:
+        local_type = local_obj["type"]
+        emb_id_list = []
+        sro_id_list = []
+        owner_id_list = []
+        total_list = []
+        sightings_id_list = []
+        obj_list.append(local_obj)
+        obj_id_set.add(local_obj["id"])
+        emb_id_list, i = get_embed_ids(local_obj, i)
+        if local_type == "observed-data":
+            sightings_id_list, i = get_sightings(local_obj, connection, local_type, i)
+        elif local_type == "indicator" or local_type == "malware":
+            sightings_id_list, i = get_sightings(local_obj, connection, local_type, i)
+        elif local_type == "identity" or local_type == "location":
+            sightings_id_list, i = get_sightings(local_obj, connection, local_type, i)
+        else:
+            pass
+        if local_type != "relationship" or local_type != "sighting":
+            sro_id_list, i = get_sros(local_obj, connection, i)
+        if local_type in unique_types:
+            owner_id_list, i = get_owners(local_obj, connection, i)
+        total_list = emb_id_list + sro_id_list + owner_id_list + sightings_id_list
+        new_objects = list(set(total_list) - obj_id_set)
+        for new_obj in new_objects:
+            new_obj = typedb.get(new_obj)
+            obj_list, obj_id_set, i = expand_subgraph(new_obj, obj_list, obj_id_set, connection, i)
+    return obj_list, obj_id_set, i
+
+
+def get_sightings(local_obj, connection, local_type, i):
+    i += 1
+    local_ids = []
+    auth = authorised_mappings(import_type)
+    # find object details
+    local_id = local_obj["id"]
+    # find typeql name
+    match_tql = "match "
+    if local_type == "observed-data":
+        match_tql += '$obs isa observed-data, has stix-id "' + local_id + '";'
+        match_tql += " $sight (observed:$obs) isa sighting, has stix-id $sight_id;"
+    elif local_type == "indicator" or local_type == "malware":
+        match_tql += '$sdo isa stix-domain-object, has stix-id "' + local_id + '";'
+        match_tql += " $sight (sighting-of:$sdo) isa sighting, has stix-id $sight_id;"
+    elif local_type == "identity" or local_type == "location":
+        match_tql += '$ident isa identity, has stix-id "' + local_id + '";'
+        match_tql += " $sight (where-sighted:$ident) isa sighting, has stix-id $sight_id;"
+
+    else:
+        raise ValueError(f"Unknown type in get_owners function {local_type}")
+    # find embedded owners
+    match_tql += " get $sight_id;"
+    local_ids = local_ids + get_id_list(match_tql, connection, "sight_id")
+    logger.debug(f"for {local_id} get_sightings: {local_ids}")
+    return local_ids, i
+
+
+def get_owners(local_obj, connection, i):
+    i += 1
+    local_ids = []
+    auth = authorised_mappings(import_type)
+    # find object details
+    local_type = local_obj["type"]
+    local_id = local_obj["id"]
+    # find typeql name
+    match_tql = "match "
+    if local_type in auth["types"]["sdo"]:
+        tql_type = "stix-domain-object"
+        tql_var = "$down"
+        match_tql += f"{tql_var} isa {tql_type}, has stix-id \"{local_id}\";"
+    elif local_type in auth["types"]["sro"] or local_type == "relationship":
+        tql_type = "stix-core-relationship"
+        tql_var = "$down"
+        match_tql += f"{tql_var} isa {tql_type}, has stix-id \"{local_id}\";"
+    elif local_type in auth["types"]["sco"]:
+        tql_type = "stix-cyber-observable-object"
+        tql_var = "$down"
+        match_tql += f"{tql_var} isa {tql_type}, has stix-id \"{local_id}\";"
+    elif local_type in auth["types"]["meta"]:
+        tql_type = "marking-definition"
+        tql_var = "$down"
+        match_tql += f"{tql_var} isa {tql_type}, has stix-id \"{local_id}\";"
+    else:
+        raise ValueError(f"Unknown type in get_owners function {local_type}")
+    # find embedded owners
+    match_tql += " $up isa stix-domain-object, has stix-id $up_id;"
+    match_tql += f" (owner:$up, pointed-to: $down) isa embedded; get $up_id;"
+    local_ids = local_ids + get_id_list(match_tql, connection, "up_id")
+    logger.debug(f"for {local_id} get_owners: {local_ids}")
+    return local_ids, i
+
+
+def get_id_list(match_tql, connection, variable):
+    g_uri = connection["uri"] + ':' + connection["port"]
+    id_list = []
+    with TypeDB.core_client(g_uri) as client:
+        with client.session(connection["database"], SessionType.DATA) as session:
+            with session.transaction(TransactionType.READ) as read_transaction:
+                answer_iterator = read_transaction.query().match(match_tql)
+                ids = [ans.get(variable) for ans in answer_iterator]
+                for sid_obj in ids:
+                    sid = sid_obj.get_value()
+                    if sid in marking:
+                        continue
+                    else:
+                        id_list.append(sid)
+    return id_list
+
+
+def get_sros(local_obj, connection, i):
+    i += 1
+    local_ids = []
+    auth = authorised_mappings(import_type)
+    # find object details
+    local_type = local_obj["type"]
+    local_id = local_obj["id"]
+    print("***********************************")
+    print(local_type)
+    print(local_id)
+    print("***********************************")
+    # find typeql name
+    match_tql = "match "
+    if local_type in auth["types"]["sdo"]:
+        tql_type = "stix-domain-object"
+        tql_var = "$side"
+        match_tql += f"{tql_var} isa {tql_type}, has stix-id \"{local_id}\";"
+    elif local_type in auth["types"]["sro"] or local_type == "relationship":
+        return [], i
+    elif local_type in auth["types"]["sco"]:
+        tql_type = "stix-cyber-observable-object"
+        tql_var = "$side"
+        match_tql += f"{tql_var} isa {tql_type}, has stix-id \"{local_id}\";"
+    elif local_type in auth["types"]["meta"]:
+        tql_type = "marking-definition"
+        tql_var = "$side"
+        match_tql += f"{tql_var} isa {tql_type}, has stix-id \"{local_id}\";"
+    else:
+        raise ValueError(f"Unknown type in get_sro function {local_type}")
+    # find embedded owners
+    match_tql += " $sro isa stix-core-relationship, has stix-id $sro_id;"
+    match_tql += "{$sro (source:$side) isa stix-core-relationship;} or "
+    match_tql += " {$sro (target:$side) isa stix-core-relationship;}; get $sro_id;"
+    local_ids = local_ids + get_id_list(match_tql, connection, "sro_id")
+    logger.debug(f"for {local_id} get_SRO's {local_ids}")
+    return local_ids, i
+
+
+
+def get_embed_ids(init_obj, i):
+    local_ids = []
+    i += 1
+    for key, prop in init_obj.items():
+        if key == "id":
+            continue
+        elif isinstance(prop, list):
+            local_ids = local_ids + process_list(prop)
+        elif isinstance(prop, dict):
+            local_ids = local_ids + get_embed_ids(prop)
+        elif isinstance(prop, str):
+            local_ids = local_ids + process_str(prop)
+        else:
+            continue
+    return local_ids, i
+
+
+def process_list(prop):
+    local_ids = []
+    for element in prop:
+        if isinstance(element, dict):
+            local_ids = local_ids + get_embed_ids(element)
+        elif isinstance(element, str):
+            local_ids = local_ids + process_str(element)
+        else:
+            continue
+    return local_ids
+
+
+def process_str(prop):
+    local_id = []
+    auth = authorised_mappings(import_type)
+    test_list = auth["tql_types"]["sdo"] + auth["tql_types"]["sro"] + auth["tql_types"]["sco"] + ["relationship"]
+    if "--" in prop:
+        tmp_source = prop.split('--')[0]
+        if tmp_source in test_list:
+            local_id.append(prop)
+    return local_id
+
+
+def test_get_embedded(obj_id):
+    typedb = TypeDBSource(connection, import_type)
+    obj_list = []
+    emb_id_list = []
+    sro_id_list = []
+    # get initial object
+    init_obj = typedb.get(obj_id)
+    emb_id_list = get_embed_ids(init_obj)
+    obj_list.append(init_obj["id"])
+    obj_list.append(init_obj["created_by_ref"])
+    obj_list = obj_list + init_obj["object_refs"]
+    missing = set(obj_list) - set(emb_id_list)
+    print("==================================================================")
+    print(emb_id_list)
+    print("==================================================================")
+    print(len(emb_id_list))
+    print(len(obj_list))
+    print("==================================================================")
+    print(missing)
+
+######################################################################################
+#
+# Setup Nodes and Edges Array Stuff for Force Graph Display - including icons
+#
+########################################################################################
+def try_nodes_and_edges():
+    nodes_edges = {}
+    with open(reports + poison, mode="r", encoding="utf-8") as f:
+        json_text = json.load(f)
+        obj_list = json_text["objects"]
+        print(obj_list[0])
+        nodes_edges = nodes_and_edges(obj_list)
+        with open("n_and_e.json", 'w') as outfile:
+            json.dump(nodes_edges, outfile)
+
+
+def nodes_and_edges(obj_list):
+    nodes_edges = {}
+    nodes = []
+    edges = []
+    for obj in obj_list:
+        if obj["type"] == "relationship":
+            edges = setup_edges(obj, edges)
+        else:
+            nodes, edges = setup_nodes(obj, nodes, edges)
+    nodes_edges["nodes"] = nodes
+    nodes_edges["edges"] = edges
+    return nodes_edges
+
+
+def setup_edges(obj, edges):
+    edge = {}
+    edge["id"] = obj["id"]
+    edge["type"] = "relationship"
+    edge["label"] = obj["relationship_type"]
+    edge["source"] = obj["source_ref"]
+    edge["target"] = obj["target_ref"]
+    edges.append(edge)
+    return edges
+
+
+def setup_nodes(obj, nodes, edges):
+    obj_id = obj["id"]
+    node = {}
+    node["id"] = obj_id
+    node["original"] = copy.deepcopy(obj)
+    edges = find_embedded(obj, edges, obj_id)
+    node = find_icon(obj, node)
+    nodes.append(node)
+    return nodes, edges
+
+
+def find_embedded(obj, edges, obj_id):
+    auth = authorised_mappings(import_type)
+    for key, prop in obj.items():
+        if key == "id":
+            continue
+        elif key in auth["reln_name"]["embedded_relations"]:
+            edges = extract_ids(key, prop, edges, obj_id)
+        elif isinstance(prop, list):
+            edges = embedded_list(key, prop, edges, obj_id)
+        elif isinstance(prop, dict):
+            edges = find_embedded(prop, edges, obj_id)
+        else:
+            continue
+    return edges
+
+
+def embedded_list(key, prop, edges, obj_id):
+    logger.debug(f"embedded_list {key} {prop}")
+    for pro in prop:
+        if isinstance(pro, dict):
+            edges = find_embedded(pro, edges, obj_id)
+        else:
+            continue
+    return edges
+
+
+def extract_ids(key, prop, edges, obj_id):
+    auth = authorised_mappings(import_type)
+    for ex in auth["reln"]["embedded_relations"]:
+        if ex["rel"] == key:
+            label = ex["label"]
+            source_owner = ex["owner-is-source"]
+    edge = {"label": label, "type": "embedded"}
+    if isinstance(prop, list):
+        for pro in prop:
+            if pro.split('--')[0] == "relationship":
+                continue
+            elif source_owner:
+                edge["source"] = obj_id
+                edge["target"] = pro
+                edges.append(copy.deepcopy(edge))
+            else:
+                edge["source"] = pro
+                edge["target"] = obj_id
+                edges.append(copy.deepcopy(edge))
+    else:
+        if source_owner:
+            edge["source"] = obj_id
+            edge["target"] = prop
+        else:
+            edge["source"] = prop
+            edge["target"] = obj_id
+        edges.append(copy.deepcopy(edge))
+    return edges
+
+
+def find_icon(stix_object, node):
+    auth = authorised_mappings(import_type)
+    logger.debug(f'stix object type {stix_object["type"]}\n')
+    label = ""
+    icon = ""
+    auth_types = copy.deepcopy(auth["types"])
+    if stix_object["type"] in auth_types["sdo"]:
+        logger.debug(f' going into sdo ---? {stix_object}')
+        icon, label = sdo_icon(stix_object)
+    elif stix_object["type"] in auth_types["sco"]:
+        logger.debug(f' going into sco ---> {stix_object}')
+        icon, label = sco_icon(stix_object)
+    elif stix_object["type"] in auth_types["sro"]:
+        logger.debug(f' going into sro ---> {stix_object}')
+        icon, label = sro_icon(stix_object)
+    elif stix_object["type"] == 'marking-definition':
+        icon, label = meta_icon(stix_object)
+    else:
+        logger.error(f'object type not supported: {stix_object.type}, import type {import_type}')
+    node["icon"] = icon
+    node["label"] = label
+    return node
+
+
+def sdo_icon(stix_object):
+    sdo_type = stix_object["type"]
+    label = stix_object.get("name", "")
+    icon_type = ""
+    attack_type = ""
+    attack_object = False if not stix_object.get("x_mitre_version", False) else True
+    if attack_object:
+        sub_technique = False if not stix_object.get("x_mitre_is_subtechnique", False) else True
+        for model in attack_models["mappings"]["object_conversion"]:
+            logger.debug(f'chacking models, type is {model["type"]}')
+            if model["type"] == sdo_type:
+                attack_type = model["typeql"]
+                logger.debug(f'attack type is {attack_type}')
+                if attack_type == "technique" and sub_technique:
+                    attack_type = "subtechnique"
+                break
+        if "attack-" in attack_type:
+            pass
+        else:
+            attack_type = "attack-" + attack_type
+        icon_type = attack_type
+    else:
+        if sdo_type == "identity":
+            if stix_object.get("identity_class", False):
+                if stix_object["identity_class"] == "individual":
+                    icon_type = "identity-individual"
+                elif stix_object["identity_class"] == "organization":
+                    icon_type = "identity-organization"
+                elif stix_object["identity_class"] == "class":
+                    icon_type = "identity-class"
+                elif stix_object["identity_class"] == "system":
+                    icon_type = "identity-system"
+                elif stix_object["identity_class"] == "group":
+                    icon_type = "identity-group"
+                else:
+                    icon_type = "identity-unknown"
+            else:
+                icon_type = "identity-unknown"
+
+        elif sdo_type == "malware":
+            if stix_object.get("is_family", False):
+                icon_type = "malware-family"
+            else:
+                icon_type = "malware"
+        else:
+            icon_type = sdo_type
+    return icon_type, label
+
+
+def sco_icon(stix_object):
+    sco_type = stix_object["type"]
+    label = stix_object.get("name", "")
+    if sco_type == "email-message":
+        if stix_object.get("is_multipart", False):
+            icon_type = "email-message-mime"
+            label = stix_object.get("subject", "")
+        else:
+            icon_type = "email-message"
+            label = stix_object.get("subject", "")
+    elif sco_type == "file":
+        if stix_object["extensions"].get("archive-ext", False):
+            icon_type = "file-archive"
+            label = stix_object.get("name", "")
+        elif stix_object["extensions"].get("pdf-ext", False):
+            icon_type = "file-pdf"
+            label = stix_object.get("name", "")
+        elif stix_object["extensions"].get("raster-image-ext", False):
+            icon_type = "file-img"
+            label = stix_object.get("name", "")
+        elif stix_object["extensions"].get("windows-pebinary-ext", False):
+            icon_type = "file-bin"
+            label = stix_object.get("name", "")
+        elif stix_object["extensions"].get("ntfs-ext", False):
+            icon_type = "file-ntfs"
+            label = stix_object.get("name", "")
+        else:
+            icon_type = "file"
+            label = stix_object.get("name", "")
+    elif sco_type == "network-traffic":
+        if stix_object["extensions"].get("http-request-ext", False):
+            icon_type = "network-traffic-http"
+            label = "http-request"
+        elif stix_object["extensions"].get("icmp-ext", False):
+            icon_type = "network-traffic-icmp"
+            label = "icmp"
+        elif stix_object["extensions"].get("tcp-ext", False):
+            icon_type = "network-traffic-tcp"
+            label = "tcp"
+        elif stix_object["extensions"].get("sock-ext", False):
+            icon_type = "network-traffic-sock"
+            label = "socket"
+        else:
+            icon_type = "network-traffic"
+            for prot in stix_object["protocols"]:
+                label += prot + ", "
+    elif sco_type == "user-account":
+        if stix_object["extensions"].get("unix-account-ext", False):
+            icon_type = "user-account-unix"
+            label = "unix-account"
+        else:
+            icon_type = "user-account"
+            label = "standard-account"
+    else:
+        icon_type = sco_type
+        if sco_type == "artifact":
+            label = stix_object.get("mime_type", "")
+        elif sco_type == "directory":
+            label = stix_object.get("path", "")
+        elif sco_type in ["domain-name", "email-addr", "ipv4-addr", "ipv6-addr", "mac-addr", "mutex", "url"]:
+            label = stix_object.get("value", "")
+        elif sco_type == "process":
+            if stix_object["extensions"].get("windows-process-ext", False):
+                label = "windows process"
+            elif stix_object["extensions"].get("windows-service-ext", False):
+                label = "windows service"
+            else:
+                label = "standard process"
+        elif sco_type == "windows-registry-key":
+            label = stix_object.get("key", "")
+        elif sco_type == "x509-certificate":
+            label = stix_object.get("serial_number", "")
+    return icon_type, label
+
+
+def sro_icon(stix_object):
+    sro_type = stix_object["type"]
+    if sro_type == "sighting":
+        icon_type = "sighting"
+        label = ""
+    else:
+        icon_type = "relationship"
+        label = stix_object.get("retlationship_type", "")
+    return icon_type, label
+
+
+def meta_icon(stix_object):
+    return "marking-definition", stix_object.get("definition_type", "")
+
+
 # if this file is run directly, then start here
 if __name__ == '__main__':
 
@@ -1005,6 +1567,8 @@ if __name__ == '__main__':
     mitre_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
     mitre = "data/mitre/"
     osthreat = "data/os-threat/"
+    reports = "data/threat_reports/"
+    poison = "poisonivy.json"
 
     id_list = ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46', 'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265', 'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559', 'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6', 'attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5', 'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
     # 019fde1c-
@@ -1015,10 +1579,10 @@ if __name__ == '__main__':
     stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     #test_initialise()
     #load_file_list(path1, [f2, f29])
-    #load_file(path1 + f29)
+    #load_file(reports + f29)
     #load_file(mitre + "attack_objects.json")
     #check_object(mitre + "attack_objects.json")
-    #load_file(data_path + file1)
+    #load_file(reports + poison)
     print("=====")
     print("=====")
     print("=====")
@@ -1045,4 +1609,7 @@ if __name__ == '__main__':
     #test_insert_statements(path1 + f29, stid2)
     #test_get_del_dir_statements(mitre)
     #test_json(osthreat + "feed.json")
-    test_feeds()
+    #test_feeds()
+    #test_get_embedded("report--f2b63e80-b523-4747-a069-35c002c690db")
+    #try_subgraph_get(reports + poison)
+    try_nodes_and_edges()

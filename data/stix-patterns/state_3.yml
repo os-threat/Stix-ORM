@@ -1,0 +1,17 @@
+pattern:
+  observation:
+    objects: {file}
+    join:
+    qualifiers:
+    expressions:
+      - comparison:
+          object: file
+          path:
+            - extensions
+            - windows-pebinary-ext
+            - sections
+            - [*]
+            - entropy
+          negated:
+          operator: '>'
+          value: 7.0

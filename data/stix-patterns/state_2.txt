@@ -1,0 +1,3 @@
+==================== state_2 ======================
+statement 2	[file:parent_directory_ref.path = 'C:\\Windows\\System32']
+
