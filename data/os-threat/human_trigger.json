@@ -202,7 +202,7 @@
       "created": "2020-10-19T01:01:01.000Z",
       "modified": "2020-10-19T01:01:01.000Z",
       "spec_version": "2.1",
-      "task_type": "start_task",
+      "step_type": "start_task",
       "on_completion": "task--2d254737-fbf8-4969-adb3-80ac5c293f57"
     },
     {
@@ -212,7 +212,7 @@
       "modified": "2020-10-19T01:01:01.000Z",
       "spec_version": "2.1",
       "name": "Recover email",
-      "task_type": "single_task",
+      "step-type": "single_task",
       "priority": 10,
       "external_references": [],
       "owner": "identity--023d105b-752e-4cc c-941c-7d3f3cb15e9e",
