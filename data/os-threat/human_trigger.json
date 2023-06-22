@@ -203,7 +203,12 @@
       "modified": "2020-10-19T01:01:01.000Z",
       "spec_version": "2.1",
       "step_type": "start_task",
-      "on_completion": "task--2d254737-fbf8-4969-adb3-80ac5c293f57"
+      "on_completion": "task--2d254737-fbf8-4969-adb3-80ac5c293f57",
+      "extensions": {
+        "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
+          "extension_type": "new-sdo"
+        }
+      }
     },
     {
       "type": "task",
@@ -558,7 +563,12 @@
       "object_refs": [
         "ipv4-addr--ff26c055-6336-5bc5-b98d-13d6226742dd",
         "ipv4-addr--ff26c055-6666-5bc5-b98d-13d6226742dd"
-      ]
+      ],
+      "extensions": {
+        "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
+          "extension_type": "new-sdo"
+        }
+      }
     },
     {
       "type": "task",
@@ -602,7 +612,12 @@
       "source": "email",
       "object_refs": [
         "ipv4-addr--ff26c055-6006-5bc5-b98d-13d6226742dd"
-      ]
+      ],
+      "extensions": {
+        "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
+          "extension_type": "new-sdo"
+        }
+      }
     },
     {
       "type": "ipv4-addr",
@@ -635,7 +650,12 @@
       "object_refs": [
         "domain-name--3c10e93f-798e-5a26-a0c1-08156efab7f5",
         "autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74"
-      ]
+      ],
+      "extensions": {
+        "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
+          "extension_type": "new-sdo"
+        }
+      }
     },
     {
       "type": "domain-name",
@@ -667,7 +687,12 @@
       "source": "Spamhouse",
       "object_refs": [
         "ipv4-addr--ff26c055-6006-5bc5-b98d-13d6226742dd"
-      ]
+      ],
+      "extensions": {
+        "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
+          "extension_type": "new-sdo"
+        }
+      }
     },
     {
       "type": "evidence",
@@ -683,7 +708,12 @@
         "campaign--1d8897a7-fdc2-4e59-afc9-becbe04df727",
         "infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d",
         "relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa60266ed"
-      ]
+      ],
+      "extensions": {
+        "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
+          "extension_type": "new-sdo"
+        }
+      }
     },
     {
       "type": "campaign",
@@ -736,7 +766,12 @@
       "object_refs": [
         "malware--d1c612bc-146f-4b65-b7b0-9a54a14150a4",
         "identity--1621d4d4-b67d-41e3-9670-f01faf20d111"
-      ]
+      ],
+      "extensions": {
+        "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
+          "extension_type": "new-sdo"
+        }
+      }
     },
     {
       "type": "indicator",
@@ -769,7 +804,12 @@
       "object_refs": [
         "attack-pattern--8ac90ff3-ecf8-4835-95b8-6aea6a623df5",
         "attack-pattern--9db0cf3a-a3c9-4012-8268-123b9db6fd82"
-      ]
+      ],
+      "extensions": {
+        "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
+          "extension_type": "new-sdo"
+        }
+      }
     },
     {
       "x_mitre_platforms": [
