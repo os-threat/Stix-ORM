@@ -19,7 +19,7 @@
           "blocked": false,
           "malicious": true,
           "determination": "suspected",
-          "incident-types": [
+          "incident_types": [
             "hosting-phishing-sites",
             "theft-access-credentials",
             "known-malware"
