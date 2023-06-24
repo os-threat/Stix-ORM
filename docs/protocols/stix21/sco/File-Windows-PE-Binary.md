@@ -230,7 +230,8 @@ match
         has $d;
     $e (owner:$a, pointed-to:$c) isa embedded;
     $g (owner:$a, pointed-to:$f) isa embedded;
-    $h has $j;
+    $h isa stix-sub-object,
+        has $j;
     $i (owner:$f, pointed-to:$h) isa embedded;
 ```
 
