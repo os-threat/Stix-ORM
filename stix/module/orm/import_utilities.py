@@ -10,7 +10,7 @@ import logging
 from stix.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 
 # ---------------------------------------------------
@@ -113,6 +113,7 @@ def add_relation_to_typeql(rel,
     """
     logger.debug(f'===============\n=====================\n===================\n')
     logger.debug(f'rel {rel}')
+    logger.debug(f'obj[rel] {obj[rel]}')
     logger.debug(f'obj {obj}')
     logger.debug(f'obj_Var {obj_var}')
     logger.debug(f'\nprop var list {prop_var_list}')

@@ -15,7 +15,7 @@ from stix2.properties import (
 from stix2.utils import NOW, _get_dict
 from stix2.markings import _MarkingsMixin
 from stix2.markings.utils import check_tlp_marking
-from stix2.v21.base import _DomainObject, _STIXBase21, _RelationshipObject
+from stix2.v21.base import _DomainObject, _STIXBase21, _RelationshipObject, _Extension
 from stix2.v21.common import (
     ExternalReference, GranularMarking, KillChainPhase,
     MarkingProperty, TLPMarking, StatementMarking,
@@ -35,6 +35,12 @@ logger = logging.getLogger(__name__)
 valid_obj =  list(get_definitions().get_all_types())
 # i) allows x- prefix see properties.py line 592 obj_type.startswith("x-") and
 # ii) allows non stix definitiosn to be added see properties.py line 592 is_object(obj_type, self.spec_version)
+
+############################################################################################
+#
+# Feed Definitions
+#
+############################################################################################
 class ThreatSubObject(_STIXBase21):
     """For more detailed information on this object's properties, see
     `the OS-Threat documentation`__.
@@ -73,7 +79,6 @@ class Feed(_DomainObject):
     ])
 
 
-
 class Feeds(_DomainObject):
     """For more detailed information on this object's properties, see
     `the OS-Threat documentation`__.
@@ -100,35 +105,95 @@ class Feeds(_DomainObject):
         ('contained', ListProperty(ThreatReference(valid_types='feed', spec_version='2.1'))),
     ])
 
+
+############################################################################################
 #
-# class Pallet(_DomainObject):
-#     """For more detailed information on this object's properties, see
-#     `the OS-Threat documentation`__.
-#     """
-#     _type = 'pallet'
-#     _properties = OrderedDict([
-#         ('type', TypeProperty(_type, spec_version='2.1')),
-#         ('spec_version', StringProperty(fixed='2.1')),
-#         ('id', IDProperty(_type, spec_version='2.1')),
-#         ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
-#         ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-#         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-#         ('name', StringProperty(required=True)),
-#         ('description', StringProperty()),
-#         ('labels', ListProperty(StringProperty)),
-#         ('confidence', IntegerProperty()),
-#         ('lang', StringProperty()),
-#         ('external_references', ListProperty(ExternalReference)),
-#         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
-#         ('granular_markings', ListProperty(GranularMarking)),
-#         ('extensions', ExtensionsProperty(spec_version='2.1')),
-#         ('cartons', ListProperty(ThreatReference(valid_types='carton', spec_version='2.1'))),
-#     ])
+# Incident Definitions
 #
+############################################################################################
+
+class StateChangeObject(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
+    """
+    _properties = OrderedDict([
+        ('state_change_type', StringProperty()),
+        ('initial_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1')),
+        ('result_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1')),
+    ])
+
+
+class Event(_DomainObject):
+    """For more detailed information on this object's properties, see
+    `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
+    """
+    _type = 'event'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('status', StringProperty()),
+        ('changed_objects', ListProperty(EmbeddedObjectProperty(type=StateChangeObject))),
+        ('description', StringProperty()),
+        ('detection_methods', ListProperty(StringProperty)),
+        ('detection_rule', StringProperty()),
+        ('detection_system', StringProperty()),
+        ('end_time', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('end_time_fidelity', StringProperty()),
+        ('event_seq', IntegerProperty()),
+        ('event_types', ListProperty(StringProperty)),
+        ('goal', StringProperty()),
+        ('name', StringProperty()),
+        ('sighting_refs', ListProperty(ThreatReference(valid_types=valid_obj, spec_version='2.1'))),
+        ('start-time', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('start_time_fidelity', StringProperty()),
+        ('subevents', ListProperty(ThreatReference(valid_types=valid_obj, spec_version='2.1'))),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('cartons', ListProperty(ThreatReference(valid_types='carton', spec_version='2.1'))),
+    ])
+
+
+class StateChangeObject(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
+    """
+    _properties = OrderedDict([
+        ('state_change_type', StringProperty()),
+        ('initial_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1')),
+        ('result_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1')),
+    ])
+
+
+class IncidentCoreExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
+    """
+
+    _type = 'extension-definition--ef765651-680c-498d-9894-99799f2fa126'
+    _properties = OrderedDict([
+        ('extension_type', StringProperty()),
+        ('investigation_status', StringProperty()),
+        ('blocked', BooleanProperty()),
+        ('malicious', BooleanProperty()),
+        ('determination', StringProperty()),
+        ('labels', ListProperty(StringProperty)),
+        ('number_of_symbols', IntegerProperty(min=0)),
+        ('size_of_optional_header', IntegerProperty(min=0)),
+    ])
+
 #
 # class Carton(_DomainObject):
 #     """For more detailed information on this object's properties, see
-#     `the OS-Threat documentation`__.
+#     `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
 #     """
 #     _type = 'carton'
 #     _properties = OrderedDict([
@@ -153,7 +218,7 @@ class Feeds(_DomainObject):
 #
 # class Cases(_DomainObject):
 #     """For more detailed information on this object's properties, see
-#     `the OS-Threat documentation`__.
+#     `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
 #     """
 #     _type = 'cases'
 #     _properties = OrderedDict([
@@ -179,7 +244,7 @@ class Feeds(_DomainObject):
 #
 # class ObservedSubObject(_STIXBase21):
 #     """For more detailed information on this object's properties, see
-#     `the OS-Threat documentation`__.
+#     `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
 #     """
 #     _properties = OrderedDict([
 #         ('object_ref', ThreatReference(valid_types='observed-data', spec_version='2.1')),
@@ -190,7 +255,7 @@ class Feeds(_DomainObject):
 #
 # class EnrichmentSubObject(_STIXBase21):
 #     """For more detailed information on this object's properties, see
-#     `the OS-Threat documentation`__.
+#     `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
 #     """
 #     _properties = OrderedDict([
 #         ('object_ref', ThreatReference(valid_types='enrichment', spec_version='2.1')),
@@ -201,7 +266,7 @@ class Feeds(_DomainObject):
 #
 # class NoteSubObject(_STIXBase21):
 #     """For more detailed information on this object's properties, see
-#     `the OS-Threat documentation`__.
+#     `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
 #     """
 #     _properties = OrderedDict([
 #         ('object_ref', ThreatReference(valid_types='note', spec_version='2.1')),
@@ -212,7 +277,7 @@ class Feeds(_DomainObject):
 #
 # class TaskSubObject(_STIXBase21):
 #     """For more detailed information on this object's properties, see
-#     `the OS-Threat documentation`__.
+#     `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
 #     """
 #     _properties = OrderedDict([
 #         ('object_ref', ThreatReference(valid_types='task', spec_version='2.1')),
@@ -223,7 +288,7 @@ class Feeds(_DomainObject):
 #
 # class OpinionSubObject(_STIXBase21):
 #     """For more detailed information on this object's properties, see
-#     `the OS-Threat documentation`__.
+#     `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
 #     """
 #     _properties = OrderedDict([
 #         ('object_ref', ThreatReference(valid_types='opinion', spec_version='2.1')),
@@ -234,7 +299,7 @@ class Feeds(_DomainObject):
 #
 # class Case(_DomainObject):
 #     """For more detailed information on this object's properties, see
-#     `the OS-Threat documentation`__.
+#     `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
 #     """
 #     _type = 'case'
 #     _properties = OrderedDict([
@@ -268,7 +333,7 @@ class Feeds(_DomainObject):
 #
 # class Enrichment(_DomainObject):
 #     """For more detailed information on this object's properties, see
-#     `the OS-Threat documentation`__.
+#     `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
 #     """
 #     _type = 'enrichment'
 #     _properties = OrderedDict([
@@ -296,7 +361,7 @@ class Feeds(_DomainObject):
 #
 # class Task(_DomainObject):
 #     """For more detailed information on this object's properties, see
-#     `the OS-Threat documentation`__.
+#     `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
 #     """
 #     _type = 'task'
 #     _properties = OrderedDict([

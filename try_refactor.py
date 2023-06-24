@@ -39,7 +39,7 @@ connection = {
     "password": None
 }
 
-import_type = import_type_factory.get_all_imports()
+import_type = import_type_factory.get_default_import()
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
@@ -103,7 +103,7 @@ def dict_to_typeql(stix_dict, import_type):
     stix_obj = parse(stix_dict, False, import_type)
     #logger.debug(f' i have parsed\n')
     dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
-    logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+    #logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
     dep_obj["dep_match"] = dep_match
     dep_obj["dep_insert"] = dep_insert
     dep_obj["indep_ql"] = indep_ql
@@ -619,7 +619,9 @@ def check_dir(dirpath):
             print(f'==================== {s_file} ===================================')
             print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
+                print(f'f->{f}')
                 for element in f:
+                    print(f'element is {element}')
                     temp_id = element.get('id', False)
                     if temp_id:
                         id_list.append(temp_id)
@@ -1518,6 +1520,7 @@ if __name__ == '__main__':
     f27 = 'process_ext_win_service.json'
     f28 = 'threat_actor.json'
     f29 = "observed.json"
+    f30 = "x509_cert_v3_ext.json"
     file_list = [f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,f21,f22,f23,f24,f25]
     group_list = [f2, f3, f21, f25]
     note_list = [f2, f8, f26]
@@ -1578,8 +1581,8 @@ if __name__ == '__main__':
     stid2 = "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"
     stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     #test_initialise()
-    #load_file_list(path1, [f2, f29])
-    #load_file(reports + f29)
+    #load_file_list(path1, [f30, f21])
+    load_file(path1 + f21)
     #load_file(mitre + "attack_objects.json")
     #check_object(mitre + "attack_objects.json")
     #load_file(reports + poison)
@@ -1603,7 +1606,7 @@ if __name__ == '__main__':
     #test_auth()
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
-    #backdoor_add_dir(osthreat)
+    #backdoor_add_dir(path1)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)
@@ -1612,4 +1615,4 @@ if __name__ == '__main__':
     #test_feeds()
     #test_get_embedded("report--f2b63e80-b523-4747-a069-35c002c690db")
     #try_subgraph_get(reports + poison)
-    try_nodes_and_edges()
+    #try_nodes_and_edges()

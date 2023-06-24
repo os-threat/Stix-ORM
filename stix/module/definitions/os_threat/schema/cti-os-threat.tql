@@ -19,192 +19,288 @@
 # under the License.
 #
 define
-    # Incident Extension Objects
-    incident-extension sub stix-sub-object,
-	    plays extensions:extension;
 
-    incident-ext sub incident-extension,
-        owns determination,
-        owns extension-type,
-        owns investigation-status,
-        owns malicious,
-        owns blocked,
-        owns criticality,
-        owns recoverability,
-        plays impact-counter:impact-driver,
-        plays scores:scored,
-        plays task-refs:incident,
-        plays event-refs:incident,
-        plays impact-refs:incident,
-        plays evidence-refs:incident,
-        plays notes-refs:incident;
+#    # Incident Event Object
+#    event sub stix-domain-object,
+#        owns name,
+#        owns description,
+#        owns status,
+#        owns end-time,
+#        owns end-time-fidelity,
+#        owns event-types,
+#        owns goal,
+#        owns start-time,
+#        owns start-time-fidelity,
+#        owns event-seq,
+#        owns detection-emthods,
+#        owns detection-system,
+#        owns detection-rule,
+#        plays event-refs:the-event,
+#        plays subevents:parent,
+#        plays subevents:sub-event,
+#        plays list-of-sightings:sighting-event,
+#        plays objects-changed:change-driver;
+#
+#    # Incoident Impact Object
+#    impact sub stix-domain-object,
+#        owns impact-category,
+#        owns criticality,
+#        owns description,
+#        owns end-time,
+#        owns end-time-fidelity,
+#        owns recoverability,
+#        owns start-time,
+#        owns start-time-fidelity,
+#        plays impact-counter:impact-driver,
+#        plays impacts:impact-category,
+#        plays superseded:superseded-by,
+#        plays impact-refs:the-impact,
+#        plays superseded:precedes;
+#
+#    # Incident Evidence Object
+#    evidence sub stix-domain-object,
+#        owns evidence-type,
+#        owns description,
+#        owns name,
+#        owns source,
+#        plays obj-refs:object,
+#        plays evidence-refs:the-evidence;
+#
+#    # Incident Tasks Object
+#    task sub stix-domain-object, abstract,
+#        owns step-type;
+#
+#    start-step sub task,
+#        plays on-completion:source,
+#        plays task-refs:the-task;
+#
+#    end-step sub task,
+#        plays on-completion:target,
+#        plays on-success:target,
+#        plays on-failure:target,
+#        plays task-refs:the-task;
+#
+#    single-step sub task,
+#        owns outcome,
+#        owns task-type,
+#        owns step-type,
+#        owns description,
+#        owns name,
+#        owns end-time,
+#        owns end-time-fidelity,
+#        owns error,
+#        owns priority,
+#        owns start-time,
+#        owns start-time-fidelity,
+#        plays on-completion:target,
+#        plays on-success:target,
+#        plays on-failure:target,
+#        plays on-completion:source,
+#        plays on-success:source,
+#        plays on-failure:source,
+#        plays next-steps:target,
+#        plays owned-by:owned,
+#        plays impact-counter:impact-driver,
+#        plays objects-changed:change-driver,
+#        plays task-refs:the-task;
+#
+#    parallel-step sub task,
+#        owns outcome,
+#        owns task-type,
+#        owns step-type,
+#        owns description,
+#        owns name,
+#        owns end-time,
+#        owns end-time-fidelity,
+#        owns error,
+#        owns priority,
+#        owns start-time,
+#        owns start-time-fidelity,
+#        plays on-completion:target,
+#        plays on-success:target,
+#        plays on-failure:target,
+#        plays next-steps:source,
+#        plays task-refs:the-task;
+#
+#    # Incident State Change Sub Object
+#    state-change sub stix-sub-object,
+#        owns state-change-type,
+#        plays  changed-objects-initial:changed-objects,
+#        plays  changed-objects-result:changed-objects,
+#        plays objects-changed:object-list;
+#
+#    entity-counter sub stix-sub-object,
+#        owns individual-count,
+#        owns group-count,
+#        owns system-count,
+#        owns organization-count,
+#        owns class-count,
+#        owns unknown-count,
+#        plays impact-counter:counters;
+#
+#    incident-score sub stix-sub-object,
+#        owns name,
+#        owns description,
+#        owns score-value,
+#        plays scores:score;
+#
+#
+#    # Incident Extension Objects
+#    incident-extension sub stix-sub-object,
+#	    plays extensions:extension;
 
-    task-ext sub incident-ext,
-        owns extension-type;
+#    incident-ext sub incident-extension,
+#        owns determination,
+#        owns ext-type,
+#        owns investigation-status,
+#        owns malicious,
+#        owns blocked,
+#        owns criticality,
+#        owns recoverability,
+#        plays impact-counter:impact-driver,
+#        plays scores:scored,
+#        plays task-refs:incident,
+#        plays event-refs:incident,
+#        plays impact-refs:incident,
+#        plays evidence-refs:incident,
+#        plays notes-refs:incident;
+#
+#    evidence-ext sub incident-ext,
+#        owns ext-type;
+#
+#    task-ext sub incident-ext,
+#        owns ext-type;
+#
+#    event-ext sub incident-ext,
+#        owns ext-type;
+#
+#    impact-ext sub incident-ext,
+#        owns ext-type;
 
-    event-ext sub incident-ext,
-        owns extension-type;
+#    availability-impact sub incident-extension,
+#        owns impacted-availability;
+#
+#    confidentiality-impact sub incident-extension,
+#        owns information-type,
+#        owns loss-type,
+#        owns record-count,
+#        owns record-size;
+#
+#    external-impact sub incident-extension,
+#        owns impact-type;
+#
+#    integrity-impact sub incident-extension,
+#        owns alteration,
+#        owns information-type,
+#        owns record-count,
+#        owns record-size;
+#
+#    monetary-impact sub incident-extension,
+#        owns variety,
+#        owns conversion-rate,
+#        owns conversion-time,
+#        owns currrency,
+#        owns currency-actual,
+#        owns max-amount,
+#        owns min-amount;
+#
+#    physical-impact sub incident-extension,
+#        owns impact-type,
+#        owns asset-type;
+#
+#    traceability-impact sub incident-extension,
+#        owns traceability-type;
+#
+#
+#    # Incident Relationhs
+#    sighting
+#        plays list-of-sightings:sights;
+#
+#    # Incident Embedded Relations
+#    list-of-sightings sub embedded,
+#        relates sighting-event as owner,
+#        relates sights as pointed-to;
+#
+#    subevents sub embedded,
+#        relates parent as owner,
+#        relates sub-event as pointed-to;
+#
+#    objects-changed sub embedded,
+#        relates change-driver as owner,
+#        relates object-list as pointed-to;
+#
+#    changed-objects-initial sub embedded,
+#        relates changed-objects as owner,
+#        relates changed as pointed-to;
+#
+#    changed-objects-result sub embedded,
+#        relates changed-objects as owner,
+#        relates changed as pointed-to;
+#
+#    impact-counter sub embedded,
+#        relates impact-driver as owner,
+#        relates counters as pointed-to;
+#
+#    impacts sub embedded,
+#        relates impact-category as owner,
+#        relates impacted as pointed-to;
+#
+#    superseded sub embedded,
+#        relates superseded-by as pointed-to,
+#        relates precedes as owner;
+#
+#    on-completion sub embedded,
+#        relates source as owner,
+#        relates target as pointed-to;
+#
+#    on-success sub embedded,
+#        relates source as owner,
+#        relates target as pointed-to;
+#
+#    on-failure sub embedded,
+#        relates source as owner,
+#        relates target as pointed-to;
+#
+#    next-steps sub embedded,
+#        relates source as owner,
+#        relates target as pointed-to;
+#
+#    owned-by sub embedded,
+#        relates owned as owner,
+#        relates who as pointed-to;
+#
+#    scores sub embedded,
+#        relates scored as owner,
+#        relates score as pointed-to;
+#
+#    task-refs sub embedded,
+#        relates incident as owner,
+#        relates the-task as pointed-to;
+#
+#    event-refs sub embedded,
+#        relates incident as owner,
+#        relates the-event as pointed-to;
+#
+#    impact-refs sub embedded,
+#        relates incident as owner,
+#        relates the-impact as pointed-to;
+#
+#    evidence-refs sub embedded,
+#        relates incident as owner,
+#        relates the-evidence as pointed-to;
+#
+#    notes-refs sub embedded,
+#        relates incident as owner,
+#        relates the-note as pointed-to;
 
-    impact-ext sub incident-ext,
-        owns extension-type;
+    # Feed Embedded Relations
+    list-of-feeds sub embedded,
+		relates feed-list-owner as owner,
+		relates single-feed as pointed-to;
 
-    availability-impact sub incident-extension,
-        owns impacted-availability;
-
-    confidentiality-impact sub incident-extension,
-        owns information-type,
-        owns loss-type,
-        owns record-count,
-        owns record-size;
-
-    external-impact sub incident-extension,
-        owns impact-type;
-
-    integrity-impact sub incident-extension,
-        owns alteration,
-        owns information-type,
-        owns record-count,
-        owns record-size;
-
-    monetary-impact sub incident-extension,
-        owns variety,
-        owns conversion-rate,
-        owns conversion-time,
-        owns currrency,
-        owns currency-actual,
-        owns max-amount,
-        owns min-amount;
-
-    physical-impact sub incident-extension,
-        owns impact-type,
-        owns asset-type;
-
-    traceability-impact sub incident-extension,
-        owns traceability-type;
-
-    # Incident Event Object
-    event sub stix-domain-object,
-        owns name,
-        owns description,
-        owns status,
-        owns end-time,
-        owns end-time-fidelity,
-        owns event-types,
-        owns goal,
-        owns start-time,
-        owns start-time-fidelity,
-        owns event-seq,
-        owns detection-emthods,
-        owns detection-system,
-        owns detection-rule,
-        plays event-refs:the-event,
-        plays subevents:parent,
-        plays subevents:sub-event,
-        plays list-of-sightings:sighting-event,
-        plays objects-changed:change-driver;
-
-    # Incoident Impact Object
-    impact sub stix-domain-object,
-        owns impact-category,
-        owns criticality,
-        owns description,
-        owns end-time,
-        owns end-time-fidelity,
-        owns recoverability,
-        owns start-time,
-        owns start-time-fidelity,
-        plays impact-counter:impact-driver,
-        plays impacts:impact-category,
-        plays superseded:superseded-by,
-        plays impact-refs:the-impact,
-        plays superseded:precedes;
-
-    # Incident Evidence Object
-    evidence sub stix-domain-object,
-        owns evidence-type,
-        owns description,
-        owns name,
-        owns source,
-        plays obj-refs:object,
-        plays evidence-refs:the-evidence;
-
-    # Incident Tasks Object
-    task sub stix-domain-object, abstract,
-        owns step-type;
-
-    start-step sub task,
-        plays on-completion:source,
-        plays task-refs:the-task;
-
-    end-step sub task,
-        plays on-completion:target,
-        plays on-success:target,
-        plays on-failure:target,
-        plays task-refs:the-task;
-
-    single-step sub task,
-        owns outcome,
-        owns task-type,
-        owns step-type,
-        owns description,
-        owns name,
-        owns end-time,
-        owns end-time-fidelity,
-        owns error,
-        owns priority,
-        owns start-time,
-        owns start-time-fidelity,
-        plays on-completion:target,
-        plays on-success:target,
-        plays on-failure:target,
-        plays on-completion:source,
-        plays on-success:source,
-        plays on-failure:source,
-        plays next-steps:target,
-        plays owned-by:owned,
-        plays impact-counter:impact-driver,
-        plays objects-changed:change-driver,
-        plays task-refs:the-task;
-
-    parallel-step sub task,
-        owns outcome,
-        owns task-type,
-        owns step-type,
-        owns description,
-        owns name,
-        owns end-time,
-        owns end-time-fidelity,
-        owns error,
-        owns priority,
-        owns start-time,
-        owns start-time-fidelity,
-        plays on-completion:target,
-        plays on-success:target,
-        plays on-failure:target,
-        plays next-steps:source,
-        plays task-refs:the-task;
-
-    # Incident State Change Sub Object
-    state-change sub stix-sub-object,
-        owns state-change-type,
-        plays  changed-objects-initial:changed-objects,
-        plays  changed-objects-result:changed-objects,
-        plays objects-changed:object-list;
-
-    entity-counter sub stix-sub-object,
-        owns individual-count,
-        owns group-count,
-        owns system-count,
-        owns organization-count,
-        owns class-count,
-        owns unknown-count,
-        plays impact-counter:counters;
-
-    incident-score sub stix-sub-object,
-        owns name,
-        owns description,
-        owns score-value,
-        plays scores:score;
+    feed-content sub embedded,
+		relates feed-owner as owner,
+		relates content as pointed-to;
 
     # Feeds Collection Object
     feeds sub stix-domain-object,
@@ -229,108 +325,18 @@ define
         plays obj-ref:container,
         plays feed-content:content;
 
-    # Incident Relationhs
-    sighting
-        plays list-of-sightings:sights;
-
-    # Incident Embedded Relations
-    list-of-sightings sub embedded,
-        relates sighting-event as owner,
-        relates sights as pointed-to;
-
-    subevents sub embedded,
-        relates parent as owner,
-        relates sub-event as pointed-to;
-
-    objects-changed sub embedded,
-        relates change-driver as owner,
-        relates object-list as pointed-to;
-
-    changed-objects-initial sub embedded,
-        relates changed-objects as owner,
-        relates changed as pointed-to;
-
-    changed-objects-result sub embedded,
-        relates changed-objects as owner,
-        relates changed as pointed-to;
-
-    impact-counter sub embedded,
-        relates impact-driver as owner,
-        relates counters as pointed-to;
-
-    impacts sub embedded,
-        relates impact-category as owner,
-        relates impacted as pointed-to;
-
-    superseded sub embedded,
-        relates superseded-by as pointed-to,
-        relates precedes as owner;
-
-    on-completion sub embedded,
-        relates source as owner,
-        relates target as pointed-to;
-
-    on-success sub embedded,
-        relates source as owner,
-        relates target as pointed-to;
-
-    on-failure sub embedded,
-        relates source as owner,
-        relates target as pointed-to;
-
-    next-steps sub embedded,
-        relates source as owner,
-        relates target as pointed-to;
-
-    owned-by sub embedded,
-        relates owned as owner,
-        relates who as pointed-to;
-
-    scores sub embedded,
-        relates scored as owner,
-        relates score as pointed-to;
-
-    task-refs sub embedded,
-        relates incident as owner,
-        relates the-task as pointed-to;
-
-    event-refs sub embedded,
-        relates incident as owner,
-        relates the-event as pointed-to;
-
-    impact-refs sub embedded,
-        relates incident as owner,
-        relates the-impact as pointed-to;
-
-    evidence-refs sub embedded,
-        relates incident as owner,
-        relates the-evidence as pointed-to;
-
-    notes-refs sub embedded,
-        relates incident as owner,
-        relates the-note as pointed-to;
-
-    # Feed Embedded Relations
-    list-of-feeds sub embedded,
-		relates feed-list-owner as owner,
-		relates single-feed as pointed-to;
-
-    feed-content sub embedded,
-		relates feed-owner as owner,
-		relates content as pointed-to;
-
 	# Feed and Incident Contained References, can contain SDO, SCO or SRO, or Meta
 	stix-domain-object
 	    plays feed-content:content,
-	    plays obj-ref:content,
-	    plays changed-objects-initial:changed,
-	    plays changed-objects-result:changed,
-	    plays impacts:impacted;
+	    plays obj-ref:content;
+#	    plays changed-objects-initial:changed,
+#	    plays changed-objects-result:changed,
+#	    plays impacts:impacted;
 
 	stix-cyber-observable-object
 	    plays feed-content:content,
-	    plays obj-ref:content,
-	    plays impacts:impacted;
+	    plays obj-ref:content;
+#	    plays impacts:impacted;
 
 	stix-core-relationship
 	    plays feed-content:content;
@@ -338,11 +344,11 @@ define
     marking-definition
 	    plays feed-content:content;
 
-	identity
-	    plays owned-by:who;
-
-	note
-	    plays notes-refs:the-note;
+#	identity
+#	    plays owned-by:who;
+#
+#	note
+#	    plays notes-refs:the-note;
 
     # Attribute Definitions
     paid sub stix-attribute-boolean;
@@ -377,7 +383,7 @@ define
     step-type sub stix-attribute-string;
     error sub stix-attribute-string;
     determination sub stix-attribute-string;
-    extension-type sub stix-attribute-string;
+#    ext-type sub stix-attribute-string;
     investigation-status sub stix-attribute-string;
 
 
