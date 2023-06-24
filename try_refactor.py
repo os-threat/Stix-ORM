@@ -1577,12 +1577,12 @@ if __name__ == '__main__':
     # 019fde1c-
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
-    stid1 = "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+    stid1 = "file--fb0419a8-f09c-57f8-be64-71a80417591c"
     stid2 = "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"
     stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     #test_initialise()
     #load_file_list(path1, [f30, f21])
-    load_file(path1 + f21)
+    #load_file(path1 + f21)
     #load_file(mitre + "attack_objects.json")
     #check_object(mitre + "attack_objects.json")
     #load_file(reports + poison)
@@ -1595,7 +1595,7 @@ if __name__ == '__main__':
     #check_dir(path1)
     #test_delete(data_path+file1)
     #test_get(stid1)
-    #test_get_delete(path2 + "attack_objects.json")
+    test_get_delete(path2 + "attack_objects.json")
     #test_initialise()
     #test_delete_dir(path1)
     #clean_db()

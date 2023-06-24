@@ -10,7 +10,7 @@ import logging
 from stix.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 
 # ---------------------------------------------------
@@ -89,6 +89,7 @@ def add_property_to_typeql(prop, obj_tql, obj, prop_var_list):
 #                -  e.g. hasehs, kill-chain-phases, created_by, external_references, object_marking_refs etc.
 # --------------------------------------------------
 # Giant Switch statement to add the embedded relations to the typeql statement
+# rel, prop_dict, obj_var, prop_var_list, import_type, protocol
 
 def add_relation_to_typeql(rel,
                            obj,
@@ -138,7 +139,7 @@ def add_relation_to_typeql(rel,
     # insert list of object relation
     elif rel in auth["reln_name"]["list_of_objects"]:
         logger.debug("list of objects")
-        match, insert, dep_list = list_of_object(rel, obj[rel], obj_var, import_type, protocol)
+        match, insert, dep_list = list_of_object(rel, obj[rel], obj_var, inc, import_type, protocol)
 
     # insert embedded relations based on stix-id
     elif rel in auth["reln_name"]["embedded_relations"]:
@@ -149,12 +150,12 @@ def add_relation_to_typeql(rel,
     elif (rel == "x509_v3_extensions"
           or rel == "optional_header"):
         logger.debug("X509")
-        match, insert, dep_list = load_object(rel, obj[rel], obj_var, import_type, protocol)
+        match, insert, dep_list = load_object(rel, obj[rel], obj_var, inc, import_type, protocol)
 
     # insert  SCO Extensions here, a possible dict of sub-objects
-    elif rel in auth["reln_name"]["extension_relations"]:
+    elif rel in auth["reln_name"]["extension_relations"] or rel == "extensions":
         logger.debug("extension")
-        match, insert, dep_list = extensions(rel, obj[rel], obj_var, import_type, protocol)
+        match, insert, dep_list = extensions(rel, obj[rel], obj_var, inc, import_type, protocol)
 
     # ignore the following relations as they are already processed, for Relationships, Sightings and Extensions
     elif rel in auth["reln_name"]["standard_relations"] or rel == "definition" or "definition_type":
@@ -177,7 +178,7 @@ def add_relation_to_typeql(rel,
 
 def extensions(prop_name: str,
                prop_dict,
-               parent_var,
+               parent_var, inc,
                import_type: ImportType,
                protocol: str):
     """
@@ -200,7 +201,7 @@ def extensions(prop_name: str,
     for ext_type in prop_dict:
         for ext_type_ql in auth["reln"]["extension_relations"]:
             if ext_type == ext_type_ql["stix"]:
-                match2, insert2, dep_list2 = load_object(ext_type, prop_dict[ext_type], parent_var, import_type, protocol)
+                match2, insert2, dep_list2 = load_object(ext_type, prop_dict[ext_type], parent_var, inc, import_type, protocol)
                 match = match + match2
                 insert = insert + insert2
                 dep_list = dep_list + dep_list2
@@ -211,7 +212,7 @@ def extensions(prop_name: str,
 
 def load_object(prop_name: str,
                 prop_dict,
-                parent_var: str,
+                parent_var: str, inc,
                 import_type: ImportType,
                 protocol: str):
     """
@@ -243,9 +244,11 @@ def load_object(prop_name: str,
             type_ql += ' ' + obj_var + ' isa ' + obj_type
             # Split them into properties and relations
             total_props = prop_dict._inner
+            logger.debug(f'load object properties: {total_props}')
             properties, relations = split_on_activity_type(total_props, obj_tql)
             prop_var_list = []
             dep_list = []
+            logger.debug(f'load object relations: {relations}')
             for prop in properties:
                 # split off for properties processing
                 type_ql2, type_ql_props2, prop_var_list = add_property_to_typeql(prop, obj_tql, prop_dict,
@@ -257,9 +260,11 @@ def load_object(prop_name: str,
             type_ql += ";\n" + type_ql_props + "\n\n"
 
             # add each of the relations to the match and insert statements
+            logger.debug(f'load object relations: {relations}')
             for rel in relations:
                 # split off for relation processing
-                match2, insert2, dep_list2 = add_relation_to_typeql(rel, prop_dict, obj_var, prop_var_list, import_type, protocol)
+                logger.debug(f'load object relation: {rel}, protocol: {protocol}')
+                match2, insert2, dep_list2 = add_relation_to_typeql(rel, prop_dict, obj_var, prop_var_list, import_type, inc, protocol)
                 # then add it back together    
                 match = match + match2
                 insert = insert + "\n" + insert2
@@ -277,7 +282,7 @@ def load_object(prop_name: str,
 
 def list_of_object(prop_name: str,
                    prop_value_list: List[str],
-                   parent_var,
+                   parent_var, inc,
                    import_type: ImportType,
                    protocol: str):
     """

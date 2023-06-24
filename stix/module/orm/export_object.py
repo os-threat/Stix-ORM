@@ -42,8 +42,8 @@ def convert_ans_to_stix(query, answer_iterator, r_tx, import_type: ImportType):
     """
     res = convert_ans_to_res(answer_iterator, r_tx, import_type)
     path = pathlib.Path(__file__).parent.joinpath("export_test.json")
-    with open(str(path), 'w') as outfile:
-        json.dump(res, outfile)
+    #with open(str(path), 'w') as outfile:
+    #    json.dump(res, outfile)
     logger.debug(f'got res, now for stix')
     stix_dict = convert_res_to_stix(res, import_type)
     logger.debug((f'got stix now for object'))
@@ -411,7 +411,7 @@ def make_relations(relns, obj_tql, stix_dict, is_list, obj_name, import_type: Im
         elif reln_name in auth["tql_types"]["list_of_objects"]:
             stix_dict = make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
-        elif reln_name == "v3-extensions" or reln_name == "optional-header":
+        elif reln_name == "v3-extensions" or reln_name == "optional-headers":
             stix_dict = make_object(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
         elif reln_name in auth["tql_types"]["extension_relations"]:
