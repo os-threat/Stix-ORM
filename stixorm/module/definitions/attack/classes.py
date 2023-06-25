@@ -517,6 +517,7 @@ class AttackCampaign(_DomainObject):
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_first_seen_citation', StringProperty()),
+        ('x_mitre_last_seen_citation', StringProperty()),
         ('x_mitre_aliases', StringProperty()),
         ('aliases', ListProperty(StringProperty)),
         ('first_seen', TimestampProperty()),
