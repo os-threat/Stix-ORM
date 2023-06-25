@@ -411,7 +411,7 @@ def make_relations(relns, obj_tql, stix_dict, is_list, obj_name, import_type: Im
         elif reln_name in auth["tql_types"]["list_of_objects"]:
             stix_dict = make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
-        elif reln_name == "v3-extensions" or reln_name == "optional-header":
+        elif reln_name == "v3-extensions" or reln_name == "optional-headers":
             stix_dict = make_object(reln, reln_name, stix_dict, is_list, obj_name, import_type)
 
         elif reln_name in auth["tql_types"]["extension_relations"]:
