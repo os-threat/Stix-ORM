@@ -8,7 +8,7 @@ The STIX Model is based on seven different types of objects, as can be seen in t
 
 
 
-<img src="img/stix-core.png?raw=true" width="600" />
+<img src="/docs/img/stix-core.png?raw=true" width="600" />
 
 from the [Stix 2.1 Standard](https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_xzbicbtscatx)
 
@@ -34,7 +34,7 @@ The generic flat stix object has some key features. It is an entity, or relation
 - an "id" property, which is a unique key field that contains the type of the object and a UUID
 - additional properties, which are a basic datatype: string, integer, double, boolean or datetime stamps
 
-<img src="img/Stix-Generic-Object.png?raw=true" width="600" />
+<img src="/docs/img/Stix-Generic-Object.png?raw=true" width="600" />
 
 An example of a flat Stix object, with no sub-object shapes is shown below, an identity object. One can see that the object only has properties comprised of basic datatypes.
 ```json
