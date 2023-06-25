@@ -87,23 +87,42 @@ def attack_data():
         result.append(mitre_version["url"])
     return result
 
-def test_database_initialization(typedb, json_data):
+@pytest.fixture
+def setup_teardown():
+    typedb = TypeDBSink(connection=connection,
+                        clear=False,
+                        import_type=import_type)
 
-    result = typedb.add(json_data)
-    validate_is_successful(result)
+    typedb.clear_db()
+
+    yield
+
+    typedb = TypeDBSink(connection=connection,
+                        clear=False,
+                        import_type=import_type)
+
+    typedb.clear_db()
+
+class TestMitre:
 
 
-@pytest.mark.parametrize("url", attack_data())
-def test_load_attack_stix_data(typedb, url):
-    response = requests.get(url)
-    data = response.json()
+    def test_database_initialization(self, setup_teardown, typedb, json_data):
 
-    result = typedb.add([data])
-    #validate_is_successful(result)
+        result = typedb.add(json_data)
+        validate_is_successful(result)
 
-def test_ics_attack_database_initialization(typedb, ics_attack_data):
 
-    with pytest.raises(Exception):
-        result = typedb.add(ics_attack_data)
+    @pytest.mark.parametrize("url", attack_data())
+    def test_load_attack_stix_data(self, setup_teardown, typedb, url):
+        response = requests.get(url)
+        data = response.json()
+
+        result = typedb.add([data])
+        #validate_is_successful(result)
+
+    def test_ics_attack_database_initialization(self, setup_teardown, typedb, ics_attack_data):
+
+        with pytest.raises(Exception):
+            result = typedb.add(ics_attack_data)
 
 
