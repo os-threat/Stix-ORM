@@ -216,11 +216,11 @@ def class_for_type(stix_typeql, import_type, category=None):
         for obj in auth["conv"][category]:
             logger.debug(f'object tql is {obj["typeql"]}, wanted {stix_typeql}')
             if obj["typeql"] == stix_typeql:
-                #logger.debug("found the right type")
+                logger.debug("found the right type")
                 conv_cls = obj["class"]
                 logger.debug(f'classs is {conv_cls}')
                 cls = copy.deepcopy(auth["classes"][category][conv_cls])
-                #logger.debug(f'classs 2 is {cls}')
+                logger.debug(f'classs 2 is {cls}')
                 return cls
 
     return cls

@@ -63,6 +63,7 @@ define
         owns x-mitre-system-requirements,
         owns x-mitre-tactic-type,
         owns x-mitre-permissions-required,
+        owns x-mitre-network-requirements,
         owns x-mitre-effective-permissions,
         owns x-mitre-defense-bypassed,
         owns x-mitre-remote-support,
@@ -350,6 +351,7 @@ define
         x-mitre-is-subtechnique sub mitre-attribute-boolean;
         x-mitre-deprecated sub mitre-attribute-boolean;
         x-mitre-remote-support sub mitre-attribute-boolean;
+        x-mitre-network-requirements sub mitre-attribute-boolean;
 
     mitre-attribute-timestamp sub stix-attribute-timestamp, abstract;
         object-modified sub mitre-attribute-timestamp;

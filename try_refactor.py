@@ -39,7 +39,7 @@ connection = {
     "password": None
 }
 
-import_type = import_type_factory.get_default_import()
+import_type = import_type_factory.get_attack_import()
 all_imports = import_type_factory.get_all_imports()
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
@@ -297,17 +297,17 @@ def load_file(fullname):
     input_id_list=[]
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
-        # print(json_text)
-        # for stix_dict in json_text:
-        #     input_id_list.append(stix_dict.get("id", False))
+        print(json_text)
+        for stix_dict in json_text:
+            input_id_list.append(stix_dict.get("id", False))
         typedb.add(json_text)
-    # id_set = set(input_id_list)
-    # id_typedb = set(get_stix_ids())
-    # len_files = len(id_set)
-    # len_typedb = len(id_typedb)
-    # id_diff = id_set - id_typedb
-    # print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
-    # print(f'difference -> {id_diff}')
+    id_set = set(input_id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> {id_diff}')
 
 
 def check_object(fullname):
@@ -1566,10 +1566,11 @@ if __name__ == '__main__':
     file7 = "report.json"
     file8 = "sighting_observable.json"
     file9 = "threat_actor.json"
-    mitre_data = "data/mitre/enterprise-attack.json"
+    mitre_data = "data/mitre/traffic_duplication.json"
 
     mitre_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
     mitre = "data/mitre/"
+    mitre_test = "data/mitre/test/"
     osthreat = "data/os-threat/"
     reports = "data/threat_reports/"
     poison = "poisonivy.json"
@@ -1581,9 +1582,9 @@ if __name__ == '__main__':
     stid1 = "file--fb0419a8-f09c-57f8-be64-71a80417591c"
     stid2 = "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"
     stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
-    test_initialise()
+    #test_initialise()
     #load_file_list(path1, [f30, f21])
-    #load_file(path1 + f21)
+    #load_file(mitre_data)
     #load_file(mitre + "attack_objects.json")
     #check_object(mitre + "attack_objects.json")
     #load_file(reports + poison)
@@ -1607,7 +1608,7 @@ if __name__ == '__main__':
     #test_auth()
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
-    #backdoor_add_dir(path1)
+    backdoor_add_dir(mitre_test)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)
