@@ -53,6 +53,19 @@ def json_data():
 
 
 @pytest.fixture
+def traffic_duplication_json():
+    data_standard_path = "data/mitre/"
+    top_dir_path = pathlib.Path(__file__).parents[0]
+    file_path = str(top_dir_path.joinpath(data_standard_path).joinpath("traffic_duplication.json"))
+    with open(file_path, mode="r", encoding="utf-8") as f:
+        json_text = json.load(f)
+
+    if isinstance(json_text, dict):
+        json_text = [json_text]
+
+    return json_text
+
+@pytest.fixture
 def ics_attack_data():
     data_standard_path = "data/mitre/"
     top_dir_path = pathlib.Path(__file__).parents[0]
@@ -105,6 +118,11 @@ def setup_teardown():
 
 class TestMitre:
 
+
+    def test_traffic_duplication_json(self, setup_teardown, typedb, traffic_duplication_json):
+
+        result = typedb.add(traffic_duplication_json)
+        validate_is_successful(result)
 
     def test_database_initialization(self, setup_teardown, typedb, json_data):
 
