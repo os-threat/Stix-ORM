@@ -39,7 +39,7 @@ connection = {
     "password": None
 }
 
-import_type = import_type_factory.get_attack_import()
+import_type = import_type_factory.get_all_imports()
 all_imports = import_type_factory.get_all_imports()
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
@@ -1598,7 +1598,7 @@ if __name__ == '__main__':
     #test_delete(data_path+file1)
     #test_get(stid1)
     #test_get_delete(path2 + "attack_objects.json")
-    #test_initialise()
+    test_initialise()
     #test_delete_dir(path1)
     #clean_db()
     #cert_test(cert_root+cert11)
@@ -1608,7 +1608,7 @@ if __name__ == '__main__':
     #test_auth()
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
-    backdoor_add_dir(mitre_test)
+    #backdoor_add_dir(mitre_test)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)

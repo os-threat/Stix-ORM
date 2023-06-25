@@ -20,7 +20,7 @@ from stix.module.typedb_lib.logging import log_delete_layer, log_add_layer
 from stix.module.typedb_lib.instructions import Instructions
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 
 @safe
