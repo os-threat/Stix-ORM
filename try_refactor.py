@@ -40,6 +40,7 @@ connection = {
 }
 
 import_type = import_type_factory.get_default_import()
+all_imports = import_type_factory.get_all_imports()
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
@@ -258,7 +259,7 @@ def test_initialise():
     """ Test the database initialisation function
 
     """
-    typedb = TypeDBSink(connection, True, import_type)
+    typedb = TypeDBSink(connection, True, all_imports)
 
 
 def load_file_list(path1, file_list):
@@ -1580,7 +1581,7 @@ if __name__ == '__main__':
     stid1 = "file--fb0419a8-f09c-57f8-be64-71a80417591c"
     stid2 = "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"
     stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
-    #test_initialise()
+    test_initialise()
     #load_file_list(path1, [f30, f21])
     #load_file(path1 + f21)
     #load_file(mitre + "attack_objects.json")
@@ -1595,7 +1596,7 @@ if __name__ == '__main__':
     #check_dir(path1)
     #test_delete(data_path+file1)
     #test_get(stid1)
-    test_get_delete(path2 + "attack_objects.json")
+    #test_get_delete(path2 + "attack_objects.json")
     #test_initialise()
     #test_delete_dir(path1)
     #clean_db()
