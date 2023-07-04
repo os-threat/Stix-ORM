@@ -39,7 +39,7 @@
             }
           ],
           "event_refs": [
-            "event--84ede1e8-aa78-4c63-98cd-02f4387fc1ec"
+            {"event_ref":"event--84ede1e8-aa78-4c63-98cd-02f4387fc1ec"}
           ],
           "task_refs": [
             "task--2d254737-fbf8-4969-adb3-80ac5c293f57"
