@@ -42,13 +42,13 @@
             {"event_ref":"event--84ede1e8-aa78-4c63-98cd-02f4387fc1ec"}
           ],
           "task_refs": [
-            "task--2d254737-fbf8-4969-adb3-80ac5c293f57"
+            {"task_ref":"task--2d254737-fbf8-4969-adb3-80ac5c293f57"}
           ],
           "impact_refs": [
-            "impact--1032f48b-28d1-451f-970e-78b736db8e13"
+            {"impact_ref":"impact--1032f48b-28d1-451f-970e-78b736db8e13"}
           ],
           "notes_refs": [
-            "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061"
+            {"note_ref":"note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061"}
           ]
         }
       }
