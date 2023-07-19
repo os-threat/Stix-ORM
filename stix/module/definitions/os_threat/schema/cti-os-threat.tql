@@ -35,11 +35,21 @@ define
         owns detection-emthods,
         owns detection-system,
         owns detection-rule,
+        plays blocks:stops,
+        plays causes:caused,
+        plays detects:found,
+        plays performed:outcome,
+	    plays based-on:basis,
+        plays located-at:locating,
+	    plays led-to:initial,
+	    plays led-to:subsequent,
+	    plays impacts:issue,
         plays event-refs:the-event,
         plays subevents:parent,
         plays subevents:sub-event,
         plays list-of-sightings:sighting-event,
-        plays objects-changed:change-driver;
+        plays objects-changed:change-driver,
+        plays event-ext:event-base;
 
     # Incoident Impact Object
     impact sub stix-domain-object,
@@ -52,10 +62,18 @@ define
         owns start-time,
         owns start-time-fidelity,
         plays impact-counter:impact-driver,
-        plays impacts:impact-category,
+        plays impacted-refs:the-impact,
         plays superseded:superseded-by,
-        plays impact-refs:the-impact,
-        plays superseded:precedes;
+        plays superseded:precedes,
+        plays impact-ext:impact-base,
+        plays availability-ext:impact-base,
+        plays confidentiality-ext:impact-base,
+        plays external-ext:impact-base,
+        plays integrity-ext:impact-base,
+        plays monetary-ext:impact-base,
+        plays physical-ext:impact-base,
+        plays traceability-ext:impact-base,
+        plays impact-refs:the-impact;
 
     # Incident Evidence Object
     evidence sub stix-domain-object,
@@ -64,11 +82,39 @@ define
         owns name,
         owns source,
         plays obj-refs:object,
-        plays evidence-refs:the-evidence;
+        plays evidence-refs:the-evidence,
+        plays evidence-ext:evidence-base;
 
     # Incident Tasks Object
     task sub stix-domain-object, abstract,
-        owns step-type;
+        owns step-type,
+        owns outcome,
+        owns task-type,
+        owns description,
+        owns name,
+        owns end-time,
+        owns end-time-fidelity,
+        owns error,
+        owns priority,
+        owns start-time,
+        owns start-time-fidelity,
+        plays task-ext:task-base,
+        plays blocks:effort,
+        plays causes:effort,
+        plays detects:effort,
+        plays creates:effort,
+        plays uses:used,
+        plays detects:effort,
+        plays impacts:issue,
+        plays located-at:locating,
+        plays errored-to:started,
+        plays errored-to:on-error,
+        plays followed-by:initial,
+        plays followed-by:subsequent,
+        plays assigned:effort,
+        plays contact-for:issue,
+        plays participated-in:assisted,
+        plays performed:outcome;
 
     start-step sub task,
         plays on-completion:source,
@@ -81,16 +127,6 @@ define
         plays task-refs:the-task;
 
     single-step sub task,
-        owns outcome,
-        owns task-type,
-        owns description,
-        owns name,
-        owns end-time,
-        owns end-time-fidelity,
-        owns error,
-        owns priority,
-        owns start-time,
-        owns start-time-fidelity,
         plays on-completion:target,
         plays on-success:target,
         plays on-failure:target,
@@ -104,16 +140,6 @@ define
         plays task-refs:the-task;
 
     parallel-step sub task,
-        owns outcome,
-        owns task-type,
-        owns description,
-        owns name,
-        owns end-time,
-        owns end-time-fidelity,
-        owns error,
-        owns priority,
-        owns start-time,
-        owns start-time-fidelity,
         plays on-completion:target,
         plays on-success:target,
         plays on-failure:target,
@@ -143,11 +169,11 @@ define
         plays scores:score;
 
 
-    # Incident Extension Objects
+    # Generic Incident Extension Objects
     incident-extension sub stix-sub-object,
-        owns extension-type,
-	    plays extensions:extension;
+        owns extension-type;
 
+    # incident core extension
     incident-ext sub incident-extension,
         owns determination,
         owns investigation-status,
@@ -155,56 +181,185 @@ define
         owns blocked,
         owns criticality,
         owns recoverability,
+        owns incident-types,
         plays impact-counter:impact-driver,
         plays scores:scored,
         plays task-refs:incident,
         plays event-refs:incident,
-        plays impact-refs:incident,
         plays evidence-refs:incident,
-        plays notes-refs:incident;
+        plays notes-refs:incident,
+        plays impact-refs:incident,
+	    plays  occurence-ext:incident-core,
+        plays derived-from:raw-material;
+    # incident core extension embedded relation
+    occurence-ext sub extensions,
+        relates occurence as sco,
+        relates incident-core as extension;
 
-    evidence-ext sub incident-extension;
+    # evidence extension object
+    evidence-extension sub incident-extension,
+        plays evidence-ext:evidence-spec;
+    # incident core extension embedded relation
+    evidence-ext sub extensions,
+        relates evidence-base as sco,
+        relates evidence-spec as extension;
 
-    task-ext sub incident-extension;
+    # task extension object
+    task-extension sub incident-extension,
+        plays task-ext:task-spec;
+    # task extension embedded relation
+    task-ext sub extensions,
+        relates task-base as sco,
+        relates task-spec as extension;
 
-    event-ext sub incident-extension;
+    # event extension object
+    event-extension sub incident-extension,
+        plays event-ext:event-spec;
+    # event extension embedded relation
+    event-ext sub extensions,
+        relates event-base as sco,
+        relates event-spec as extension;
 
-    impact-ext sub incident-extension;
+    # base impact extension object
+    impact-extension sub incident-extension,
+        plays impact-ext:impact-spec;
+    # base impact extension embedded relation
+    impact-ext sub extensions,
+        relates impact-base as sco,
+        relates impact-spec as extension;
 
-    availability-impact sub incident-extension,
-        owns impacted-availability;
+    # availability-impact extension object
+    availability sub incident-extension,
+        owns impacted-availability,
+        plays availability-ext:availability-impact;
+    # availability-impact extension embedded relation
+    availability-ext sub extensions,
+        relates impact-base as sco,
+        relates availability-impact as extension;
 
-    confidentiality-impact sub incident-extension,
+    # confidentiality-impact extension object
+    confidentiality sub incident-extension,
         owns information-type,
         owns loss-type,
         owns record-count,
-        owns record-size;
+        owns record-size,
+        plays confidentiality-ext:confidentiality-impact;
+    # confidentiality-impact extension embedded relation
+    confidentiality-ext sub extensions,
+        relates impact-base as sco,
+        relates confidentiality-impact as extension;
 
-    external-impact sub incident-extension,
-        owns impact-type;
+    # external-impact extension object
+    external sub incident-extension,
+        owns impact-type,
+        plays external-ext:external-impact;
+    # external-impact extension embedded relation
+     external-ext sub extensions,
+        relates impact-base as sco,
+        relates external-impact as extension;
 
-    integrity-impact sub incident-extension,
+    # integrity-impact extension object
+    integrity sub incident-extension,
         owns alteration,
         owns information-type,
         owns record-count,
-        owns record-size;
+        owns record-size,
+        plays integrity-ext:integrity-impact;
+    # integrity-impact extension embedded relation
+    integrity-ext sub extensions,
+        relates impact-base as sco,
+        relates integrity-impact as extension;
 
-    monetary-impact sub incident-extension,
+    # monetary-impact extension object
+    monetary sub incident-extension,
         owns variety,
         owns conversion-rate,
         owns conversion-time,
         owns currrency,
         owns currency-actual,
         owns max-amount,
-        owns min-amount;
+        owns min-amount,
+        plays monetary-ext:monetary-impact;
+    # monetary-impact extension embedded relation
+    monetary-ext sub extensions,
+        relates impact-base as sco,
+        relates monetary-impact as extension;
 
-    physical-impact sub incident-extension,
+    # physical-impact extension object
+    physical sub incident-extension,
         owns impact-type,
-        owns asset-type;
+        owns asset-type,
+        plays physical-ext:physical-impact;
+    # physical-impact extension embedded relation
+    physical-ext sub extensions,
+        relates impact-base as sco,
+        relates physical-impact as extension;
 
-    traceability-impact sub incident-extension,
-        owns traceability-type;
+    # traceability-impact extension object
+    traceability sub incident-extension,
+        owns traceability-type,
+        plays traceability-ext:traceability-impact;
+    # traceability-impact extension embedded relation
+    traceability-ext sub extensions,
+        relates impact-base as sco,
+        relates traceability-impact as extension;
 
+    # Incident SRO's
+    led-to sub stix-core-relationship,
+		relates initial as source,
+		relates subsequent as target;
+
+    impacts sub stix-core-relationship,
+		relates issue as source,
+		relates impacted as target;
+
+    contact-for sub stix-core-relationship,
+		relates contact as source,
+		relates issue as target;
+
+    detected sub stix-core-relationship,
+		relates method as source,
+		relates issue as target;
+
+	performed sub stix-core-relationship,
+	    relates initiator as source,
+	    relates outcome as target;
+
+    blocks sub stix-core-relationship,
+		relates effort as source,
+		relates stops as target;
+
+    causes sub stix-core-relationship,
+		relates effort as source,
+		relates caused as target;
+
+    detects sub stix-core-relationship,
+		relates effort as source,
+		relates found as target;
+
+    creates sub stix-core-relationship,
+		relates effort as source,
+		relates made as target;
+
+    errored-to sub stix-core-relationship,
+		relates started as source,
+		relates on-error as target;
+
+    followed-by sub stix-core-relationship,
+		relates initial as source,
+		relates subsequent as target;
+
+    assigned sub stix-core-relationship,
+		relates owner as source,
+		relates effort as target;
+
+    participated-in sub stix-core-relationship,
+		relates contact as source,
+		relates assisted as target;
+
+    derived-from sub stix-core-relationship,
+		relates result as source,
+		relates raw-material as target;
 
     # Incident Relationhs
     sighting
@@ -235,9 +390,9 @@ define
         relates impact-driver as owner,
         relates counters as pointed-to;
 
-    impacts sub embedded,
-        relates impact-category as owner,
-        relates impacted as pointed-to;
+    impacted-refs sub embedded,
+        relates the-impact as owner,
+        relates impacted-thing as pointed-to;
 
     superseded sub embedded,
         relates superseded-by as pointed-to,
@@ -275,10 +430,6 @@ define
         relates incident as owner,
         relates the-event as pointed-to;
 
-    impact-refs sub embedded,
-        relates incident as owner,
-        relates the-impact as pointed-to;
-
     evidence-refs sub embedded,
         relates incident as owner,
         relates the-evidence as pointed-to;
@@ -286,6 +437,10 @@ define
     notes-refs sub embedded,
         relates incident as owner,
         relates the-note as pointed-to;
+
+    impact-refs sub embedded,
+        relates incident as owner,
+        relates the-impact as pointed-to;
 
     # Feed Embedded Relations
     list-of-feeds sub embedded,
@@ -325,11 +480,12 @@ define
 	    plays obj-ref:content,
 	    plays changed-objects-initial:changed,
 	    plays changed-objects-result:changed,
-	    plays impacts:impacted;
+	    plays impacted-refs:impacted-thing;
 
 	stix-cyber-observable-object
 	    plays feed-content:content,
 	    plays obj-ref:content,
+	    plays impacted-refs:impacted-thing,
 	    plays impacts:impacted;
 
 	stix-core-relationship
@@ -339,10 +495,38 @@ define
 	    plays feed-content:content;
 
 	identity
-	    plays owned-by:who;
+	    plays owned-by:who,
+	    plays impacts:impacted,
+	    plays contact-for:contact,
+        plays assigned:owner,
+        plays participated-in:contact;
+
+	infrastructure
+	    plays impacts:impacted;
 
 	note
 	    plays notes-refs:the-note;
+
+	incident
+	    plays  occurence-ext:occurence,
+	    plays led-to:initial,
+	    plays led-to:subsequent,
+	    plays impacts:issue,
+	    plays contact-for:issue,
+	    plays detected:issue;
+
+    indicator
+        plays detected:method,
+        plays creates:made;
+
+    malware
+        plays performed:initiator;
+
+    tool
+        plays performed:initiator;
+
+    report
+        plays derived-from:result;
 
     # Attribute Definitions
     paid sub stix-attribute-boolean;
@@ -379,6 +563,7 @@ define
     determination sub stix-attribute-string;
     extension-type sub stix-attribute-string;
     investigation-status sub stix-attribute-string;
+    incident-types sub stix-attribute-string;
 
 
     event-seq sub stix-attribute-integer;

@@ -22,7 +22,11 @@ import os
 from pathlib import Path
 
 from stix.module.definitions.os_threat.classes import (
-    Feeds, Feed, ThreatSubObject
+    Feeds, Feed, ThreatSubObject, StateChangeObject, EventCoreExt,
+    Event, EntityCountObject, ImpactCoreExt, Availability, Confidentiality,
+    External, Integrity, Monetary, Physical, Traceability, Impact,
+    IncidentScoreObject, IncidentCoreExt, TaskCoreExt, Task,
+    EvidenceCoreExt, Evidence
 )
 
 from stix.module.definitions.definitions import DefinitionNames
@@ -74,19 +78,43 @@ for file_path in glob(f'{dir_path}/sub_objects/*.json'):
 
         os_threat_models["sub_objects"][key] = json.load(json_file)
 
+
 os_threat_models["classes"] = {}
 os_threat_models["classes"]["sdo"] = {
     "Feeds": Feeds,
-    "Feed": Feed
+    "Feed": Feed,
+    "Evidence": Evidence,
+    "Event": Event,
+    "Impact": Impact,
+    "Task": Task
 }
 os_threat_models["classes"]["sco"] = {}
 os_threat_models["classes"]["sro"] = {}
 os_threat_models["classes"]["sub"] = {
     "ThreatSubObject" : ThreatSubObject,
+    "StateChangeObject": StateChangeObject,
+    "EventCoreExt": EventCoreExt,
+    "EntityCountObject": EntityCountObject,
+    "ImpactCoreExt": ImpactCoreExt,
+    "Availability": Availability,
+    "Confidentiality": Confidentiality,
+    "External": External,
+    "Integrity": Integrity,
+    "Monetary": Monetary,
+    "Physical": Physical,
+    "Traceability": Traceability,
+    "IncidentScoreObject": IncidentScoreObject,
+    "IncidentCoreExt": IncidentCoreExt,
+    "TaskCoreExt": TaskCoreExt,
+    "EvidenceCoreExt": EvidenceCoreExt
 }
 
 __all__ = """
-    Feeds, Feed, TaskSubObject
+    Feeds, Feed, ThreatSubObject, StateChangeObject, EventCoreExt,
+    Event, EntityCountObject, ImpactCoreExt, Availability, Confidentiality,
+    External, Integrity, Monetary, Physical, Traceability, Impact,
+    IncidentScoreObject, IncidentCoreExt, TaskCoreExt, Task,
+    EvidenceCoreExt, Evidence
 """.replace(",", " ").split()
 
 total_len = len(os_threat_models["data"])+len(os_threat_models["base"])+len(os_threat_models["mappings"])+len(os_threat_models["sub_objects"])

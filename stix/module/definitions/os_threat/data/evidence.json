@@ -1,8 +1,7 @@
 {
   "name": "name",
   "description": "description",
-  "paid": "paid",
-  "free": "free",
-  "userid": "userid",
+  "evidence_type": "evidence-type",
+  "source": "source",
   "object_refs": ""
 }

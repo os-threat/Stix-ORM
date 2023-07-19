@@ -21,12 +21,12 @@ from loguru import logger
 import os
 from pathlib import Path
 from stix.module.definitions.stix21.classes import (
-    Note, ObservedData
+    Note, ObservedData, Incident, Report
 )
 from stix2.v21.sdo import (
     AttackPattern, Campaign, CourseOfAction, CustomObject, Grouping, Identity,
-    Incident, Indicator, Infrastructure, IntrusionSet, Location, Malware,
-    MalwareAnalysis, Opinion, Report, ThreatActor, Tool,
+    Indicator, Infrastructure, IntrusionSet, Location, Malware,
+    MalwareAnalysis, Opinion, ThreatActor, Tool,
     Vulnerability,
 )
 from stix2.v21.observables import (

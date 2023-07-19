@@ -157,7 +157,7 @@ attack-pattern sub stix-domain-object,
 	# Reverse Relations
 	# plays indicates:indicated, -> Defined in SDO
 	plays mitigates:mitigated,
-	plays uses:used; 
+	plays uses:used;
 
 	# Embedded Relations
 	# created-by
@@ -195,7 +195,8 @@ course-of-action sub stix-domain-object,
 	# Common Relations
 	plays investigates:investigating,
 	plays mitigates:mitigator,
-	plays remediation:remediating;
+	plays remediation:remediating,
+	plays uses:used-by;
 
 	# Reverse Relations
 	# NA

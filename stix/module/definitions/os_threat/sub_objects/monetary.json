@@ -1,0 +1,9 @@
+{
+  "variety" : "variety",
+  "conversion_rate" : "conversion-rate",
+  "conversion_time" : "conversion-time",
+  "currency" : "currrency",
+  "currency_actual" : "currency-actual",
+  "max_amount" : "max-amount",
+  "min_amount" : "min-amount"
+}

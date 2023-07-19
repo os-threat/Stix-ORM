@@ -1,0 +1,100 @@
+[
+  {
+    "stix": "impacted_entity_counts",
+    "object": "entity-counter",
+    "relation": "impact-counter",
+    "owner": "impact-driver",
+    "pointed-to": "counters"
+  },
+  {
+    "stix": "extension-definition--4ca6de00-5b0d-45ef-a1dc-ea7279ea910e",
+    "object": "event-extension",
+    "relation": "event-ext",
+    "owner": "event-base",
+    "pointed-to": "event-spec"
+  },
+  {
+    "stix": "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9",
+    "object": "impact-extension",
+    "relation": "impact-ext",
+    "owner": "impact-ext",
+    "pointed-to": "impact-spec"
+  },
+  {
+    "stix": "availability",
+    "object": "availability",
+    "relation": "availability-ext",
+    "owner": "impact-base",
+    "pointed-to": "availability-impact"
+  },
+  {
+    "stix": "confidentiality",
+    "object": "confidentiality",
+    "relation": "confidentiality-ext",
+    "owner": "impact-base",
+    "pointed-to": "confidentiality-impact"
+  },
+  {
+    "stix": "external",
+    "object": "external",
+    "relation": "external-ext",
+    "owner": "impact-base",
+    "pointed-to": "external-impact"
+  },
+  {
+    "stix": "integrity",
+    "object": "integrity",
+    "relation": "integrity-ext",
+    "owner": "impact-base",
+    "pointed-to": "integrity-impact"
+  },
+  {
+    "stix": "monetary",
+    "object": "monetary",
+    "relation": "monetary-ext",
+    "owner": "impact-base",
+    "pointed-to": "monetary-impact"
+  },
+  {
+    "stix": "physical",
+    "object": "physical",
+    "relation": "physical-ext",
+    "owner": "physical-ext",
+    "pointed-to": "physical-impact"
+  },
+  {
+    "stix": "traceability",
+    "object": "traceability",
+    "relation": "traceability-ext",
+    "owner": "impact-base",
+    "pointed-to": "traceability-impact"
+  },
+  {
+    "stix": "scores",
+    "object": "incident-score",
+    "relation": "scores",
+    "owner": "scored",
+    "pointed-to": "score"
+  },
+  {
+    "stix": "extension-definition--ef765651-680c-498d-9894-99799f2fa126",
+    "object": "incident-ext",
+    "relation": "occurence-ext",
+    "owner": "occurence",
+    "pointed-to": "incident-core"
+  },
+  {
+    "stix": "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030",
+    "object": "task-extension",
+    "relation": "task-ext",
+    "owner": "task-base",
+    "pointed-to": "task-spec"
+  },
+  {
+    "stix": "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a",
+    "object": "evidence-extension",
+    "relation": "evidence-ext",
+    "owner": "evidence-base",
+    "pointed-to": "evidence-spec"
+  }
+]

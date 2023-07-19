@@ -15,9 +15,9 @@
                 "extension-definition--ef765651-680c-498d-9894-99799f2fa126": {
                     "extension_type": "property-extension",
                     "investigation_status": "new",
-                    "criticality": 80,
                     "blocked": false,
                     "malicious": true,
+                    "criticality": 80,
                     "determination": "suspected",
                     "incident_types": [
                         "hosting-phishing-sites",

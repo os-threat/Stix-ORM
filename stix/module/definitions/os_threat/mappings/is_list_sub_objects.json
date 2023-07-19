@@ -1,3 +1,27 @@
 {"threat-sub-object": [
   "object_refs"
-]}
+],
+"availability":  [],
+"confidentiality":  [],
+"entity-counter":  [],
+"event-extension":  [],
+"impact-extension":  [],
+"evidence-extension":  [],
+"task-extension":  [],
+"incident-ext":  [
+  "recoverability",
+  "incident_types",
+  "task_refs",
+  "event_refs",
+  "impact_refs",
+  "notes_refs",
+  "evidence_refs"
+],
+"external":  [],
+"incident-score":  [],
+"integrity":  [],
+"monetary":  [],
+"physical":  [],
+"traceability":  [],
+"state-change":  []
+}

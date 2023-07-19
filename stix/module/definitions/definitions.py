@@ -1,12 +1,18 @@
 import json
 import pathlib
+import os
 import uuid
+import copy
 from enum import Enum
 from typing import Optional
 from stix2.properties import Property
 from stix2.utils import STIXTypeClass
 from stix2.base import _STIXBase
-from stix2.exceptions import CustomContentError
+from stix2.properties import (
+    DictionaryProperty, ExtensionsProperty, IDProperty, IntegerProperty, ListProperty,
+    OpenVocabProperty, ReferenceProperty, StringProperty,
+    TimestampProperty, TypeProperty, EmbeddedObjectProperty, ObservableProperty
+)
 DEFAULT_VERSION = '2.1'
 ERROR_INVALID_ID = (
     "not a valid STIX identifier, must match <object-type>--<UUID>: {}"
@@ -23,32 +29,48 @@ class DefinitionNames(str, Enum):
     US_DoD = "us-dod"
 
 
+def get_ext_list(mydir):
+    local_list = []
+    file_path = os.path.join(mydir, "mappings", "object_conversion.json")
+    if os.path.isfile(file_path):
+        with open(file_path, mode="r", encoding="utf-8") as f:
+            json_text = json.load(f)
+            local_list = [x for x in json_text if x["object"] == "sub"]
+
+    return local_list
+
 class Definitions:
 
     def __init__(self):
         definitions_dir = pathlib.Path(__file__).parent.absolute()
 
         attack_definitions_dir = definitions_dir.joinpath(DefinitionNames.ATTACK.value)
+        attack_sub = get_ext_list(attack_definitions_dir)
         attack_definition = DomainDefinition(DefinitionNames.ATTACK.value,
                                              attack_definitions_dir)
 
         cacao_definitions_dir = definitions_dir.joinpath(DefinitionNames.CACAO.value)
+        cacao_sub = get_ext_list(cacao_definitions_dir)
         cacao_definition = DomainDefinition(DefinitionNames.CACAO.value,
                                             cacao_definitions_dir)
 
         kestrel_definitions_dir = definitions_dir.joinpath(DefinitionNames.KESTREL.value)
+        kestrel_sub = get_ext_list(kestrel_definitions_dir)
         kestrel_definition = DomainDefinition(DefinitionNames.KESTREL.value,
                                               kestrel_definitions_dir)
 
         os_threat_definitions_dir = definitions_dir.joinpath("os_threat")
+        os_threat_sub = get_ext_list(os_threat_definitions_dir)
         os_threat_definition = DomainDefinition(DefinitionNames.OS_THREAT.value,
                                                 os_threat_definitions_dir)
 
         stix_21_definitions_dir = definitions_dir.joinpath("stix21")
+        stix_21_sub = get_ext_list(stix_21_definitions_dir)
         stix_21_definition = DomainDefinition(DefinitionNames.STIX_21.value,
                                               stix_21_definitions_dir)
 
         us_dod_definitions_dir = definitions_dir.joinpath("us_dod")
+        us_dod_sub = get_ext_list(us_dod_definitions_dir)
         us_dod_definition = DomainDefinition(DefinitionNames.US_DoD.value,
                                               us_dod_definitions_dir)
 
@@ -59,6 +81,8 @@ class Definitions:
         self.definitions[DefinitionNames.US_DoD] = us_dod_definition
         self.definitions[DefinitionNames.OS_THREAT] = os_threat_definition
         self.definitions[DefinitionNames.STIX_21] = stix_21_definition
+        self.sub_objects = []
+        self.sub_objects = attack_sub + cacao_sub + kestrel_sub + os_threat_sub + stix_21_sub + us_dod_sub
 
     def get_definition(self, domain_name: DefinitionNames) -> DomainDefinition:
         if domain_name not in self.definitions:
@@ -196,5 +220,4 @@ class ThreatReference(Property):
             )
 
         return value, allow_custom
-
 

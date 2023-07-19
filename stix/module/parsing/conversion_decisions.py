@@ -48,7 +48,7 @@ def sdo_type_to_tql(sdo_type: str,
             # dispatch specific stix properties plus later on, generic sdo properties
             protocol = "stix21"
             obj_tql = copy.deepcopy(stix_models["data"][sdo_type])
-        elif auth["case"] or auth["feed"] and sdo_type in os_threat_models:
+        elif sdo_type in os_threat_models["data"]:
             # dispatch specific stix properties plus later on, generic sdo properties
             protocol = "os-threat"
             obj_tql = copy.deepcopy(os_threat_models["data"][sdo_type])

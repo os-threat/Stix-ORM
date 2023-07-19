@@ -10,7 +10,7 @@ import logging
 from stix.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 default_import_type = import_type_factory.get_default_import()
 
 def parse(data: dict, allow_custom=False, import_type: ImportType=default_import_type):
@@ -66,11 +66,13 @@ def _get_dict(data):
         except (ValueError, TypeError):
             raise ValueError(f"Cannot convert {str(data)} to dictionary.")
 
+
 def is_attack_object(stix_dict):
     if stix_dict.get("x_mitre_domains", False) or stix_dict.get("x_mitre_attack_spec_version", False):
         return True
     else:
         return False
+
 
 def dict_to_stix(stix_dict: dict,
                  allow_custom=False,
