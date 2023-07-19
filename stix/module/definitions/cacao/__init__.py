@@ -21,7 +21,7 @@ from loguru import logger
 import os
 from pathlib import Path
 
-from stix.module.definitions.definitions import get_definitions, DefinitionNames
+from stix.module.definitions.property_definitions import get_definitions, DefinitionNames
 from stix.module.definitions.domain_definition import DomainDefinition
 
 path = os.path.abspath(__file__)

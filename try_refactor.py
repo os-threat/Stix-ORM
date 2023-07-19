@@ -16,7 +16,7 @@ from stix.module.definitions.stix21 import ObservedData, IPv4Address
 from stix.module.definitions.os_threat import Feed, ThreatSubObject
 from stix.module.orm.import_utilities import val_tql
 from stix.module.definitions.attack import attack_models
-from stix.module.definitions.definitions import get_definitions
+from stix.module.definitions.property_definitions import get_definitions
 import copy
 
 import logging

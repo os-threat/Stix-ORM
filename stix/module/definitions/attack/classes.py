@@ -25,7 +25,7 @@ from stix2.v21.vocab import (
 
 import logging
 
-from stix.module.definitions.definitions import get_definitions, ThreatReference
+from stix.module.definitions.property_definitions import get_definitions, ThreatReference
 from stix.module.typedb_lib.auth_types import all_auth_types
 
 logger = logging.getLogger(__name__)

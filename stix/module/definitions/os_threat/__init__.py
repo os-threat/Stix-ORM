@@ -29,7 +29,7 @@ from stix.module.definitions.os_threat.classes import (
     EvidenceCoreExt, Evidence
 )
 
-from stix.module.definitions.definitions import DefinitionNames
+from stix.module.definitions.property_definitions import DefinitionNames
 from stix.module.definitions.domain_definition import DomainDefinition
 
 path = os.path.abspath(__file__)

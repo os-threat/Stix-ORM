@@ -1,7 +1,7 @@
 
 import logging
 
-from stix.module.definitions.definitions import get_libraries
+from stix.module.definitions.property_definitions import get_libraries
 from stix.module.typedb_lib.factories.domain_factory import DomainFactory
 from stix.module.typedb_lib.factories.import_type_factory import ImportTypeFactory, ImportType
 from stix.module.typedb_lib.factories.process_map_factory import ProcessMapFactory
