@@ -154,6 +154,7 @@ def backdoor_add_dir(dirpath):
         else:
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 json_text = json.load(f)
+                json_text = json_text["objects"]
                 for element in json_text:
                     #logger.debug(f'**********==={element}')
                     obj_list.append(element)
@@ -1003,7 +1004,7 @@ if __name__ == '__main__':
     mitre_data = "data/mitre/enterprise-attack.json"
 
     mitre_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
-    mitre = "data/mitre/"
+    mitre = "data/mitre/latest"
     osthreat = "data/os-threat/"
 
     id_list = ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46', 'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265', 'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559', 'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6', 'attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5', 'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
@@ -1039,10 +1040,10 @@ if __name__ == '__main__':
     #test_auth()
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
-    #backdoor_add_dir(osthreat)
+    backdoor_add_dir(mitre)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)
     #test_get_del_dir_statements(mitre)
     #test_json(osthreat + "feed.json")
-    test_feeds()
+    #test_feeds()
