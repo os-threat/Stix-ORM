@@ -10,31 +10,31 @@ from enum import Enum
 #
 ###############################################
 
-from stix.module.definitions.os_threat.classes import (
-    ThreatSubObject, StateChangeObject, EventCoreExt, EntityCountObject, ImpactCoreExt, Availability,
-    Confidentiality, External, Integrity, Monetary, Physical, Traceability, IncidentScoreObject,
-    IncidentCoreExt, TaskCoreExt, EvidenceCoreExt
-
-)
-
-os_threat_models = {
-    "ThreatSubObject" : ThreatSubObject,
-    "StateChangeObject": StateChangeObject,
-    "EventCoreExt": EventCoreExt,
-    "EntityCountObject": EntityCountObject,
-    "ImpactCoreExt": ImpactCoreExt,
-    "Availability": Availability,
-    "Confidentiality": Confidentiality,
-    "External": External,
-    "Integrity": Integrity,
-    "Monetary": Monetary,
-    "Physical": Physical,
-    "Traceability": Traceability,
-    "IncidentScoreObject": IncidentScoreObject,
-    "IncidentCoreExt": IncidentCoreExt,
-    "TaskCoreExt": TaskCoreExt,
-    "EvidenceCoreExt": EvidenceCoreExt
-}
+# from stix.module.definitions.os_threat.classes import (
+#     ThreatSubObject, StateChangeObject, EventCoreExt, EntityCountObject, ImpactCoreExt, Availability,
+#     Confidentiality, External, Integrity, Monetary, Physical, Traceability, IncidentScoreObject,
+#     IncidentCoreExt, TaskCoreExt, EvidenceCoreExt
+#
+# )
+#
+# os_threat_models = {
+#     "ThreatSubObject" : ThreatSubObject,
+#     "StateChangeObject": StateChangeObject,
+#     "EventCoreExt": EventCoreExt,
+#     "EntityCountObject": EntityCountObject,
+#     "ImpactCoreExt": ImpactCoreExt,
+#     "Availability": Availability,
+#     "Confidentiality": Confidentiality,
+#     "External": External,
+#     "Integrity": Integrity,
+#     "Monetary": Monetary,
+#     "Physical": Physical,
+#     "Traceability": Traceability,
+#     "IncidentScoreObject": IncidentScoreObject,
+#     "IncidentCoreExt": IncidentCoreExt,
+#     "TaskCoreExt": TaskCoreExt,
+#     "EvidenceCoreExt": EvidenceCoreExt
+# }
 
 
 class DefinitionNames(str, Enum):

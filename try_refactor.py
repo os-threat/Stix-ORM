@@ -1572,7 +1572,7 @@ if __name__ == '__main__':
 
     mitre_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
     mitre = "data/mitre/"
-    mitre_test = "data/mitre/test/"
+    mitre_test = "data/mitre/latest/"
     osthreat = "data/os-threat/"
     reports = "data/threat_reports/"
     poison = "poisonivy.json"
@@ -1611,7 +1611,8 @@ if __name__ == '__main__':
     #test_auth()
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
-    backdoor_add_dir(osthreat + threattest)
+    #backdoor_add_dir(osthreat + threattest)
+    backdoor_add_dir(mitre_test)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)
