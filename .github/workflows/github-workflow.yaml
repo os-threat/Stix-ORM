@@ -76,5 +76,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: Flake8 Report
+          name: flake-8-report--${{ matrix.python-version }}
           path: flake8_report
