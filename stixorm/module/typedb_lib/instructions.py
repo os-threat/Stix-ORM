@@ -3,7 +3,7 @@ import traceback
 from enum import Enum
 from typing import Optional, List, Dict
 
-from networkx import DiGraph, find_cycle
+from networkx import DiGraph, find_cycle, contracted_nodes, topological_sort
 from pydantic import BaseModel
 
 
@@ -30,6 +30,7 @@ class Result(BaseModel):
     id: str
     status: ResultStatus
     error: Optional[str]
+    message: Optional[str]
 
 
 class Instructions:
@@ -39,12 +40,15 @@ class Instructions:
         self.dependencies: Optional[DiGraph] = None
         self.verified_missing_dependencies = []
         self.order = []
+        self.cyclical_references = {}
 
 
     def convert_to_result(self):
         results = []
+        message = None
         error = None
         status = ResultStatus.UNKNOWN
+        instruction: Instruction
         for instruction in self.instructions.values():
             if instruction.status in [Status.SUCCESS]:
                 status = ResultStatus.SUCCESS
@@ -57,10 +61,12 @@ class Instructions:
                 status = ResultStatus.CYCLICAL_DEPENDENCY
             elif instruction.status == Status.FAILED_MISSING_DEPENDENCY:
                 status = ResultStatus.MISSING_DEPENDENCY
-            elif instruction.status in [Status.CREATED_QUERY]:
+                message = "Missing values " + str(instruction.missing)
+            elif instruction.status in [Status.CREATED_QUERY, Status.CREATED]:
                 status = ResultStatus.VALID_FOR_DB_COMMIT
 
-            results.append(Result(id=instruction.id, error=error, status=status))
+
+            results.append(Result(id=instruction.id, error=error, status=status, message=message))
         return results
 
     def add_dependencies(self, dependencies: DiGraph):
@@ -69,6 +75,20 @@ class Instructions:
     def not_allow_insertion(self,
                             id: str):
         return self.instructions[id].status != Status.CREATED_QUERY
+
+    def __create_key(self, string1, string2):
+        concatenated_string = [string1 , string2]
+        sorted_string = ''.join(sorted(concatenated_string))
+        return sorted_string
+
+    def compress_cyclical_ids(self):
+        for tuple in self.cyclical_ids():
+            id = self.__create_key(tuple[0], tuple[1])
+            if id in self.cyclical_references:
+                continue
+            new_graph = merge(self.dependencies, tuple[0], tuple[1])
+            self.dependencies = new_graph
+            self.cyclical_references[id] = [tuple[0], tuple[1]]
 
     def cyclical_ids(self):
         try:
@@ -115,12 +135,17 @@ class Instructions:
         self.verified_missing_dependencies = missing
         instruction: AddInstruction
         for instruction in self.instructions.values():
-            if len(set(instruction.typeql_obj.dep_list).intersection(set(missing))) > 0:
+            if instruction.status == Status.ERROR:
+                continue
+            missing_dependencies = set(instruction.typeql_obj.dep_list).intersection(set(missing))
+            if len(missing_dependencies) > 0:
                 instruction.status = Status.FAILED_MISSING_DEPENDENCY
+                instruction.missing = list(missing_dependencies)
 
 
     def create_insert_queries(self,
                               build_insert_query):
+        instruction: Instruction
         for instruction in self.instructions.values():
             if instruction.status != Status.CREATED:
                 continue
@@ -167,7 +192,7 @@ class Instructions:
 
     def insert_add_instruction(self,
                                id: str,
-                               typeql_obj: TypeQLObject):
+                               typeql_obj: Optional[TypeQLObject]):
         self.instructions[id] = AddInstruction(status=Status.CREATED, id=id, typeql_obj=typeql_obj)
 
     def insert_delete_instruction(self,
@@ -234,6 +259,7 @@ class Instruction(BaseModel):
     layer: Optional[dict]
     query: Optional[str]
     error: Optional[str]
+    missing: Optional[List[str]]
 
 class AddInstruction(Instruction):
     typeql_obj: Optional[TypeQLObject]
