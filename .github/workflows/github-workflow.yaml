@@ -53,6 +53,13 @@ jobs:
           pip install pytest-cov  pytest-html pytest-bdd-html
           pytest  --verbose --cov=my_module --html=report.html --self-contained-html test/
 
+      - name: Upload pytest report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Pytest Report
+          path: report.html
+
       - name: Generate coverage report
         if: always()
         run: |
@@ -66,12 +73,6 @@ jobs:
           name: Coverage Report
           path: coverage_report
 
-      - name: Upload pytest report
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: Pytest Report
-          path: report.html
 
       - name: Upload Flake8 report
         if: always()
