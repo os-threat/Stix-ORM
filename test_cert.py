@@ -1,7 +1,9 @@
 import json
 import logging
 import re
-from stix.module.typedb_lib import TypeDBSink, TypeDBSource
+
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
+from stixorm.module.typedb_lib.factories.import_type_factory import ImportTypeFactory
 from test.oasis.dbconfig import connection
 from stix2 import (parse)
 from pathlib import Path
@@ -31,8 +33,9 @@ def load_template(file_path='./oasis/cert_template.txt'):
 def run_profiles(config: dict,template,tags,out_file):
     report = template
     # create the database and init
-    sink_db = TypeDBSink(connection=connection, clear=True,import_type= "STIX21")
-    source_db =  TypeDBSource(connection=connection, import_type="STIX21")
+    import_type = ImportTypeFactory().get_default_import()
+    sink_db = TypeDBSink(connection=connection, clear=True,import_type= import_type)
+    source_db =  TypeDBSource(connection=connection, import_type=import_type)
     # get all the initial STIX IDs (only markings should be there)
     base_ids = sink_db.get_stix_ids()
     # markings should be automatically ignored
@@ -181,7 +184,7 @@ def run_profile(short,
 if __name__ == '__main__':
     cwd = Path.cwd()
     logger.info(f'Running tests in {cwd}')
-    tests = load_personas(file_path=Path.joinpath(cwd,'data','stix_cert_data','stix_cert_persona_dict.json'))
+    tests = load_personas(file_path=Path.joinpath(cwd, 'test/data', 'stix_cert_data', 'stix_cert_persona_dict.json'))
     template,tags = load_template(file_path=Path.joinpath(cwd, 'test/oasis', 'cert_template.txt'))
     logger.info(f"Profiles: {list(tests.keys())}")
     run_profiles(tests, template, tags, out_file=Path.joinpath(cwd, 'test/oasis', 'report.txt'))

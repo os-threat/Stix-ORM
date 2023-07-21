@@ -1,12 +1,13 @@
 import json
-import logging
 import pathlib
-import unittest
 from typing import List
 
-from stix.module.authorise import import_type_factory
-from stix.module.typedb import TypeDBSink
-from stix.module.typedb_lib.instructions import ResultStatus
+import pytest
+
+from stixorm.module.authorise import import_type_factory
+from stixorm.module.typedb import TypeDBSink
+from stixorm.module.typedb_lib.factories.import_type_factory import ImportTypeFactory
+from stixorm.module.typedb_lib.instructions import ResultStatus
 
 connection = {
     "uri": "localhost",
@@ -15,14 +16,12 @@ connection = {
     "user": None,
     "password": None
 }
-schema_path = path = str(pathlib.Path(__file__).parents[1])
 
-
-
-import_type = import_type_factory.get_all_imports()
+import_type = import_type_factory.create_import(stix_21=False,
+                                                os_threat=True)
 
 def variable_all_standard_data_filepaths() -> List[str]:
-    top_dir_path = pathlib.Path(__file__).parents[1]
+    top_dir_path = pathlib.Path(__file__).parents[0]
     standard_data_path = top_dir_path.joinpath("data/os-threat/")
     paths = []
 
@@ -32,27 +31,31 @@ def variable_all_standard_data_filepaths() -> List[str]:
             paths.append(str(file))
 
     return [paths[0]]
-class TestOSThreat(unittest.TestCase):
+@pytest.fixture(scope="class")
+def typedb_sink():
+    connection = {
+        "uri": "localhost",
+        "port": "1729",
+        "database": "stix",
+        "user": None,
+        "password": None
+    }
+    schema_path = "path/to/schema.json"
+    typedb = TypeDBSink(connection=connection, clear=False, import_type=import_type)
+    yield typedb
+    typedb.clear_db()
 
-    def setUp(self):
-        self.clean_db()
+class TestOSThreat:
+    def test_delete_dir(self, typedb_sink):
+        file_paths = variable_all_standard_data_filepaths()
+        for file_path in file_paths:
+            json_text = self.get_json_from_file(file_path)
+            typedb_sink.add(json_text)
 
-    def tearDown(self):
-        self.clean_db()
+        stix_id_list = typedb_sink.get_stix_ids()
+        typedb_sink.delete(stix_id_list)
 
-    def clean_db(self):
-        """ Get all stix-ids and delete them
-
-        """
-        typedb = TypeDBSink(connection=connection,
-                            clear=False,
-                            import_type=import_type,
-                            schema_path=schema_path)
-
-        typedb.clear_db()
-
-    def get_json_from_file(self,
-                           file_path: str) -> List[dict]:
+    def get_json_from_file(self, file_path):
         assert pathlib.Path(file_path).is_file()
 
         with open(file_path, mode="r", encoding="utf-8") as f:
@@ -63,29 +66,6 @@ class TestOSThreat(unittest.TestCase):
 
         return json_text
 
-    def validate_has_missing_dependencies(self,
-                                   results):
+    def validate_has_missing_dependencies(self, results):
         for result in results:
             assert result.status in [ResultStatus.VALID_FOR_DB_COMMIT, ResultStatus.MISSING_DEPENDENCY]
-
-    def test_delete_dir(self):
-        """ Load an entire directory and delete all files except marking objects
-
-        """
-        file_paths = variable_all_standard_data_filepaths()
-        typedb_sink = TypeDBSink(connection=connection,
-                                 clear=True,
-                                 import_type=import_type,
-                                 schema_path=schema_path)
-        for file_path in file_paths:
-            json_text = self.get_json_from_file(file_path)
-            typedb_sink.add(json_text)
-
-        stix_id_list = typedb_sink.get_stix_ids()
-        typedb_sink.delete(stix_id_list)
-
-if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG,
-                        filename="test.log")
-    loader = unittest.TestLoader()
-    unittest.main()

@@ -11,7 +11,7 @@ import itertools as it
 class StixComparator(object):
 
     def __init__(self):
-        with open('../stix/module/definitions/common/data/is_list_sro.json', 'r') as file:
+        with open('../stixorm/module/definitions/common/data/is_list_sro.json', 'r') as file:
             self._sro_list = json.load(file)
 
     def property_check(self,a,b,key,property_type):
@@ -101,7 +101,7 @@ if __name__ == '__main__':
         return matched
 
     # test granular markings
-    filename = '../data/examples/granular_markings.json'
+    filename = 'data/examples/granular_markings.json'
     with open(filename, mode="r", encoding="utf-8") as file:
         json_blob = json.load(file)
 

@@ -1,13 +1,14 @@
+import os
 import pathlib
-import unittest
 import json
 import itertools as it
 import glob
 import logging
 
-from stix.module.typedb import TypeDBSource, TypeDBSink
-from stix.module.typedb_lib.factories.import_type_factory import ImportTypeFactory
-from test.dbconfig import *
+import pytest
+
+from stixorm.module.typedb import TypeDBSource, TypeDBSink
+from stixorm.module.typedb_lib.factories.import_type_factory import ImportTypeFactory
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
@@ -113,77 +114,70 @@ class StixComparator(object):
 
             return len(not_equals)==0,equals,not_equals
 
-class TestDatabase(unittest.TestCase):
+@pytest.fixture(scope="class")
+def typedb_connection():
+    connection = {
+        "uri": "localhost",
+        "port": "1729",
+        "database": "stix",
+        "user": None,
+        "password": None
+    }
+    import_type = ImportTypeFactory().get_default_import()
+    typedb_sink = TypeDBSink(connection=connection, clear=True, import_type=import_type)
+    typedb_source = TypeDBSource(connection=connection, import_type=import_type)
+    data_folder = pathlib.Path(__file__).parents[0].joinpath("data/examples/")
+    example = str(pathlib.Path(__file__).parents[0].joinpath("data/examples/"))
 
-    @classmethod
-    def setUpClass(cls):
-        '''
-        Create a connection to the database and reset it
-        '''
-        connection = {
-            "uri": "localhost",
-            "port": "1729",
-            "database": "stix",
-            "user": None,
-            "password": None
-        }
+    yield typedb_sink, typedb_source, data_folder, example
 
-        import_type = ImportTypeFactory().get_default_import()
-        cls._typedbSink = TypeDBSink(connection=connection, clear=True, import_type=import_type)
-        cls._typedbSource = TypeDBSource(connection=connection, import_type=import_type)
-        cls._data_folder = pathlib.Path(__file__).parents[1].joinpath("data/examples/")
-        cls._example = str(pathlib.Path(__file__).parents[1].joinpath("data/examples/"))
+    # Teardown code, if needed
 
+class TestDatabase:
+    def test_markings(self, typedb_connection):
+        typedb_sink, _, data_folder, _ = typedb_connection
 
-    @classmethod
-    def tearDownClass(cls):
-        pass
+        assert os.path.exists(data_folder)
 
-    def test_markings(self):
+        filename = data_folder.joinpath("marking_definitions.json")
 
-        self.assertTrue(os.path.exists(self._example))
-
-        filename = self._data_folder.joinpath("marking_definitions.json")
-
-        logger.info(f'Loading file {filename}')
-        with open(filename,mode="r", encoding="utf-8") as file:
+        logging.info(f'Loading file {filename}')
+        with open(filename, mode="r", encoding="utf-8") as file:
             stix_dict = json.load(file)
             stix_obj = parse(stix_dict)
-            self._typedbSink.add(stix_obj)
+            typedb_sink.add(stix_obj)
 
-    def test_others(self):
+    def test_others(self, typedb_connection):
+        typedb_sink, typedb_source, data_folder, example = typedb_connection
 
-        self.assertTrue(os.path.exists(self._example))
+        assert os.path.exists(data_folder)
 
-        for filename in sorted(glob.glob(self._example + '*.json')):
-            logger.info(f'Testing file {filename}')
+        for filename in sorted(glob.glob(example + '*.json')):
+            logging.info(f'Testing file {filename}')
             with open(filename, mode="r", encoding="utf-8") as file:
                 if filename.endswith('marking_definitions.json'):
                     continue
                 else:
-                    logger.info(f'Loading file {filename}')
+                    logging.info(f'Loading file {filename}')
                     json_blob = json.load(file)
 
                     if isinstance(json_blob, list):
                         for item in json_blob:
                             stix_obj = parse(item)
-                            self._typedbSink.add(stix_obj)
-                            return_dict = self._typedbSource.get(stix_obj.id)
+                            typedb_sink.add(stix_obj)
+                            return_dict = typedb_source.get(stix_obj.id)
                             return_obj = parse(return_dict)
                             cmp = StixComparator()
                             check, p_ok, p_not = cmp.compare(stix_obj, return_obj)
-                            self.assertTrue(check)
+                            assert check
                     else:
                         bundle = parse(json_blob)
                         for stix_obj in bundle.objects:
-                            self._typedbSink.add(stix_obj)
-                            return_dict = self._typedbSource.get(stix_obj.id)
+                            typedb_sink.add(stix_obj)
+                            return_dict = typedb_source.get(stix_obj.id)
                             return_obj = parse(return_dict)
                             cmp = StixComparator()
                             check, p_ok, p_not = cmp.compare(stix_obj, return_obj)
-                            logger.info(f'OK properties {p_ok}')
-                            logger.info(f'KO properties {p_not}')
-                            self.assertTrue(check)
-
-if __name__ == '__main__':
-    unittest.main()
+                            logging.info(f'OK properties {p_ok}')
+                            logging.info(f'KO properties {p_not}')
+                            assert check
