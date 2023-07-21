@@ -51,14 +51,16 @@ jobs:
       - name: Run pytest with coverage
         run: |
           pip install pytest-cov  pytest-html pytest-bdd-html
-          pytest  --verbose --cov=my_module --html=report.html --self-contained-html test/
+          pytest  --verbose --cov=Stix-ORM --cov-report=html --html=report.html --self-contained-html test/
 
       - name: Upload pytest report
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: test-report-${{ matrix.python-version }}
-          path: report.html
+          path: |
+            report.html
+            Stix-ORM/htmlcov
 
       - name: Generate coverage report
         if: always()
