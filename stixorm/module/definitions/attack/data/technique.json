@@ -9,6 +9,7 @@
   "x_mitre_tactic_type": "x-mitre-tactic-type",
   "x_mitre_permissions_required": "x-mitre-permissions-required",
   "x_mitre_effective_permissions": "x-mitre-effective-permissions",
+  "x_mitre_network_requirements": "x-mitre-network-requirements",
   "x_mitre_defense_bypassed": "x-mitre-defense-bypassed",
   "x_mitre_remote_support": "x-mitre-remote-support",
   "x_mitre_impact_type": "x-mitre-impact-type",
