@@ -48,9 +48,13 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --format=html --htmldir=flake8_report
 
+      - name: Run Bandit Security Check
+        run: |
+          bandit -r Stix-ORM -f json -o bandit_report.json || echo "##[error]Bandit security check failed."
+
       - name: Run pytest with coverage
         run: |
-          pip install pytest-cov  pytest-html pytest-bdd-html
+          pip install pytest-cov  pytest-html pytest-bdd-html bandit
           pytest  --verbose --cov=Stix-ORM --cov-report=html --html=report.html --self-contained-html test/
 
       - name: Upload pytest report
@@ -62,19 +66,11 @@ jobs:
             report.html
             Stix-ORM/htmlcov
 
-      - name: Generate coverage report
-        if: always()
-        run: |
-          pip install coverage
-          coverage html -d coverage_report
-
-      - name: Upload coverage report
-        if: always()
+      - name: Upload Bandit Report
         uses: actions/upload-artifact@v2
         with:
-          name: Coverage Report
-          path: coverage_report
-
+          name: bandit-report-${{ matrix.python-version }}
+          path: bandit_report.json
 
       - name: Upload Flake8 report
         if: always()
