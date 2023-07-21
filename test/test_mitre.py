@@ -1,14 +1,14 @@
 import json
 import logging
 import pathlib
+from typing import List
 
 import pytest
 import requests
 
 from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink
-from stixorm.module.typedb_lib.instructions import ResultStatus
-
+from stixorm.module.typedb_lib.instructions import ResultStatus, Result
 
 connection = {
     "uri": "localhost",
@@ -119,6 +119,16 @@ def setup_teardown():
 class TestMitre:
 
 
+    def validate_successful_result(self,
+                                   results: List[Result]):
+        for result in results:
+            if result.status not in [ ResultStatus.SUCCESS, ResultStatus.ALREADY_IN_DB]:
+                message = "" if result.message is None else result.message
+                error = "" if result.error is None else result.error
+                logging.info("Unsuccessful results " + result.id + " " + str(result.status) + " " + message + " " + error)
+        for result in results:
+            assert result.status in [ ResultStatus.SUCCESS, ResultStatus.ALREADY_IN_DB]
+
     def test_traffic_duplication_json(self, setup_teardown, typedb, traffic_duplication_json):
 
         result = typedb.add(traffic_duplication_json)
@@ -129,7 +139,16 @@ class TestMitre:
         result = typedb.add(json_data)
         validate_is_successful(result)
 
+    def test_load_enterprise_attack_13_1(self, setup_teardown, typedb):
+        top_dir_path = pathlib.Path(__file__).parents[0]
+        file_path = top_dir_path.joinpath("data").joinpath("mitre").joinpath("enterprise-attack-13.1.json")
+        with open(str(file_path), "r") as file:
+            data = json.load(file)
 
+        result = typedb.add(data)
+        self.validate_successful_result(result)
+
+    @pytest.mark.skip(reason="This will be added later")
     @pytest.mark.parametrize("url", attack_data())
     def test_load_attack_stix_data(self, setup_teardown, typedb, url):
         response = requests.get(url)
