@@ -57,7 +57,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: Pytest Report
+          name: test-report-${{ matrix.python-version }}
           path: report.html
 
       - name: Generate coverage report
