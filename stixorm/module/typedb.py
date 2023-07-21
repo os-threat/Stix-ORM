@@ -24,7 +24,7 @@ from stixorm.module.typedb_lib.logging import log_delete_instruction, log_delete
 from stixorm.module.typedb_lib.queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query,\
     build_insert_query, query_id, add_instructions_to_typedb
 from stixorm.module.typedb_lib.file import write_to_file
-from stixorm.module.typedb_lib.instructions import Instructions, Status, AddInstruction, TypeQLObject
+from stixorm.module.typedb_lib.instructions import Instructions, Status, AddInstruction, TypeQLObject, Result
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType, ImportTypeFactory
 
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
@@ -347,7 +347,6 @@ class TypeDBSink(DataSink):
         logger.debug(f'\n-------------------------------------------------------------\n i have parsed\n')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
         logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
-        dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
         typeql_obj = TypeQLObject(
             dep_match=dep_match,
             dep_insert=dep_insert,
@@ -363,17 +362,17 @@ class TypeDBSink(DataSink):
                                 obj_list) -> Instructions:
         instructions = Instructions()
         for stix_dict in obj_list:
+            try:
+                typeql_object_result = self.__generate_typeql_object(stix_dict)
 
-            typeql_object_result = self.__generate_typeql_object(stix_dict)
-
-            typeql_object: TypeQLObject = typeql_object_result
-            instructions.insert_add_instruction(stix_dict['id'], typeql_object)
-
-            #typeql_object: TypeQLObject = typeql_object_result.unwrap()
-           # is_missing = len(typeql_object.dep_list) == 0
-            #if is_missing:
-            #    instructions.insert_add_insert_missing_dependency(stix_dict['id'], typeql_object)
-            #else:
+                typeql_object: TypeQLObject = typeql_object_result
+                instructions.insert_add_instruction(stix_dict['id'], typeql_object)
+            except Exception as e:
+                logging.error("Error generating instructions for " + stix_dict['id'])
+                logging.error(e)
+                instructions.insert_add_instruction(stix_dict['id'], None)
+                traceback_str = traceback.format_exc()
+                instructions.update_instruction_as_error(stix_dict['id'], traceback_str)
 
 
         return instructions
@@ -384,27 +383,33 @@ class TypeDBSink(DataSink):
         directed_graph = nx.DiGraph()
         instruction: AddInstruction
         for instruction in instructions.instructions.values():
+            try:
+                if instruction.status in [Status.ERROR]:
+                    logging.debug("Skipping error " + instruction.id)
+                    continue
 
-            if instruction.status in [Status.ERROR]:
-                logging.debug("Skipping error " + instruction.id)
-                continue
+                dependencies = instruction.typeql_obj.dep_list
 
-            dependencies = instruction.typeql_obj.dep_list
-
-            this_node = instruction.id
-            if not directed_graph.has_node(this_node):
-                # logging.info("Already has node id " + this_node)
-                # logging.info("Inserting dependency node " + this_node)
-                directed_graph.add_node(this_node)
-
-            for dependency_node in dependencies:
-                if not directed_graph.has_node(dependency_node):
-                   # logging.info("Already has dependency node id " + this_node)
-
-                   # logging.info("Dependency node does not exist id " + this_node)
+                this_node = instruction.id
+                if not directed_graph.has_node(this_node):
+                    # logging.info("Already has node id " + this_node)
+                    # logging.info("Inserting dependency node " + this_node)
                     directed_graph.add_node(this_node)
-                directed_graph.add_edge(dependency_node, this_node)
-        instructions.add_dependencies(directed_graph)
+
+                for dependency_node in dependencies:
+                    if not directed_graph.has_node(dependency_node):
+                       # logging.info("Already has dependency node id " + this_node)
+
+                       # logging.info("Dependency node does not exist id " + this_node)
+                        directed_graph.add_node(this_node)
+                    directed_graph.add_edge(dependency_node, this_node)
+                instructions.add_dependencies(directed_graph)
+            except Exception as e:
+                logging.error("Error creating dependency graph for " + instruction.id)
+                logging.error(e)
+                traceback_str = traceback.format_exc()
+                instructions.update_instruction_as_error(instruction.id, traceback_str)
+
         return instructions
 
 
@@ -440,14 +445,17 @@ class TypeDBSink(DataSink):
 
     def __reorder_instructions(self,
                                instructions: Instructions):
-        order = list(nx.topological_sort(instructions.dependencies))
-        instructions.add_insertion_order(order)
+        try:
+            order = list(nx.topological_sort(instructions.dependencies))
+            instructions.add_insertion_order(order)
+        except Exception as e:
+            logging.exception(e)
         return instructions
 
 
 
 
-    def add(self, stix_data: Optional[List[dict]] = None) -> bool:
+    def add(self, stix_data: Optional[List[dict]] = None) -> List[Result]:
         """Add STIX objects to the typedb_lib server.
             1. Gather objects into a list
             2. For each object
@@ -481,8 +489,7 @@ class TypeDBSink(DataSink):
         if instructions.exist_missing_dependencies():
             return instructions.convert_to_result()
         if instructions.exist_cyclical_ids():
-            cycles = instructions.cyclical_ids()
-            raise Exception("Cycles exist in " + str(cycles))
+            instructions.compress_cyclical_ids()
 
         reorder_result = self.__reorder_instructions(instructions)
 
