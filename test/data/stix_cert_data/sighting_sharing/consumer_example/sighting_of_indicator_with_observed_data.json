@@ -1,0 +1,72 @@
+[
+    {
+      "type": "identity",
+      "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp, Inc.",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "identity",
+      "id": "identity--f6e43aa5-76cc-45ca-9b06-be2d65f26bfb",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp Sighting, Inc.",
+      "created": "2015-01-20T12:34:56.000Z",
+      "modified": "2015-01-20T12:34:56.000Z"
+  },
+  {
+      "type": "file",
+      "spec_version": "2.1",
+      "id": "file--30038539-3eb6-44bc-a59e-d0d3fe84695a",
+      "hashes": {
+          "SHA-256": "fe90a7e910cb3a4739bed9180e807e93fa70c90f25a8915476f5e4bfbac681db"
+      },
+      "size": 25536,
+      "name": "foo.dll"
+  },
+  {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f",
+      "created_by_ref": "identity--f6e43aa5-76cc-45ca-9b06-be2d65f26bfb",
+      "created": "2016-04-06T20:03:48.000Z",
+      "modified": "2016-04-06T20:03:48.000Z",
+      "indicator_types": ["malicious-activity"],
+      "name": "Poison Ivy Malware",
+      "description": "This file is part of Poison Ivy",
+      "pattern": "[ file:hashes.'SHA-256' = '4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877' ]",
+      "pattern_type": "stix",
+      "valid_from": "2016-01-01T00:00:00Z"
+  },
+  {
+      "type": "observed-data",
+      "spec_version": "2.1",
+      "id": "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2016-04-06T19:58:16.000Z",
+      "modified": "2016-04-06T19:58:16.000Z",
+      "first_observed": "2015-12-21T19:00:00Z",
+      "last_observed": "2016-04-06T19:58:16Z",
+      "number_observed": 50,
+      "object_refs": [
+          "file--30038539-3eb6-44bc-a59e-d0d3fe84695a"
+      ]
+  },
+  {
+      "type": "sighting",
+      "spec_version": "2.1",
+      "id": "sighting--ee20065d-2555-424f-ad9e-0f8428623c75",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2016-04-06T20:08:31.000Z",
+      "modified": "2016-04-06T20:08:31.000Z",
+      "first_seen": "2015-12-21T19:00:00Z",
+      "last_seen": "2015-12-21T19:00:00Z",
+      "count": 50,
+      "sighting_of_ref": "indicator--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f",
+      "observed_data_refs": ["observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"],
+      "where_sighted_refs": ["identity--f6e43aa5-76cc-45ca-9b06-be2d65f26bfb"]
+  }
+]

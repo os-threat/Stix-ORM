@@ -1,0 +1,50 @@
+[
+  {
+      "type": "identity",
+      "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp, Inc.",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "malware",
+      "spec_version": "2.1",
+      "id": "malware--aee92322-7e90-431a-8015-56b3d31773d5",
+      "created": "2019-05-12T08:17:27.000Z",
+      "modified": "2019-05-12T08:17:27.000Z",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "name": "Cryptolocker",
+      "description": "A variant of the cryptolocker family",
+      "malware_types": [ "ransomware" ],
+      "is_family": false
+  },{
+      "type": "attack-pattern",
+      "id": "attack-pattern--b80d107d-fa0d-4b60-9684-b0433e8bdba0",
+      "spec_version": "2.1",
+      "created": "2019-03-15T13:59:30.390Z",
+      "modified": "2019-03-15T13:59:30.390Z",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "kill_chain_phases": [
+          {
+              "kill_chain_name": "mitre-attack",
+              "phase_name": "impact"
+          }
+      ],
+      "name": "Data Encrypted for Impact",
+      "description": "Adversaries may encrypt data on target systems or on large numbers of systems in a network to interrupt availability to system and network resources…"
+  },
+  {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--300b07c2-8fb7-41b0-b3e5-dbff05310047",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2020-01-16T18:52:24.277Z",
+      "modified": "2020-01-16T18:52:24.277Z",
+      "relationship_type": "uses",
+      "source_ref": "malware--aee92322-7e90-431a-8015-56b3d31773d5",
+      "target_ref": "attack-pattern--b80d107d-fa0d-4b60-9684-b0433e8bdba0",
+      "object_marking_refs": ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"]
+  }
+]

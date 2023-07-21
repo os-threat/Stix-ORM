@@ -1,0 +1,93 @@
+[
+    {
+        "type": "identity",
+        "id": "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283",
+        "spec_version": "2.1",
+        "identity_class": "organization",
+        "name": "ACME Corp, Inc.",
+        "created": "2018-01-17T11:11:13.000Z",
+        "modified": "2018-01-17T11:11:13.000Z"
+    },
+    {
+        "type": "ipv4-addr",
+        "spec_version": "2.1",
+        "id": "ipv4-addr--4d22aae0-2bf9-5427-8819-e4f6abf20a53",
+        "value": "128.29.99.14"
+    },
+    {
+        "type": "ipv4-addr",
+        "spec_version": "2.1",
+        "id": "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8",
+        "value": "198.51.100.3"
+    },
+    {
+        "type": "network-traffic",
+        "spec_version": "2.1",
+        "id": "network-traffic--2568d22a-8998-58eb-99ec-3c8ca74f527d",
+        "src_ref": "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8",
+        "dst_ref": "ipv4-addr--4d22aae0-2bf9-5427-8819-e4f6abf20a53",
+        "protocols": [
+            "tcp"
+        ]
+    },
+    {
+        "type": "domain-name",
+        "spec_version": "2.1",
+        "id": "domain-name--ecb120bf-2694-4902-a737-62b74539a41b",
+        "value": "suspiciousplace.com",
+        "resolves_to_refs": [ "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8" ]
+    },
+    {
+        "type": "observed-data",
+        "spec_version": "2.1",
+        "id": "observed-data--83422c77-904c-4dc1-aff5-5c38f3a2c55c",
+        "created_by_ref": "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283",
+        "created": "2020-04-21T03:51:01.000Z",
+        "modified": "2020-04-21T03:51:01.000Z",
+        "first_observed": "2020-04-21T02:11:01.000Z",
+        "last_observed": "2020-04-21T02:11:01.000Z",
+        "number_observed": 1,
+        "object_refs": [
+            "network-traffic--2568d22a-8998-58eb-99ec-3c8ca74f527d"
+        ]
+    },
+    {
+        "type": "observed-data",
+        "spec_version": "2.1",
+        "id": "observed-data--26ffb872-1dd9-446e-b6f5-d58527e5b5d2",
+        "created_by_ref": "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283",
+        "created": "2020-04-18T09:34:11.000Z",
+        "modified": "2020-04-18T09:34:11.000Z",
+        "first_observed": "2020-04-18T06:14:10.000Z",
+        "last_observed": "2020-04-18T09:12:31.000Z",
+        "number_observed": 50,
+        "object_refs": [
+            "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8",
+            "domain-name--ecb120bf-2694-4902-a737-62b74539a41b"
+        ]
+    },
+    {
+        "type": "grouping",
+        "spec_version": "2.1",
+        "id": "grouping--84e4d88f-44ea-4bcd-bbf3-b2c1c320bcb3",
+        "created_by_ref": "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283",
+        "created": "2020-04-21T19:59:11.000Z",
+        "modified": "2020-04-21T19:59:11.000Z",
+        "name": "Suspicious event Grouping",
+        "context": "suspicious-activity",
+        "object_refs": [
+            "observed-data--26ffb872-1dd9-446e-b6f5-d58527e5b5d2",
+            "observed-data--83422c77-904c-4dc1-aff5-5c38f3a2c55c"
+        ]
+    },
+    {
+        "type": "sighting",
+        "spec_version": "2.1",
+        "id": "sighting--49247b1f-6158-480f-ad26-6a2f9303f22b",
+        "created_by_ref": "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283",
+        "created": "2020-04-22T03:51:01.000Z",
+        "modified": "2020-04-22T03:51:01.000Z",
+        "sighting_of_ref": "grouping--84e4d88f-44ea-4bcd-bbf3-b2c1c320bcb3",
+        "observed_data_refs": [ "observed-data--83422c77-904c-4dc1-aff5-5c38f3a2c55c" ]
+    }
+]

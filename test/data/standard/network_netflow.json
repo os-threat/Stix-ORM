@@ -1,0 +1,31 @@
+[
+    {
+        "type": "ipv4-addr",      
+        "spec_version": "2.1",      
+        "id": "ipv4-addr--e42c19c8-f9fe-5ae9-9fc8-22c398f78fb7",      
+        "value": "203.0.113.1"      
+    },
+    {      
+        "type": "ipv4-addr",      
+        "spec_version": "2.1",      
+        "id": "ipv4-addr--03b708d9-7761-2355-ab75-5ea096294a68",
+        "value": "203.0.113.5"      
+    },
+    {      
+        "type": "network-traffic",      
+        "spec_version": "2.1",      
+        "id": "network-traffic--630d7bb1-0bbc-53a6-a6d4-f3c2d35c2734",      
+        "src_ref": "ipv4-addr--e42c19c8-f9fe-5ae9-9fc8-22c398f78fb7",      
+        "dst_ref": "ipv4-addr--03b708d9-7761-2355-ab75-5ea096294a68",
+        "protocols": [      
+          "ipv4",      
+          "tcp"      
+        ],      
+        "src_byte_count": 147600,      
+        "src_packets": 100,      
+        "ipfix": {      
+          "minimumIpTotalLength": 32,      
+          "maximumIpTotalLength": 2556      
+        }      
+      }
+]

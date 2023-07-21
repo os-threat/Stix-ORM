@@ -1,0 +1,91 @@
+[
+{
+    "type": "identity",           
+    "spec_version": "2.1",
+    "id": "identity--93607fcf-a0cc-572f-bcc6-92082f856b37",
+    "created": "2017-02-15T13:29:42.904Z",
+    "modified": "2017-02-15T13:29:42.904Z",
+    "name": "HelloInteropWorld Inc.",
+    "identity_class": "organization"
+},      
+{
+    "spec_version": "2.1",
+    "type": "infrastructure",
+    "id": "infrastructure--bb054b70-d97e-5451-aa68-e31c72c791d1",
+    "created": "2019-11-10T10:01:15.000Z",
+    "modified": "2019-11-10T10:01:15.000Z",
+    "created_by_ref": "identity--93607fcf-a0cc-572f-bcc6-92082f856b37",
+    "infrastructure_types": [ "c2" ],
+    "name": "c2--https://corpcougar.com/mexzi/Panel/five/fre.php"
+},
+{
+    "spec_version": "2.1",
+    "type": "malware",
+    "id": "malware--77362faf-ac50-5479-a9ec-d70dfc830850",
+    "created": "2018-10-18T09:26:03.235Z",
+    "modified": "2019-02-11T01:46:23.000Z",
+    "created_by_ref": "identity--93607fcf-a0cc-572f-bcc6-92082f856b37",
+    "name": "LOKIBOT",
+    "is_family": true,
+    "malware_types": ["bot"],
+    "external_references": [
+        {
+            "source_name": "FireEye",
+            "external_id": "17-00005991",
+            "description": "LokiBot Malware Overview"
+        }
+    ]
+},
+{
+    "spec_version": "2.1",
+    "type": "url",
+    "id": "url--7c9374bc-0ccf-511d-a8f2-0af7965fe06e",
+    "value": "https://corpcougar.com/mexzi/Panel/five/fre.php"
+},
+{
+    "spec_version": "2.1",
+    "type": "indicator",
+    "id": "indicator--2b254bc2-5da2-56c0-9e24-d19342934f63",
+    "created": "2019-11-11T10:01:15.000Z",
+    "modified": "2019-11-11T10:01:15.000Z",
+    "created_by_ref": "identity--93607fcf-a0cc-572f-bcc6-92082f856b37",
+    "indicator_types": "malicious-activity",
+    "pattern_type": "stix",
+    "pattern": "[url:value='https://corpcougar.com/mexzi/Panel/five/fre.php']",
+    "valid_from": "2019-11-16T10:00:57.147Z",
+    "valid_until": "2019-11-23T10:00:57.000Z"
+},
+{
+    "spec_version": "2.1",
+    "type": "relationship",
+    "id": "relationship--445ba3b4-1e46-48cd-9e31-3491894373b5",
+    "created": "2019-11-16T10:01:15.001Z",
+    "modified": "2019-11-16T10:01:15.001Z",
+    "created_by_ref": "identity--93607fcf-a0cc-572f-bcc6-92082f856b37",
+    "relationship_type": "delivers",
+    "source_ref": "infrastructure--bb054b70-d97e-5451-aa68-e31c72c791d1",
+    "target_ref": "malware--77362faf-ac50-5479-a9ec-d70dfc830850"
+},
+{
+    "spec_version": "2.1",
+    "type": "relationship",
+    "id": "relationship--13d8a9d0-d968-446d-b9e3-9f18b208ebbb",
+    "created": "2019-11-16T10:01:15.002Z",
+    "modified": "2019-11-16T10:01:15.002Z",
+    "created_by_ref": "identity--93607fcf-a0cc-572f-bcc6-92082f856b37",
+    "relationship_type": "indicates",
+    "source_ref": "indicator--2b254bc2-5da2-56c0-9e24-d19342934f63",
+    "target_ref": "infrastructure--bb054b70-d97e-5451-aa68-e31c72c791d1"
+},
+{
+    "spec_version": "2.1",
+    "type": "relationship",
+    "id": "relationship--f58d1dcf-a24a-479f-a2f2-29c4881ee285",
+    "created": "2019-11-16T10:01:15.005Z",
+    "modified": "2019-11-16T10:01:15.005Z",
+    "created_by_ref": "identity--93607fcf-a0cc-572f-bcc6-92082f856b37",
+    "relationship_type": "consists-of",
+    "source_ref": "infrastructure--bb054b70-d97e-5451-aa68-e31c72c791d1",
+    "target_ref": "url--7c9374bc-0ccf-511d-a8f2-0af7965fe06e"
+}  
+]

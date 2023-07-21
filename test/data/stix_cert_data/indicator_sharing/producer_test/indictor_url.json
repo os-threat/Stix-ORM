@@ -1,0 +1,24 @@
+[
+  {
+      "type": "identity",
+      "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp, Inc.",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "indicator",
+      "id": "indicator--21edc30b-11c9-406d-867a-42fb4bdeedda",
+      "spec_version": "2.1",
+      "name": "Bad URL",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z",
+      "valid_from": "2018-01-01T00:00:00.000Z",
+      "indicator_types": ["malicious-activity"],
+      "pattern": "[url:value = 'https://www.5z8.info/foo']",
+      "pattern_type": "stix"
+  }
+]

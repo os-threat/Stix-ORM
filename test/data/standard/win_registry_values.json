@@ -1,0 +1,17 @@
+[{    "type": "windows-registry-key",  
+    "spec_version": "2.1",  
+    "id": "windows-registry-key--2ba37ae7-2745-5082-9dfd-9486dad41016",  
+    "key": "hkey_local_machine\\system\\bar\\foo",  
+    "values": [  
+      {  
+        "name": "Foo",  
+        "data": "qwerty",  
+        "data_type": "REG_SZ"  
+      },  
+      {  
+        "name": "Bar",  
+        "data": "42",  
+        "data_type": "REG_DWORD"  
+      }  
+    ]  
+  }]

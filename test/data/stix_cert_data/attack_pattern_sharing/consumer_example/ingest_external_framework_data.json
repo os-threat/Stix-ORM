@@ -1,0 +1,39 @@
+[
+  {
+      "type": "identity",
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "The MITRE Corporation",
+      "created": "2017-06-01T00:00:00.000Z",
+      "modified": "2017-06-01T00:00:00.000Z"
+  },
+  {
+      "type": "attack-pattern",
+      "id": "attack-pattern--b80d107d-fa0d-4b60-9684-b0433e8bdba0",
+      "spec_version": "2.1",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "created": "2019-03-15T13:59:30.390Z",
+      "modified": "2019-07-19T14:35:12.349Z",
+      "name": "Data Encrypted for Impact",
+      "description": "Adversaries may encrypt data on target systems or on large numbers of systems in a network to interrupt availability to system and network resources...",
+      "kill_chain_phases": [
+          {
+              "kill_chain_name": "mitre-attack",
+              "phase_name": "impact"
+          }
+      ],
+      "external_references": [
+          {
+              "source_name": "mitre-attack",
+              "external_id": "T1486",
+              "url": "https://attack.mitre.org/techniques/T1486"
+          },
+          {
+              "source_name": "US-CERT Ransomware 2016",
+              "description": "US-CERT. (2016, March 31). Alert (TA16-091A): Ransomware and Recent Variants. Retrieved March 15, 2019.",
+              "url": "https://www.us-cert.gov/ncas/alerts/TA16-091A"
+          }
+      ]
+  }  
+]

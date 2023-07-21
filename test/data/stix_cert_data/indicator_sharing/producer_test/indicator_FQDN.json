@@ -1,0 +1,24 @@
+[
+  {
+      "type": "identity",
+      "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp, Inc.",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "indicator",
+      "id": "indicator--69a4eedb-05c5-463b-ba59-65257d652cf4",
+      "spec_version": "2.1",
+      "name": "Bad Domain",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z",
+      "valid_from": "2018-01-01T00:00:00.000Z",
+      "indicator_types": ["malicious-activity"],
+      "pattern": "[domain-name:value = 'www.5z8.info']",
+      "pattern_type": "stix"
+  }
+]

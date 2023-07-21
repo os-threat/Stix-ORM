@@ -1,0 +1,46 @@
+[
+  {
+      "type": "identity",
+      "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp Sighting, Inc.",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "course-of-action",
+      "id": "course-of-action--17ce1618-0aab-4366-a93a-9d290282995e",
+      "spec_version": "2.1",
+      "name": "Add TCP port 80 Filter Rule to the existing Block UDP 1434 Filter",
+      "description": "This is how to add a filter rule to block inbound access to TCP port 80 to the existing UDP 1434 filter..",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "indicator",
+      "id": "indicator--bc7a2301-d711-465d-a8bf-97d50e1cb68f",
+      "spec_version": "2.1",
+      "name": "Poison Ivy Malware",
+      "description": "Popular remote access tool.",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z",
+      "valid_from": "2018-01-01T00:00:00.000Z",
+      "indicator_types": ["malicious-activity"],
+      "pattern": "[file:hashes.MD5 = '3773a88f65a5e780c8dff9cdc3a056f3']",
+      "pattern_type": "stix"
+  },
+  {
+      "type": "relationship",
+      "id": "relationship--1d79e2b8-c4e2-4f64-a9b3-739de42bc1c6",
+      "spec_version": "2.1",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z",
+      "source_ref": "course-of-action--17ce1618-0aab-4366-a93a-9d290282995e",
+      "target_ref": "indicator--bc7a2301-d711-465d-a8bf-97d50e1cb68f",
+      "relationship_type": "mitigates"
+  }
+]

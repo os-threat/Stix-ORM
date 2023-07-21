@@ -1,0 +1,55 @@
+[
+    {
+        "type": "ipv4-addr",      
+        "spec_version": "2.1",      
+        "id": "ipv4-addr--4d22aae0-2bf9-5427-8819-e4f6abf20a53",      
+        "value": "198.51.100.2"      
+    },
+    {      
+        "type": "ipv4-addr",      
+        "spec_version": "2.1",      
+        "id": "ipv4-addr--e42c19c8-f9fe-5ae9-9fc8-22c398f78fb7",      
+        "value": "203.0.113.1"      
+    },
+    {      
+        "type": "ipv4-addr",      
+        "spec_version": "2.1",      
+        "id": "ipv4-addr--ffe65ce3-bf2a-577c-bb7e-947d39198637",      
+        "value": "203.0.113.2"      
+    },
+    {      
+        "type": "network-traffic",      
+        "spec_version": "2.1",      
+        "id": "network-traffic--ac267abc-1a41-536d-8e8d-98458d9bf491",      
+        "src_ref": "ipv4-addr--4d22aae0-2bf9-5427-8819-e4f6abf20a53",      
+        "dst_ref": "ipv4-addr--e42c19c8-f9fe-5ae9-9fc8-22c398f78fb7",      
+        "src_port": 2487,      
+        "dst_port": 1723,      
+        "protocols": [      
+          "ipv4",      
+          "pptp"      
+        ],      
+        "src_byte_count": 35779,      
+        "dst_byte_count": 935750,      
+        "encapsulates_refs": [      
+          "network-traffic--53e0bf48-2eee-5c03-8bde-ed7049d2c0a3"      
+        ]      
+    },
+    {      
+        "type": "network-traffic",      
+        "spec_version": "2.1",      
+        "id": "network-traffic--53e0bf48-2eee-5c03-8bde-ed7049d2c0a3",      
+        "src_ref": "ipv4-addr--4d22aae0-2bf9-5427-8819-e4f6abf20a53",      
+        "dst_ref": "ipv4-addr--ffe65ce3-bf2a-577c-bb7e-947d39198637",      
+        "src_port": 24678,      
+        "dst_port": 80,      
+        "protocols": [      
+          "ipv4",      
+          "tcp",      
+          "http"      
+        ],      
+        "src_packets": 14356,      
+        "dst_packets": 14356,      
+        "encapsulated_by_ref": "network-traffic--ac267abc-1a41-536d-8e8d-98458d9bf491"      
+    }
+]

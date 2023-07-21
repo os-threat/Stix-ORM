@@ -1,0 +1,25 @@
+[
+  {
+      "type": "identity",
+      "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp, Inc.",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "indicator",
+      "id": "indicator--0cddd4c0-411a-47a7-8ccc-d0473d690a6f",
+      "spec_version": "2.1",
+      "name": "Bad File1",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z",
+      "description": "This is an Indicator associated with malicious activity, with the included SHA-256 hash",
+      "valid_from": "2018-01-01T00:00:00.000Z",
+      "indicator_types": ["malicious-activity"],
+      "pattern": "[file:hashes.'SHA-256' = 'bf07a7fbb825fc0aae7bf4a1177b2b31fcf8a3feeaf7092761e18c859ee52a9c' OR file:hashes.MD5 = 'cead3f77f6cda6ec00f57d76c9a6879f']",
+      "pattern_type": "stix"
+  }
+]

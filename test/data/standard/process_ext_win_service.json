@@ -1,0 +1,28 @@
+[
+    {
+        "type": "file",      
+        "spec_version": "2.1",      
+        "id": "file--4b9a516b-4974-4ff8-a50d-a8b8d552ce1f",      
+        "hashes": {      
+          "SHA-256": "bf07a7fbb825fc0aae7bf4a1177b2b31fcf8a3feeaf7092761e18c859ee52a9c"      
+        },      
+        "name": "sirvizio.exe"      
+    },
+    {      
+        "type": "process",      
+        "spec_version": "2.1",      
+        "id": "process--70b17c6c-93e5-4c80-8683-5a4d4e51f2c1",      
+        "pid": 2217,      
+        "command_line": "C:\\Windows\\System32\\sirvizio.exe /s",      
+        "image_ref": "file--c7d1e135-8b34-549a-bb47-302f5cf998ed",      
+        "extensions": {      
+          "windows-service-ext": {      
+            "service_name": "sirvizio",      
+            "display_name": "Sirvizio",      
+            "start_type": "SERVICE_AUTO_START",      
+            "service_type": "SERVICE_WIN32_OWN_PROCESS",      
+            "service_status": "SERVICE_RUNNING"      
+          }      
+        }      
+      }
+]

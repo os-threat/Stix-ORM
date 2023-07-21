@@ -1,0 +1,26 @@
+[
+  {      
+    "type": "email-addr",      
+    "spec_version": "2.1",      
+    "id": "email-addr--98f25ea8-d6ef-51e9-8fce-6a29236436ed",      
+    "value": "jdoe@example.com",      
+    "display_name": "John Doe"      
+  },
+  {      
+    "type": "email-addr",      
+    "spec_version": "2.1",      
+    "id": "email-addr--e4ee5301-b52d-59cd-a8fa-7630838c7194",      
+    "value": "mary@example.com",      
+    "display_name": "Mary Smith"      
+  },  
+  {
+    "type": "email-message",      
+    "spec_version": "2.1",      
+    "id": "email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265",      
+    "from_ref": "email-addr--98f25ea8-d6ef-51e9-8fce-6a29236436ed",      
+    "to_refs": ["email-addr--e4ee5301-b52d-59cd-a8fa-7630838c7194"],      
+    "is_multipart": false,      
+    "date": "1997-11-21T15:55:06.000Z",      
+    "subject": "Conference Info"
+  }
+]

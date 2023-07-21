@@ -1,0 +1,48 @@
+[
+    {
+        "type": "infrastructure",       
+        "spec_version": "2.1",       
+        "id": "infrastructure--33588e0e-2bab-430e-9073-cacf704ea1e7",       
+        "created": "2017-04-04T13:01:21.000Z",       
+        "modified": "2017-04-04T13:01:21.000Z",       
+        "name": "Malware hosted on compromised domain",       
+        "infrastructure_types": ["hosting-malware"]       
+       },       
+       {       
+        "type": "relationship",       
+        "spec_version": "2.1",       
+        "id": "relationship--409244ac-01cd-4465-ad30-3f92a226f59f",       
+        "created": "2016-11-25T09:46:09.000Z",       
+        "modified": "2016-11-25T09:46:09.000Z",       
+        "relationship_type": "consists-of",       
+        "source_ref": "infrastructure--33588e0e-2bab-430e-9073-cacf704ea1e7",       
+        "target_ref": "domain-name--224dd5a2-d2db-5b8d-91f9-124a0c0c8546"       
+       },       
+       {       
+        "id": "domain-name--224dd5a2-d2db-5b8d-91f9-124a0c0c8546",       
+        "type": "domain-name",       
+        "value": "foo.example.com"       
+       },       
+       {       
+        "type": "relationship",       
+        "spec_version": "2.1",       
+        "id": "relationship--b3ab5ba1-e6d6-46b0-8ebe-91fc91978c85",       
+        "created": "2017-04-05T13:37:27.000Z",       
+        "modified": "2017-04-05T13:37:27.000Z",       
+        "relationship_type": "delivers",       
+        "source_ref": "infrastructure--33588e0e-2bab-430e-9073-cacf704ea1e7",       
+        "target_ref": "malware--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061"       
+       },       
+       {       
+        "type": "malware",       
+        "spec_version": "2.1",       
+        "id": "malware--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061",       
+        "created": "2016-05-12T08:17:27.000Z",       
+        "modified": "2016-05-12T08:17:27.000Z",       
+        "name": "SpyEye",       
+        "is_family": false,       
+        "malware_types": [       
+          "trojan"       
+        ]       
+       }
+]

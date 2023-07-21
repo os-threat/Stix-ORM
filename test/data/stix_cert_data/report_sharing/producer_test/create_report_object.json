@@ -1,0 +1,38 @@
+[
+  {
+      "type": "identity",
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "XYZA Corp, Inc.",
+      "created": "2017-01-17T11:11:13.000Z",
+      "modified": "2017-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--26ffb872-1dd9-446e-b6f5-d58527e5b5d2",
+      "created": "2019-12-21T19:59:17.000Z",
+      "modified": "2020-05-21T19:59:17.000Z",
+      "name": "Some indicator",
+      "indicator_types": ["malicious-activity"],
+      "pattern": "[ file:hashes.MD5 = '3773a88f65a5e780c8dff9cdc3a056f3' ]",
+      "pattern_type": "stix",
+      "valid_from": "2015-12-21T19:59:17Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+  },
+  {
+      "type": "report",
+      "spec_version": "2.1",
+      "id": "report--84e4d88f-44ea-4bcd-bbf3-b2c1c320bcbd",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "created": "2019-12-21T19:59:11.000Z",
+      "modified": "2020-05-21T19:59:11.000Z",
+      "name": "Glass Gazelle Campaign",
+      "published": "2020-01-20T17:00:00Z",
+      "report_types": [ "campaign" ],
+      "object_refs": [
+          "indicator--26ffb872-1dd9-446e-b6f5-d58527e5b5d2"
+      ]
+  }
+]

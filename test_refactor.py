@@ -960,7 +960,7 @@ if __name__ == '__main__':
     group_list = [f2, f3, f21, f25]
     note_list = [f2, f8, f26]
 
-    data_path = "data/examples/"
+    data_path = "test/data/examples/"
     path1 = "data/standard/"
     path2 = "data/mitre/history/"
     cert_root = "data/stix_cert_data"

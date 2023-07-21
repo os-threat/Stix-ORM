@@ -3,13 +3,13 @@ Test the new feed object....
 
 """
 import json
-import logging
-import pathlib
+from datetime import datetime
+from pathlib import Path
 
 import pytest
+from stix2 import parse
 from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink
-from stixorm.module.typedb_lib.instructions import ResultStatus
 
 connection = {
     "uri": "localhost",
@@ -19,9 +19,44 @@ connection = {
     "password": None
 }
 
-schema_path = path = str(pathlib.Path(__file__).parents[1])
 
-import_type = import_type_factory.get_attack_import()
+import_type = import_type_factory.get_all_imports()
+
+def create_feed(local_list, typedb_sink, loc_datetime):
+    ips = []
+    observed = []
+    threatsubobj = []
+    for ipaddr in local_list:
+        ip = IPv4Address(value=ipaddr)
+        ips.append(ip)
+        obs = ObservedData(
+            first_observed=loc_datetime,
+            last_observed=loc_datetime,
+            number_observed=1,
+            object_refs =[ip.id]
+        )
+        observed.append(obs)
+        sub = ThreatSubObject(
+            object_ref=obs.id,
+            created=loc_datetime,
+            modified=loc_datetime
+        )
+        threatsubobj.append(sub)
+
+    feed = Feed(
+        name="OS Threat Feed",
+        description="OS Threat Test Feed",
+        created=loc_datetime,
+        contents=[
+            threatsubobj[0],
+            threatsubobj[1],
+            threatsubobj[2],
+            threatsubobj[3]
+        ]
+    )
+    add_list = ips + observed + [feed]
+    typedb_sink.add(add_list)
+    return feed.id
 
 @pytest.fixture
 def database():
@@ -29,14 +64,12 @@ def database():
         connection=connection,
         clear=True,
         import_type=import_type,
-        schema_path=schema_path
     )
     db.clear_db()
     db = TypeDBSink(
         connection=connection,
         clear=True,
-        import_type=import_type,
-        schema_path=schema_path
+        import_type=import_type
     )
     yield db
     db.clear_db()
@@ -70,7 +103,7 @@ def empty_feed_list():
                   object_marking_refs = [marking_def_statement],
                   contents=[])
 
-    return [info,marking_def_statement,a_feed]
+    return [marking_def_statement,a_feed]
 
 @pytest.fixture
 def empty_feed_bundle():
@@ -97,7 +130,9 @@ def empty_feed_bundle():
                   object_marking_refs = [marking_def_statement],
                   contents=[])
 
-    return Bundle(info,marking_def_statement,a_feed,allow_custom=True)
+    bundle = Bundle(marking_def_statement,
+                    a_feed)
+    return bundle
 
 @pytest.fixture
 def simple_feed():
@@ -168,44 +203,129 @@ def simple_feed():
                   object_marking_refs = [marking_def_statement],
                   contents=[threat_sub_object])
 
-    return [info,identity,marking_def_statement,marking_def_amber,fileMalicious,threat_sub_object,a_feed]
+    return [identity,marking_def_statement,marking_def_amber,fileMalicious,threat_sub_object,a_feed]
 
-def test_database_initialization(database:TypeDBSink):
-    '''
-    First initialize the database...
-    Args:
-        database:
+class TestFeed:
 
-    Returns:
+    def setUp(self):
+        self.clean_db()
 
-    '''
-    pass
+    def tearDown(self):
+        self.clean_db()
+
+    def clean_db(self):
+        """ Get all stix-ids and delete them
+
+        """
+        typedb = TypeDBSink(connection=connection,
+                            clear=False,
+                            import_type=import_type)
+
+        typedb.clear_db()
+
+    def test_database_initialization(self, database:TypeDBSink):
+        '''
+        First initialize the database...
+        Args:
+            database:
+
+        Returns:
+
+        '''
+        pass
 
 
-def test_create_feed(database:TypeDBSink,empty_feed_bundle:Bundle):
-    '''
+    def test_create_feed_1(self,
+                           database:TypeDBSink,
+                           empty_feed_bundle:Bundle):
+        '''
 
-    Now create the feed for the first time, there is no content to begin with...
-    Args:
-        database:
-        simple_feed:
+        Now create the feed for the first time, there is no content to begin with...
+        Args:
+            database:
+            simple_feed:
 
-    Returns:
+        Returns:
 
-    '''
-    result = database.add(empty_feed_bundle)
-    print(result)
+        '''
+        result = database.add(empty_feed_bundle)
+        print(result)
 
-def test_create_feed_list(database:TypeDBSink,empty_feed_list):
-    '''
+    def test_create_feed_list(self, database:TypeDBSink,
+                              empty_feed_list):
+        '''
 
-    Now create the feed for the first time, there is no content to begin with...
-    Args:
-        database:
-        simple_feed:
+        Now create the feed for the first time, there is no content to begin with...
+        Args:
+            database:
+            simple_feed:
 
-    Returns:
+        Returns:
 
-    '''
-    result = database.add(empty_feed_list)
-    print(result)
+        '''
+        result = database.add(empty_feed_list)
+        print(result)
+
+
+    def test_create_feed_2(self, database:TypeDBSink):
+        current_file_path = Path(__file__)
+        directory = current_file_path.parent
+        example = directory.joinpath("data/os-threat/feed-example/example.json")
+        assert example.exists()
+        osthreat = str(example)
+        datetime1 = datetime.fromisoformat("2020-10-19T01:01:01.000")
+        datetime2 = datetime.fromisoformat("2020-10-20T01:01:01.000")
+        datetime3 = datetime.fromisoformat("2020-10-21T01:01:01.000")
+
+        typedb_sink = TypeDBSink(connection, True, import_type)
+
+        with open(osthreat, mode="r", encoding="utf-8") as f:
+            json_text = json.load(f)
+            create_feed(json_text[0], typedb_sink, datetime1)
+
+
+    def test_create_bundle(self):
+        # Create STIX objects
+        json_data = {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--a862ff86-68d9-42e5-8095-cd80c040e112",
+            "created": "2020-06-24T15:04:40.048932Z",
+            "modified": "2020-06-24T15:04:40.048932Z",
+            "name": "File hash for malware variant",
+            "pattern": "[file:hashes.md5 = 'd41d8cd98f00b204e9800998ecf8427e']",
+            "pattern_type": "stix",
+            "pattern_version": "2.1",
+            "valid_from": "2020-06-24T15:04:40.048932Z"
+        }
+
+        # Create a STIX Indicator object
+        indicator = parse(json_data)
+
+        json_data = {
+            "type": "malware",
+            "spec_version": "2.1",
+            "id": "malware--389c934c-258c-44fb-ae4b-14c6c12270f6",
+            "created": "2020-06-24T14:53:20.156644Z",
+            "modified": "2020-06-24T14:53:20.156644Z",
+            "name": "Poison Ivy",
+            "is_family": False
+        }
+
+        malware = parse(json_data)
+
+        json_data = {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--2f6a8785-e27b-487e-b870-b85a2121502d",
+            "created": "2020-06-24T15:05:18.250605Z",
+            "modified": "2020-06-24T15:05:18.250605Z",
+            "relationship_type": "indicates",
+            "source_ref": "indicator--a862ff86-68d9-42e5-8095-cd80c040e112",
+            "target_ref": "malware--389c934c-258c-44fb-ae4b-14c6c12270f6"
+        }
+
+        relationship = parse(json_data)
+
+        # Create a STIX bundle
+        bundle = Bundle(objects=[indicator, malware, relationship])

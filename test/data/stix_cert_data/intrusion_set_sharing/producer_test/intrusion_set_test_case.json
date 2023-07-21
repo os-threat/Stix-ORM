@@ -1,0 +1,22 @@
+[
+    {
+        "type": "identity",
+        "name": "ACME Corp, Inc.",
+        "identity_class": "organization",
+        "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+        "spec_version": "2.1",
+        "created": "2020-01-20T12:34:56.000Z",
+        "modified": "2020-01-20T12:34:56.000Z"
+    },
+    {
+        "type": "intrusion-set",
+        "spec_version": "2.1",
+        "id": "intrusion-set--4e78f46f-a023-4e5f-bc24-71b3ca22ec29",
+        "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+        "created": "2016-04-06T20:03:48.000Z",
+        "modified": "2016-04-06T20:03:48.000Z",
+        "name": "Bobcat Breakin",
+        "resource_level": "organization",
+        "primary_motivation": "ideology"
+    }
+]

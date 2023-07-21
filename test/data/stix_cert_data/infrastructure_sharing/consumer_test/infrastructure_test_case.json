@@ -1,0 +1,21 @@
+[
+  {
+      "type": "identity",
+      "name": "ACME Corp, Inc.",
+      "identity_class": "organization",
+      "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "spec_version": "2.1",
+      "created": "2020-01-20T12:34:56.000Z",
+      "modified": "2020-01-20T12:34:56.000Z"
+  },
+  {
+      "type": "infrastructure",
+      "spec_version": "2.1",
+      "id": "infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d",
+      "created": "2016-05-07T11:22:30.000Z",
+      "modified": "2016-05-07T11:22:30.000Z",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "name": "Poison Ivy C2",
+      "infrastructure_types": [ "command-and-control" ]
+  }
+]

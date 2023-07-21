@@ -1,0 +1,36 @@
+[
+  {
+      "type": "identity",
+      "name": "ACME Corp, Inc.",
+      "identity_class": "organization",
+      "id": "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283",
+      "spec_version": "2.1",
+      "created": "2012-01-20T12:34:56.000Z",
+      "modified": "2012-01-20T12:34:56.000Z"
+  },
+  {
+      "type": "indicator",
+      "id": "indicator--26ffb872-1dd9-446e-b6f5-d58527e5b5d2",
+      "spec_version": "2.1",
+      "name": "Bad IP1",
+      "created_by_ref": "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283",
+      "created": "2014-01-17T11:11:13.000Z",
+      "modified": "2014-01-17T11:11:13.000Z",
+      "valid_from": "2013-01-01T00:00:00.000Z",
+      "indicator_types": [ "malicious-activity" ],
+      "pattern": "[ipv4-addr:value = '198.51.100.1']",
+      "pattern_type": "stix"
+  },
+  {
+      "type": "grouping",
+      "spec_version": "2.1",
+      "id": "grouping--84e4d88f-44ea-4bcd-bbf3-b2c1c320bcb3",
+      "created_by_ref": "identity--a463ffb3-1bd9-4d94-b02d-74e4f1658283",
+      "created": "2015-12-21T19:59:11.000Z",
+      "modified": "2015-12-21T19:59:11.000Z",
+      "context": "suspicious-activity",
+      "object_refs": [
+          "indicator--26ffb872-1dd9-446e-b6f5-d58527e5b5d2"
+      ]
+  }
+]

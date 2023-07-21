@@ -1,0 +1,219 @@
+[
+  {
+    "id": "pallet--b3bca52f-63f9-4b0b-b37c-b511b413ae42",
+    "type": "pallet",
+    "spec_version": "2.1",
+    "name": "My Pallet 1",
+    "description": "Example Pallet containing cartons for an entire organisation",
+    "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
+    "created": "2018-10-17T00:14:20.652Z",
+    "modified": "2019-10-11T19:30:42.406Z",
+    "object_marking_refs": [
+        "marking-definition--4e5406e6-f0ff-4d3b-a44c-942df630da32"
+    ],
+    "cartons": [
+        "carton--fcc9c988-a1eb-497f-9351-b7c5cd384401"
+    ]
+  },
+  {
+    "id": "carton--fcc9c988-a1eb-497f-9351-b7c5cd384401",
+    "type": "carton",
+    "spec_version": "2.1",
+    "name": "My Carton 1",
+    "description": "Example Carton containing multiple cases for a team",
+    "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
+    "created": "2018-10-17T00:14:20.652Z",
+    "modified": "2019-10-11T19:30:42.406Z",
+    "object_marking_refs": [
+        "marking-definition--4e5406e6-f0ff-4d3b-a44c-942df630da32"
+    ],
+    "cases": [
+        "cases--dd89363b-0c03-483e-b4a2-0fc7043b4125"
+    ]
+  },
+  {
+    "id": "cases--dd89363b-0c03-483e-b4a2-0fc7043b4125",
+    "type": "cases",
+    "spec_version": "2.1",
+    "name": "My Cases 1",
+    "description": "Example Carton containing multiple cases for a team",
+    "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
+    "created": "2018-10-17T00:14:20.652Z",
+    "modified": "2019-10-11T19:30:42.406Z",
+    "userid": "user-1",
+    "object_marking_refs": [
+        "marking-definition--4e5406e6-f0ff-4d3b-a44c-942df630da32"
+    ],
+    "case_list": [
+        "case--3955751b-d8a8-4373-8473-29a865ded0e1"
+    ]
+  },
+  {
+    "id": "case--3955751b-d8a8-4373-8473-29a865ded0e1",
+    "type": "case",
+    "spec_version": "2.1",
+    "name": "My Case 1",
+    "description": "Example Case 1 dataset",
+    "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
+    "created": "2018-10-17T00:14:20.652Z",
+    "modified": "2019-10-11T19:30:42.406Z",
+    "assigned": ["identity--882f9b7c-ed4b-4da8-99d5-4d510b38669c"],
+    "labels": [
+        "tag1",
+        "tag2"
+    ],
+    "status": "open",
+    "case_type": "incident",
+    "case_priority": "high",
+    "case_source": "email",
+    "object_marking_refs": [
+        "marking-definition--4e5406e6-f0ff-4d3b-a44c-942df630da32"
+    ],
+    "observed": [
+        {
+            "object_ref": "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",
+            "created": "2019-07-17T20:04:40.297Z",
+            "modified": "2019-07-17T20:04:40.297Z"
+        }
+    ],
+    "enrichments": [
+        {
+            "object_ref": "enrichment--bc69bdf3-586c-433e-9301-982b79a4068a",
+            "created": "2019-07-17T20:04:40.297Z",
+            "modified": "2019-07-17T20:04:40.297Z"
+        }
+    ],
+    "notes": [
+        {
+            "object_ref": "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061",
+            "created": "2019-07-17T20:04:40.297Z",
+            "modified": "2019-07-17T20:04:40.297Z"
+        }
+    ],
+    "tasks": [
+        {
+            "object_ref": "task--ef7cd0bd-2e83-4869-b35f-c0f0e9d13547",
+            "created": "2019-07-17T20:04:40.297Z",
+            "modified": "2019-07-17T20:04:40.297Z"
+        }
+    ],
+    "opinions": [
+        {
+            "object_ref": "opinion--b01efc25-77b4-4003-b18b-f6e24b5cd9f7",
+            "created": "2019-07-17T20:04:40.297Z",
+            "modified": "2019-07-17T20:04:40.297Z"
+        }
+    ]
+  },
+  {
+    "type": "ipv4-addr",
+    "spec_version": "2.1",
+    "id": "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8",
+    "value": "198.51.100.3"
+  },
+  {
+    "type": "identity",
+    "spec_version": "2.1",
+    "id": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
+    "created": "2016-04-06T20:03:00.000Z",
+    "modified": "2016-04-06T20:03:00.000Z",
+    "name": "ACME Widget, Inc.",
+    "identity_class": "organization"
+  },
+  {
+    "type": "identity",
+    "spec_version": "2.1",
+    "id": "identity--882f9b7c-ed4b-4da8-99d5-4d510b38669c",
+    "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
+    "created": "2016-04-06T20:03:00.000Z",
+    "modified": "2016-04-06T20:03:00.000Z",
+    "name": "Joe Blogs",
+    "identity_class": "individual"
+  },
+  {
+    "type": "observed-data",
+    "spec_version": "2.1",
+    "id": "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",
+    "created_by_ref": "identity--882f9b7c-ed4b-4da8-99d5-4d510b38669c",
+    "created": "2016-04-06T19:58:16.000Z",
+    "modified": "2016-04-06T19:58:16.000Z",
+    "first_observed": "2015-12-21T19:00:00Z",
+    "last_observed": "2015-12-21T19:00:00Z",
+    "number_observed": 50,
+    "object_refs": [
+      "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
+    ]
+  },
+  {
+    "type": "domain-name",
+    "spec_version": "2.1",
+    "id": "domain-name--3c10e93f-798e-52a6-a0c1-08156efab7f5",
+    "value": "site.of.interest.zaz",
+    "resolves_to_refs": ["ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"]
+  },
+  {
+    "type": "enrichment",
+    "spec_version": "2.1",
+    "id": "enrichment--bc69bdf3-586c-433e-9301-982b79a4068a",
+    "created_by_ref": "identity--882f9b7c-ed4b-4da8-99d5-4d510b38669c",
+    "created": "2016-04-07T19:58:16.000Z",
+    "modified": "2016-04-07T19:58:16.000Z",
+    "name": "phishing-IPs-ACTIVE",
+    "paid": false,
+    "free": true,
+    "description": "Phishing IPs that are active",
+    "userid": "user-1",
+    "labels": ["ipv4"],
+    "object_refs": [
+      "domain-name--3c10e93f-798e-52a6-a0c1-08156efab7f5"
+    ]
+  },
+  {
+  "type": "note",
+  "spec_version": "2.1",
+  "id": "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061",
+  "created": "2016-05-12T08:17:27.000Z",
+  "modified": "2016-05-12T08:17:27.000Z",
+  "created_by_ref": "identity--882f9b7c-ed4b-4da8-99d5-4d510b38669c",
+  "external_references": [
+    {
+      "source_name": "job-tracker",
+      "external_id": "job-id-1234"
+    }
+  ],
+  "abstract": "Tracking Team Note#1",
+  "content": "This note indicates the various steps taken by the threat analyst team to investigate this specific campaign. Step 1) Do a scan 2) Review scanned results for identified hosts not known by external intel…etc.",
+  "authors": ["Joe Blogs"],
+  "object_refs": ["enrichment--bc69bdf3-586c-433e-9301-982b79a4068a"]
+},
+  {
+  "type": "task",
+  "spec_version": "2.1",
+  "id": "task--ef7cd0bd-2e83-4869-b35f-c0f0e9d13547",
+  "created": "2016-05-12T08:17:27.000Z",
+  "modified": "2016-05-12T08:17:27.000Z",
+  "created_by_ref": "identity--882f9b7c-ed4b-4da8-99d5-4d510b38669c",
+  "external_references": [
+    {
+      "source_name": "firewall-logs",
+      "external_id": "log#1234"
+    }
+  ],
+  "name": "Task1",
+  "description": "task details here",
+  "authors": ["Joe Blogs"],
+  "assigned": ["identity--882f9b7c-ed4b-4da8-99d5-4d510b38669c"],
+  "object_refs": ["ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"]
+},
+  {
+    "type": "opinion",
+    "spec_version": "2.1",
+    "id": "opinion--b01efc25-77b4-4003-b18b-f6e24b5cd9f7",
+    "created_by_ref": "identity--882f9b7c-ed4b-4da8-99d5-4d510b38669c",
+    "created": "2016-05-12T08:17:27.000Z",
+    "modified": "2016-05-12T08:17:27.000Z",
+    "object_refs": ["observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"],
+    "opinion": "strongly-agree",
+    "explanation": "This seems like it is a feasibleattack. We've seen how PandaCat has attacked Spanish infrastructure over the last 3 years, so this change in targeting seems to be viable. The methods used are commonly associated with the FlameDragonCrew."
+  }
+]

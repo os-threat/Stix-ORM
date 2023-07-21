@@ -1,0 +1,24 @@
+[
+  {
+      "type": "identity",
+      "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp, Inc.",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "indicator",
+      "id": "indicator--1b0eb2d2-cce4-4c18-a58d-cf238ceea505",
+      "spec_version": "2.1",
+      "name": "Bad IP Subnets",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z",
+      "valid_from": "2018-01-01T00:00:00.000Z",
+      "indicator_types": ["malicious-activity"],
+      "pattern": "[ipv4-addr:value ISSUBSET '198.51.100.0/24' OR ipv4-addr:value ISSUBSET '196.45.200.0/24']",
+      "pattern_type": "stix"
+  }
+]

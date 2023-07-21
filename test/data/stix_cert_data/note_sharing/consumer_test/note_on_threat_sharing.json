@@ -1,0 +1,35 @@
+[
+    {
+        "type": "identity",
+        "id": "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c",
+        "spec_version": "2.1",
+        "created": "2017-04-14T13:07:49.812Z",
+        "modified": "2017-04-14T13:07:49.812Z",
+        "name": "Oscorp Industries",
+        "identity_class": "organization"
+    },
+    {
+        "type": "threat-actor",
+        "spec_version": "2.1",
+        "id": "threat-actor--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f",
+        "created_by_ref": "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c",
+        "created": "2016-04-06T20:03:48.000Z",
+        "modified": "2016-04-06T20:03:48.000Z",
+        "threat_actor_types": [ "crime-syndicate"],
+        "name": "Evil Org",
+        "roles": ["director"],
+        "sophistication": "advanced",
+        "resource_level": "team",
+        "primary_motivation": "organizational-gain"
+    },
+    {
+        "type": "note",
+        "spec_version": "2.1",
+        "id": "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061",
+        "created": "2016-05-12T08:17:27.000Z",
+        "modified": "2016-05-12T08:17:27.000Z",
+        "created_by_ref": "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c",
+        "content": "This note indicates the various steps taken by the threat actor to instigate particular attacks. Step 1) Do a scan 2) Review scanned results for identified hosts not known by external intel…etc.",
+        "object_refs": ["threat-actor--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f"]
+    }
+]

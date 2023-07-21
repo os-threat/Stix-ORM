@@ -181,6 +181,7 @@ class Technique(_DomainObject):
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_deprecated', BooleanProperty(default=lambda: False)),
+        ('x_mitre_network_requirements', BooleanProperty(default=lambda: False)),
         ('aliases', ListProperty(StringProperty)),
         ('kill_chain_phases', ListProperty(KillChainPhase)),
         ('revoked', BooleanProperty(default=lambda: False)),
@@ -243,6 +244,7 @@ class SubTechnique(_DomainObject):
         ('x_mitre_system_requirements', ListProperty(StringProperty)),
         ('x_mitre_tactic_type', ListProperty(StringProperty)),
         ('x_mitre_permissions_required', ListProperty(StringProperty)),
+        ('x_mitre_network_requirements', BooleanProperty(default=lambda: True)),
         ('x_mitre_effective_permissions', ListProperty(StringProperty)),
         ('x_mitre_defense_bypassed', ListProperty(StringProperty)),
         ('x_mitre_remote_support', BooleanProperty(default=lambda: False)),
@@ -493,7 +495,7 @@ class DataComponent(_DomainObject):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('extensions', ExtensionsProperty(spec_version='2.1')),
-        ('x_mitre_data_source_ref', StringProperty())
+        ('x_mitre_data_source_ref', StringProperty()) #
     ])
 
 class AttackCampaign(_DomainObject):
@@ -517,6 +519,7 @@ class AttackCampaign(_DomainObject):
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_first_seen_citation', StringProperty()),
+        ('x_mitre_last_seen_citation', StringProperty()),
         ('x_mitre_aliases', StringProperty()),
         ('aliases', ListProperty(StringProperty)),
         ('first_seen', TimestampProperty()),

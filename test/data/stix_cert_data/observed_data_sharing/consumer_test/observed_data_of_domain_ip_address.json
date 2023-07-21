@@ -1,0 +1,51 @@
+[
+  {
+      "type": "identity",
+      "id": "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c",
+      "spec_version": "2.1",
+      "created": "2017-04-14T13:07:49.812Z",
+      "modified": "2017-04-14T13:07:49.812Z",
+      "name": "Oscorp Industries",
+      "identity_class": "organization"
+  },
+  {
+      "type": "ipv4-addr",
+      "spec_version": "2.1",
+      "id": "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8",
+      "value": "198.51.100.3"
+  },
+  {
+      "type": "domain-name",
+      "spec_version": "2.1",
+      "id": "domain-name--ecb120bf-2694-4902-a737-62b74539a41b",
+      "value": "example.com",
+      "resolves_to_refs": ["ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"]
+  },
+  {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--7ca2d678-c8c7-4947-a730-bfbc2cc5aa0a",
+      "created_by_ref": "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c",
+      "created": "2016-04-06T19:58:16.000Z",
+      "modified": "2016-04-06T19:58:16.000Z",
+      "source_ref": "domain-name--ecb120bf-2694-4902-a737-62b74539a41b",
+      "target_ref": "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8",
+      "relationship_type": "resolves-to"
+  },
+  {
+      "type": "observed-data",
+      "spec_version": "2.1",
+      "id": "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",
+      "created_by_ref": "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c",
+      "created": "2016-04-06T19:58:16.000Z",
+      "modified": "2016-04-06T19:58:16.000Z",
+      "first_observed": "2015-12-21T19:00:00Z",
+      "last_observed": "2015-12-21T19:00:00Z",
+      "number_observed": 50,
+      "object_refs": [
+          "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8",
+          "domain-name--ecb120bf-2694-4902-a737-62b74539a41b",
+          "relationship--7ca2d678-c8c7-4947-a730-bfbc2cc5aa0a"
+      ]
+  }
+]

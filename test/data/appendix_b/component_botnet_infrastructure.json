@@ -1,0 +1,109 @@
+[
+    {
+        "type": "infrastructure",       
+        "spec_version": "2.1",       
+        "id": "infrastructure--767ed805-f00a-4603-9bd8-5b5a006b56fa",       
+        "created": "2016-11-21T09:22:30.000Z",       
+        "modified": "2016-11-21T09:22:30.000Z",       
+        "name": "Example Target List Host 2",       
+        "infrastructure_types": ["hosting-target-lists"]       
+       },       
+       {       
+        "type": "relationship",       
+        "spec_version": "2.1",       
+        "id": "relationship--81f12913-1372-4c96-85ec-E9034ac98aba",       
+        "created": "2016-11-23T10:42:39.000Z",       
+        "modified": "2016-11-23T10:42:39.000Z",       
+        "relationship_type": "consists-of",       
+        "source_ref": "infrastructure--767ed805-f00a-4603-9bd8-5b5a006b56fa",       
+        "target_ref": "domain-name--3c10e93f-798e-5a26-a0c1-08156efab7f5"       
+       },       
+       {       
+        "id": "domain-name--3c10e93f-798e-5a26-a0c1-08156efab7f5",       
+        "type": "domain-name",       
+        "value": "example.com"       
+       },       
+       {       
+        "type": "infrastructure",       
+        "spec_version": "2.1",       
+        "id": "infrastructure--e4ed271e-e023-45db-99e6-1f912e79bd06",       
+        "created": "2016-11-22T11:04:18.000Z",       
+        "modified": "2016-11-22T11:04:18.000Z",       
+        "name": "Control.Example command-and-control",       
+        "infrastructure_types": ["command-and-control"]       
+       },       
+       {       
+        "type": "relationship",       
+        "spec_version": "2.1",       
+        "id": "relationship--2f340a76-edef-443d-a203-bede067c0bb0",       
+        "created": "2016-11-25T09:46:09.000Z",       
+        "modified": "2016-11-25T09:46:09.000Z",       
+        "relationship_type": "consists-of",       
+        "source_ref": "infrastructure--e4ed271e-e023-45db-99e6-1f912e79bd06",       
+        "target_ref": "domain-name--a56780a5-93a5-5047-97ab-6900d2441bca"       
+       },       
+       {       
+        "id": "domain-name--a56780a5-93a5-5047-97ab-6900d2441bca",       
+        "type": "domain-name",       
+        "value": "control.example.com"       
+       },       
+       {       
+        "type": "infrastructure",       
+        "spec_version": "2.1",       
+        "id": "infrastructure--a3536537-456a-47b5-84dc-fb7c340959e8",       
+        "created": "2016-11-18T04:22:30.000Z",       
+        "modified": "2016-11-18T04:22:30.000Z",       
+        "name": "Botnet Example",       
+        "infrastructure_types": ["botnet"]       
+       },       
+       {       
+        "type": "relationship",       
+        "spec_version": "2.1",       
+        "id": "relationship--3263dfe0-6bf4-42eb-bab9-5fc9edc6e443",       
+        "created": "2016-11-18T08:27:37.000Z",       
+        "modified": "2016-11-18T08:27:37.000Z",       
+        "relationship_type": "consists-of",       
+        "source_ref": "infrastructure--a3536537-456a-47b5-84dc-fb7c340959e8",       
+        "target_ref": "ipv4-addr--182726c7-ba5e-5f77-97ef-378365bd0b79"       
+       },       
+       {       
+        "id": "ipv4-addr--182726c7-ba5e-5f77-97ef-378365bd0b79",       
+        "type": "ipv4-addr",       
+        "value": "198.51.100.8"       
+       },       
+       {       
+        "type": "relationship",       
+        "spec_version": "2.1",       
+        "id": "relationship--80d9ba7d-893b-4286-96f9-32225060a730",       
+        "created": "2016-11-18T06:22:31.000Z",       
+        "modified": "2016-11-18T06:22:31.000Z",       
+        "relationship_type": "consists-of",       
+        "source_ref": "infrastructure--a3536537-456a-47b5-84dc-fb7c340959e8",       
+        "target_ref": "ipv4-addr--d7177770-fc12-586b-9244-426596a7008e"       
+       },       
+       {       
+        "id": "ipv4-addr--d7177770-fc12-586b-9244-426596a7008e",       
+        "type": "ipv4-addr",       
+        "value": "198.51.100.9"       
+       },       
+       {       
+        "type": "relationship",       
+        "spec_version": "2.1",       
+        "id": "relationship--43f753d8-61e2-472e-918e-d7c58e2463e7",       
+        "created": "2016-11-25T13:37:27.000Z",       
+        "modified": "2017-11-25T13:37:27.000Z",       
+        "relationship_type": "uses",       
+        "source_ref": "infrastructure--a3536537-456a-47b5-84dc-fb7c340959e8",       
+        "target_ref": "infrastructure--767ed805-f00a-4603-9bd8-5b5a006b56fa"       
+       },       
+       {       
+        "type": "relationship",       
+        "spec_version": "2.1",       
+        "id": "relationship--8386f241-b583-4c59-9056-a3b0db596d93",       
+        "created": "2016-11-25T13:37:27.000Z",       
+        "modified": "2017-11-25T13:37:27.000Z",       
+        "relationship_type": "controls",       
+        "source_ref": "infrastructure--e4ed271e-e023-45db-99e6-1f912e79bd06",       
+        "target_ref": "infrastructure--a3536537-456a-47b5-84dc-fb7c340959e8"       
+       }
+]

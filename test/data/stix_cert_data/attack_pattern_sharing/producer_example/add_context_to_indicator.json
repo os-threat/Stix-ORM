@@ -1,0 +1,50 @@
+[
+  {
+      "type": "identity",
+      "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp, Inc.",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2019-05-12T08:17:27.000Z",
+      "modified": "2019-05-12T08:17:27.000Z",
+      "indicator_types": ["malicious-activity"],
+      "pattern": "[url:value = 'http://badsite.com/foo' OR url:value = 'http://badsite.com/bar']",
+      "pattern_type": "stix",
+      "valid_from": "2019-01-01T00:00:00Z"
+  },
+  {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2019-05-12T08:17:27.000Z",
+      "modified": "2019-05-12T08:17:27.000Z",
+      "name": "Spear Phishing as Practiced by Adversary X",
+      "description": "Spear phishing where the attacker includes personal details in the email and claims that the target had won a contest.",
+      "external_references": [
+          {
+              "source_name": "capec",
+              "external_id": "CAPEC-163"
+          }
+      ]
+  },
+  {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--57b56a43-b8b0-4cba-9deb-34e3e1faed9e",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2019-05-12T08:17:27.000Z",
+      "modified": "2019-05-12T08:17:27.000Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6",
+      "target_ref": "attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5"
+  }
+]

@@ -1,0 +1,31 @@
+[
+    {
+        "type": "ipv4-addr",      
+        "spec_version": "2.1",      
+        "id": "ipv4-addr--89830c10-2e94-57fa-8ca6-e0537d2719d1",      
+        "value": "198.51.100.5"      
+    },
+    {      
+        "type": "ipv4-addr",      
+        "spec_version": "2.1",      
+        "id": "ipv4-addr--45f4c6fb-2d7d-576a-a571-edc78d899a72",      
+        "value": "198.51.100.6"      
+    },
+    {      
+        "type": "network-traffic",      
+        "spec_version": "2.1",      
+        "id": "network-traffic--09ca55c3-97e5-5966-bad0-1d41d557ae13",      
+        "src_ref": "ipv4-addr--89830c10-2e94-57fa-8ca6-e0537d2719d1",      
+        "dst_ref": "ipv4-addr--45f4c6fb-2d7d-576a-a571-edc78d899a72",      
+        "src_port": 3372,      
+        "dst_port": 80,      
+        "protocols": [      
+          "tcp"      
+        ],      
+        "extensions": {      
+          "tcp-ext": {      
+            "src_flags_hex": "00000002"      
+          }      
+        }      
+      }
+]

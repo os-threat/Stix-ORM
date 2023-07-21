@@ -1,0 +1,46 @@
+[
+    {
+      "type": "identity",
+      "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp, Inc.",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "identity",
+      "id": "identity--f6e43aa5-76cc-45ca-9b06-be2d65f26bfb",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp Sighting, Inc.",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "indicator",
+      "id": "indicator--12fd1bad-8306-4ed4-8c9b-7dfdd8ad5eb8",
+      "spec_version": "2.1",
+      "name": "Bad IP1",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "created": "2017-12-17T11:11:13.000Z",
+      "modified": "2017-12-17T11:11:13.000Z",
+      "valid_from": "2017-12-22T00:00:00.000Z",
+      "indicator_types": ["malicious-activity"],
+      "pattern": "[ipv4-addr:value = '127.198.96.42']",
+      "pattern_type": "stix"
+  },
+  {
+      "type": "sighting",
+      "id": "sighting--f185c0e8-f187-4880-be0b-1f10df2d356f",
+      "spec_version": "2.1",
+      "created_by_ref": "identity--f6e43aa5-76cc-45ca-9b06-be2d65f26bfb",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-19T11:11:13.000Z",
+      "first_seen": "2017-12-21T19:00:00.000Z",
+      "last_seen": "2018-01-16T19:00:00.000Z",
+      "count": 50,
+      "sighting_of_ref": "indicator--12fd1bad-8306-4ed4-8c9b-7dfdd8ad5eb8",
+      "revoked": true
+  }
+]

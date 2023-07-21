@@ -1,0 +1,199 @@
+{
+  "AIM": {
+    "title": "Adversary Infrastructure Mapping (AIM):",
+    "description": "Software or system, that consumes and produces STIX content, that is used to map out adversarial networks",
+    "level1": [
+      {"dir" : "attack_pattern_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "campaign_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "campaign_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "infrastructure_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "intrusion_set_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "intrusion_set_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "location_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "note_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "threat_actor_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "threat_actor_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "tool_sharing", "sub_dir" : "producer_test"}
+    ],
+    "level2": [
+      {"dir" : "attack_pattern_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "infrastructure_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "location_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "note_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "tool_sharing", "sub_dir" : "consumer_test"}
+    ]
+  },
+  "LIM": {
+    "title": "Local Infrastructure Mapping (LIM):",
+    "description": "Software that scans local networks and provides STIX representations of these finds.",
+    "level1": [
+      {"dir" : "infrastructure_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "location_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "note_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "observed_data_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "vulnerability_sharing", "sub_dir" : "producer_test"}
+    ],
+    "level2": [
+      {"dir" : "infrastructure_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "vulnerability_sharing", "sub_dir" : "consumer_test"}
+    ]
+  },
+  "MAS": {
+    "title": "Malware Analysis System (MAS):",
+    "description": "Software instance, system, or set of systems that performs static and/or dynamic analysis of binary files and produces STIX content with this analysis information.",
+    "level1": [
+      {"dir" : "malware_analysis_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "malware_sharing", "sub_dir" : "producer_test"}
+    ],
+    "level2": [
+      {"dir" : "indicator_sharing", "sub_dir" : "producer_test"}
+    ]
+  },
+  "SIEM": {
+    "title": "Security Incident and Event Management system (SIEM):",
+    "description": "Software instance that acts as a Producer and/or Consumer of STIX 2.1 content. A SIEM that produces STIX content will typically create Indicators and other information about incidents. A SIEM that consumes STIX content will typically consume Sightings, Indicators.",
+    "level1": [
+      {"dir" : "indicator_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "observed_data_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "observed_data_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "sighting_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "versioning", "sub_dir" : "producer_test"}
+    ],
+    "level2": [
+      {"dir" : "note_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "note_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "sighting_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "versioning", "sub_dir" : "consumer_test"}
+    ]
+  },
+  "TDS": {
+    "title": "Threat Detection System (TDS):",
+    "description": "Software instance of any network product that monitors, detects and alerts such as Intrusion Detection Software (IDS), Endpoint Detection and Response (EDR) software, web proxy, etc. This is applicable for both Producers and Consumers.",
+    "level1": [
+      {"dir" : "indicator_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "sighting_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "sighting_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "versioning", "sub_dir" : "producer_test"}
+    ],
+    "level2": [
+      {"dir" : "course_of_action_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "observed_data_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "versioning", "sub_dir" : "consumer_test"}
+    ]
+  },
+  "TIP": {
+    "title": "Threat Intelligence Platform (TIP):",
+    "description": "Software instance that acts as a Producer and/or Consumer of STIX 2.1 content primarily used to aggregate, refine and share intelligence with other machines or security personnel operating other security infrastructure.",
+    "level1": [
+      {"dir" : "attack_pattern_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "attack_pattern_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "campaign_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "campaign_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "confidence_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "confidence_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "course_of_action_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "course_of_action_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "data_marking_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "data_marking_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "indicator_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "indicator_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "intrusion_set_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "intrusion_set_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "malware_analysis_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "malware_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "malware_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "note_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "note_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "observed_data_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "opinion_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "opinion_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "report_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "report_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "threat_actor_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "threat_actor_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "versioning", "sub_dir" : "producer_test"},
+      {"dir" : "versioning", "sub_dir" : "consumer_test"},
+      {"dir" : "vulnerability_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "vulnerability_sharing", "sub_dir" : "consumer_test"}
+    ],
+    "level2": [
+      {"dir" : "location_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "location_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "observed_data_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "sighting_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "sighting_sharing", "sub_dir" : "consumer_test"}
+    ]
+  },
+  "TMS": {
+    "title": "Threat Mitigation System (TMS):",
+    "description": "Software instance that acts on Course of Action and data from other threat mitigations such as a firewall, IPS, Endpoint Detection and Response (EDR) software, etc. This is applicable for both Producers and Consumers.",
+    "level1": [
+      {"dir" : "course_of_action_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "indicator_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "sighting_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "versioning", "sub_dir" : "producer_test"}
+    ],
+    "level2": [
+      {"dir" : "observed_data_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "versioning", "sub_dir" : "consumer_test"}
+    ]
+  },
+  "SXC": {
+    "title": " STIX Consumer (SXC):",
+    "description": "Software instance that consumes STIX 2.1 content in order to perform translations to domain-specific formats consumable by enforcement and/or detection systems that do not natively support STIX 2.1. A SXC will typically consume STIX content but may not produce any STIX content itself.",
+    "level1": [
+      {"dir" : "confidence_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "data_marking_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "versioning", "sub_dir" : "consumer_test"}
+    ],
+    "level2": [
+      {"dir" : "attack_pattern_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "campaign_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "course_of_action_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "grouping_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "indicator_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "infrastructure_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "intrusion_set_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "location_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "malware_analysis_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "malware_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "note_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "observed_data_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "opinion_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "report_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "sighting_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "threat_actor_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "tool_sharing", "sub_dir" : "consumer_test"},
+      {"dir" : "vulnerability_sharing", "sub_dir" : "consumer_test"}
+    ]
+  },
+  "SXP": {
+    "title": "STIX Producer (SXP):",
+    "description": "Software instance that acts as a Producer of STIX 2.1 content.",
+    "level1": [
+      {"dir" : "confidence_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "data_marking_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "versioning", "sub_dir" : "producer_test"}
+    ],
+    "level2": [
+      {"dir" : "attack_pattern_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "campaign_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "course_of_action_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "grouping_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "indicator_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "infrastructure_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "intrusion_set_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "location_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "malware_analysis_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "malware_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "note_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "observed_data_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "opinion_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "report_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "sighting_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "threat_actor_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "tool_sharing", "sub_dir" : "producer_test"},
+      {"dir" : "vulnerability_sharing", "sub_dir" : "producer_test"}
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+[
+    {
+      "type": "identity",
+      "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp, Inc.",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "identity",
+      "id": "identity--f6e43aa5-76cc-45ca-9b06-be2d65f26bfb",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp Sighting, Inc.",
+      "created": "2015-01-20T12:34:56.000Z",
+      "modified": "2015-01-20T12:34:56.000Z",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff"
+  },
+  {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--3d305eee-c862-40b1-bba1-37087c274162",
+      "created_by_ref": "identity--f6e43aa5-76cc-45ca-9b06-be2d65f26bfb",
+      "created": "2015-01-21T12:34:56.000Z",
+      "description": "Example of what a TIS Indicator Consumer can do",
+      "modified": "2015-01-21T12:34:56.000Z",
+      "valid_from": "2015-01-01T00:00:00.000Z",
+      "pattern": "[ipv6-addr:value = '2001:0db8:85a3:0000:0000:8a2e:0370:7334']",
+      "pattern_type": "stix",
+      "indicator_types": [ "anomalous-activity" ]
+  }
+]

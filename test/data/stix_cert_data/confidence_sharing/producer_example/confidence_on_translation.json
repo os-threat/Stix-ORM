@@ -1,0 +1,70 @@
+[
+  {
+      "type": "identity",
+      "id": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "spec_version": "2.1",
+      "identity_class": "organization",
+      "name": "ACME Corp, Inc.",
+      "created": "2018-01-17T11:11:13.000Z",
+      "modified": "2018-01-17T11:11:13.000Z"
+  },
+  {
+      "type": "campaign",
+      "id": "campaign--12a111f0-b824-4baf-a224-83b80237a094",
+      "lang": "en",
+      "spec_version": "2.1",
+      "created": "2017-02-08T21:31:22.007Z",
+      "modified": "2017-02-08T21:31:22.007Z",
+      "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
+      "name": "Bank Attack",
+      "description": "More information about bank attack"
+  },
+  {
+      "type": "language-content",
+      "id": "language-content--b86bd89f-98bb-4fa9-8cb2-9ad421da981d",
+      "spec_version": "2.1",
+      "created": "2017-02-08T21:31:22.007Z",
+      "modified": "2017-02-08T21:31:22.007Z",
+      "confidence": 100,
+      "object_ref": "campaign--12a111f0-b824-4baf-a224-83b80237a094",
+      "object_modified": "2017-02-08T21:31:22.007Z",
+      "contents": {
+          "de": {
+              "name": "Bank Angriff",
+              "description": "Weitere Informationen über Banküberfall"
+          }
+      }
+  },
+  {
+      "type": "language-content",
+      "id": "language-content--a2cd6c46-d999-4a79-95ae-0c6cb2fc0648",
+      "spec_version": "2.1",
+      "created": "2017-02-08T21:31:22.007Z",
+      "modified": "2017-02-08T21:31:22.007Z",
+      "confidence": 90,
+      "object_ref": "campaign--12a111f0-b824-4baf-a224-83b80237a094",
+      "object_modified": "2017-02-08T21:31:22.007Z",
+      "contents": {
+          "fr": {
+              "name": "Attaque Bank",
+              "description": "Plus d'informations sur la crise bancaire"
+          }
+      }
+  },
+  {
+      "type": "language-content",
+      "id": "language-content--fe76d222-40f1-4c7d-8dd1-643681356df7",
+      "spec_version": "2.1",
+      "created": "2017-02-08T21:31:22.007Z",
+      "modified": "2017-02-08T21:31:22.007Z",
+      "confidence": 95,
+      "object_ref": "campaign--12a111f0-b824-4baf-a224-83b80237a094",
+      "object_modified": "2017-02-08T21:31:22.007Z",
+      "contents": {
+          "ja": {
+              "name": "銀行への攻撃",
+              "description": "銀行への攻撃の追加情報"
+          }
+      }
+  }
+]

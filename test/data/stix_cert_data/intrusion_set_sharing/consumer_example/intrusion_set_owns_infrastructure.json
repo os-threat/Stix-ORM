@@ -1,0 +1,59 @@
+[
+  {
+      "type": "identity",
+      "id": "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c",
+      "spec_version": "2.1",
+      "created": "2015-04-14T13:07:49.812Z",
+      "modified": "2015-04-14T13:07:49.812Z",
+      "name": "Oscorp Industries",
+      "identity_class": "organization"
+  },
+  {
+      "type": "intrusion-set",
+      "spec_version": "2.1",
+      "id": "intrusion-set--4e78f46f-a023-4e5f-bc24-71b3ca22ec29",
+      "created_by_ref": "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c",
+      "created": "2016-04-06T20:03:48.000Z",
+      "modified": "2016-04-06T20:03:48.000Z",
+      "name": "Bobcat Breakin",
+      "description": "Incidents usually feature a shared TTP of a bobcat being released within           the building containing network access, scaring users to leave their computers without locking them first. Still determining where the threat actors are getting the bobcats."
+  },
+  {
+      "type": "infrastructure",
+      "spec_version": "2.1",
+      "id": "infrastructure--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+      "created_by_ref": "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c",
+      "created": "2016-08-08T15:50:10.983Z",
+      "modified": "2016-08-08T15:50:10.983Z",
+      "name": "Bobcat Infrastructure",
+      "description": "A C2 server for computers that were accessed after bobcats were released.",
+      "infrastructure_types": [ "command-and-control" ]
+  },
+  {
+      "type": "ipv4-addr",
+      "spec_version": "2.1",
+      "id": "ipv4-addr--b4e29b62-2053-47c4-bab4-bbce39e5ed67",
+      "value": "198.51.100.3"
+  },
+  {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--a6e9345f-5a15-4c29-8bb3-7dcc5d168d64",
+      "created_by_ref": "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c",
+      "created": "2020-02-29T17:41:44.940Z",
+      "modified": "2020-02-29T17:41:44.940Z",
+      "relationship_type": "owns",
+      "source_ref": "intrusion-set--4e78f46f-a023-4e5f-bc24-71b3ca22ec29",
+      "target_ref": "infrastructure--e5268b6e-4931-42f1-b379-87f48eb41b1e"
+  },
+  {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa60266ef",
+      "created": "2016-09-09T08:17:27.000Z",
+      "modified": "2016-09-09T08:17:27.000Z",
+      "relationship_type": "consists-of",
+      "source_ref": "infrastructure--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+      "target_ref": "ipv4-addr--b4e29b62-2053-47c4-bab4-bbce39e5ed67"
+  }
+]

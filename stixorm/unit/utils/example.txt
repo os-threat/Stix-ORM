@@ -1,0 +1,39 @@
+dep_match ->  $identity0 isa identity, has stix-id "identity--b38dfe21-7477-40d1-aa90-5c8671ce51ca";
+ $marking-definition01 isa marking-definition, has stix-id "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed";
+
+dep_insert ->
+ $created-by0 (created:$threat-actor, creator:$identity0) isa created-by;
+
+ $object-marking1 (marked:$threat-actor, marking:$marking-definition01) isa object-marking;
+
+indep_ql -> $threat-actor isa threat-actor,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has threat-actor-type $threat_actor_types0,
+ has threat-actor-type $threat_actor_types1,
+ has aliases $aliases0,
+ has aliases $aliases1,
+ has stix-role $roles0,
+ has resource-level $resource-level,
+ has primary-motivation $primary-motivation;
+
+ $stix-type "threat-actor";
+ $spec-version "2.1";
+ $stix-id "threat-actor--8b6297fe-cae7-47c6-9256-5584b417849c";
+ $created 2017-04-27T16:18:24.318;
+ $modified 2017-04-27T16:18:24.318;
+ $name "The Joker";
+ $threat_actor_types0 "criminal";
+ $threat_actor_types1 "terrorist";
+ $aliases0 "Joe Kerr";
+ $aliases1 "The Clown Prince of Crime";
+ $roles0 "director";
+ $resource-level "team";
+ $primary-motivation "personal-satisfaction";
+
+
+core_ql ->  $threat-actor isa threat-actor, has stix-id "threat-actor--8b6297fe-cae7-47c6-9256-5584b417849c";

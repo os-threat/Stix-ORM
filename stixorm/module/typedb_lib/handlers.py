@@ -1,6 +1,6 @@
 import traceback
 
-from returns.pipeline import is_successful
+
 import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -8,7 +8,7 @@ logger.setLevel(logging.DEBUG)
 def handle_result(result,
                   name: str = '',
                   strict_failure: bool = False):
-        result_failure = not is_successful(result)
+        result_failure = result is not None
         try:
             if result_failure:
                 logger.info("Failure in result for: "+ name)

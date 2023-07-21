@@ -1,0 +1,82 @@
+[
+  {
+      "type": "identity",
+      "spec_version": "2.1",
+      "id": "identity--c00275a5-4423-46c6-bb79-235654096f8a",
+      "created": "2019-02-15T13:29:42.904Z",
+      "modified": "2019-09-19T20:21:59.961Z",
+      "name": "Example Shodan Inferred Vulnerability",
+      "identity_class": "organization"
+  },
+  {
+      "spec_version": "2.1",
+      "type": "vulnerability",
+      "id": "vulnerability--fa4ca8dd-1248-5fef-8828-1bd2d935fa58",
+      "created": "2019-07-22T12:34:02.602Z",
+      "modified": "2019-07-22T12:34:02.602Z",
+      "created_by_ref": "identity--c00275a5-4423-46c6-bb79-235654096f8a",
+      "name": "CVE-2019-1234",
+      "external_references": [
+          {
+              "source_name": "cve",
+              "external_id": "CVE-2019-1234",
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-1019-1234"
+          }
+      ]
+  },
+  {
+      "type": "infrastructure",
+      "spec_version": "2.1",
+      "id": "infrastructure--a927d4b3-3396-5c01-998b-08733784ab5e",
+      "created": "2019-07-22T12:34:02.602Z",
+      "modified": "2019-07-22T12:34:02.602Z",
+      "created_by_ref": "identity--c00275a5-4423-46c6-bb79-235654096f8a",
+      "name": "93.184.216.34",
+      "infrastructure_types": ["exfiltration"]
+  },
+  {
+      "type": "ipv4-addr",
+      "id": "ipv4-addr--a927d4b3-3396-5c01-998b-08733784ab5e",
+      "spec_version": "2.1",
+      "value": "93.184.216.34"
+  },
+  {
+      "type": "domain-name",
+      "id": "domain-name--98e751b4-e47f-56f1-9d5d-f60001e5ac84",
+      "spec_version": "2.1",
+      "value": "example.com"
+  },
+  {
+      "spec_version": "2.1",
+      "type": "relationship",
+      "id": "relationship--a502bd26-42d1-4020-b652-70ec37797cb6",
+      "created": "2019-07-22T12:34:02.602Z",
+      "modified": "2019-07-22T12:34:02.602Z",
+      "created_by_ref": "identity--c00275a5-4423-46c6-bb79-235654096f8a",
+      "relationship_type": "has",
+      "source_ref": "infrastructure--a927d4b3-3396-5c01-998b-08733784ab5e",
+      "target_ref": "vulnerability--fa4ca8dd-1248-5fef-8828-1bd2d935fa58"
+  },
+  {
+      "spec_version": "2.1",
+      "type": "relationship",
+      "id": "relationship--91420849-09b2-4ba4-8769-30d258749ae8",
+      "created": "2019-07-22T12:34:02.602Z",
+      "modified": "2019-07-22T12:34:02.602Z",
+      "created_by_ref": "identity--c00275a5-4423-46c6-bb79-235654096f8a",
+      "relationship_type": "consists-of",
+      "source_ref": "infrastructure--a927d4b3-3396-5c01-998b-08733784ab5e",
+      "target_ref": "ipv4-addr--a927d4b3-3396-5c01-998b-08733784ab5e"
+  },
+  {
+      "spec_version": "2.1",
+      "type": "relationship",
+      "id": "relationship--8371387d-2e54-443a-8aec-99e763e1a0d8",
+      "created": "2019-07-22T12:34:02.602Z",
+      "modified": "2019-07-22T12:34:02.602Z",
+      "created_by_ref": "identity--c00275a5-4423-46c6-bb79-235654096f8a",
+      "relationship_type": "resolves-to",
+      "source_ref": "domain-name--98e751b4-e47f-56f1-9d5d-f60001e5ac84",
+      "target_ref": "ipv4-addr--a927d4b3-3396-5c01-998b-08733784ab5e"
+  }
+]

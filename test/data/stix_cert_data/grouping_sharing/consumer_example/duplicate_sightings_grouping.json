@@ -1,0 +1,120 @@
+[
+
+    {
+        "type": "indicator",
+        "spec_version": "2.1",
+        "id": "indicator--04817822-564e-4300-a393-ea756aff0725",
+        "created": "2019-12-01T00:00:00.000Z",
+        "modified": "2019-12-01T00:00:00.000Z",
+        "valid_from": "2020-02-20T22:28:19.313Z",
+        "pattern": "[file:hashes.MD5 = 'd41d8cd98f00b204e9800998ecf8427e']",
+        "pattern_type": "stix"
+    },
+    {
+        "type": "indicator",
+        "spec_version": "2.1",
+        "id": "indicator--74654fff-2435-463b-bd41-36444453febd",
+        "created": "2019-12-01T00:00:00.000Z",
+        "modified": "2019-12-01T00:00:00.000Z",
+        "valid_from": "2020-02-20T22:28:19.313Z",
+        "pattern": "[file:hashes.MD5 = '79054025255fb1a26e4bc422aef54eb4']",
+        "pattern_type": "stix"
+    },
+    {
+        "type": "identity",
+        "id": "identity--79a32d9a-62d4-400e-b279-d031908b2260",
+        "spec_version": "2.1",
+        "created": "2019-08-11T15:07:09.000Z",
+        "modified": "2019-08-11T15:07:09.000Z",
+        "name": "ISAO",
+        "description": "An ISAO",
+        "identity_class": "organization"
+    },
+    {
+        "type": "identity",
+        "id": "identity--19100e8d-1229-4606-a00c-b6788f41b970",
+        "spec_version": "2.1",
+        "created": "2017-11-11T10:07:12.000Z",
+        "modified": "2017-11-11T10:07:12.000Z",
+        "name": "Vendor",
+        "description": "A threat intel vendor",
+        "identity_class": "organization"
+    },
+    {
+        "type": "identity",
+        "id": "identity--74756489-bed8-de0a-ad23-abe9d90ed126",
+        "spec_version": "2.1",
+        "created": "2018-06-08T08:07:00.000Z",
+        "modified": "2018-06-08T08:07:00.000Z",
+        "name": "Researcher",
+        "description": "A threat intel researcher",
+        "identity_class": "organization"
+    },
+    {
+        "type": "identity",
+        "id": "identity--6716e619-44b3-446d-8e7f-386f93f106a7",
+        "spec_version": "2.1",
+        "created": "2017-12-29T15:05:19.000Z",
+        "modified": "2017-12-29T15:05:19.000Z",
+        "name": "SIEM",
+        "description": "A SIEM tool",
+        "identity_class": "organization"
+    },
+    {
+        "type": "sighting",
+        "id": "sighting--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+        "spec_version": "2.1",
+        "created_by_ref": "identity--79a32d9a-62d4-400e-b279-d031908b2260",
+        "created": "2020-03-01T09:11:13.000Z",
+        "modified": "2020-03-01T09:11:13.000Z",
+        "sighting_of_ref": "indicator--04817822-564e-4300-a393-ea756aff0725",
+        "count": 10
+    },
+    {
+        "type": "sighting",
+        "id": "sighting--34098fce-860f-48ae-8e50-ebd3cc5e41da",
+        "spec_version": "2.1",
+        "created_by_ref": "identity--19100e8d-1229-4606-a00c-b6788f41b970",
+        "created": "2020-03-02T07:15:58.160Z",
+        "modified": "2020-03-02T07:15:58.160Z",
+        "sighting_of_ref": "indicator--04817822-564e-4300-a393-ea756aff0725",
+        "count": 20
+    },
+    {
+        "type": "sighting",
+        "id": "sighting--9634a1a9-3ad4-46b7-81a2-0a7f745cadfd",
+        "spec_version": "2.1",
+        "created_by_ref": "identity--74756489-bed8-de0a-ad23-abe9d90ed126",
+        "created": "2020-03-03T11:14:35.000Z",
+        "modified": "2020-03-03T11:14:35.000Z",
+        "sighting_of_ref": "indicator--74654fff-2435-463b-bd41-36444453febd",
+        "count": 30
+    },
+    {
+        "type": "sighting",
+        "id": "sighting--f88d31f6-486f-44da-b317-01333bde0b82",
+        "spec_version": "2.1",
+        "created_by_ref": "identity--6716e619-44b3-446d-8e7f-386f93f106a7",
+        "created": "2020-03-01T10:04:20.244Z",
+        "modified": "2020-03-01T10:04:20.244Z",
+        "sighting_of_ref": "indicator--04817822-564e-4300-a393-ea756aff0725",
+        "count": 40
+    },
+    {
+        "type": "grouping",
+        "spec_version": "2.1",
+        "id": "grouping--84e4d88f-44ea-4bcd-bbf3-b2c1c320bcb3",
+        "created_by_ref": "identity--6716e619-44b3-446d-8e7f-386f93f106a7",
+        "created": "2020-04-21T19:59:11.000Z",
+        "modified": "2020-04-21T19:59:11.000Z",
+        "name": "Sighting Grouping",
+        "description": "The referenced Sightings are duplicates and represent a single sighting",
+        "context": "duplicate-of",
+        "object_refs": [
+            "sighting--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+            "sighting--34098fce-860f-48ae-8e50-ebd3cc5e41da",
+            "sighting--9634a1a9-3ad4-46b7-81a2-0a7f745cadfd",
+            "sighting--f88d31f6-486f-44da-b317-01333bde0b82"
+        ]
+    }
+]

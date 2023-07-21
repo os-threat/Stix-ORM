@@ -52,13 +52,13 @@ class ImportTypeFactory:
             identity=identity,
             location=location,
             os_threat=os_threat,
-            kestral=kestrel,
+            kestrel=kestrel,
             rules=rules,
             ATTACK=attack,
             ATTACK_Versions=attack_versions,
             ATTACK_Domains=attack_domains,
             CACAO=cacao,
-            US_DoD=us_dod
+            US_DoD=us_dod,
         )
 
     @staticmethod
