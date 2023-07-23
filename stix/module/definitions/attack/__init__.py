@@ -27,8 +27,7 @@ from stix.module.definitions.attack.classes import (
     SoftwareTool, DataSource, DataComponent, AttackCampaign, Collection,
     ObjectVersion, AttackRelation, AttackMarking, AttackIdentity
 )
-from ..property_definitions import get_definitions, DefinitionNames
-from ..domain_definition import DomainDefinition
+from ..domain_definition import DomainDefinition, DefinitionNames
 
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
