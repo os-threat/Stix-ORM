@@ -3,6 +3,10 @@ import os
 import pathlib
 from abc import ABC, abstractmethod
 from enum import Enum
+
+from stixorm.module.definitions.os_threat import os_threat_models
+
+
 ##############################################
 #
 # Denis these references below are clumsy, can we build a proper object registry please as a refactor?
@@ -57,9 +61,9 @@ class ObjectKeys(str, Enum):
 class DomainDefinition:
 
     def __init__(self,
-                 domain_name: str,
+                 domain_name: DefinitionNames,
                  path):
-        self.domain_name = domain_name
+        self.domain_name: DefinitionNames = domain_name
         self.definition_path = path
 
     def get_mappings(self) -> dict:
@@ -116,34 +120,34 @@ class Definitions:
     def __init__(self):
         definitions_dir = pathlib.Path(__file__).parent.absolute()
 
-        attack_definitions_dir = definitions_dir.joinpath(DefinitionNames.ATTACK.value)
+        attack_definitions_dir = definitions_dir.joinpath(DefinitionNames.ATTACK)
         attack_sub = get_ext_list(attack_definitions_dir)
-        attack_definition = DomainDefinition(DefinitionNames.ATTACK.value,
+        attack_definition = DomainDefinition(DefinitionNames.ATTACK,
                                              attack_definitions_dir)
 
-        cacao_definitions_dir = definitions_dir.joinpath(DefinitionNames.CACAO.value)
+        cacao_definitions_dir = definitions_dir.joinpath(DefinitionNames.CACAO)
         cacao_sub = get_ext_list(cacao_definitions_dir)
-        cacao_definition = DomainDefinition(DefinitionNames.CACAO.value,
+        cacao_definition = DomainDefinition(DefinitionNames.CACAO,
                                             cacao_definitions_dir)
 
-        kestrel_definitions_dir = definitions_dir.joinpath(DefinitionNames.KESTREL.value)
+        kestrel_definitions_dir = definitions_dir.joinpath(DefinitionNames.KESTREL)
         kestrel_sub = get_ext_list(kestrel_definitions_dir)
-        kestrel_definition = DomainDefinition(DefinitionNames.KESTREL.value,
+        kestrel_definition = DomainDefinition(DefinitionNames.KESTREL,
                                               kestrel_definitions_dir)
 
         os_threat_definitions_dir = definitions_dir.joinpath("os_threat")
         os_threat_sub = get_ext_list(os_threat_definitions_dir)
-        os_threat_definition = DomainDefinition(DefinitionNames.OS_THREAT.value,
+        os_threat_definition = DomainDefinition(DefinitionNames.OS_THREAT,
                                                 os_threat_definitions_dir)
 
         stix_21_definitions_dir = definitions_dir.joinpath("stix21")
         stix_21_sub = get_ext_list(stix_21_definitions_dir)
-        stix_21_definition = DomainDefinition(DefinitionNames.STIX_21.value,
+        stix_21_definition = DomainDefinition(DefinitionNames.STIX_21,
                                               stix_21_definitions_dir)
 
         us_dod_definitions_dir = definitions_dir.joinpath("us_dod")
         us_dod_sub = get_ext_list(us_dod_definitions_dir)
-        us_dod_definition = DomainDefinition(DefinitionNames.US_DoD.value,
+        us_dod_definition = DomainDefinition(DefinitionNames.US_DoD,
                                               us_dod_definitions_dir)
 
         self.definitions = {}

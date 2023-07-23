@@ -53,7 +53,7 @@ for file_path in glob(f'{dir_path}/base/*.json'):
         
 
 kestrel_definitions_dir = pathlib.Path(__file__).parent
-kestrel_definition = DomainDefinition(DefinitionNames.KESTREL.value,
+kestrel_definition = DomainDefinition(DefinitionNames.KESTREL,
                                             kestrel_definitions_dir)
 
 kestrel_models["mappings"] = kestrel_definition.get_mappings()

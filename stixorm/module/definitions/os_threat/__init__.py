@@ -60,7 +60,7 @@ for file_path in glob(f'{dir_path}/base/*.json'):
         
 
 os_threat_definitions_dir = pathlib.Path(__file__).parent
-os_threat_definition = DomainDefinition(DefinitionNames.OS_THREAT.value,
+os_threat_definition = DomainDefinition(DefinitionNames.OS_THREAT,
                                             os_threat_definitions_dir)
 
 os_threat_models["mappings"] = os_threat_definition.get_mappings()

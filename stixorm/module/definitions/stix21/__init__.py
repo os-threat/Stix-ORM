@@ -43,8 +43,7 @@ from stix2.v21.sro import Relationship, Sighting
 from stix2.v21.common import MarkingDefinition
 
 
-from stixorm.module.definitions.definitions import get_definitions, DefinitionNames
-from stixorm.module.definitions.domain_definition import DomainDefinition
+from stixorm.module.definitions.domain_definition import DomainDefinition, DefinitionNames
 
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
@@ -75,7 +74,7 @@ for file_path in glob(f'{dir_path}/base/*.json'):
         stix_models["base"][key] = json.load(json_file)
 
 stix_21_definitions_dir = pathlib.Path(__file__).parent
-stix_21_definition = DomainDefinition(DefinitionNames.STIX_21.value,
+stix_21_definition = DomainDefinition(DefinitionNames.STIX_21,
                                               stix_21_definitions_dir)
 stix_models["mappings"] = stix_21_definition.get_mappings()
 

@@ -58,7 +58,7 @@ for file_path in glob(f'{dir_path}/base/*.json'):
         
 
 attack_definitions_dir = pathlib.Path(__file__).parent
-attack_definition = DomainDefinition(DefinitionNames.ATTACK.value,
+attack_definition = DomainDefinition(DefinitionNames.ATTACK,
                                         attack_definitions_dir)
 
 attack_models["mappings"] = attack_definition.get_mappings()

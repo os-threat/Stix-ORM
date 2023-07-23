@@ -53,7 +53,7 @@ for file_path in glob(f'{dir_path}/base/*.json'):
         
 
 us_dod_definitions_dir = pathlib.Path(__file__).parent
-us_dod_definition = DomainDefinition(DefinitionNames.US_DoD.value,
+us_dod_definition = DomainDefinition(DefinitionNames.US_DoD,
                                             us_dod_definitions_dir)
 us_dod_models["mappings"] = us_dod_definition.get_mappings()
 

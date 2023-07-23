@@ -21,8 +21,7 @@ from loguru import logger
 import os
 from pathlib import Path
 
-from stixorm.module.definitions.definitions import get_definitions, DefinitionNames
-from stixorm.module.definitions.domain_definition import DomainDefinition
+from stixorm.module.definitions.domain_definition import DomainDefinition, DefinitionNames
 
 path = os.path.abspath(__file__)
 dir_path = os.path.dirname(path)
@@ -53,7 +52,7 @@ for file_path in glob(f'{dir_path}/base/*.json'):
         
 
 cacao_definitions_dir = pathlib.Path(__file__).parent
-cacao_definition = DomainDefinition(DefinitionNames.CACAO.value,
+cacao_definition = DomainDefinition(DefinitionNames.CACAO,
                                             cacao_definitions_dir)
 cacao_models["mappings"] = cacao_definition.get_mappings()
 
