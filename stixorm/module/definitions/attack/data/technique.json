@@ -1,0 +1,19 @@
+{
+  "name": "name",
+  "description": "description",
+  "x_mitre_detection": "x-mitre-detection",
+  "x_mitre_platforms": "x-mitre-platforms",
+  "x_mitre_data_sources": "x-mitre-data-sources",
+  "x_mitre_is_subtechnique": "x-mitre-is-subtechnique",
+  "x_mitre_system_requirements": "x-mitre-system-requirements",
+  "x_mitre_tactic_type": "x-mitre-tactic-type",
+  "x_mitre_permissions_required": "x-mitre-permissions-required",
+  "x_mitre_network_requirements": "x-mitre-network-requirements",
+  "x_mitre_effective_permissions": "x-mitre-effective-permissions",
+  "x_mitre_network_requirements": "x-mitre-network-requirements",
+  "x_mitre_defense_bypassed": "x-mitre-defense-bypassed",
+  "x_mitre_remote_support": "x-mitre-remote-support",
+  "x_mitre_impact_type": "x-mitre-impact-type",
+  "kill_chain_phases": "",
+  "aliases": "aliases"
+}

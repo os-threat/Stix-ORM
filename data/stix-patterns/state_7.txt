@@ -1,4 +1,0 @@
-==================== state_7 ======================
-statement 7 (OR) 
-[url:value = 'http://example.com/foo' OR url:value = 'https://example.com/research/index.html']
-

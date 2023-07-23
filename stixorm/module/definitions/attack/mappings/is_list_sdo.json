@@ -1,0 +1,75 @@
+{
+  "attack": [
+    "x_mitre_contributors",
+    "x_mitre_domains"
+  ],
+  "matrix": [
+    "tactic_refs"
+  ],
+  "tactic": [],
+  "technique": [
+    "aliases",
+    "kill_chain_phases",
+    "x_mitre_platforms",
+    "x_mitre_data_sources",
+    "x_mitre_system_requirements",
+    "x_mitre_tactic_type",
+    "x_mitre_permissions_required",
+    "x_mitre_effective_permissions",
+    "x_mitre_defense_bypassed",
+    "x_mitre_impact_type"
+  ],
+  "sub-technique": [
+    "aliases",
+    "kill_chain_phases",
+    "x_mitre_platforms",
+    "x_mitre_data_sources",
+    "x_mitre_system_requirements",
+    "x_mitre_tactic_type",
+    "x_mitre_permissions_required",
+    "x_mitre_effective_permissions",
+    "x_mitre_defense_bypassed",
+    "x_mitre_impact_type"
+  ],
+  "mitigation": [],
+  "attack-group": [
+    "aliases",
+    "goals",
+    "secondary_motivations"
+  ],
+  "software-malware": [
+    "malware_types",
+    "kill_chain_phases",
+    "aliases",
+    "operating_system_refs",
+    "architecture_execution_envs",
+    "implementation_languages",
+    "capabilities",
+    "sample_refs",
+    "x_mitre_platforms",
+    "x_mitre_aliases"
+  ],
+  "software-tool": [
+    "tool_types",
+    "kill_chain_phases",
+    "aliases",
+    "x_mitre_platforms",
+    "x_mitre_aliases"
+  ],
+  "data-source": [
+    "x_mitre_platforms",
+    "x_mitre_collection_layers"
+  ],
+  "data-component": [],
+  "collection": [
+    "object_marking_refs",
+    "x_mitre_contents"
+  ],
+  "attack-campaign": [
+    "aliases"
+  ],
+  "attack-identity": [
+    "roles",
+    "sectors"
+  ]
+}

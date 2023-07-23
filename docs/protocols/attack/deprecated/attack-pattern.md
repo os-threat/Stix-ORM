@@ -120,7 +120,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 
 connection = {
     "uri": "localhost",

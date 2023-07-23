@@ -1,4 +1,0 @@
-==================== state_6 ======================
-statement 6 (AND) v2 
-[domain-name:value = 'site.of.interest.zaz' AND domain-name:resolves_to_refs.value = '198.51.100.3']
-
