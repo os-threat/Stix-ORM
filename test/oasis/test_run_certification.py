@@ -4,22 +4,21 @@ import os, json, sys
 import logging
 import pathlib
 import re
-import unittest
 
-from parameterized import parameterized
+import pytest
 
 from dbconfig import connection
 from stix2 import (v21, parse)
 from pathlib import Path
 
-from stix.module.authorise import import_type_factory
-from stix.module.typedb import TypeDBSink, TypeDBSource
+from stixorm.module.authorise import import_type_factory
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 
 loggers = [logging.getLogger()]  # get the root logger
 loggers = loggers + [logging.getLogger(name) for name in logging.root.manager.loggerDict]
 
 for l in loggers:
-    if l.name.startswith('stix.module'):
+    if l.name.startswith('stixorm.module'):
         # you can change verbosity here if needed
         '''
         l.setLevel(logging.DEBUG)
@@ -100,12 +99,12 @@ def sanity_check(path: Path):
     logger.error(f'Files with broken stix = {len(stix_fails)}')
 
 def load_data():
-    path = pathlib.Path(__file__).parents[2].joinpath('data', 'stix_cert_data', 'stix_cert_persona_dict.json')
+    path = pathlib.Path(__file__).parents[1].joinpath('data', 'stix_cert_data', 'stix_cert_persona_dict.json')
     assert os.path.exists(str(path))
     tests = load_personas(file_path=str(path))
     logger.info(f'Running sanity checks in {path}')
 
-    path = pathlib.Path(__file__).parents[2].joinpath('data', 'stix_cert_data')
+    path = pathlib.Path(__file__).parents[1].joinpath('data', 'stix_cert_data')
     assert os.path.exists(str(path))
     sanity_check(path=path)
 
@@ -123,12 +122,12 @@ def load_data():
 
     return data
 
-class CertificationTest(unittest.TestCase):
+class CertificationTest():
 
 
 
 
-    @parameterized.expand(load_data())
+    @pytest.mark.parametrize("profile_key, profile_value, tags, out_file, template", load_data())
     def test_run_profile(self, profile_key, profile_value, tags, out_file, template):
 
         report = template
@@ -373,11 +372,4 @@ class CertificationTest(unittest.TestCase):
 
 
 
-
-
-if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG,
-                        filename="test.log")
-    loader = unittest.TestLoader()
-    unittest.main()
 

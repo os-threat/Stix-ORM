@@ -1,4 +1,0 @@
-==================== state_11 ======================
-statement 11 (REPEAT, WITHIN) 
-[network-traffic:dst_ref.type = 'domain-name' AND network-traffic:dst_ref.value = 'example.com'] REPEATS 5 TIMES WITHIN 180 SECONDS
-

@@ -20,7 +20,7 @@ artifact.png,artifact.csv,artifact,Artifact,"The Artifact object permits capturi
     $payload-bin ""VBORw0KGgoAAAANSUhEUgAAADI== ..."";","match
     $a isa artifact,
         has stix-id  ""artifact--ca17bcf8-9846-5ab4-8662-75c1bf6e63ee"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -67,7 +67,7 @@ autonomous-system.png,autonomous.csv,autonomous-system,Autonomous-System,This ob
     $rir ""ARIN"";","match
     $a isa autonomous-system,
         has stix-id ""autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -108,7 +108,7 @@ directory.png,directory.csv,directory,Directory,The Directory object represents 
     $path ""C:\\Windows\\System32"";","match
     $a isa directory,
         has stix-id ""directory--93c0a9b0-520d-545d-9094-1d80adf46b05"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -156,7 +156,7 @@ insert
     $a isa domain-name,
         has stix-id ""domain-name--3c10e93f-798e-52a6-a0c1-08156efab7f5"",
         has $b;
-    $c (owner:$a, pointed-to:$d) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $c (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -200,7 +200,7 @@ email-addr.png,email-addr.csv,email-addr,Email-Address,The Email Address object 
     $display-name ""John Doe"";","match
     $a isa email-addr,
         has stix-id ""email-addr--2d77a846-6264-5d51-b586-e48322ea1ea3"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -272,7 +272,7 @@ insert
         has $b;
     $c (owner:$a, pointed-to:$d) isa embedded;
     $e isa header-key, has $f;
-    $g (owner:$a, pointed-to:$e) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $g (owner:$a, pointed-to:$e) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -396,7 +396,7 @@ $email-mime-part2 isa email-mime-part,
     $g (owner:$a, pointed-to:$e) isa embedded;
     $h isa stix-sub-object,
         has $i;
-    $j (owner:$a, pointed-to:$h) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $j (owner:$a, pointed-to:$h) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -454,7 +454,7 @@ insert
     $c (owner:$a, pointed-to:$d) isa embedded;
     $e isa stix-sub-object, 
         has $f;
-    $g (owner:$a, pointed-to:$e) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $g (owner:$a, pointed-to:$e) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -529,7 +529,7 @@ insert
         has $d;
     $e (owner:$a, pointed-to:$c) isa embedded;
     $g (owner:$a, pointed-to:$h) isa embedded;
-    $i (owner:$h, pointed-to:$j) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $i (owner:$h, pointed-to:$j) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -600,7 +600,7 @@ file-ntfs.png,file-ntfs.csv,ntfs-ext,File-NTFS,The NTFS file extension specifies
     $g (owner:$a, pointed-to:$h) isa embedded;
     $i isa stix-sub-object,
         has $j;
-    $k (owner:$h, pointed-to:$i) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $k (owner:$h, pointed-to:$i) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -684,7 +684,7 @@ file-pdf.png,file-pdf.csv,pdf-ext,File-PDF,"The PDF file extension specifies a d
         has $d;
     $e (owner:$a, pointed-to:$c) isa embedded;
     $g has $h;
-    $i (owner:$c, pointed-to:$g) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $i (owner:$c, pointed-to:$g) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -760,7 +760,7 @@ file-image.png,file-image.csv,raster-image-ext,File-Raster-Image,The Raster Imag
     $e (owner:$a, pointed-to:$c) isa embedded;
     $g (owner:$a, pointed-to:$f) isa embedded;
     $h has $j;
-    $i (owner:$f, pointed-to:$h) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $i (owner:$f, pointed-to:$h) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -783,9 +783,9 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""file--c7d1e135-8b34-549a-bb47-302f5cf998ed"")"
-file-windows.png,file-windows.csv,windows-pebinary-ext,File-Windows-PE-Binary,"The Windows™ PE Binary File extension specifies a default extension for capturing properties specific to Windows portable executable (PE) files. The key for this extension when used in the extensions dictionary MUST be windows-pebinary-ext. Note that this predefined extension does not use the extension facility described in section 7.3.
+file-windows.png,file-windows.csv,windows-pebinary-ext,File-Windows-PE-Binary,"The Windowsï¿½ PE Binary File extension specifies a default extension for capturing properties specific to Windows portable executable (PE) files. The key for this extension when used in the extensions dictionary MUST be windows-pebinary-ext. Note that this predefined extension does not use the extension facility described in section 7.3.
 
-An object using the Windows™ PE Binary File Extension MUST contain at least one property other than the required pe_type property from this extension.","Note that the example below also contains data and properties from the ""windows-pe-optional-header-type"" and the ""windows-pe-section-type"" ",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_gg5zibddf9bs,"{
+An object using the Windowsï¿½ PE Binary File Extension MUST contain at least one property other than the required pe_type property from this extension.","Note that the example below also contains data and properties from the ""windows-pe-optional-header-type"" and the ""windows-pe-section-type"" ",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_gg5zibddf9bs,"{
     ""type"": ""file"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""file--fb0419a8-f09c-57f8-be64-71a80417591c"",  
@@ -972,7 +972,7 @@ An object using the Windows™ PE Binary File Extension MUST contain at least one 
     $e (owner:$a, pointed-to:$c) isa embedded;
     $g (owner:$a, pointed-to:$f) isa embedded;
     $h has $j;
-    $i (owner:$f, pointed-to:$h) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $i (owner:$f, pointed-to:$h) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1013,7 +1013,7 @@ ipv4-addr.png,ipv4.csv,ipv4-addr,IPv4-Address,The IPv4 Address object represents
     $stix-value ""198.51.100.3"";","match
     $a isa ipv4-addr,
         has stix-id ""ipv4-addr--ff26c055-6336-5bc5-b89d-13d6226742dd"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1054,7 +1054,7 @@ ipv6-addr.png,ipv6.csv,ipv6-addr,IPv6-Address,The IPv6 Address object represents
     $stix-value ""2001:0db8::/96"";","match
     $a isa ipv6-addr,
         has stix-id ""ipv6-addr--5daf7456-8863-5481-9d42-237d477697f4"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1095,7 +1095,7 @@ mac-addr.png,mac.csv,mac-addr,MAC-Address,The MAC Address object represents a si
     $stix-value ""d2:fb:49:24:37:18"";","match
     $a isa mac-addr,
         has stix-id ""mac-addr--65cfcf98-8a6e-5a1b-8f61-379ac4f92d00"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1136,7 +1136,7 @@ mutex.png,mutex.csv,mutex,Mutex,The Mutex object represents the properties of a 
     $name ""__CLEANSWEEP__"";","match
     $a isa mutex,
         has stix-id ""mutex--eba44954-d4e4-5d3b-814c-2b17dd8de300"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1159,7 +1159,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""mutex--eba44954-d4e4-5d3b-814c-2b17dd8de300"")"
-network.png,network-traffic.csv,network-traffic,Network-Traffic,"The Network Traffic object represents arbitrary network traffic that originates from a source and is addressed to a destination. The network traffic MAY or MAY NOT constitute a valid unicast, multicast, or broadcast network connection. This MAY also include traffic that is not established, such as a SYN flood.","To allow for use cases where a source or destination address may be sensitive and not suitable for sharing, such as addresses that are internal to an organization’s network, the source and destination properties (src_ref and dst_ref, respectively) are defined as optional in the properties table below. However, a Network Traffic object MUST contain the protocols property and at least one of the src_ref or dst_ref properties and SHOULD contain the src_port and dst_port properties.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_rgnc3w40xy,"{      
+network.png,network-traffic.csv,network-traffic,Network-Traffic,"The Network Traffic object represents arbitrary network traffic that originates from a source and is addressed to a destination. The network traffic MAY or MAY NOT constitute a valid unicast, multicast, or broadcast network connection. This MAY also include traffic that is not established, such as a SYN flood.","To allow for use cases where a source or destination address may be sensitive and not suitable for sharing, such as addresses that are internal to an organizationï¿½s network, the source and destination properties (src_ref and dst_ref, respectively) are defined as optional in the properties table below. However, a Network Traffic object MUST contain the protocols property and at least one of the src_ref or dst_ref properties and SHOULD contain the src_port and dst_port properties.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_rgnc3w40xy,"{      
     ""type"": ""network-traffic"",      
     ""spec_version"": ""2.1"",      
     ""id"": ""network-traffic--630d7bb1-0bbc-53a6-a6d4-f3c2d35c2734"",      
@@ -1209,7 +1209,7 @@ insert $network-traffic isa network-traffic,
         has $b;
     $c (owner:$a, pointed-to:$d) isa embedded;
     $e has $f;
-    $g (owner:$a, pointed-to:$e) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $g (owner:$a, pointed-to:$e) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1297,7 +1297,7 @@ insert $network-traffic isa network-traffic,
         has $f;
     $g (owner:$a, pointed-to:$e) isa embedded;
     $i has $j;
-    $k (owner:$e, pointed-to:$i) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $k (owner:$e, pointed-to:$i) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1369,7 +1369,7 @@ insert
     $c (owner:$a, pointed-to:$d) isa embedded;
     $e isa stix-sub-object,
         has $f;
-    $g (owner:$a, pointed-to:$e) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $g (owner:$a, pointed-to:$e) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1445,7 +1445,7 @@ insert
     $c (owner:$a, pointed-to:$d) isa embedded;
     $e isa stix-sub-object,
         has $f;
-    $g (owner:$a, pointed-to:$e) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $g (owner:$a, pointed-to:$e) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1520,7 +1520,7 @@ insert
     $c (owner:$a, pointed-to:$d) isa embedded;
     $e isa stix-sub-object,
         has $f;
-    $g (owner:$a, pointed-to:$e) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $g (owner:$a, pointed-to:$e) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1574,7 +1574,7 @@ insert
     $a isa process,
         has stix-id  ""process--d2ec5aab-808d-4492-890a-3c1a1e3cb06e"",
         has $b;
-    $c (owner:$a, pointed-to:$d) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $c (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1639,7 +1639,7 @@ process-windows.png,process-windows.csv,windows-process-ext,Process-Windows-Proc
         has $b;
     $c (owner:$a, pointed-to:$d) isa embedded;
     $d isa stix-sub-object,
-        has $e;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $e;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1716,7 +1716,7 @@ insert
     $c (owner:$a, pointed-to:$d) isa embedded;
     $d isa stix-sub-object,
         has $e;
-    $f (owner:$a, pointed-to:$g) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $f (owner:$a, pointed-to:$g) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1766,7 +1766,7 @@ software.png,software.csv,software,Software,"The Software object represents high
     $version ""2002"";","match
     $a isa software,
         has stix-id  ""software--a1827f6d-ca53-5605-9e93-4316cd22a00a"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1807,7 +1807,7 @@ url.png,url.csv,url,URL,The URL object represents the properties of a uniform re
     $stix-value ""https://example.com/research/index.html"";","match
     $a isa url,
         has stix-id  ""url--c1477287-23ac-5971-a010-5c287877fa60"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1857,7 +1857,7 @@ user-account.png,user-account.csv,user-account,User-Account,"The User Account ob
     $display-name ""the grugq"";","match
     $a isa user-account,
         has stix-id  ""user-account--9bd3afcf-deee-54f9-83e2-520653cb6bba"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1940,7 +1940,7 @@ user-account-unix.png,user-account-unix.csv,unix-account-ext,User-UNIX-Account,T
         has $b;
     $c isa stix-sub-object,
         has $d;
-    $f (owner:$a, pointed-to:$c) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $f (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -1981,7 +1981,7 @@ registry-key.png,registry-key.csv,windows-registry-key,Windows-Registry-Key,"The
     $attribute-key ""HKEY_LOCAL_MACHINE\\System\\Foo\\Bar"";","match
     $a isa windows-registry-key,
         has stix-id  ""windows-registry-key--9d60798d-4e3e-5fe4-af8a-0e4986f0f90b"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -2047,7 +2047,7 @@ registry-key-value.png,registry-key-value.csv,windows-registry-value-type,Window
         has $b;
     $c isa stix-sub-object,
         has $d;
-    $e (owner:$a, pointed-to:$c) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -2100,7 +2100,7 @@ x509.png,x509.csv,x509-certificate,X.509-Certificate,"The X.509 Certificate obje
     $subject ""C=US, ST=Maryland, L=Pasadena, O=Brent Baccala, OU=FreeSoft, CN=www.freesoft.org/emailAddress=baccala@freesoft.org"";","match
     $a isa x509-certificate,
         has stix-id   ""x509-certificate--463d7b2a-8516-5a50-a3d7-6f801465d5de"",
-        has $b;","from stix.module.typedb import TypeDBSink, TypeDBSource
+        has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",
@@ -2206,7 +2206,7 @@ x509-ext.png,x509-ext.csv,x509-v3-extensions-type,X.509-Certificate Extension,"T
         has $b;
     $c isa stix-sub-object,
         has $d;
-    $e (owner:$a, pointed-to:$c) isa embedded;","from stix.module.typedb import TypeDBSink, TypeDBSource
+    $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     ""uri"": ""localhost"",
     ""port"": ""1729"",

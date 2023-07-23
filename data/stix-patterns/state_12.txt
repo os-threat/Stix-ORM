@@ -1,4 +1,0 @@
-==================== state_12 ======================
-statement 12 (START-STOP) 
-[file:name = 'foo.dll'] START t'2016-06-01T00:00:00Z' STOP t'2016-07-01T00:00:00Z'
-

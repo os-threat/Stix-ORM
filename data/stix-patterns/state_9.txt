@@ -1,4 +1,0 @@
-==================== state_9 ======================
-statement 9 (FollowedBy) 
-[file:hashes.'SHA-256' = 'fe90a7e910cb3a4739bed9180e807e93fa70c90f25a8915476f5e4bfbac681db'] FOLLOWEDBY [win-registry-key:key = 'hkey_local_machine\\system\\bar\\foo']
-

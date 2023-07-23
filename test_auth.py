@@ -1,5 +1,5 @@
 
-from stix.module.authorise import authorised_mappings
+from stixorm.module.authorise import authorised_mappings
 
 import_type = {
     "STIX21": True,

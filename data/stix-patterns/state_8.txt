@@ -1,4 +1,0 @@
-==================== state_8 ======================
-statement 8 (AND,OR,OR) 
-([file:name = 'foo.dll'] AND [win-registry-key:key = 'hkey_local_machine\\systemaroo']) OR [process:name = 'fooproc' OR process:name = 'procfoo']
-
