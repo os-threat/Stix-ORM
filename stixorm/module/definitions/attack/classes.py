@@ -25,8 +25,9 @@ from stix2.v21.vocab import (
 
 import logging
 
-from stixorm.module.definitions.property_definitions import get_definitions, ThreatReference
+from stixorm.module.definitions.property_definitions import ThreatReference
 from stixorm.module.typedb_lib.auth_types import all_auth_types
+from stixorm.module.typedb_lib.factories.mappings_factory import get_mapping_factory_instance
 
 logger = logging.getLogger(__name__)
 
@@ -548,7 +549,7 @@ class AttackCampaign(_DomainObject):
             raise ValueError(msg.format(self))
 
 
-valid_obj =  list(get_definitions().get_all_types())
+valid_obj =  get_mapping_factory_instance().get_all_types()
 # i) allows x- prefix see properties.py line 592 obj_type.startswith("x-") and
 # ii) allows non stix definitiosn to be added see properties.py line 592 is_object(obj_type, self.spec_version)
 class ObjectVersion(_STIXBase21):

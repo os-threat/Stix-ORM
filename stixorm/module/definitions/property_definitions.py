@@ -14,30 +14,20 @@ from stix2.properties import (
     TimestampProperty, TypeProperty, EmbeddedObjectProperty, ObservableProperty
 )
 
-from stixorm.module.definitions.domain_definition import Definitions
 
 DEFAULT_VERSION = '2.1'
 ERROR_INVALID_ID = (
     "not a valid STIX identifier, must match <object-type>--<UUID>: {}"
 )
 
+def get_ext_class(key, spec_version):
+    defin = Definitions()
+    list_of_ext = defin.sub_objects
+    for ext in list_of_ext:
+        if ext["type"] == key:
+            pass
+           # return os_threat_models[ext["class"]]
 
-def get_ext_list(mydir):
-    local_list = []
-    file_path = os.path.join(mydir, "mappings", "object_conversion.json")
-    if os.path.isfile(file_path):
-        with open(file_path, mode="r", encoding="utf-8") as f:
-            json_text = json.load(f)
-            local_list = [x for x in json_text if x["object"] == "sub"]
-
-    return local_list
-
-
-definitions = Definitions()
-
-
-def get_definitions() -> Definitions:
-    return definitions
 
 
 # TODO: Kestrel was missing from original definition, does this need to be fixed?

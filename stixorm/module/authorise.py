@@ -1,8 +1,9 @@
 
 import logging
+from typing import List
 
 from stixorm.module.definitions.property_definitions import get_libraries
-from stixorm.module.typedb_lib.factories.domain_factory import DomainFactory
+from stixorm.module.typedb_lib.factories.definition_factory import get_definition_factory_instance, DomainDefinition
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportTypeFactory, ImportType
 from stixorm.module.typedb_lib.factories.process_map_factory import ProcessMapFactory
 
@@ -26,8 +27,8 @@ def authorised_mappings(import_type: ImportType=default_import_type):
     auth["tql_types"] = {}
     auth["types"] = {}
     auth["is_lists"] = {}
-    domain_factory = DomainFactory.get_domain_factory()
-    auth_domains = domain_factory.get_domains_for_import(import_type)
+    definition_factory = get_definition_factory_instance()
+    auth_domains: List[DomainDefinition] = definition_factory.get_definitions_for_import(import_type)
 
 
     dom= get_libraries()
@@ -92,32 +93,32 @@ def authorised_mappings(import_type: ImportType=default_import_type):
             if name == "reln_name":
                 #logger.debug("----------- reln_name ------------")
                 for i, key in enumerate(keys):
-                    if domain["mappings"].get(matches[i], False):
+                    if domain.contains_mapping(matches[i]):
                         #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}, cond->{conds[i]}')
-                        value_list = [x[conds[i]] for x in domain["mappings"][matches[i]]]
+                        value_list = [x[conds[i]] for x in domain.get_mapping(matches[i])]
                         auth[name][key].extend(value_list)
             elif name == "reln":
                 #logger.debug("--------- reln--------------")
                 for i, key in enumerate(keys):
-                    if domain["mappings"].get(matches[i], False):
+                    if domain.contains_mapping(matches[i]):
                         #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{key}, match->{matches[i]}')
-                        value_list = domain["mappings"][matches[i]]
+                        value_list =  domain.get_mapping(matches[i])
                         auth[name][key].extend(value_list)
             elif name == "tql_types1":
                 #logger.debug("--------- reln--------------")
                 for i, key in enumerate(keys):
-                    if domain["mappings"].get(matches[i], False):
+                    if domain.contains_mapping(matches[i]):
                         logger.debug(f'\nAuth Loading: domain->{dom[j]}, name->{name}, key->{key}, match->{matches[i]}')
-                        value_list = [x[conds[i]] for x in domain["mappings"][matches[i]]]
+                        value_list = [x[conds[i]] for x in domain.get_mapping(matches[i])]
                         logger.debug(f'value list -> {value_list}')
                         auth["tql_types"][key].extend(value_list)
             elif name == "tql_types":
                 #logger.debug("---------- tql_types -------------")
                 for i, key in enumerate(keys):
-                    if domain["mappings"].get("object_conversion", False):
+                    if domain.contains_mapping("object_conversion"):
                         #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}, cond->{conds[i]}')
-                        value_list_type = [x["type"] for x in domain["mappings"][matches[i]] if x["object"] == conds[i]]
-                        value_list_typeql = [x["typeql"] for x in domain["mappings"][matches[i]] if x["object"] == conds[i]]
+                        value_list_type = [x["type"] for x in domain.get_mapping(matches[i]) if x["object"] == conds[i]]
+                        value_list_typeql = [x["typeql"] for x in domain.get_mapping(matches[i]) if x["object"] == conds[i]]
                         logger.debug(f' value_list_type -> {value_list_type}\n\n value_list_typeql -> {value_list_typeql}')
                         auth["tql_types"][key].extend(value_list_typeql)
                         auth["types"][key].extend(value_list_type)
@@ -126,30 +127,30 @@ def authorised_mappings(import_type: ImportType=default_import_type):
             elif name == "is_lists":
                 #logger.debug("--------- is_lists --------------")
                 for i, key in enumerate(keys):
-                    if domain["mappings"].get(matches[i], False):
+                    if domain.contains_mapping(matches[i]):
                         #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}, cond->{conds[i]}')
-                        value_dict = domain["mappings"][matches[i]]
+                        value_dict = domain.get_mapping(matches[i])
                         auth[name][key].update(value_dict)
             elif name == "direct":
                 #logger.debug("-------- direct ---------------")
                 for i, key in enumerate(keys):
-                    if domain.get(matches[i], False):
+                    if domain.does_property_contain_values(matches[i]):
                         #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}')
-                        value_dict = domain[matches[i]]
+                        value_dict = domain.get_property_values(matches[i])
                         auth[key].update(value_dict)
             elif name == "conv":
                 #logger.debug("-------- conv ---------------")
                 for i, key in enumerate(keys):
-                    if domain["mappings"].get("object_conversion", False):
+                    if domain.contains_mapping("object_conversion"):
                         #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}, cond->{conds[i]}')
-                        value_list = [x for x in domain["mappings"]["object_conversion"] if x["object"] == conds[i]]
+                        value_list = [x for x in domain.get_mapping("object_conversion") if x["object"] == conds[i]]
                         auth[name][key].extend(value_list)
             elif name == "classes":
                 #logger.debug("-------- conv ---------------")
                 for i, key in enumerate(keys):
-                    if domain["classes"].get(key, False):
+                    if domain.does_classes_contain_values(key):
                         #logger.debug(f'Auth Loading: domain->{dom[j]}, name->{name}, key->{keys[i]}, match->{matches[i]}, cond->{conds[i]}')
-                        value_dict = domain["classes"][key]
+                        value_dict = domain.get_classes_property_values(key)
                         auth[name][key].update(value_dict)
 
             else:

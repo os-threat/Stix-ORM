@@ -42,60 +42,13 @@ from stix2.v21.observables import (
 from stix2.v21.sro import Relationship, Sighting
 from stix2.v21.common import MarkingDefinition
 
-
-from stixorm.module.definitions.domain_definition import DomainDefinition, DefinitionNames
-
-path = os.path.abspath(__file__)
-dir_path = os.path.dirname(path)
-#logger = logging.getLogger(__name__)
-
-stix_models = {}
-stix_models["data"] = {}
-for file_path in glob(f'{dir_path}/data/*.json'):
-    # Opening JSON file
-    file_name = Path(file_path).stem
-
-    with open(file_path) as json_file:
-        # create well formed key
-        key = f'{file_name}'
-
-        stix_models["data"][key] = json.load(json_file)
-
-
-stix_models["base"] = {}
-for file_path in glob(f'{dir_path}/base/*.json'):
-    # Opening JSON file
-    file_name = Path(file_path).stem
-
-    with open(file_path) as json_file:
-        # create well formed key
-        key = f'{file_name}'
-
-        stix_models["base"][key] = json.load(json_file)
-
-stix_21_definitions_dir = pathlib.Path(__file__).parent
-stix_21_definition = DomainDefinition(DefinitionNames.STIX_21,
-                                              stix_21_definitions_dir)
-stix_models["mappings"] = stix_21_definition.get_mappings()
-
-
-stix_models["sub_objects"] = {}
-for file_path in glob(f'{dir_path}/sub_objects/*.json'):
-    # Opening JSON file
-    file_name = Path(file_path).stem
-
-    with open(file_path) as json_file:
-        # create well formed key
-        key = f'{file_name}'
-
-        stix_models["sub_objects"][key] = json.load(json_file)
-
-stix_models["classes"] = {}
-stix_models["classes"]["sro"] = {
+name = "stix21"
+class_model = {}
+class_model["sro"] = {
     "Relationship": Relationship,
     "Sighting": Sighting
 }
-stix_models["classes"]["sdo"] = {
+class_model["sdo"] = {
     "AttackPattern":AttackPattern,
     "Campaign":Campaign,
     "CourseOfAction":CourseOfAction,
@@ -117,7 +70,7 @@ stix_models["classes"]["sdo"] = {
     "Tool":Tool,
     "Vulnerability":Vulnerability,
 }
-stix_models["classes"]["sub"] = {
+class_model["sub"] = {
     "AlternateDataStream":AlternateDataStream,
     "ArchiveExt":ArchiveExt,
     "EmailMIMEComponent": EmailMIMEComponent,
@@ -137,7 +90,7 @@ stix_models["classes"]["sub"] = {
     "WindowsServiceExt":WindowsServiceExt,
     "X509V3ExtensionsType":X509V3ExtensionsType
 }
-stix_models["classes"]["sco"] = {
+class_model["sco"] = {
     "URL":URL,
     "Artifact":Artifact,
     "AutonomousSystem":AutonomousSystem,
@@ -158,13 +111,7 @@ stix_models["classes"]["sco"] = {
     "WindowsRegistryKey":WindowsRegistryKey,
     "X509Certificate":X509Certificate,
 }
-stix_models["classes"]["meta"] = {
+class_model["meta"] = {
     "MarkingDefinition":MarkingDefinition
 }
 
-total_len = len(stix_models["data"])+len(stix_models["base"])+len(stix_models["mappings"])
-total_len += len(stix_models["sub_objects"])+len(stix_models["classes"]["sdo"])
-total_len += len(stix_models["classes"]["sub"])+len(stix_models["classes"]["sco"])
-total_len += len(stix_models["classes"]["sro"])
-
-logger.debug('Loaded %d stix dictionary objects' % total_len)

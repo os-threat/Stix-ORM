@@ -1,4 +1,5 @@
 """Python Mitre ATT&CK Stix Class Definitions """
+from stixorm.module.typedb_lib.factories.mappings_factory import get_mapping_factory_instance
 
 """Python Mitre ATT&CK Stix Class Definitions """
 import json
@@ -28,12 +29,12 @@ from stix2.v21.vocab import (
 
 import logging
 
-from stixorm.module.definitions.property_definitions import get_definitions, ThreatReference, ThreatExtensionsProperty
-from stixorm.module.typedb_lib.auth_types import all_auth_types
+from stixorm.module.definitions.property_definitions import ThreatReference, ThreatExtensionsProperty
+
 
 logger = logging.getLogger(__name__)
 
-valid_obj =  list(get_definitions().get_all_types())
+valid_obj =  get_mapping_factory_instance().get_all_types()
 
 
 class Note(_DomainObject):
