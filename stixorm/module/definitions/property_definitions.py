@@ -1,82 +1,33 @@
 import json
-import pathlib
+import os
 import uuid
+import copy
 from enum import Enum
 from typing import Optional
 from stix2.properties import Property
 from stix2.utils import STIXTypeClass
-from stix2.base import _STIXBase
 from stix2.exceptions import CustomContentError
+from stix2.base import _STIXBase
+from stix2.properties import (
+    DictionaryProperty, ExtensionsProperty, IDProperty, IntegerProperty, ListProperty,
+    OpenVocabProperty, ReferenceProperty, StringProperty,
+    TimestampProperty, TypeProperty, EmbeddedObjectProperty, ObservableProperty
+)
+
+
 DEFAULT_VERSION = '2.1'
 ERROR_INVALID_ID = (
     "not a valid STIX identifier, must match <object-type>--<UUID>: {}"
 )
-from stixorm.module.definitions.domain_definition import DomainDefinition
 
+def get_ext_class(key, spec_version):
+    defin = Definitions()
+    list_of_ext = defin.sub_objects
+    for ext in list_of_ext:
+        if ext["type"] == key:
+            pass
+           # return os_threat_models[ext["class"]]
 
-class DefinitionNames(str, Enum):
-    ATTACK = "attack"
-    CACAO = "cacao"
-    KESTREL = "kestrel"
-    OS_THREAT = "os-threat"
-    STIX_21 = "stix"
-    US_DoD = "us-dod"
-
-
-class Definitions:
-
-    def __init__(self):
-        definitions_dir = pathlib.Path(__file__).parent.absolute()
-
-        attack_definitions_dir = definitions_dir.joinpath(DefinitionNames.ATTACK.value)
-        attack_definition = DomainDefinition(DefinitionNames.ATTACK.value,
-                                             attack_definitions_dir)
-
-        cacao_definitions_dir = definitions_dir.joinpath(DefinitionNames.CACAO.value)
-        cacao_definition = DomainDefinition(DefinitionNames.CACAO.value,
-                                            cacao_definitions_dir)
-
-        kestrel_definitions_dir = definitions_dir.joinpath(DefinitionNames.KESTREL.value)
-        kestrel_definition = DomainDefinition(DefinitionNames.KESTREL.value,
-                                              kestrel_definitions_dir)
-
-        os_threat_definitions_dir = definitions_dir.joinpath("os_threat")
-        os_threat_definition = DomainDefinition(DefinitionNames.OS_THREAT.value,
-                                                os_threat_definitions_dir)
-
-        stix_21_definitions_dir = definitions_dir.joinpath("stix21")
-        stix_21_definition = DomainDefinition(DefinitionNames.STIX_21.value,
-                                              stix_21_definitions_dir)
-
-        us_dod_definitions_dir = definitions_dir.joinpath("us_dod")
-        us_dod_definition = DomainDefinition(DefinitionNames.US_DoD.value,
-                                              us_dod_definitions_dir)
-
-        self.definitions = {}
-        self.definitions[DefinitionNames.ATTACK] = attack_definition
-        self.definitions[DefinitionNames.CACAO] = cacao_definition
-        self.definitions[DefinitionNames.KESTREL] = kestrel_definition
-        self.definitions[DefinitionNames.US_DoD] = us_dod_definition
-        self.definitions[DefinitionNames.OS_THREAT] = os_threat_definition
-        self.definitions[DefinitionNames.STIX_21] = stix_21_definition
-
-    def get_definition(self, domain_name: DefinitionNames) -> DomainDefinition:
-        if domain_name not in self.definitions:
-            raise ValueError(f"Domain name {domain_name} is not a valid domain name")
-        return self.definitions.get(domain_name)
-
-    def get_all_types(self) -> set[str]:
-        types = set()
-        for definition in self.definitions.values():
-            types.update(definition.get_all_types())
-        return types
-
-
-definitions = Definitions()
-
-
-def get_definitions() -> Definitions:
-    return definitions
 
 
 # TODO: Kestrel was missing from original definition, does this need to be fixed?
@@ -198,3 +149,92 @@ class ThreatReference(Property):
         return value, allow_custom
 
 
+
+def _get_dict(data):
+    """Return data as a dictionary.
+
+    Input can be a dictionary, string, or file-like object.
+    """
+
+    if type(data) is dict:
+        return data
+    else:
+        try:
+            return json.loads(data)
+        except TypeError:
+            pass
+        try:
+            return json.load(data)
+        except AttributeError:
+            pass
+        try:
+            return dict(data)
+        except (ValueError, TypeError):
+            raise ValueError("Cannot convert '%s' to dictionary." % str(data))
+
+
+class ThreatExtensionsProperty(DictionaryProperty):
+    """Property for representing extensions on Observable objects.
+    """
+
+    def __init__(self, spec_version=DEFAULT_VERSION, required=False):
+        super(ThreatExtensionsProperty, self).__init__(spec_version=spec_version, required=required)
+
+    def clean(self, value, allow_custom):
+        try:
+            dictified = _get_dict(value)
+            # get deep copy since we are going modify the dict and might
+            # modify the original dict as _get_dict() does not return new
+            # dict when passed a dict
+            dictified = copy.deepcopy(dictified)
+        except ValueError:
+            raise ValueError("The extensions property must contain a dictionary")
+
+        has_custom = False
+        for key, subvalue in dictified.items():
+            cls = get_ext_class(key, self.spec_version)
+            if cls:
+                if isinstance(subvalue, dict):
+                    ext = cls(allow_custom=False, **subvalue)
+                elif isinstance(subvalue, cls):
+                    # If already an instance of the registered class, assume
+                    # it's valid
+                    ext = subvalue
+                else:
+                    raise TypeError(
+                        "Can't create extension '{}' from {}.".format(
+                            key, type(subvalue),
+                        ),
+                    )
+
+                has_custom = has_custom or ext.has_custom
+
+                if not allow_custom and has_custom:
+                    raise CustomContentError(
+                        "custom content found in {} extension".format(
+                            key,
+                        ),
+                    )
+
+                dictified[key] = ext
+
+            else:
+                # If an unregistered "extension-definition--" style extension,
+                # we don't know what's supposed to be in it, so we can't
+                # determine whether there's anything custom.  So, assume there
+                # are no customizations.  If it's a different type of extension,
+                # non-registration implies customization (since all spec-defined
+                # extensions should be pre-registered with the library).
+
+                if key.startswith('extension-definition--'):
+                    _validate_id(
+                        key, self.spec_version, 'extension-definition--',
+                    )
+                elif allow_custom:
+                    has_custom = True
+                else:
+                    raise CustomContentError("Can't parse unknown extension type: {}".format(key))
+
+                dictified[key] = subvalue
+
+        return dictified, has_custom

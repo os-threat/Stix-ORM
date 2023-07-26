@@ -6,27 +6,87 @@
     "typeql": "list-of-feeds"
   },
   {
-    "rel": "cartons",
-    "owner": "carton-list-owner",
-    "pointed-to": "single-carton",
-    "typeql": "list-of-cartons"
+    "rel": "sighting_refs",
+    "owner": "sighting-event",
+    "pointed-to": "sights",
+    "typeql": "list-of-sightings"
   },
   {
-    "rel": "cases",
-    "owner": "cases-list-owner",
-    "pointed-to": "single-cases",
-    "typeql": "list-of-cases"
+    "rel": "subevents",
+    "owner": "parent",
+    "pointed-to": "sub-event",
+    "typeql": "subevents"
   },
   {
-    "rel": "case_list",
-    "owner": "case-list-owner",
-    "pointed-to": "single-case",
-    "typeql": "case-list"
+    "rel": "impacted_refs",
+    "owner": "the-impact",
+    "pointed-to": "impacted-thing",
+    "typeql": "impacted-refs"
   },
   {
-    "rel": "assigned",
-    "owner": "assigned-owner",
-    "pointed-to": "assignee",
-    "typeql": "assigned"
+    "rel": "superseded_by_ref",
+    "owner": "precedes",
+    "pointed-to": "superseded-by",
+    "typeql": "superseded"
+  },
+  {
+    "rel": "owner",
+    "owner": "owned",
+    "pointed-to": "who",
+    "typeql": "owned-by"
+  },
+  {
+    "rel": "on_completion",
+    "owner": "source",
+    "pointed-to": "target",
+    "typeql": "on-completion"
+  },
+  {
+    "rel": "on_failure",
+    "owner": "source",
+    "pointed-to": "target",
+    "typeql": "on-failure"
+  },
+  {
+    "rel": "on_success",
+    "owner": "source",
+    "pointed-to": "source",
+    "typeql": "on-success"
+  },
+  {
+    "rel": "next_steps",
+    "owner": "source",
+    "pointed-to": "target",
+    "typeql": "next-steps"
+  },
+  {
+    "rel": "task_refs",
+    "owner": "incident",
+    "pointed-to": "the-task",
+    "typeql": "task-refs"
+  },
+  {
+    "rel": "event_refs",
+    "owner": "incident",
+    "pointed-to": "the-event",
+    "typeql": "event-refs"
+  },
+  {
+    "rel": "impact_refs",
+    "owner": "incident",
+    "pointed-to": "the-impact",
+    "typeql": "impact-refs"
+  },
+  {
+    "rel": "notes_refs",
+    "owner": "incident",
+    "pointed-to": "the-note",
+    "typeql": "notes-refs"
+  },
+  {
+    "rel": "evidence_refs",
+    "owner": "incident",
+    "pointed-to": "the-evidence",
+    "typeql": "evidence-refs"
   }
 ]

@@ -21,64 +21,13 @@ from loguru import logger
 import os
 from pathlib import Path
 
-from stixorm.module.definitions.definitions import get_definitions, DefinitionNames
-from stixorm.module.definitions.domain_definition import DomainDefinition
 
-path = os.path.abspath(__file__)
-dir_path = os.path.dirname(path)
-
-cacao_models = {}
-cacao_models["data"] = {}
-for file_path in glob(f'{dir_path}/data/*.json'):
-    # Opening JSON file
-    file_name = Path(file_path).stem
-
-    with open(file_path) as json_file:
-        # create well formed key
-        key = f'{file_name}'
-
-        cacao_models["data"][key] = json.load(json_file)
-        
-
-cacao_models["base"] = {}
-for file_path in glob(f'{dir_path}/base/*.json'):
-    # Opening JSON file
-    file_name = Path(file_path).stem
-
-    with open(file_path) as json_file:
-        # create well formed key
-        key = f'{file_name}'
-
-        cacao_models["base"][key] = json.load(json_file)
-        
-
-cacao_definitions_dir = pathlib.Path(__file__).parent
-cacao_definition = DomainDefinition(DefinitionNames.CACAO.value,
-                                            cacao_definitions_dir)
-cacao_models["mappings"] = cacao_definition.get_mappings()
+name = "cacao"
+class_model = {}
+class_model["sdo"] = {}
+class_model["sco"] = {}
+class_model["sro"] = {}
+class_model["sub"] = {}
+class_model["meta"] = {}
 
 
-
-cacao_models["sub_objects"] = {}
-for file_path in glob(f'{dir_path}/sub_objects/*.json'):
-    # Opening JSON file
-    file_name = Path(file_path).stem
-
-    with open(file_path) as json_file:
-        # create well formed key
-        key = f'{file_name}'
-
-        cacao_models["sub_objects"][key] = json.load(json_file)
-
-cacao_models["classes"] = {}
-cacao_models["classes"]["sdo"] = {}
-cacao_models["classes"]["sco"] = {}
-cacao_models["classes"]["sro"] = {}
-cacao_models["classes"]["sub"] = {}
-
-
-total_len = len(cacao_models["data"])+len(cacao_models["base"])+len(cacao_models["mappings"])
-total_len += len(cacao_models["sub_objects"])+len(cacao_models["classes"]["sdo"])
-total_len += len(cacao_models["classes"]["sub"])+len(cacao_models["classes"]["sco"])
-total_len += len(cacao_models["classes"]["sro"])
-logger.debug('Loaded %d cacao dictionary objects' % total_len)

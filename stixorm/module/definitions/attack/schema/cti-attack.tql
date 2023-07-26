@@ -63,6 +63,7 @@ define
         owns x-mitre-system-requirements,
         owns x-mitre-tactic-type,
         owns x-mitre-permissions-required,
+        owns x-mitre-network-requirements,
         owns x-mitre-effective-permissions,
         owns x-mitre-defense-bypassed,
         owns x-mitre-remote-support,

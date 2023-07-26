@@ -1,4 +1,5 @@
 """Python Mitre ATT&CK Stix Class Definitions """
+from stixorm.module.typedb_lib.factories.mappings_factory import get_mapping_factory_instance
 
 """Python Mitre ATT&CK Stix Class Definitions """
 import json
@@ -23,17 +24,17 @@ from stix2.v21.common import (
 )
 from stix2.v21.vocab import (
     ATTACK_MOTIVATION, ATTACK_RESOURCE_LEVEL, IMPLEMENTATION_LANGUAGE, MALWARE_CAPABILITIES, MALWARE_TYPE,
-    PROCESSOR_ARCHITECTURE, TOOL_TYPE, IDENTITY_CLASS, INDUSTRY_SECTOR,
+    PROCESSOR_ARCHITECTURE, TOOL_TYPE, IDENTITY_CLASS, INDUSTRY_SECTOR, REPORT_TYPE
 )
 
 import logging
 
-from stixorm.module.definitions.definitions import get_definitions, ThreatReference
-from stixorm.module.typedb_lib.auth_types import all_auth_types
+from stixorm.module.definitions.property_definitions import ThreatReference, ThreatExtensionsProperty
+
 
 logger = logging.getLogger(__name__)
 
-valid_obj =  list(get_definitions().get_all_types())
+valid_obj =  get_mapping_factory_instance().get_all_types()
 
 
 class Note(_DomainObject):
@@ -116,3 +117,58 @@ class ObservedData(_DomainObject):
         self._check_mutually_exclusive_properties(
             ["objects", "object_refs"],
         )
+
+class Incident(_DomainObject):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_sczfhw64pjxt>`__.
+    """
+
+    _type = 'incident'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty(required=True)),
+        ('description', StringProperty()),
+        ('kill_chain_phases', ListProperty(KillChainPhase)),
+        ('revoked', BooleanProperty(default=lambda: False)),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+    ])
+
+
+class Report(_DomainObject):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_n8bjzg1ysgdq>`__.
+    """
+
+    _type = 'report'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty(required=True)),
+        ('description', StringProperty()),
+        ('report_types', ListProperty(OpenVocabProperty(REPORT_TYPE))),
+        ('published', TimestampProperty(required=True)),
+        ('object_refs', ListProperty(ThreatReference(valid_types=["SCO", "SDO", "SRO"], spec_version='2.1'), required=True)),
+        ('revoked', BooleanProperty(default=lambda: False)),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ExtensionsProperty(spec_version='2.1')),
+    ])

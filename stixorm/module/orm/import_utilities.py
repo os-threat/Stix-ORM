@@ -1,7 +1,5 @@
 import datetime
 from typing import List, Dict
-
-from stixorm.module.definitions.stix21 import stix_models
 from stixorm.module.authorise import authorised_mappings
 import copy
 
@@ -113,6 +111,7 @@ def add_relation_to_typeql(rel,
     """
     logger.debug(f'===============\n=====================\n===================\n')
     logger.debug(f'rel {rel}')
+    logger.debug(f'obj[rel] {obj[rel]}')
     logger.debug(f'obj {obj}')
     logger.debug(f'obj_Var {obj_var}')
     logger.debug(f'\nprop var list {prop_var_list}')
@@ -244,9 +243,11 @@ def load_object(prop_name: str,
             type_ql += ' ' + obj_var + ' isa ' + obj_type
             # Split them into properties and relations
             total_props = prop_dict._inner
+            logger.debug(f'load object properties: {total_props}')
             properties, relations = split_on_activity_type(total_props, obj_tql)
             prop_var_list = []
             dep_list = []
+            logger.debug(f'load object relations: {relations}')
             for prop in properties:
                 # split off for properties processing
                 type_ql2, type_ql_props2, prop_var_list = add_property_to_typeql(prop, obj_tql, prop_dict,
@@ -258,8 +259,10 @@ def load_object(prop_name: str,
             type_ql += ";\n" + type_ql_props + "\n\n"
 
             # add each of the relations to the match and insert statements
+            logger.debug(f'load object relations: {relations}')
             for rel in relations:
                 # split off for relation processing
+                logger.debug(f'load object relation: {rel}, protocol: {protocol}')
                 match2, insert2, dep_list2 = add_relation_to_typeql(rel, prop_dict, obj_var, prop_var_list, import_type, inc, protocol)
                 # then add it back together    
                 match = match + match2

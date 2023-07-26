@@ -157,7 +157,7 @@ attack-pattern sub stix-domain-object,
 	# Reverse Relations
 	# plays indicates:indicated, -> Defined in SDO
 	plays mitigates:mitigated,
-	plays uses:used; 
+	plays uses:used;
 
 	# Embedded Relations
 	# created-by
@@ -195,7 +195,8 @@ course-of-action sub stix-domain-object,
 	# Common Relations
 	plays investigates:investigating,
 	plays mitigates:mitigator,
-	plays remediation:remediating;
+	plays remediation:remediating,
+	plays uses:used-by;
 
 	# Reverse Relations
 	# NA
@@ -246,7 +247,7 @@ identity sub stix-domain-object,
 
 	# 10.7 Identity Class Vocabulary
 	individual sub identity;
-	group sub identity;
+	identity-group sub identity;
 	system sub identity;
 	organization sub identity;
 	class sub identity;
@@ -799,7 +800,7 @@ stix-core-relationship sub relation,
 sighting sub stix-core-relationship, 
 	owns first-seen,
 	owns last-seen,
-	owns count,
+	owns sighting-count,
 	owns summary,
 	relates where-sighted,
 	relates sighting-of as source, 
@@ -1680,7 +1681,7 @@ stix-attribute-string sub attribute, value string, abstract,
 	summary sub stix-attribute-string; 
 	spec-version sub stix-attribute-string; 
 	attribute-key sub stix-attribute-string; 
-	value sub stix-attribute-string; 
+#	value sub stix-attribute-string;
 	number-subkeys sub stix-attribute-string; 
 	objective sub stix-attribute-string;
 	statement sub stix-attribute-string;
@@ -1877,7 +1878,7 @@ stix-attribute-double sub attribute, value double, abstract,
 	longitude sub stix-attribute-double;
 	precision sub stix-attribute-double;
 	
-	count sub stix-attribute-double;
+	sighting-count sub stix-attribute-double;
 	number sub stix-attribute-double;
 	
 	entropy sub stix-attribute-double;

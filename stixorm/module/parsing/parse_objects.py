@@ -10,7 +10,7 @@ import logging
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 default_import_type = import_type_factory.get_default_import()
 
 def parse(data: dict, allow_custom=False, import_type: ImportType=default_import_type):
@@ -66,11 +66,13 @@ def _get_dict(data):
         except (ValueError, TypeError):
             raise ValueError(f"Cannot convert {str(data)} to dictionary.")
 
+
 def is_attack_object(stix_dict):
     if stix_dict.get("x_mitre_domains", False) or stix_dict.get("x_mitre_attack_spec_version", False):
         return True
     else:
         return False
+
 
 def dict_to_stix(stix_dict: dict,
                  allow_custom=False,
@@ -216,11 +218,11 @@ def class_for_type(stix_typeql, import_type, category=None):
         for obj in auth["conv"][category]:
             logger.debug(f'object tql is {obj["typeql"]}, wanted {stix_typeql}')
             if obj["typeql"] == stix_typeql:
-                #logger.debug("found the right type")
+                logger.debug("found the right type")
                 conv_cls = obj["class"]
                 logger.debug(f'classs is {conv_cls}')
                 cls = copy.deepcopy(auth["classes"][category][conv_cls])
-                #logger.debug(f'classs 2 is {cls}')
+                logger.debug(f'classs 2 is {cls}')
                 return cls
 
     return cls

@@ -5,29 +5,21 @@
   "feeds": [
     "contained"
   ],
-  "pallet": [
-    "cartons"
+  "event": [
+    "changed_objects",
+    "detection_methods",
+    "event_types",
+    "sighting_refs",
+    "subevents"
   ],
-  "carton": [
-    "cases"
-  ],
-  "cases": [
-    "case_list"
-  ],
-  "case": [
-    "assigned",
-    "observed",
-    "entrichments",
-    "notes",
-    "tasks",
-    "opinions"
-  ],
-  "enrichment": [
+  "evidence": [
     "object_refs"
+  ],
+  "impact": [
+    "impacted_refs"
   ],
   "task": [
-    "authors",
-    "assigned",
-    "object_refs"
+    "changed_objects",
+    "next_steps"
   ]
 }
