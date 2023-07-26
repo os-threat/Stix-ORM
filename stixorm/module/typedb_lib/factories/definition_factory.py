@@ -100,6 +100,14 @@ class DomainDefinition:
                       lookup: str) -> bool:
         return lookup in self.__model_definition.data.keys() and len(self.__model_definition.data[lookup]) > 0
 
+    def contains_sub_objects(self,
+                             lookup) -> bool:
+        return lookup in self.__model_definition.sub_objects.keys() and len(self.__model_definition.sub_objects[lookup]) > 0
+
+    def get_sub_objects(self,
+                 lookup: str):
+        return self.__model_definition.sub_objects[lookup]
+
     def get_data(self,
                  lookup: str):
         return self.__model_definition.data[lookup]

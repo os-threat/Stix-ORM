@@ -1,10 +1,12 @@
-from stixorm.module.definitions.attack import attack_models
-from stixorm.module.definitions.cacao import cacao_models
-from stixorm.module.definitions.kestrel import kestrel_models
-from stixorm.module.definitions.os_threat import os_threat_models
-from stixorm.module.definitions.stix21 import stix_models
-from stixorm.module.definitions.us_dod import us_dod_models
+from stixorm.module.typedb_lib.factories.definition_factory import get_definition_factory_instance
+from stixorm.module.typedb_lib.model.definitions import DefinitionName
 
+stix_models = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
+attack_models = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
+os_threat_models = get_definition_factory_instance().lookup_definition(DefinitionName.OS_THREAT)
+cacao_models = get_definition_factory_instance().lookup_definition(DefinitionName.CACAO)
+kestrel_models = get_definition_factory_instance().lookup_definition(DefinitionName.KESTREL)
+us_dod_models = get_definition_factory_instance().lookup_definition(DefinitionName.US_DoD)
 
 class AuthTypeFactory:
 

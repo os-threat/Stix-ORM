@@ -5,8 +5,11 @@ import copy
 
 import logging
 
+from stixorm.module.typedb_lib.factories.definition_factory import get_definition_factory_instance
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
+from stixorm.module.typedb_lib.model.definitions import DefinitionName
 
+stix_models = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
@@ -405,8 +408,8 @@ def hashes(prop_name, prop_dict, parent_var):
     for i, key in enumerate(prop_dict):
         hash_var = '$hash' + str(i)
         hash_var_list.append(hash_var)
-        if key in stix_models["sub_objects"]["hash_typeql_dict"]:
-            insert += ' ' + hash_var + ' isa ' + stix_models["sub_objects"]["hash_typeql_dict"][
+        if key in stix_models.get_sub_objects("hash_typeql_dict"):
+            insert += ' ' + hash_var + ' isa ' + stix_models.get_sub_objects("hash_typeql_dict")[
                 key] + ', has hash-value ' + val_tql(prop_dict[key]) + ';\n'
         else:
             logger.error(f'Unknown hash type {key}')

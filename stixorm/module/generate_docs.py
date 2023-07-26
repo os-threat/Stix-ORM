@@ -4,11 +4,11 @@ import glob
 import csv
 import json
 
-from stixorm.module.definitions.stix21 import stix_models
-from stixorm.module.definitions.attack import attack_models
-from stixorm.module.definitions.os_threat import os_threat_models
-from stixorm.module.definitions.cacao import cacao_models
-from stixorm.module.definitions.kestrel import kestrel_models
+from stixorm.module.typedb_lib.factories.definition_factory import get_definition_factory_instance
+from stixorm.module.typedb_lib.model.definitions import DefinitionName
+
+stix_models = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
+attack_models = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
 
 heading_align = [
     ":--------------------|",
@@ -38,12 +38,12 @@ object_tables = [
     {
         "title": "OASIS Stix 2.1",
         "protocol": "stix21",
-        "objects": stix_models["mappings"]["object_conversion"]
+        "objects": stix_models.get_mapping("object_conversion")
     },
     {
         "title": "Mitre ATT&CK",
         "protocol": "attack",
-        "objects": attack_models["mappings"]["object_conversion"]
+        "objects": attack_models.get_mapping("object_conversion")
     }
 ]
 protocols = [
