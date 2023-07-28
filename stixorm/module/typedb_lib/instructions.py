@@ -251,15 +251,15 @@ class Status(Enum):
 class AddInfo(BaseModel):
     status: Status
     id: str
-    error: Optional[str]
+    error: Optional[str]  = None
 
 class Instruction(BaseModel):
     status: Status
     id: str
-    layer: Optional[dict]
-    query: Optional[str]
-    error: Optional[str]
-    missing: Optional[List[str]]
+    layer: Optional[dict]  = None
+    query: Optional[str]  = None
+    error: Optional[str]  = None
+    missing: Optional[List[str]] = None
 
 class AddInstruction(Instruction):
     typeql_obj: Optional[TypeQLObject]
