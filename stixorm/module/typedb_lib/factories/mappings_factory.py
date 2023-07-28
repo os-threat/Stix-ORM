@@ -1,7 +1,7 @@
 import json
 import os
 import pathlib
-from typing import Dict
+from typing import Dict, List
 import functools
 
 from stixorm.module.typedb_lib.model.definitions import ObjectKeys
@@ -71,13 +71,13 @@ class MappingsFactory():
     def all_object_keys_as_string(self) -> set[str]:
         return set([key.value for key in self.all_object_keys()])
 
-    def get_all_types(self) -> set[str]:
+    def get_all_types(self) -> List[str]:
         types = []
         for mapping in self.definitions.values():
             for object_conversion in mapping.get_object_conversion():
                 if "type" in object_conversion and object_conversion["object"] in self.all_object_keys_as_string():
                     types.append(object_conversion["type"])
-        return set(types)
+        return list(set(types))
 
 
     def get_subfolder_names(self, folder_path):
