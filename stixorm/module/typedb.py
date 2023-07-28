@@ -368,8 +368,8 @@ class TypeDBSink(DataSink):
                 typeql_object: TypeQLObject = typeql_object_result
                 instructions.insert_add_instruction(stix_dict['id'], typeql_object)
             except Exception as e:
-                logging.exception("Error generating instructions for " + stix_dict['id'])
                 logging.exception(e)
+                logging.info("Error generating instructions for " + stix_dict['id'])
                 instructions.insert_add_instruction(stix_dict['id'], None)
                 traceback_str = traceback.format_exc()
                 instructions.update_instruction_as_error(stix_dict['id'], traceback_str)
