@@ -1,4 +1,5 @@
 import logging
+import traceback
 from typing import List, Iterator
 from typedb.api.answer.concept_map import ConceptMap
 from typedb.api.connection.client import TypeDBClient
@@ -227,18 +228,21 @@ def add_layer(transaction: TypeDBTransaction, layer: str):
 
 
 def add_instructions_to_typedb(uri: str, port: str, database: str, instructions: Instructions):
-    with get_core_client(uri, port) as client:
-        client_session = get_data_session(client, database)
-        with client_session as session:
-            for instruction_id in instructions.get_ordered_ids():
-                if instructions.not_allow_insertion(instruction_id):
-                    continue
-                write_transaction = get_write_transaction(session)
-                with write_transaction as transaction:
-                    query = instructions.get_query_for_id(instruction_id)
-                    result = add_layer(transaction, query)
-                    log_add_layer(result, query)
-                    instructions.update_instruction_as_success(instruction_id)
+    try:
+        with get_core_client(uri, port) as client:
+            client_session = get_data_session(client, database)
+            with client_session as session:
+                for instruction_id in instructions.get_ordered_ids():
+                    if instructions.not_allow_insertion(instruction_id):
+                        continue
+                    write_transaction = get_write_transaction(session)
+                    with write_transaction as transaction:
+                        query = instructions.get_query_for_id(instruction_id)
+                        add_layer(transaction, query)
+                        instructions.update_instruction_as_success(instruction_id)
+    except Exception as e:
+        traceback_str = traceback.format_exc()
+        instructions.update_instruction_as_error(instruction_id, traceback_str)
     return instructions
 
 
