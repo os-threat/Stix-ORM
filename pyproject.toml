@@ -31,6 +31,10 @@ pytest = "^7.4.0"
 flake8 = "^6.0.0"
 pyhamcrest = "^2.0.4"
 black = "^23.7.0"
+flake8-html = "^0.4.3"
+pytest-html = "^3.2.0"
+pytest-bdd-html = "^0.1.14a0"
+bandit = "^1.7.5"
 
 [build-system]
 requires = ["poetry-core"]
