@@ -160,7 +160,6 @@ def sdo_to_typeql(sdo, import_type=default_import_type) -> [str, str, str, str, 
     """
     # 1.A) get configuration parameters
     # - variable for use in typeql statements
-    auth = authorised_mappings(import_type)
     dep_list = []
     # 1.B) get the data model
     total_props, obj_tql, sdo_tql_name, protocol = sdo_to_data(sdo, import_type)
