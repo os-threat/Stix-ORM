@@ -150,7 +150,7 @@ class TestMitre:
         with open(str(file_path), "r") as file:
             data = json.load(file)
 
-        result = typedb.add([data["objects"][0]])
+        result = typedb.add([data["objects"][1831]])
         self.validate_successful_result(result)
 
     @pytest.mark.skip(reason="This will be added later")
