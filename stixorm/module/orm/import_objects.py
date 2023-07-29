@@ -9,8 +9,7 @@ from stixorm.module.orm.import_utilities import clean_props, get_embedded_match,
 
 import logging
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger = logging.getLogger()
 
 
 marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",

@@ -2,8 +2,7 @@ import traceback
 
 
 import logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger = logging.getLogger()
 
 def handle_result(result,
                   name: str = '',

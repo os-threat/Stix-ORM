@@ -10,8 +10,7 @@ from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink
 from stixorm.module.typedb_lib.instructions import ResultStatus
 
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 
 failed_connection = {
     "uri": "localhost",
