@@ -1,6 +1,7 @@
 import json
 import os
 import pathlib
+from typing import List
 
 import pytest
 from typedb.client import *
@@ -12,8 +13,22 @@ from stixorm.module.typedb_lib.instructions import ResultStatus
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 
+failed_connection = {
+    "uri": "localhost",
+    "port": "729",
+    "database": "stix",
+    "user": None,
+    "password": None
+}
 
-
+# define the database data and import details
+connection = {
+    "uri": "localhost",
+    "port": "1729",
+    "database": "stix",
+    "user": None,
+    "password": None
+}
 
 import_type = import_type_factory.get_default_import()
 
@@ -299,8 +314,8 @@ def cert_grouped_filepaths() -> List[List[str]]:
 
 
 @pytest.fixture
-def setup_teardown(generate_connection):
-    typedb = TypeDBSink(connection=generate_connection,
+def setup_teardown():
+    typedb = TypeDBSink(connection=connection,
                         clear=False,
                         import_type=import_type)
 
@@ -308,7 +323,7 @@ def setup_teardown(generate_connection):
 
     yield
 
-    typedb = TypeDBSink(connection=generate_connection,
+    typedb = TypeDBSink(connection=connection,
                         clear=False,
                         import_type=import_type)
 
@@ -328,31 +343,31 @@ class TestTypeDB:
 
         return json_text
 
-    def test_initialise(self, setup_teardown, generate_connection):
+    def test_initialise(self, setup_teardown):
         """ Test the database initialisation function
 
         """
-        TypeDBSink(connection=generate_connection,
+        TypeDBSink(connection=connection,
                    clear=True,
                    import_type=import_type)
 
 
-    def test_failed_initialise(self, setup_teardown, generate_failed_connection):
+    def test_failed_initialise(self, setup_teardown):
         """ Test the database initialisation function
 
         """
         with pytest.raises(Exception):
-            TypeDBSink(connection=generate_failed_connection,
+            TypeDBSink(connection=failed_connection,
                        clear=True,
                        import_type=import_type)
 
         #  TODO: add error type
         #assert ('Client Error: Unable to connect to TypeDB server.' in str(context.exception))
 
-    def test_delete_identity_pattern(self, setup_teardown, generate_connection):
+    def test_delete_identity_pattern(self, setup_teardown):
         file_path = aaa_identity_path()
 
-        typedb = TypeDBSink(connection=generate_connection,
+        typedb = TypeDBSink(connection=connection,
                             clear=True,
                             import_type=import_type)
         json_text = self.get_json_from_file(file_path)
@@ -362,10 +377,10 @@ class TestTypeDB:
         result = typedb.delete(local_list)
         self.validate_successful_result(result)
 
-    def test_artifact_basic(self, setup_teardown, generate_connection):
+    def test_artifact_basic(self, setup_teardown):
         file_path = artifact_basic_path()
 
-        typedb = TypeDBSink(connection=generate_connection,
+        typedb = TypeDBSink(connection=connection,
                             clear=True,
                             import_type=import_type)
         json_text = self.get_json_from_file(file_path)
@@ -376,10 +391,10 @@ class TestTypeDB:
         self.validate_successful_result(result)
 
 
-    def test_delete_attack_pattern(self, setup_teardown, generate_connection):
+    def test_delete_attack_pattern(self, setup_teardown):
         file_path = aaa_attack_path()
 
-        typedb = TypeDBSink(connection=generate_connection,
+        typedb = TypeDBSink(connection=connection,
                             clear=True,
                             import_type=import_type)
         json_text = self.get_json_from_file(file_path)
@@ -390,12 +405,12 @@ class TestTypeDB:
         self.validate_successful_result(result)
 
 
-    def test_delete_dir(self, setup_teardown, generate_connection):
+    def test_delete_dir(self, setup_teardown):
         """ Load an entire directory and delete all files except marking objects
 
         """
         file_paths = variable_all_standard_data_filepaths()
-        typedb_sink = TypeDBSink(connection=generate_connection,
+        typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
                                  import_type=import_type)
         for file_path in file_paths:
@@ -409,13 +424,13 @@ class TestTypeDB:
 
 
     @pytest.mark.parametrize("file_path", standard_data_file_paths_with_no_dependencies())
-    def test_delete(self, setup_teardown, file_path: str, generate_connection):
+    def test_delete(self, setup_teardown, file_path: str):
         """ Load a single file and delete it
 
         Args:
             file_path (): the path and file name
         """
-        typedb = TypeDBSink(connection=generate_connection,
+        typedb = TypeDBSink(connection=connection,
                             clear=True,
                             import_type=import_type)
         json_text = self.get_json_from_file(file_path)
@@ -426,7 +441,7 @@ class TestTypeDB:
         self.validate_successful_result(result)
 
     @pytest.mark.parametrize("file_paths", cert_grouped_filepaths())
-    def check_dir(self, setup_teardown, file_paths: List[str], generate_connection):
+    def check_dir(self, setup_teardown, file_paths: List[str]):
         """ Open a directory and history all the files, optionally printing them
 
         Args:
@@ -434,14 +449,14 @@ class TestTypeDB:
         """
 
         for file_path in file_paths:
-            typedb_sink = TypeDBSink(connection=generate_connection,
+            typedb_sink = TypeDBSink(connection=connection,
                                      clear=True,
                                      import_type=import_type)
             json_text = self.get_json_from_file(file_path)
             typedb_sink.add(json_text)
 
     @pytest.mark.parametrize("cert_file", cert_filepaths())
-    def test_cert(self, setup_teardown, cert_file: str, generate_connection):
+    def test_cert(self, setup_teardown, cert_file: str):
 
         json_text = self.get_json_from_file(cert_file)
 
@@ -449,7 +464,7 @@ class TestTypeDB:
         for l in json_text:
             local_list1.append(l["id"])
 
-        typedb = TypeDBSink(connection=generate_connection,
+        typedb = TypeDBSink(connection=connection,
                             clear=True,
                             import_type=import_type)
         typedb.add(json_text)
@@ -460,8 +475,8 @@ class TestTypeDB:
         local_list_post = typedb.get_stix_ids()
 
 
-    def test_add_grouping_path(self, setup_teardown, generate_connection):
-        typedb_sink = TypeDBSink(connection=generate_connection,
+    def test_add_grouping_path(self, setup_teardown):
+        typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
                                  import_type=import_type)
         json_text = self.get_json_from_file(aaa_grouping_path())
@@ -470,10 +485,10 @@ class TestTypeDB:
         self.validate_has_missing_dependencies(result)
 
 
-    def test_add_files(self, setup_teardown, generate_connection):
+    def test_add_files(self, setup_teardown):
 
 
-        typedb_sink = TypeDBSink(connection=generate_connection,
+        typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
                                  import_type=import_type)
         files = all_standard_data_file_paths()
@@ -486,8 +501,8 @@ class TestTypeDB:
         result = typedb_sink.add(combined)
         self.validate_successful_result(result)
 
-    def test_translation_campaign(self, setup_teardown, generate_connection):
-        typedb_sink = TypeDBSink(connection=generate_connection,
+    def test_translation_campaign(self, setup_teardown):
+        typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
                                  import_type=import_type)
         json_text = self.get_json_from_file(translation_campaign_path())
@@ -496,8 +511,8 @@ class TestTypeDB:
         self.validate_successful_result(result)
 
 
-    def test_add_x509_path(self, setup_teardown, generate_connection):
-        typedb_sink = TypeDBSink(connection=generate_connection,
+    def test_add_x509_path(self, setup_teardown):
+        typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
                                  import_type=import_type)
         json_text = self.get_json_from_file(x509_path())
@@ -505,8 +520,8 @@ class TestTypeDB:
         result = typedb_sink.add(json_text)
         self.validate_successful_result(result)
 
-    def test_add_attack_path(self, setup_teardown, generate_connection):
-        typedb_sink = TypeDBSink(connection=generate_connection,
+    def test_add_attack_path(self, setup_teardown):
+        typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
                                  import_type=import_type)
         json_text = self.get_json_from_file(aaa_attack_path())
@@ -514,8 +529,8 @@ class TestTypeDB:
         result = typedb_sink.add(json_text)
         self.validate_successful_result(result)
 
-    def test_add_indicator_path(self, setup_teardown, generate_connection):
-        typedb_sink = TypeDBSink(connection=generate_connection,
+    def test_add_indicator_path(self, setup_teardown):
+        typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
                                  import_type=import_type)
         json_text = self.get_json_from_file(aaa_indicator_path())
@@ -542,8 +557,8 @@ class TestTypeDB:
         for result in results:
             assert result.status in [ResultStatus.VALID_FOR_DB_COMMIT, ResultStatus.MISSING_DEPENDENCY]
 
-    def test_add_identity_path(self, setup_teardown, generate_connection):
-        typedb_sink = TypeDBSink(connection=generate_connection,
+    def test_add_identity_path(self, setup_teardown):
+        typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
                                  import_type=import_type)
         json_text = self.get_json_from_file(aaa_identity_path())
@@ -551,8 +566,8 @@ class TestTypeDB:
         result = typedb_sink.add(json_text)
         self.validate_successful_result(result)
 
-    def test_network_tunnel_dns_path(self, setup_teardown, generate_connection):
-        typedb_sink = TypeDBSink(connection=generate_connection,
+    def test_network_tunnel_dns_path(self, setup_teardown):
+        typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
                                  import_type=import_type)
         json_text = self.get_json_from_file(network_tunnel_dns_path())
@@ -561,8 +576,8 @@ class TestTypeDB:
         self.validate_successful_result(result)
 
 
-    def test_get_ids(self, setup_teardown, generate_connection):
-        typedb_sink = TypeDBSink(connection=generate_connection,
+    def test_get_ids(self, setup_teardown):
+        typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
                                  import_type=import_type)
         json_text = self.get_json_from_file(aaa_identity_path())
@@ -574,9 +589,9 @@ class TestTypeDB:
                                    'identity--f431f809-377b-45e0-aa1c-6a4751cae5ff'})
 
     @pytest.mark.parametrize("path", standard_data_file_paths_with_no_dependencies())
-    def test_get_all_ids_loaded(self, setup_teardown, path, generate_connection):
+    def test_get_all_ids_loaded(self, setup_teardown, path):
         variables_id_list()
-        typedb_sink = TypeDBSink(connection=generate_connection,
+        typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
                                  import_type=import_type)
         json_text = self.get_json_from_file(path)
@@ -594,9 +609,9 @@ class TestTypeDB:
         assert (set(my_id_list) == set(stix_ids_list))
 
     @pytest.mark.parametrize("path", standard_data_file_paths_with_no_dependencies())
-    def test_all_ids_loaded_success(self,setup_teardown, path, generate_connection):
+    def test_all_ids_loaded_success(self,setup_teardown, path):
         variables_id_list()
-        typedb_sink = TypeDBSink(connection=generate_connection,
+        typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
                                  import_type=import_type)
         json_text = self.get_json_from_file(path)
@@ -606,9 +621,9 @@ class TestTypeDB:
         self.validate_successful_result(result)
 
     @pytest.mark.parametrize("path", standard_data_file_paths_with_dependencies())
-    def test_all_ids_loaded_missing_dependencies(self, setup_teardown, path, generate_connection):
+    def test_all_ids_loaded_missing_dependencies(self, setup_teardown, path):
         variables_id_list()
-        typedb_sink = TypeDBSink(connection=generate_connection,
+        typedb_sink = TypeDBSink(connection=connection,
                                  clear=True,
                                  import_type=import_type)
         json_text = self.get_json_from_file(path)

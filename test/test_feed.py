@@ -11,14 +11,6 @@ from stix2 import parse
 from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink
 
-connection = {
-    "uri": "localhost",
-    "port": "1729",
-    "database": "stix",
-    "user": None,
-    "password": None
-}
-
 
 import_type = import_type_factory.get_all_imports()
 
@@ -59,15 +51,15 @@ def create_feed(local_list, typedb_sink, loc_datetime):
     return feed.id
 
 @pytest.fixture
-def database():
+def database(generate_connection):
     db = TypeDBSink(
-        connection=connection,
+        connection=generate_connection,
         clear=True,
         import_type=import_type,
     )
     db.clear_db()
     db = TypeDBSink(
-        connection=connection,
+        connection=generate_connection,
         clear=True,
         import_type=import_type
     )
@@ -213,11 +205,11 @@ class TestFeed:
     def tearDown(self):
         self.clean_db()
 
-    def clean_db(self):
+    def clean_db(self, generate_connection):
         """ Get all stix-ids and delete them
 
         """
-        typedb = TypeDBSink(connection=connection,
+        typedb = TypeDBSink(connection=generate_connection,
                             clear=False,
                             import_type=import_type)
 
@@ -267,7 +259,7 @@ class TestFeed:
         print(result)
 
 
-    def test_create_feed_2(self, database:TypeDBSink):
+    def test_create_feed_2(self, database:TypeDBSink, generate_connection):
         current_file_path = Path(__file__)
         directory = current_file_path.parent
         example = directory.joinpath("data/os-threat/feed-example/example.json")
@@ -277,7 +269,7 @@ class TestFeed:
         datetime2 = datetime.fromisoformat("2020-10-20T01:01:01.000")
         datetime3 = datetime.fromisoformat("2020-10-21T01:01:01.000")
 
-        typedb_sink = TypeDBSink(connection, True, import_type)
+        typedb_sink = TypeDBSink(generate_connection, True, import_type)
 
         with open(osthreat, mode="r", encoding="utf-8") as f:
             json_text = json.load(f)

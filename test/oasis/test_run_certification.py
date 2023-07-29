@@ -7,7 +7,6 @@ import re
 
 import pytest
 
-from dbconfig import connection
 from stix2 import (v21, parse)
 from pathlib import Path
 
@@ -128,20 +127,20 @@ class CertificationTest():
 
 
     @pytest.mark.parametrize("profile_key, profile_value, tags, out_file, template", load_data())
-    def test_run_profile(self, profile_key, profile_value, tags, out_file, template):
+    def test_run_profile(self, profile_key, profile_value, tags, out_file, template, generate_connection):
 
         report = template
 
         # let's reset the database for each profile
         import_type=import_type_factory.get_default_import()
-        sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
+        sink_db = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type)
         # get all the initial STIX IDs (only markings should be there)
         base_ids = sink_db.get_stix_ids()
         # markings should be automatically ignored
         assert len(base_ids) == 0
 
         logger.info(f'Checking profile {profile_key}')
-        result = self.run_profile(profile_key, profile_value)
+        result = self.run_profile(profile_key, profile_value, generate_connection)
         logger.info(result)
 
         for code in result.keys():
@@ -256,7 +255,7 @@ class CertificationTest():
 
 
 
-    def run_profile(self, short, profile):
+    def run_profile(self, short, profile, connection):
         logger.info(f'Title {profile["title"]}')
         results = {}
 

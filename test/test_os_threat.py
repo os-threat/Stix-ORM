@@ -6,16 +6,8 @@ import pytest
 
 from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink
-from stixorm.module.typedb_lib.factories.import_type_factory import ImportTypeFactory
 from stixorm.module.typedb_lib.instructions import ResultStatus
 
-connection = {
-    "uri": "localhost",
-    "port": "1729",
-    "database": "stix",
-    "user": None,
-    "password": None
-}
 
 import_type = import_type_factory.create_import(stix_21=False,
                                                 os_threat=True)
@@ -31,17 +23,11 @@ def variable_all_standard_data_filepaths() -> List[str]:
             paths.append(str(file))
 
     return [paths[0]]
-@pytest.fixture(scope="class")
-def typedb_sink():
-    connection = {
-        "uri": "localhost",
-        "port": "1729",
-        "database": "stix",
-        "user": None,
-        "password": None
-    }
+@pytest.fixture
+def typedb_sink(generate_connection):
+
     schema_path = "path/to/schema.json"
-    typedb = TypeDBSink(connection=connection, clear=False, import_type=import_type)
+    typedb = TypeDBSink(connection=generate_connection, clear=False, import_type=import_type)
     yield typedb
     typedb.clear_db()
 

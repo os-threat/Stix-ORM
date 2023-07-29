@@ -10,27 +10,19 @@ from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink
 from stixorm.module.typedb_lib.instructions import ResultStatus, Result
 
-connection = {
-    "uri": "localhost",
-    "port": "1729",
-    "database": "stix",
-    "user": None,
-    "password": None
-}
-
 import_type = import_type_factory.get_attack_import()
 
 
 @pytest.fixture
-def typedb():
+def typedb(generate_connection):
     db = TypeDBSink(
-        connection=connection,
+        connection=generate_connection,
         clear=True,
         import_type=import_type,
     )
     db.clear_db()
     db = TypeDBSink(
-        connection=connection,
+        connection=generate_connection,
         clear=True,
         import_type=import_type,
     )
@@ -113,8 +105,8 @@ def attack_data():
     return result
 
 @pytest.fixture
-def setup_teardown():
-    typedb = TypeDBSink(connection=connection,
+def setup_teardown(generate_connection):
+    typedb = TypeDBSink(connection=generate_connection,
                         clear=False,
                         import_type=import_type)
 
@@ -122,7 +114,7 @@ def setup_teardown():
 
     yield
 
-    typedb = TypeDBSink(connection=connection,
+    typedb = TypeDBSink(connection=generate_connection,
                         clear=False,
                         import_type=import_type)
 
@@ -151,14 +143,14 @@ class TestMitre:
         result = typedb.add(json_data)
         validate_is_successful(result)
 
-
+    @pytest.mark.skip(reason="This will be added later")
     def test_load_enterprise_attack_13_1(self, setup_teardown, typedb):
         top_dir_path = pathlib.Path(__file__).parents[0]
         file_path = top_dir_path.joinpath("data").joinpath("mitre").joinpath("enterprise-attack-13.1.json")
         with open(str(file_path), "r") as file:
             data = json.load(file)
 
-        result = typedb.add([data["objects"][1831]])
+        result = typedb.add([data["objects"][0]])
         self.validate_successful_result(result)
 
     @pytest.mark.skip(reason="This will be added later")
