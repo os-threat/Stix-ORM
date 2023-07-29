@@ -54,7 +54,7 @@ jobs:
 
       - name: Run pytest with coverage
         run: |
-          poetry run pytest -n 5 --verbose --cov=Stix-ORM --cov-report=html --html=report.html --self-contained-html test/
+          poetry run pytest -n 5 --verbose --cov=Stix-ORM --cov-report=html --html=report.html --self-contained-html test/ --log-level=WARNING
 
       - name: Upload pytest report
         if: always()
