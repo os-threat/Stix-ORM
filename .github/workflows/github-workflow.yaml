@@ -44,17 +44,16 @@ jobs:
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
-          flake8 . --count --exit-zero --select=E9,F63,F7,F82 --show-source --statistics
+          poetry run flake8 . --count --exit-zero --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --format=html --htmldir=flake8_report
+          poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --format=html --htmldir=flake8_report
 
       - name: Run Bandit Security Check
         run: |
-          bandit -r Stix-ORM -f json -o bandit_report.json || echo "##[error]Bandit security check failed."
+          poetry run bandit -r Stix-ORM -f json -o bandit_report.json || echo "##[error]Bandit security check failed."
 
       - name: Run pytest with coverage
         run: |
-          pip install pytest-cov  pytest-html pytest-bdd-html bandit
           pytest  --verbose --cov=Stix-ORM --cov-report=html --html=report.html --self-contained-html test/
 
       - name: Upload pytest report
