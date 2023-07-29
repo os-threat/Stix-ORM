@@ -90,9 +90,9 @@ def sanity_check(path: Path):
                     stix_fails.append((file_path, str(e)))
                     continue
 
-    logger.error(f'Files with unicode quotes =  {len(quote_fails)}')
-    logger.error(f'Files with broken json = {len(json_fails)}')
-    logger.error(f'Files with broken stix = {len(stix_fails)}')
+    logger.info(f'Files with unicode quotes =  {len(quote_fails)}')
+    logger.info(f'Files with broken json = {len(json_fails)}')
+    logger.info(f'Files with broken stix = {len(stix_fails)}')
 
 def load_data():
     path = pathlib.Path(__file__).parents[1].joinpath('data', 'stix_cert_data', 'stix_cert_persona_dict.json')
