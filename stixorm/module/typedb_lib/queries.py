@@ -84,11 +84,13 @@ def match_query(uri: str, port: str, database: str, query: str, data_query, **da
 
 
 def delete_database(uri: str, port: str, database: str):
-    with get_core_client(uri, port) as client:
-        client_session = get_data_session(client, database)
-        with client_session as session:
-            read_transaction = get_read_transaction(session)
-            session.database().delete()
+    client = get_core_client(uri, port)
+    if client.databases().contains(database):
+       logger.info('Database ' + database + ' exists... deleting')
+       client.databases().get(database).delete()
+    else:
+       logger.info('Database ' + database + ' does not exists... skipping')
+
 
 def query_ids(query, generator, transaction, **data_query_args):
     logger.info(
