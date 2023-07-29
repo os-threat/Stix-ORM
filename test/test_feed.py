@@ -10,9 +10,14 @@ import pytest
 from stix2 import parse
 from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink
-
+from stixorm.module.typedb_lib.instructions import ResultStatus
 
 import_type = import_type_factory.get_all_imports()
+
+
+def validate_successful_result(results):
+    for result in results:
+        assert result.status in [ResultStatus.SUCCESS, ResultStatus.ALREADY_IN_DB]
 
 def create_feed(local_list, typedb_sink, loc_datetime):
     ips = []
@@ -47,8 +52,8 @@ def create_feed(local_list, typedb_sink, loc_datetime):
         ]
     )
     add_list = ips + observed + [feed]
-    typedb_sink.add(add_list)
-    return feed.id
+    result = typedb_sink.add(add_list)
+    return result
 
 @pytest.fixture
 def database(generate_connection):
@@ -199,11 +204,11 @@ def simple_feed():
 
 class TestFeed:
 
-    def setUp(self):
-        self.clean_db()
+    def setUp(self, generate_connection):
+        self.clean_db(generate_connection)
 
-    def tearDown(self):
-        self.clean_db()
+    def tearDown(self, generate_connection):
+        self.clean_db(generate_connection)
 
     def clean_db(self, generate_connection):
         """ Get all stix-ids and delete them
@@ -241,7 +246,7 @@ class TestFeed:
 
         '''
         result = database.add(empty_feed_bundle)
-        print(result)
+        validate_successful_result(result)
 
     def test_create_feed_list(self, database:TypeDBSink,
                               empty_feed_list):
@@ -273,7 +278,8 @@ class TestFeed:
 
         with open(osthreat, mode="r", encoding="utf-8") as f:
             json_text = json.load(f)
-            create_feed(json_text[0], typedb_sink, datetime1)
+            result = create_feed(json_text[0], typedb_sink, datetime1)
+            validate_successful_result(result)
 
 
     def test_create_bundle(self):
