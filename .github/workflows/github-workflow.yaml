@@ -113,7 +113,6 @@ jobs:
         poetry install
         poetry build
         poetry env remove --all
-        poetry update --remove
 
     - name: Create environment with package
       run: |
