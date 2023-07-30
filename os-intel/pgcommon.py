@@ -10,7 +10,7 @@ from collections import defaultdict
 
 from sqlstorage import infer_type
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 CHECK_FOR_COMMON_SCHEMA = (
     "SELECT routines.routine_name"

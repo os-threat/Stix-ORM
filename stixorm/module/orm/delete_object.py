@@ -8,7 +8,8 @@ from stixorm.module.orm.import_objects import sdo_to_data, sro_to_data, sco_to_d
 from stixorm.module.orm.import_utilities import split_on_activity_type, val_tql
 
 import logging
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 ##############################################################
 #  1.) Methods to Delete any Stix Objects
 ############################################################

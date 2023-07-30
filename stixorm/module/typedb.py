@@ -29,8 +29,8 @@ from stixorm.module.typedb_lib.factories.import_type_factory import ImportType, 
 
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
-logger = logging.getLogger()
-
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 @dataclass

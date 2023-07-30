@@ -7,8 +7,8 @@ from stixorm.module.typedb_lib.factories.definition_factory import get_definitio
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportTypeFactory, ImportType
 from stixorm.module.typedb_lib.factories.process_map_factory import ProcessMapFactory
 
-logger = logging.getLogger()
-
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 ##############################################################
