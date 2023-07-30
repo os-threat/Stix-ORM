@@ -2,8 +2,8 @@ import traceback
 
 
 import logging
-logger = logging.getLogger()
-
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 def log_delete_layers(result):
     try:
