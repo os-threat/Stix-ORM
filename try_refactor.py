@@ -1,22 +1,22 @@
 import json
 import os
 
-import dateutil.parser
-from dateutil.parser import *
-from stix.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
+#import dateutil.parser
+#from dateutil.parser import *
+from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
 from typedb.client import *
-from stix.module.orm.import_objects import raw_stix2_to_typeql
-from stix.module.orm.delete_object import delete_stix_object
-from stix.module.orm.export_object import convert_ans_to_stix
-from stix.module.authorise import authorised_mappings, import_type_factory
-from stix.module.parsing.parse_objects import parse
-from stix.module.generate_docs import configure_overview_table_docs, object_tables
-from stix.module.initialise import sort_layers, load_typeql_data
-from stix.module.definitions.stix21 import ObservedData, IPv4Address
-from stix.module.definitions.os_threat import Feed, ThreatSubObject
-from stix.module.orm.import_utilities import val_tql
-from stix.module.definitions.attack import attack_models
-from stix.module.definitions.property_definitions import get_definitions
+from stixorm.module.orm.import_objects import raw_stix2_to_typeql
+from stixorm.module.orm.delete_object import delete_stix_object
+from stixorm.module.orm.export_object import convert_ans_to_stix
+from stixorm.module.authorise import authorised_mappings, import_type_factory
+from stixorm.module.parsing.parse_objects import parse
+from stixorm.module.generate_docs import configure_overview_table_docs, object_tables
+from stixorm.module.initialise import sort_layers, load_typeql_data
+from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
+from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
+from stixorm.module.orm.import_utilities import val_tql
+#from stixorm.module.definitions.attack import attack_models
+#from stixorm.module.definitions.property_definitions import get_definitions
 import copy
 
 import logging
@@ -26,6 +26,7 @@ from timeit import default_timer as timer
 #from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
 logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 #logger.addHandler(logging.StreamHandler())
 
 
@@ -1527,7 +1528,7 @@ if __name__ == '__main__':
     note_list = [f2, f8, f26]
 
     data_path = "data/examples/"
-    path1 = "data/standard/"
+    path1 = "test/data/standard/"
     path2 = "data/mitre/history/"
     cert_root = "data/stix_cert_data"
     cert1 = "/attack_pattern_sharing/"
@@ -1569,7 +1570,7 @@ if __name__ == '__main__':
     mitre_data = "data/mitre/traffic_duplication.json"
 
     mitre_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
-    mitre = "data/mitre/"
+    mitre = "test/data/mitre/check/"
     mitre_test = "data/mitre/latest/"
     osthreat = "data/os-threat/"
     reports = "data/threat_reports/"
@@ -1610,7 +1611,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    backdoor_add_dir(mitre_test)
+    backdoor_add_dir(mitre)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)

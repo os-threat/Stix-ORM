@@ -26,6 +26,11 @@ class DomainDefinition:
         mappings = self.__get_mappings()
         sub_objects = self.__get_sub_objects()
         data = self.__get_data()
+        # schema = self.__get_schema()
+        # rules = self.__getrules()
+        # vocab = self.__getvocab()
+        # enums = self.__getenums()
+
 
         self.__model_definition = ModelDefinition(base=base,
                                                   mappings=mappings,
