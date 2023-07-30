@@ -59,7 +59,7 @@ jobs:
     - name: Upload package artifact
       uses: actions/upload-artifact@v2
       with:
-        name: stixorm-${{RELEASE_VERSION}}-py${{ matrix.python-version }}-${{ env.OS_NAME }}
+        name: stixorm-$RELEASE_VERSION-py${{ matrix.python-version }}-${{ env.OS_NAME }}
         path: dist/*.whl  # Upload the built package (replace with appropriate file format if not using wheels
 
 
