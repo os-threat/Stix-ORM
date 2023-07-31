@@ -25,8 +25,8 @@ from timeit import default_timer as timer
 
 #from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+logger = logging.getLogger(__name__)
 #logger.addHandler(logging.StreamHandler())
 
 
