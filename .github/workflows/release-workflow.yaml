@@ -1,0 +1,73 @@
+name: Python Package Build and Upload on Release
+
+on:
+  release:
+    types: [created]  # Trigger the workflow when a new release is created
+
+jobs:
+  build-and-upload:
+    strategy:
+      matrix:
+        python-version: [3.9, 3.10, 3.11]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Poetry
+      run: pip install poetry
+
+    - name: Install package dependencies
+      run: poetry install
+
+    - name: Set release version from tag
+      run: echo "RELEASE_VERSION=$(echo ${GITHUB_REF#refs/tags/})" >> $GITHUB_ENV
+
+    - name: Update version in pyproject.toml
+      run: |
+        if [[ $RELEASE_VERSION =~ ^v([0-9]+\.[0-9]+\.[0-9]+) ]]; then
+          poetry version ${BASH_REMATCH[1]}
+        else
+          echo "Invalid release tag format: $RELEASE_VERSION"
+          exit 1
+        fi
+
+    - name: Build package
+      run: poetry build
+
+    - name: Set OS Name
+      run: |
+        if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+          echo "OS_NAME=linux" >> $GITHUB_ENV
+        elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          echo "OS_NAME=win" >> $GITHUB_ENV
+        elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+          echo "OS_NAME=mac" >> $GITHUB_ENV
+        else
+          echo "Unknown OS" >&2
+          exit 1
+        fi
+
+    - name: Upload package artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: stixorm-${{ env.RELEASE_VERSION }}-py${{ matrix.python-version }}-${{ env.OS_NAME }}
+        path: dist/*.whl  # Upload the built package (replace with appropriate file format if not using wheels
+
+
+    - name: Install Twine
+      run: pip install twine
+
+    #- name: Upload to PyPI
+    #  env:
+    #    TWINE_USERNAME: __token__  # Use the PyPI token or your username here
+   #     TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}  # Use the PyPI token or your password here
+   #   run: twine upload dist/*

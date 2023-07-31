@@ -57,9 +57,12 @@ def variables_id_list():
             'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
 
 
+def top_path():
+    return pathlib.Path(__file__).parents[2].joinpath("test")
+
 def mitre_path():
     data_mitre_path = "data/mitre"
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_mitre_path).joinpath("enterprise-attack.json"))
 
 
@@ -103,7 +106,7 @@ def excluded_files() -> List[str]:
 
 def all_standard_data_file_paths() -> List[str]:
 
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     data_standard_path = top_dir_path.joinpath("data/standard/")
 
     standard_data_file_list = []
@@ -121,7 +124,7 @@ def all_standard_data_file_paths() -> List[str]:
 
 def standard_data_file_paths_with_dependencies() -> List[str]:
 
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     data_standard_path = top_dir_path.joinpath("data/standard/")
 
     standard_data_file_list = []
@@ -137,7 +140,7 @@ def standard_data_file_paths_with_dependencies() -> List[str]:
 
 def standard_data_file_paths_with_no_dependencies() -> List[str]:
 
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     data_standard_path = top_dir_path.joinpath("data/standard/")
 
     standard_data_file_list = []
@@ -154,47 +157,47 @@ def standard_data_file_paths_with_no_dependencies() -> List[str]:
 
 def artifact_basic_path() -> str:
     data_standard_path = "data/standard/"
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("artifact_basic.json"))
 
 def aaa_grouping_path() -> str:
     data_standard_path = "data/standard/"
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("grouping.json"))
 
 def aaa_indicator_path() -> str:
     data_standard_path = "data/standard/"
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_indicator.json"))
 
 def translation_campaign_path() -> str:
     data_standard_path = "data/standard/"
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("issues").joinpath("translation_campaign.json"))
 
 
 def x509_path() -> str:
     data_standard_path = "data/standard/"
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("x509_cert_v3_ext.json"))
 
 def aaa_identity_path() -> str:
     data_standard_path = "data/standard/"
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_identity.json"))
 
 def network_tunnel_dns_path() -> str:
     data_standard_path = "data/standard/issues"
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("network_tunnel_DNS.json"))
 
 def aaa_attack_path() -> str:
     data_standard_path = "data/standard/"
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_attack_pattern.json"))
 
 def variable_all_standard_data_filepaths() -> List[str]:
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     standard_data_path = top_dir_path.joinpath("data/standard/")
     paths = []
 
@@ -239,7 +242,7 @@ def cert_filepaths() -> List[str]:
                     "producer_example",
                     "producer_test"]
 
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     stix_data_path = top_dir_path.joinpath(cert_root)
 
     for folder in cert_list:
@@ -295,7 +298,7 @@ def cert_grouped_filepaths() -> List[List[str]]:
                     "producer_example",
                     "producer_test"]
 
-    top_dir_path = pathlib.Path(__file__).parents[0]
+    top_dir_path = top_path()
     stix_data_path = top_dir_path.joinpath(cert_root)
 
     for folder in cert_list:
