@@ -1,6 +1,8 @@
 import json
 import os
 
+#import dateutil.parser
+#from dateutil.parser import *
 from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
 from typedb.client import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
@@ -13,19 +15,17 @@ from stixorm.module.initialise import sort_layers, load_typeql_data
 from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
 from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
 from stixorm.module.orm.import_utilities import val_tql
+#from stixorm.module.definitions.attack import attack_models
+#from stixorm.module.definitions.property_definitions import get_definitions
 import copy
 
 import logging
 
 from timeit import default_timer as timer
 
-from stixorm.module.typedb_lib.factories.definition_factory import get_definition_factory_instance
-from stixorm.module.typedb_lib.model.definitions import DefinitionName
-
 #from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
-logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 #logger.addHandler(logging.StreamHandler())
 
@@ -168,9 +168,9 @@ def backdoor_add_dir(dirpath):
                         id_list.append(temp_id)
 
                     dep_obj = dict_to_typeql(element, import_type)
-                    # logger.debug('----------------------------------------------------------------------------------------------------')
-                    # logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
-                    # logger.debug('----------------------------------------------------------------------------------------------------')
+                    logger.debug('----------------------------------------------------------------------------------------------------')
+                    logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
+                    logger.debug('----------------------------------------------------------------------------------------------------')
                     layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
 
     logger.debug(f'missing {missing}, cyclical {cyclical}')
@@ -734,9 +734,9 @@ def test_auth():
 ##################################################################################
 def test_feeds():
     osthreat = "data/os-threat/feed-example/example.json"
-    datetime1 = datetime.strptime("2020-10-19T01:01:01.000Z", "%Y-%m-%dT%H:%M:%S.%fZ")
-    datetime2 = datetime.strptime("2020-10-20T01:01:01.000Z", "%Y-%m-%dT%H:%M:%S.%fZ")
-    datetime3 = datetime.strptime("2020-10-21T01:01:01.000Z", "%Y-%m-%dT%H:%M:%S.%fZ")
+    datetime1 = dateutil.parser.isoparse("2020-10-19T01:01:01.000Z")
+    datetime2 = dateutil.parser.isoparse("2020-10-20T01:01:01.000Z")
+    datetime3 = dateutil.parser.isoparse("2020-10-21T01:01:01.000Z")
     typedb_source = TypeDBSource(connection, import_type)
     typedb_sink = TypeDBSink(connection, True, import_type)
     with open(osthreat, mode="r", encoding="utf-8") as f:
@@ -1356,11 +1356,10 @@ def sdo_icon(stix_object):
     label = stix_object.get("name", "")
     icon_type = ""
     attack_type = ""
-    attack_models = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
     attack_object = False if not stix_object.get("x_mitre_version", False) else True
     if attack_object:
         sub_technique = False if not stix_object.get("x_mitre_is_subtechnique", False) else True
-        for model in attack_models.get_mapping("object_conversion"):
+        for model in attack_models["mappings"]["object_conversion"]:
             logger.debug(f'chacking models, type is {model["type"]}')
             if model["type"] == sdo_type:
                 attack_type = model["typeql"]
@@ -1529,7 +1528,7 @@ if __name__ == '__main__':
     note_list = [f2, f8, f26]
 
     data_path = "data/examples/"
-    path1 = "data/standard/"
+    path1 = "test/data/standard/"
     path2 = "data/mitre/history/"
     cert_root = "data/stix_cert_data"
     cert1 = "/attack_pattern_sharing/"
@@ -1571,10 +1570,10 @@ if __name__ == '__main__':
     mitre_data = "data/mitre/traffic_duplication.json"
 
     mitre_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
-    mitre = "test/data/mitre/"
-    mitre_test = "test/data/mitre/history/"
-    osthreat = "test/data/os-threat/"
-    reports = "test/data/threat_reports/"
+    mitre = "test/data/mitre/check/"
+    mitre_test = "data/mitre/latest/"
+    osthreat = "data/os-threat/"
+    reports = "data/threat_reports/"
     poison = "poisonivy.json"
     threattest = "history/"
 
@@ -1608,11 +1607,11 @@ if __name__ == '__main__':
     #cert_dict(cert_root, certs)
     #test_get_ids(connection, import_type)
     #test_ids_loaded(id_list2, connection)
-    test_auth()
+    #test_auth()
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    #backdoor_add_dir(mitre_test)
+    backdoor_add_dir(mitre)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)

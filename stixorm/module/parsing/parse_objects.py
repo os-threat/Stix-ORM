@@ -12,6 +12,7 @@ from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 default_import_type = import_type_factory.get_default_import()
+logger.setLevel(logging.DEBUG)
 
 def parse(data: dict, allow_custom=False, import_type: ImportType=default_import_type):
     """Convert a string, dict or file-like object into a STIX object.

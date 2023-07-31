@@ -12,6 +12,7 @@ from stixorm.module.typedb_lib.model.definitions import DefinitionName
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 default_import_type = import_type_factory.get_default_import()
+logger.setLevel(logging.DEBUG)
 
 attack_model = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
 stix_model = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
@@ -187,7 +188,7 @@ def sro_type_to_tql(sro_type: str,
 
         else:
             # its a Stix object, not an AT&CK one
-            if sro_type in stix_model.contains_data("data"):
+            if stix_model.contains_data(sro_type):
                 # dispatch specific stix properties plus mitre properties plus generic sdo properties
                 protocol = "stix21"
                 obj_tql = copy.deepcopy(stix_model.get_data(sro_type))
