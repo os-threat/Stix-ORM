@@ -168,9 +168,9 @@ def backdoor_add_dir(dirpath):
                         id_list.append(temp_id)
 
                     dep_obj = dict_to_typeql(element, import_type)
-                    # logger.debug('----------------------------------------------------------------------------------------------------')
-                    # logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
-                    # logger.debug('----------------------------------------------------------------------------------------------------')
+                    logger.debug('----------------------------------------------------------------------------------------------------')
+                    logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
+                    logger.debug('----------------------------------------------------------------------------------------------------')
                     layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
 
     logger.debug(f'missing {missing}, cyclical {cyclical}')
