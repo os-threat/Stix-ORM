@@ -9,6 +9,7 @@ from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_typ
 from stixorm.module.orm.export_utilities import convert_ans_to_res
 import logging
 
+from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger()
@@ -69,7 +70,8 @@ def convert_res_to_stix(res: List[dict], import_type: ImportType):
         stix_dict {}: a dict containing the stix object
     """
 
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     stix_dict = {}
     for obj in res:
         obj_type = obj["T_name"]
@@ -101,7 +103,8 @@ def make_sdo(res, import_type: ImportType):
         stix_dict {}: a dict containing the stix object
     """
     try:
-        auth = authorised_mappings(import_type)
+        auth_factory = get_auth_factory_instance()
+        auth = auth_factory.get_auth_for_import(import_type)
         stix_dict = {}
         # 2.A) get the typeql properties and relations
         sdo_tql_name = res["T_name"]
@@ -151,7 +154,8 @@ def make_sro(res, import_type: ImportType):
     Returns:
         stix_dict {}: a dict containing the stix object
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     stix_dict = {}
     # 2.A) get the typeql properties and relations
     sro_tql_name = res["type"]
@@ -264,7 +268,8 @@ def make_sco(res: dict, import_type: ImportType):
     Returns:
         stix_dict {}: a dict containing the stix object
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     # - work out the type of object
     stix_dict = {}
     obj_type = res["T_name"]
@@ -317,7 +322,7 @@ def make_meta(res, import_type: ImportType):
         stix_dict {}: a dict containing the stix object
     """
     stix_dict = {}
-    auth = authorised_mappings(import_type)
+
     obj_type = res["T_name"]
     props = res["has"]
     relns = res["relns"]
@@ -396,7 +401,8 @@ def make_relations(relns, obj_tql, stix_dict, is_list, obj_name, import_type: Im
     Returns:
         stix_dict {}: a dict containing the stix object
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     for reln in relns:
         reln_name = reln["T_name"]
         if reln_name in auth["tql_types"]["embedded_relations"]:
@@ -443,7 +449,8 @@ def make_embedded_relations(reln, reln_name, stix_dict, is_list: bool, obj_name,
     Returns:
         stix_dict {}: a dict containing the stix object
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     stix_object_type = obj_name
     for embedded_r in auth["reln"]["embedded_relations"]:
         if reln_name == embedded_r["typeql"]:
@@ -489,7 +496,6 @@ def make_embedded_relations(reln, reln_name, stix_dict, is_list: bool, obj_name,
 
 def make_standard_relations(reln, reln_name, stix_dict, is_list, obj_name, import_type: ImportType):
     #logger.warning(" make standard relations visited, but not implemented")
-    auth = authorised_mappings(import_type)
     return stix_dict
 
 
@@ -506,7 +512,8 @@ def make_key_value_relations(reln, reln_name, stix_dict, is_list, obj_type, impo
     Returns:
         stix_dict {}: a dict containing the stix object
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     for kv_obj in auth["reln"]["key_value_relations"]:
         if reln_name == kv_obj["typeql"]:
             role_pointed = kv_obj["pointed_to"]
@@ -554,7 +561,7 @@ def make_extension_relations(reln, reln_name, stix_dict, is_list, obj_type, impo
         stix_dict {}: a dict containing the stix object
     """
     logger.debug("make extension relations visited")
-    auth = authorised_mappings(import_type)
+
     local_dict = {}
     local_dict = make_object(reln, reln_name, local_dict, is_list, obj_type, import_type)
     stix_dict["extensions"] = local_dict
@@ -575,7 +582,8 @@ def make_object(reln, reln_name, stix_dict, is_list, obj_type, import_type: Impo
         stix_dict {}: a dict containing the stix object
     """
     logger.debug("make object visited")
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     for ext_obj in auth["reln"]["extension_relations"]:
         if reln_name == ext_obj["relation"]:
             role_pointed = ext_obj["pointed-to"]
@@ -644,7 +652,8 @@ def make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_type, import_t
     Returns:
         stix_dict {}: a dict containing the stix object
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     for l_obj in auth["reln"]["list_of_objects"]:
         if reln_name == l_obj["typeql"]:
             role_pointed = l_obj["pointed_to"]

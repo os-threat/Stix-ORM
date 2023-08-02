@@ -9,6 +9,8 @@ from stixorm.module.orm.import_utilities import clean_props, get_embedded_match,
 
 import logging
 
+from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
+
 logger = logging.getLogger()
 
 
@@ -86,7 +88,8 @@ def raw_stix2_to_typeql(stix_object,
     if import_type is None:
         import_type = default_import_type
 
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     logger.debug(f'stix object type {stix_object["type"]}\n')
 
     auth_types = copy.deepcopy(auth["types"])
@@ -224,7 +227,6 @@ def sro_to_data(sro, import_type=default_import_type) -> [dict, Dict[str, str], 
 
     logger.debug(f'into sro -> {sro}')
     # - work out the type of object
-    auth = authorised_mappings(import_type)
     uses_relation = False
     is_procedure = False
     attack_object = False if not sro.get("x_mitre_version", False) else True
@@ -256,7 +258,8 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
         core_ql: a typeql insert statement that describes the object head, so the independent and dependent parts can be injected seaparately
 
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     # 1.) get configuration parameters
     # - variable for use in typeql statements
     dep_list = []

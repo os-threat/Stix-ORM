@@ -7,6 +7,7 @@ from stix2.parsing import dict_to_stix2
 from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql
 import logging
 
+from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger()
@@ -101,7 +102,8 @@ def dict_to_stix(stix_dict: dict,
     """
     assert len(stix_dict) > 0
     logger.debug(f"I'm in dict to stix, {stix_dict}")
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     if 'type' not in stix_dict:
         raise ParseError(f"Can't parse object with no 'type' property: {str(stix_dict)}")
 
@@ -208,7 +210,8 @@ def class_for_type(stix_typeql, import_type, category=None):
     :return: A registered python class which implements the given STIX type, or
         None if one is not found.
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     conv_cls = ""
     cls = None
     logger.debug(f' working out classes, typeql {stix_typeql}, category {category}')

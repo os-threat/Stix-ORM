@@ -5,6 +5,7 @@ from stixorm.module.authorise import authorised_mappings
 
 import logging
 
+from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger()
@@ -200,7 +201,8 @@ def get_relation_details(r, r_tx, import_type: ImportType):
     Returns:
         reln {}: a dict containing the reln details
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     reln = {}
     reln_name = r.get_type().get_label().name()
     reln['T_name'] = reln_name
@@ -355,7 +357,8 @@ def get_list_of_objects(r,
     Returns:
         roles []: list of dict objects
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     reln_name = r.get_type().get_label().name()
     for lot in auth["reln"]["list_of_objects"]:
         if reln_name == lot["typeql"]:
@@ -459,7 +462,8 @@ def get_extension_relations(r,
     Returns:
         roles []: list of dict objects
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     reln_name = r.get_type().get_label().name()
     for ext in auth["reln"]["extension_relations"]:
         if ext['relation'] == reln_name:
@@ -526,7 +530,8 @@ def validate_get_relns(rel,
     Returns:
         reln {}: a dict containing the reln details
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     reln={}
     reln_name = rel.get_type().get_label().name()
     if reln_name in auth["tql_types"]["embedded_relations"]:

@@ -5,6 +5,7 @@ import copy
 
 import logging
 
+from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
 from stixorm.module.typedb_lib.factories.definition_factory import get_definition_factory_instance
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 from stixorm.module.typedb_lib.model.definitions import DefinitionName
@@ -118,7 +119,8 @@ def add_relation_to_typeql(rel,
     logger.debug(f'obj {obj}')
     logger.debug(f'obj_Var {obj_var}')
     logger.debug(f'\nprop var list {prop_var_list}')
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     dep_list = []
     logger.debug("\nstarting into choices")
     if rel == "granular_markings":
@@ -194,7 +196,8 @@ def extensions(prop_name: str,
         match: the typeql match string
         insert: the typeql insert string
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     match = insert = ''
     dep_list = []
     # for each key in the dict (extension type)
@@ -229,7 +232,8 @@ def load_object(prop_name: str,
         match: the typeql match string
         insert: the typeql insert string
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     match = insert = type_ql = type_ql_props = ''
     # as long as it is predefined, history the object
     # logger.debug('------------------- history object ------------------------------')
@@ -300,7 +304,8 @@ def list_of_object(prop_name: str,
         match: the typeql match string
         insert: the typeql insert string
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     for config in auth["reln"]["list_of_objects"]:
         if config["name"] == prop_name:
             rel_typeql = config["typeql"]
@@ -357,7 +362,8 @@ def key_value_store(prop,
         match: the typeql match string
         insert: the typeql insert string
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     for config in auth["reln"]["key_value_relations"]:
         if config["name"] == prop:
             rel_typeql = config["typeql"]
@@ -493,7 +499,7 @@ def get_selector_var(selector, prop_var_list):
 # analysis_sco_refs
 # etc.
 
-def embedded_relation(prop,
+def  embedded_relation(prop,
                       prop_value,
                       obj_var,
                       inc: int,
@@ -511,7 +517,8 @@ def embedded_relation(prop,
         insert: the typeql insert string
     """
     logger.debug("I'm in embedded")
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     for ex in auth["reln"]["embedded_relations"]:
         if ex["rel"] == prop:
             owner = ex["owner"]
@@ -570,7 +577,8 @@ def get_source_from_id(stid: str,
         source: the source of the object
     """
     tmp_source = stid.split('--')[0]
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     source = ""
     for model in auth["conv"]["sdo"]:
         if model["protocol"] == protocol and model["type"] == tmp_source:

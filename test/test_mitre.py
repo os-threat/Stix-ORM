@@ -5,6 +5,7 @@ from typing import List
 
 import pytest
 import requests
+from pyinstrument import Profiler
 
 from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink
@@ -135,15 +136,53 @@ class TestMitre:
 
     def test_traffic_duplication_json(self, setup_teardown, typedb, traffic_duplication_json):
 
+        profiler = Profiler()
+        profiler.start()
         result = typedb.add(traffic_duplication_json)
         validate_is_successful(result)
 
+
     def test_database_initialization(self, setup_teardown, typedb, json_data):
 
+        profiler = Profiler()
+        profiler.start()
         result = typedb.add(json_data)
         validate_is_successful(result)
+        profiler.stop()
 
-    @pytest.mark.skip(reason="This will be added later")
+
+        log_filename = "C:\\Users\\denis\\PycharmProjects\\Stix-ORM\\profiler.log"
+        log_text = "This is a log message."
+
+        self.write_to_log(log_filename, profiler.output_text())
+
+    def write_to_log(self, log_filename, log_text):
+        with open(log_filename, 'w') as log_file:
+            log_file.write(log_text + "\n")
+
+    def validate_has_missing_dependencies(self, results):
+        for result in results:
+            assert result.status in [ResultStatus.VALID_FOR_DB_COMMIT, ResultStatus.MISSING_DEPENDENCY]
+
+    def test_load_enterprise_attack_13_1_first_object(self, setup_teardown, typedb):
+        top_dir_path = pathlib.Path(__file__).parents[0]
+        file_path = top_dir_path.joinpath("data").joinpath("mitre").joinpath("enterprise-attack-13.1.json")
+        with open(str(file_path), "r") as file:
+            data = json.load(file)
+
+        profiler = Profiler()
+        profiler.start()
+        try:
+            result = typedb.add([data["objects"][0]])
+        except Exception as e:
+            print(e)
+        profiler.stop()
+
+        log_filename = "C:\\Users\\denis\\PycharmProjects\\Stix-ORM\\profiler.log"
+        log_text = "This is a log message."
+
+        self.write_to_log(log_filename, profiler.output_text())
+
     def test_load_enterprise_attack_13_1(self, setup_teardown, typedb):
         top_dir_path = pathlib.Path(__file__).parents[0]
         file_path = top_dir_path.joinpath("data").joinpath("mitre").joinpath("enterprise-attack-13.1.json")

@@ -5,6 +5,7 @@ from stixorm.module.authorise import authorised_mappings, import_type_factory
 
 import logging
 
+from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
 from stixorm.module.typedb_lib.factories.definition_factory import get_definition_factory_instance
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 from stixorm.module.typedb_lib.model.definitions import DefinitionName
@@ -33,7 +34,8 @@ def sdo_type_to_tql(sdo_type: str,
         is_list: a list of all the porperties that are lists
 
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     obj_tql = {}
     is_list =[]
     protocol = ""
@@ -136,7 +138,8 @@ def sro_type_to_tql(sro_type: str,
 
     """
     # - list of property names that have values, and do not include False values
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     obj_tql = {}
     protocol = ""
     sro_tql_name = sro_type
@@ -223,7 +226,8 @@ def sco__type_to_tql(sco_type: str, import_type=default_import_type) -> [Dict[st
 
     """
     # Based on import type setup observables
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     protocol = ""
     is_list = copy.deepcopy(auth["is_lists"]["sco"]["sco"])
     is_list.extend(auth["is_lists"]["sco"][sco_type])
@@ -252,7 +256,8 @@ def meta_type_to_tql(meta_type: str, import_type=default_import_type, attack_obj
 
     """
     # Based on import type setup observables
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     is_list = copy.deepcopy(auth["is_lists"]["sdo"]["sdo"])
     is_list.extend(auth["is_lists"]["meta"]["marking-definition"])
     meta_tql_name = meta_type

@@ -2,8 +2,9 @@
 name = "stixorm"
 version = "0.1.0"
 description = "Description"
+repository="https://github.com/os-threat/Stix-ORM"
 authors = [
-    "Brett Forbes"
+    "Brett Forbes <brett@cloudaccelerator.co>"
 ]
 readme = "README.md"
 classifiers = [
@@ -37,6 +38,7 @@ pytest-bdd-html = "^0.1.14a0"
 bandit = "^1.7.5"
 pytest-xdist = "^3.3.1"
 pytest-cov = "^4.1.0"
+pyinstrument = "^4.5.1"
 
 [build-system]
 requires = ["poetry-core"]

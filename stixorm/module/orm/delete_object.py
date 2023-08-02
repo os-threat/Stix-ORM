@@ -8,6 +8,9 @@ from stixorm.module.orm.import_objects import sdo_to_data, sro_to_data, sco_to_d
 from stixorm.module.orm.import_utilities import split_on_activity_type, val_tql
 
 import logging
+
+from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
+
 logger = logging.getLogger()
 ##############################################################
 #  1.) Methods to Delete any Stix Objects
@@ -24,8 +27,8 @@ def delete_stix_object(stix_object,
                        indep_ql: str,
                        core_ql: str,
                        import_type) -> [str, str]:
-
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     if stix_object.type in auth["types"]["sdo"]:
         total_props, obj_tql, sdo_tql_name, protocol = sdo_to_data(stix_object, import_type)
         var_name: List[str] = get_obj_var(indep_ql)
@@ -132,7 +135,8 @@ def delete_sub_reln(rel, obj, obj_var, i, import_type):
         match: the typeql match string
         delete: the typeql delete string
     """
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     if rel == "granular_markings":
         match, delete = del_granular_markings(obj_var)
 
@@ -196,7 +200,8 @@ def del_hashes(rel_name, rel_object, obj_var, i):
 
 
 def del_key_value_store(rel_name, rel_object, obj_var, i, import_type):
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     for config in auth["reln"]["key_value_relations"]:
         if config["name"] == rel_name:
             rel_typeql = config["typeql"]
@@ -222,7 +227,8 @@ def del_key_value_store(rel_name, rel_object, obj_var, i, import_type):
 
 
 def del_list_of_object(rel_name, prop_value_list, parent_var, i, import_type):
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     logger.debug(f'rl name -> {rel_name}')
     for config in auth["reln"]["list_of_objects"]:
         if config["name"] == rel_name:
@@ -267,7 +273,8 @@ def del_list_of_object(rel_name, prop_value_list, parent_var, i, import_type):
 
 
 def del_embedded_relation(rel_name, rel_object, obj_var, i, import_type):
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     for ex in auth["reln"]["embedded_relations"]:
       if ex["rel"] == rel_name:
         owner = ex["owner"]
@@ -283,7 +290,8 @@ def del_embedded_relation(rel_name, rel_object, obj_var, i, import_type):
 def del_load_object(prop_name, prop_dict, parent_var, i, import_type):
     # as long as it is predefined, history the object
     #logger.debug('------------------- history object ------------------------------')
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     logger.debug(f'prop dict {prop_dict}')
     for prop_type in auth["reln"]["extension_relations"]:
         if prop_name == prop_type["stix"]:
@@ -328,7 +336,8 @@ def del_load_object(prop_name, prop_dict, parent_var, i, import_type):
 
 
 def del_extensions(prop_name, prop_dict, parent_var, i, import_type):
-    auth = authorised_mappings(import_type)
+    auth_factory = get_auth_factory_instance()
+    auth = auth_factory.get_auth_for_import(import_type)
     match = ''
     delete = ''
     # for each key in the dict (extension type)
