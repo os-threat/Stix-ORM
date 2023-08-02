@@ -32,7 +32,7 @@ import logging
 from stixorm.module.definitions.property_definitions import ThreatReference, ThreatExtensionsProperty
 
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 valid_obj =  get_mapping_factory_instance().get_all_types()
 

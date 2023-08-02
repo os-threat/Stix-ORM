@@ -29,7 +29,7 @@ from stixorm.module.definitions.property_definitions import ThreatReference
 from stixorm.module.typedb_lib.auth_types import all_auth_types
 from stixorm.module.typedb_lib.factories.mappings_factory import get_mapping_factory_instance
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 

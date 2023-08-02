@@ -5,7 +5,7 @@ from stixorm.module.typedb_lib.instructions import ResultStatus
 import json
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 # define the database data and import details
 connection = {

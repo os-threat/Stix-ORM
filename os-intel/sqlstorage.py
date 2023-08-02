@@ -12,7 +12,7 @@ from identifiers import makeid
 
 DB_VERSION = "1.0"
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 def infer_type(key, value):
     if key == 'id':

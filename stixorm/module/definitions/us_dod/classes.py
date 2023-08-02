@@ -19,5 +19,5 @@ from stix2.v21.vocab import (
 )
 
 import logging
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 

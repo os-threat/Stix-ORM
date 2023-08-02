@@ -8,7 +8,8 @@ from test.oasis.dbconfig import connection
 from stix2 import (parse)
 from pathlib import Path
 
-logger = logging.getLogger()
+logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+logger = logging.getLogger(__name__)
 
 
 def load_personas(file_path='./data/stix_cert_data/stix_cert_persona_dict.json'):

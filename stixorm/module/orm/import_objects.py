@@ -10,7 +10,8 @@ from stixorm.module.orm.import_utilities import clean_props, get_embedded_match,
 import logging
 
 from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
-
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 logger = logging.getLogger()
 
 

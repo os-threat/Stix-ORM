@@ -10,7 +10,8 @@ import logging
 from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 default_import_type = import_type_factory.get_default_import()
 logger.setLevel(logging.DEBUG)
 

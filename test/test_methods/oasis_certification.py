@@ -11,6 +11,7 @@ from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink, TypeDBSource
 
 loggers = [logging.getLogger()]  # get the root logger
+loggers = loggers + [logging.getLogger(name) for name in logging.root.manager.loggerDict]
 
 for l in loggers:
     if l.name.startswith('stix.module'):
@@ -19,14 +20,18 @@ for l in loggers:
         l.setLevel(logging.DEBUG)
         '''
 
-logger = logging.getLogger()
-
+format = '[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s'
+formatter = logging.Formatter(format)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 stdout_handler = logging.StreamHandler(sys.stdout)
-
+stdout_handler.setLevel(logging.DEBUG)
+stdout_handler.setFormatter(formatter)
 
 file_handler = logging.FileHandler('oasis_cert.log', mode='w')
-
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(formatter)
 
 logger.addHandler(file_handler)
 logger.addHandler(stdout_handler)

@@ -15,7 +15,7 @@ from pgcommon import (CHECK_FOR_COMMON_SCHEMA, CHECK_FOR_CACHE_TABLE,INTERNAL_TA
 
 from sqlstorage import SqlStorage, DB_VERSION
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 def get_storage(url, session_id):
