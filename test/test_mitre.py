@@ -170,18 +170,8 @@ class TestMitre:
         with open(str(file_path), "r") as file:
             data = json.load(file)
 
-        profiler = Profiler()
-        profiler.start()
-        try:
-            result = typedb.add([data["objects"][0]])
-        except Exception as e:
-            print(e)
-        profiler.stop()
-
-        log_filename = "C:\\Users\\denis\\PycharmProjects\\Stix-ORM\\profiler.log"
-        log_text = "This is a log message."
-
-        self.write_to_log(log_filename, profiler.output_text())
+        result = typedb.add([data["objects"][0]])
+        self.validate_successful_result(result)
 
     def test_load_enterprise_attack_13_1(self, setup_teardown, typedb):
         top_dir_path = pathlib.Path(__file__).parents[0]
