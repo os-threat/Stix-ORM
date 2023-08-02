@@ -10,8 +10,7 @@ import pytest
 from stixorm.module.typedb import TypeDBSource, TypeDBSink
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportTypeFactory
 
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 
 from stix2 import (v21, parse)
 

@@ -25,15 +25,12 @@ for l in loggers:
 
 format = '[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s'
 formatter = logging.Formatter(format)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger = logging.getLogger()
 
 stdout_handler = logging.StreamHandler(sys.stdout)
-stdout_handler.setLevel(logging.DEBUG)
 stdout_handler.setFormatter(formatter)
 
 file_handler = logging.FileHandler('oasis_cert.log', mode='w')
-file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
 
 logger.addHandler(file_handler)

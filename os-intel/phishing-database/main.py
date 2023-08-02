@@ -6,9 +6,8 @@ from stix2 import utils
 from stix2.exceptions import InvalidValueError
 import logging
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger = logging.getLogger()
+
 
 '''
 Load all the STIX objects from that Phishing Database

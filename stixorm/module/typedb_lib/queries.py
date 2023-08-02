@@ -13,8 +13,8 @@ from typedb.stream.bidirectional_stream import BidirectionalStream
 from stixorm.module.typedb_lib.logging import log_delete_layer, log_add_layer
 from stixorm.module.typedb_lib.instructions import Instructions
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger = logging.getLogger()
+
 
 
 def build_insert_query(layer):

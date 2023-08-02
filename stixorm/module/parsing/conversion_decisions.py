@@ -9,8 +9,7 @@ from stixorm.module.typedb_lib.factories.definition_factory import get_definitio
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 from stixorm.module.typedb_lib.model.definitions import DefinitionName
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger = logging.getLogger()
 default_import_type = import_type_factory.get_default_import()
 logger.setLevel(logging.DEBUG)
 

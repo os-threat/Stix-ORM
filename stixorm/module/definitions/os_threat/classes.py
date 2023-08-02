@@ -31,7 +31,7 @@ import logging
 from stixorm.module.definitions.property_definitions import ThreatReference, ThreatExtensionsProperty
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 
 valid_obj =  get_mapping_factory_instance().get_all_types()
 # i) allows x- prefix see properties.py line 592 obj_type.startswith("x-") and

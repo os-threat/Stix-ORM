@@ -7,8 +7,8 @@ import logging
 
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger = logging.getLogger()
+
 
 # --------------------------------------------------------------------------------------------------------
 #  1. Convert TypeQl Ans to Res

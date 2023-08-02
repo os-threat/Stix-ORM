@@ -25,8 +25,7 @@ from timeit import default_timer as timer
 
 #from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
-logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 #logger.addHandler(logging.StreamHandler())
 
 
@@ -168,9 +167,9 @@ def backdoor_add_dir(dirpath):
                         id_list.append(temp_id)
 
                     dep_obj = dict_to_typeql(element, import_type)
-                    logger.debug('----------------------------------------------------------------------------------------------------')
-                    logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
-                    logger.debug('----------------------------------------------------------------------------------------------------')
+                    # logger.debug('----------------------------------------------------------------------------------------------------')
+                    # logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
+                    # logger.debug('----------------------------------------------------------------------------------------------------')
                     layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
 
     logger.debug(f'missing {missing}, cyclical {cyclical}')
@@ -1611,7 +1610,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    backdoor_add_dir(mitre)
+    backdoor_add_dir(mitre_test)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)

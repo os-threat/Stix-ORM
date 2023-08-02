@@ -3,12 +3,10 @@ from stixorm.module.typedb import TypeDBSink, TypeDBSource
 from stixorm.module.authorise import import_type_factory
 from stixorm.module.parsing.parse_objects import parse
 import logging
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 
 import_type = import_type_factory.get_attack_import()
-logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+
 
 connection = {
     "uri": "localhost",
