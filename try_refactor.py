@@ -1,8 +1,9 @@
 import json
 import os
+import datetime
 
-#import dateutil.parser
-#from dateutil.parser import *
+import dateutil.parser
+from dateutil.parser import *
 from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
 from typedb.client import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
@@ -609,6 +610,7 @@ def check_dir(dirpath):
     """
     id_list = []
     dirFiles = os.listdir(dirpath)
+    list_of_objects = []
     sorted_files = sorted(dirFiles)
     print(sorted_files)
     typedb_sink = TypeDBSink(connection, True, import_type)
@@ -621,14 +623,19 @@ def check_dir(dirpath):
             print(f'==================== {s_file} ===================================')
             print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
-                print(f'f->{f}')
-                for element in f:
+                testtime = datetime.now()
+                print(f"I am opening the file {testtime}")
+                json_text = json.load(f)
+                json_list = json_text["objects"]
+                for element in json_list:
                     print(f'element is {element}')
                     temp_id = element.get('id', False)
                     if temp_id:
                         id_list.append(temp_id)
-                json_text = json.load(f)
-                typedb_sink.add(json_text)
+                list_of_objects = list_of_objects + json_list
+    print(f'9999999999999999999999999 Add {len(list_of_objects)} 99999999999999999999999999999999999999999999')
+    typedb_sink.add(list_of_objects)
+    print(f'==================== List is added  ===================================')
     id_set = set(id_list)
     id_typedb = set(get_stix_ids())
     len_files = len(id_set)
@@ -1596,7 +1603,7 @@ if __name__ == '__main__':
     #query_id(stid1)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
-    #check_dir(path1)
+    check_dir(mitre)
     #test_delete(data_path+file1)
     #test_get(stid1)
     #test_get_delete(path2 + "attack_objects.json")
@@ -1606,12 +1613,13 @@ if __name__ == '__main__':
     #cert_test(cert_root+cert11)
     #cert_dict(cert_root, certs)
     #test_get_ids(connection, import_type)
-    #test_ids_loaded(id_list2, connection)
+    #test_ids_loaded(id_list2, ccls
+    # onnection)
     #test_auth()
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    backdoor_add_dir(mitre)
+    #backdoor_add_dir(mitre)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)
