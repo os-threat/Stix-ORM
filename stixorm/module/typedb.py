@@ -481,7 +481,7 @@ class TypeDBSink(DataSink):
 
         generate_instructions_result = self.__generate_instructions(obj_result)
         logger.info("\n##########################################################################################################################################################\n")
-        #print(f"generate instructions is {generate_instructions_result}")
+        #logger.info(f"generate instructions is {generate_instructions_result}")
         instruction_dependency_graph_result =  self.__create_instruction_dependency_graph(generate_instructions_result)
         check_missing_dependency_result = self.__check_missing_dependencies(instruction_dependency_graph_result)
 

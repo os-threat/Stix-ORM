@@ -138,8 +138,7 @@ def make_sdo(res, import_type: ImportType):
             if stix_dict["created_by_ref"] == stix_dict["id"]:
                 del stix_dict["created_by_ref"]
     except Exception as e:
-        traceback.print_exc()
-        print(e)
+        logger.exception(e)
 
     return stix_dict
 
@@ -745,7 +744,7 @@ def make_list_of_objects(reln, reln_name, stix_dict, is_list, obj_type, import_t
 
                     else:
                         logger.debug(f'unsupported relation for list of objects {sub_reln}')
-                        #print(f'embedded --> {stix_models["embedded_relations_typeql"]}')
+                        #logger.info(f'embedded --> {stix_models["embedded_relations_typeql"]}')
 
                 list_of_objects.append(player)
 
