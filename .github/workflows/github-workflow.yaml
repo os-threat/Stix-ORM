@@ -126,4 +126,4 @@ jobs:
       run: |
         cd test_package
         source venv/bin/activate
-        pytest --verbose  test/ --log-level=WARNING
+        pytest --verbose  test/ --log-level=WARNING --log-cli-level=WARNING
