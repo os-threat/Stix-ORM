@@ -109,9 +109,9 @@ def dict_to_stix(stix_dict: dict,
         raise ParseError(f"Can't parse object with no 'type' property: {str(stix_dict)}")
 
     obj_type = stix_dict["type"]
-    logger.debug(f'\nin parse, raw type is --> {obj_type}')
-    logger.debug(f'\n auth-sdo -->{auth["tql_types"]["sdo"]}\n')
-    logger.debug(f'\n\n auth-sro -->{auth["tql_types"]["sro"]}\n')
+    logger.debug(f'in parse, raw type is --> {obj_type}')
+    logger.debug(f' auth-sdo -->{auth["tql_types"]["sdo"]}\n')
+    logger.debug(f'auth-sro -->{auth["tql_types"]["sro"]}\n\n')
     attack_object = is_attack_object(stix_dict)
     logger.debug(f'attack object {attack_object}')
     #print(f'auth is {auth["tql_types"]["meta"]}')

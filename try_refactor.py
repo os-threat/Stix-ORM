@@ -1537,6 +1537,7 @@ if __name__ == '__main__':
     data_path = "data/examples/"
     path1 = "test/data/standard/"
     path2 = "data/mitre/history/"
+    incident1 = "test/data/os-threat/incident/"
     cert_root = "data/stix_cert_data"
     cert1 = "/attack_pattern_sharing/"
     cert2 = "/campaign_sharing/"
@@ -1603,7 +1604,7 @@ if __name__ == '__main__':
     #query_id(stid1)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
-    check_dir(mitre)
+    check_dir(incident1)
     #test_delete(data_path+file1)
     #test_get(stid1)
     #test_get_delete(path2 + "attack_objects.json")
