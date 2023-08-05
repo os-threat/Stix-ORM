@@ -6,6 +6,7 @@ import pytest
 
 from stixorm.module.typedb_lib.queries import get_all_databases, delete_database
 
+logging.basicConfig(level=logging.WARNING, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
 def pytest_configure(config):
     # Set up the logging format and level
