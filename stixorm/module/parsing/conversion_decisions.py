@@ -58,7 +58,7 @@ def sdo_type_to_tql(sdo_type: str,
         elif os_threat_model.contains_data(sdo_type):
             # dispatch specific stix properties plus later on, generic sdo properties
             protocol = "os-threat"
-            obj_tql = copy.deepcopy(stix_model.get_data(sdo_type))
+            obj_tql = copy.deepcopy(os_threat_model.get_data(sdo_type))
         else:
             logger.error(f'obj_type type {sdo_type} not supported')
             return {}, "", {}, ""
