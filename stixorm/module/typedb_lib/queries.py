@@ -83,6 +83,9 @@ def match_query(uri: str, port: str, database: str, query: str, data_query, **da
                 data = data_query(query, answer_iterator, transaction, **data_query_args)
                 return data
 
+def get_all_databases(uri: str, port: str):
+    client = get_core_client(uri, port)
+    return client.databases().all()
 
 def delete_database(uri: str, port: str, database: str):
     client = get_core_client(uri, port)
