@@ -4,13 +4,20 @@ import re
 
 from stixorm.module.typedb import TypeDBSink, TypeDBSource
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportTypeFactory
-from test.oasis.dbconfig import connection
 from stix2 import (parse)
 from pathlib import Path
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 
+
+connection = {
+        "uri": "localhost",
+        "port": "1729",
+        "database": "stix",
+        "user": None,
+        "password": None
+    }
 
 def load_personas(file_path='./data/stix_cert_data/stix_cert_persona_dict.json'):
     logger.info(f'Loading file {file_path}')
