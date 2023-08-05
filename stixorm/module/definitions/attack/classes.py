@@ -31,14 +31,14 @@ from stixorm.module.typedb_lib.factories.mappings_factory import get_mapping_fac
 
 logger = logging.getLogger(__name__)
 
-
+valid_obj =  get_mapping_factory_instance().get_all_types()
+# i) allows x- prefix see properties.py line 592 obj_type.startswith("x-") and
+# ii) allows non stix definitiosn to be added see properties.py line 592 is_object(obj_type, self.spec_version)
 
 class AttackRelation(_RelationshipObject):
     """For more detailed information on this object's properties, see
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
     """
-
-    _invalid_source_target_types = ['bundle', 'language-content', 'marking-definition', 'relationship', 'sighting']
 
     _type = 'relationship'
     _properties = OrderedDict([
@@ -56,8 +56,8 @@ class AttackRelation(_RelationshipObject):
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_platforms', ListProperty(StringProperty)),
-        ('source_ref', ReferenceProperty(invalid_types=_invalid_source_target_types, spec_version='2.1', required=True)),
-        ('target_ref', ReferenceProperty(invalid_types=_invalid_source_target_types, spec_version='2.1', required=True)),
+        ('source_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1', required=True)),
+        ('target_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1', required=True)),
         ('start_time', TimestampProperty()),
         ('stop_time', TimestampProperty()),
         ('revoked', BooleanProperty(default=lambda: False)),
@@ -549,9 +549,7 @@ class AttackCampaign(_DomainObject):
             raise ValueError(msg.format(self))
 
 
-valid_obj =  get_mapping_factory_instance().get_all_types()
-# i) allows x- prefix see properties.py line 592 obj_type.startswith("x-") and
-# ii) allows non stix definitiosn to be added see properties.py line 592 is_object(obj_type, self.spec_version)
+
 class ObjectVersion(_STIXBase21):
     """For more detailed information on this object's properties, see
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
