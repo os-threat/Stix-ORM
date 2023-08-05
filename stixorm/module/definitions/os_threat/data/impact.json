@@ -1,0 +1,13 @@
+{
+  "impact_category": "impact-category",
+  "criticality": "criticality",
+  "description": "description",
+  "end_time": "end-time",
+  "end_time_fidelity": "end-time-fidelity,",
+  "impacted_entity_counts": "",
+  "impacted_refs": "",
+  "recoverability": "recoverability",
+  "start_time": "start-time",
+  "start_time_fidelity": "start-time-fidelity",
+  "superseded_by_ref": ""
+}

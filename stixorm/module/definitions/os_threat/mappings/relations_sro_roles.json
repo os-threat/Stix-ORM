@@ -1,0 +1,86 @@
+[
+  {
+    "stix": "led-to",
+    "typeql": "led-to",
+    "source": "initial",
+    "target": "subsequent"
+  },
+  {
+    "stix": "impacts",
+    "typeql": "impacts",
+    "source": "issue",
+    "target": "impacted"
+  },
+  {
+    "stix": "contact-for",
+    "typeql": "contact-for",
+    "source": "contact",
+    "target": "issue"
+  },
+  {
+    "stix": "detected",
+    "typeql": "detected",
+    "source": "method",
+    "target": "issue"
+  },
+  {
+    "stix": "performed",
+    "typeql": "performed",
+    "source": "initiator",
+    "target": "outcome"
+  },
+  {
+    "stix": "blocks",
+    "typeql": "blocks",
+    "source": "effort",
+    "target": "stops"
+  },
+  {
+    "stix": "causes",
+    "typeql": "causes",
+    "source": "effort",
+    "target": "caused"
+  },
+  {
+    "stix": "detects",
+    "typeql": "detects",
+    "source": "effort",
+    "target": "found"
+  },
+  {
+    "stix": "creates",
+    "typeql": "creates",
+    "source": "effort",
+    "target": "made"
+  },
+  {
+    "stix": "errored-to",
+    "typeql": "errored-to",
+    "source": "started",
+    "target": "on-error"
+  },
+  {
+    "stix": "followed-by",
+    "typeql": "followed-by",
+    "source": "initial",
+    "target": "subsequent"
+  },
+  {
+    "stix": "assigned",
+    "typeql": "assigned",
+    "source": "owner",
+    "target": "effort"
+  },
+  {
+    "stix": "participated-in",
+    "typeql": "participated-in",
+    "source": "contact",
+    "target": "assisted"
+  },
+  {
+    "stix": "derived-from",
+    "typeql": "derived-from",
+    "source": "result",
+    "target": "raw-material"
+  }
+]
