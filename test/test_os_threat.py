@@ -27,7 +27,7 @@ def variable_all_standard_data_filepaths() -> List[str]:
 def typedb_sink(generate_connection):
 
     schema_path = "path/to/schema.json"
-    typedb = TypeDBSink(connection=generate_connection, clear=False, import_type=import_type)
+    typedb = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type)
     yield typedb
     typedb.clear_db()
 
@@ -36,7 +36,7 @@ class TestOSThreat:
         file_paths = variable_all_standard_data_filepaths()
         for file_path in file_paths:
             json_text = self.get_json_from_file(file_path)
-            typedb_sink.add(json_text)
+            result = typedb_sink.add(json_text)
 
         stix_id_list = typedb_sink.get_stix_ids()
         typedb_sink.delete(stix_id_list)
