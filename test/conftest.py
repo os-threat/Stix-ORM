@@ -42,7 +42,7 @@ def generate_connection(random_string):
     connection = {
         "uri":  data_base_uri(),
         "port": database_port(),
-        "database": "stix_test_db_" + random_string,
+        "database": data_base_prefix() + random_string,
         "user": None,
         "password": None
     }
