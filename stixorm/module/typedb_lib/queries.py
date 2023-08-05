@@ -74,14 +74,18 @@ def get_write_transaction(session: TypeDBSession):
 
 def match_query(uri: str, port: str, database: str, query: str, data_query, **data_query_args):
     data = []
-    with get_core_client(uri, port) as client:
-        client_session = get_data_session(client, database)
-        with client_session as session:
-            read_transaction = get_read_transaction(session)
-            with read_transaction as transaction:
-                answer_iterator = transaction.query().match(query)
-                data = data_query(query, answer_iterator, transaction, **data_query_args)
-                return data
+    try:
+        with get_core_client(uri, port) as client:
+            client_session = get_data_session(client, database)
+            with client_session as session:
+                read_transaction = get_read_transaction(session)
+                with read_transaction as transaction:
+                    answer_iterator = transaction.query().match(query)
+                    data = data_query(query, answer_iterator, transaction, **data_query_args)
+                    return data
+    except Exception as e:
+        logger.exception(e)
+        raise Exception("Problem matching")
 
 def get_all_databases(uri: str, port: str):
     client = get_core_client(uri, port)
