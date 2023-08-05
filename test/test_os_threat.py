@@ -10,6 +10,7 @@ from stixorm.module.typedb_lib.instructions import ResultStatus
 
 
 import_type = import_type_factory.create_import(stix_21=True,
+                                                attack=True,
                                                 os_threat=True)
 
 def variable_all_standard_data_filepaths() -> List[str]:
@@ -37,6 +38,7 @@ class TestOSThreat:
         for file_path in file_paths:
             json_text = self.get_json_from_file(file_path)
             result = typedb_sink.add(json_text)
+            self.validate_success(result)
 
         stix_id_list = typedb_sink.get_stix_ids()
         typedb_sink.delete(stix_id_list)
@@ -52,6 +54,6 @@ class TestOSThreat:
 
         return json_text
 
-    def validate_has_missing_dependencies(self, results):
+    def validate_success(self, results):
         for result in results:
-            assert result.status in [ResultStatus.VALID_FOR_DB_COMMIT, ResultStatus.MISSING_DEPENDENCY]
+            assert result.status in [ResultStatus.SUCCESS]
