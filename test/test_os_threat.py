@@ -9,7 +9,7 @@ from stixorm.module.typedb import TypeDBSink
 from stixorm.module.typedb_lib.instructions import ResultStatus
 
 
-import_type = import_type_factory.create_import(stix_21=False,
+import_type = import_type_factory.create_import(stix_21=True,
                                                 os_threat=True)
 
 def variable_all_standard_data_filepaths() -> List[str]:
