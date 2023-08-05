@@ -180,7 +180,7 @@ class TestMitre:
             data = json.load(file)
 
         result = typedb.add([data["objects"][1831]])
-        self.validate_successful_result(result)
+        self.validate_has_missing_dependencies(result)
 
     @pytest.mark.skip(reason="This will be added later")
     @pytest.mark.parametrize("url", attack_data())
