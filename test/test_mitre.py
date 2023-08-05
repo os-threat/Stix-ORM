@@ -136,25 +136,15 @@ class TestMitre:
 
     def test_traffic_duplication_json(self, setup_teardown, typedb, traffic_duplication_json):
 
-        profiler = Profiler()
-        profiler.start()
         result = typedb.add(traffic_duplication_json)
         validate_is_successful(result)
 
 
     def test_database_initialization(self, setup_teardown, typedb, json_data):
 
-        profiler = Profiler()
-        profiler.start()
         result = typedb.add(json_data)
         validate_is_successful(result)
-        profiler.stop()
 
-
-        log_filename = "C:\\Users\\denis\\PycharmProjects\\Stix-ORM\\profiler.log"
-        log_text = "This is a log message."
-
-        self.write_to_log(log_filename, profiler.output_text())
 
     def write_to_log(self, log_filename, log_text):
         with open(log_filename, 'w') as log_file:
@@ -171,7 +161,7 @@ class TestMitre:
             data = json.load(file)
 
         result = typedb.add([data["objects"][0]])
-        self.validate_successful_result(result)
+        self.validate_has_missing_dependencies(result)
 
     def test_load_enterprise_attack_13_1(self, setup_teardown, typedb):
         top_dir_path = pathlib.Path(__file__).parents[0]
