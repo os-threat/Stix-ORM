@@ -1,8 +1,6 @@
 import json
 import os
 import pathlib
-from typing import List
-
 import pytest
 from typedb.client import *
 import logging
@@ -75,6 +73,7 @@ def standard_data_files_with_dependencies() -> List[str]:
         "standard_grouping.json",
         "standard_incident.json",
         "standard_intrusion_set.json",
+        'campaign.json',
         "standard_locations.json",
         "standard_note.json",
         "standard_observed.json",
@@ -90,7 +89,14 @@ def standard_data_files_with_dependencies() -> List[str]:
         "sighting_no_observed.json",
         "sighting_with_observed.json",
         "network_tunnel_basic.json",
-        "network_tunnel_DNS.json"
+        "network_tunnel_DNS.json",
+        "opinion.json",
+        "observed.json",
+        "locations.json",
+        "intrusion_set.json",
+        "incident.json",
+        "grouping.json",
+        "process_basic.json"
     ]
 
     return standard_data_file_list
@@ -589,6 +595,8 @@ class TestTypeDB:
         my_id_list = typedb_sink.get_stix_ids()
         assert (set(my_id_list) == {'identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65',
                                    'identity--f431f809-377b-45e0-aa1c-6a4751cae5ff'})
+
+
 
     @pytest.mark.parametrize("path", standard_data_file_paths_with_no_dependencies())
     def test_get_all_ids_loaded(self, setup_teardown, path):
