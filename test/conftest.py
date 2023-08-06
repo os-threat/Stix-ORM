@@ -4,6 +4,8 @@ import string
 
 import pytest
 
+from stixorm.module.authorise import import_type_factory
+from stixorm.module.typedb import TypeDBSink
 from stixorm.module.typedb_lib.queries import get_all_databases, delete_database
 
 logging.basicConfig(level=logging.WARNING, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
@@ -48,6 +50,25 @@ def generate_connection(random_string):
         "password": None
     }
     return connection
+
+
+@pytest.fixture
+def setup_teardown(generate_connection):
+    import_type = import_type_factory.get_all_imports()
+    typedb = TypeDBSink(connection=generate_connection,
+                        clear=False,
+                        import_type=import_type)
+
+    typedb.clear_db()
+
+    yield
+
+    typedb = TypeDBSink(connection=generate_connection,
+                        clear=False,
+                        import_type=import_type)
+
+    typedb.clear_db()
+
 
 @pytest.fixture(scope="session")
 def setup_before_all_tests(request):
