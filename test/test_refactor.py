@@ -1,7 +1,6 @@
 import json
 import os
 import pathlib
-
 import pytest
 from typedb.client import *
 import logging
@@ -10,9 +9,6 @@ from stixorm.module.typedb import TypeDBSink
 from stixorm.module.typedb_lib.instructions import ResultStatus
 
 logger = logging.getLogger(__name__)
-
-
-
 
 import_type = import_type_factory.get_default_import()
 
@@ -41,6 +37,9 @@ def variables_id_list():
             'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
 
 
+def top_path():
+    return pathlib.Path(__file__).parents[2].joinpath("test")
+
 def mitre_path():
     data_mitre_path = "data/mitre"
     top_dir_path = pathlib.Path(__file__).parents[0]
@@ -57,6 +56,7 @@ def standard_data_files_with_dependencies() -> List[str]:
         "standard_grouping.json",
         "standard_incident.json",
         "standard_intrusion_set.json",
+        'campaign.json',
         "standard_locations.json",
         "standard_note.json",
         "standard_observed.json",
@@ -72,7 +72,14 @@ def standard_data_files_with_dependencies() -> List[str]:
         "sighting_no_observed.json",
         "sighting_with_observed.json",
         "network_tunnel_basic.json",
-        "network_tunnel_DNS.json"
+        "network_tunnel_DNS.json",
+        "opinion.json",
+        "observed.json",
+        "locations.json",
+        "intrusion_set.json",
+        "incident.json",
+        "grouping.json",
+        "process_basic.json"
     ]
 
     return standard_data_file_list
@@ -297,21 +304,6 @@ def cert_grouped_filepaths() -> List[List[str]]:
     return paths
 
 
-@pytest.fixture
-def setup_teardown(generate_connection):
-    typedb = TypeDBSink(connection=generate_connection,
-                        clear=False,
-                        import_type=import_type)
-
-    typedb.clear_db()
-
-    yield
-
-    typedb = TypeDBSink(connection=generate_connection,
-                        clear=False,
-                        import_type=import_type)
-
-    typedb.clear_db()
 
 class TestTypeDB:
 
@@ -483,7 +475,7 @@ class TestTypeDB:
 
             combined = combined + json_text
         result = typedb_sink.add(combined)
-        self.validate_successful_result(result)
+        self.validate_has_missing_dependencies(result)
 
     def test_translation_campaign(self, setup_teardown, generate_connection):
         typedb_sink = TypeDBSink(connection=generate_connection,
@@ -536,6 +528,14 @@ class TestTypeDB:
         for result in results:
             assert result.status in [ ResultStatus.SUCCESS, ResultStatus.ALREADY_IN_DB]
 
+    def validate_contains_cyclical(self,
+                                   results):
+        count = 0
+        for result in results:
+            if result.status in [ ResultStatus.CYCLICAL_DEPENDENCY ]:
+                count = count + 1
+        assert count > 0
+
     def validate_has_missing_dependencies(self,
                                    results):
         for result in results:
@@ -557,7 +557,7 @@ class TestTypeDB:
         json_text = self.get_json_from_file(network_tunnel_dns_path())
 
         result = typedb_sink.add(json_text)
-        self.validate_successful_result(result)
+        self.validate_contains_cyclical(result)
 
 
     def test_get_ids(self, setup_teardown, generate_connection):
@@ -571,6 +571,8 @@ class TestTypeDB:
         my_id_list = typedb_sink.get_stix_ids()
         assert (set(my_id_list) == {'identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65',
                                    'identity--f431f809-377b-45e0-aa1c-6a4751cae5ff'})
+
+
 
     @pytest.mark.parametrize("path", standard_data_file_paths_with_no_dependencies())
     def test_get_all_ids_loaded(self, setup_teardown, path, generate_connection):
