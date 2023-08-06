@@ -54,16 +54,19 @@ jobs:
     - name: Set OS Name - windows
       if: matrix.os == 'windows-latest'
       run: |
-        IF "%MATRIX_OS%"=="ubuntu-latest" (
-            echo OS_NAME=linux >> %GITHUB_ENV%
-        ) ELSE IF "%MATRIX_OS%"=="windows-latest" (
-            echo OS_NAME=win >> %GITHUB_ENV%
-        ) ELSE IF "%MATRIX_OS%"=="macos-latest" (
-            echo OS_NAME=mac >> %GITHUB_ENV%
-        ) ELSE (
-            echo Unknown OS
-            exit /b 1
-        )
+        if ($env:MATRIX_OS -eq "ubuntu-latest") {
+            $env:OS_NAME = "linux"
+        }
+        elseif ($env:MATRIX_OS -eq "windows-latest") {
+            $env:OS_NAME = "win"
+        }
+        elseif ($env:MATRIX_OS -eq "macos-latest") {
+            $env:OS_NAME = "mac"
+        }
+        else {
+            Write-Host "Unknown OS"
+            exit 1
+        }
 
     - name: Set Python version in env
       run: echo "PYTHON_VERSION=py${{ matrix.python-version }}" >> $GITHUB_ENV
