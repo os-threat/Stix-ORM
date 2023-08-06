@@ -70,7 +70,7 @@ jobs:
       run: pip install twine
 
     - name: Publish to PyPI
-      run: |
-        echo "TWINE_USERNAME=__token__" >> $GITHUB_ENV
-        echo "TWINE_PASSWORD=${{ secrets.PYPI_TOKEN }}" >> $GITHUB_ENV
-        twine upload dist/*
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+      run: twine upload dist/*
