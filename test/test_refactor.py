@@ -71,8 +71,6 @@ def standard_data_files_with_dependencies() -> List[str]:
         "sighting.json",
         "sighting_no_observed.json",
         "sighting_with_observed.json",
-        "network_tunnel_basic.json",
-        "network_tunnel_DNS.json",
         "opinion.json",
         "observed.json",
         "locations.json",
@@ -84,6 +82,12 @@ def standard_data_files_with_dependencies() -> List[str]:
 
     return standard_data_file_list
 
+
+def standard_data_files_with_cyclical() -> List[str]:
+    return [
+        "network_tunnel_basic.json",
+        "network_tunnel_DNS.json"
+    ]
 
 def excluded_files() -> List[str]:
     return [
@@ -119,7 +123,7 @@ def standard_data_file_paths_with_dependencies() -> List[str]:
 
     for root, dirs, files in os.walk(data_standard_path):
         for file in files:
-            if file.endswith(".json") and file not in excluded_files() and file in standard_data_files_with_dependencies() :
+            if file.endswith(".json") and file not in excluded_files() and file not in standard_data_files_with_cyclical() and file in standard_data_files_with_dependencies() :
                 standard_data_file_list.append(os.path.join(root, file))
             else:
                 logger.debug("Excluding from test: " + file)
@@ -135,13 +139,29 @@ def standard_data_file_paths_with_no_dependencies() -> List[str]:
 
     for root, dirs, files in os.walk(data_standard_path):
         for file in files:
-            if file.endswith(".json") and file not in excluded_files() and file not in standard_data_files_with_dependencies() :
+            if file.endswith(".json") and file not in excluded_files() and file not in standard_data_files_with_cyclical() and file not in standard_data_files_with_dependencies() :
                 standard_data_file_list.append(os.path.join(root, file))
             else:
                 logger.debug("Excluding from test: " + file)
 
     return standard_data_file_list
 
+
+def standard_data_file_paths_with_cyclical() -> List[str]:
+
+    top_dir_path = pathlib.Path(__file__).parents[0]
+    data_standard_path = top_dir_path.joinpath("data/standard/")
+
+    standard_data_file_list = []
+
+    for root, dirs, files in os.walk(data_standard_path):
+        for file in files:
+            if file.endswith(".json") and file in standard_data_files_with_cyclical():
+                standard_data_file_list.append(os.path.join(root, file))
+            else:
+                logger.debug("Excluding from test: " + file)
+
+    return standard_data_file_list
 
 def artifact_basic_path() -> str:
     data_standard_path = "data/standard/"
@@ -617,5 +637,16 @@ class TestTypeDB:
 
         result = typedb_sink.add(json_text)
         self.validate_has_missing_dependencies(result)
+
+    @pytest.mark.parametrize("path", standard_data_file_paths_with_cyclical())
+    def test_all_ids_loaded_cyclicals(self, setup_teardown, path, generate_connection):
+        variables_id_list()
+        typedb_sink = TypeDBSink(connection=generate_connection,
+                                 clear=True,
+                                 import_type=import_type)
+        json_text = self.get_json_from_file(path)
+
+        result = typedb_sink.add(json_text)
+        self.validate_contains_cyclical(result)
 
 
