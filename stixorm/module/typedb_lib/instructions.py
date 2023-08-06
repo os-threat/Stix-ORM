@@ -142,6 +142,14 @@ class Instructions:
                 instruction.status = Status.FAILED_MISSING_DEPENDENCY
                 instruction.missing = list(missing_dependencies)
 
+    def register_cyclical_dependencies(self):
+        instruction: AddInstruction
+        for instruction in self.instructions.values():
+            if instruction.status == Status.ERROR:
+                continue
+            cyclical_ids = [item for tup in self.cyclical_ids() for item in tup]
+            if instruction.id in set(cyclical_ids):
+                instruction.status = Status.FAILED_CYCLICAL
 
     def create_insert_queries(self,
                               build_insert_query):
