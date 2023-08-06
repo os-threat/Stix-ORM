@@ -39,21 +39,24 @@ jobs:
 
     - name: Set OS Name
       run: |
-        if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+        if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
           echo "OS_NAME=linux" >> $GITHUB_ENV
-        elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+        elif [ "${{ matrix.os }}" == "windows-latest" ]; then
           echo "OS_NAME=win" >> $GITHUB_ENV
-        elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+        elif [ "${{ matrix.os }}" == "macos-latest" ]; then
           echo "OS_NAME=mac" >> $GITHUB_ENV
         else
           echo "Unknown OS" >&2
           exit 1
         fi
 
+    - name: Set Python version in env
+      run: echo "PYTHON_VERSION=py${{ matrix.python-version }}" >> $GITHUB_ENV
+
     - name: Upload package artifact
       uses: actions/upload-artifact@v2
       with:
-        name: stixorm-${{ env.RELEASE_VERSION }}-py${{ matrix.python-version }}-${{ env.OS_NAME }}
+        name: stixorm-${{ env.RELEASE_VERSION }}-${{ env.PYTHON_VERSION }}-${{ env.OS_NAME }}
         path: dist/*.whl  # Upload the built package (replace with appropriate file format if not using wheels
 
 
