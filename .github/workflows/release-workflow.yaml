@@ -65,12 +65,8 @@ jobs:
         name: stixorm-${{ env.RELEASE_VERSION }}-${{ env.PYTHON_VERSION }}-${{ env.OS_NAME }}
         path: dist/*.whl  # Upload the built package (replace with appropriate file format if not using wheels
 
-
-    - name: Install Twine
-      run: pip install twine
-
     - name: Publish to PyPI
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-      run: twine upload dist/*
+      run: python -m poetry publish -u __token__ -p $POETRY_PYPI_TOKEN --no-interaction
