@@ -37,7 +37,22 @@ jobs:
     - name: Build package
       run: poetry build
 
-    - name: Set OS Name
+    - name: Set OS Name - linux / mac
+      if: matrix.os != 'windows-latest'
+      run: |
+        if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+          echo "OS_NAME=linux" >> $GITHUB_ENV
+        elif [ "${{ matrix.os }}" == "windows-latest" ]; then
+          echo "OS_NAME=win" >> $GITHUB_ENV
+        elif [ "${{ matrix.os }}" == "macos-latest" ]; then
+          echo "OS_NAME=mac" >> $GITHUB_ENV
+        else
+          echo "Unknown OS" >&2
+          exit 1
+        fi
+
+    - name: Set OS Name - windows
+      if: matrix.os == 'windows-latest'
       run: |
         if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
           echo "OS_NAME=linux" >> $GITHUB_ENV
