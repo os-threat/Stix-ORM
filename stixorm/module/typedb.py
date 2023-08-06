@@ -424,17 +424,20 @@ class TypeDBSink(DataSink):
                                      instructions: Instructions):
         missing_ids_from_tree = instructions.missing_dependency_ids()
 
-        query_result = build_match_id_query(missing_ids_from_tree)
+        result = []
+        for missing_ids in missing_ids_from_tree[:500]:
+            query_result = build_match_id_query(missing_ids)
 
-        data_result = match_query(uri=self.uri,
-                                  port=self.port,
-                                  database=self.database,
-                                  query=query_result,
-                                  data_query=query_id,
-                                  import_type=None)
+            data_result = match_query(uri=self.uri,
+                                      port=self.port,
+                                      database=self.database,
+                                      query=query_result,
+                                      data_query=query_id,
+                                      import_type=None)
+            result = result + data_result
 
 
-        missing_ids_found_in_db = data_result
+        missing_ids_found_in_db = result
         # ids with no record in db and in dependency tree
         ids_missing = list(set(missing_ids_from_tree) - set(missing_ids_found_in_db))
         instructions.register_missing_dependencies(ids_missing)
