@@ -154,6 +154,14 @@ class TestMitre:
         for result in results:
             assert result.status in [ResultStatus.VALID_FOR_DB_COMMIT, ResultStatus.MISSING_DEPENDENCY]
 
+    def validate_contains_cyclical(self,
+                                   results):
+        count = 0
+        for result in results:
+            if result.status in [ ResultStatus.CYCLICAL_DEPENDENCY ]:
+                count = count + 1
+        assert count > 0
+
     def test_load_enterprise_attack_13_1_first_object(self, setup_teardown, typedb):
         top_dir_path = pathlib.Path(__file__).parents[0]
         file_path = top_dir_path.joinpath("data").joinpath("mitre").joinpath("enterprise-attack-13.1.json")
@@ -172,6 +180,7 @@ class TestMitre:
         result = typedb.add([data["objects"][1831]])
         self.validate_has_missing_dependencies(result)
 
+    # TODO: Add this back in
     @pytest.mark.skip(reason="This will be added later")
     @pytest.mark.parametrize("url", attack_data())
     def test_load_attack_stix_data(self, setup_teardown, typedb, url):
@@ -181,9 +190,11 @@ class TestMitre:
         result = typedb.add([data])
         #validate_is_successful(result)
 
+    # TODO: Fix cyclical
     def test_ics_attack_database_initialization(self, setup_teardown, typedb, ics_attack_data):
 
-        with pytest.raises(Exception):
-            result = typedb.add(ics_attack_data)
+
+        result = typedb.add(ics_attack_data)
+        self.validate_contains_cyclical(result)
 
 
