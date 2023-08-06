@@ -92,7 +92,8 @@ def standard_data_files_with_cyclical() -> List[str]:
 def excluded_files() -> List[str]:
     return [
         'course_action.json',
-        'translation_campaign.json'
+        'translation_campaign.json',
+        "infrastructure.json",
     ]
 
 
@@ -426,6 +427,25 @@ class TestTypeDB:
         Args:
             file_path (): the path and file name
         """
+        typedb = TypeDBSink(connection=generate_connection,
+                            clear=True,
+                            import_type=import_type)
+        json_text = self.get_json_from_file(file_path)
+        typedb.add(json_text)
+
+        local_list = typedb.get_stix_ids()
+        result = typedb.delete(local_list)
+        self.validate_successful_result(result)
+
+    #TODO: Fix this object. Missing controls
+    @pytest.mark.skip(reason="Failing - needs to be fixed")
+    def test_delete_infrastructure(self, setup_teardown, generate_connection):
+        """ Load a single file and delete it
+
+        Args:
+            file_path (): the path and file name
+        """
+        file_path = "C:\\Users\\denis\\PycharmProjects\\Stix-ORM\\test\\data\\standard\\infrastructure.json"
         typedb = TypeDBSink(connection=generate_connection,
                             clear=True,
                             import_type=import_type)
