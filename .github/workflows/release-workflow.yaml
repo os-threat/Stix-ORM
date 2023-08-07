@@ -106,6 +106,10 @@ jobs:
       - name: Install Dependencies
         run: poetry install --no-root
 
+      - name: Update version in pyproject.toml
+        run: |
+          poetry version $(git describe --tags --abbrev=0 | sed 's/^v//')
+
       - name: Build Package Distributions
         run: poetry build
 
