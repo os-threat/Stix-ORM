@@ -68,13 +68,37 @@ jobs:
         name: stixorm-${{ env.RELEASE_VERSION }}-${{ env.PYTHON_VERSION }}-${{ env.OS_NAME }}
         path: ./dist  # Upload the built package (replace with appropriate file format if not using wheels
 
-    - name: Build package
-      run: |
-        poetry build
+  pypi-publish:
+    needs: build-and-upload
+    environment: 'publish'
 
-    - name: Publish package
-      run: |
-        poetry publish --platform ${{ matrix.os }} --python ${{ matrix.python-version }} --username __token__ --password $POETRY_PYPI_TOKEN
-      env:
-          POETRY_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+    name: upload release to PyPI
+    runs-on: ubuntu-latest
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
+    steps:
 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python -
+          python -m poetry config virtualenvs.create false
+
+      - name: Install Dependencies
+        run: python -m poetry install --no-root
+
+      - name: Build Package Distributions
+        run: python -m poetry build
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages_dir: artifact/
