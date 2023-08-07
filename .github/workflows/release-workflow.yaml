@@ -65,22 +65,16 @@ jobs:
     - name: Upload package artifact
       uses: actions/upload-artifact@v3
       with:
-       # name: stixorm-${{ env.RELEASE_VERSION }}-${{ env.PYTHON_VERSION }}-${{ env.OS_NAME }}
+        name: stixorm-${{ env.RELEASE_VERSION }}-${{ env.PYTHON_VERSION }}-${{ env.OS_NAME }}
         path: ./dist  # Upload the built package (replace with appropriate file format if not using wheels
 
-  pypi-publish:
-    needs: build-and-upload
-    environment: 'publish'
+    - name: Build package
+      run: |
+        poetry build --platform ${{ matrix.os }} --python ${{ matrix.python-version }} 
 
-    name: upload release to PyPI
-    runs-on: ubuntu-latest
-    permissions:
-      # IMPORTANT: this permission is mandatory for trusted publishing
-      id-token: write
-    steps:
-      - uses: actions/download-artifact@v3
+    - name: Publish package
+      run: |
+        poetry publish --platform ${{ matrix.os }} --python ${{ matrix.python-version }} --username __token__ --password $POETRY_PYPI_TOKEN
+      env:
+          POETRY_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
 
-      - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          packages_dir: artifact/
