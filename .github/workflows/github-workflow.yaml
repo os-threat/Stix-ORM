@@ -50,11 +50,11 @@ jobs:
 
       - name: Run Bandit Security Check
         run: |
-          poetry run bandit -r Stix-ORM -f json -o bandit_report.json || echo "##[error]Bandit security check failed."
+          poetry run bandit -r stixorm -f json -o bandit_report.json || echo "##[error]Bandit security check failed."
 
       - name: Run pytest with coverage
         run: |
-          poetry run pytest -n 5 --verbose --cov=Stix-ORM --cov-report=html --html=report.html --self-contained-html test/ --log-level=WARNING
+          poetry run pytest -n 5 --verbose --cov=stixorm --cov-report=html --html=report.html --self-contained-html test/ --log-level=WARNING
 
       - name: Upload pytest report
         if: always()
