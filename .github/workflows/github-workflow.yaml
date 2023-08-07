@@ -101,7 +101,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: my-package-artifact
+          name: stixorm-0.1.0-py3-none-any
           path: dist/
 
 
