@@ -46,13 +46,3 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 
-[tool.poetry.packages]
-"stixorm_linux_39" = { include = ["stixorm/**"], python = "3.9" }
-"stixorm_linux_310" = { include = ["stixorm/**"], python = "3.10" }
-"stixorm_linux_311" = { include = ["stixorm/**"], python = "3.11" }
-"stixorm_win_39" = { include = ["stixorm/**"], python = "3.9" }
-"stixorm_win_310" = { include = ["stixorm/**"], python = "3.10" }
-"stixorm_win_311" = { include = ["stixorm/**"], python = "3.11" }
-"stixorm_mac_39" = { include = ["stixorm/**"], python = "3.9" }
-"stixorm_mac_310" = { include = ["stixorm/**"], python = "3.10" }
-"stixorm_mac_311" = { include = ["stixorm/**"], python = "3.11" }
