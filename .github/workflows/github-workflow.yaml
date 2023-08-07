@@ -146,7 +146,7 @@ jobs:
         source venv/bin/activate
         pip install pytest
         cd ../
-        pip install dist/stixorm-*.whl
+        pip install stixorm-0.1.0-py3-none-any.whl
 
     - name: Run pytest for package
       run: |
