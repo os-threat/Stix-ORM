@@ -91,7 +91,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: artifacts
+          path: artifacts
 
       - name: Install and authenticate Twine
         run: |
