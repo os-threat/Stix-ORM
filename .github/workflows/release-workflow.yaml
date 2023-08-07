@@ -69,4 +69,4 @@ jobs:
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-      run: python -m poetry publish -u __token__ -p $POETRY_PYPI_TOKEN --no-interaction
+      run: python -m poetry publish -u __token__ -p $PYPI_TOKEN --no-interaction
