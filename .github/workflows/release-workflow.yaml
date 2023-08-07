@@ -70,7 +70,7 @@ jobs:
 
     - name: Build package
       run: |
-        poetry build --platform ${{ matrix.os }} --python ${{ matrix.python-version }} 
+        poetry build
 
     - name: Publish package
       run: |
