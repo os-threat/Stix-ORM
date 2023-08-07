@@ -73,4 +73,4 @@ jobs:
         POETRY_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
       run: |
         python -m poetry build
-        python -m poetry publish -u __token__ -p $PYPI_TOKEN --no-interaction
+        python -m poetry publish -u __token__ -p $POETRY_PYPI_TOKEN --no-interaction
