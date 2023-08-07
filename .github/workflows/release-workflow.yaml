@@ -23,7 +23,8 @@ jobs:
 
     - name: Install Poetry
       run: |
-        curl -sSL https://install.python-poetry.org | python -
+        python -m pip install --upgrade pip
+        pip install poetry
         python -m poetry config virtualenvs.create false
 
     - name: Install package dependencies
