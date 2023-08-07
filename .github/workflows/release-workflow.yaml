@@ -68,9 +68,19 @@ jobs:
         name: stixorm-${{ env.RELEASE_VERSION }}-${{ env.PYTHON_VERSION }}-${{ env.OS_NAME }}
         path: dist/*.whl  # Upload the built package (replace with appropriate file format if not using wheels
 
+    - name: Change Package Name
+      run: |
+        package_name="${{ matrix.os }}_${{ matrix.python-version }}"
+        mv pyproject.toml pyproject.toml.bak
+        cp "pyproject.toml.$package_name" pyproject.toml
+
     - name: Build and Publish with Poetry
       env:
         POETRY_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
       run: |
         python -m poetry build
         python -m poetry publish -u __token__ -p $POETRY_PYPI_TOKEN --no-interaction
+
+    - name: Restore Original pyproject.toml
+      run: |
+        mv pyproject.toml.bak pyproject.toml
