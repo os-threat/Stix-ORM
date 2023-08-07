@@ -65,7 +65,7 @@ jobs:
     - name: Upload package artifact
       uses: actions/upload-artifact@v3
       with:
-        name: stixorm-${{ env.RELEASE_VERSION }}-${{ env.PYTHON_VERSION }}-${{ env.OS_NAME }}
+       # name: stixorm-${{ env.RELEASE_VERSION }}-${{ env.PYTHON_VERSION }}-${{ env.OS_NAME }}
         path: ./dist  # Upload the built package (replace with appropriate file format if not using wheels
 
   pypi-publish:
