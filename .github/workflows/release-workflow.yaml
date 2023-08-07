@@ -78,9 +78,9 @@ jobs:
         name: stixorm-${{ env.RELEASE_VERSION }}-cp${{ env.PYTHON_VERSION }}cp${{ env.PYTHON_VERSION }}m-${{ env.OS_NAME }}
         path: dist/*.whl  # Upload the built package (replace with appropriate file format if not using wheels
 
-
+  # This produces a wheel for any version or platform
   pypi-publish:
-    needs: [ 'build-and-upload' ]
+    needs: build-and-upload
     environment: 'publish'
 
     name: upload release to PyPI
@@ -89,21 +89,27 @@ jobs:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
     steps:
-      - uses: actions/download-artifact@v3
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          path: artifacts
+          python-version: 3.10
 
-      - name: Install and authenticate Twine
+      - name: Install Poetry
         run: |
-          pip install twine
+          pip install poetry
+          poetry config virtualenvs.create false
 
+      - name: Install Dependencies
+        run: poetry install --no-root
 
-      - name: Publish distributions to PyPI
-        run: |
-          # Use twine to upload the distributions one by one
-          for file in artifacts/*; do
-            twine upload "$file"
-          done
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+      - name: Build Package Distributions
+        run: poetry build
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          distribution-dir: dist
