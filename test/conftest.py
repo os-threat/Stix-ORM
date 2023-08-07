@@ -8,10 +8,12 @@ from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink
 from stixorm.module.typedb_lib.queries import get_all_databases, delete_database
 
-logging.basicConfig(level=logging.WARNING, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
+
+@pytest.hookimpl(tryfirst=True)
 def pytest_configure(config):
     # Set up the logging format and level
+    logging.root.setLevel(logging.WARNING)
     logging.basicConfig(level=logging.WARNING, format="%(asctime)s - %(levelname)s - %(message)s")
 
 def data_base_prefix():
