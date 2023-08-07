@@ -61,7 +61,8 @@ jobs:
 
     - name: Set Python version in env
       run: |
-        echo "PYTHON_VERSION=${{ matrix.python-version }}" >> $GITHUB_ENV
+        converted_python_version="${{ matrix.python-version/./ }}"
+        echo "PYTHON_VERSION=$converted_python_version" >> $GITHUB_ENV
 
     - name: Upload package artifact
       uses: actions/upload-artifact@v3
@@ -69,13 +70,32 @@ jobs:
         name: stixorm-${{ env.RELEASE_VERSION }}-cp${{ env.PYTHON_VERSION }}cp${{ env.PYTHON_VERSION }}m-${{ env.OS_NAME }}
         path: dist/*.whl  # Upload the built package (replace with appropriate file format if not using wheels
 
-    - name: Install Twine
-      run: |
-        pip install twine
 
-    - name: Upload package distributions to PyPI
-      run: |
-        twine upload -r pypi dist/*.whl
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+  pypi-publish:
+    needs: [ 'build-and-upload' ]
+    environment: 'publish'
+
+    name: upload release to PyPI
+    runs-on: ubuntu-latest
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: artifacts
+
+      - name: Install and authenticate Twine
+        run: |
+          pip install twine
+
+
+      - name: Publish distributions to PyPI
+        run: |
+          # Use twine to upload the distributions one by one
+          for file in artifacts/*; do
+            twine upload "$file"
+          done
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
