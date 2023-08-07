@@ -63,10 +63,10 @@ jobs:
       run: echo "PYTHON_VERSION=py${{ matrix.python-version }}" >> $GITHUB_ENV
 
     - name: Upload package artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: stixorm-${{ env.RELEASE_VERSION }}-${{ env.PYTHON_VERSION }}-${{ env.OS_NAME }}
-        path: dist/*.whl  # Upload the built package (replace with appropriate file format if not using wheels
+        path: ./dist  # Upload the built package (replace with appropriate file format if not using wheels
 
   pypi-publish:
     needs: build-and-upload
