@@ -69,8 +69,6 @@ jobs:
         path: dist/*.whl  # Upload the built package (replace with appropriate file format if not using wheels
 
   pypi-publish:
-    needs: [ 'build' ]
-    environment: 'publish'
 
     name: upload release to PyPI
     runs-on: ubuntu-latest
