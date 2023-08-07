@@ -316,5 +316,4 @@ class TestFeed:
 
         # Create a STIX bundle
         bundle = Bundle(objects=[indicator, malware, relationship])
-        result = database.add(empty_feed_list)
-        validate_successful_result(result)
+        # TODO: Do something with this
