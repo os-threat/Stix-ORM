@@ -65,8 +65,9 @@ jobs:
         name: stixorm-${{ env.RELEASE_VERSION }}-${{ env.PYTHON_VERSION }}-${{ env.OS_NAME }}
         path: dist/*.whl  # Upload the built package (replace with appropriate file format if not using wheels
 
-    - name: Publish to PyPI
+    - name: Build and Publish with Poetry
       env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-      run: python -m poetry publish -u __token__ -p $PYPI_TOKEN --no-interaction
+        POETRY_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+      run: |
+        python -m poetry build
+        python -m poetry publish -u __token__ -p $PYPI_TOKEN --no-interaction
