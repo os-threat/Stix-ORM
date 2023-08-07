@@ -70,7 +70,7 @@ jobs:
 
   pypi-publish:
     needs: build-and-upload
-
+    environment: 'publish'
 
     name: upload release to PyPI
     runs-on: ubuntu-latest
