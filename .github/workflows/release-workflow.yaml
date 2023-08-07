@@ -60,9 +60,17 @@ jobs:
         $env:OS_NAME = "win_amd64"
 
     - name: Set Python version in env
+      if: matrix.os != 'windows-latest'
       run: |
         converted_python_version="${{ matrix.python-version }}"
         echo "PYTHON_VERSION=$converted_python_version" >> $GITHUB_ENV
+        
+    - name: Set Python version in env
+      if: matrix.os == 'windows-latest'
+      run: |
+        $converted_python_version = $env:matrix_python_version
+        Write-Host "PYTHON_VERSION=$converted_python_version" >> $env:GITHUB_ENV
+
 
     - name: Upload package artifact
       uses: actions/upload-artifact@v3
