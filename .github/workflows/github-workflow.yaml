@@ -140,11 +140,13 @@ jobs:
 
     - name: Create environment with package
       run: |
+        ls
         cd test_package
         python -m venv venv
         source venv/bin/activate
         pip install pytest
-        pip install dist/*.whl
+        cd ../
+        pip install dist/stixorm-*.whl
 
     - name: Run pytest for package
       run: |
