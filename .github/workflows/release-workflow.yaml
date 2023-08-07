@@ -61,7 +61,7 @@ jobs:
 
     - name: Set Python version in env
       run: |
-        converted_python_version="${{ matrix.python-version/./ }}"
+        converted_python_version="${{ matrix.python-version }}"
         echo "PYTHON_VERSION=$converted_python_version" >> $GITHUB_ENV
 
     - name: Upload package artifact
