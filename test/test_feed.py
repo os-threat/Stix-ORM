@@ -220,17 +220,6 @@ class TestFeed:
 
         typedb.clear_db()
 
-    def test_database_initialization(self, database:TypeDBSink):
-        '''
-        First initialize the database...
-        Args:
-            database:
-
-        Returns:
-
-        '''
-        pass
-
 
     def test_create_feed_1(self,
                            database:TypeDBSink,
@@ -261,7 +250,7 @@ class TestFeed:
 
         '''
         result = database.add(empty_feed_list)
-        print(result)
+        validate_successful_result(result)
 
 
     def test_create_feed_2(self, database:TypeDBSink, generate_connection):
@@ -327,3 +316,4 @@ class TestFeed:
 
         # Create a STIX bundle
         bundle = Bundle(objects=[indicator, malware, relationship])
+        # TODO: Do something with this

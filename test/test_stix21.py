@@ -10,7 +10,6 @@ import pytest
 from stixorm.module.typedb import TypeDBSource, TypeDBSink
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportTypeFactory
 
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 
 from stix2 import (v21, parse)
@@ -114,7 +113,7 @@ class StixComparator(object):
 
             return len(not_equals)==0,equals,not_equals
 
-@pytest.fixture(scope="class")
+@pytest.fixture
 def typedb_connection(generate_connection):
     import_type = ImportTypeFactory().get_default_import()
     typedb_sink = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type)
@@ -123,10 +122,12 @@ def typedb_connection(generate_connection):
     example = str(pathlib.Path(__file__).parents[0].joinpath("data/examples/"))
 
     yield typedb_sink, typedb_source, data_folder, example
-
     # Teardown code, if needed
 
 class TestDatabase:
+
+
+
     def test_markings(self, typedb_connection):
         typedb_sink, _, data_folder, _ = typedb_connection
 

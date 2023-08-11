@@ -6,9 +6,9 @@ ts2 = '$threat-actor isa threat-actor, has stix-id "threat-actor--8b6297fe-cae7-
 
 def get_local_relns(dep_insert):
     m = re.findall(r"(\$[a-z\-0-9]+)\s+(.+)?isa\s+", dep_insert,re.MULTILINE)
-    #print(f'local 1 -> {m}')
+    #logger.info(f'local 1 -> {m}')
     if m:
-        #print(f'local -> {m}')
+        #logger.info(f'local -> {m}')
         return [g[0] for g in m]
     else:
         return []
@@ -20,7 +20,7 @@ def get_object_variable(core_ql):
 
 # if this file is run directly, then start here
 if __name__ == '__main__':
-    print("ts1=================")
+    logger.info("ts1=================")
     get_local_relns(ts2)
-    print("ts2====================")
+    logger.info("ts2====================")
     get_object_variable(ts1)

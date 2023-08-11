@@ -85,6 +85,8 @@ class StixComparator(object):
 
             return len(not_equals)==0,equals,not_equals
 
+#TODO: Fix this
+@pytest.mark.skip(reason="Find these files referenced")
 def test_compare_objects():
     folder_path = pathlib.Path(__file__).parents[0]
 

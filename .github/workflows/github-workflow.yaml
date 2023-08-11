@@ -50,15 +50,15 @@ jobs:
 
       - name: Run Bandit Security Check
         run: |
-          poetry run bandit -r Stix-ORM -f json -o bandit_report.json || echo "##[error]Bandit security check failed."
+          poetry run bandit -r stixorm -f json -o bandit_report.json || echo "##[error]Bandit security check failed."
 
       - name: Run pytest with coverage
         run: |
-          poetry run pytest -n 5 --verbose --cov=Stix-ORM --cov-report=html --html=report.html --self-contained-html test/ --log-level=WARNING
+          poetry run pytest -n 5 --verbose --cov=stixorm --cov-report=html --html=report.html --self-contained-html test/ --log-level=WARNING
 
       - name: Upload pytest report
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-report-${{ matrix.python-version }}
           path: |
@@ -66,20 +66,47 @@ jobs:
             Stix-ORM/htmlcov
 
       - name: Upload Bandit Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: bandit-report-${{ matrix.python-version }}
           path: bandit_report.json
 
       - name: Upload Flake8 report
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: flake-8-report--${{ matrix.python-version }}
           path: flake8_report
 
-  package-test:
+  build-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install Poetry
+        run: |
+          pip install poetry
+
+      - name: Build Package
+        run: |
+          poetry install --no-dev
+          poetry build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: stixorm-0.1.0-py3-none-any
+          path: dist/
+
+
+  test-package:
+    needs: build-package
     strategy:
       fail-fast: false
       matrix:
@@ -106,24 +133,23 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Build package
-      run: |
-        python -m pip install --upgrade pip
-        pip install poetry
-        poetry install
-        poetry build
-        poetry env remove --all
+    - name: Download Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: stixorm-0.1.0-py3-none-any
 
     - name: Create environment with package
       run: |
+        ls
         cd test_package
         python -m venv venv
         source venv/bin/activate
         pip install pytest
-        pip install ../dist/stixorm-0.1.0-py3-none-any.whl
+        cd ../
+        pip install stixorm-0.1.0-py3-none-any.whl
 
     - name: Run pytest for package
       run: |
         cd test_package
         source venv/bin/activate
-        pytest --verbose  test/ --log-level=WARNING
+        pytest --verbose  test/ --log-level=WARNING --log-cli-level=WARNING

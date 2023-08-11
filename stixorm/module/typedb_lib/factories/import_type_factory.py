@@ -46,6 +46,9 @@ class ImportTypeFactory:
                       attack_versions=[],
                       attack_domains=[],
                       cacao=False):
+        if os_threat and (not stix_21 or not attack):
+            raise ValueError("os_threat requires stix_21 and attack")
+
         return ImportType(
             STIX21=stix_21,
             CVE=cve,

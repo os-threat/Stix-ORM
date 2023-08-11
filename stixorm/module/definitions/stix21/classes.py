@@ -144,7 +144,7 @@ class Incident(_DomainObject):
         ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
 
-
+valid_obj =  get_mapping_factory_instance().get_all_types()
 class Report(_DomainObject):
     """For more detailed information on this object's properties, see
     `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_n8bjzg1ysgdq>`__.
@@ -162,7 +162,7 @@ class Report(_DomainObject):
         ('description', StringProperty()),
         ('report_types', ListProperty(OpenVocabProperty(REPORT_TYPE))),
         ('published', TimestampProperty(required=True)),
-        ('object_refs', ListProperty(ThreatReference(valid_types=["SCO", "SDO", "SRO"], spec_version='2.1'), required=True)),
+        ('object_refs', ListProperty(ThreatReference(valid_types=valid_obj, spec_version='2.1'), required=True)),
         ('revoked', BooleanProperty(default=lambda: False)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),

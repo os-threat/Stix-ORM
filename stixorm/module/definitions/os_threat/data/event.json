@@ -1,0 +1,18 @@
+{
+  "status": "status",
+  "changed_objects": "",
+  "description": "description",
+  "detection_methods": "detection-emthods,",
+  "detection_rule": "detection-rule",
+  "detection_system": "detection-system",
+  "end_time": "end-time",
+  "end_time_fidelity": "end-time-fidelity",
+  "event_seq": "event-seq",
+  "event_types": "event-types",
+  "goal": "goal",
+  "name": "name",
+  "sighting_refs": "",
+  "start_time": "goal",
+  "start_time_fidelity": "start-time-fidelity",
+  "subevents": ""
+}

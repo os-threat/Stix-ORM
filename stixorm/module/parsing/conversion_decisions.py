@@ -1,7 +1,7 @@
 from typing import Dict, List
 import copy
 
-from stixorm.module.authorise import authorised_mappings, import_type_factory
+from stixorm.module.authorise import  import_type_factory
 
 import logging
 
@@ -11,9 +11,8 @@ from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 from stixorm.module.typedb_lib.model.definitions import DefinitionName
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 default_import_type = import_type_factory.get_default_import()
-logger.setLevel(logging.DEBUG)
+
 
 attack_model = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
 stix_model = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
@@ -59,7 +58,7 @@ def sdo_type_to_tql(sdo_type: str,
         elif os_threat_model.contains_data(sdo_type):
             # dispatch specific stix properties plus later on, generic sdo properties
             protocol = "os-threat"
-            obj_tql = copy.deepcopy(stix_model.get_data(sdo_type))
+            obj_tql = copy.deepcopy(os_threat_model.get_data(sdo_type))
         else:
             logger.error(f'obj_type type {sdo_type} not supported')
             return {}, "", {}, ""

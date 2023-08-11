@@ -31,7 +31,6 @@ from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_in
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 
 
 @dataclass
@@ -425,17 +424,20 @@ class TypeDBSink(DataSink):
                                      instructions: Instructions):
         missing_ids_from_tree = instructions.missing_dependency_ids()
 
-        query_result = build_match_id_query(missing_ids_from_tree)
+        result = []
+        for missing_ids in missing_ids_from_tree[:500]:
+            query_result = build_match_id_query(missing_ids)
 
-        #data_result = match_query(uri=self.uri,
-       #                           port=self.port,
-        #                          database=self.database,
-        #                          query=query_result,
-        #                          data_query=query_id,
-        #                          import_type=None)
+            data_result = match_query(uri=self.uri,
+                                      port=self.port,
+                                      database=self.database,
+                                      query=query_result,
+                                      data_query=query_id,
+                                      import_type=None)
+            result = result + data_result
 
 
-        missing_ids_found_in_db = {}
+        missing_ids_found_in_db = result
         # ids with no record in db and in dependency tree
         ids_missing = list(set(missing_ids_from_tree) - set(missing_ids_found_in_db))
         instructions.register_missing_dependencies(ids_missing)
@@ -482,7 +484,7 @@ class TypeDBSink(DataSink):
 
         generate_instructions_result = self.__generate_instructions(obj_result)
         logger.info("\n##########################################################################################################################################################\n")
-        #print(f"generate instructions is {generate_instructions_result}")
+        #logger.info(f"generate instructions is {generate_instructions_result}")
         instruction_dependency_graph_result =  self.__create_instruction_dependency_graph(generate_instructions_result)
         check_missing_dependency_result = self.__check_missing_dependencies(instruction_dependency_graph_result)
 
@@ -490,7 +492,8 @@ class TypeDBSink(DataSink):
         if instructions.exist_missing_dependencies():
             return instructions.convert_to_result()
         if instructions.exist_cyclical_ids():
-            instructions.compress_cyclical_ids()
+            instructions.register_cyclical_dependencies()
+            return instructions.convert_to_result()
 
         reorder_result = self.__reorder_instructions(instructions)
 

@@ -3,7 +3,6 @@ import traceback
 
 import logging
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
 def handle_result(result,
                   name: str = '',
@@ -14,8 +13,7 @@ def handle_result(result,
                 logger.info("Failure in result for: "+ name)
                 logging.exception("\n".join(traceback.format_exception(result.failure())))
         except Exception as e:
-            logger.error(e)
-        if strict_failure and result_failure:
+            logger.exception(e)
             raise Exception(str(result.failure()))
 
 def handle_missing_values(result_failure: bool,
@@ -26,6 +24,5 @@ def handle_missing_values(result_failure: bool,
         if result_failure:
             logger.error(name)
     except Exception as e:
-        logger.error(e)
-    if strict_failure and result_failure:
+        logger.exception(e)
         raise Exception(name)

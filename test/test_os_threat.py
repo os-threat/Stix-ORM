@@ -9,7 +9,8 @@ from stixorm.module.typedb import TypeDBSink
 from stixorm.module.typedb_lib.instructions import ResultStatus
 
 
-import_type = import_type_factory.create_import(stix_21=False,
+import_type = import_type_factory.create_import(stix_21=True,
+                                                attack=True,
                                                 os_threat=True)
 
 def variable_all_standard_data_filepaths() -> List[str]:
@@ -27,7 +28,7 @@ def variable_all_standard_data_filepaths() -> List[str]:
 def typedb_sink(generate_connection):
 
     schema_path = "path/to/schema.json"
-    typedb = TypeDBSink(connection=generate_connection, clear=False, import_type=import_type)
+    typedb = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type)
     yield typedb
     typedb.clear_db()
 
@@ -36,7 +37,8 @@ class TestOSThreat:
         file_paths = variable_all_standard_data_filepaths()
         for file_path in file_paths:
             json_text = self.get_json_from_file(file_path)
-            typedb_sink.add(json_text)
+            result = typedb_sink.add(json_text)
+            self.validate_success(result)
 
         stix_id_list = typedb_sink.get_stix_ids()
         typedb_sink.delete(stix_id_list)
@@ -52,6 +54,6 @@ class TestOSThreat:
 
         return json_text
 
-    def validate_has_missing_dependencies(self, results):
+    def validate_success(self, results):
         for result in results:
-            assert result.status in [ResultStatus.VALID_FOR_DB_COMMIT, ResultStatus.MISSING_DEPENDENCY]
+            assert result.status in [ResultStatus.SUCCESS]
