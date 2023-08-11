@@ -17,7 +17,7 @@ class TypeQLObject(BaseModel):
     dep_list: List[str]
 
 
-class ResultStatus(Enum):
+class ResultStatus(str, Enum):
     SUCCESS = "success"
     ERROR = "error"
     ALREADY_IN_DB = "already_in_db"
