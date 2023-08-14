@@ -13,7 +13,7 @@ from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_in
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
-
+logger.setLevel(logging.INFO)
 
 ###################################################################################################
 #

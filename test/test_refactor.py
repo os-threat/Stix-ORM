@@ -438,7 +438,7 @@ class TestTypeDB:
         self.validate_successful_result(result)
 
     #TODO: Fix this object. Missing controls
-    @pytest.mark.skip(reason="Failing - needs to be fixed")
+    #@pytest.mark.skip(reason="Failing - needs to be fixed")
     def test_delete_infrastructure(self, setup_teardown, generate_connection):
         """ Load a single file and delete it
 

@@ -15,6 +15,7 @@ from stixorm.module.generate_docs import configure_overview_table_docs, object_t
 from stixorm.module.initialise import sort_layers, load_typeql_data
 from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
 from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
+from stixorm.module.typedb_lib.logging import log_delete_instruction
 from stixorm.module.orm.import_utilities import val_tql
 #from stixorm.module.definitions.attack import attack_models
 #from stixorm.module.definitions.property_definitions import get_definitions
@@ -361,7 +362,7 @@ def test_get_del_dir_statements(dirpath):
 
 
 def test_get_delete(fullname):
-    #load_file(fullname)
+    load_file(fullname)
     id_list = get_stix_ids()
     print("\n\n=============\n-------------\n$$$$$$$$$$$$$$$$$$$$$\n")
     for obj_id in id_list:
@@ -521,6 +522,9 @@ def test_delete(path):
 
     local_list = get_stix_ids()
     typedb.delete(local_list)
+    print(f"\n\nlen input ids -> {len(set(local_list))} ")
+    print(f"len db ids before delete -> {len(local_list)}")
+    print(f"db ids after delete -> {len(get_stix_ids())}")
 
 
 def check_dir_ids(dirpath):
@@ -1496,6 +1500,49 @@ def sro_icon(stix_object):
 def meta_icon(stix_object):
     return "marking-definition", stix_object.get("definition_type", "")
 
+##############################################################################
+#
+# test delete
+#
+##############################################################################
+def test_del_statements(filepath):
+    with open(filepath, mode="r", encoding="utf-8") as f:
+        json_text = json.load(f)
+        if isinstance(json_text, list):
+            for stix_dict in json_text:
+                stix_object = parse(stix_dict, False, import_type)
+                dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_object, import_type)
+                del_match, del_tql = delete_stix_object(stix_object, dep_match, dep_insert, indep_ql, core_ql, import_type)
+                log_delete_instruction(dep_match, dep_insert, indep_ql, dep_obj, del_match, del_tql)
+################################################################################
+#
+# Methods for  Dataflow Blocks
+#
+##################################################################################
+
+def get_object_cluster(cluster_head_id, connection):
+    cluster_type = cluster_head_id.split('--')[0]
+    stix_list = []
+    if cluster_type == "report":
+        typedb_source = TypeDBSource(connection, import_type)
+        report_obj = typedb_source.get(cluster_head_id)
+        if report_obj:
+            stix_list.append(report_obj)
+            if hasattr(report_obj, "created_by"):
+                identity = typedb_source.get(report_obj.created_by)
+                stix_list.append(identity)
+            if hasattr(report_obj, "object_refs"):
+                report_list = report_obj.object_refs
+                for report_component in report_list:
+                    stix_list.append(report_component)
+
+            return stix_list
+
+
+
+
+
+
 
 # if this file is run directly, then start here
 if __name__ == '__main__':
@@ -1530,6 +1577,7 @@ if __name__ == '__main__':
     f28 = 'threat_actor.json'
     f29 = "observed.json"
     f30 = "x509_cert_v3_ext.json"
+    f31 = "infrastructure.json"
     file_list = [f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17,f18,f19,f20,f21,f22,f23,f24,f25]
     group_list = [f2, f3, f21, f25]
     note_list = [f2, f8, f26]
@@ -1580,6 +1628,7 @@ if __name__ == '__main__':
     mitre = "test/data/mitre/check/"
     mitre_test = "data/mitre/latest/"
     osthreat = "data/os-threat/"
+    standard = "test/data/standard/"
     reports = "data/threat_reports/"
     poison = "poisonivy.json"
     threattest = "history/"
@@ -1603,10 +1652,11 @@ if __name__ == '__main__':
     #query_id(stid1)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
-    check_dir(mitre)
-    #test_delete(data_path+file1)
+    #check_dir(mitre)
+    #test_delete(standard+f31)
+    test_del_statements(standard+f31)
     #test_get(stid1)
-    #test_get_delete(path2 + "attack_objects.json")
+    #test_get_delete(standard + f31)
     #test_initialise()
     #test_delete_dir(path1)
     #clean_db()

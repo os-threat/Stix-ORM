@@ -11,6 +11,7 @@ from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 from stixorm.module.typedb_lib.model.definitions import DefinitionName
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 default_import_type = import_type_factory.get_default_import()
 
 
