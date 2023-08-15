@@ -419,13 +419,17 @@ class TypeDBSink(DataSink):
         result = instructions.create_insert_queries(build_insert_query)
         return result
 
+    def batch_generator(self, data):
+        batch_size = 500
+        for i in range(0, len(data), batch_size):
+            yield data[i:i + batch_size]
 
     def __check_missing_dependencies(self,
                                      instructions: Instructions):
         missing_ids_from_tree = instructions.missing_dependency_ids()
 
         result = []
-        for missing_ids in missing_ids_from_tree[:500]:
+        for missing_ids in self.batch_generator(missing_ids_from_tree):
             query_result = build_match_id_query(missing_ids)
 
             data_result = match_query(uri=self.uri,
