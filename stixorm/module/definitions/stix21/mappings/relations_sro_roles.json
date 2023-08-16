@@ -79,7 +79,7 @@
   },
   {
     "stix": "controls",
-    "typeql": "control",
+    "typeql": "controls",
     "source": "controlling",
     "target": "controlled"
   },

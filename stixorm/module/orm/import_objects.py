@@ -285,7 +285,7 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
         dep_match += source_match + target_match
         # 3.)  then setup the typeql statement to insert the specific sro relation, from the dict, with the matches
         for record in auth["reln"]["standard_relations"]:
-            if record['stix'] == sro_tql_name:
+            if record['typeql'] == sro_tql_name:
                 dep_insert += '\n' + sro_var
                 dep_insert += ' (' + record['source'] + ':' + source_var
                 dep_insert += ', ' + record['target'] + ':' + target_var + ')'

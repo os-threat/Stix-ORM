@@ -144,8 +144,11 @@ def sro_type_to_tql(sro_type: str,
     obj_tql = {}
     protocol = ""
     sro_tql_name = sro_type
-    if sro_sub_type != "":
-        sro_tql_name = sro_sub_type
+    if sro_type == "relationship":
+        for config in auth["reln"]["relations_sro_roles"]:
+            if config["stix"] == sro_sub_type:
+                sro_tql_name = config["typeql"]
+                break
     is_list = copy.deepcopy(auth["is_lists"]["sro"]["sro"])
     if sro_type == "sighting":
         is_list.extend(auth["is_lists"]["sro"]["sighting"])

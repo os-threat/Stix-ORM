@@ -1505,11 +1505,14 @@ def meta_icon(stix_object):
 # test delete
 #
 ##############################################################################
-def test_del_statements(filepath):
+def test_del_statements():
+    filepath = "test/data/standard/"+"infrastructure.json"
     with open(filepath, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         if isinstance(json_text, list):
             for stix_dict in json_text:
+                # if stix_dict.get("type", False) == "relationship":
+                #     if stix_dict.get("relationship_type", False) == "controls":
                 stix_object = parse(stix_dict, False, import_type)
                 dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_object, import_type)
                 del_match, del_tql = delete_stix_object(stix_object, dep_match, dep_insert, indep_ql, core_ql, import_type)
@@ -1526,15 +1529,18 @@ def get_object_cluster(cluster_head_id, connection):
     if cluster_type == "report":
         typedb_source = TypeDBSource(connection, import_type)
         report_obj = typedb_source.get(cluster_head_id)
-        if report_obj:
+        if report_obj.type == cluster_type:
             stix_list.append(report_obj)
-            if hasattr(report_obj, "created_by"):
-                identity = typedb_source.get(report_obj.created_by)
+            if hasattr(report_obj, "created_by_ref"):
+                identity = typedb_source.get(report_obj.created_by_ref)
                 stix_list.append(identity)
             if hasattr(report_obj, "object_refs"):
                 report_list = report_obj.object_refs
-                for report_component in report_list:
-                    stix_list.append(report_component)
+                for report_component_id in report_list:
+                    print(f"find obj {report_component_id}")
+                    tmp_obj = typedb_source.get(report_component_id)
+                    stix_list.append(tmp_obj)
+                    print("found and added")
 
             return stix_list
 
@@ -1645,7 +1651,7 @@ if __name__ == '__main__':
     #load_file(mitre_data)
     #load_file(mitre + "attack_objects.json")
     #check_object(mitre + "attack_objects.json")
-    #load_file(reports + poison)
+    #load_file("test/data/standard/"+"infrastructure.json")
     print("=====")
     print("=====")
     print("=====")
@@ -1653,8 +1659,8 @@ if __name__ == '__main__':
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
     #check_dir(mitre)
-    #test_delete(standard+f31)
-    test_del_statements(standard+f31)
+    test_delete(standard+f31)
+    #test_del_statements()
     #test_get(stid1)
     #test_get_delete(standard + f31)
     #test_initialise()
