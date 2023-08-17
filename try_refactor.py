@@ -7,12 +7,12 @@ from dateutil.parser import *
 from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
 from typedb.client import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
-from stixorm.module.orm.delete_object import delete_stix_object
+from stixorm.module.orm.delete_object import delete_stix_object, add_delete_layers
 from stixorm.module.orm.export_object import convert_ans_to_stix
 from stixorm.module.authorise import authorised_mappings, import_type_factory
 from stixorm.module.parsing.parse_objects import parse
 from stixorm.module.generate_docs import configure_overview_table_docs, object_tables
-from stixorm.module.initialise import sort_layers, load_typeql_data
+from stixorm.module.initialise import sort_layers, load_typeql_data, delete_typeql_data
 from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
 from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
 from stixorm.module.typedb_lib.logging import log_delete_instruction
@@ -107,6 +107,7 @@ def dict_to_typeql(stix_dict, import_type):
     #logger.debug(f' i have parsed\n')
     dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
     #logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+    dep_obj["id"] = stix_obj.id
     dep_obj["dep_match"] = dep_match
     dep_obj["dep_insert"] = dep_insert
     dep_obj["indep_ql"] = indep_ql
@@ -1509,6 +1510,9 @@ def test_del_statements():
     filepath = "test/data/standard/"+"infrastructure.json"
     with open(filepath, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
+        layers = []
+        indexes = []
+        missing = []
         if isinstance(json_text, list):
             for stix_dict in json_text:
                 # if stix_dict.get("type", False) == "relationship":
@@ -1516,7 +1520,29 @@ def test_del_statements():
                 stix_object = parse(stix_dict, False, import_type)
                 dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_object, import_type)
                 del_match, del_tql = delete_stix_object(stix_object, dep_match, dep_insert, indep_ql, core_ql, import_type)
+
+                dep_obj["id"] = stix_object.id
+                dep_obj["dep_match"] = dep_match
+                dep_obj["dep_insert"] = dep_insert
+                dep_obj["indep_ql"] = indep_ql
+                dep_obj["core_ql"] = core_ql
+                dep_obj["delete"] = del_match + '\n' + del_tql
+                layers, indexes, missing = update_delete_layers(layers, indexes, missing, dep_obj)
                 log_delete_instruction(dep_match, dep_insert, indep_ql, dep_obj, del_match, del_tql)
+            delete_typeql_data(layers, connection)
+
+
+def update_delete_layers(layers, indexes, missing, dep_obj):
+    if dep_obj is None:
+        return layers, indexes, missing
+    if len(layers) == 0:
+        missing = dep_obj['dep_list']
+        indexes.append(dep_obj['id'])
+        layers.append(dep_obj)
+    else:
+        layers, indexes, missing = add_delete_layers(layers, dep_obj, indexes, missing)
+    return layers, indexes, missing
+
 ################################################################################
 #
 # Methods for  Dataflow Blocks
@@ -1659,8 +1685,8 @@ if __name__ == '__main__':
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
     #check_dir(mitre)
-    test_delete(standard+f31)
-    #test_del_statements()
+    #test_delete(standard+f31)
+    test_del_statements()
     #test_get(stid1)
     #test_get_delete(standard + f31)
     #test_initialise()

@@ -125,6 +125,21 @@ def load_typeql_data(data_list, stix_connection: Dict[str, str]):
                 write_transaction.commit()
 
 
+def delete_typeql_data(data_list, stix_connection: Dict[str, str]):
+    url = stix_connection["uri"] + ":" + stix_connection["port"]
+    with TypeDB.core_client(url) as client:
+        # Stage 1: Create the schema
+        with client.session(stix_connection["database"], SessionType.DATA) as session:
+            with session.transaction(TransactionType.WRITE) as write_transaction:
+                logger.debug(f'Bqckdoor deletion test')
+                for data in data_list:
+                    logger.debug(f'\n\n{data["delete"]}\n\n')
+                    delete_iterator = write_transaction.query().delete(data["delete"])
+
+                    logger.debug(f'delete_iterator response ->\n{delete_iterator}')
+
+                write_transaction.commit()
+
 
 
 def sort_layers(layers,
