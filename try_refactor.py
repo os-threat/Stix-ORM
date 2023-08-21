@@ -301,8 +301,8 @@ def load_file(fullname):
     input_id_list=[]
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
-        print(json_text)
-        for stix_dict in json_text:
+        #print(json_text)
+        for stix_dict in json_text["objects"]:
             input_id_list.append(stix_dict.get("id", False))
         typedb.add(json_text)
     id_set = set(input_id_list)
@@ -1506,8 +1506,8 @@ def meta_icon(stix_object):
 # test delete
 #
 ##############################################################################
-def test_del_statements():
-    filepath = "test/data/standard/"+"infrastructure.json"
+def test_del_statements(filepath):
+
     with open(filepath, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         layers = []
@@ -1661,9 +1661,11 @@ if __name__ == '__main__':
     mitre_test = "data/mitre/latest/"
     osthreat = "data/os-threat/"
     standard = "test/data/standard/"
-    reports = "data/threat_reports/"
+    reports = "test/data/threat_reports/"
+    incident = "test/data/os-threat/incident/"
     poison = "poisonivy.json"
     threattest = "history/"
+    human = "human_trigger.json"
 
     id_list = ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46', 'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265', 'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559', 'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6', 'attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5', 'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
     # 019fde1c-
@@ -1674,7 +1676,7 @@ if __name__ == '__main__':
     stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     #test_initialise()
     #load_file_list(path1, [f30, f21])
-    #load_file(mitre_data)
+    #load_file(incident + human)
     #load_file(mitre + "attack_objects.json")
     #check_object(mitre + "attack_objects.json")
     #load_file("test/data/standard/"+"infrastructure.json")
@@ -1686,7 +1688,7 @@ if __name__ == '__main__':
     #check_dir_ids(path1)
     #check_dir(mitre)
     #test_delete(standard+f31)
-    test_del_statements()
+    #test_del_statements(standard+f31)
     #test_get(stid1)
     #test_get_delete(standard + f31)
     #test_initialise()
@@ -1701,7 +1703,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    #backdoor_add_dir(mitre)
+    backdoor_add_dir(incident)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)

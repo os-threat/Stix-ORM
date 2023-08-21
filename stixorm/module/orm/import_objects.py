@@ -11,7 +11,7 @@ import logging
 
 from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 
 
