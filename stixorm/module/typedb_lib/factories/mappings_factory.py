@@ -1,3 +1,4 @@
+import importlib.util
 import json
 import os
 import pathlib
@@ -65,6 +66,15 @@ class MappingsFactory():
         for name in subfolder_names:
             self.definitions[name] = MappingsDefinition(name, self.definition_dir.joinpath(name))
 
+        self.sub_objects_by_name = {}
+        self.all_sub_objects = []
+        for name in subfolder_names:
+            object_conversion = self.definitions[name].get_object_conversion()
+            sub_objects = [x for x in object_conversion if x["object"] == "sub"]
+            self.sub_objects_by_name[name] = sub_objects
+            self.all_sub_objects.extend(sub_objects)
+
+
     def all_object_keys(self) -> set[ObjectKeys]:
         return set(list(ObjectKeys))
 
@@ -98,3 +108,21 @@ class MappingsFactory():
     def get_mappings_from_definition(self,
                                      name):
         return self.get_mapping_definition(name).get_mappings()
+
+    def get_all_sub_objects(self):
+        return self.all_sub_objects
+
+    def get_ext_class(self, key: str, name: str):
+        sub_objects = self.sub_objects_by_name.get(name, [])
+        for sub_object in sub_objects:
+            if sub_object["type"] == key:
+                object_name = sub_object["class"]
+
+                module_path = self.definition_dir.joinpath(name).joinpath("classes.py")
+                # Load the module using importlib
+                spec = importlib.util.spec_from_file_location("classes", module_path)
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
+                return getattr(module, object_name)
+
+        raise Exception (f"Class for {key} not found")

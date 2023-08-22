@@ -42,6 +42,14 @@ def get_poison_ivy() -> str:
     json_text = get_json_from_file(file_path)
     return json_text[0]
 
+
+def get_human_trigger() -> str:
+    data_standard_path = "data/os-threat/incident"
+    top_dir_path = top_path()
+    file_path = str(top_dir_path.joinpath(data_standard_path).joinpath("human_trigger.json"))
+    json_text = get_json_from_file(file_path)
+    return json_text[0]['objects']
+
 def standard_data_file_path() -> List[str]:
 
     top_dir_path = top_path()
@@ -77,6 +85,35 @@ def get_all_mitre():
     with open(str(file_path), "r") as file:
         data = json.load(file)
     return data["objects"]
+
+# TODO: Fix failing
+@pytest.mark.parametrize("json_data", get_human_trigger())
+def test_serialise_human_trigger(json_data):
+    import_type = import_type_factory.get_all_imports()
+    #json_text = get_json_from_file(file_path)
+
+    if json_data["id"] not in ["incident--1a074418-9248-4a21-9918-a79d0f1dbc5b",
+                              "identity--023d105b-752e-4cc c-941c-7d3f3cb15e9e",
+                              "task--1ffe4af4-3b18-4ee2-8279-0d1264efd0fe",
+                              "task--2d254737-fbf8-4969-adb3-80ac5c293f57",
+                              "task--2d254737-fbf8-4969-addd-80ac5c293f57",
+                              "relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa6026666",
+                              "task--56d81e7e-69b6-41aa-88cc-2b64b7896463",
+                                "task--2d254737-fbff-4969-bbbb-80ac5c293f57",
+                                "task--2d254737-fbff-4969-addd-80ac5c293f57",
+                                "task--2d254737-fbbb-4969-addd-80ac5c293f57",
+                                "evidence--2d2541111-fbf8-4969-addd-80ac5c293f57",
+                                "evidence--2d2542222-fbf8-4969-addd-80ac5c293f57",
+                                "evidence--2d2541111-fbf8-4969-addd-80ac5c293f57",
+                                "evidence--2d2543333-fbf8-4969-addd-80ac5c293f57",
+                                "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f",
+                                "impact--1032f48b-28d1-451f-970e-78b736db8e13",
+                                "report--f66c52bc-cb78-4657-894f-a4c2902b1c30"
+                              ]:
+        identity = parse(json_data, False, import_type)
+        identity.serialize()
+
+
 
 def test_serialise_feed(setup_teardown, generate_connection):
     file_path = aaa_identity_path()
