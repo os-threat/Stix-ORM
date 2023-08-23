@@ -160,7 +160,7 @@ def backdoor_add_dir(dirpath):
         else:
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 json_text = json.load(f)
-                json_text = json_text["objects"]
+                #json_text = json_text["objects"]
                 for element in json_text:
                     #logger.debug(f'**********==={element}')
                     obj_list.append(element)
@@ -205,7 +205,7 @@ def backdoor_add_dir(dirpath):
     id_diff = id_set - id_typedb
     print(f'\n\n\n===========================\nduplist -> {duplist}')
     print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
-    print(f'difference -> {id_diff}')
+    #print(f'difference -> {id_diff}')
 
 
 def backdoor_add(pahhway):
@@ -628,7 +628,7 @@ def check_dir(dirpath):
                 json_text = json.load(f)
                 json_list = json_text["objects"]
                 for element in json_list:
-                    print(f'element is {element}')
+                    #print(f'element is {element}')
                     temp_id = element.get('id', False)
                     if temp_id:
                         id_list.append(temp_id)
@@ -642,7 +642,7 @@ def check_dir(dirpath):
     len_typedb = len(id_typedb)
     id_diff = id_set - id_typedb
     print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
-    print(f'difference -> {id_diff}')
+    #print(f'difference -> {id_diff}')
 
 
 def cert_dict(cert_root, certs):
@@ -1582,6 +1582,8 @@ if __name__ == '__main__':
     osthreat = "data/os-threat/"
     reports = "data/threat_reports/"
     poison = "poisonivy.json"
+    incident = "test/data/os-threat/incident"
+    incident_test = "test/data/os-threat/test"
     threattest = "history/"
 
     id_list = ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46', 'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265', 'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559', 'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6', 'attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5', 'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
@@ -1603,7 +1605,7 @@ if __name__ == '__main__':
     #query_id(stid1)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
-    check_dir(mitre)
+    #check_dir(incident)
     #test_delete(data_path+file1)
     #test_get(stid1)
     #test_get_delete(path2 + "attack_objects.json")
@@ -1619,7 +1621,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    #backdoor_add_dir(mitre)
+    backdoor_add_dir(incident_test)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)

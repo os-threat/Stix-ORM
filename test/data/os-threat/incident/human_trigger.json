@@ -10,7 +10,6 @@
             "created_by_ref": "identity--2242662b-d581-4864-8696-fff719dc0500",
             "spec_version": "2.1",
             "name": "An example incident with human triggered suspicious email",
-            "criticality": 80,
             "description": "A user has reported a suspicious phishing email, possibly a company wide campaign",
             "extensions": {
                 "extension-definition--ef765651-680c-498d-9894-99799f2fa126": {
@@ -18,19 +17,18 @@
                     "investigation_status": "new",
                     "blocked": false,
                     "malicious": true,
+                    "criticality": 80,
                     "determination": "suspected",
                     "incident_types": [
                         "hosting-phishing-sites",
                         "theft-access-credentials",
                         "known-malware"
                     ],
-                    "impacted_entity_counts": [
-                        {
+                    "impacted_entity_counts": {
                             "individual": 10,
                             "organization": 1,
                             "system": 5
-                        }
-                    ],
+                    },
                     "scores": [
                         {
                             "name": "SOC scoring",
@@ -64,7 +62,7 @@
         {
             "type": "identity",
             "spec_version": "2.1",
-            "id": "identity--023d105b-752e-4cc c-941c-7d3f3cb15e9e",
+            "id": "identity--f069ebc5-563f-4709-bea1-2f1b4cf321d2",
             "created": "2016-04-06T20:03:00.000Z",
             "modified": "2016-04-06T20:03:00.000Z",
             "name": "SOC Operator",
@@ -207,6 +205,7 @@
         {
             "type": "task",
             "id": "task--1ffe4af4-3b18-4ee2-8279-0d1264efd0fe",
+            "name": "Start Task",
             "created": "2020-10-19T01:01:01.000Z",
             "modified": "2020-10-19T01:01:01.000Z",
             "spec_version": "2.1",
@@ -227,7 +226,7 @@
             "name": "Recover email",
             "priority": 10,
             "external_references": [],
-            "owner": "identity--023d105b-752e-4cc c-941c-7d3f3cb15e9e",
+            "owner": "identity--f069ebc5-563f-4709-bea1-2f1b4cf321d2",
             "task_types": [
                 "discovery"
             ],
@@ -273,7 +272,7 @@
             "step_type": "single_step",
             "priority": 10,
             "external_references": [],
-            "owner": "identity--023d105b-752e-4cc c-941c-7d3f3cb15e9e",
+            "owner": "identity--f069ebc5-563f-4709-bea1-2f1b4cf321d2",
             "task_types": [
                 "discovery"
             ],
@@ -484,7 +483,7 @@
             "step_type": "parallel_task",
             "priority": 8,
             "external_references": [],
-            "owner": "identity--023d105b-752e-4cc c-941c-7d3f3cb15e9e",
+            "owner": "identity--f069ebc5-563f-4709-bea1-2f1b4cf321d2",
             "task_types": [
                 "external-intelligence",
                 "attribution"
@@ -514,14 +513,13 @@
             "step_type": "end_step",
             "priority": 8,
             "external_references": [],
-            "owner": "identity--023d105b-752e-4cc c-941c-7d3f3cb15e9e",
+            "owner": "identity--f069ebc5-563f-4709-bea1-2f1b4cf321d2",
             "task_types": [
                 "reported"
             ],
             "outcome": "successful",
             "start_time": "2020-10-15T01:01:01.000Z",
             "end_time": "2020-10-15T01:01:01.000Z",
-            "on_success": "",
             "extensions": {
                 "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
                     "extension_type": "new-sdo"
@@ -538,7 +536,7 @@
             "step_type": "single_step",
             "priority": 8,
             "external_references": [],
-            "owner": "identity--023d105b-752e-4cc c-941c-7d3f3cb15e9e",
+            "owner": "identity--f069ebc5-563f-4709-bea1-2f1b4cf321d2",
             "task_types": [
                 "external-intelligence"
             ],
@@ -588,7 +586,7 @@
             "step_type": "single_step",
             "priority": 8,
             "external_references": [],
-            "owner": "identity--023d105b-752e-4cc c-941c-7d3f3cb15e9e",
+            "owner": "identity--f069ebc5-563f-4709-bea1-2f1b4cf321d2",
             "task_types": [
                 "external-intelligence"
             ],
@@ -647,7 +645,7 @@
         },
         {
             "type": "evidence",
-            "id": "evidence--2d2541111-fbf8-4969-addd-80ac5c293f57",
+            "id": "evidence--69e50c4c-0a74-4098-8b76-bb9635b678fc",
             "created": "2020-10-19T01:01:01.000Z",
             "modified": "2020-10-19T01:01:01.000Z",
             "spec_version": "2.1",
@@ -685,7 +683,7 @@
         },
         {
             "type": "evidence",
-            "id": "evidence--2d2542222-fbf8-4969-addd-80ac5c293f57",
+            "id": "evidence--16b72259-77c7-48e5-ae8b-6a7a221754ce",
             "created": "2020-10-19T01:01:01.000Z",
             "modified": "2020-10-19T01:01:01.000Z",
             "spec_version": "2.1",
@@ -704,7 +702,7 @@
         },
         {
             "type": "evidence",
-            "id": "evidence--2d2541111-fbf8-4969-addd-80ac5c293f57",
+            "id": "evidence--69e50c4c-0a74-4098-8b76-bb9635b678fc",
             "created": "2020-10-19T01:01:01.000Z",
             "modified": "2020-10-19T01:01:01.000Z",
             "spec_version": "2.1",
@@ -760,7 +758,7 @@
         },
         {
             "type": "evidence",
-            "id": "evidence--2d2543333-fbf8-4969-addd-80ac5c293f57",
+            "id": "evidence--fbda3c71-676b-46a4-9c46-ab76ea6e056b",
             "created": "2020-10-19T01:01:01.000Z",
             "modified": "2020-10-19T01:01:01.000Z",
             "spec_version": "2.1",
@@ -768,7 +766,7 @@
             "name": "YARA signatures on suspicious binaries",
             "description": "Hunt: The data collected from internal systems during a hunt for additional context",
             "source": "YARA",
-            "sources_refs": [
+            "evidence_refs": [
                 "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f"
             ],
             "object_refs": [
@@ -797,6 +795,7 @@
                 }
             ],
             "pattern_type": "yara",
+            "pattern": "[ file:hashes.'SHA-256' = '4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877' ]",
             "valid_from": "2014-06-29T13:49:37.079Z"
         },
         {
@@ -1056,7 +1055,7 @@
             ],
             "object_refs": [
                 "incident--1a074418-9248-4a21-9918-a79d0f1dbc5b",
-                "identity--023d105b-752e-4cc c-941c-7d3f3cb15e9e",
+                "identity--f069ebc5-563f-4709-bea1-2f1b4cf321d2",
                 "event--84ede1e8-aa78-4c63-98cd-02f4387fc1ec",
                 "file--e277603e-1060-5ad4-9937-c26c97f1ca68",
                 "email-message--0c57a381-2a17-5e61-8754-5ef96efb286c",
@@ -1088,15 +1087,15 @@
                 "ipv4-addr--ff26c055-6006-5bc5-b98d-13d6226742dd",
                 "ipv4-addr--ff26c055-6336-5bc5-b98d-13d6226742dd",
                 "ipv4-addr--ff26c055-6666-5bc5-b98d-13d6226742dd",
-                "evidence--2d2541111-fbf8-4969-addd-80ac5c293f57",
+                "evidence--69e50c4c-0a74-4098-8b76-bb9635b678fc",
                 "domain-name--3c10e93f-798e-5a26-a0c1-08156efab7f5",
                 "autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74",
-                "evidence--2d2542222-fbf8-4969-addd-80ac5c293f57",
-                "evidence--2d2541111-fbf8-4969-addd-80ac5c293f57",
+                "evidence--16b72259-77c7-48e5-ae8b-6a7a221754ce",
+                "evidence--69e50c4c-0a74-4098-8b76-bb9635b678fc",
                 "campaign--1d8897a7-fdc2-4e59-afc9-becbe04df727",
                 "infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d",
                 "relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa60266ed",
-                "evidence--2d2543333-fbf8-4969-addd-80ac5c293f57",
+                "evidence--fbda3c71-676b-46a4-9c46-ab76ea6e056b",
                 "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f",
                 "evidence--2d254444-fbf8-4969-addd-80ac5c293f57",
                 "attack-pattern--9db0cf3a-a3c9-4012-8268-123b9db6fd82",

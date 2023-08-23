@@ -31,6 +31,11 @@ from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_in
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(filename="typedb_log.txt",
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
 
 
 @dataclass
