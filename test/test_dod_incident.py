@@ -3,6 +3,14 @@ import os
 import datetime
 import stix2
 from stix2 import Identity
+import pytest
+import pytest
+from stix2 import parse
+from stixorm.module.authorise import import_type_factory
+from stixorm.module.typedb import TypeDBSink
+from stixorm.module.typedb_lib.instructions import ResultStatus
+
+import_type = import_type_factory.get_all_imports()
 
 def quick_check():
     with open('./data/os-threat/incident/human_trigger.json','r') as file:
@@ -36,32 +44,37 @@ def quick_check():
                 print(object)
         print('Total found %d' % found)
 
-from stixorm.module.authorise import import_type_factory
-from stixorm.module.typedb import TypeDBSink,TypeDBSource
-from stixorm.module.typedb_lib.instructions import ResultStatus
-import stix2
+@pytest.fixture
+def database(generate_connection):
+    db = TypeDBSink(
+        connection=generate_connection,
+        clear=True,
+        import_type=import_type,
+    )
+    db.clear_db()
+    db = TypeDBSink(
+        connection=generate_connection,
+        clear=True,
+        import_type=import_type
+    )
+    yield db
+    db.clear_db()
+    db.clear_db()
 
-import_type = import_type_factory.get_default_import()
+class TestDOD:
 
-connection = {
-    "uri": "localhost",
-    "port": "1729",
-    "database": "stixorm",
-    "user": None,
-    "password": None
-}
-def load_sample():
-    with open('./data/os-threat/incident/human_trigger.json','r') as file:
-        bundle_json = json.load(file)
+    def setUp(self, generate_connection):
+        self.clean_db(generate_connection)
 
-        typedb = TypeDBSink(connection=connection,
-                            clear=True,
-                            import_type=import_type)
+    def tearDown(self, generate_connection):
+        self.clean_db(generate_connection)
+    def test_load(self,database:TypeDBSink):
+        with open('./data/os-threat/incident/human_trigger.json','r') as file:
 
-        results = typedb.add(bundle_json)
+            bundle_json = json.load(file)
 
-        for result in results:
-            print(result)
+            inserts = database.add(bundle_json)
 
-
-load_sample()
+            for result in inserts:
+                assert result.message is None
+                assert result.error is None
