@@ -3,5 +3,6 @@
   "description": "description",
   "evidence_type": "evidence-type",
   "source": "source",
-  "object_refs": ""
+  "object_refs": "",
+  "evidence_refs": ""
 }

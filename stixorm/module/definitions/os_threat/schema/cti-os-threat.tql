@@ -89,7 +89,7 @@ define
     task sub stix-domain-object, abstract,
         owns step-type,
         owns outcome,
-        owns task-type,
+        owns task-types,
         owns description,
         owns name,
         owns end-time,
@@ -557,7 +557,7 @@ define
     evidence-type sub stix-attribute-string;
     source sub stix-attribute-string;
     outcome sub stix-attribute-string;
-    task-type sub stix-attribute-string;
+    task-types sub stix-attribute-string;
     step-type sub stix-attribute-string;
     error sub stix-attribute-string;
     determination sub stix-attribute-string;

@@ -21,7 +21,7 @@ from loguru import logger
 import os
 from pathlib import Path
 from stixorm.module.definitions.stix21.classes import (
-    Note, ObservedData, Incident, Report
+    Note, ObservedData, Incident, Report, Relationship
 )
 from stix2.v21.sdo import (
     AttackPattern, Campaign, CourseOfAction, CustomObject, Grouping, Identity,
@@ -39,7 +39,7 @@ from stix2.v21.observables import (
     WindowsProcessExt, WindowsRegistryKey, WindowsRegistryValueType,
     WindowsServiceExt, X509Certificate, X509V3ExtensionsType,
 )
-from stix2.v21.sro import Relationship, Sighting
+from stix2.v21.sro import Sighting
 from stix2.v21.common import MarkingDefinition
 
 name = "stix21"

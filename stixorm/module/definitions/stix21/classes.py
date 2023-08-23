@@ -144,7 +144,10 @@ class Incident(_DomainObject):
         ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
 
+
 valid_obj =  get_mapping_factory_instance().get_all_types()
+
+
 class Report(_DomainObject):
     """For more detailed information on this object's properties, see
     `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_n8bjzg1ysgdq>`__.
@@ -172,3 +175,59 @@ class Report(_DomainObject):
         ('granular_markings', ListProperty(GranularMarking)),
         ('extensions', ExtensionsProperty(spec_version='2.1')),
     ])
+
+class Relationship(_RelationshipObject):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_e2e1szrqfoan>`__.
+    """
+
+    _invalid_source_target_types = ['bundle', 'language-content', 'marking-definition', 'relationship', 'sighting']
+
+    _type = 'relationship'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('relationship_type', StringProperty(required=True)),
+        ('description', StringProperty()),
+        ('source_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1', required=True)),
+        ('target_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1', required=True)),
+        ('start_time', TimestampProperty()),
+        ('stop_time', TimestampProperty()),
+        ('revoked', BooleanProperty(default=lambda: False)),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ExtensionsProperty(spec_version='2.1')),
+    ])
+
+    # Explicitly define the first three kwargs to make readable Relationship declarations.
+    # def __init__(
+    #     self, source_ref=None, relationship_type=None,
+    #     target_ref=None, **kwargs
+    # ):
+    #     # Allow (source_ref, relationship_type, target_ref) as positional args.
+    #     if source_ref and not kwargs.get('source_ref'):
+    #         kwargs['source_ref'] = source_ref
+    #     if relationship_type and not kwargs.get('relationship_type'):
+    #         kwargs['relationship_type'] = relationship_type
+    #     if target_ref and not kwargs.get('target_ref'):
+    #         kwargs['target_ref'] = target_ref
+    #
+    #     super(Relationship, self).__init__(**kwargs)
+
+    def _check_object_constraints(self):
+        super(self.__class__, self)._check_object_constraints()
+
+        start_time = self.get('start_time')
+        stop_time = self.get('stop_time')
+
+        if start_time and stop_time and stop_time <= start_time:
+            msg = "{0.id} 'stop_time' must be later than 'start_time'"
+            raise ValueError(msg.format(self))
