@@ -2,30 +2,66 @@ import json
 import os
 import datetime
 import stix2
+from stix2 import Identity
 
+def quick_check():
+    with open('./data/os-threat/incident/human_trigger.json','r') as file:
+        bundle_json = json.load(file)
 
-with open('./data/os-threat/incident/human_trigger.json','r') as file:
-    bundle_json = json.load(file)
+        missing = []
+        print('Missing %d' % len(missing))
 
-    missing = ['sighting--9af0cfab-2dfe-448d-a4e3-85ae0af3149c', 'sighting--f771469d-bd11-4e7a-b1f8-9a732b77db23', 'identity--2242662b-d581-4864-8696-fff719dc0500', 'identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5', 'report--f66c52bc-cb78-4657-894f-a4c2902b1c30', 'identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c', 'marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168']
-    print('Missing %d' % len(missing))
-
-    found = 0
-    for object in bundle_json['objects']:
-        is_m = any([object['id']==m for m in missing])
-        if is_m:
-            print(object['id'])
-            found += 1
-        if 'created_by_ref' in object:
-            is_m = any([object['created_by_ref'] == m for m in missing])
+        found = 0
+        for object in bundle_json['objects']:
+            is_m = any([object['id']==m for m in missing])
             if is_m:
-                print(object['id'])
+                print("Source object : %s" % object['id'])
+                spec = [m for m in missing if object['id'] == m]
+                print("\tMissing object : %s" % spec)
                 found += 1
-        if 'sighting_refs' in object:
-            for ref in object['sighting_refs']:
-                is_m = any([ref == m for m in missing])
+            if 'created_by_ref' in object:
+                is_m = any([object['created_by_ref'] == m for m in missing])
                 if is_m:
-                    print(object['id'])
+                    print("Source object : %s" % object['id'])
+                    spec = [m for m in missing if object['created_by_ref'] == m]
+                    print("\tMissing object : %s" % spec)
                     found += 1
+            if 'sighting_refs' in object:
+                for ref in object['sighting_refs']:
+                    is_m = any([ref == m for m in missing])
+                    if is_m:
+                        print("Source object : %s" % object['id'])
+                        found += 1
+            if object['type']=='sighting':
+                print(object)
+        print('Total found %d' % found)
 
-    print('Total found %d' % found)
+from stixorm.module.authorise import import_type_factory
+from stixorm.module.typedb import TypeDBSink,TypeDBSource
+from stixorm.module.typedb_lib.instructions import ResultStatus
+import stix2
+
+import_type = import_type_factory.get_default_import()
+
+connection = {
+    "uri": "localhost",
+    "port": "1729",
+    "database": "stixorm",
+    "user": None,
+    "password": None
+}
+def load_sample():
+    with open('./data/os-threat/incident/human_trigger.json','r') as file:
+        bundle_json = json.load(file)
+
+        typedb = TypeDBSink(connection=connection,
+                            clear=True,
+                            import_type=import_type)
+
+        results = typedb.add(bundle_json)
+
+        for result in results:
+            print(result)
+
+
+load_sample()
