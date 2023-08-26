@@ -26,7 +26,7 @@ from timeit import default_timer as timer
 
 #from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
-logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 #logger.addHandler(logging.StreamHandler())
 
@@ -103,7 +103,8 @@ def dict_to_typeql(stix_dict, import_type):
     """
     #logger.debug(f"im about to parse \n")
     stix_obj = parse(stix_dict, False, import_type)
-    #logger.debug(f' i have parsed\n')
+    #logger.debug(f' i have parsed {stix_dict}\n')
+    #logger.debug(f"\n object type {stix_obj}")
     dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
     #logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
     dep_obj["dep_match"] = dep_match
@@ -119,7 +120,7 @@ def test_insert_statements(pahhway, stid):
         for stix_dict in json_text:
             if stix_dict['id'] == stid:
                 dep_obj = dict_to_typeql(stix_dict, import_type)
-                logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
+                #logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
 
 
 def update_layers(layers, indexes, missing, dep_obj, cyclical):
@@ -170,6 +171,9 @@ def backdoor_add_dir(dirpath):
 
                     dep_obj = dict_to_typeql(element, import_type)
                     logger.debug('----------------------------------------------------------------------------------------------------')
+                    myobj1 = parse(element, False, import_type)
+                    logger.debug(myobj1.serialize(pretty=True))
+                    logger.debug(f'\n================\n{dep_obj["dep_list"]}')
                     logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
                     logger.debug('----------------------------------------------------------------------------------------------------')
                     layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
@@ -177,7 +181,14 @@ def backdoor_add_dir(dirpath):
     logger.debug(f'missing {missing}, cyclical {cyclical}')
     newlist = []
     duplist = []
-    if missing == [] and cyclical == []:
+    missing2 = []
+    if missing != []:
+        missing2 = [x for x in missing if x not in id_list]
+        print(f'\n\n-----------------')
+        print(f'missing ->{missing}')
+        print(f'missing2 -> {missing2}')
+
+    if missing2 == [] and cyclical == []:
         # add the layers into a list of strings
         for layer in layers:
             stid = layer["id"]
@@ -299,8 +310,8 @@ def load_file(fullname):
     input_id_list=[]
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
-        print(json_text)
-        for stix_dict in json_text:
+        #print(json_text["objects"])
+        for stix_dict in json_text["objects"]:
             input_id_list.append(stix_dict.get("id", False))
         typedb.add(json_text)
     id_set = set(input_id_list)
@@ -1595,7 +1606,7 @@ if __name__ == '__main__':
     stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     #test_initialise()
     #load_file_list(path1, [f30, f21])
-    #load_file(mitre_data)
+    load_file(incident + "/human_trigger.json")
     #load_file(mitre + "attack_objects.json")
     #check_object(mitre + "attack_objects.json")
     #load_file(reports + poison)
@@ -1621,7 +1632,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    backdoor_add_dir(incident)
+    #backdoor_add_dir(incident)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)

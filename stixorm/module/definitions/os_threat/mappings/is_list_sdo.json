@@ -21,5 +21,21 @@
   "task": [
     "changed_objects",
     "next_steps"
+  ],
+  "start-step": [
+    "changed_objects",
+    "next_steps"
+  ],
+  "end-step": [
+    "changed_objects",
+    "next_steps"
+  ],
+  "single-step": [
+    "changed_objects",
+    "next_steps"
+  ],
+  "parallel-step": [
+    "changed_objects",
+    "next_steps"
   ]
 }

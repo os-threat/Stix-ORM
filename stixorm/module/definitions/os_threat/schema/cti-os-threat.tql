@@ -95,7 +95,7 @@ define
         owns end-time,
         owns end-time-fidelity,
         owns error,
-        owns priority,
+        owns int-priority,
         owns start-time,
         owns start-time-fidelity,
         plays task-ext:task-base,
@@ -114,6 +114,7 @@ define
         plays assigned:effort,
         plays contact-for:issue,
         plays participated-in:assisted,
+        plays owned-by:owned,
         plays performed:outcome;
 
     start-step sub task,
@@ -134,7 +135,6 @@ define
         plays on-success:source,
         plays on-failure:source,
         plays next-steps:target,
-        plays owned-by:owned,
         plays impact-counter:impact-driver,
         plays objects-changed:change-driver,
         plays task-refs:the-task;
@@ -581,6 +581,7 @@ define
     max-amount sub stix-attribute-integer;
     min-amount sub stix-attribute-integer;
     score-value sub stix-attribute-integer;
+    int-priority sub stix-attribute-integer;
 
     end-time sub stix-attribute-timestamp;
     conversion-time sub stix-attribute-timestamp;

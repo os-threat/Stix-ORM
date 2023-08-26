@@ -12,7 +12,7 @@ from stixorm.module.typedb_lib.model.definitions import DefinitionName
 
 stix_models = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 # ---------------------------------------------------
 # 1.5) Sub Object Methods for adding common standard properties

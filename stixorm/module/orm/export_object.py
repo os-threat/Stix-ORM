@@ -116,13 +116,16 @@ def make_sdo(res, import_type: ImportType):
         relns = res["relns"]
         attack_object = False
         sub_technique = False
+        step_type = ""
         for prop in props:
             if prop["typeql"] == "x-mitre-version":
                 attack_object = True
             if prop["typeql"] == "x-mitre-is-subtechnique" and prop["value"] is True:
                 sub_technique = True
+            if prop["typeql"] == "step_type":
+                step_type = prop["value"]
 
-        obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(sdo_type, import_type, attack_object, sub_technique)
+        obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(sdo_type, import_type, attack_object, sub_technique, step_type)
 
         #logger.debug(f"obj tql -> {obj_tql}\n sdo tql name -> {sdo_tql_name}")
         # 2.B) get the is_list list, the list of properties that are lists for that object

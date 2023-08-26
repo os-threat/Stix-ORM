@@ -135,11 +135,14 @@ def sdo_to_data(sdo, import_type=default_import_type) -> [dict, Dict[str, str], 
     # 1.B) get the specific typeql names for an object into a dictionary
     # b. Instance details
     attack_object = False if not sdo.get("x_mitre_version", False) else True
+    step_type = ""
+    if sdo.type == "task":
+        step_type = sdo.get("step_type", "task")
     sub_technique = False
     if attack_object:
         sub_technique = False if not sdo.get("x_mitre_is_subtechnique", False) else True
 
-    obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique)
+    obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique, step_type)
     logger.debug(f'\nobject tql {obj_tql}, \nsdo tql name {sdo_tql_name},\n is_list {is_list}')
 
     return total_props, obj_tql, sdo_tql_name, protocol

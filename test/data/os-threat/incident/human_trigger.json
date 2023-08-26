@@ -246,7 +246,7 @@
             "created": "2020-10-19T01:01:01.000Z",
             "modified": "2020-10-19T01:01:01.000Z",
             "spec_version": "2.1",
-            "step_type": "start_task",
+            "step_type": "start_step",
             "on_completion": "task--2d254737-fbf8-4969-adb3-80ac5c293f57",
             "extensions": {
                 "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
@@ -1157,7 +1157,7 @@
             "id": "relationship--e12d5a58-218f-4892-9f63-7c1b17e0185e",
             "created": "2023-07-07T12:50:35.36004Z",
             "modified": "2023-07-07T12:50:35.36004Z",
-            "relationship_type": "derived_from",
+            "relationship_type": "derived-from",
             "source_ref": "report--f66c52bc-cb78-4657-894f-a4c2902b1c30",
             "target_ref": "incident--1a074418-9248-4a21-9918-a79d0f1dbc5b"
         }

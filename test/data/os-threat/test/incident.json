@@ -1,24 +1,12 @@
 [
   {
-            "type": "impact",
-            "id": "impact--1032f48b-28d1-451f-970e-78b736db8e13",
-            "created": "2022-05-06T01:01:01.002Z",
-            "modified": "2022-05-06T01:01:01.002Z",
+            "type": "relationship",
             "spec_version": "2.1",
-            "description": "A list of users from our organization were succesfully compromised",
-            "recoverability": "supplemented",
-            "impacted_refs": [
-                "identity--023d105b-752e-4e3c-941c-7d3f3cb15e9e",
-                "identity--023d105b-752e-4e3c-941c-7d3f3cb15e99"
-            ],
-            "impact_category": "confidentiality",
-            "extensions": {
-                "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
-                    "extension_type": "new-sdo"
-                },
-                "information_type": "credentials-user",
-                "loss-type": "confirmed-loss",
-                "record_count": 10
-            }
+            "id": "relationship--e12d5a58-218f-4892-9f63-7c1b17e0185e",
+            "created": "2023-07-07T12:50:35.36004Z",
+            "modified": "2023-07-07T12:50:35.36004Z",
+            "relationship_type": "derived-from",
+            "source_ref": "report--f66c52bc-cb78-4657-894f-a4c2902b1c30",
+            "target_ref": "incident--1a074418-9248-4a21-9918-a79d0f1dbc5b"
         }
 ]

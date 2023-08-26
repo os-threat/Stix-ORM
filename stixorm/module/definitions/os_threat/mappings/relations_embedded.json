@@ -50,7 +50,7 @@
   {
     "rel": "on_success",
     "owner": "source",
-    "pointed-to": "source",
+    "pointed-to": "target",
     "typeql": "on-success"
   },
   {

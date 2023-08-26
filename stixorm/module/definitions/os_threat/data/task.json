@@ -9,7 +9,7 @@
   "error": "error",
   "impacted_entity_counts": "",
   "name": "name",
-  "priority": "priority",
+  "priority": "int-priority",
   "start_time": "start-time",
   "start_time_fidelity": "start-time-fidelity",
   "owner": "",

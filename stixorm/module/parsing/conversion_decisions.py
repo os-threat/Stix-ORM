@@ -22,7 +22,7 @@ os_threat_model = get_definition_factory_instance().lookup_definition(Definition
 
 def sdo_type_to_tql(sdo_type: str,
                     import_type:ImportType=default_import_type,
-                    attack_object=False, subtechnique=False) -> [dict, str, dict, str]:
+                    attack_object=False, subtechnique=False, step_type="") -> [dict, str, dict, str]:
     """ convert Stix object into a data model for processing
 
     Args:
@@ -56,10 +56,14 @@ def sdo_type_to_tql(sdo_type: str,
             # dispatch specific stix properties plus later on, generic sdo properties
             protocol = "stix21"
             obj_tql = copy.deepcopy(stix_model.get_data(sdo_type))
+            is_list.extend(auth["is_lists"]["sdo"][tql_name])
         elif os_threat_model.contains_data(sdo_type):
             # dispatch specific stix properties plus later on, generic sdo properties
             protocol = "os-threat"
             obj_tql = copy.deepcopy(os_threat_model.get_data(sdo_type))
+            is_list.extend(auth["is_lists"]["sdo"][tql_name])
+            if tql_name == "task":
+                tql_name = "-".join(step_type.split("_"))
         else:
             logger.error(f'obj_type type {sdo_type} not supported')
             return {}, "", {}, ""
@@ -80,6 +84,7 @@ def sdo_type_to_tql(sdo_type: str,
                     if attack_type == "technique" and subtechnique:
                         attack_type = "sub-technique"
                     obj_tql.update(attack_model.get_data(attack_type))
+                    is_list.extend(auth["is_lists"]["sdo"][attack_type])
                     logger.debug("updated")
                     break
             # Else log an error
@@ -95,10 +100,14 @@ def sdo_type_to_tql(sdo_type: str,
                 # dispatch specific stix properties plus mitre properties plus generic sdo properties
                 protocol = "stix21"
                 obj_tql = copy.deepcopy(stix_model.get_data(sdo_type))
+                is_list.extend(auth["is_lists"]["sdo"][tql_name])
             elif os_threat_model.contains_data(sdo_type):
                 # dispatch specific stix properties plus later on, generic sdo properties
                 protocol = "os-threat"
                 obj_tql = copy.deepcopy(os_threat_model.get_data(sdo_type))
+                is_list.extend(auth["is_lists"]["sdo"][tql_name])
+                if tql_name == "task" and step_type != "task":
+                    tql_name = "-".join(step_type.split("_"))
             else:
                 logger.error(f'obj_type type {sdo_type} not in stix_models["dispatch_stix"] or dispatch mitre')
                 return {}, "", {}, ""
@@ -111,7 +120,6 @@ def sdo_type_to_tql(sdo_type: str,
     logger.debug("about to update stuff")
     logger.debug(f'tql nme {tql_name}, sdo-type {sdo_type}')
     obj_tql.update(stix_model.get_base("base_sdo"))
-    is_list.extend(auth["is_lists"]["sdo"][tql_name])
     is_list.extend(auth["is_lists"]["sdo"]["sdo"])
     logger.debug("about to return from decisions")
 
