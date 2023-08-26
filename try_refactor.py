@@ -161,7 +161,7 @@ def backdoor_add_dir(dirpath):
         else:
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 json_text = json.load(f)
-                json_text = json_text["objects"]
+                #json_text = json_text["objects"]
                 for element in json_text:
                     #logger.debug(f'**********==={element}')
                     obj_list.append(element)
@@ -313,8 +313,6 @@ def load_file(fullname):
         json_text = json.load(f)
         #print(json_text["objects"])
         for stix_dict in json_text["objects"]:
-            if stix_dict.get("type", False) == "evidence":
-                evidence_list.append(stix_dict.get("id", False))
             input_id_list.append(stix_dict.get("id", False))
         result = typedb.add(json_text)
     id_set = set(input_id_list)
@@ -327,8 +325,6 @@ def load_file(fullname):
     print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
     for item in result:
         print(item.id + " " + str(item.status) + " " + str(item.message))
-    print("=================================")
-    print(evidence_list)
 
 
 def check_object(fullname):
@@ -1640,7 +1636,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    #backdoor_add_dir(incident)
+    #backdoor_add_dir(incident_test)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)
