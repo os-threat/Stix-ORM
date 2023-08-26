@@ -305,6 +305,7 @@ def load_file(fullname):
     Args:
         fullname (): path and filename
     """
+    evidence_list = []
     logger.debug(f'inside history file {fullname}')
     typedb = TypeDBSink(connection, True, import_type)
     input_id_list=[]
@@ -312,8 +313,10 @@ def load_file(fullname):
         json_text = json.load(f)
         #print(json_text["objects"])
         for stix_dict in json_text["objects"]:
+            if stix_dict.get("type", False) == "evidence":
+                evidence_list.append(stix_dict.get("id", False))
             input_id_list.append(stix_dict.get("id", False))
-        typedb.add(json_text)
+        result = typedb.add(json_text)
     id_set = set(input_id_list)
     id_typedb = set(get_stix_ids())
     len_files = len(id_set)
@@ -321,6 +324,11 @@ def load_file(fullname):
     id_diff = id_set - id_typedb
     print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
     print(f'difference -> {id_diff}')
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    for item in result:
+        print(item.id + " " + str(item.status) + " " + str(item.message))
+    print("=================================")
+    print(evidence_list)
 
 
 def check_object(fullname):
@@ -1607,7 +1615,7 @@ if __name__ == '__main__':
     #test_initialise()
     #load_file_list(path1, [f30, f21])
     load_file(incident + "/human_trigger.json")
-    #load_file(mitre + "attack_objects.json")
+    #load_file(incident_test + "/incident.json")
     #check_object(mitre + "attack_objects.json")
     #load_file(reports + poison)
     print("=====")

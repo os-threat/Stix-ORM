@@ -1,12 +1,56 @@
 [
   {
+            "type": "email-addr",
+            "spec_version": "2.1",
+            "id": "email-addr--9b7e29b3-fd8d-562e-b3f0-8fc8134f5dda",
+            "value": "admin@microsft.support.com",
+            "display_name": "Microsoft Support"
+  },{
+            "type": "email-addr",
+            "spec_version": "2.1",
+            "id": "email-addr--d1b3bf0c-f02a-51a1-8102-11aba7959868",
+            "value": "help@microsft.support.com",
+            "display_name": "Microsoft Help"
+  },{
+            "type": "email-message",
+            "spec_version": "2.1",
+            "id": "email-message--0c57a381-2a17-5e61-8754-5ef96efb286c",
+            "from_ref": "email-addr--9b7e29b3-fd8d-562e-b3f0-8fc8134f5dda",
+            "to_refs": [
+                "email-addr--d1b3bf0c-f02a-51a1-8102-11aba7959868"
+            ],
+            "is_multipart": false,
+            "date": "2004-04-19T12:22:23.000Z",
+            "subject": "Password Expiration Warning",
+            "body": "Please change your password for Office 365: http://officez365.microsoftz.com/login?user=paolo&tkn=1234&z=aaaaaaa",
+            "additional_header_fields": {
+                "Reply-To": [
+                    "admin@microsft.support.com",
+                    "help@microsft.support.com"
+                ]
+            }
+  },{
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f",
+            "created": "2014-06-29T13:49:37.079Z",
+            "modified": "2014-06-29T13:49:37.079Z",
+            "name": "Malicious phishing page",
+            "description": "This webpage was delivered via email",
+            "indicator_types": [
+                "suspicious-activity"
+            ],
+            "pattern": "[url:value = 'http://officez365.microsoftz.com/login?user=paolo&tkn=1234&z=aaaaaaa']",
+            "pattern_type": "stix",
+            "valid_from": "2014-06-29T13:49:37.079Z"
+    },{
             "type": "relationship",
             "spec_version": "2.1",
-            "id": "relationship--e12d5a58-218f-4892-9f63-7c1b17e0185e",
-            "created": "2023-07-07T12:50:35.36004Z",
-            "modified": "2023-07-07T12:50:35.36004Z",
-            "relationship_type": "derived-from",
-            "source_ref": "report--f66c52bc-cb78-4657-894f-a4c2902b1c30",
-            "target_ref": "incident--1a074418-9248-4a21-9918-a79d0f1dbc5b"
-        }
+            "id": "relationship--dddcb3d1-0e56-4170-97e2-eb79da432cbb",
+            "created": "2022-05-06T01:01:01.000Z",
+            "modified": "2022-05-06T01:01:01.000Z",
+            "relationship_type": "based-on",
+            "source_ref": "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f",
+            "target_ref": "email-message--0c57a381-2a17-5e61-8754-5ef96efb286c"
+    }
 ]

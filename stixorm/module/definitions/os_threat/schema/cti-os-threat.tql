@@ -143,6 +143,9 @@ define
         plays on-completion:target,
         plays on-success:target,
         plays on-failure:target,
+        plays on-completion:source,
+        plays on-success:source,
+        plays on-failure:source,
         plays next-steps:source,
         plays task-refs:the-task;
 

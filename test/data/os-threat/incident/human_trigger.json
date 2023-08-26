@@ -92,6 +92,15 @@
                     ],
                     "notes_refs": [
                         "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061"
+                    ],
+                    "evidence_refs": [
+                        "evidence--2d254777-fbf8-4969-addd-80ac5c293f57",
+                        "evidence--2d254777-fbf8-4969-addd-80ac5c293f57",
+                        "evidence--69e50c4c-0a74-4098-8b76-bb9635b678fc",
+                        "evidence--16b72259-77c7-48e5-ae8b-6a7a221754ce",
+                        "evidence--69e50c4c-0a74-4098-8b76-bb9635b678fc",
+                        "evidence--fbda3c71-676b-46a4-9c46-ab76ea6e056b",
+                        "evidence--2d254444-fbf8-4969-addd-80ac5c293f57"
                     ]
                 }
             }
@@ -267,7 +276,7 @@
             "task_types": [
                 "discovery"
             ],
-            "step_type": "single_task",
+            "step_type": "single_step",
             "outcome": "successful",
             "description": "Recover the original email described from the user",
             "start_time": "2020-10-15T01:01:01.000Z",
@@ -297,7 +306,21 @@
             "modified": "2022-05-06T01:01:01.000Z",
             "relationship_type": "based-on",
             "source_ref": "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f",
-            "target_ref": "email-message--0c57a381-2a17-5e61-8754-5ef96efb286c"
+            "target_ref": "observed-data--7c3502ce-a233-4e22-aaf9-e68ddbbdc111"
+        },
+        {
+            "type": "observed-data",
+            "spec_version": "2.1",
+            "id": "observed-data--7c3502ce-a233-4e22-aaf9-e68ddbbdc111",
+            "created_by_ref": "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c",
+            "created": "2017-02-28T19:37:11.213Z",
+            "modified": "2017-02-28T19:37:11.213Z",
+            "first_observed": "2023-03-10T21:37:11.213Z",
+            "last_observed": "2023-03-20T21:37:11.213Z",
+            "number_observed": 10,
+            "object_refs": [
+                "email-message--0c57a381-2a17-5e61-8754-5ef96efb286c"
+            ]
         },
         {
             "type": "task",
@@ -516,7 +539,7 @@
             "modified": "2020-10-19T01:01:01.000Z",
             "spec_version": "2.1",
             "name": "Perform more investigations",
-            "step_type": "parallel_task",
+            "step_type": "parallel_step",
             "priority": 8,
             "external_references": [],
             "owner": "identity--f069ebc5-563f-4709-bea1-2f1b4cf321d2",
@@ -802,12 +825,10 @@
             "name": "YARA signatures on suspicious binaries",
             "description": "Hunt: The data collected from internal systems during a hunt for additional context",
             "source": "YARA",
-            "evidence_refs": [
-                "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f"
-            ],
             "object_refs": [
                 "malware--d1c612bc-146f-4b65-b7b0-9a54a14150a4",
-                "identity--1621d4d4-b67d-41e3-9670-f01faf20d111"
+                "identity--1621d4d4-b67d-41e3-9670-f01faf20d111",
+                "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f"
             ],
             "extensions": {
                 "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
