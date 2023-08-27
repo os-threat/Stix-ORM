@@ -191,7 +191,9 @@ define
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-version,
-        plays obj-ref:content,
+        plays obj-ref:content;
+
+    identity
         plays x-mitre-modified-by-ref:modifier;
 
     # Relations

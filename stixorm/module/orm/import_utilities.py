@@ -551,6 +551,8 @@ def  embedded_relation(prop,
         logger.debug(f'deplist {dep_list}')
         if prop_type == 'relationship':
             prop_type = 'stix-core-relationship'
+        if prop_type == 'attack-identity':
+            prop_type = 'identity'
         prop_var = '$' + prop_type + inc_add
         prop_var_list.append(prop_var)
         match += ' ' + prop_var + ' isa ' + prop_type + ', has stix-id ' + '"' + prop_value + '";\n'

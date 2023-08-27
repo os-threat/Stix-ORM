@@ -26,7 +26,7 @@ from timeit import default_timer as timer
 
 #from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 #logger.addHandler(logging.StreamHandler())
 
@@ -170,12 +170,12 @@ def backdoor_add_dir(dirpath):
                         id_list.append(temp_id)
 
                     dep_obj = dict_to_typeql(element, import_type)
-                    logger.debug('----------------------------------------------------------------------------------------------------')
-                    myobj1 = parse(element, False, import_type)
-                    logger.debug(myobj1.serialize(pretty=True))
-                    logger.debug(f'\n================\n{dep_obj["dep_list"]}')
-                    logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
-                    logger.debug('----------------------------------------------------------------------------------------------------')
+                    # logger.debug('----------------------------------------------------------------------------------------------------')
+                    # myobj1 = parse(element, False, import_type)
+                    # logger.debug(myobj1.serialize(pretty=True))
+                    # logger.debug(f'\n================\n{dep_obj["dep_list"]}')
+                    # logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
+                    # logger.debug('----------------------------------------------------------------------------------------------------')
                     layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
 
     logger.debug(f'missing {missing}, cyclical {cyclical}')
@@ -1599,6 +1599,7 @@ if __name__ == '__main__':
     poison = "poisonivy.json"
     incident = "test/data/os-threat/incident"
     incident_test = "test/data/os-threat/test"
+    incident_test2 = "test/data/os-threat/test2"
     threattest = "history/"
 
     id_list = ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46', 'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265', 'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559', 'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6', 'attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5', 'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
@@ -1612,6 +1613,7 @@ if __name__ == '__main__':
     #load_file_list(path1, [f30, f21])
     load_file(incident + "/human_trigger.json")
     #load_file(incident_test + "/incident.json")
+    #load_file(incident_test2 + "/test.json")
     #check_object(mitre + "attack_objects.json")
     #load_file(reports + poison)
     print("=====")

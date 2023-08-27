@@ -192,8 +192,7 @@ define
         plays evidence-refs:incident,
         plays notes-refs:incident,
         plays impact-refs:incident,
-	    plays  occurence-ext:incident-core,
-        plays derived-from:raw-material;
+	    plays  occurence-ext:incident-core;
     # incident core extension embedded relation
     occurence-ext sub extensions,
         relates occurence as sco,
@@ -516,7 +515,8 @@ define
 	    plays led-to:subsequent,
 	    plays impacts:issue,
 	    plays contact-for:issue,
-	    plays detected:issue;
+	    plays detected:issue,
+        plays derived-from:raw-material;
 
     indicator
         plays detected:method,
