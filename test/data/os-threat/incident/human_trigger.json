@@ -50,15 +50,9 @@
             "description": "A user has reported a suspicious phishing email, possibly a company wide campaign",
             "extensions": {
                 "extension-definition--ef765651-680c-498d-9894-99799f2fa126": {
-                    "extension_type": "property-extension",
-                    "investigation_status": "new",
-                    "blocked": false,
-                    "malicious": true,
-                    "criticality": 80,
-                    "determination": "suspected",
-                    "incident_types": [
-                        "hosting-phishing-sites",
-                        "theft-access-credentials",
+                    "extension_
+
+                    tials",
                         "known-malware"
                     ],
                     "impacted_entity_counts": {
@@ -76,7 +70,7 @@
                     "event_refs": [
                         "event--84ede1e8-aa78-4c63-98cd-02f4387fc1ec",
                         "event--44728578-a89c-41de-b934-17fec1bd30d7",
-                        "event--84ede1e8-aa78-4c63-98cd-02f4387fc1ec"
+                        "event--5276275e-73f3-41b1-b241-7947e8868c03"
                     ],
                     "task_refs": [
                         "task--1ffe4af4-3b18-4ee2-8279-0d1264efd0fe",
@@ -117,7 +111,7 @@
         },
         {
             "type": "event",
-            "id": "event--84ede1e8-aa78-4c63-98cd-02f4387fc1ec",
+            "id": "event--5276275e-73f3-41b1-b241-7947e8868c03",
             "created": "2020-10-19T01:01:01.000Z",
             "modified": "2020-10-19T02:12:23.000Z",
             "spec_version": "2.1",
@@ -1129,7 +1123,7 @@
                 "relationship--dddcb3d1-0e56-4170-97e2-eb79da432cbb",
                 "task--2d254737-fbf8-4969-addd-80ac5c293f57",
                 "relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa6026666",
-                "event--84ede1e8-aa78-4c63-98cd-02f4387fc1ec",
+                "event--5276275e-73f3-41b1-b241-7947e8868c03",
                 "url--364fe3e5-b1f4-5ba3-b951-ee5983b3538d",
                 "url--364fe3e5-b1f4-5ba3-b951-ee5983b3538e",
                 "observed-data--cf8eaa41-6f4c-482e-89b9-9cd2d6a83cb1",

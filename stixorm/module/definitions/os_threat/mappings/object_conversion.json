@@ -77,6 +77,50 @@
     "icon":""
   },
   {
+    "type":  "task",
+    "typeql": "start-step",
+    "class": "Task",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "task",
+    "typeql": "end-step",
+    "class": "Task",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "task",
+    "typeql": "single-step",
+    "class": "Task",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "task",
+    "typeql": "parallel-step",
+    "class": "Task",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
     "type":  "availability",
     "typeql": "availability",
     "class": "Availability",

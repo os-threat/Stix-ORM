@@ -2,7 +2,7 @@
   "status": "status",
   "changed_objects": "",
   "description": "description",
-  "detection_methods": "detection-methods,",
+  "detection_methods": "detection-methods",
   "detection_rule": "detection-rule",
   "detection_system": "detection-system",
   "end_time": "end-time",

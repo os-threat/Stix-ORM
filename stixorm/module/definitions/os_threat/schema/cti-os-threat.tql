@@ -32,7 +32,7 @@ define
         owns start-time,
         owns start-time-fidelity,
         owns event-seq,
-        owns detection-emthods,
+        owns detection-methods,
         owns detection-system,
         owns detection-rule,
         plays blocks:stops,
@@ -542,7 +542,7 @@ define
     start-time-fidelity sub stix-attribute-string;
     event-types sub stix-attribute-string;
     goal sub stix-attribute-string;
-    detection-emthods sub stix-attribute-string;
+    detection-methods sub stix-attribute-string;
     detection-system sub stix-attribute-string;
     detection-rule sub stix-attribute-string;
     state-change-type sub stix-attribute-string;

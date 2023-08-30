@@ -2,8 +2,8 @@ import json
 import os
 import datetime
 
-import dateutil.parser
-from dateutil.parser import *
+#import dateutil.parser
+#from dateutil.parser import *
 from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
 from typedb.client import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
@@ -378,8 +378,9 @@ def test_get_del_dir_statements(dirpath):
 def test_get_delete(fullname):
     #load_file(fullname)
     id_list = get_stix_ids()
-    print("\n\n=============\n-------------\n$$$$$$$$$$$$$$$$$$$$$\n")
-    for obj_id in id_list:
+    print(f"\n\n=============\n------{id_list}-------\n$$$$$$$$$$$$$$$$$$$$$\n")
+    for inc, obj_id in enumerate(id_list):
+        print(f'\n==========\n---------- {inc} of {len(obj_id)} -------\n===========')
         query_id(obj_id)
     print(f'id list -> {id_list}')
 
@@ -1606,7 +1607,7 @@ if __name__ == '__main__':
     # 019fde1c-
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
-    stid1 = "file--fb0419a8-f09c-57f8-be64-71a80417591c"
+    stid1 = "task--1ffe4af4-3b18-4ee2-8279-0d1264efd0fe"
     stid2 = "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"
     stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     #test_initialise()
@@ -1625,7 +1626,7 @@ if __name__ == '__main__':
     #check_dir(incident)
     #test_delete(data_path+file1)
     #test_get(stid1)
-    #test_get_delete(path2 + "attack_objects.json")
+    #test_get_delete(incident)
     #test_initialise()
     #test_delete_dir(path1)
     #clean_db()
