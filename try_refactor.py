@@ -1608,11 +1608,11 @@ if __name__ == '__main__':
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
     stid1 = "task--1ffe4af4-3b18-4ee2-8279-0d1264efd0fe"
-    stid2 = "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"
+    stid2 = "sighting--55183679-1f1d-4824-af63-72ec2ef855a0"
     stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     #test_initialise()
     #load_file_list(path1, [f30, f21])
-    load_file(incident + "/human_trigger.json")
+    #load_file(incident + "/human_trigger.json")
     #load_file(incident_test + "/incident.json")
     #load_file(incident_test2 + "/test.json")
     #check_object(mitre + "attack_objects.json")
@@ -1620,7 +1620,7 @@ if __name__ == '__main__':
     print("=====")
     print("=====")
     print("=====")
-    #query_id(stid1)
+    query_id(stid2)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
     #check_dir(incident)

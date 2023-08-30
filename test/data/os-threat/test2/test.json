@@ -1,28 +1,26 @@
 [
         {
-            "type": "event",
-            "id": "event--5276275e-73f3-41b1-b241-7947e8868c03",
-            "created": "2020-10-19T01:01:01.000Z",
-            "modified": "2020-10-19T02:12:23.000Z",
+            "type": "indicator",
             "spec_version": "2.1",
-            "name": "Potential Phishing email",
-            "status": "occurred",
-            "description": "A suspicious email was reported",
-            "start_time": "2020-10-15T06:00:00.000Z",
-            "start_time_fidelity": "day",
-            "end_time": "2020-10-15T06:00:00.000Z",
-            "end_time_fidelity": "day",
-            "event_seq": 1,
-            "subevents": [],
-            "detection_methods": [
-                "user-report"
+            "id": "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f",
+            "created": "2014-06-29T13:49:37.079Z",
+            "modified": "2014-06-29T13:49:37.079Z",
+            "name": "Malicious url with phishing",
+            "description": "A suspicious phishing webpage",
+            "indicator_types": [
+                "suspicious-activity"
             ],
-            "detection_system": "ServiceNOW",
-            "detection_rule": "the sender looks suspicious",
-            "extensions": {
-                "extension-definition--4ca6de00-5b0d-45ef-a1dc-ea7279ea910e": {
-                    "extension_type": "new-sdo"
-                }
-            }
+            "pattern": "[url:value LIKE 'http://%/login?user=%&tkn=%&z=%'] OR [domain:value = 'officez365.microsoftz.com']",
+            "pattern_type": "stix",
+            "valid_from": "2014-06-29T13:49:37.079Z"
+        },
+
+        {
+            "type": "sighting",
+            "spec_version": "2.1",
+            "id": "sighting--55183679-1f1d-4824-af63-72ec2ef855a0",
+            "created": "2020-10-19T01:01:01.000Z",
+            "modified": "2020-10-19T01:01:01.000Z",
+            "sighting_of_ref": "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f"
         }
 ]

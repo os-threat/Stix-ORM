@@ -50,9 +50,15 @@
             "description": "A user has reported a suspicious phishing email, possibly a company wide campaign",
             "extensions": {
                 "extension-definition--ef765651-680c-498d-9894-99799f2fa126": {
-                    "extension_
-
-                    tials",
+                    "extension_type": "property-extension",
+                    "investigation_status": "new",
+                    "blocked": false,
+                    "malicious": true,
+                    "criticality": 80,
+                    "determination": "suspected",
+                    "incident_types": [
+                        "hosting-phishing-sites",
+                        "theft-access-credentials",
                         "known-malware"
                     ],
                     "impacted_entity_counts": {
