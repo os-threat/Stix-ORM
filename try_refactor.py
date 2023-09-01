@@ -1612,7 +1612,7 @@ if __name__ == '__main__':
     stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     #test_initialise()
     #load_file_list(path1, [f30, f21])
-    #load_file(incident + "/human_trigger.json")
+    load_file(incident + "/human_trigger.json")
     #load_file(incident_test + "/incident.json")
     #load_file(incident_test2 + "/test.json")
     #check_object(mitre + "attack_objects.json")
@@ -1620,7 +1620,7 @@ if __name__ == '__main__':
     print("=====")
     print("=====")
     print("=====")
-    query_id(stid2)
+    #query_id(stid2)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
     #check_dir(incident)

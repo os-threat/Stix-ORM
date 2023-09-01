@@ -44,7 +44,7 @@ def convert_ans_to_stix(query, answer_iterator, r_tx, import_type: ImportType):
     """
     res = convert_ans_to_res(answer_iterator, r_tx, import_type)
     path = pathlib.Path(__file__).parent.joinpath("export_test.json")
-    #with open(str(path), 'w') as outfile:
+    # with open(str(path), 'w') as outfile:
     #    json.dump(res, outfile)
     logger.debug(f'got res, now for stix')
     stix_dict = convert_res_to_stix(res, import_type)
@@ -81,7 +81,7 @@ def convert_res_to_stix(res: List[dict], import_type: ImportType):
             stix_dict = make_sdo(obj, import_type)
         elif obj_type in auth["tql_types"]["sco"]:
             stix_dict = make_sco(obj, import_type)
-        elif tql_type in auth["tql_types"]["sro"] or tql_type == 'relationship':
+        elif obj_type in auth["tql_types"]["sro"] or tql_type == 'relationship':
             stix_dict = make_sro(obj, import_type)
         elif obj_type in auth["tql_types"]["meta"] or obj_type == "statement-marking":
             stix_dict = make_meta(obj, import_type)
@@ -161,29 +161,32 @@ def make_sro(res, import_type: ImportType):
     auth = auth_factory.get_auth_for_import(import_type)
     stix_dict = {}
     # 2.A) get the typeql properties and relations
-    sro_tql_name = res["type"]
-    sro_type = ""
+    sro_tql_name = res["T_name"]
+    sro_type = res["type"]
+    
     props = res["has"]
     relns = res["relns"]
     sro_sub_rel = ""
-    if sro_tql_name in auth["tql_types"]["relations_sro_roles"]:
-        sro_sub_rel = sro_tql_name
-        sro_type = "relationship"
-    elif sro_tql_name == "relationship":
-        sro_type = "relationship"
+    if sro_tql_name == "sighting":
+        sro_type = "sighting"
+        
+    elif sro_type == "relationship":
         for has in props:
             if has["typeql"] == "relationship-type":
                 sro_sub_rel = has["value"]
                 logger.debug(f'found relationship type -> {sro_sub_rel}\n')
                 break
+    elif sro_tql_name in auth["tql_types"]["relations_sro_roles"]:
+        sro_sub_rel = sro_tql_name
+        sro_type = "relationship"
     else:
-        sro_type = "sighting"
+        sro_type = "unknown"
     #
     # Note, Issue, cannot yet tell what to do with a procedure
     #
     attack_object = False
     uses_relation = False
-    if sro_tql_name == "procedire":
+    if sro_tql_name == "procedure":
         sro_sub_rel = sro_tql_name
         is_procedure = True
     else:
