@@ -1,8 +1,24 @@
 {
-  "individual" : "individual-count",
+  "computers-mobile" : "computers-mobile-count",
+  "computers-personal" : "computers-personal-count",
+  "computers-server" : "computers-server-count",
+  "customer" : "customer-count",
+  "customer-individual" : "customer-individual-count",
+  "customer-organization" : "customer-organization-count",
+  "domain-controller" : "domain-controller-count",
+  "employee" : "employee-count",
   "group" : "group-count",
-  "system" : "system-count",
+  "ics-actuator" : "ics-actuator-count",
+  "ics-engineering-workstation" : "ics-engineering-workstation-count",
+  "ics-historian" : "ics-historian-count",
+  "ics-hmi" : "ics-hmi-count",
+  "ics-other" : "ics-other-count",
+  "ics-plc" : "ics-plc-count",
+  "ics-safety-system" : "ics-safety-system-count",
+  "ics-sensor" : "ics-sensor-count",
+  "individual" : "individual-count",
+  "network-device" : "network-device-count",
   "organization" : "organization-count",
-  "class" : "class-count",
-  "unknown" : "class-count"
+  "system" : "system-count",
+  "vehicles" : "vehicles-count"
 }

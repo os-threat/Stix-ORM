@@ -1,0 +1,7 @@
+match
+    $a isa x509-certificate,
+        has stix-id   "x509-certificate--b595eaf0-0b28-5dad-9e8e-0fab9c1facc9",
+        has $b;
+    $c isa stix-sub-object,
+        has $d;
+    $e (owner:$a, pointed-to:$c) isa embedded;

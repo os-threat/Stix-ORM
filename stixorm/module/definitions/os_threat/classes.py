@@ -183,12 +183,28 @@ class EntityCountObject(_STIXBase21):
     `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
     """
     _properties = OrderedDict([
-        ('individual', IntegerProperty()),
+        ('computers-mobile', IntegerProperty()),
+        ('computers-personal', IntegerProperty()),
+        ('computers-server', IntegerProperty()),
+        ('customer', IntegerProperty()),
+        ('customer-individual', IntegerProperty()),
+        ('customer-organization', IntegerProperty()),
+        ('domain-controller', IntegerProperty()),
+        ('employee', IntegerProperty()),
         ('group', IntegerProperty()),
-        ('system', IntegerProperty()),
+        ('ics-actuator', IntegerProperty()),
+        ('ics-engineering-workstation', IntegerProperty()),
+        ('ics-historian', IntegerProperty()),
+        ('ics-hmi', IntegerProperty()),
+        ('ics-other', IntegerProperty()),
+        ('ics-plc', IntegerProperty()),
+        ('ics-safety-system', IntegerProperty()),
+        ('ics-sensor', IntegerProperty()),
+        ('individual', IntegerProperty()),
+        ('network-device', IntegerProperty()),
         ('organization', IntegerProperty()),
-        ('class', IntegerProperty()),
-        ('unknown', IntegerProperty()),
+        ('system', IntegerProperty()),
+        ('vehicles', IntegerProperty()),
     ])
 
 
