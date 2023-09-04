@@ -1,0 +1,16 @@
+created,name,description,type,determination,investigation_status,detection_methods,impact_category,labels,outcome,relationship_type
+2020-10-19T01:01:01.000Z,Exchange Server Compromise,An Exchange server was compromised containing protected health information,incident,confirmed,open,['automated-tool'],,,,
+2020-10-19T01:01:01.000Z,,,impact,,,,confidentiality,,,
+2020-10-19T01:01:01.000Z,,,impact,,,,availability,['overall'],,
+2020-10-19T01:01:01.000Z,,,task,,,,,,successful,
+2020-10-19T01:01:01.000Z,,Per advice of security team it will be easier to start from a new server instead of cleaning the existing one.  The timeline for this is still pending.,task,,,,,,pending,
+2020-10-19T01:01:01.000Z,Replace Exchange Server,"Stand up new Exchange server, migrate data store",course-of-action,,,,,,,
+2020-10-19T01:01:01.000Z,Victim Corp,,identity,,,,,,,
+2021-03-26T01:01:01.000Z,Victim Corp Exchange Server,,infrastructure,,,,,,,
+,Exchange 2016,,software,,,,,,,
+2021-03-26T01:01:01.000Z,CVE-2021-26855,,vulnerability,,,,,,,
+2021-03-26T01:01:01.000Z,,,relationship,,,,,,,owns
+2021-03-26T01:01:01.000Z,,,relationship,,,,,,,used
+2020-10-19T01:01:01.000Z,,,relationship,,,,,,,targets
+2020-10-19T01:01:01.000Z,,,relationship,,,,,,,consists-of
+2020-10-19T01:01:01.000Z,,,relationship,,,,,,,has

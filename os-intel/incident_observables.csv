@@ -1,0 +1,9 @@
+created,name,description,type,investigation_status,determination,detection_methods,outcome,status
+2020-10-19T01:01:01.000Z,Sample Incident with Cyber-Observables,We blocked an email with a potentially malicious attachment but haven't had time to look to determine if Indicators should be generated from these or not,incident,new,suspected,['email-filter'],,
+2020-10-19T01:01:01.000Z,,An alert was triggered,task,,,,successful,
+2020-10-19T01:01:01.000Z,,Email with a malicious attachment,event,,,,blocked,occurred
+2020-10-19T01:01:01.000Z,,,sighting,,,,,
+,,,file,,,,,
+,,,email-addr,,,,,
+,,,email-message,,,,,
+2020-10-19T01:01:01.000Z,,,observed-data,,,,,

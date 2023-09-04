@@ -1,0 +1,27 @@
+created,name,description,type,investigation_status,determination,detection_methods,impact_category,labels,outcome,status,relationship_type
+2020-10-16T01:01:01.000Z,Sample PII Incident,"A laptop with an encrypted laptop that contains PII records for 123,456 individuals was reported stolen.  Per the employee they believe it was unlocked at the time of the theft as they had it open working on other tasks while at a coffee shop when it was taken from their table.",incident,open,suspected,['user-reporting'],,,,,
+2020-10-17T01:01:01.000Z,,,impact,,,,confidentiality,,,,
+2020-10-17T01:01:01.000Z,,,impact,,,,availability,['overall'],,,
+2020-10-17T01:01:01.000Z,,,impact,,,,integrity,,,,
+2020-10-17T01:01:01.000Z,,"The laptop was encrypted, but it is unclear if this is actually preventing the thief from exacting information as the device was unlocked.",task,,,,,,unknown,,
+2020-10-17T01:01:01.000Z,,Security was alerting the theft of equipment,task,,,,,,successful,,
+2020-10-17T01:01:01.000Z,,Security was alerting the theft of equipment,task,,,,,,successful,,
+2020-10-17T01:01:01.000Z,,The laptop was determined to have PII so a potential breach was declared,task,,,,,,successful,,
+2020-10-17T01:01:01.000Z,,"Found the laptop contained 123,456 records and was unlocked when stolen so this data has a high probability of being exposed",task,,,,,,successful,,
+2020-10-17T01:01:01.000Z,,Police were contacted regarding the theft of the laptop and are working with the coffee shop to identify the using security footage,task,,,,,,successful,,
+2020-10-17T01:01:01.000Z,,PII Breach report was filed per regulations,task,,,,,,successful,,
+2020-10-17T01:01:01.000Z,,A thief stole the encrypted laptop from a table at a coffee shop while it was unlocked,event,,,,,,,occurred,
+2020-10-17T01:01:01.000Z,,,sighting,,,,,,,,
+2020-10-16T01:01:01.000Z,,A fake coffee shop,location,,,,,,,,
+2020-10-16T01:01:01.000Z,Laptop or Tablet,Gain unauthorized access to a laptop or tablet to acquire data,attack-pattern,,,,,,,,
+2020-10-16T01:01:01.000Z,Contact Contacterson,A point of contact for the incident.,identity,,,,,,,,
+2020-10-16T01:01:01.000Z,Encrypt Portable Devices,Encrypt all portable devices to protect them in case of loss of control.,course-of-action,,,,,,,,
+2020-10-16T01:01:01.000Z,Contact Law Enforcement Regarding Theft,When physical equipment is stolen contact local law enforcement in order to potentially regain custody of it.,course-of-action,,,,,,,,
+2020-10-19T01:01:01.000Z,,,relationship,,,,,,,,located-at
+2020-10-19T01:01:01.000Z,,,relationship,,,,,,,,contact-for
+2020-10-16T01:01:01.000Z,Detective Anderson,The local law enforcement detective assigned to the case.,identity,,,,,,,,
+2020-10-16T01:01:01.000Z,Fake Local Law Enforcement Agency,A fake local law enforcement agency.,identity,,,,,,,,
+2020-10-19T01:01:01.000Z,,,relationship,,,,,,,,member-of
+2020-10-19T01:01:01.000Z,,,relationship,,,,,,,,uses
+2020-10-19T01:01:01.000Z,,,relationship,,,,,,,,uses
+2020-10-19T01:01:01.000Z,,,relationship,,,,,,,,contact-for
