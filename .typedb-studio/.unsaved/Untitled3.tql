@@ -1,7 +1,9 @@
 match
-    $a isa x509-certificate,
-        has stix-id   "x509-certificate--b595eaf0-0b28-5dad-9e8e-0fab9c1facc9",
-        has $b;
-    $c isa stix-sub-object,
-        has $d;
-    $e (owner:$a, pointed-to:$c) isa embedded;
+   $impact isa impact,
+         has stix-id $stix-id;
+   $Sub-Object0 isa stix-sub-object,
+         has information-type $information_type;
+   (owner:$impact, pointed-to:$Sub-Object0) isa embedded;
+   $information_type "credentials-user";
+   get $stix-id;
+

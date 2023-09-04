@@ -48,7 +48,7 @@ marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
           "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
 
-get_ids = 'match $ids isa stix-id;'
+get_ids = 'match $stix-id isa stix-id;'
 
 
 test_id = "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff"
@@ -410,19 +410,20 @@ def query_id(stixid):
     print(f'del_tql -> {del_tql}')
 
 
-def get_stix_ids():
+def get_stix_ids(get_id_query = get_ids):
     """ Get all the stix-ids in a database, should be moved to typedb_lib file
 
     Returns:
         id_list : list of the stix-ids in the database
     """
+    query = get_id_query
     g_uri = connection["uri"] + ':' + connection["port"]
     id_list = []
     with TypeDB.core_client(g_uri) as client:
         with client.session(connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.READ) as read_transaction:
-                answer_iterator = read_transaction.query().match(get_ids)
-                ids = [ans.get("ids") for ans in answer_iterator]
+                answer_iterator = read_transaction.query().match(query)
+                ids = [ans.get("stix-id") for ans in answer_iterator]
                 for sid_obj in ids:
                     sid = sid_obj.get_value()
                     if sid in marking:
@@ -1512,6 +1513,246 @@ def sro_icon(stix_object):
 def meta_icon(stix_object):
     return "marking-definition", stix_object.get("definition_type", "")
 
+###################################################################################
+#
+#  Build TypeDB Source
+#
+#############################################################################
+
+compare = {
+    "GT" : " > ",
+    "LT": " < ",
+    "EQ": " ",
+    "GE": " >= ",
+    "LE": " <= ",
+    "NE": " != "
+}
+
+def get_list(stix_id_list):
+    '''
+    TypeDBSource Method
+    To be poarallelised and sped-up by Denis, main
+
+    Args:
+        - stix_id_list ([stix-id]) - a list of valid stix-id's that exists in the database
+
+    Returns
+        - list of stix objects or an error message
+    '''
+    obj_list = []
+    typedb = TypeDBSource(connection, import_type)
+    for stix_id in stix_id_list:
+        obj = typedb.get(stix_id)
+        obj_list.append(obj)
+
+    return obj_list
+
+
+
+
+def get_objects(obj, properties, embedded=[], sub_prop=[], import_type=import_type):
+    """Interface for getting one or more STIX objects from TypeDB.
+
+    Can be based on object tpe, with property constraints, embedded and sub-object constraints
+
+    Args:
+        - obj_typeql (string) - a valid Stx-ORM object that exists in the database
+        - properties ([dict]) - a list of dicts providing comparisons between properties and constants
+                                  - dict:
+                                          - property-name - a TypeDB property
+                                          - comparator - a two letter comparison
+                                          - constant - a constant against which the property value is compared
+        - embedded([stix-id]) - a list of valid stix-ids that exist in the database
+        - sub_prop([dict]) - a list of valid stix-ids that exist in the database
+                                  - dict:
+                                          - sub-object typeql name
+                                          - property-name - a TypeDB property
+                                          - comparator - a two letter comparison
+                                          - constant - a constant against which the property value is compared
+
+    """
+    id_list = []
+    logger.debug("----------------------- Incoming Definition --------------------------------------")
+    logger.debug(f"object is -> {obj}")
+    for prop in properties:
+        logger.debug(f"prop -> {prop}")
+    logger.debug(f"embedded is -> {embedded}")
+    for sub in sub_prop:
+        logger.debug(f"sub_prop -> {sub}")
+    match = _get_objects_tql(obj, properties, embedded, sub_prop, import_type)
+    logger.debug("------------------- Resulting Match Statement ------------------------------------------")
+    logger.debug(f"match is -> \n{match}")
+    logger.debug("-------------------------------------------------------------")
+    id_list = get_stix_ids(match)
+    obj_list = get_list(id_list)
+    return obj_list
+
+
+
+def test_get_objects():
+    # 0. Load the human_trigger.json file into typedb
+    #load_file(incident + "/human_trigger.json")
+    # 1. Find incident created by identity
+    # Return -> "incident--1a074418-9248-4a21-9918-a79d0f1dbc5b"
+    obj = "incident"
+    properties = []
+    embedded = [
+        "identity--2242662b-d581-4864-8696-fff719dc0500"
+    ]
+    sub_prop= []
+    print("\n***** Test Incident - 1 ************")
+    test_result  = get_objects(obj, properties, embedded, sub_prop, import_type)
+    print(test_result)
+
+    # 2. Find Email Address with Property  Equal to constant
+    # Return -> "email-addr--9b7e29b3-fd8d-562e-b3f0-8fc8134f5dda"
+    obj = "email-addr"
+    properties = [{
+        "prop_name": "value",
+        "comparator" : "EQ",
+        "prop_value": "admin@microsft.support.com"
+    }]
+    embedded = []    
+    sub_prop= []
+    print("\n***** Test Identity - 2 property equals ************")
+    test_result  = get_objects(obj, properties, embedded, sub_prop, import_type)
+    print(test_result)
+
+    # 3. Find identity where Proeprty is Not Equal to Constant
+    # Return -> { $stix-id "identity--1621d4d4-b67d-41e3-9670-f01faf20d111" isa stix-id; }
+    #           { $stix-id "identity--2242662b-d581-4864-8696-fff719dc0500" isa stix-id; }
+    #           { $stix-id "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c" isa stix-id; }
+    #           { $stix-id "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5" isa stix-id; }
+    obj = "identity"
+    properties = [{
+        "prop_name": "identity_class",
+        "comparator" : "NE",
+        "prop_value": "individual"
+    }]
+    embedded = []    
+    sub_prop= []
+    print("\n***** Test Identity - 3 proeprty not equals ************")
+    test_result  = get_objects(obj, properties, embedded, sub_prop, import_type)
+    print(test_result)
+
+    # 4. Find identity where both of two Property's EQ Constants
+    # Return -> { $stix-id "identity--2242662b-d581-4864-8696-fff719dc0500" isa stix-id; }
+    obj = "identity"
+    properties = [{
+        "prop_name": "identity_class",
+        "comparator" : "EQ",
+        "prop_value": "organization"
+    },
+    {
+        "prop_name": "name",
+        "comparator" : "EQ",
+        "prop_value": "OS Threat"
+    }]
+    embedded = []    
+    sub_prop= []
+    print("\n***** identity Test -  two Property EQ ************")
+    test_result  = get_objects(obj, properties, embedded, sub_prop, import_type)
+    print(test_result)
+
+    # 5. Find attack-pattern where one Ext Ref sub-object has a Property EQ Constant --> Mitre ATT&CK object
+    # Return -> { $stix-id "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7" isa stix-id; }
+    #           { $stix-id "attack-pattern--9db0cf3a-a3c9-4012-8268-123b9db6fd82" isa stix-id; }
+    
+    obj = "attack-pattern"
+    sub_prop = [{
+        "prop_name": "source_name",
+        "comparator" : "EQ",
+        "prop_value": "mitre-attack"
+    }]
+    embedded = []    
+    properties = []
+    print("\n***** Attack-Pattern Test - Ext Ref property EQ ************")
+    test_result  = get_objects(obj, properties, embedded, sub_prop, import_type)
+    print(test_result)
+
+
+    # 6. Find impact where a property of an Extension equals a contant
+    # Return -> { $stix-id "impact--1032f48b-28d1-451f-970e-78b736db8e13" isa stix-id; }
+    obj = "impact"
+    sub_prop = [{
+        "prop_name": "information_type",
+        "comparator" : "EQ",
+        "prop_value": "credentials-user"
+    }]
+    embedded = []    
+    properties = []
+    print("\n***** impact Test - Extension proeprty equals ************")
+    test_result  = get_objects(obj, properties, embedded, sub_prop, import_type)
+    print(test_result)
+
+
+
+def _get_objects_tql(obj, properties, embedded=[], sub_prop=[], import_type=import_type):
+    """Function to return the typeQL for a Get Objects call.
+
+    Can be based on object tpe, with property constraints, embedded and sub-object constraints
+
+    Args:
+        - obj_typeql (string) - a valid Stx-ORM object that exists in the database
+        - properties ([dict]) - a list of dicts providing comparisons between properties 
+                    with stix json property names (not typeql names) and constants
+                                  - dict:
+                                          - property-name - a TypeDB property
+                                          - comparator - a two letter comparison
+                                          - constant - a constant against which the property value is compared
+        - embedded([stix-id]) - a list of valid stix-ids that exist in the database
+        - sub_prop([dict]) - a list of valid stix-ids that exist in the database
+                                  - dict:
+                                          - sub-object typeql name
+                                          - property-name - a TypeDB property
+                                          - comparator - a two letter comparison
+                                          - constant - a constant against which the property value is compared
+
+    """
+    auth = authorised_mappings(import_type)
+    # object match statement
+    obj_tql = auth["objects"][obj]
+    obj_var = "$" + obj
+    match = "match\n   " + obj_var + " isa " + obj +",\n         has stix-id $stix-id;\n"
+    value = ""
+
+    # object properties
+    for prop in properties:
+        prop_var = "$" + prop["prop_name"]
+        match += "   " + obj_var + " has " + obj_tql[prop["prop_name"]] + " " + prop_var + ";\n"
+        value += "   " + prop_var + compare[prop["comparator"]] + val_tql(prop["prop_value"]) + ";\n"
+
+    # embedded properties
+    for inc, embed in enumerate(embedded):
+        prop_var = "$" + "Stix-Object" + str(inc)
+        match += "   "  + prop_var + ' isa stix-core-object,\n' 
+        match += "         "  + 'has stix-id "' + embed + '";\n'
+        value += "   "  + "(owner:" +obj_var + ", pointed-to:" + prop_var +  ") isa embedded;\n"
+
+    sub_obj_props = {}
+    print(type(auth["sub_objects"]))
+    for raw_key, raw_sub in auth["sub_objects"].items():
+        for prop_key, prop_value in raw_sub.items():
+            if prop_key not in sub_obj_props:
+                sub_obj_props[prop_key] = prop_value
+
+    # sub-object properties
+    for inc, sub in enumerate(sub_prop):
+         sub_var = "$Sub-Object" + str(inc) 
+         prop_var = "$" + sub["prop_name"]
+         prop_name = sub_obj_props[sub["prop_name"]]
+         match +=  "   "  + sub_var + " isa stix-sub-object,\n"
+         match +=  "         "  + "has " + prop_name + " " + prop_var + ";\n"
+         match +=  "   "  + "(owner:" + obj_var + ", pointed-to:" + sub_var + ") isa embedded;\n"
+         value +=  "   "  + prop_var + compare[sub["comparator"]] + val_tql(sub["prop_value"]) + ";\n"
+
+    get = "   get $stix-id;\n"
+    return match + value + get
+
+
+
+
+##############################################################################
 
 # if this file is run directly, then start here
 if __name__ == '__main__':
@@ -1612,7 +1853,7 @@ if __name__ == '__main__':
     stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
     #test_initialise()
     #load_file_list(path1, [f30, f21])
-    load_file(incident + "/human_trigger.json")
+    #load_file(incident + "/human_trigger.json")
     #load_file(incident_test + "/incident.json")
     #load_file(incident_test2 + "/test.json")
     #check_object(mitre + "attack_objects.json")
@@ -1649,3 +1890,4 @@ if __name__ == '__main__':
     #test_get_embedded("report--f2b63e80-b523-4747-a069-35c002c690db")
     #try_subgraph_get(reports + poison)
     #try_nodes_and_edges()
+    test_get_objects()

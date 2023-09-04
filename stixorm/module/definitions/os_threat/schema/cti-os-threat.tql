@@ -182,6 +182,7 @@ define
         plays impact-counter:counters;
 
 
+
     incident-score sub stix-sub-object,
         owns name,
         owns description,
@@ -596,28 +597,28 @@ define
     min-amount sub stix-attribute-integer;
     score-value sub stix-attribute-integer;
     int-priority sub stix-attribute-integer;
-    computers-mobile-count
-    computers-personal-count
-    computers-server-count
-    customer-count
-    customer-individual-count
-    customer-organization-count
-    domain-controller-count
-    employee-count
-    group-count
-    ics-actuator-count
-    ics-engineering-workstation-count
-    ics-historian-count
-    ics-hmi-count
-    ics-other-count
-    ics-plc-count
-    ics-safety-system-count
-    ics-sensor-count
-    individual-count
-    network-device-count
-    organization-count
-    system-count
-    vehicles-count
+    computers-mobile-count sub stix-attribute-integer;
+    computers-personal-count sub stix-attribute-integer;
+    computers-server-count sub stix-attribute-integer;
+    customer-count sub stix-attribute-integer;
+    customer-individual-count sub stix-attribute-integer;
+    customer-organization-count sub stix-attribute-integer;
+    domain-controller-count sub stix-attribute-integer;
+    employee-count sub stix-attribute-integer;
+    group-count sub stix-attribute-integer;
+    ics-actuator-count sub stix-attribute-integer;
+    ics-engineering-workstation-count sub stix-attribute-integer;
+    ics-historian-count sub stix-attribute-integer;
+    ics-hmi-count sub stix-attribute-integer;
+    ics-other-count sub stix-attribute-integer;
+    ics-plc-count sub stix-attribute-integer;
+    ics-safety-system-count sub stix-attribute-integer;
+    ics-sensor-count sub stix-attribute-integer;
+    individual-count sub stix-attribute-integer;
+    network-device-count sub stix-attribute-integer;
+    organization-count sub stix-attribute-integer;
+    system-count sub stix-attribute-integer;
+    vehicles-count sub stix-attribute-integer;
 
 
     end-time sub stix-attribute-timestamp;
