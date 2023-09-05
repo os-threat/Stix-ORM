@@ -1,8 +1,0 @@
-match 
-    $incident isa incident, has stix-id "incident--1a074418-9248-4a21-9918-a79d0f1dbc5b",
-       has $a;
-    $ext isa stix-sub-object,
-       has $b;
-    $c (owner:$incident, pointed-to:$ext) isa embedded;
-    $sdo isa stix-domain-object, has $d;
-    $e (owner:$ext, pointed-to:$sdo) isa embedded;
