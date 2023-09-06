@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Stix-ORM.iml" filepath="$PROJECT_DIR$/.idea/Stix-ORM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/test_package.iml" filepath="$PROJECT_DIR$/.idea/test_package.iml" />
     </modules>
   </component>
 </project>
