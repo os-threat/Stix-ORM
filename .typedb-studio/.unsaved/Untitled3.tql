@@ -1,9 +1,0 @@
-match
-   $impact isa impact,
-         has stix-id $stix-id;
-   $Sub-Object0 isa stix-sub-object,
-         has information-type $information_type;
-   (owner:$impact, pointed-to:$Sub-Object0) isa embedded;
-   $information_type "credentials-user";
-   get $stix-id;
-

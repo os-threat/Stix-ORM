@@ -1591,7 +1591,7 @@ def get_objects(obj, properties, embedded=[], sub_prop=[], import_type=import_ty
 
 def test_get_objects():
     # 0. Load the human_trigger.json file into typedb
-    #load_file(incident + "/human_trigger.json")
+    load_file(incident + "/human_trigger.json")
     # 1. Find incident created by identity
     # Return -> "incident--1a074418-9248-4a21-9918-a79d0f1dbc5b"
     obj = "incident"
