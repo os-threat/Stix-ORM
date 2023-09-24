@@ -1,0 +1,17 @@
+created,name,description,type,determination,investigation_status,detection_methods,outcome,labels,impact_category,relationship_type
+2020-10-19T01:01:01.000Z,Sample Destruction with Unknown Recovery,"Two systems were hit, but we don't know how and are currently trying to find if it can be fixed while preparing to report on it",incident,confirmed,open,"['user-reporting', 'message-from-attacker']",,,,
+2020-10-19T01:01:01.000Z,,,task,,,,successful,,,
+2020-10-19T01:01:01.000Z,,,task,,,,successful,,,
+2020-10-19T01:01:01.000Z,,,task,,,,pending,,,
+2020-10-19T01:01:01.000Z,,,impact,,,,,['overall'],availability,
+2020-10-19T01:01:01.000Z,,,impact,,,,,,confidentiality,
+2020-10-19T01:01:01.000Z,,,impact,,,,,,confidentiality,
+2020-10-19T01:01:01.000Z,,,impact,,,,,,integrity,
+2020-10-19T01:01:01.000Z,,,impact,,,,,,integrity,
+2020-10-19T01:01:01.000Z,,,impact,,,,,,traceability,
+2020-10-19T01:01:01.000Z,Victim Corp,,identity,,,,,,,
+2016-04-06T20:03:48.000Z,Evil Org,The Evil Org threat actor group,threat-actor,,,,,,,
+2020-10-19T01:01:01.000Z,Enterprise Chat App,,infrastructure,,,,,,,
+2020-10-19T01:01:01.000Z,Electronic Health Record System,,infrastructure,,,,,,,
+2020-10-19T01:01:01.000Z,,,relationship,,,,,,,targets
+2020-10-19T01:01:01.000Z,,,relationship,,,,,,,attributed-to

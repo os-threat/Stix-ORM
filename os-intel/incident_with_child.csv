@@ -1,0 +1,8 @@
+created,name,description,type,investigation_status,determination,detection_methods,status,outcome,relationship_type
+2020-10-19T01:01:01.001Z,Stolen Laptop,Someone stole a laptop,incident,closed,confirmed,['user-report'],,,
+2020-10-19T01:01:01.000Z,Theft,A laptop was stolen,event,,,,occurred,,
+2020-10-19T01:01:01.000Z,,User alerted security,task,,,,,successful,
+2020-10-19T01:01:01.000Z,,,task,,,,,successful,
+2020-10-19T01:01:01.000Z,,,task,,,,,successful,
+2020-10-19T02:12:23.001Z,Determine if Stolen Laptop had PHI,A laptop was stolen that may have contained PHI.  Investigate and follow reporting rules as necessary.,incident,new,suspected,['user-report'],,,
+2020-10-19T02:12:23.000Z,,,relationship,,,,,,led-to
