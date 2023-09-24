@@ -758,17 +758,17 @@ def test_auth():
 ##################################################################################
 def test_feeds():
     osthreat = "data/os-threat/feed-example/example.json"
-    datetime1 = dateutil.parser.isoparse("2020-10-19T01:01:01.000Z")
-    datetime2 = dateutil.parser.isoparse("2020-10-20T01:01:01.000Z")
-    datetime3 = dateutil.parser.isoparse("2020-10-21T01:01:01.000Z")
-    typedb_source = TypeDBSource(connection, import_type)
-    typedb_sink = TypeDBSink(connection, True, import_type)
-    with open(osthreat, mode="r", encoding="utf-8") as f:
-        json_text = json.load(f)
-        # first lets create the feed
-        feed_id = create_feed(json_text[0], typedb_sink, datetime1)
-        print(f'feed id -> {feed_id}')
-        update_feed(feed_id, json_text[1], datetime2, typedb_source, typedb_sink)
+    # # datetime1 = dateutil.parser.isoparse("2020-10-19T01:01:01.000Z")
+    # # datetime2 = dateutil.parser.isoparse("2020-10-20T01:01:01.000Z")
+    # # datetime3 = dateutil.parser.isoparse("2020-10-21T01:01:01.000Z")
+    # typedb_source = TypeDBSource(connection, import_type)
+    # typedb_sink = TypeDBSink(connection, True, import_type)
+    # with open(osthreat, mode="r", encoding="utf-8") as f:
+    #     json_text = json.load(f)
+    #     # first lets create the feed
+    #     feed_id = create_feed(json_text[0], typedb_sink, datetime1)
+    #     print(f'feed id -> {feed_id}')
+    #     update_feed(feed_id, json_text[1], datetime2, typedb_source, typedb_sink)
 
 
 def update_feed(feed_id, local_list, loc_datetime, typedb_source, typedb_sink):
@@ -1268,8 +1268,18 @@ def nodes_and_edges(obj_list):
             edges = setup_edges(obj, edges)
         else:
             nodes, edges = setup_nodes(obj, nodes, edges)
+    check_icons = []
+    legend = []
+    for node in nodes:
+        if node["icon"] not in check_icons:
+            check_icons.append(node["icon"])
+            layer = {}
+            layer["icon"] = node["icon"]
+            layer["label"] = node["label"]
+            legend.append(layer)
     nodes_edges["nodes"] = nodes
     nodes_edges["edges"] = edges
+    nodes_edges["legend"] = legend
     return nodes_edges
 
 
@@ -1377,20 +1387,29 @@ def find_icon(stix_object, node):
 
 def sdo_icon(stix_object):
     sdo_type = stix_object["type"]
-    label = stix_object.get("name", "")
+    label = sdo_type
     icon_type = ""
     attack_type = ""
     attack_object = False if not stix_object.get("x_mitre_version", False) else True
     if attack_object:
         sub_technique = False if not stix_object.get("x_mitre_is_subtechnique", False) else True
-        for model in attack_models["mappings"]["object_conversion"]:
-            logger.debug(f'chacking models, type is {model["type"]}')
-            if model["type"] == sdo_type:
-                attack_type = model["typeql"]
-                logger.debug(f'attack type is {attack_type}')
-                if attack_type == "technique" and sub_technique:
-                    attack_type = "subtechnique"
-                break
+        if sdo_type[:7] == "x-mitre":
+            attack_type = sdo_type[8:]
+        elif sdo_type == "attack-pattern":
+            attack_type = "technique"
+            if sub_technique:
+                attack_type = "subtechnique"
+        elif sdo_type == "course-of-action":
+            attack_type = "mitigation"
+        elif sdo_type == "intrusion-set":
+            attack_type = "group"
+        elif sdo_type == "malware" or sdo_type == "tool":
+            attack_type = "software"
+        elif sdo_type == "campaign":
+            attack_type = "campaign"
+        else:
+            attack_type = "unknown"
+
         if "attack-" in attack_type:
             pass
         else:
@@ -1503,10 +1522,10 @@ def sro_icon(stix_object):
     sro_type = stix_object["type"]
     if sro_type == "sighting":
         icon_type = "sighting"
-        label = ""
+        label = "sighting"
     else:
         icon_type = "relationship"
-        label = stix_object.get("retlationship_type", "")
+        label = stix_object.get("retlationship_type", "relationship")
     return icon_type, label
 
 
@@ -1837,11 +1856,11 @@ if __name__ == '__main__':
     mitre = "test/data/mitre/check/"
     mitre_test = "data/mitre/latest/"
     osthreat = "data/os-threat/"
-    reports = "data/threat_reports/"
+    reports = "test/data/threat_reports/"
     poison = "poisonivy.json"
     incident = "test/data/os-threat/incident"
     incident_test = "test/data/os-threat/test"
-    incident_test2 = "test/data/os-threat/test2"
+    incident_adjust = "test/data/os-threat/incident_adjust"
     threattest = "history/"
 
     id_list = ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46', 'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265', 'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559', 'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6', 'attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5', 'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
@@ -1880,7 +1899,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    #backdoor_add_dir(incident_test)
+    backdoor_add_dir(incident_adjust)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)
@@ -1890,4 +1909,4 @@ if __name__ == '__main__':
     #test_get_embedded("report--f2b63e80-b523-4747-a069-35c002c690db")
     #try_subgraph_get(reports + poison)
     #try_nodes_and_edges()
-    test_get_objects()
+    #test_get_objects()

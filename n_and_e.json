@@ -16,7 +16,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "Poison Ivy"
+      "label": "malware"
     },
     {
       "id": "identity--81cade27-7df8-4730-836b-62d880e6d9d3",
@@ -33,7 +33,7 @@
         ]
       },
       "icon": "identity-organization",
-      "label": "FireEye, Inc."
+      "label": "identity"
     },
     {
       "id": "campaign--752c225d-d6f6-4456-9130-d9580fd4007b",
@@ -48,7 +48,7 @@
         "first_seen": "2008-01-07T00:00:00.000000Z"
       },
       "icon": "campaign",
-      "label": "admin@338"
+      "label": "campaign"
     },
     {
       "id": "campaign--d02a1560-ff69-49f4-ac34-919b8aa4b91e",
@@ -63,7 +63,7 @@
         "first_seen": "2009-10-26T00:00:00.000000Z"
       },
       "icon": "campaign",
-      "label": "th3bug"
+      "label": "campaign"
     },
     {
       "id": "campaign--721976f9-56d7-4749-8c69-b3ac7c315f05",
@@ -78,7 +78,7 @@
         "first_seen": "2009-12-14T00:00:00.000000Z"
       },
       "icon": "campaign",
-      "label": "menuPass"
+      "label": "campaign"
     },
     {
       "id": "attack-pattern--19da6e1c-69a8-4c2f-886d-d620d09d3b5a",
@@ -105,7 +105,7 @@
         ]
       },
       "icon": "attack-pattern",
-      "label": "Spear Phishing Attack Pattern used by admin@338"
+      "label": "attack-pattern"
     },
     {
       "id": "attack-pattern--ea2c747d-4aa3-4573-8853-37b7159bc180",
@@ -125,7 +125,7 @@
         ]
       },
       "icon": "attack-pattern",
-      "label": "Strategic Web Compromise Attack Pattern used by th3bug"
+      "label": "attack-pattern"
     },
     {
       "id": "attack-pattern--fb6aa549-c94a-4e45-b4fd-7e32602dad85",
@@ -152,7 +152,7 @@
         ]
       },
       "icon": "attack-pattern",
-      "label": "Spear Phishing Attack Pattern used by menuPass"
+      "label": "attack-pattern"
     },
     {
       "id": "course-of-action--70b3d5f6-374b-4488-8688-729b6eedac5b",
@@ -179,7 +179,7 @@
         ]
       },
       "icon": "course-of-action",
-      "label": "Analyze with FireEye Calamine Toolset"
+      "label": "course-of-action"
     },
     {
       "id": "malware--61a62a6a-9a18-4758-8e52-622431c4b8ae",
@@ -197,7 +197,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (808e21d6efa2884811fbd0adf67fda78)"
+      "label": "malware"
     },
     {
       "id": "malware--30ea087f-7d2b-496b-9ed1-5f000c8b7695",
@@ -215,7 +215,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (8010cae3e8431bb11ed6dc9acabb93b7,)"
+      "label": "malware"
     },
     {
       "id": "malware--4de25c38-5826-4ee7-b84d-878064de87ad",
@@ -233,7 +233,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (0323de551aa10ca6221368c4a73732e6,)"
+      "label": "malware"
     },
     {
       "id": "malware--dc669921-4a1a-470d-bfae-694e740ce181",
@@ -251,7 +251,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (8002debc47e04d534b45f7bb7dfcab4d)"
+      "label": "malware"
     },
     {
       "id": "malware--f86febd3-609b-4d2e-9fec-aa805cb498bf",
@@ -269,7 +269,7 @@
         ]
       },
       "icon": "malware",
-      "label": "PIVY Variant (55a3b2656ceac2ba6257b6e39f4a5b5a)"
+      "label": "malware"
     },
     {
       "id": "malware--80c260d9-a075-4148-9301-ebe4af27f449",
@@ -287,7 +287,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (b08694e14a9b966d8033b42b58ab727d)"
+      "label": "malware"
     },
     {
       "id": "malware--3ed0364f-62c8-4ebc-b136-deaf6966880b",
@@ -305,7 +305,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (d8c00fed6625e5f8d0b8188a5caac115)"
+      "label": "malware"
     },
     {
       "id": "malware--17099f03-5ec8-456d-a2de-968aebaafc78",
@@ -323,7 +323,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (b1deff736b6d12b8d98b485e20d318ea)"
+      "label": "malware"
     },
     {
       "id": "malware--e14b6476-40b5-4b0b-bde7-0e856ab00b6c",
@@ -341,7 +341,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (08709f35581e0958d1ca4e50b7d86dba)"
+      "label": "malware"
     },
     {
       "id": "malware--feaf146d-ea67-4eb1-946a-6f352ff79a81",
@@ -359,7 +359,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (e84853c0484b02b7518dd683787d04f)"
+      "label": "malware"
     },
     {
       "id": "malware--13791e02-6621-45fb-8c10-f6b72e1bf553",
@@ -377,7 +377,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (cf8094c07c15aa394dddd4eca4aa8c8b)"
+      "label": "malware"
     },
     {
       "id": "malware--703a15a7-eb85-475d-a27a-77d8fcf8f7b9",
@@ -395,7 +395,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (410eeaa18dbec01a27c5b41753b3c7ed )"
+      "label": "malware"
     },
     {
       "id": "malware--fade08cb-fa57-485e-97f8-fab5a1bd4460",
@@ -413,7 +413,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (b2dc98caa647e64a2a8105c298218462)"
+      "label": "malware"
     },
     {
       "id": "malware--3050937d-6330-44c7-83ba-8821e1f7e7bd",
@@ -431,7 +431,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (68fec995a13762184a2616bda86757f8)"
+      "label": "malware"
     },
     {
       "id": "malware--9d995717-edc3-4bd8-8554-aecf773bdecc",
@@ -449,7 +449,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (39a59411e7b12236c0b4351168fb47ce)"
+      "label": "malware"
     },
     {
       "id": "malware--40e15fa5-df8d-4771-a682-21dab0a024fd",
@@ -467,7 +467,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (f5315fb4a654087d30c69c768d80f826)"
+      "label": "malware"
     },
     {
       "id": "malware--69101c2f-da92-47af-b402-7c60a39a982f",
@@ -485,7 +485,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (e6ca06e9b000933567a8604300094a85)"
+      "label": "malware"
     },
     {
       "id": "malware--1601b8c2-5e6f-4a18-a413-10527e5d90b7",
@@ -503,7 +503,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (56cff0d0e0ce486aa0b9e4bc0bf2a141)"
+      "label": "malware"
     },
     {
       "id": "malware--626badcc-4257-4222-946c-6d6e889836ea",
@@ -521,7 +521,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (60963553335fa5877bd5f9be9d8b23a6 )"
+      "label": "malware"
     },
     {
       "id": "malware--3b275ed1-9c2e-4443-b1dd-5cfb51eaef2e",
@@ -539,7 +539,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (6d989302166ba1709d66f90066c2fd59)"
+      "label": "malware"
     },
     {
       "id": "malware--f138b6e0-9a7d-4cd9-a904-08a7df2eabb1",
@@ -557,7 +557,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (4bc6cab128f623f34bb97194da21d7b6)"
+      "label": "malware"
     },
     {
       "id": "malware--302ac5b5-486c-4c99-8cad-4426aeaf47b6",
@@ -575,7 +575,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (4e84b1448cf96fabe88c623b222057c4)"
+      "label": "malware"
     },
     {
       "id": "malware--e1c02dca-d3fe-48f1-bb4b-3cacd2bc3619",
@@ -593,7 +593,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (494e65cf21ad559fccf3dacdd69acc94)"
+      "label": "malware"
     },
     {
       "id": "malware--a4f315bd-e159-4bfb-8439-0d5a8330fc70",
@@ -611,7 +611,7 @@
         ]
       },
       "icon": "malware-family",
-      "label": "PIVY Variant (a5965b750997dbecec61358d41ac93c7)"
+      "label": "malware"
     },
     {
       "id": "indicator--e8094b09-7df4-4b13-b207-1e27af3c4bde",
@@ -632,7 +632,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "IP address: 219.76.208.163"
+      "label": "indicator"
     },
     {
       "id": "indicator--329ae6e9-25bd-49e8-89d1-aae4ca52e4a7",
@@ -653,7 +653,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "www.webserver.dynssl.com"
+      "label": "indicator"
     },
     {
       "id": "indicator--54e1e351-fec0-41a4-b62c-d7f86101e241",
@@ -674,7 +674,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "www.webserver.freetcp.com"
+      "label": "indicator"
     },
     {
       "id": "indicator--2e59f00b-0986-437e-9ebd-e0d61900d688",
@@ -695,7 +695,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "www.webserver.fartit.com"
+      "label": "indicator"
     },
     {
       "id": "indicator--8da68996-f175-4ae0-bd74-aad4913873b8",
@@ -716,7 +716,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "microsoft.byinter.net"
+      "label": "indicator"
     },
     {
       "id": "indicator--4e11b23f-732b-418e-b786-4dbf65459d50",
@@ -737,7 +737,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "nkr.iphone.qpoe.com"
+      "label": "indicator"
     },
     {
       "id": "indicator--b7fa7e73-e645-4813-9723-161bbd8dda62",
@@ -758,7 +758,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "e.ct.toh.info"
+      "label": "indicator"
     },
     {
       "id": "indicator--b2f09ce0-2db4-480f-bd2f-073ddb3a0c87",
@@ -779,7 +779,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "js001.3322.org"
+      "label": "indicator"
     },
     {
       "id": "indicator--9842a3b9-fc5b-44c4-bb48-578cf6f728d9",
@@ -800,7 +800,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "apple.cmdnetview.com"
+      "label": "indicator"
     },
     {
       "id": "indicator--4e4c4ad7-4909-456a-b6fa-e24a6f682a40",
@@ -821,7 +821,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "autuo.xicp.net"
+      "label": "indicator"
     },
     {
       "id": "indicator--137acf67-cedc-4a07-8719-72759174de3a",
@@ -842,7 +842,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "CBricksDoc"
+      "label": "indicator"
     },
     {
       "id": "indicator--9695dc2f-d92a-4f2b-8b16-b0e21d7c631d",
@@ -863,7 +863,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "tw.2012yearleft.com"
+      "label": "indicator"
     },
     {
       "id": "indicator--7fd865ed-93e9-481f-953b-82ab386190ae",
@@ -884,7 +884,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "dedydns.ns01.us"
+      "label": "indicator"
     },
     {
       "id": "indicator--e5bc6507-d052-447f-93c7-db7ef32211da",
@@ -905,7 +905,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "maofajapa.3322.org"
+      "label": "indicator"
     },
     {
       "id": "indicator--fead5c52-9533-405c-b822-a034092a1ba8",
@@ -926,7 +926,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "send.have8000.com"
+      "label": "indicator"
     },
     {
       "id": "indicator--405ff732-2c35-4f46-9f78-2a632ce36e03",
@@ -947,7 +947,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "fbi.zyns.com"
+      "label": "indicator"
     },
     {
       "id": "indicator--4d58096e-b5c9-47d8-af9a-1af5f4762d6b",
@@ -968,7 +968,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "weile3322b.3322.org"
+      "label": "indicator"
     },
     {
       "id": "indicator--9c725598-a160-4e91-8b93-ed0956709892",
@@ -989,7 +989,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "ngcc.8800.org"
+      "label": "indicator"
     },
     {
       "id": "indicator--2efe7c62-1b96-4568-81ee-c85b840bde39",
@@ -1010,7 +1010,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "sh.chromeenter.com"
+      "label": "indicator"
     },
     {
       "id": "indicator--b8322c9b-8031-4fb3-9cbc-8a1ea0fe3cfa",
@@ -1031,7 +1031,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "mf.ddns.info"
+      "label": "indicator"
     },
     {
       "id": "indicator--b08f9631-dd94-4d99-a96c-32b42af2ea81",
@@ -1052,7 +1052,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "av.ddns.us"
+      "label": "indicator"
     },
     {
       "id": "indicator--950c01b8-c647-4cc8-b0c1-3612fa780108",
@@ -1073,7 +1073,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "jj.mysecondarydns.com"
+      "label": "indicator"
     },
     {
       "id": "indicator--ae29faa6-5f70-4eb8-981b-30818433a52e",
@@ -1094,7 +1094,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "mongoles.3322.org"
+      "label": "indicator"
     },
     {
       "id": "indicator--b6cc482d-89db-4e6b-a592-723070f6d22d",
@@ -1115,7 +1115,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "3q.wubangtu.info"
+      "label": "indicator"
     },
     {
       "id": "indicator--0b71628d-31dd-4eb8-baee-39f19c0a14b0",
@@ -1136,7 +1136,7 @@
         "valid_from": "2015-05-15T09:12:16.432678Z"
       },
       "icon": "indicator",
-      "label": "CPiShellPutDoc"
+      "label": "indicator"
     },
     {
       "id": "vulnerability--c7cab3fb-0822-43a5-b1ba-c9bab34361a2",
@@ -1156,7 +1156,7 @@
         ]
       },
       "icon": "vulnerability",
-      "label": "CVE-2012-0158"
+      "label": "vulnerability"
     },
     {
       "id": "vulnerability--6a2eab9c-9789-4437-812b-d74323fa3bca",
@@ -1176,7 +1176,7 @@
         ]
       },
       "icon": "vulnerability",
-      "label": "CVE-2009-4324"
+      "label": "vulnerability"
     },
     {
       "id": "vulnerability--2b7f00d8-b133-4a92-9118-46ce5f8b2531",
@@ -1196,7 +1196,7 @@
         ]
       },
       "icon": "vulnerability",
-      "label": "CVE-2013-0422"
+      "label": "vulnerability"
     },
     {
       "id": "vulnerability--4d7dc9cb-983f-40b4-b597-d7a38b2d9a4b",
@@ -1216,7 +1216,7 @@
         ]
       },
       "icon": "vulnerability",
-      "label": "CVE-2013-1347"
+      "label": "vulnerability"
     },
     {
       "id": "vulnerability--8323404c-1fdd-4272-822b-829f85556c53",
@@ -1236,7 +1236,7 @@
         ]
       },
       "icon": "vulnerability",
-      "label": "CVE-2011-3544"
+      "label": "vulnerability"
     },
     {
       "id": "vulnerability--717cb1c9-eab3-4330-8340-e4858055aa80",
@@ -1256,7 +1256,7 @@
         ]
       },
       "icon": "vulnerability",
-      "label": "CVE-2010-3333"
+      "label": "vulnerability"
     },
     {
       "id": "report--f2b63e80-b523-4747-a069-35c002c690db",
@@ -1431,7 +1431,7 @@
         ]
       },
       "icon": "report",
-      "label": "Poison Ivy: Assessing Damage and Extracting Intelligence"
+      "label": "report"
     }
   ],
   "edges": [
@@ -2454,6 +2454,44 @@
       "type": "embedded",
       "source": "report--f2b63e80-b523-4747-a069-35c002c690db",
       "target": "vulnerability--717cb1c9-eab3-4330-8340-e4858055aa80"
+    }
+  ],
+  "legend": [
+    {
+      "icon": "malware-family",
+      "label": "malware"
+    },
+    {
+      "icon": "identity-organization",
+      "label": "identity"
+    },
+    {
+      "icon": "campaign",
+      "label": "campaign"
+    },
+    {
+      "icon": "attack-pattern",
+      "label": "attack-pattern"
+    },
+    {
+      "icon": "course-of-action",
+      "label": "course-of-action"
+    },
+    {
+      "icon": "malware",
+      "label": "malware"
+    },
+    {
+      "icon": "indicator",
+      "label": "indicator"
+    },
+    {
+      "icon": "vulnerability",
+      "label": "vulnerability"
+    },
+    {
+      "icon": "report",
+      "label": "report"
     }
   ]
 }

@@ -1,0 +1,125 @@
+{
+    "type": "bundle",
+    "id": "bundle--7d9ba979-6e72-47e8-9a48-a28c42206307",
+    "objects": [
+        {
+            "type": "identity",
+            "id": "identity--4e0dd272-7d68-4c8d-b6bc-0cb9d4b8e924",
+            "created": "2022-05-06T01:01:01.000Z",
+            "modified": "2022-12-16T01:01:01.000Z",
+            "spec_version": "2.1",
+            "name": "Paolo",
+            "description": "The main point of contact for the incident.",
+            "identity_class": "individual",
+            "roles": [
+                "security-point-of-contact"
+            ],
+            "contact_information": "Ring him as he is unreliable on Slack",
+            "extensions": {
+                "extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498": {
+                    "extension_type": "property-extension",
+                    "organization": "OS-Threat",
+                    "team": "responders",
+                    "first_name": "Paolo",
+                    "middle_name": "",
+                    "last_name": "Di Prodi",
+                    "contact_numbers": [
+                        {
+                            "contact_number": "123-456-7890",
+                            "contact_number_type": "work-phone"
+                        }
+                    ],
+                    "email_addresses": [
+                        {
+                            "email_address_ref": "email-addr--06029cc1-105d-5495-9fc5-3d252dd7af76",
+                            "digital_contact_type": "work"
+                        },
+                        {
+                            "email_address_ref": "email-addr--78b946aa-91ab-5ce8-829b-4d078a8ecc00",
+                            "digital_contact_type": "organizational"
+                        }
+                    ],
+                    "social_media_accounts": [
+                        {
+                            "user_account_ref": "user-account--7aa68be3-1d4d-5b0f-8c26-8410085e5741",
+                            "digital_contact_type": "career",
+                            "description": "Paolo's LinkeIn contact details"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "email-addr",
+            "spec_version": "2.1",
+            "id": "email-addr--06029cc1-105d-5495-9fc5-3d252dd7af76",
+            "value": "paolo@priam.ai"
+        },
+        {
+            "type": "email-addr",
+            "spec_version": "2.1",
+            "id": "email-addr--78b946aa-91ab-5ce8-829b-4d078a8ecc00",
+            "value": "paolo@nomadenergy.co.uk"
+        },
+        {
+            "type": "user-account",
+            "spec_version": "2.1",
+            "id": "user-account--7aa68be3-1d4d-5b0f-8c26-8410085e5741",
+            "account_login": "paolo di prodi",
+            "account_type": "LinkedIn"
+        },
+        {
+            "type": "identity",
+            "id": "identity--48405e34-669b-41fa-9ad3-a292b4e6b3b7",
+            "created": "2022-05-06T01:01:01.000Z",
+            "modified": "2022-12-16T01:01:01.000Z",
+            "spec_version": "2.1",
+            "name": "Brett",
+            "description": "The secondary point of contact for the incident.",
+            "identity_class": "individual",
+            "roles": [
+                "security-point-of-contact"
+            ],
+            "contact_information": "Very reliable on Slack",
+            "extensions": {
+                "extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498": {
+                    "extension_type": "property-extension",
+                    "organization": "OS-Threat",
+                    "team": "responders",
+                    "first_name": "Brett",
+                    "middle_name": "Colin",
+                    "last_name": "Forbes",
+                    "contact_numbers": [
+                        {
+                            "contact_number": "0491 629 206",
+                            "contact_number_type": "work-phone"
+                        }
+                    ],
+                    "email_addresses": [
+                        {
+                            "email_address_ref": "email-addr--a04693c3-b040-44c5-833a-75cbe45386b5",
+                            "digital_contact_type": "work"
+                        },
+                        {
+                            "email_address_ref": "email-addr--25769d7c-b38f-496b-9ca5-5359537d9ff9",
+                            "digital_contact_type": "organizational"
+                        }
+                    ],
+                    "social_media_accounts": []
+                }
+            }
+        },
+        {
+            "type": "email-addr",
+            "spec_version": "2.1",
+            "id": "email-addr--a04693c3-b040-44c5-833a-75cbe45386b5",
+            "value": "brett@cloudaccelerator.co"
+        },
+        {
+            "type": "email-addr",
+            "spec_version": "2.1",
+            "id": "email-addr--25769d7c-b38f-496b-9ca5-5359537d9ff9",
+            "value": "brett@innovolve.ai"
+        }
+    ]
+}
