@@ -1,6 +1,6 @@
 {
     "type": "bundle",
-    "id": "bundle--6a121120-cc77-4aef-b741-4a472e4ee0e6",
+    "id": "bundle--72d299a9-b736-4698-9911-04a22b7a3c3b",
     "objects": [
         {
             "type": "identity",
@@ -29,72 +29,6 @@
                 "statement": "Copyright 2015-2023, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
             },
             "x_mitre_attack_spec_version": "2.1.0"
-        },
-        {
-            "type": "incident",
-            "spec_version": "2.1",
-            "id": "incident--1a074418-9248-4a21-9918-a79d0f1dbc5b",
-            "created_by_ref": "identity--2242662b-d581-4864-8696-fff719dc0500",
-            "created": "2020-10-19T01:01:01.000Z",
-            "modified": "2020-10-19T01:01:01.000Z",
-            "name": "An example incident with human triggered suspicious email",
-            "description": "A user has reported a suspicious phishing email, possibly a company wide campaign",
-            "extensions": {
-                "extension-definition--ef765651-680c-498d-9894-99799f2fa126": {
-                    "blocked": false,
-                    "criticality": 80,
-                    "determination": "suspected",
-                    "event_refs": [
-                        "event--84ede1e8-aa78-4c63-98cd-02f4387fc1ec",
-                        "event--44728578-a89c-41de-b934-17fec1bd30d7",
-                        "event--5276275e-73f3-41b1-b241-7947e8868c03"
-                    ],
-                    "evidence_refs": [
-                        "evidence--2d254777-fbf8-4969-addd-80ac5c293f57",
-                        "evidence--2d254777-fbf8-4969-addd-80ac5c293f57",
-                        "evidence--69e50c4c-0a74-4098-8b76-bb9635b678fc",
-                        "evidence--16b72259-77c7-48e5-ae8b-6a7a221754ce",
-                        "evidence--69e50c4c-0a74-4098-8b76-bb9635b678fc",
-                        "evidence--fbda3c71-676b-46a4-9c46-ab76ea6e056b",
-                        "evidence--2d254444-fbf8-4969-addd-80ac5c293f57"
-                    ],
-                    "extension_type": "property-extension",
-                    "impact_refs": [
-                        "impact--1032f48b-28d1-451f-970e-78b736db8e13"
-                    ],
-                    "impacted_entity_counts": {
-                        "individual": 10,
-                        "organization": 1,
-                        "system": 5
-                    },
-                    "incident_types": [
-                        "hosting-phishing-sites",
-                        "theft-access-credentials",
-                        "known-malware"
-                    ],
-                    "investigation_status": "new",
-                    "malicious": true,
-                    "notes_refs": [
-                        "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061"
-                    ],
-                    "scores": [
-                        {
-                            "description": "A phishing email is ranked 6/10",
-                            "name": "SOC scoring",
-                            "value": 6
-                        }
-                    ],
-                    "task_refs": [
-                        "task--1ffe4af4-3b18-4ee2-8279-0d1264efd0fe",
-                        "task--2d254737-fbf8-4969-adb3-80ac5c293f57",
-                        "task--2d254737-fbf8-4969-addd-80ac5c293f57",
-                        "task--56d81e7e-69b6-41aa-88cc-2b64b7896463",
-                        "task--2d254737-fbff-4969-bbbb-80ac5c293f57",
-                        "task--2d254737-fbff-4969-addd-80ac5c293f57",
-                        "task--2d254737-fbbb-4969-addd-80ac5c293f57"
-                    ]
-                }
-            }
         },
         {
             "created": "2020-10-19T01:01:01.000Z",
@@ -455,45 +389,6 @@
             "x_mitre_version": "2.3"
         },
         {
-            "created": "2020-10-19T01:01:01.000Z",
-            "spec_version": "2.1",
-            "description": "The data collected automatically from internal systems to enrich the incident",
-            "evidence_type": "context",
-            "extensions": {
-                "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
-                    "extension_type": "new-sdo"
-                }
-            },
-            "id": "evidence--2d254777-fbf8-4969-addd-80ac5c293f57",
-            "modified": "2020-10-19T01:01:01.000Z",
-            "name": "Web Proxy Activity for URL",
-            "object_refs": [
-                "ipv4-addr--ff26c055-6336-5bc5-b98d-13d6226742dd",
-                "ipv4-addr--ff26c055-6666-5bc5-b98d-13d6226742dd"
-            ],
-            "source": "webproxy",
-            "type": "evidence"
-        },
-        {
-            "created": "2020-10-19T01:01:01.000Z",
-            "spec_version": "2.1",
-            "description": "The data collected automatically from internal systems to enrich the incident",
-            "evidence_type": "context",
-            "extensions": {
-                "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
-                    "extension_type": "new-sdo"
-                }
-            },
-            "id": "evidence--2d254777-fbf8-4969-addd-80ac5c293f57",
-            "modified": "2020-10-19T01:01:01.000Z",
-            "name": "EMAIL server",
-            "object_refs": [
-                "ipv4-addr--ff26c055-6006-5bc5-b98d-13d6226742dd"
-            ],
-            "source": "email",
-            "type": "evidence"
-        },
-        {
             "type": "ipv4-addr",
             "spec_version": "2.1",
             "id": "ipv4-addr--ff26c055-6006-5bc5-b98d-13d6226742dd",
@@ -512,26 +407,6 @@
             "value": "200.51.100.3"
         },
         {
-            "created": "2020-10-19T01:01:01.000Z",
-            "spec_version": "2.1",
-            "description": "The data collected from external sources to enrich the incident",
-            "evidence_type": "enrichment",
-            "extensions": {
-                "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
-                    "extension_type": "new-sdo"
-                }
-            },
-            "id": "evidence--69e50c4c-0a74-4098-8b76-bb9635b678fc",
-            "modified": "2020-10-19T01:01:01.000Z",
-            "name": "Domain information for URLS",
-            "object_refs": [
-                "domain-name--3c10e93f-798e-5a26-a0c1-08156efab7f5",
-                "autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74"
-            ],
-            "source": "domain tools",
-            "type": "evidence"
-        },
-        {
             "type": "domain-name",
             "spec_version": "2.1",
             "id": "domain-name--3c10e93f-798e-5a26-a0c1-08156efab7f5",
@@ -548,46 +423,6 @@
             "number": 15139,
             "name": "Evil Industries",
             "rir": "ARIN"
-        },
-        {
-            "created": "2020-10-19T01:01:01.000Z",
-            "spec_version": "2.1",
-            "description": "The data collected from external sources that blacklist any IoC's involved in the incident",
-            "evidence_type": "blacklist",
-            "extensions": {
-                "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
-                    "extension_type": "new-sdo"
-                }
-            },
-            "id": "evidence--16b72259-77c7-48e5-ae8b-6a7a221754ce",
-            "modified": "2020-10-19T01:01:01.000Z",
-            "name": "Blacklist of known spam senders",
-            "object_refs": [
-                "ipv4-addr--ff26c055-6006-5bc5-b98d-13d6226742dd"
-            ],
-            "source": "Spamhouse",
-            "type": "evidence"
-        },
-        {
-            "created": "2020-10-19T01:01:01.000Z",
-            "spec_version": "2.1",
-            "description": "Pivoting discovered: ",
-            "evidence_type": "enrichment",
-            "extensions": {
-                "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
-                    "extension_type": "new-sdo"
-                }
-            },
-            "id": "evidence--69e50c4c-0a74-4098-8b76-bb9635b678fc",
-            "modified": "2020-10-19T01:01:01.000Z",
-            "name": "Domain information for URLS",
-            "object_refs": [
-                "campaign--1d8897a7-fdc2-4e59-afc9-becbe04df727",
-                "infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d",
-                "relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa60266ed"
-            ],
-            "source": "Alien Vault and Mitre",
-            "type": "evidence"
         },
         {
             "type": "campaign",
@@ -625,27 +460,6 @@
             "target_ref": "infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d"
         },
         {
-            "created": "2020-10-19T01:01:01.000Z",
-            "spec_version": "2.1",
-            "description": "Hunt: The data collected from internal systems during a hunt for additional context",
-            "evidence_type": "hunt",
-            "extensions": {
-                "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
-                    "extension_type": "new-sdo"
-                }
-            },
-            "id": "evidence--fbda3c71-676b-46a4-9c46-ab76ea6e056b",
-            "modified": "2020-10-19T01:01:01.000Z",
-            "name": "YARA signatures on suspicious binaries",
-            "object_refs": [
-                "malware--d1c612bc-146f-4b65-b7b0-9a54a14150a4",
-                "identity--1621d4d4-b67d-41e3-9670-f01faf20d111",
-                "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f"
-            ],
-            "source": "YARA",
-            "type": "evidence"
-        },
-        {
             "type": "indicator",
             "spec_version": "2.1",
             "id": "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f",
@@ -663,26 +477,6 @@
                 }
             ],
             "valid_from": "2014-06-29T13:49:37.079Z"
-        },
-        {
-            "created": "2020-10-19T01:01:01.000Z",
-            "spec_version": "2.1",
-            "description": "Matching to known patterns (Tactics, Techniques and Procedures) of behaviour",
-            "evidence_type": "pattern",
-            "extensions": {
-                "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a": {
-                    "extension_type": "new-sdo"
-                }
-            },
-            "id": "evidence--2d254444-fbf8-4969-addd-80ac5c293f57",
-            "modified": "2020-10-19T01:01:01.000Z",
-            "name": "Extracted relevant TTP for this incident",
-            "object_refs": [
-                "attack-pattern--8ac90ff3-ecf8-4835-95b8-6aea6a623df5",
-                "attack-pattern--9db0cf3a-a3c9-4012-8268-123b9db6fd82"
-            ],
-            "source": "MITRE ATTACK and LOCKHEED MARTIN",
-            "type": "evidence"
         },
         {
             "type": "attack-pattern",
@@ -1351,9 +1145,9 @@
         {
             "type": "indicator",
             "spec_version": "2.1",
-            "id": "indicator--1ced35c3-c4d2-488e-ae65-d82951eaee8c",
-            "created": "2023-09-26T21:28:29.27858Z",
-            "modified": "2023-09-26T21:28:29.27858Z",
+            "id": "indicator--5d0012a3-33d5-4b9e-8bff-b9e1029e498c",
+            "created": "2023-09-27T21:41:23.955599Z",
+            "modified": "2023-09-27T21:41:23.955599Z",
             "name": "Valak malware",
             "indicator_types": [
                 "malicious-activity"
@@ -1361,7 +1155,7 @@
             "pattern": "[(file:name = 'pdf.exe' OR file:size = '371712') AND file:created = t'2014-01-13T07:03:17Z']",
             "pattern_type": "yara",
             "pattern_version": "1.0",
-            "valid_from": "2023-09-26T21:28:29.27858Z"
+            "valid_from": "2023-09-27T21:41:23.955599Z"
         },
         {
             "count": 10,
@@ -1386,7 +1180,7 @@
             "last_seen": "2017-02-28T19:07:24.857Z",
             "modified": "2017-02-28T19:37:11.213Z",
             "observed_data_refs": [
-                "indicator--1ced35c3-c4d2-488e-ae65-d82951eaee8c"
+                "indicator--5d0012a3-33d5-4b9e-8bff-b9e1029e498c"
             ],
             "sighting_of_ref": "malware--d1c612bc-146f-4b65-b7b0-9a54a14150a1",
             "type": "sighting-source7",
@@ -1400,78 +1194,140 @@
             "spec_version": "2.1",
             "id": "report--f66c52bc-cb78-4657-894f-a4c2902b1c30",
             "created": "2022-05-06T01:01:01.001Z",
-            "modified": "2023-09-26T21:28:29.292021Z",
+            "modified": "2023-09-27T21:41:23.96597Z",
             "name": "Incident Indicators Example",
             "published": "2022-05-06T01:01:01Z",
             "object_refs": [
-                "file--e277603e-1060-5ad4-9937-c26c97f1ca68",
-                "relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa60266ed",
-                "task--2d254737-fbf8-4969-adb3-80ac5c293f57",
-                "url--364fe3e5-b1f4-5ba3-b951-ee5983b3538d",
-                "campaign--1d8897a7-fdc2-4e59-afc9-becbe04df727",
-                "evidence--69e50c4c-0a74-4098-8b76-bb9635b678fc",
-                "impact--1032f48b-28d1-451f-970e-78b736db8e13",
-                "malware--d1c612bc-146f-4b65-b7b0-9a54a14150a4",
-                "sighting--f0747539-929a-47b8-bc54-dc96e876a679",
-                "domain-name--196a7bee-fe01-54fb-b8e5-2fcbe5edbb63",
-                "observed-data-source6--b67d30ff-02ac-498a-92f9-32f845f448cf",
-                "attack-pattern--9db0cf3a-a3c9-4012-8268-123b9db6fd82",
-                "evidence--2d254777-fbf8-4969-addd-80ac5c293f57",
-                "observed-data-source6--b67d30ff-02ac-498a-92f9-32f845f448ff",
-                "sighting--f0747539-929a-46b8-bc54-dc96e876a679",
-                "event--44728578-a89c-41de-b934-17fec1bd30d7",
-                "event--84ede1e8-aa78-4c63-98cd-02f4387fc1ec",
-                "infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d",
-                "relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa6026666",
-                "observed-data-source2--b67d30ff-02ac-498a-92f9-32f845f448cf",
-                "observed-data-source1--b67d30ff-02ac-498a-92f9-32f845f448cf",
-                "evidence--fbda3c71-676b-46a4-9c46-ab76ea6e056b",
-                "email-message--0c57a381-2a17-5e61-8754-5ef96efb286c",
-                "sighting--55183679-1f1d-4824-af63-72ec2ef855a0",
-                "evidence--2d254444-fbf8-4969-addd-80ac5c293f57",
-                "ipv4-addr--96aac303-770c-52cc-9ab8-a2a77bb34a3f",
-                "identity--1621d4d4-b67d-41e3-9670-f01faf20d111",
-                "task--2d254737-fbff-4969-bbbb-80ac5c293f57",
-                "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061",
-                "domain-name--2b51f4fe-bfff-5659-abeb-f80485456eef",
-                "observed-data-source5--b67d30ff-02ac-498a-92f9-32f845f448cf",
-                "task--2d254737-fbbb-4969-addd-80ac5c293f57",
-                "ipv4-addr--ff26c055-6666-5bc5-b98d-13d6226742dd",
-                "task--2d254737-fbf8-4969-addd-80ac5c293f57",
-                "sighting-source4--779c4ae8-e134-4180-baa4-03141095d971",
-                "url--364fe3e5-b1f4-5ba3-b951-ee5983b3538e",
-                "domain-name--5b3d016b-5726-5158-a7b6-eaff1f28d0e8",
-                "task--56d81e7e-69b6-41aa-88cc-2b64b7896463",
-                "sighting-source7--779c4ae8-e134-4180-baa4-03141095d971",
-                "relationship--3cd2d6f9-0ded-486b-8dca-606283a8997f",
-                "malware--d1c612bc-146f-4b65-b7b0-9a54a14150a1",
-                "task--2d254737-fbff-4969-addd-80ac5c293f57",
-                "indicator--1ced35c3-c4d2-488e-ae65-d82951eaee8c",
-                "attack-pattern--8ac90ff3-ecf8-4835-95b8-6aea6a623df5",
-                "domain-name--3c10e93f-798e-5a26-a0c1-08156efab7f5",
-                "email-addr--d1b3bf0c-f02a-51a1-8102-11aba7959868",
-                "threat-actor--9a8a0d25-7636-429b-a99e-b2a73cd0f11f",
-                "incident--1a074418-9248-4a21-9918-a79d0f1dbc5b",
-                "relationship--d44019b6-b8f7-4cb3-837e-7fd3c5724b87",
-                "observed-data--cf8eaa41-6f4c-482e-89b9-9cd2d6a83cb1",
-                "relationship--56e5f1c8-08f3-4e24-9e8e-f87d844672ec",
-                "observed-data-source3--b67d30ff-02ac-498a-92f9-32f845f448cf",
-                "email-addr--9b7e29b3-fd8d-562e-b3f0-8fc8134f5dda",
-                "autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74",
-                "ipv4-addr--ff26c055-6336-5bc5-b98d-13d6226742dd",
-                "evidence--16b72259-77c7-48e5-ae8b-6a7a221754ce",
-                "task--1ffe4af4-3b18-4ee2-8279-0d1264efd0fe",
-                "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f",
-                "relationship--dddcb3d1-0e56-4170-97e2-eb79da432cbb",
-                "ipv4-addr--ff26c055-6006-5bc5-b98d-13d6226742dd",
-                "event--5276275e-73f3-41b1-b241-7947e8868c03",
                 "identity--023d105b-752e-4e3c-941c-7d3f3cb15e9e",
+                "sighting-source7--779c4ae8-e134-4180-baa4-03141095d971",
+                "email-addr--d1b3bf0c-f02a-51a1-8102-11aba7959868",
+                "ipv4-addr--ff26c055-6336-5bc5-b98d-13d6226742dd",
+                "ipv4-addr--96aac303-770c-52cc-9ab8-a2a77bb34a3f",
+                "impact--1032f48b-28d1-451f-970e-78b736db8e13",
                 "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7",
-                "identity--023d105b-752e-4e3c-941c-7d3f3cb15e99"
+                "identity--023d105b-752e-4e3c-941c-7d3f3cb15e99",
+                "relationship--d44019b6-b8f7-4cb3-837e-7fd3c5724b87",
+                "sighting--f0747539-929a-46b8-bc54-dc96e876a679",
+                "malware--d1c612bc-146f-4b65-b7b0-9a54a14150a4",
+                "task--2d254737-fbbb-4969-addd-80ac5c293f57",
+                "observed-data-source5--b67d30ff-02ac-498a-92f9-32f845f448cf",
+                "url--364fe3e5-b1f4-5ba3-b951-ee5983b3538e",
+                "observed-data-source1--b67d30ff-02ac-498a-92f9-32f845f448cf",
+                "domain-name--196a7bee-fe01-54fb-b8e5-2fcbe5edbb63",
+                "task--2d254737-fbf8-4969-adb3-80ac5c293f57",
+                "observed-data-source2--b67d30ff-02ac-498a-92f9-32f845f448cf",
+                "task--56d81e7e-69b6-41aa-88cc-2b64b7896463",
+                "relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa60266ed",
+                "observed-data-source6--b67d30ff-02ac-498a-92f9-32f845f448ff",
+                "task--2d254737-fbf8-4969-addd-80ac5c293f57",
+                "event--84ede1e8-aa78-4c63-98cd-02f4387fc1ec",
+                "observed-data-source3--b67d30ff-02ac-498a-92f9-32f845f448cf",
+                "event--5276275e-73f3-41b1-b241-7947e8868c03",
+                "url--364fe3e5-b1f4-5ba3-b951-ee5983b3538d",
+                "task--2d254737-fbff-4969-addd-80ac5c293f57",
+                "identity--1621d4d4-b67d-41e3-9670-f01faf20d111",
+                "indicator--5d0012a3-33d5-4b9e-8bff-b9e1029e498c",
+                "event--44728578-a89c-41de-b934-17fec1bd30d7",
+                "file--e277603e-1060-5ad4-9937-c26c97f1ca68",
+                "relationship--56e5f1c8-08f3-4e24-9e8e-f87d844672ec",
+                "email-message--0c57a381-2a17-5e61-8754-5ef96efb286c",
+                "domain-name--3c10e93f-798e-5a26-a0c1-08156efab7f5",
+                "threat-actor--9a8a0d25-7636-429b-a99e-b2a73cd0f11f",
+                "ipv4-addr--ff26c055-6006-5bc5-b98d-13d6226742dd",
+                "malware--d1c612bc-146f-4b65-b7b0-9a54a14150a1",
+                "task--2d254737-fbff-4969-bbbb-80ac5c293f57",
+                "task--1ffe4af4-3b18-4ee2-8279-0d1264efd0fe",
+                "observed-data--cf8eaa41-6f4c-482e-89b9-9cd2d6a83cb1",
+                "ipv4-addr--ff26c055-6666-5bc5-b98d-13d6226742dd",
+                "domain-name--5b3d016b-5726-5158-a7b6-eaff1f28d0e8",
+                "relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa6026666",
+                "sighting--f0747539-929a-47b8-bc54-dc96e876a679",
+                "sighting--55183679-1f1d-4824-af63-72ec2ef855a0",
+                "infrastructure--38c47d93-d984-4fd9-b87b-d69d0841628d",
+                "campaign--1d8897a7-fdc2-4e59-afc9-becbe04df727",
+                "domain-name--2b51f4fe-bfff-5659-abeb-f80485456eef",
+                "attack-pattern--9db0cf3a-a3c9-4012-8268-123b9db6fd82",
+                "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061",
+                "sighting-source4--779c4ae8-e134-4180-baa4-03141095d971",
+                "incident--1a074418-9248-4a21-9918-a79d0f1dbc5b",
+                "attack-pattern--8ac90ff3-ecf8-4835-95b8-6aea6a623df5",
+                "relationship--3cd2d6f9-0ded-486b-8dca-606283a8997f",
+                "email-addr--9b7e29b3-fd8d-562e-b3f0-8fc8134f5dda",
+                "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f",
+                "observed-data-source6--b67d30ff-02ac-498a-92f9-32f845f448cf",
+                "relationship--dddcb3d1-0e56-4170-97e2-eb79da432cbb",
+                "autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74"
             ],
             "labels": [
                 "unpublished"
             ]
+        },
+        {
+            "type": "incident",
+            "spec_version": "2.1",
+            "id": "incident--1a074418-9248-4a21-9918-a79d0f1dbc5b",
+            "created_by_ref": "identity--2242662b-d581-4864-8696-fff719dc0500",
+            "created": "2020-10-19T01:01:01.000Z",
+            "modified": "2020-10-19T01:01:01.000Z",
+            "name": "An example incident with human triggered suspicious email",
+            "description": "A user has reported a suspicious phishing email, possibly a company wide campaign",
+            "extensions": {
+                "extension-definition--ef765651-680c-498d-9894-99799f2fa126": {
+                    "blocked": false,
+                    "criticality": 80,
+                    "determination": "suspected",
+                    "event_refs": [
+                        "event--84ede1e8-aa78-4c63-98cd-02f4387fc1ec",
+                        "event--44728578-a89c-41de-b934-17fec1bd30d7",
+                        "event--5276275e-73f3-41b1-b241-7947e8868c03"
+                    ],
+                    "evidence_refs": [
+                        "observed-data-source1--b67d30ff-02ac-498a-92f9-32f845f448cf",
+                        "observed-data-source2--b67d30ff-02ac-498a-92f9-32f845f448cf",
+                        "observed-data-source3--b67d30ff-02ac-498a-92f9-32f845f448cf",
+                        "sighting-source4--779c4ae8-e134-4180-baa4-03141095d971",
+                        "observed-data-source5--b67d30ff-02ac-498a-92f9-32f845f448cf",
+                        "observed-data-source6--b67d30ff-02ac-498a-92f9-32f845f448cf",
+                        "observed-data-source6--b67d30ff-02ac-498a-92f9-32f845f448ff",
+                        "sighting-source7--779c4ae8-e134-4180-baa4-03141095d971"
+                    ],
+                    "extension_type": "property-extension",
+                    "impact_refs": [
+                        "impact--1032f48b-28d1-451f-970e-78b736db8e13"
+                    ],
+                    "impacted_entity_counts": {
+                        "individual": 10,
+                        "organization": 1,
+                        "system": 5
+                    },
+                    "incident_types": [
+                        "hosting-phishing-sites",
+                        "theft-access-credentials",
+                        "known-malware"
+                    ],
+                    "investigation_status": "new",
+                    "malicious": true,
+                    "notes_refs": [
+                        "note--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061"
+                    ],
+                    "scores": [
+                        {
+                            "description": "A phishing email is ranked 6/10",
+                            "name": "SOC scoring",
+                            "value": 6
+                        }
+                    ],
+                    "task_refs": [
+                        "task--1ffe4af4-3b18-4ee2-8279-0d1264efd0fe",
+                        "task--2d254737-fbf8-4969-adb3-80ac5c293f57",
+                        "task--2d254737-fbf8-4969-addd-80ac5c293f57",
+                        "task--56d81e7e-69b6-41aa-88cc-2b64b7896463",
+                        "task--2d254737-fbff-4969-bbbb-80ac5c293f57",
+                        "task--2d254737-fbff-4969-addd-80ac5c293f57",
+                        "task--2d254737-fbbb-4969-addd-80ac5c293f57"
+                    ]
+                }
+            }
         }
     ]
 }
