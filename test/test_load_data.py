@@ -15,26 +15,11 @@ import stix2
 
 import_type = import_type_factory.get_default_import()
 
-connection = {
-    "uri": "localhost",
-    "port": "1729",
-    "database": "stixorm",
-    "user": None,
-    "password": None
-}
 
-db_write = TypeDBSink(
-    connection=connection,
-    clear=True,
-    import_type=import_type,
-)
 
-db_read = TypeDBSource(
-    connection=connection,
-    import_type=import_type,
-)
 
-def test_campaign_data():
+
+def test_campaign_data(db_sink_for_default, db_source_for_default):
     url1 = "https://raw.githubusercontent.com/os-threat/Stix-ORM/main/test/data/standard/aaa_identity.json"
     url2 = "https://raw.githubusercontent.com/os-threat/Stix-ORM/main/test/data/standard/campaign.json"
     # Insert the identities first
@@ -47,13 +32,13 @@ def test_campaign_data():
         if type(identities)==list:
             print('Ready to load ....')
 
-            inserts = db_write.add(identities)
+            inserts = db_sink_for_default.add(identities)
 
             for result in inserts:
                 assert result.message is None
                 assert result.error is None
             for obj in identities:
-                found = db_read.get(stix_id=obj['id'])
+                found = db_source_for_default.get(stix_id=obj['id'])
 
                 assert type(found)==stix2.v21.sdo.Identity
                 print("Object was found!")
@@ -72,10 +57,10 @@ def test_campaign_data():
                 campaign['created_by_ref']=identities[0]['id']
                 campaigns.append(campaign)
             # missing dependencies here but why I just inserted the identiy before....
-            inserts = db_write.add(campaigns)
+            inserts = db_sink_for_default.add(campaigns)
 
             for result in inserts:
                 assert result.message is None
                 assert result.error is None
 
-        db_write.clear_db()
+        db_sink_for_default.clear_db()
