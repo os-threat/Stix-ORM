@@ -75,16 +75,6 @@ define
         plays traceability-ext:impact-base,
         plays impact-refs:the-impact;
 
-    # Incident Evidence Object
-    evidence sub stix-domain-object,
-        owns evidence-type,
-        owns description,
-        owns name,
-        owns source,
-        plays obj-refs:object,
-        plays evidence-refs:the-evidence,
-        plays evidence-ext:evidence-base;
-
     # Incident Tasks Object
     task sub stix-domain-object, abstract,
         owns step-type,
@@ -216,13 +206,75 @@ define
         relates occurence as sco,
         relates incident-core as extension;
 
-    # evidence extension object
-    evidence-extension sub incident-extension,
+    # evidence extension objects
+    evidence-extension sub stix-sub-object;
+    observed-extension sub evidence-extension,
+        plays evidence-ext:evidence-spec;
+    sighting-extension sub evidence-extension,
         plays evidence-ext:evidence-spec;
     # incident core extension embedded relation
     evidence-ext sub extensions,
         relates evidence-base as sco,
         relates evidence-spec as extension;
+    # evidence extension - Alerts
+    alert-evidence sub observed-extension,
+        owns name,
+        owns log,
+        owns uuid,
+        owns source,
+        owns product,
+        owns format,
+        owns confidence,
+        plays evidence-ext:evidence-spec;
+    # evidence extension - Context
+    context-evidence sub observed-extension,
+        owns name,
+        owns description,
+        owns context-value,
+        owns confidence,
+        plays evidence-ext:evidence-spec;
+    # evidence extension - Exclusion List
+    exclusion-evidence sub observed-extension,
+        owns source,
+        owns channel,
+        owns confidence,
+        plays evidence-ext:evidence-spec;
+    # evidence extension - Enrichments
+    enrichment-evidence sub observed-extension,
+        owns name,
+        owns link-url,
+        owns paid,
+        owns enrichment-value,
+        owns confidence,
+        plays evidence-ext:evidence-spec;
+    # evidence extension - Hunts
+    hunt-evidence sub observed-extension,
+        owns name,
+        owns playbook-id,
+        owns hunt-rule,
+        owns confidence,
+        plays evidence-ext:evidence-spec;
+    # evidence extension - Framework
+    framework-evidence sub sighting-extension,
+        owns framework,
+        owns version,
+        owns domain,
+        owns comparison,
+        owns comparison-approach,
+        owns confidence,
+        plays evidence-ext:evidence-spec;
+    # evidence extension - External Evidence
+    external-evidence sub sighting-extension,
+        owns source,
+        owns version,
+        owns last-update,
+        owns pattern,
+        owns pattern-type,
+        owns payload,
+        owns valid-from,
+        owns valid-until,
+        owns confidence,
+        plays evidence-ext:evidence-spec;
 
     # task extension object
     task-extension sub incident-extension,
@@ -528,7 +580,7 @@ define
 	    plays notes-refs:the-note;
 
 	incident
-	    plays  occurence-ext:occurence,
+	    plays occurence-ext:occurence,
 	    plays led-to:initial,
 	    plays led-to:subsequent,
 	    plays impacts:issue,
@@ -542,6 +594,14 @@ define
 
     malware
         plays performed:initiator;
+
+    observed-data
+        plays evidence-refs:the-evidence,
+        plays evidence-ext:evidence-base;
+
+    sighting
+        plays evidence-refs:the-evidence,
+        plays evidence-ext:evidence-base;
 
     tool
         plays performed:initiator;
@@ -585,6 +645,20 @@ define
     extension-type sub stix-attribute-string;
     investigation-status sub stix-attribute-string;
     incident-types sub stix-attribute-string;
+    log sub stix-attribute-string;
+    uuid sub stix-attribute-string;
+    format sub stix-attribute-string;
+    context-value sub stix-attribute-string;
+    channel sub stix-attribute-string;
+    link-url sub stix-attribute-string;
+    enrichment-value sub stix-attribute-string;
+    playbook-id sub stix-attribute-string;
+    hunt-rule sub stix-attribute-string;
+    framework sub stix-attribute-string;
+    domain sub stix-attribute-string;
+    comparison sub stix-attribute-string;
+    comparison-approach sub stix-attribute-string;
+    payload sub stix-attribute-string;
 
 
     event-seq sub stix-attribute-integer;
@@ -623,5 +697,6 @@ define
 
     end-time sub stix-attribute-timestamp;
     conversion-time sub stix-attribute-timestamp;
+    last-update sub stix-attribute-timestamp;
 
 

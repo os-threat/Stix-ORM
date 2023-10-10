@@ -1,0 +1,11 @@
+{
+  "source" : "source",
+  "version" : "version",
+  "last_update" : "last-update",
+  "pattern" : "pattern",
+  "pattern_type" : "pattern-type",
+  "payload" : "payload",
+  "valid_from" : "valid-from",
+  "valid_until" : "valid-until",
+  "confidence" : "confidence"
+}

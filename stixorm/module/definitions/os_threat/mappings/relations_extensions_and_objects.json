@@ -91,8 +91,64 @@
     "pointed-to": "task-spec"
   },
   {
-    "stix": "extension-definition--7ff5b5a5-a342-417e-9c0d-339561d9d78a",
-    "object": "evidence-extension",
+    "stix": "extension-definition--37b19192-905e-4851-912c-1af99ede56ac",
+    "object": "observed-extension",
+    "relation": "evidence-ext",
+    "owner": "evidence-base",
+    "pointed-to": "evidence-spec"
+  },
+  {
+    "stix": "observed-alert",
+    "object": "alert-evidence",
+    "relation": "evidence-ext",
+    "owner": "evidence-base",
+    "pointed-to": "evidence-spec"
+  },
+  {
+    "stix": "observed-context",
+    "object": "context-evidence",
+    "relation": "evidence-ext",
+    "owner": "evidence-base",
+    "pointed-to": "evidence-spec"
+  },
+  {
+    "stix": "observed-exclusion",
+    "object": "exclusion-evidence",
+    "relation": "evidence-ext",
+    "owner": "evidence-base",
+    "pointed-to": "evidence-spec"
+  },
+  {
+    "stix": "observed-enrichment",
+    "object": "enrichment-evidence",
+    "relation": "evidence-ext",
+    "owner": "evidence-base",
+    "pointed-to": "evidence-spec"
+  },
+  {
+    "stix": "observed-hunt",
+    "object": "hunt-evidence",
+    "relation": "evidence-ext",
+    "owner": "evidence-base",
+    "pointed-to": "evidence-spec"
+  },
+  {
+    "stix": "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43",
+    "object": "sighting-extension",
+    "relation": "evidence-ext",
+    "owner": "evidence-base",
+    "pointed-to": "evidence-spec"
+  },
+  {
+    "stix": "sighting-framework",
+    "object": "framework-evidence",
+    "relation": "evidence-ext",
+    "owner": "evidence-base",
+    "pointed-to": "evidence-spec"
+  },
+  {
+    "stix": "sighting-external",
+    "object": "external-evidence",
     "relation": "evidence-ext",
     "owner": "evidence-base",
     "pointed-to": "evidence-spec"

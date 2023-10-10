@@ -1,0 +1,9 @@
+{
+  "name" : "name",
+  "log" : "log",
+  "uuid" : "uuid",
+  "source" : "source",
+  "product" : "product",
+  "format" : "format",
+  "confidence" : "confidence"
+}
