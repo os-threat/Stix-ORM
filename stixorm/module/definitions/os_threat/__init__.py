@@ -26,7 +26,9 @@ from stixorm.module.definitions.os_threat.classes import (
     Event, EntityCountObject, ImpactCoreExt, Availability, Confidentiality,
     External, Integrity, Monetary, Physical, Traceability, Impact,
     IncidentScoreObject, IncidentCoreExt, TaskCoreExt, Task,
-    EvidenceCoreExt, Evidence
+    ObservedEvidence, ObservedAlert, ObservedContext, ObservedExclusion,
+    ObservedEnrichment, ObservedHunt, SightingEvidence, SightingFramework,
+    SightingExternal
 )
 
 
@@ -38,7 +40,6 @@ class_model = {}
 class_model["sdo"] = {
     "Feeds": Feeds,
     "Feed": Feed,
-    "Evidence": Evidence,
     "Event": Event,
     "Impact": Impact,
     "Task": Task
@@ -61,6 +62,14 @@ class_model["sub"] = {
     "IncidentScoreObject": IncidentScoreObject,
     "IncidentCoreExt": IncidentCoreExt,
     "TaskCoreExt": TaskCoreExt,
-    "EvidenceCoreExt": EvidenceCoreExt
+    "ObservedEvidence": ObservedEvidence,
+    "ObservedAlert": ObservedAlert,
+    "ObservedContext": ObservedContext,
+    "ObservedExclusion": ObservedExclusion,
+    "ObservedEnrichment": ObservedEnrichment,
+    "ObservedHunt": ObservedHunt,
+    "SightingEvidence": SightingEvidence,
+    "SightingFramework": SightingFramework,
+    "SightingExternal": SightingExternal
 }
 class_model["meta"] = {}

@@ -462,7 +462,7 @@ class ObservedAlert(_Extension):
     _properties = OrderedDict([
         ('name', StringProperty()),
         ('log', StringProperty()),
-        ('uuid', StringProperty()),
+        ('system_id', StringProperty()),
         ('source', StringProperty()),
         ('product', StringProperty()),
         ('format', StringProperty()),

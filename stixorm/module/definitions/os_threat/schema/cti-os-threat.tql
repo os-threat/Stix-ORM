@@ -220,7 +220,7 @@ define
     alert-evidence sub observed-extension,
         owns name,
         owns log,
-        owns uuid,
+        owns system-id,
         owns source,
         owns product,
         owns format,
@@ -646,7 +646,7 @@ define
     investigation-status sub stix-attribute-string;
     incident-types sub stix-attribute-string;
     log sub stix-attribute-string;
-    uuid sub stix-attribute-string;
+    system-id sub stix-attribute-string;
     format sub stix-attribute-string;
     context-value sub stix-attribute-string;
     channel sub stix-attribute-string;
