@@ -44,10 +44,12 @@ stix-object sub stix-entity,
 		plays created-by:created,
 
 		# Common relations for SDOs and SCOs. Defined in 3.7. 
-		plays derivation:derived-from,
-		plays derivation:deriving,
-		plays duplicate:duplicated-object,
-		plays relatedness:related-to;
+		plays derived:derived-from,
+		plays derived:deriving,
+		plays duplicated:original,
+		plays duplicated:duplicate,
+		plays related:related-to,
+		plays related:related-from;
 
 			stix-domain-object sub stix-core-object, 
 				# Required
@@ -669,8 +671,29 @@ stix-core-relationship sub relation,
 	plays object-marking:marked,
 	plays granular-marking:object, 
 	plays external-references:referenced,
-	plays created-by:created;
+	plays created-by:created,
+    plays derived:derived-from,
+    plays derived:deriving,
+    plays duplicated:original,
+    plays duplicated:duplicate,
+    plays related:related-to,
+    plays related:related-from;
 
+
+    # 3.7 Common Relationships
+    # These are relation types that are shared by SDOs and SCOs
+
+    derived sub stix-core-relationship,
+        relates derived-from as source,
+        relates deriving as target;
+
+    duplicated sub stix-core-relationship,
+        relates original as source,
+        relates duplicate  as target;
+
+    related sub stix-core-relationship,
+        relates related-from as source,
+        relates related-to  as target;
 
 	# Specific Relationships from Appendix C
 	delivers sub stix-core-relationship, 
@@ -1602,24 +1625,6 @@ embedded sub relation,
 			relates v3-extension as extension;
 
 
-
-
-
-
-
-
-# 3.7 Common Relationships 
-# These are relation types that are shared by SDOs and SCOs
-
-derivation sub relation, 
-	relates derived-from,
-	relates deriving;
-
-duplicate sub relation, 
-	relates duplicated-object; 
-
-relatedness sub relation,
-	relates related-to; 
 
 ## INFERRED RELATIONS ## 
 

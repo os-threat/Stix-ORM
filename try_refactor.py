@@ -1870,7 +1870,7 @@ if __name__ == '__main__':
     stid1 = "task--1ffe4af4-3b18-4ee2-8279-0d1264efd0fe"
     stid2 = "sighting--55183679-1f1d-4824-af63-72ec2ef855a0"
     stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
-    #test_initialise()
+    test_initialise()
     #load_file_list(path1, [f30, f21])
     #load_file(incident + "/human_trigger.json")
     #load_file(incident_test + "/incident.json")
@@ -1899,7 +1899,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    backdoor_add_dir(incident_adjust)
+    #backdoor_add_dir(incident_adjust)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)

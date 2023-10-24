@@ -15,15 +15,15 @@ from stixorm.module.generate_docs import configure_overview_table_docs, object_t
 from stixorm.module.initialise import sort_layers, load_typeql_data
 from stixorm.module.definitions.stix21 import (
     ObservedData, IPv4Address, EmailAddress, DomainName, EmailMessage, URL, UserAccount,
-    Identity, Incident, Note, Sighting
+    Identity, Incident, Note, Sighting, Indicator, Relationship
 )
 from stixorm.module.definitions.os_threat import (
     StateChangeObject, EventCoreExt, Event, EntityCountObject, ImpactCoreExt,
     Availability, Confidentiality, External, Integrity, Monetary, Physical,
     Traceability, Impact, IncidentScoreObject, IncidentCoreExt, TaskCoreExt,
-    Task, ObservedEvidence, ObservedAlert, ObservedContext, ObservedExclusion,
-    ObservedEnrichment, ObservedHunt, SightingEvidence, SightingFramework,
-    SightingExternal
+    Task, SightingEvidence, Sequence,
+    SightingAnecdote, SightingAlert, SightingContext, SightingExclusion,
+    SightingEnrichment, SightingHunt, SightingFramework, SightingExternal
 )
 from stixorm.module.orm.import_utilities import val_tql
 #from stixorm.module.definitions.attack import attack_models
@@ -47,6 +47,14 @@ logger = logging.getLogger(__name__)
 ########################################################################################################
 
 bundle_list = []
+sequence_start_refs = []
+sequence_refs = []
+task_refs = []
+event_refs = []
+impact_refs = []
+notes_refs = []
+sighting_refs = []
+other_object_refs = []
 
 #
 # Step 0 - Setup Attack Data, so we dont have to create it from scratch
@@ -231,15 +239,55 @@ TTP_lateral_movement = {
             ],
             "x_mitre_version": "1.1"
         }
-#
-#
+############################################################################################
+############################################################################################
 # Step 1: A User reports a suspsicious email, so create an event and assign it to an incident
 # email address = evil@northkorea.com
 # email url = "https://www.northkorea.nk/we/are/mad/"
 # email message = "we are coming for you"
+# date = "2020-10-19T01:01:01.000Z"
 # user address = naive@mycompany.com
 # name = naive smith
-# user account
-#
+# user account = nsmith
+###########################################################################################
+# 1.A Create SCO's and Observed-Data
 email_addr1 = EmailAddress(value="evil@northkorea.com")
-user_account1 = UserAccount(account_type="unix", account_login="nsmith", display_name="naive smith")
+user_account2 = UserAccount(account_type="unix", account_login="nsmith", display_name="naive smith")
+email_addr2 = EmailAddress(value="naive@mycompany.com", belongs_to_ref=user_account2.id)
+email_message1 = EmailMessage(to_refs=email_addr2.id, from_ref=email_addr1.id, subject="we are coming for you",
+                              is_multipart=False, date="2020-10-19T01:01:01.000Z")
+url1 = URL(value="https://www.northkorea.nk/we/are/mad/")
+rel1 = Relationship(relationship_type='derived-from', source_ref=email_message1.id, target_ref=url1.id)
+obs_refs1 = [email_addr1.id, email_message1.id, url1.id, rel1.id]
+observation1 = ObservedData(number_observed=1, object_refs=obs_refs1,
+                            first_observed=email_message1.date,last_observed=email_message1.date)
+local_list1 = [email_addr1, user_account2, email_addr2, email_message1, url1, rel1, observation1]
+other_object_refs = other_object_refs + local_list1
+##########################################################################################
+# 1.B Create Indicator and Sighting
+pat1 = "[email-addr:value = '" + email_addr1.value + "' AND email:subject = '" + email_message1.subject + "']"
+ind1 = Indicator(name="Suspicious Email", pattern_type="stix", pattern=pat1, indicator_types=["unknown"])
+sight_ext = SightingEvidence(extension_type="property-extension")
+alert = SightingAlert(name="user-report", log="I have found a suspicious email")
+sight_ext1 = {
+    "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": sight_ext,
+    "observed-alert": alert
+}
+sighting1 = Sighting(observed_data_refs=observation1, sighting_of_ref=ind1,
+                     extensions={"extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43":sight_ext})
+other_object_refs.append(ind1)
+sighting_refs.append((sighting1))
+bundle_list = bundle_list + other_object_refs + sighting_refs
+
+
+
+
+#######################################################################################################
+#######################################################################################################
+# Print Bundle on console
+#######################################################################################################
+
+for bun in bundle_list:
+    print("--------------------------------------------------------------------------")
+    print(bun.serialize(pretty=True))
+

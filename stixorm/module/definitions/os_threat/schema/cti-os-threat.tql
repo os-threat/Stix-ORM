@@ -224,36 +224,31 @@ define
         owns source,
         owns product,
         owns format,
-        owns confidence,
-        plays evidence-ext:evidence-spec;
+        owns confidence;
     # evidence extension - Context
     context-evidence sub observed-extension,
         owns name,
         owns description,
         owns context-value,
-        owns confidence,
-        plays evidence-ext:evidence-spec;
+        owns confidence;
     # evidence extension - Exclusion List
     exclusion-evidence sub observed-extension,
         owns source,
         owns channel,
-        owns confidence,
-        plays evidence-ext:evidence-spec;
+        owns confidence;
     # evidence extension - Enrichments
     enrichment-evidence sub observed-extension,
         owns name,
         owns link-url,
         owns paid,
         owns enrichment-value,
-        owns confidence,
-        plays evidence-ext:evidence-spec;
+        owns confidence;
     # evidence extension - Hunts
     hunt-evidence sub observed-extension,
         owns name,
         owns playbook-id,
         owns hunt-rule,
-        owns confidence,
-        plays evidence-ext:evidence-spec;
+        owns confidence;
     # evidence extension - Framework
     framework-evidence sub sighting-extension,
         owns framework,
@@ -261,8 +256,7 @@ define
         owns domain,
         owns comparison,
         owns comparison-approach,
-        owns confidence,
-        plays evidence-ext:evidence-spec;
+        owns confidence;
     # evidence extension - External Evidence
     external-evidence sub sighting-extension,
         owns source,
@@ -273,8 +267,7 @@ define
         owns payload,
         owns valid-from,
         owns valid-until,
-        owns confidence,
-        plays evidence-ext:evidence-spec;
+        owns confidence;
 
     # task extension object
     task-extension sub incident-extension,

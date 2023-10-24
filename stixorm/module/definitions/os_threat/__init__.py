@@ -25,14 +25,11 @@ from stixorm.module.definitions.os_threat.classes import (
     Feeds, Feed, ThreatSubObject, StateChangeObject, EventCoreExt,
     Event, EntityCountObject, ImpactCoreExt, Availability, Confidentiality,
     External, Integrity, Monetary, Physical, Traceability, Impact,
-    IncidentScoreObject, IncidentCoreExt, TaskCoreExt, Task,
-    ObservedEvidence, ObservedAlert, ObservedContext, ObservedExclusion,
-    ObservedEnrichment, ObservedHunt, SightingEvidence, SightingFramework,
-    SightingExternal
+    IncidentScoreObject, IncidentCoreExt, TaskCoreExt, Task, SightingEvidence,
+    SightingAnecdote, SightingAlert, SightingContext, SightingExclusion,
+    SightingEnrichment, SightingHunt, SightingFramework, SightingExternal,
+    Sequence
 )
-
-
-
 
 
 name = "os_threat"
@@ -42,7 +39,8 @@ class_model["sdo"] = {
     "Feed": Feed,
     "Event": Event,
     "Impact": Impact,
-    "Task": Task
+    "Task": Task,
+    "Sequence": Sequence
 }
 class_model["sco"] = {}
 class_model["sro"] = {}
@@ -62,13 +60,13 @@ class_model["sub"] = {
     "IncidentScoreObject": IncidentScoreObject,
     "IncidentCoreExt": IncidentCoreExt,
     "TaskCoreExt": TaskCoreExt,
-    "ObservedEvidence": ObservedEvidence,
-    "ObservedAlert": ObservedAlert,
-    "ObservedContext": ObservedContext,
-    "ObservedExclusion": ObservedExclusion,
-    "ObservedEnrichment": ObservedEnrichment,
-    "ObservedHunt": ObservedHunt,
     "SightingEvidence": SightingEvidence,
+    "SightingAnecdote": SightingAnecdote,
+    "SightingAlert": SightingAlert,
+    "SightingContext": SightingContext,
+    "SightingExclusion": SightingExclusion,
+    "SightingEnrichment": SightingEnrichment,
+    "SightingHunt": SightingHunt,
     "SightingFramework": SightingFramework,
     "SightingExternal": SightingExternal
 }

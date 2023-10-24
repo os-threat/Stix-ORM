@@ -112,6 +112,40 @@ class Feeds(_DomainObject):
 #
 # Incident Definitions
 #
+############################################################################
+
+###############################################################################
+# Sequence object
+#################################################################################
+
+class Sequence(_DomainObject):
+    """For more detailed information on this object's properties, see
+    `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
+    """
+    _type = 'sequence'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('sequenced_object', ThreatReference(valid_types=valid_obj, spec_version='2.1')),
+        ('step_type', StringProperty()),
+        ('on_completion', ThreatReference(valid_types='sequence', spec_version='2.1')),
+        ('on_success', ThreatReference(valid_types='sequence', spec_version='2.1')),
+        ('on_failure', ThreatReference(valid_types='sequence', spec_version='2.1')),
+        ('next_steps', ListProperty(ThreatReference(valid_types='sequence', spec_version='2.1'))),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+    ])
+
+
 ############################################################################################
 # Event Object
 ##################################################################################
@@ -152,19 +186,14 @@ class Event(_DomainObject):
         ('status', StringProperty()),
         ('changed_objects', ListProperty(EmbeddedObjectProperty(type=StateChangeObject))),
         ('description', StringProperty()),
-        ('detection_methods', ListProperty(StringProperty)),
-        ('detection_rule', StringProperty()),
-        ('detection_system', StringProperty()),
         ('end_time', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('end_time_fidelity', StringProperty()),
-        ('event_seq', IntegerProperty()),
         ('event_types', ListProperty(StringProperty)),
         ('goal', StringProperty()),
         ('name', StringProperty()),
         ('sighting_refs', ListProperty(ThreatReference(valid_types=valid_obj, spec_version='2.1'))),
         ('start_time', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('start_time_fidelity', StringProperty()),
-        ('subevents', ListProperty(ThreatReference(valid_types='event', spec_version='2.1'))),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
         ('lang', StringProperty()),
@@ -174,7 +203,7 @@ class Event(_DomainObject):
         ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
 ###############################################################################
-# Imapct object
+# Impact object
 #################################################################################
 
 
@@ -374,11 +403,14 @@ class IncidentCoreExt(_Extension):
         ('impacted_entity_counts', EmbeddedObjectProperty(type=EntityCountObject)),
         ('recoverability', ListProperty(StringProperty)),
         ('scores', ListProperty(EmbeddedObjectProperty(type=IncidentScoreObject))),
+        ('sequence_start_refs', ListProperty(ThreatReference(valid_types='sequence'))),
+        ('sequence_refs', ListProperty(ThreatReference(valid_types='sequence'))),
         ('task_refs', ListProperty(ThreatReference(valid_types='task'))),
         ('event_refs', ListProperty(ThreatReference(valid_types='event'))),
         ('impact_refs', ListProperty(ThreatReference(valid_types='impact'))),
         ('notes_refs', ListProperty(ThreatReference(valid_types='note'))),
-        ('evidence_refs', ListProperty(ThreatReference(valid_types='evidence'))),
+        ('sighting_refs', ListProperty(ThreatReference(valid_types='evidence'))),
+        ('other_object_refs', ListProperty(ThreatReference(valid_types=valid_obj))),
     ])
 
 ###############################################################################
@@ -410,7 +442,6 @@ class Task(_DomainObject):
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('changed_objects', ListProperty(EmbeddedObjectProperty(type=StateChangeObject))),
         ('task_types', ListProperty(StringProperty)),
-        ('step_type', StringProperty()),
         ('outcome', StringProperty()),
         ('description', StringProperty()),
         ('end_time', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
@@ -422,10 +453,6 @@ class Task(_DomainObject):
         ('start_time', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('start_time_fidelity', StringProperty()),
         ('owner', ReferenceProperty(valid_types='identity', spec_version='2.1')),
-        ('on_completion', ThreatReference(valid_types='task')),
-        ('on_failure', ThreatReference(valid_types='task')),
-        ('on_success', ThreatReference(valid_types='task')),
-        ('next_steps', ListProperty(ThreatReference(valid_types='task'))),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
         ('lang', StringProperty()),
@@ -439,92 +466,6 @@ class Task(_DomainObject):
 ###############################################################################
 # Evidence object
 #################################################################################
-# Observations
-##################################################################################
-
-class ObservedEvidence(_Extension):
-    """For more detailed information on this object's properties, see
-    `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
-    """
-
-    _type = 'extension-definition--37b19192-905e-4851-912c-1af99ede56ac'
-    _properties = OrderedDict([
-        ('extension_type', StringProperty(fixed='property-extension'))
-    ])
-
-
-class ObservedAlert(_Extension):
-    """For more detailed information on this object's properties, see
-    `the  https://github.com/dod-cyber-crime-center/cti-stix-common-objects/blob/incident_rework/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc`__.
-    """
-
-    _type = 'observed-alert'
-    _properties = OrderedDict([
-        ('name', StringProperty()),
-        ('log', StringProperty()),
-        ('system_id', StringProperty()),
-        ('source', StringProperty()),
-        ('product', StringProperty()),
-        ('format', StringProperty()),
-        ('confidence', IntegerProperty()),
-    ])
-
-
-class ObservedContext(_Extension):
-    """For more detailed information on this object's properties, see
-    `the  https://github.com/dod-cyber-crime-center/cti-stix-common-objects/blob/incident_rework/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc`__.
-    """
-
-    _type = 'observed-context'
-    _properties = OrderedDict([
-        ('name', StringProperty()),
-        ('description', StringProperty()),
-        ('value', StringProperty()),
-        ('confidence', IntegerProperty()),
-    ])
-
-
-class ObservedExclusion(_Extension):
-    """For more detailed information on this object's properties, see
-    `the  https://github.com/dod-cyber-crime-center/cti-stix-common-objects/blob/incident_rework/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc`__.
-    """
-
-    _type = 'observed-exclusion'
-    _properties = OrderedDict([
-        ('source', StringProperty()),
-        ('channel', StringProperty()),
-        ('confidence', IntegerProperty()),
-    ])
-
-
-class ObservedEnrichment(_Extension):
-    """For more detailed information on this object's properties, see
-    `the  https://github.com/dod-cyber-crime-center/cti-stix-common-objects/blob/incident_rework/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc`__.
-    """
-
-    _type = 'observed-enrichment'
-    _properties = OrderedDict([
-        ('name', StringProperty()),
-        ('url', StringProperty()),
-        ('paid', BooleanProperty()),
-        ('value', StringProperty()),
-        ('confidence', IntegerProperty()),
-    ])
-
-
-class ObservedHunt(_Extension):
-    """For more detailed information on this object's properties, see
-    `the  https://github.com/dod-cyber-crime-center/cti-stix-common-objects/blob/incident_rework/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc`__.
-    """
-
-    _type = 'observed-hunt'
-    _properties = OrderedDict([
-        ('name', StringProperty()),
-        ('playbook_id', StringProperty()),
-        ('rule', StringProperty()),
-        ('confidence', IntegerProperty()),
-    ])
-
 
 #################################################################################
 # Sightings
@@ -541,6 +482,84 @@ class SightingEvidence(_Extension):
     ])
 
 
+class SightingAlert(_Extension):
+    """For more detailed information on this object's properties, see
+    `the  https://github.com/dod-cyber-crime-center/cti-stix-common-objects/blob/incident_rework/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc`__.
+    """
+
+    _type = 'sighting-alert'
+    _properties = OrderedDict([
+        ('name', StringProperty()),
+        ('log', StringProperty()),
+        ('system_id', StringProperty()),
+        ('source', StringProperty()),
+        ('product', StringProperty()),
+        ('format', StringProperty()),
+    ])
+
+
+class SightingAnecdote(_Extension):
+    """For more detailed information on this object's properties, see
+    `the  https://github.com/dod-cyber-crime-center/cti-stix-common-objects/blob/incident_rework/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc`__.
+    """
+
+    _type = 'sighting-anecdote'
+    _properties = OrderedDict([
+        ('person_name', StringProperty()),
+        ('person_context', StringProperty()),
+        ('report_submission', StringProperty()),
+    ])
+
+class SightingContext(_Extension):
+    """For more detailed information on this object's properties, see
+    `the  https://github.com/dod-cyber-crime-center/cti-stix-common-objects/blob/incident_rework/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc`__.
+    """
+
+    _type = 'sighting-context'
+    _properties = OrderedDict([
+        ('name', StringProperty()),
+        ('description', StringProperty()),
+        ('value', StringProperty()),
+    ])
+
+class SightingExclusion(_Extension):
+    """For more detailed information on this object's properties, see
+    `the  https://github.com/dod-cyber-crime-center/cti-stix-common-objects/blob/incident_rework/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc`__.
+    """
+
+    _type = 'sighting-exclusion'
+    _properties = OrderedDict([
+        ('source', StringProperty()),
+        ('channel', StringProperty()),
+    ])
+
+
+class SightingEnrichment(_Extension):
+    """For more detailed information on this object's properties, see
+    `the  https://github.com/dod-cyber-crime-center/cti-stix-common-objects/blob/incident_rework/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc`__.
+    """
+
+    _type = 'sighting-enrichment'
+    _properties = OrderedDict([
+        ('name', StringProperty()),
+        ('url', StringProperty()),
+        ('paid', BooleanProperty()),
+        ('value', StringProperty()),
+    ])
+
+
+class SightingHunt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the  https://github.com/dod-cyber-crime-center/cti-stix-common-objects/blob/incident_rework/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc`__.
+    """
+
+    _type = 'sighting-hunt'
+    _properties = OrderedDict([
+        ('name', StringProperty()),
+        ('playbook_id', StringProperty()),
+        ('rule', StringProperty()),
+    ])
+
 class SightingFramework(_Extension):
     """For more detailed information on this object's properties, see
     `the  https://github.com/dod-cyber-crime-center/cti-stix-common-objects/blob/incident_rework/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc`__.
@@ -553,7 +572,6 @@ class SightingFramework(_Extension):
         ('domain', StringProperty()),
         ('comparison', StringProperty()),
         ('comparison_approach', StringProperty()),
-        ('confidence', IntegerProperty()),
     ])
 
 
@@ -572,5 +590,4 @@ class SightingExternal(_Extension):
         ('payload', StringProperty()),
         ('valid_from', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('valid_until', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('confidence', IntegerProperty()),
     ])
