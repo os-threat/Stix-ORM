@@ -208,8 +208,6 @@ define
 
     # evidence extension objects
     evidence-extension sub stix-sub-object;
-    observed-extension sub evidence-extension,
-        plays evidence-ext:evidence-spec;
     sighting-extension sub evidence-extension,
         plays evidence-ext:evidence-spec;
     # incident core extension embedded relation
@@ -217,46 +215,45 @@ define
         relates evidence-base as sco,
         relates evidence-spec as extension;
     # evidence extension - Alerts
-    alert-evidence sub observed-extension,
+    alert-evidence sub sighting-extension,
         owns name,
         owns log,
         owns system-id,
         owns source,
         owns product,
-        owns format,
-        owns confidence;
+        owns format;
     # evidence extension - Context
-    context-evidence sub observed-extension,
+    anecdote-evidence sub sighting-extension,
+        owns person-name,
+        owns person-context,
+        owns report-submission;
+    # evidence extension - Context
+    context-evidence sub sighting-extension,
         owns name,
         owns description,
-        owns context-value,
-        owns confidence;
+        owns context-value;
     # evidence extension - Exclusion List
-    exclusion-evidence sub observed-extension,
+    exclusion-evidence sub sighting-extension,
         owns source,
-        owns channel,
-        owns confidence;
+        owns channel;
     # evidence extension - Enrichments
-    enrichment-evidence sub observed-extension,
+    enrichment-evidence sub sighting-extension,
         owns name,
         owns link-url,
         owns paid,
-        owns enrichment-value,
-        owns confidence;
+        owns enrichment-value;
     # evidence extension - Hunts
-    hunt-evidence sub observed-extension,
+    hunt-evidence sub sighting-extension,
         owns name,
         owns playbook-id,
-        owns hunt-rule,
-        owns confidence;
+        owns hunt-rule;
     # evidence extension - Framework
     framework-evidence sub sighting-extension,
         owns framework,
         owns version,
         owns domain,
         owns comparison,
-        owns comparison-approach,
-        owns confidence;
+        owns comparison-approach;
     # evidence extension - External Evidence
     external-evidence sub sighting-extension,
         owns source,
@@ -266,8 +263,7 @@ define
         owns pattern-type,
         owns payload,
         owns valid-from,
-        owns valid-until,
-        owns confidence;
+        owns valid-until;
 
     # task extension object
     task-extension sub incident-extension,
@@ -652,6 +648,9 @@ define
     comparison sub stix-attribute-string;
     comparison-approach sub stix-attribute-string;
     payload sub stix-attribute-string;
+    person-name sub stix-attribute-string;
+    person-context sub stix-attribute-string;
+    report-submission sub stix-attribute-string;
 
 
     event-seq sub stix-attribute-integer;
