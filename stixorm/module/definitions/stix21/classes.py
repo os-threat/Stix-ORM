@@ -269,7 +269,7 @@ class Sighting(_RelationshipObject):
         if sighting_of_ref and not kwargs.get('sighting_of_ref'):
             kwargs['sighting_of_ref'] = sighting_of_ref
 
-       # super(Sighting, self).__init__(**kwargs)
+        super(Sighting, self).__init__(**kwargs)
 
     def _check_object_constraints(self):
         super(self.__class__, self)._check_object_constraints()

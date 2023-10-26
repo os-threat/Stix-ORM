@@ -189,6 +189,8 @@ class ThreatExtensionsProperty(DictionaryProperty):
             if cls:
                 if isinstance(subvalue, dict):
                     ext = cls(allow_custom=False, **subvalue)
+                elif hasattr(cls, '_type') and hasattr(subvalue, '_type') and cls._type == subvalue._type:
+                    ext = subvalue
                 elif isinstance(subvalue, cls):
                     # If already an instance of the registered class, assume
                     # it's valid
