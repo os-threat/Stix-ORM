@@ -28,7 +28,7 @@ from stixorm.module.definitions.os_threat.classes import (
     IncidentScoreObject, IncidentCoreExt, TaskCoreExt, Task, SightingEvidence,
     SightingAnecdote, SightingAlert, SightingContext, SightingExclusion,
     SightingEnrichment, SightingHunt, SightingFramework, SightingExternal,
-    Sequence
+    Sequence, Anecdote
 )
 
 
@@ -42,7 +42,9 @@ class_model["sdo"] = {
     "Task": Task,
     "Sequence": Sequence
 }
-class_model["sco"] = {}
+class_model["sco"] = {
+    "Anecdote": Anecdote
+}
 class_model["sro"] = {}
 class_model["sub"] = {
     "ThreatSubObject" : ThreatSubObject,

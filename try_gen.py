@@ -52,8 +52,6 @@ sequence_refs = []
 task_refs = []
 event_refs = []
 impact_refs = []
-notes_refs = []
-sighting_refs = []
 other_object_refs = []
 
 #
@@ -251,6 +249,8 @@ TTP_lateral_movement = {
 # user account = nsmith
 ###########################################################################################
 # 1.A Create SCO's and Observed-Data
+###########################################################################################
+# 1.A.1 Setup objects
 email_addr1 = EmailAddress(value="evil@northkorea.com")
 user_account2 = UserAccount(account_type="unix", account_login="nsmith", display_name="naive smith")
 email_addr2 = EmailAddress(value="naive@mycompany.com", belongs_to_ref=user_account2.id)
@@ -261,26 +261,52 @@ rel1 = Relationship(relationship_type='derived-from', source_ref=email_message1.
 obs_refs1 = [email_addr1.id, email_message1.id, url1.id, rel1.id]
 observation1 = ObservedData(number_observed=1, object_refs=obs_refs1,
                             first_observed=email_message1.date,last_observed=email_message1.date)
+# 1.A.2 Collect objects and id's in lists
 local_list1 = [email_addr1, user_account2, email_addr2, email_message1, url1, rel1, observation1]
-other_object_refs = other_object_refs + local_list1
+local_list_id1 = [email_addr1.id, user_account2.id, email_addr2.id, email_message1.id, url1.id, rel1.id, observation1.id]
+other_object_refs = other_object_refs + local_list_id1
+bundle_list = bundle_list + local_list1
 ##########################################################################################
 # 1.B Create Indicator and Sighting
+# 1.B.1 Setup Objects
 pat1 = "[email-addr:value = '" + email_addr1.value + "' AND email:subject = '" + email_message1.subject + "']"
 ind1 = Indicator(name="Suspicious Email", pattern_type="stix", pattern=pat1, indicator_types=["unknown"])
 sight_ext = SightingEvidence(extension_type="property-extension")
 alert = SightingAlert(name="user-report", log="I have found a suspicious email")
 sight_ext1 = {
     "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": sight_ext,
-    "observed-alert": alert
+    "sighting-alert": alert
 }
-sighting1 = Sighting(observed_data_refs=observation1, sighting_of_ref=ind1,
-                     extensions={"extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43":sight_ext})
-other_object_refs.append(ind1)
-sighting_refs.append((sighting1))
-bundle_list = bundle_list + other_object_refs + sighting_refs
-
-
-
+sighting1 = Sighting(observed_data_refs=observation1, sighting_of_ref=ind1, extensions=sight_ext1)
+# 1.A.2 Collect objects and ids in lists
+local_list2 = [ind1, sighting1]
+local_list_id2 = [ind1.id, sighting1.id]
+other_object_refs = other_object_refs + local_list_id2
+bundle_list = bundle_list + local_list2
+###########################################################################################
+# 1.C Create Event, Sequence and Initialise Incident
+###########################################################################################
+# 1.C.1 Setup objects
+event_ext = EventCoreExt(extension_type="new-sdo")
+event_ext1 = {"extension-definition--4ca6de00-5b0d-45ef-a1dc-ea7279ea910e": event_ext}
+event1 = Event(
+    status="occured", description="user x found a suspicious email",
+    event_types=["dissemination-phishing-emails"], name="suspiciouse email",
+    sighting_refs=[sighting1], extensions=event_ext1
+)
+eseq1_1 = Sequence(step_type="single_step", sequenced_object=event1.id, sequence_type="event")
+eseq1_0 = Sequence(step_type="start_step", on_completion=eseq1_1.id, sequence_type="event")
+incident_ext = IncidentCoreExt(
+    determination="suspected", extension_type="property-extension",
+    investigation_status="new", event_refs=[event1.id], incident_types=["dissemination-phishing-emails"],
+    other_object_refs=other_object_refs, sequence_start_refs=[eseq1_0.id],
+    sequence_refs=[eseq1_0.id, eseq1_1.id]
+)
+incident_ext1 = {"extension-definition--ef765651-680c-498d-9894-99799f2fa126": incident_ext}
+incident = Incident(name="potential phishing", extensions=incident_ext1)
+# 1.A.2 Collect objects and ids in lists
+local_list3 = [event1, eseq1_1, eseq1_0, incident]
+bundle_list = bundle_list + local_list3
 
 #######################################################################################################
 #######################################################################################################

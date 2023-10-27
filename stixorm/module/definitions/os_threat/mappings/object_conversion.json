@@ -361,5 +361,16 @@
     "summary": "",
     "protocol": "os-threat",
     "icon":""
+  },
+  {
+    "type":  "anecdote",
+    "typeql": "anecdote",
+    "class": "Anecdote",
+    "object": "sco",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
   }
 ]

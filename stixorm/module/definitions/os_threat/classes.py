@@ -16,7 +16,7 @@ from stix2.properties import (
 from stix2.utils import NOW, _get_dict
 from stix2.markings import _MarkingsMixin
 from stix2.markings.utils import check_tlp_marking
-from stix2.v21.base import _DomainObject, _STIXBase21, _RelationshipObject, _Extension
+from stix2.v21.base import _DomainObject, _STIXBase21, _RelationshipObject, _Extension, _Observable
 from stix2.v21.common import (
     ExternalReference, GranularMarking, KillChainPhase,
     MarkingProperty, TLPMarking, StatementMarking,
@@ -131,6 +131,7 @@ class Sequence(_DomainObject):
         ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('sequenced_object', ThreatReference(valid_types=valid_obj, spec_version='2.1')),
+        ('sequence_type', StringProperty()),
         ('step_type', StringProperty()),
         ('on_completion', ThreatReference(valid_types='sequence', spec_version='2.1')),
         ('on_success', ThreatReference(valid_types='sequence', spec_version='2.1')),
@@ -408,8 +409,6 @@ class IncidentCoreExt(_Extension):
         ('task_refs', ListProperty(ThreatReference(valid_types='task'))),
         ('event_refs', ListProperty(ThreatReference(valid_types='event'))),
         ('impact_refs', ListProperty(ThreatReference(valid_types='impact'))),
-        ('notes_refs', ListProperty(ThreatReference(valid_types='note'))),
-        ('sighting_refs', ListProperty(ThreatReference(valid_types='evidence'))),
         ('other_object_refs', ListProperty(ThreatReference(valid_types=valid_obj))),
     ])
 
@@ -591,3 +590,29 @@ class SightingExternal(_Extension):
         ('valid_from', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('valid_until', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
     ])
+
+#####################################################################################################
+#
+# Anecdote SCO
+#
+######################################################################################################
+
+
+class Anecdote(_Observable):
+    """For more detailed information on this object's properties, see
+    `the xxxxxxxxx`__.
+    """
+
+    _type = 'anecdote'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('value', StringProperty(required=True)),
+        ('provided_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('defanged', BooleanProperty(default=lambda: False)),
+        ('extensions', ExtensionsProperty(spec_version='2.1')),
+    ])
+    _id_contributing_properties = ["value"]
