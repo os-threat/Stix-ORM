@@ -455,13 +455,14 @@ for bun in jlist:
     elif jbun["type"] == "task" and jbun["id"] == task1.id:
         print("I made it")
         jbun["outcome"] = "successful"
+        print(bun)
 
 #######################################################################################################
 #######################################################################################################
 # Print Bundle on console
 #######################################################################################################
-bun_len = len(bundle_list)
-for inc, bun in enumerate(jlist):
-    print(f"------------------------------ {inc+1} of {bun_len}--------------------------------------------")
-    print(bun)
+# bun_len = len(bundle_list)
+# for inc, bun in enumerate(jlist):
+#     print(f"------------------------------ {inc+1} of {bun_len}--------------------------------------------")
+#     print(bun)
 
