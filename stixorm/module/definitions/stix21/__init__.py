@@ -21,10 +21,10 @@ from loguru import logger
 import os
 from pathlib import Path
 from stixorm.module.definitions.stix21.classes import (
-    Note, ObservedData, Incident, Report, Relationship, Sighting
+    Note, ObservedData, Incident, Report, Relationship, Sighting, Identity
 )
 from stix2.v21.sdo import (
-    AttackPattern, Campaign, CourseOfAction, CustomObject, Grouping, Identity,
+    AttackPattern, Campaign, CourseOfAction, CustomObject, Grouping,
     Indicator, Infrastructure, IntrusionSet, Location, Malware,
     MalwareAnalysis, Opinion, ThreatActor, Tool,
     Vulnerability,

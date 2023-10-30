@@ -372,5 +372,71 @@
     "summary": "",
     "protocol": "os-threat",
     "icon":""
+  },
+  {
+    "type":  "extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498",
+    "typeql": "identity-contact",
+    "class": "IdentityContact",
+    "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "social-media-contact",
+    "typeql": "social-media-contact",
+    "class": "SocialMediaContact",
+    "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "email-contact",
+    "typeql": "email-contact",
+    "class": "EmailContact",
+    "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "contact-number",
+    "typeql": "contact-number",
+    "class": "ContactNumber",
+    "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4",
+    "typeql": "anecdote-ext",
+    "class": "AnecdoteExt",
+    "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
+    "type":  "extension-definition--be0c7c79-1961-43db-afde-637066a87a64",
+    "typeql": "sequence-ext",
+    "class": "SequenceExt",
+    "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
   }
 ]

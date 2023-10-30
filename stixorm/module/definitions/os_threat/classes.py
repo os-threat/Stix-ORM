@@ -118,6 +118,17 @@ class Feeds(_DomainObject):
 # Sequence object
 #################################################################################
 
+class SequenceExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the  https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
+    """
+
+    _type = 'extension-definition--be0c7c79-1961-43db-afde-637066a87a64'
+    _properties = OrderedDict([
+        ('extension_type', StringProperty(fixed='new-sdo')),
+    ])
+
+
 class Sequence(_DomainObject):
     """For more detailed information on this object's properties, see
     `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
@@ -213,25 +224,25 @@ class EntityCountObject(_STIXBase21):
     `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
     """
     _properties = OrderedDict([
-        ('computers-mobile', IntegerProperty()),
-        ('computers-personal', IntegerProperty()),
-        ('computers-server', IntegerProperty()),
+        ('computers_mobile', IntegerProperty()),
+        ('computers_personal', IntegerProperty()),
+        ('computers_server', IntegerProperty()),
         ('customer', IntegerProperty()),
-        ('customer-individual', IntegerProperty()),
-        ('customer-organization', IntegerProperty()),
-        ('domain-controller', IntegerProperty()),
+        ('customer_individual', IntegerProperty()),
+        ('customer_organization', IntegerProperty()),
+        ('domain_controller', IntegerProperty()),
         ('employee', IntegerProperty()),
         ('group', IntegerProperty()),
-        ('ics-actuator', IntegerProperty()),
-        ('ics-engineering-workstation', IntegerProperty()),
-        ('ics-historian', IntegerProperty()),
-        ('ics-hmi', IntegerProperty()),
-        ('ics-other', IntegerProperty()),
-        ('ics-plc', IntegerProperty()),
-        ('ics-safety-system', IntegerProperty()),
-        ('ics-sensor', IntegerProperty()),
+        ('ics_actuator', IntegerProperty()),
+        ('ics_engineering-workstation', IntegerProperty()),
+        ('ics_historian', IntegerProperty()),
+        ('ics_hmi', IntegerProperty()),
+        ('ics_other', IntegerProperty()),
+        ('ics_plc', IntegerProperty()),
+        ('ics_safety_system', IntegerProperty()),
+        ('ics_sensor', IntegerProperty()),
         ('individual', IntegerProperty()),
-        ('network-device', IntegerProperty()),
+        ('network_device', IntegerProperty()),
         ('organization', IntegerProperty()),
         ('system', IntegerProperty()),
         ('vehicles', IntegerProperty()),
@@ -598,6 +609,16 @@ class SightingExternal(_Extension):
 ######################################################################################################
 
 
+class AnecdoteExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the __.
+    """
+
+    _type = 'extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4'
+    _properties = OrderedDict([
+        ('extension_type', StringProperty(fixed='new-sco'))
+    ])
+
 class Anecdote(_Observable):
     """For more detailed information on this object's properties, see
     `the xxxxxxxxx`__.
@@ -609,6 +630,7 @@ class Anecdote(_Observable):
         ('spec_version', StringProperty(fixed='2.1')),
         ('id', IDProperty(_type, spec_version='2.1')),
         ('value', StringProperty(required=True)),
+        ('report_date', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('provided_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
@@ -616,3 +638,65 @@ class Anecdote(_Observable):
         ('extensions', ExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["value"]
+
+
+#####################################################################################################
+#
+# Identity Extension
+#
+######################################################################################################
+
+class ContactNumber(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `the OS-Threat documentation`__.
+    """
+    _type = 'contact-number'
+    _properties = OrderedDict([
+        ('description', StringProperty()),
+        ('contact_number_type', StringProperty(required=True)),
+        ('contact_number', StringProperty(required=True)),
+    ])
+
+
+class EmailContact(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `the OS-Threat documentation`__.
+    """
+    _type = 'email-contact'
+    _properties = OrderedDict([
+        ('description', StringProperty()),
+        ('digital_contact_type', StringProperty(required=True)),
+        ('email_address_ref', ReferenceProperty(valid_types='email-addr', required=True, spec_version='2.1')),
+    ])
+
+
+class SocialMediaContact(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `the OS-Threat documentation`__.
+    """
+    _type = 'social-media-contact'
+    _properties = OrderedDict([
+        ('description', StringProperty()),
+        ('digital_contact_type', StringProperty(required=True)),
+        ('user_account_ref', ReferenceProperty(valid_types='user-account', required=True, spec_version='2.1')),
+    ])
+
+
+class IdentityContact(_Extension):
+    """For more detailed information on this object's properties, see
+    `the
+    """
+
+    _type = 'extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498'
+    _properties = OrderedDict([
+        ('extension_type', StringProperty(required=True, fixed='property-extension')),
+        ('contact_numbers', ListProperty(EmbeddedObjectProperty(type=ContactNumber))),
+        ('email_addresses', ListProperty(EmbeddedObjectProperty(type=EmailContact))),
+        ('first_name', StringProperty()),
+        ('last_name', StringProperty()),
+        ('middle_name', StringProperty()),
+        ('prefix', StringProperty()),
+        ('social_media_accounts', ListProperty(EmbeddedObjectProperty(type=SocialMediaContact))),
+        ('suffix', StringProperty()),
+        ('team', StringProperty()),
+    ])

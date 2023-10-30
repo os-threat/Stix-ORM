@@ -28,7 +28,8 @@ from stixorm.module.definitions.os_threat.classes import (
     IncidentScoreObject, IncidentCoreExt, TaskCoreExt, Task, SightingEvidence,
     SightingAnecdote, SightingAlert, SightingContext, SightingExclusion,
     SightingEnrichment, SightingHunt, SightingFramework, SightingExternal,
-    Sequence, Anecdote
+    Sequence, Anecdote, SequenceExt, ContactNumber, EmailContact,
+    SocialMediaContact,IdentityContact, AnecdoteExt
 )
 
 
@@ -61,7 +62,7 @@ class_model["sub"] = {
     "Traceability": Traceability,
     "IncidentScoreObject": IncidentScoreObject,
     "IncidentCoreExt": IncidentCoreExt,
-    "TaskCoreExt": TaskCoreExt,
+    "SequenceExt": SequenceExt,
     "SightingEvidence": SightingEvidence,
     "SightingAnecdote": SightingAnecdote,
     "SightingAlert": SightingAlert,
@@ -70,6 +71,12 @@ class_model["sub"] = {
     "SightingEnrichment": SightingEnrichment,
     "SightingHunt": SightingHunt,
     "SightingFramework": SightingFramework,
-    "SightingExternal": SightingExternal
+    "SightingExternal": SightingExternal,
+    "TaskCoreExt": TaskCoreExt,
+    "ContactNumber": ContactNumber,
+    "EmailContact": EmailContact,
+    "SocialMediaContact": SocialMediaContact,
+    "IdentityContact": IdentityContact,
+    "AnecdoteExt": AnecdoteExt
 }
 class_model["meta"] = {}

@@ -21,7 +21,8 @@ from stixorm.module.definitions.os_threat import (
     StateChangeObject, EventCoreExt, Event, EntityCountObject, ImpactCoreExt,
     Availability, Confidentiality, External, Integrity, Monetary, Physical,
     Traceability, Impact, IncidentScoreObject, IncidentCoreExt, TaskCoreExt,
-    Task, SightingEvidence, Sequence,
+    Task, SightingEvidence, Sequence, SequenceExt, ContactNumber, EmailContact,
+    SocialMediaContact, IdentityContact, AnecdoteExt, Anecdote,
     SightingAnecdote, SightingAlert, SightingContext, SightingExclusion,
     SightingEnrichment, SightingHunt, SightingFramework, SightingExternal
 )
@@ -46,6 +47,9 @@ logger = logging.getLogger(__name__)
 #
 ########################################################################################################
 
+#
+# Step 0-A - Setup Common Variables
+#
 bundle_list = []
 sequence_start_refs = []
 sequence_refs = []
@@ -53,9 +57,45 @@ task_refs = []
 event_refs = []
 impact_refs = []
 other_object_refs = []
+sight_ext = SightingEvidence(extension_type="property-extension")
+sight_ext_id = "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43"
+event_ext = EventCoreExt(extension_type="new-sdo")
+event_ext_id = "extension-definition--4ca6de00-5b0d-45ef-a1dc-ea7279ea910e"
+event_ext_dict = {event_ext_id: event_ext}
+seq_ext = SequenceExt(extension_type="new-sdo")
+seq_ext_id = 'extension-definition--be0c7c79-1961-43db-afde-637066a87a64'
+seq_ext_dict = {seq_ext_id: seq_ext}
+imp_ext = ImpactCoreExt(extension_type="new-sdo")
+imp_ext_id = 'extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9'
+anec_ext = AnecdoteExt(extension_type="new-sco")
+anec_ext_id = 'extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4'
+anec_ext_dict = {anec_ext_id:anec_ext}
+task_ext = TaskCoreExt(extension_type="new-sdo")
+task_ext_id = 'extension-definition--2074a052-8be4-4932-849e-f5e7798e0030'
+task_ext_dict = {task_ext_id: task_ext}
+ident_ext_id = 'extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498'
+inc_ext_id = 'extension-definition--2074a052-8be4-4932-849e-f5e7798e0030'
+#
+# Step 0-B - Description of Me, the Worker
+#
+me_user_account = UserAccount(account_type="unix", account_login="me", display_name="me jones")
+me_email_addr = EmailAddress(value="me@mycompany.com", belongs_to_ref=me_user_account.id)
+
+me_contact = ContactNumber(contact_number_type="work-phone", contact_number="0418-208-368")
+me_email = EmailContact(digital_contact_type="work", email_address_ref=me_email_addr.id)
+me_account = SocialMediaContact(digital_contact_type="work", user_account_ref=me_user_account.id)
+me_ident_ext = IdentityContact(
+    extension_type='property-extension', contact_numbers=[me_contact],
+    email_addresses=[me_email], social_media_accounts=[me_account],
+    first_name="Me", last_name="Jones", middle_name="Percival", prefix="Dr",
+    team="All_Stars"
+)
+me = Identity(name="Me", identity_class="individual", extensions={ident_ext_id:me_ident_ext})
+local_list0 = [me_user_account.serialize(), me_email_addr.serialize(), me.serialize()]
+bundle_list = bundle_list + local_list0
 
 #
-# Step 0 - Setup Attack Data, so we dont have to create it from scratch
+# Step 0-C - Setup Attack Data, so we dont have to create it from scratch
 #
 
 mitre_identity = {
@@ -250,6 +290,7 @@ TTP_lateral_movement = {
 ###########################################################################################
 # 1.A Create SCO's and Observed-Data
 ###########################################################################################
+#
 # 1.A.1 Setup objects
 email_addr1 = EmailAddress(value="evil@northkorea.com")
 user_account2 = UserAccount(account_type="unix", account_login="nsmith", display_name="naive smith")
@@ -261,59 +302,166 @@ rel1 = Relationship(relationship_type='derived-from', source_ref=email_message1.
 obs_refs1 = [email_addr1.id, email_message1.id, url1.id, rel1.id]
 observation1 = ObservedData(number_observed=1, object_refs=obs_refs1,
                             first_observed=email_message1.date,last_observed=email_message1.date)
+#
 # 1.A.2 Collect objects and id's in lists
-local_list1 = [email_addr1, user_account2, email_addr2, email_message1, url1, rel1, observation1]
+local_list1 = [email_addr1.serialize(), user_account2.serialize(), email_addr2.serialize(), email_message1.serialize(), url1.serialize(), rel1.serialize(), observation1.serialize()]
 local_list_id1 = [email_addr1.id, user_account2.id, email_addr2.id, email_message1.id, url1.id, rel1.id, observation1.id]
 other_object_refs = other_object_refs + local_list_id1
 bundle_list = bundle_list + local_list1
 ##########################################################################################
 # 1.B Create Indicator and Sighting
+#
 # 1.B.1 Setup Objects
 pat1 = "[email-addr:value = '" + email_addr1.value + "' AND email:subject = '" + email_message1.subject + "']"
 ind1 = Indicator(name="Suspicious Email", pattern_type="stix", pattern=pat1, indicator_types=["unknown"])
-sight_ext = SightingEvidence(extension_type="property-extension")
+
 alert = SightingAlert(name="user-report", log="I have found a suspicious email")
-sight_ext1 = {
-    "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": sight_ext,
+sight_alert_ext = {
+    sight_ext_id: sight_ext,
     "sighting-alert": alert
 }
-sighting1 = Sighting(observed_data_refs=observation1, sighting_of_ref=ind1, extensions=sight_ext1)
-# 1.A.2 Collect objects and ids in lists
-local_list2 = [ind1, sighting1]
+sighting1 = Sighting(observed_data_refs=observation1.id,
+                     sighting_of_ref=ind1.id, extensions=sight_alert_ext)
+#
+# 1.B.2 Collect objects and ids in lists
+local_list2 = [ind1.serialize(), sighting1.serialize()]
 local_list_id2 = [ind1.id, sighting1.id]
 other_object_refs = other_object_refs + local_list_id2
 bundle_list = bundle_list + local_list2
 ###########################################################################################
 # 1.C Create Event, Sequence and Initialise Incident
 ###########################################################################################
+#
 # 1.C.1 Setup objects
-event_ext = EventCoreExt(extension_type="new-sdo")
-event_ext1 = {"extension-definition--4ca6de00-5b0d-45ef-a1dc-ea7279ea910e": event_ext}
 event1 = Event(
     status="occured", description="user x found a suspicious email",
     event_types=["dissemination-phishing-emails"], name="suspiciouse email",
-    sighting_refs=[sighting1], extensions=event_ext1
+    sighting_refs=[sighting1], extensions=event_ext_dict
 )
-eseq1_1 = Sequence(step_type="single_step", sequenced_object=event1.id, sequence_type="event")
-eseq1_0 = Sequence(step_type="start_step", on_completion=eseq1_1.id, sequence_type="event")
-incident_ext = IncidentCoreExt(
-    determination="suspected", extension_type="property-extension",
-    investigation_status="new", event_refs=[event1.id], incident_types=["dissemination-phishing-emails"])
+eseq1_1 = Sequence(
+    step_type="single_step", sequenced_object=event1.id,
+    sequence_type="event", extensions=seq_ext_dict
+)
+eseq1_0 = Sequence(
+    step_type="start_step", on_completion=eseq1_1.id,
+    sequence_type="event", extensions=seq_ext_dict
+)
+# incident_ext = IncidentCoreExt(
+#     determination="suspected", extension_type="property-extension",
+#     investigation_status="new", event_refs=[event1.id], incident_types=["dissemination-phishing-emails"])
 #     other_object_refs=other_object_refs, sequence_start_refs=[eseq1_0.id],
 #     sequence_refs=[eseq1_0.id, eseq1_1.id]
 # )
-incident_ext1 = {"extension-definition--ef765651-680c-498d-9894-99799f2fa126": incident_ext}
-incident = Incident(type="incident", name="potential phishing", extensions=incident_ext1)
-# 1.A.2 Collect objects and ids in lists
-local_list3 = [event1, eseq1_1, eseq1_0, incident]
+# incident_ext1 = {"extension-definition--ef765651-680c-498d-9894-99799f2fa126": incident_ext}
+# incident = Incident(type="incident", name="potential phishing", extensions=incident_ext1)
+#
+# 1.C.2 Collect objects and ids in lists
+local_list3 = [event1.serialize(), eseq1_1.serialize(), eseq1_0.serialize()]
 bundle_list = bundle_list + local_list3
+###########################################################################################
+# 1.D Create Task to Discuss Impact with Event Reporter
+###########################################################################################
+#
+# 1.D.1 Setup objects
+task1 = Task(
+    task_types=["investigation"], outcome="pending", name="Speak to User",
+    description="Talk to user and determine what they say",
+    owner=me.id, extensions={task_ext_id:task_ext}
+)
+task_refs.append(task1.id)
+bundle_list.append((task1.serialize()))
+#
+# Step 1.D.2. Update  Incident with Task
+#
+slist = json.dumps(bundle_list)
+jlist = json.loads(slist)
+for bun in jlist:
+    jbun = dict(json.loads(bun))
+    if jbun["type"] == "incident":
+        ext = bun["extensions"]
+        inc_ext = ext[inc_ext_id]
+        inc_ext["task_refs"] = task_refs
+
+
+############################################################################################
+############################################################################################
+# Step 2: We want to talk to the original user nd find out what the impact was
+# user address = naive@mycompany.com
+# name = naive smith
+# user account = nsmith
+# value = "I clicked on the link, and my laptop screen went wierd"
+###########################################################################################
+# 2.A Create SCO's and Observed-Data
+###########################################################################################
+#
+# 2.A.1 Setup objects
+# A. Reporter
+reporter_contact = ContactNumber(contact_number_type="work-phone", contact_number="0499-999-109")
+reporter_email = EmailContact(digital_contact_type="work", email_address_ref=email_addr2.id)
+reporter_account = SocialMediaContact(digital_contact_type="work", user_account_ref=user_account2.id)
+reporter_ident_ext = IdentityContact(
+    extension_type='property-extension', contact_numbers=[reporter_contact],
+    email_addresses=[reporter_email], social_media_accounts=[reporter_account],
+    first_name="Naive", last_name="Smith", middle_name="Weakling", prefix="Mr",
+    team="Users"
+)
+reporter = Identity(name="Naive", identity_class="individual", extensions={ident_ext_id:reporter_ident_ext})
+# B. Anecdote
+anecdote = Anecdote(
+    value="I clicked on the link, and my laptop screen went weird",
+    provided_by_ref=reporter.id, extensions=anec_ext_dict
+)
+# C. Observation
+obs_refs2 = [anecdote.id]
+observation2 = ObservedData(number_observed=1, object_refs=obs_refs2,
+                            first_observed=anecdote.report_date,
+                            last_observed=anecdote.report_date)
+# D. Sighting
+anec_sight_ext = SightingAnecdote(person_name="Naive Smith", person_context="employee",
+                                  report_submission="interview")
+sight_anec_ext = {
+    sight_ext_id: sight_ext, "sighting-anecdote": anec_sight_ext
+}
+anec_sight = Sighting(observed_data_refs=observation2.id,
+                      sighting_of_ref=reporter.id, extensions=sight_anec_ext)
+# E. Availability Impact
+numbers = EntityCountObject(computers_mobile=1)
+availability = Availability(availability_impact=99)
+avail_impact = Impact(
+    impact_category="availability", criticality=99, description="Laptop is stuffed",
+    impacted_entity_counts=numbers, recoverability="regular",
+    extensions={imp_ext_id:imp_ext, "availability":availability}
+)
+#
+# Step 2.A.2 Collect Objects
+#
+impact_refs.append(avail_impact.id)
+local_list4 = [reporter, anecdote, observation2, anec_sight, avail_impact]
+local_list4_id = [reporter.id, anecdote.id, observation2.id, anec_sight.id]
+#
+# Step 2.A.3. Update Task from Pending to Completed, and Incident
+#
+slist = json.dumps(bundle_list)
+jlist = json.loads(slist)
+jlen = len(jlist)
+for bun in jlist:
+    jbun = dict(json.loads(bun))
+    print(f"jbun -> {jbun}")
+    print(f"type -> {jbun['type']}")
+    if jbun["type"] == "incident":
+        ext = bun["extensions"]
+        inc_ext = ext[inc_ext_id]
+        inc_ext["task_refs"] = task_refs
+    elif jbun["type"] == "task" and jbun["id"] == task1.id:
+        print("I made it")
+        jbun["outcome"] = "successful"
 
 #######################################################################################################
 #######################################################################################################
 # Print Bundle on console
 #######################################################################################################
-
-for bun in bundle_list:
-    print("--------------------------------------------------------------------------")
-    print(bun.serialize(pretty=True))
+bun_len = len(bundle_list)
+for inc, bun in enumerate(jlist):
+    print(f"------------------------------ {inc+1} of {bun_len}--------------------------------------------")
+    print(bun)
 
