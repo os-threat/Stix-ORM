@@ -55,6 +55,7 @@ def conv(stix_object):
 #
 # Step 0-A - Setup Common Variables
 #
+# 0-A.1 List needed to collect objects
 bundle_list = []
 sequence_start_refs = []
 sequence_refs = []
@@ -62,6 +63,8 @@ task_refs = []
 event_refs = []
 impact_refs = []
 other_object_refs = []
+#
+# 0-A-2 Setup Extensions and Extension ID's that are common
 sight_ext = SightingEvidence(extension_type="property-extension")
 sight_ext_id = "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43"
 event_ext = EventCoreExt(extension_type="new-sdo")
@@ -83,9 +86,11 @@ inc_ext_id = 'extension-definition--2074a052-8be4-4932-849e-f5e7798e0030'
 #
 # Step 0-B - Description of Me, the Worker
 #
+# 0-B.1 My Email and User Account
 me_user_account = UserAccount(account_type="unix", account_login="me", display_name="me jones")
 me_email_addr = EmailAddress(value="me@mycompany.com", belongs_to_ref=me_user_account.id)
-
+#
+# 0-B.2 My Identity
 me_contact = ContactNumber(contact_number_type="work-phone", contact_number="0418-208-368")
 me_email = EmailContact(digital_contact_type="work", email_address_ref=me_email_addr.id)
 me_account = SocialMediaContact(digital_contact_type="work", user_account_ref=me_user_account.id)
@@ -96,10 +101,10 @@ me_ident_ext = IdentityContact(
     team="All_Stars"
 )
 me = Identity(name="Me", identity_class="individual", extensions={ident_ext_id:me_ident_ext})
+#
+# 0-B.3 Collect objects about me
 local_list0 = [conv(me_user_account), conv(me_email_addr), conv(me)]
 bundle_list = bundle_list + local_list0
-print("-----------------")
-print(bundle_list)
 
 #
 # Step 0-C - Setup Attack Data, so we dont have to create it from scratch
@@ -306,7 +311,7 @@ email_message1 = EmailMessage(to_refs=email_addr2.id, from_ref=email_addr1.id, s
                               is_multipart=False, date="2020-10-19T01:01:01.000Z")
 url1 = URL(value="https://www.northkorea.nk/we/are/mad/")
 rel1 = Relationship(relationship_type='derived-from', source_ref=email_message1.id, target_ref=url1.id)
-obs_refs1 = [email_addr1.id, email_message1.id, url1.id, rel1.id]
+obs_refs1 = [email_addr1.id, email_message1.id, url1.id, rel1.id, email_addr2.id, user_account2.id]
 observation1 = ObservedData(number_observed=1, object_refs=obs_refs1,
                             first_observed=email_message1.date,last_observed=email_message1.date)
 #
@@ -375,10 +380,12 @@ task1 = Task(
     description="Talk to user and determine what they say",
     owner=me.id, extensions={task_ext_id:task_ext}
 )
+#
+# 1.D.2 Collect objects
 task_refs.append(task1.id)
 bundle_list.append(conv(task1))
 #
-# Step 1.D.2. Update  Incident with Task
+# Step 1.D.3. Update  Incident with Task
 #
 for bun in bundle_list:
     if bun["type"] == "incident":
@@ -444,7 +451,7 @@ local_list4 = [conv(reporter), conv(anecdote), conv(observation2), conv(anec_sig
 local_list4_id = [reporter.id, anecdote.id, observation2.id, anec_sight.id]
 bundle_list = bundle_list + local_list4
 #
-# Step 2.A.3. Update Task from Pending to Successful, and Incident
+# Step 2.A.3. Update Task from Pending to Successful, and add to Incident
 #
 for bun in bundle_list:
     if bun["type"] == "incident":
@@ -453,21 +460,90 @@ for bun in bundle_list:
         inc_ext["task_refs"] = task_refs
     elif bun["type"] == "task" and bun["id"] == task1.id:
         bun["outcome"] = "successful"
-
+#
+# Step A.4 New Task to check the Exchange server for other suspicirous emails
+#
+task2 = Task(
+    task_types=["investigation"], outcome="pending", name="Query Exchange Server",
+    description="Query Exchange to find out who else got the suspicious email",
+    owner=me.id, extensions={task_ext_id:task_ext}
+)
+task_refs.append(task2.id)
+bundle_list.append(conv(task2))
 ############################################################################################
 ############################################################################################
-# Step 3: We want to talk to the original user nd find out what the impact was
-# user address = naive@mycompany.com
-# name = naive smith
-# user account = nsmith
+# Step 3: We execute a Task to check out the Exchange Server and collect Context Evidence
+# collect evidence
+# email address = silly@mycompany.com, strange@mycompany.com, dumbo@mycompany.com
+# user account = sthor, sman, dguy
 # value = "I clicked on the link, and my laptop screen went wierd"
 ###########################################################################################
-# 2.A Create SCO's and Observed-Data
+# 3.A Create SCO's and Observed-Data
 ###########################################################################################
 #
-# 2.A.1 Setup objects
-# A. Reporter
-
+# 3.A.1 Setup objects
+# A. Email Addresses and User Accounts
+user_account3 = UserAccount(account_type="unix", account_login="sthor", display_name="silly thor")
+email_addr3 = EmailAddress(value="silly@mycompany.com", belongs_to_ref=user_account3.id)
+user_account4 = UserAccount(account_type="unix", account_login="sguy", display_name="strange guy")
+email_addr4 = EmailAddress(value="strange@mycompany.com", belongs_to_ref=user_account4.id)
+user_account5 = UserAccount(account_type="unix", account_login="dguy", display_name="dumbo guy")
+email_addr5 = EmailAddress(value="dumbo@mycompany.com", belongs_to_ref=user_account5.id)
+# B. Duplicate-of SRO
+sro3 = Relationship(relationship_type="duplicate-of", source_ref=email_addr2.id, target_ref=email_addr3)
+sro4 = Relationship(relationship_type="duplicate-of", source_ref=email_addr2.id, target_ref=email_addr4)
+sro5 = Relationship(relationship_type="duplicate-of", source_ref=email_addr2.id, target_ref=email_addr5)
+# C. Setup observed-data
+obs_refs2 = [email_addr1.id, email_message1.id, url1.id, rel1.id, email_addr3.id, user_account3.id,
+             email_addr4.id, user_account4.id, email_addr5.id, user_account5,
+             sro3.id, sro4.id, sro5.id]
+observation3 = ObservedData(number_observed=1, object_refs=obs_refs2,
+                            first_observed=email_message1.date,last_observed=email_message1.date)
+#
+# D. Setup Exchange Server Identity
+exchange = Identity(name="Microsoft Exchange", description="Microsoft Exchange Server",
+                    identity_class="system")
+#
+# E. Setup Sighting with Context Evidence
+query = "query from:"+email_addr1.value+", subject:"+email_message1.subject
+value = "["+email_addr3.value+", "+email_addr4.value+", "+email_addr5.value+"]"
+context = SightingContext(name="Exchange", description=query, value=value)
+sight_context_ext = {
+    sight_ext_id: sight_ext,
+    "sighting-context": context
+}
+sighting3 = Sighting(observed_data_refs=observation3.id,
+                     sighting_of_ref=ind1.id, extensions=sight_context_ext)
+#
+# Step 3.A.2 Collect Objects
+#
+local_list5 = [conv(user_account3), conv(email_addr3), conv(user_account4),
+               conv(email_addr4), conv(user_account5), conv(email_addr5),
+               conv(sro3), conv(sro4), conv(sro5), conv(observation3),
+               conv(exchange), conv(sighting3)]
+local_list5_id = [user_account3,id, user_account3.id, user_account4.id,
+               email_addr4.id, user_account5.id, email_addr5,id, sighting3.id,
+               sro3.id, sro3.id, sro5.id, observation3.id, exchange.id]
+other_object_refs = other_object_refs + local_list5_id
+bundle_list = bundle_list + local_list5
+#
+# Step 2.A.3. Update Task from Pending to Successful, and add to Incident
+#
+for bun in bundle_list:
+    if bun["type"] == "incident":
+        ext = bun["extensions"]
+        inc_ext = ext[inc_ext_id]
+        inc_ext["other_object_refs"] = other_object_refs
+    elif bun["type"] == "task" and bun["id"] == task2.id:
+        bun["outcome"] = "successful"
+#
+# Step A.4 New Task to check the Exchange server for other suspicirous emails
+#
+task2 = Task(
+    task_types=["investigation"], outcome="pending", name="Query Exchange Server",
+    description="Query Exchange to find out who else got the suspicious email",
+    owner=me.id, extensions={task_ext_id:task_ext}
+)
 #######################################################################################################
 #######################################################################################################
 # Print Bundle on console
