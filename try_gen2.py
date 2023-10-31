@@ -41,6 +41,11 @@ logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(
 logger = logging.getLogger(__name__)
 #logger.addHandler(logging.StreamHandler())
 
+def conv(stix_object):
+    string_dict = stix_object.serialize()
+    jdict = json.loads(string_dict)
+    return jdict
+
 ########################################################################################################
 #
 #  TESTING THE INCIDENT Class Model - Jupyter style
@@ -91,8 +96,10 @@ me_ident_ext = IdentityContact(
     team="All_Stars"
 )
 me = Identity(name="Me", identity_class="individual", extensions={ident_ext_id:me_ident_ext})
-local_list0 = [me_user_account.serialize(), me_email_addr.serialize(), me.serialize()]
+local_list0 = [conv(me_user_account), conv(me_email_addr), conv(me)]
 bundle_list = bundle_list + local_list0
+print("-----------------")
+print(bundle_list)
 
 #
 # Step 0-C - Setup Attack Data, so we dont have to create it from scratch
@@ -304,7 +311,7 @@ observation1 = ObservedData(number_observed=1, object_refs=obs_refs1,
                             first_observed=email_message1.date,last_observed=email_message1.date)
 #
 # 1.A.2 Collect objects and id's in lists
-local_list1 = [email_addr1.serialize(), user_account2.serialize(), email_addr2.serialize(), email_message1.serialize(), url1.serialize(), rel1.serialize(), observation1.serialize()]
+local_list1 = [conv(email_addr1), conv(user_account2), conv(email_addr2), conv(email_message1), conv(url1), conv(rel1), conv(observation1)]
 local_list_id1 = [email_addr1.id, user_account2.id, email_addr2.id, email_message1.id, url1.id, rel1.id, observation1.id]
 other_object_refs = other_object_refs + local_list_id1
 bundle_list = bundle_list + local_list1
@@ -324,7 +331,7 @@ sighting1 = Sighting(observed_data_refs=observation1.id,
                      sighting_of_ref=ind1.id, extensions=sight_alert_ext)
 #
 # 1.B.2 Collect objects and ids in lists
-local_list2 = [ind1.serialize(), sighting1.serialize()]
+local_list2 = [conv(ind1), conv(sighting1)]
 local_list_id2 = [ind1.id, sighting1.id]
 other_object_refs = other_object_refs + local_list_id2
 bundle_list = bundle_list + local_list2
@@ -356,7 +363,7 @@ eseq1_0 = Sequence(
 # incident = Incident(type="incident", name="potential phishing", extensions=incident_ext1)
 #
 # 1.C.2 Collect objects and ids in lists
-local_list3 = [event1.serialize(), eseq1_1.serialize(), eseq1_0.serialize()]
+local_list3 = [conv(event1), conv(eseq1_1), conv(eseq1_0)]
 bundle_list = bundle_list + local_list3
 ###########################################################################################
 # 1.D Create Task to Discuss Impact with Event Reporter
@@ -369,15 +376,12 @@ task1 = Task(
     owner=me.id, extensions={task_ext_id:task_ext}
 )
 task_refs.append(task1.id)
-bundle_list.append((task1.serialize()))
+bundle_list.append(conv(task1))
 #
 # Step 1.D.2. Update  Incident with Task
 #
-slist = json.dumps(bundle_list)
-jlist = json.loads(slist)
-for bun in jlist:
-    jbun = dict(json.loads(bun))
-    if jbun["type"] == "incident":
+for bun in bundle_list:
+    if bun["type"] == "incident":
         ext = bun["extensions"]
         inc_ext = ext[inc_ext_id]
         inc_ext["task_refs"] = task_refs
@@ -436,33 +440,40 @@ avail_impact = Impact(
 # Step 2.A.2 Collect Objects
 #
 impact_refs.append(avail_impact.id)
-local_list4 = [reporter, anecdote, observation2, anec_sight, avail_impact]
+local_list4 = [conv(reporter), conv(anecdote), conv(observation2), conv(anec_sight), conv(avail_impact)]
 local_list4_id = [reporter.id, anecdote.id, observation2.id, anec_sight.id]
+bundle_list = bundle_list + local_list4
 #
-# Step 2.A.3. Update Task from Pending to Completed, and Incident
+# Step 2.A.3. Update Task from Pending to Successful, and Incident
 #
-slist = json.dumps(bundle_list)
-jlist = json.loads(slist)
-jlen = len(jlist)
-for bun in jlist:
-    jbun = dict(json.loads(bun))
-    print(f"jbun -> {jbun}")
-    print(f"type -> {jbun['type']}")
-    if jbun["type"] == "incident":
+for bun in bundle_list:
+    if bun["type"] == "incident":
         ext = bun["extensions"]
         inc_ext = ext[inc_ext_id]
         inc_ext["task_refs"] = task_refs
-    elif jbun["type"] == "task" and jbun["id"] == task1.id:
-        print("I made it")
-        jbun["outcome"] = "successful"
-        print(bun)
+    elif bun["type"] == "task" and bun["id"] == task1.id:
+        bun["outcome"] = "successful"
+
+############################################################################################
+############################################################################################
+# Step 3: We want to talk to the original user nd find out what the impact was
+# user address = naive@mycompany.com
+# name = naive smith
+# user account = nsmith
+# value = "I clicked on the link, and my laptop screen went wierd"
+###########################################################################################
+# 2.A Create SCO's and Observed-Data
+###########################################################################################
+#
+# 2.A.1 Setup objects
+# A. Reporter
 
 #######################################################################################################
 #######################################################################################################
 # Print Bundle on console
 #######################################################################################################
-# bun_len = len(bundle_list)
-# for inc, bun in enumerate(jlist):
-#     print(f"------------------------------ {inc+1} of {bun_len}--------------------------------------------")
-#     print(bun)
+bun_len = len(bundle_list)
+for inc, bun in enumerate(bundle_list):
+    print(f"------------------------------ {inc+1} of {bun_len}--------------------------------------------")
+    print(bun)
 
