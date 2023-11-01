@@ -11,7 +11,7 @@ from stix2.exceptions import (
 from stix2.properties import (
     BooleanProperty, ExtensionsProperty, IDProperty, IntegerProperty, ListProperty,
     OpenVocabProperty, ReferenceProperty, StringProperty, FloatProperty,
-    TimestampProperty, TypeProperty, EmbeddedObjectProperty
+    TimestampProperty, TypeProperty, EmbeddedObjectProperty, DictionaryProperty
 )
 from stix2.utils import NOW, _get_dict
 from stix2.markings import _MarkingsMixin
@@ -219,36 +219,6 @@ class Event(_DomainObject):
 #################################################################################
 
 
-class EntityCountObject(_STIXBase21):
-    """For more detailed information on this object's properties, see
-    `the https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
-    """
-    _properties = OrderedDict([
-        ('computers_mobile', IntegerProperty()),
-        ('computers_personal', IntegerProperty()),
-        ('computers_server', IntegerProperty()),
-        ('customer', IntegerProperty()),
-        ('customer_individual', IntegerProperty()),
-        ('customer_organization', IntegerProperty()),
-        ('domain_controller', IntegerProperty()),
-        ('employee', IntegerProperty()),
-        ('group', IntegerProperty()),
-        ('ics_actuator', IntegerProperty()),
-        ('ics_engineering-workstation', IntegerProperty()),
-        ('ics_historian', IntegerProperty()),
-        ('ics_hmi', IntegerProperty()),
-        ('ics_other', IntegerProperty()),
-        ('ics_plc', IntegerProperty()),
-        ('ics_safety_system', IntegerProperty()),
-        ('ics_sensor', IntegerProperty()),
-        ('individual', IntegerProperty()),
-        ('network_device', IntegerProperty()),
-        ('organization', IntegerProperty()),
-        ('system', IntegerProperty()),
-        ('vehicles', IntegerProperty()),
-    ])
-
-
 class ImpactCoreExt(_Extension):
     """For more detailed information on this object's properties, see
     `the  https://github.com/os-threat/stix-extensions/wiki/2.-Description-of-Incident-Model`__.
@@ -367,7 +337,7 @@ class Impact(_DomainObject):
         ('description', StringProperty()),
         ('end_time', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('end_time_fidelity', StringProperty()),
-        ('impacted_entity_counts', EmbeddedObjectProperty(type=EntityCountObject)),
+        ('impacted_entity_counts', DictionaryProperty(spec_version='2.1')),
         ('impacted_refs', ListProperty(ThreatReference(valid_types=valid_obj, spec_version='2.1'))),
         ('recoverability', StringProperty()),
         ('start_time', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
@@ -412,7 +382,7 @@ class IncidentCoreExt(_Extension):
         ('criticality', IntegerProperty(min=0)),
         ('determination', StringProperty()),
         ('incident_types', ListProperty(StringProperty)),
-        ('impacted_entity_counts', EmbeddedObjectProperty(type=EntityCountObject)),
+        ('impacted_entity_counts', DictionaryProperty(spec_version='2.1')),
         ('recoverability', ListProperty(StringProperty)),
         ('scores', ListProperty(EmbeddedObjectProperty(type=IncidentScoreObject))),
         ('sequence_start_refs', ListProperty(ThreatReference(valid_types='sequence'))),
@@ -457,7 +427,7 @@ class Task(_DomainObject):
         ('end_time', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('end_time_fidelity', StringProperty()),
         ('error', StringProperty()),
-        ('impacted_entity_counts', EmbeddedObjectProperty(type=EntityCountObject)),
+        ('impacted_entity_counts', DictionaryProperty(spec_version='2.1')),
         ('name', StringProperty(required=True)),
         ('priority', IntegerProperty(min=0)),
         ('start_time', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),

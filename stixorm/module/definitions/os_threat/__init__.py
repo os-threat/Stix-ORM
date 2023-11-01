@@ -23,7 +23,7 @@ from pathlib import Path
 
 from stixorm.module.definitions.os_threat.classes import (
     Feeds, Feed, ThreatSubObject, StateChangeObject, EventCoreExt,
-    Event, EntityCountObject, ImpactCoreExt, Availability, Confidentiality,
+    Event, ImpactCoreExt, Availability, Confidentiality,
     External, Integrity, Monetary, Physical, Traceability, Impact,
     IncidentScoreObject, IncidentCoreExt, TaskCoreExt, Task, SightingEvidence,
     SightingAnecdote, SightingAlert, SightingContext, SightingExclusion,
@@ -51,7 +51,6 @@ class_model["sub"] = {
     "ThreatSubObject" : ThreatSubObject,
     "StateChangeObject": StateChangeObject,
     "EventCoreExt": EventCoreExt,
-    "EntityCountObject": EntityCountObject,
     "ImpactCoreExt": ImpactCoreExt,
     "Availability": Availability,
     "Confidentiality": Confidentiality,

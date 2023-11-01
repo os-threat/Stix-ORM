@@ -18,7 +18,7 @@ from stixorm.module.definitions.stix21 import (
     Identity, Incident, Note, Sighting, Indicator, Relationship
 )
 from stixorm.module.definitions.os_threat import (
-    StateChangeObject, EventCoreExt, Event, EntityCountObject, ImpactCoreExt,
+    StateChangeObject, EventCoreExt, Event, ImpactCoreExt,
     Availability, Confidentiality, External, Integrity, Monetary, Physical,
     Traceability, Impact, IncidentScoreObject, IncidentCoreExt, TaskCoreExt,
     Task, SightingEvidence, Sequence, SequenceExt, ContactNumber, EmailContact,
@@ -436,7 +436,7 @@ sight_anec_ext = {
 anec_sight = Sighting(observed_data_refs=observation2.id,
                       sighting_of_ref=reporter.id, extensions=sight_anec_ext)
 # E. Availability Impact
-numbers = EntityCountObject(computers_mobile=1)
+numbers = {"computers-mobile": 1}
 availability = Availability(availability_impact=99)
 avail_impact = Impact(
     impact_category="availability", criticality=99, description="Laptop is stuffed",
@@ -515,7 +515,15 @@ sight_context_ext = {
 sighting3 = Sighting(observed_data_refs=observation3.id,
                      sighting_of_ref=ind1.id, extensions=sight_context_ext)
 #
-# Step 3.A.2 Collect Objects
+# Step 3.A.2 New Task to check te Exclusion Lists in Step 4
+#
+task3 = Task(
+    task_types=["investigation"], outcome="pending", name="Check Exclusion Lists",
+    description="Check OS-Threat Exclusion List to see if email address is a known phisher",
+    owner=me.id, extensions={task_ext_id:task_ext}
+)
+#
+# Step 3.A.3 Collect Objects
 #
 local_list5 = [conv(user_account3), conv(email_addr3), conv(user_account4),
                conv(email_addr4), conv(user_account5), conv(email_addr5),
@@ -525,25 +533,81 @@ local_list5_id = [user_account3,id, user_account3.id, user_account4.id,
                email_addr4.id, user_account5.id, email_addr5,id, sighting3.id,
                sro3.id, sro3.id, sro5.id, observation3.id, exchange.id]
 other_object_refs = other_object_refs + local_list5_id
+task_refs.append(task3.id)
 bundle_list = bundle_list + local_list5
 #
-# Step 2.A.3. Update Task from Pending to Successful, and add to Incident
+# Step 3.A.4. Update Task from Pending to Successful, and add objects and new task to Incident
 #
 for bun in bundle_list:
     if bun["type"] == "incident":
         ext = bun["extensions"]
         inc_ext = ext[inc_ext_id]
         inc_ext["other_object_refs"] = other_object_refs
+        inc_ext["task_refs"] = task_refs
     elif bun["type"] == "task" and bun["id"] == task2.id:
         bun["outcome"] = "successful"
+############################################################################################
+############################################################################################
+# Step 4: We execute a Task to check out the OS-Threat Exclusion List for the email
+# we found
+# domain = northkorea.com
+# value = 197.133.142.27
+###########################################################################################
+# 4.A Create SCO's and Observed-Data
+###########################################################################################
 #
-# Step A.4 New Task to check the Exchange server for other suspicirous emails
+# 4.A.1 Setup objects
+# A. IP Address and Domain Name
+ip = IPv4Address(value="197.133.142.27")
+domain = DomainName(value="northkorea.com", resolves_to_refs=[ip.id])
 #
-task2 = Task(
-    task_types=["investigation"], outcome="pending", name="Query Exchange Server",
-    description="Query Exchange to find out who else got the suspicious email",
+# B. Setup Observation
+obs_refs4 = [ip.id, domain.id]
+observation4 = ObservedData(number_observed=1, object_refs=obs_refs4,
+                            first_observed=email_message1.date,last_observed=email_message1.date)
+#
+# C. Setup Indicator
+pat2 = "[domain-name:value = '" + domain.value + "' AND ipv4-addr:value = '" + ip.value + "']"
+ind2 = Indicator(name="Suspicious Email", pattern_type="stix", pattern=pat2, indicator_types=["unknown"])
+#
+# D. Setup Sighting with Exclusion List Evidence
+exclusion = SightingExclusion(source="www.phishdb.com", channel="Last 24 hours")
+sight_exclusion_ext = {
+    sight_ext_id: sight_ext,
+    "sighting-exclusion": exclusion
+}
+sighting4 = Sighting(observed_data_refs=observation4.id,
+                     sighting_of_ref=ind2.id, extensions=sight_exclusion_ext)
+#
+# E. New Task to check te Enrichments
+#
+task4 = Task(
+    task_types=["investigation"], outcome="pending", name="Check Enrichments",
+    description="Check known email, domain, IP address to seeif we can get enrichments",
     owner=me.id, extensions={task_ext_id:task_ext}
 )
+#
+# Step 3.A.3 Collect Objects
+#
+local_list6 = [conv(ip), conv(domain), conv(observation4), conv(ind2), conv(sighting4)]
+local_list6_id = [ip.id, domain.id, observation4.id, ind2.id, sighting4.id]
+other_object_refs = other_object_refs + local_list6_id
+task_refs.append(task4.id)
+bundle_list = bundle_list + local_list6
+#
+# Step 3.A.4. Update Task from Pending to Successful, and add objects and new task to Incident
+#
+for bun in bundle_list:
+    if bun["type"] == "incident":
+        ext = bun["extensions"]
+        inc_ext = ext[inc_ext_id]
+        inc_ext["other_object_refs"] = other_object_refs
+        inc_ext["task_refs"] = task_refs
+    elif bun["type"] == "task" and bun["id"] == task3.id:
+        bun["outcome"] = "successful"
+
+
+
 #######################################################################################################
 #######################################################################################################
 # Print Bundle on console
