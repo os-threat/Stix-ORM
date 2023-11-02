@@ -14,8 +14,8 @@ from stixorm.module.parsing.parse_objects import parse
 from stixorm.module.generate_docs import configure_overview_table_docs, object_tables
 from stixorm.module.initialise import sort_layers, load_typeql_data
 from stixorm.module.definitions.stix21 import (
-    ObservedData, IPv4Address, EmailAddress, DomainName, EmailMessage, URL, UserAccount,
-    Identity, Incident, Note, Sighting, Indicator, Relationship
+    ObservedData, IPv4Address, EmailAddress, DomainName, EmailMessage, URL, UserAccount, File,
+    Identity, Incident, Note, Sighting, Indicator, Relationship, Location, Software, Process, Bundle
 )
 from stixorm.module.definitions.os_threat import (
     StateChangeObject, EventCoreExt, Event, ImpactCoreExt,
@@ -105,6 +105,8 @@ me = Identity(name="Me", identity_class="individual", extensions={ident_ext_id:m
 # 0-B.3 Collect objects about me
 local_list0 = [conv(me_user_account), conv(me_email_addr), conv(me)]
 bundle_list = bundle_list + local_list0
+bundle = Bundle(me)
+bundle_dict = conv(bundle)
 
 #
 # Step 0-C - Setup Attack Data, so we dont have to create it from scratch
@@ -217,78 +219,7 @@ TTP_spear_phishing = {
             ],
             "x_mitre_version": "2.3"
         }
-TTP_lateral_movement = {
-            "type": "attack-pattern",
-            "spec_version": "2.1",
-            "id": "attack-pattern--9db0cf3a-a3c9-4012-8268-123b9db6fd82",
-            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "created": "2018-04-18T17:59:24.739Z",
-            "modified": "2022-05-11T14:00:00.188Z",
-            "name": "Exploitation of Remote Services",
-            "x_mitre_attack_spec_version": "2.1.0",
-            "description": "Adversaries may exploit remote services to gain unauthorized access to internal systems once inside of a network. Exploitation of a software vulnerability occurs when an adversary takes advantage of a programming error in a program, service, or within the operating system software or kernel itself to execute adversary-controlled code.\u00a0A common goal for post-compromise exploitation of remote services is for lateral movement to enable access to a remote system.\n\nAn adversary may need to determine if the remote system is in a vulnerable state, which may be done through [Network Service Discovery](https://attack.mitre.org/techniques/T1046) or other Discovery methods looking for common, vulnerable software that may be deployed in the network, the lack of certain patches that may indicate vulnerabilities,  or security software that may be used to detect or contain remote exploitation. Servers are likely a high value target for lateral movement exploitation, but endpoint systems may also be at risk if they provide an advantage or access to additional resources.\n\nThere are several well-known vulnerabilities that exist in common services such as SMB (Citation: CIS Multiple SMB Vulnerabilities) and RDP (Citation: NVD CVE-2017-0176) as well as applications that may be used within internal networks such as MySQL (Citation: NVD CVE-2016-6662) and web server services.(Citation: NVD CVE-2014-7169)\n\nDepending on the permissions level of the vulnerable remote service an adversary may achieve [Exploitation for Privilege Escalation](https://attack.mitre.org/techniques/T1068) as a result of lateral movement exploitation as well.",
-            "kill_chain_phases": [
-                {
-                    "kill_chain_name": "mitre-attack",
-                    "phase_name": "lateral-movement"
-                }
-            ],
-            "external_references": [
-                {
-                    "source_name": "mitre-attack",
-                    "url": "https://attack.mitre.org/techniques/T1210",
-                    "external_id": "T1210"
-                },
-                {
-                    "source_name": "CIS Multiple SMB Vulnerabilities",
-                    "description": "CIS. (2017, May 15). Multiple Vulnerabilities in Microsoft Windows SMB Server Could Allow for Remote Code Execution. Retrieved April 3, 2018.",
-                    "url": "https://www.cisecurity.org/advisory/multiple-vulnerabilities-in-microsoft-windows-smb-server-could-allow-for-remote-code-execution/"
-                },
-                {
-                    "source_name": "NVD CVE-2017-0176",
-                    "description": "National Vulnerability Database. (2017, June 22). CVE-2017-0176 Detail. Retrieved April 3, 2018.",
-                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2017-0176"
-                },
-                {
-                    "source_name": "NVD CVE-2016-6662",
-                    "description": "National Vulnerability Database. (2017, February 2). CVE-2016-6662 Detail. Retrieved April 3, 2018.",
-                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2016-6662"
-                },
-                {
-                    "source_name": "NVD CVE-2014-7169",
-                    "description": "National Vulnerability Database. (2017, September 24). CVE-2014-7169 Detail. Retrieved April 3, 2018.",
-                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2014-7169"
-                }
-            ],
-            "object_marking_refs": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-            ],
-            "x_mitre_contributors": [
-                "ExtraHop"
-            ],
-            "x_mitre_data_sources": [
-                "Application Log: Application Log Content",
-                "Network Traffic: Network Traffic Content"
-            ],
-            "x_mitre_detection": "Detecting software exploitation may be difficult depending on the tools available. Software exploits may not always succeed or may cause the exploited process to become unstable or crash. Also look for behavior on the endpoint system that might indicate successful compromise, such as abnormal behavior of the processes. This could include suspicious files written to disk, evidence of [Process Injection](https://attack.mitre.org/techniques/T1055) for attempts to hide execution, evidence of [Discovery](https://attack.mitre.org/tactics/TA0007), or other unusual network traffic that may indicate additional tools transferred to the system.",
-            "x_mitre_domains": [
-                "enterprise-attack"
-            ],
-            "x_mitre_is_subtechnique": False,
-            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "x_mitre_permissions_required": [
-                "User"
-            ],
-            "x_mitre_platforms": [
-                "Linux",
-                "Windows",
-                "macOS"
-            ],
-            "x_mitre_system_requirements": [
-                "Unpatched software or otherwise vulnerable target. Depending on the target and goal, the system and exploitable service may need to be remotely accessible from the internal network."
-            ],
-            "x_mitre_version": "1.1"
-        }
+
 ############################################################################################
 ############################################################################################
 # Step 1: A User reports a suspsicious email, so create an event and assign it to an incident
@@ -369,6 +300,9 @@ eseq1_0 = Sequence(
 #
 # 1.C.2 Collect objects and ids in lists
 local_list3 = [conv(event1), conv(eseq1_1), conv(eseq1_0)]
+event_refs.append(event1.id)
+sequence_start_refs.append(eseq1_0)
+sequence_refs=[eseq1_0.id, eseq1_1.id]
 bundle_list = bundle_list + local_list3
 ###########################################################################################
 # 1.D Create Task to Discuss Impact with Event Reporter
@@ -380,10 +314,20 @@ task1 = Task(
     description="Talk to user and determine what they say",
     owner=me.id, extensions={task_ext_id:task_ext}
 )
+tseq1_1 = Sequence(
+    step_type="single_step", sequenced_object=task1.id,
+    sequence_type="task", extensions=seq_ext_dict
+)
+tseq1_0 = Sequence(
+    step_type="start_step", on_completion=tseq1_1.id,
+    sequence_type="task", extensions=seq_ext_dict
+)
 #
 # 1.D.2 Collect objects
 task_refs.append(task1.id)
-bundle_list.append(conv(task1))
+sequence_start_refs.append(tseq1_0)
+sequence_refs.extend([tseq1_0.id, tseq1_1.id])
+bundle_list.extend((conv(task1), conv(tseq1_0), conv(tseq1_0)))
 #
 # Step 1.D.3. Update  Incident with Task
 #
@@ -444,12 +388,28 @@ avail_impact = Impact(
     extensions={imp_ext_id:imp_ext, "availability":availability}
 )
 #
+# F. New Task to check the Exchange server for other suspicious emails
+#
+task2 = Task(
+    task_types=["investigation"], outcome="pending", name="Query Exchange Server",
+    description="Query Exchange to find out who else got the suspicious email",
+    owner=me.id, extensions={task_ext_id:task_ext}
+)
+tseq1_2 = Sequence(
+    step_type="single_step", sequenced_object=task2.id,
+    sequence_type="task", extensions=seq_ext_dict
+)
+#
 # Step 2.A.2 Collect Objects
 #
+task_refs.append(task2.id)
+sequence_refs.append(tseq1_2.id)
 impact_refs.append(avail_impact.id)
-local_list4 = [conv(reporter), conv(anecdote), conv(observation2), conv(anec_sight), conv(avail_impact)]
+local_list4 = [conv(reporter), conv(anecdote), conv(observation2), conv(anec_sight),
+               conv(avail_impact), conv(task2), conv(tseq1_2)]
 local_list4_id = [reporter.id, anecdote.id, observation2.id, anec_sight.id]
 bundle_list = bundle_list + local_list4
+other_object_refs = other_object_refs + local_list4_id
 #
 # Step 2.A.3. Update Task from Pending to Successful, and add to Incident
 #
@@ -460,16 +420,8 @@ for bun in bundle_list:
         inc_ext["task_refs"] = task_refs
     elif bun["type"] == "task" and bun["id"] == task1.id:
         bun["outcome"] = "successful"
-#
-# Step A.4 New Task to check the Exchange server for other suspicirous emails
-#
-task2 = Task(
-    task_types=["investigation"], outcome="pending", name="Query Exchange Server",
-    description="Query Exchange to find out who else got the suspicious email",
-    owner=me.id, extensions={task_ext_id:task_ext}
-)
-task_refs.append(task2.id)
-bundle_list.append(conv(task2))
+    elif bun["type"] == "sequence" and bun["id"] == tseq1_1.id:
+        bun["on_completion"] = tseq1_2.id
 ############################################################################################
 ############################################################################################
 # Step 3: We execute a Task to check out the Exchange Server and collect Context Evidence
@@ -522,17 +474,22 @@ task3 = Task(
     description="Check OS-Threat Exclusion List to see if email address is a known phisher",
     owner=me.id, extensions={task_ext_id:task_ext}
 )
+tseq1_3 = Sequence(
+    step_type="single_step", sequenced_object=task3.id,
+    sequence_type="task", extensions=seq_ext_dict
+)
 #
 # Step 3.A.3 Collect Objects
 #
 local_list5 = [conv(user_account3), conv(email_addr3), conv(user_account4),
                conv(email_addr4), conv(user_account5), conv(email_addr5),
                conv(sro3), conv(sro4), conv(sro5), conv(observation3),
-               conv(exchange), conv(sighting3)]
+               conv(exchange), conv(sighting3), conv(task3), conv(tseq1_3)]
 local_list5_id = [user_account3,id, user_account3.id, user_account4.id,
                email_addr4.id, user_account5.id, email_addr5,id, sighting3.id,
                sro3.id, sro3.id, sro5.id, observation3.id, exchange.id]
 other_object_refs = other_object_refs + local_list5_id
+sequence_refs.append(tseq1_3.id)
 task_refs.append(task3.id)
 bundle_list = bundle_list + local_list5
 #
@@ -546,6 +503,8 @@ for bun in bundle_list:
         inc_ext["task_refs"] = task_refs
     elif bun["type"] == "task" and bun["id"] == task2.id:
         bun["outcome"] = "successful"
+    elif bun["type"] == "sequence" and bun["id"] == tseq1_2.id:
+        bun["on_completion"] = tseq1_3.id
 ############################################################################################
 ############################################################################################
 # Step 4: We execute a Task to check out the OS-Threat Exclusion List for the email
@@ -568,7 +527,7 @@ observation4 = ObservedData(number_observed=1, object_refs=obs_refs4,
 #
 # C. Setup Indicator
 pat2 = "[domain-name:value = '" + domain.value + "' AND ipv4-addr:value = '" + ip.value + "']"
-ind2 = Indicator(name="Suspicious Email", pattern_type="stix", pattern=pat2, indicator_types=["unknown"])
+ind2 = Indicator(name="Suspicious Email", pattern_type="stix", pattern=pat2, indicator_types=["malicious-activity"])
 #
 # D. Setup Sighting with Exclusion List Evidence
 exclusion = SightingExclusion(source="www.phishdb.com", channel="Last 24 hours")
@@ -583,30 +542,161 @@ sighting4 = Sighting(observed_data_refs=observation4.id,
 #
 task4 = Task(
     task_types=["investigation"], outcome="pending", name="Check Enrichments",
-    description="Check known email, domain, IP address to seeif we can get enrichments",
+    description="Check known email, domain, IP address to see if we can get enrichments",
     owner=me.id, extensions={task_ext_id:task_ext}
 )
+tseq1_4 = Sequence(
+    step_type="single_step", sequenced_object=task4.id,
+    sequence_type="task", extensions=seq_ext_dict
+)
 #
-# Step 3.A.3 Collect Objects
+# Step 4.A.3 Collect Objects
 #
-local_list6 = [conv(ip), conv(domain), conv(observation4), conv(ind2), conv(sighting4)]
+local_list6 = [conv(ip), conv(domain), conv(observation4), conv(ind2), conv(sighting4), conv(task4), conv(tseq1_4)]
 local_list6_id = [ip.id, domain.id, observation4.id, ind2.id, sighting4.id]
 other_object_refs = other_object_refs + local_list6_id
 task_refs.append(task4.id)
+sequence_refs.append(tseq1_4.id)
 bundle_list = bundle_list + local_list6
 #
-# Step 3.A.4. Update Task from Pending to Successful, and add objects and new task to Incident
+# Step 4.A.4. Update Task from Pending to Successful, and add objects and new task to Incident
 #
 for bun in bundle_list:
     if bun["type"] == "incident":
         ext = bun["extensions"]
         inc_ext = ext[inc_ext_id]
         inc_ext["other_object_refs"] = other_object_refs
+        inc_ext["sequence_refs"] = sequence_refs
         inc_ext["task_refs"] = task_refs
     elif bun["type"] == "task" and bun["id"] == task3.id:
         bun["outcome"] = "successful"
+    elif bun["type"] == "sequence" and bun["id"] == tseq1_3.id:
+        bun["on_completion"] = tseq1_4.id
 
+############################################################################################
+############################################################################################
+# Step 5: We execute a Task to check out the Enrichments
+# we found a hosting record for the domain
+# identity = Evil Incarnate Ltd
+# location = 666 Infection St, Whyme, NK
+# lat/long = 39.03385, 125.75432
+###########################################################################################
+# 5.A Create SCO's and Observed-Data
+###########################################################################################
+#
+# 5.A.1 Setup objects
+# A. Location
+location = Location(name="Evil Incarnate Ltd", latitude=39.03385, longitude=125.75432,
+                    street_address="666 Infection St", city="Whyme", country="PRK", region="south-eastern-asi")
+# B. Identity
+sender_identity = Identity(name="Evil Incarnate Ltd", description="Hosted phsihing domain",
+                           identity_class="organization", contact_information="666 Infection St, Whyme, NK")
+# C. STO -> located-at
+sender_SRO = Relationship(relationship_type="located-at", source_ref=sender_identity.id, target_ref=location.id)
+# D. Setup Sighting, connect the domain observation
+enrichment = SightingEnrichment(name="maltego", url="maltego.com", paid=True,
+                                value="Evil Incarnate Ltd, 666 Infection St, Whyme, NK, lat/long = 39.03385, 125.75432")
+sight_enrichment_ext = {
+    sight_ext_id: sight_ext,
+    "sighting-enrichment": enrichment
+}
+sighting5 = Sighting(observed_data_refs=observation4.id, where_sighted_refs=[location.id],
+                     sighting_of_ref=sender_identity.id, extensions=sight_enrichment_ext)
+#
+# E. New Task to setup the TTP
+#
+task5 = Task(
+    task_types=["investigation"], outcome="pending", name="Hunt the Actual Impact",
+    description="Use Hunting to determine how many clicked the link, and what impact it caused",
+    owner=me.id, extensions={task_ext_id:task_ext}
+)
+tseq1_5 = Sequence(
+    step_type="single_step", sequenced_object=task5.id,
+    sequence_type="task", extensions=seq_ext_dict
+)
+#
+# Step 5.A.2 Collect Objects
+#
+local_list6 = [conv(location), conv(sender_identity), conv(sender_SRO), conv(sighting5), conv(task5), conv(tseq1_5)]
+local_list6_id = [location.id, sender_identity.id, sender_SRO.id, sighting5.id]
+other_object_refs = other_object_refs + local_list6_id
+task_refs.append(task5.id)
+sequence_refs.append(tseq1_5.id)
+bundle_list = bundle_list + local_list6
+#
+# Step 5.A.3. Update Task from Pending to Successful, and add objects and new task to Incident
+#
+for bun in bundle_list:
+    if bun["type"] == "incident":
+        ext = bun["extensions"]
+        inc_ext = ext[inc_ext_id]
+        inc_ext["other_object_refs"] = other_object_refs
+        inc_ext["sequence_refs"] = sequence_refs
+        inc_ext["task_refs"] = task_refs
+    elif bun["type"] == "task" and bun["id"] == task4.id:
+        bun["outcome"] = "successful"
+    elif bun["type"] == "sequence" and bun["id"] == tseq1_4.id:
+        bun["on_completion"] = tseq1_5.id
 
+############################################################################################
+############################################################################################
+# Step 6: We execute a Task to hunt out the actual impacts
+# We find the original user 2 and user4 both clicked on the link, downloaded
+# some software which started a rm -r process
+# name = evil.exe
+###########################################################################################
+# 5.A Create SCO's and Observed-Data
+###########################################################################################
+#
+# 5.A.1 Setup objects
+# A. Software
+software = Software(name="evil.exe")
+# B. File
+hashes ={"SHA-256": "fe90a7e910cb3a4739bed9180e807e93fa70c90f25a8915476f5e4bfbac681db"}
+file = File(name="evil.exe", hashes=hashes)
+# C. Process
+process = Process(pid=1221, created_time="2023-01-20T14:11:25.55Z",
+                  command_line="./gedit-bin --destroy-alll", image_ref=file.id)
+# D. SRO "derived-from"
+SRO_Evil = Relationship(relationship_type="derived-from", source_ref=software.id, target_ref=process.id)
+#
+# E. SRO attributed-to
+SRO_click1 = Relationship(relationship_type="attributed-to", source_ref=email_addr2.id, target_ref=software.id)
+SRO_click2 = Relationship(relationship_type="attributed-to", source_ref=email_addr4.id, target_ref=software.id)
+#
+# E. Setup Observation
+obs_refs6 = [software.id, file.id, process.id, SRO_Evil.id, SRO_click1.id, SRO_click2.id,
+             email_addr2.id, email_addr4.id, user_account2, user_account4]
+observation6 = ObservedData(number_observed=1, object_refs=obs_refs6,
+                            first_observed=email_message1.date,last_observed=email_message1.date)
+#
+# F. Sighting
+hunt = SightingHunt(name="kestrel", playbook_id="playbook_1_1", rule="demo rule string")
+sight_hunt_ext = {
+    sight_ext_id: sight_ext,
+    "sighting-hunt": hunt
+}
+sighting5 = Sighting(observed_data_refs=observation4.id, where_sighted_refs=[location.id],
+                     sighting_of_ref=sender_identity.id, extensions=sight_hunt_ext)
+#
+# G. Setup Event and Sequence
+event2 = Event(
+    status="occured", description="2 users clicked on the email and destroyed their laptops",
+    event_types=["dissemination-phishing-emails"], name="confirmed impact",
+    sighting_refs=[sighting5], extensions=event_ext_dict
+)
+eseq1_2 = Sequence(
+    step_type="single_step", sequenced_object=event2.id,
+    sequence_type="event", extensions=seq_ext_dict
+)
+# H. Availability Impact
+numbers = {"computers-mobile": 2}
+availability = Availability(availability_impact=99)
+avail_impact = Impact(
+    impact_category="availability", criticality=99, description="Two Laptops are stuffed",
+    impacted_entity_counts=numbers, recoverability="regular",
+    extensions={imp_ext_id:imp_ext, "availability":availability}
+)
 
 #######################################################################################################
 #######################################################################################################
@@ -617,3 +707,11 @@ for inc, bun in enumerate(bundle_list):
     print(f"------------------------------ {inc+1} of {bun_len}--------------------------------------------")
     print(bun)
 
+#########################################################################################################
+# Export bundle
+#########################################################################################################
+export_dict = bundle_dict["objects"] = bundle_list
+pathfile="test/data/os-threat/test/evidence.json"
+
+with open(pathfile, 'w') as outfile:
+    json.dump(export_dict, outfile, indent=6)

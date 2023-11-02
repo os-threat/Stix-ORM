@@ -18,7 +18,7 @@ from stixorm.module.definitions.stix21 import (
     Identity, Incident, Note, Sighting, Indicator, Relationship
 )
 from stixorm.module.definitions.os_threat import (
-    StateChangeObject, EventCoreExt, Event, EntityCountObject, ImpactCoreExt,
+    StateChangeObject, EventCoreExt, Event, ImpactCoreExt,
     Availability, Confidentiality, External, Integrity, Monetary, Physical,
     Traceability, Impact, IncidentScoreObject, IncidentCoreExt, TaskCoreExt,
     Task, SightingEvidence, Sequence,

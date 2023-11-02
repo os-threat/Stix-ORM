@@ -39,7 +39,7 @@ from stix2.v21.observables import (
     WindowsProcessExt, WindowsRegistryKey, WindowsRegistryValueType,
     WindowsServiceExt, X509Certificate, X509V3ExtensionsType,
 )
-
+from stix2.v21.bundle import Bundle
 from stix2.v21.common import MarkingDefinition
 
 name = "stix21"
@@ -69,6 +69,7 @@ class_model["sdo"] = {
     "ThreatActor":ThreatActor,
     "Tool":Tool,
     "Vulnerability":Vulnerability,
+    "Bundle": Bundle
 }
 class_model["sub"] = {
     "AlternateDataStream":AlternateDataStream,
