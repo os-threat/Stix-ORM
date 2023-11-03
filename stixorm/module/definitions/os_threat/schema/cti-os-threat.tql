@@ -20,6 +20,31 @@
 #
 define
 
+    # Anecdote SCO
+    anecdote sub stix-cyber-observable-object,
+        owns anecdote-value,
+        owns report-date,
+        plays provided-by:ancdote;
+
+    # Incident Sequence Object for Tasks/Events
+    sequence sub stix-domain-object, abstract,
+        owns step-type,
+        owns sequence-type,
+        plays sequenced-object:sequence,
+        plays on-completion:source,
+        plays on-success:source,
+        plays on-failure:source,
+        plays next-steps:source,
+        plays on-completion:target,
+        plays on-success:target,
+        plays on-failure:target,
+        plays next-steps:target;
+
+    start-sequence sub sequence;
+    end-sequence sub sequence;
+    single-sequence sub sequence;
+    parallel-sequence sub sequence;
+
     # Incident Event Object
     event sub stix-domain-object,
         owns name,
@@ -31,22 +56,17 @@ define
         owns goal,
         owns start-time,
         owns start-time-fidelity,
-        owns event-seq,
-        owns detection-methods,
-        owns detection-system,
-        owns detection-rule,
         plays blocks:stops,
         plays causes:caused,
         plays detects:found,
         plays performed:outcome,
 	    plays based-on:basis,
-        plays located-at:locating,
-	    plays led-to:initial,
-	    plays led-to:subsequent,
-	    plays impacts:issue,
+        plays located-at:locating, # SRO
+	    plays led-to:initial, # SRO
+	    plays led-to:subsequent, # SRO
+	    plays impacts:issue, # SRO
         plays event-refs:the-event,
-        plays subevents:parent,
-        plays subevents:sub-event,
+        plays sequenced-object:object,
         plays list-of-sightings:sighting-event,
         plays objects-changed:change-driver,
         plays event-ext:event-base;
@@ -76,8 +96,7 @@ define
         plays impact-refs:the-impact;
 
     # Incident Tasks Object
-    task sub stix-domain-object, abstract,
-        owns step-type,
+    task sub stix-domain-object,
         owns outcome,
         owns task-types,
         owns description,
@@ -91,7 +110,6 @@ define
         plays task-ext:task-base,
         plays blocks:effort,
         plays causes:effort,
-        plays detects:effort,
         plays creates:effort,
         plays uses:used,
         plays detects:effort,
@@ -101,43 +119,12 @@ define
         plays errored-to:on-error,
         plays followed-by:initial,
         plays followed-by:subsequent,
+        plays sequenced-object:object,
         plays assigned:effort,
         plays contact-for:issue,
         plays participated-in:assisted,
         plays owned-by:owned,
         plays performed:outcome;
-
-    start-step sub task,
-        plays on-completion:source,
-        plays task-refs:the-task;
-
-    end-step sub task,
-        plays on-completion:target,
-        plays on-success:target,
-        plays on-failure:target,
-        plays task-refs:the-task;
-
-    single-step sub task,
-        plays on-completion:target,
-        plays on-success:target,
-        plays on-failure:target,
-        plays on-completion:source,
-        plays on-success:source,
-        plays on-failure:source,
-        plays next-steps:target,
-        plays impact-counter:impact-driver,
-        plays objects-changed:change-driver,
-        plays task-refs:the-task;
-
-    parallel-step sub task,
-        plays on-completion:target,
-        plays on-success:target,
-        plays on-failure:target,
-        plays on-completion:source,
-        plays on-success:source,
-        plays on-failure:source,
-        plays next-steps:source,
-        plays task-refs:the-task;
 
     # Incident State Change Sub Object
     state-change sub stix-sub-object,
@@ -170,8 +157,6 @@ define
         owns system-count,
         owns vehicles-count,
         plays impact-counter:counters;
-
-
 
     incident-score sub stix-sub-object,
         owns name,
@@ -431,9 +416,9 @@ define
         relates sighting-event as owner,
         relates sights as pointed-to;
 
-    subevents sub embedded,
-        relates parent as owner,
-        relates sub-event as pointed-to;
+    sequenced-object sub embedded,
+        relates sequence as owner,
+        relates object as pointed-to;
 
     objects-changed sub embedded,
         relates change-driver as owner,
@@ -503,6 +488,10 @@ define
         relates incident as owner,
         relates the-impact as pointed-to;
 
+    provided-by sub embedded,
+        relates ancdote as owner,
+        relates reporter as pointed-to;
+
     # Feed Embedded Relations
     list-of-feeds sub embedded,
 		relates feed-list-owner as owner,
@@ -560,7 +549,8 @@ define
 	    plays impacts:impacted,
 	    plays contact-for:contact,
         plays assigned:owner,
-        plays participated-in:contact;
+        plays participated-in:contact,
+        plays provided-by:reporter;
 
 	infrastructure
 	    plays impacts:impacted;
@@ -651,7 +641,8 @@ define
     person-name sub stix-attribute-string;
     person-context sub stix-attribute-string;
     report-submission sub stix-attribute-string;
-
+    sequence-type sub stix-attribute-string;
+    anecdote-value sub stix-attribute-string;
 
     event-seq sub stix-attribute-integer;
     criticality sub stix-attribute-integer;
@@ -690,5 +681,6 @@ define
     end-time sub stix-attribute-timestamp;
     conversion-time sub stix-attribute-timestamp;
     last-update sub stix-attribute-timestamp;
+    report-date sub stix-attribute-timestamp;
 
 

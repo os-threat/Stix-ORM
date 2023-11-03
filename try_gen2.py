@@ -5,7 +5,7 @@ import datetime
 #import dateutil.parser
 #from dateutil.parser import *
 from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
-from typedb.client import *
+#from typedb.client import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
 from stixorm.module.orm.delete_object import delete_stix_object
 from stixorm.module.orm.export_object import convert_ans_to_stix
@@ -301,7 +301,7 @@ eseq1_0 = Sequence(
 # 1.C.2 Collect objects and ids in lists
 local_list3 = [conv(event1), conv(eseq1_1), conv(eseq1_0)]
 event_refs.append(event1.id)
-sequence_start_refs.append(eseq1_0)
+sequence_start_refs.append(eseq1_0.id)
 sequence_refs=[eseq1_0.id, eseq1_1.id]
 bundle_list = bundle_list + local_list3
 ###########################################################################################
@@ -325,7 +325,7 @@ tseq1_0 = Sequence(
 #
 # 1.D.2 Collect objects
 task_refs.append(task1.id)
-sequence_start_refs.append(tseq1_0)
+sequence_start_refs.append(tseq1_0.id)
 sequence_refs.extend([tseq1_0.id, tseq1_1.id])
 bundle_list.extend((conv(task1), conv(tseq1_0), conv(tseq1_0)))
 #
@@ -485,8 +485,8 @@ local_list5 = [conv(user_account3), conv(email_addr3), conv(user_account4),
                conv(email_addr4), conv(user_account5), conv(email_addr5),
                conv(sro3), conv(sro4), conv(sro5), conv(observation3),
                conv(exchange), conv(sighting3), conv(task3), conv(tseq1_3)]
-local_list5_id = [user_account3,id, user_account3.id, user_account4.id,
-               email_addr4.id, user_account5.id, email_addr5,id, sighting3.id,
+local_list5_id = [user_account3.id, user_account3.id, user_account4.id,
+               email_addr4.id, user_account5.id, email_addr5.id, sighting3.id,
                sro3.id, sro3.id, sro5.id, observation3.id, exchange.id]
 other_object_refs = other_object_refs + local_list5_id
 sequence_refs.append(tseq1_3.id)
@@ -603,7 +603,7 @@ sight_enrichment_ext = {
 sighting5 = Sighting(observed_data_refs=observation4.id, where_sighted_refs=[location.id],
                      sighting_of_ref=sender_identity.id, extensions=sight_enrichment_ext)
 #
-# E. New Task to setup the TTP
+# E. New Task to setup the Hunt for Impact
 #
 task5 = Task(
     task_types=["investigation"], outcome="pending", name="Hunt the Actual Impact",
@@ -645,10 +645,10 @@ for bun in bundle_list:
 # some software which started a rm -r process
 # name = evil.exe
 ###########################################################################################
-# 5.A Create SCO's and Observed-Data
+# 6.A Create SCO's and Observed-Data
 ###########################################################################################
 #
-# 5.A.1 Setup objects
+# 6.A.1 Setup objects
 # A. Software
 software = Software(name="evil.exe")
 # B. File
@@ -666,7 +666,7 @@ SRO_click2 = Relationship(relationship_type="attributed-to", source_ref=email_ad
 #
 # E. Setup Observation
 obs_refs6 = [software.id, file.id, process.id, SRO_Evil.id, SRO_click1.id, SRO_click2.id,
-             email_addr2.id, email_addr4.id, user_account2, user_account4]
+             email_addr2.id, email_addr4.id, user_account2.id, user_account4.id]
 observation6 = ObservedData(number_observed=1, object_refs=obs_refs6,
                             first_observed=email_message1.date,last_observed=email_message1.date)
 #
@@ -676,14 +676,14 @@ sight_hunt_ext = {
     sight_ext_id: sight_ext,
     "sighting-hunt": hunt
 }
-sighting5 = Sighting(observed_data_refs=observation4.id, where_sighted_refs=[location.id],
+sighting6 = Sighting(observed_data_refs=observation6.id, where_sighted_refs=[location.id],
                      sighting_of_ref=sender_identity.id, extensions=sight_hunt_ext)
 #
 # G. Setup Event and Sequence
 event2 = Event(
     status="occured", description="2 users clicked on the email and destroyed their laptops",
     event_types=["dissemination-phishing-emails"], name="confirmed impact",
-    sighting_refs=[sighting5], extensions=event_ext_dict
+    sighting_refs=[sighting6], extensions=event_ext_dict
 )
 eseq1_2 = Sequence(
     step_type="single_step", sequenced_object=event2.id,
@@ -691,12 +691,56 @@ eseq1_2 = Sequence(
 )
 # H. Availability Impact
 numbers = {"computers-mobile": 2}
-availability = Availability(availability_impact=99)
-avail_impact = Impact(
+availability2 = Availability(availability_impact=99)
+avail_impact2 = Impact(
     impact_category="availability", criticality=99, description="Two Laptops are stuffed",
     impacted_entity_counts=numbers, recoverability="regular",
-    extensions={imp_ext_id:imp_ext, "availability":availability}
+    extensions={imp_ext_id:imp_ext, "availability":availability2}
 )
+#
+# I. New Task to setup the TTP
+#
+task6 = Task(
+    task_types=["investigation"], outcome="pending", name="Add Phishing TTP",
+    description="Use the Mitre ATT&CK Phishing TTP to confirm the technique",
+    owner=me.id, extensions={task_ext_id:task_ext}
+)
+tseq1_6 = Sequence(
+    step_type="single_step", sequenced_object=task6.id,
+    sequence_type="task", extensions=seq_ext_dict
+)
+#
+# Step 6.A.2 Collect Objects
+#
+local_list7 = [conv(software), conv(file), conv(process), conv(SRO_Evil), conv(SRO_click1), conv(SRO_click2),
+               conv(observation6), conv(sighting6), conv(event2), conv(eseq1_2), conv(avail_impact),
+               conv(task6), conv(tseq1_6)]
+local_list7_id = [software.id, file.id, process.id, SRO_Evil.id, SRO_click1.id, SRO_click2.id,
+                  observation6.id, sighting6.id]
+other_object_refs = other_object_refs + local_list7_id
+task_refs.append(task5.id)
+event_refs.append(event2.id)
+impact_refs.append(avail_impact2.id)
+sequence_refs.append(eseq1_2.id)
+sequence_refs.append(tseq1_6.id)
+bundle_list = bundle_list + local_list7
+#
+# Step 6.A.3. Update Task from Pending to Successful, and add objects and new task to Incident
+#
+for bun in bundle_list:
+    if bun["type"] == "incident":
+        ext = bun["extensions"]
+        inc_ext = ext[inc_ext_id]
+        inc_ext["other_object_refs"] = other_object_refs
+        inc_ext["sequence_refs"] = sequence_refs
+        inc_ext["task_refs"] = task_refs
+        inc_ext["impact_refs"] = impact_refs
+    elif bun["type"] == "task" and bun["id"] == task5.id:
+        bun["outcome"] = "successful"
+    elif bun["type"] == "sequence" and bun["id"] == tseq1_5.id:
+        bun["on_completion"] = tseq1_6.id
+    elif bun["type"] == "sequence" and bun["id"] == eseq1_1.id:
+        bun["on_completion"] = tseq1_2.id
 
 #######################################################################################################
 #######################################################################################################
@@ -707,6 +751,14 @@ for inc, bun in enumerate(bundle_list):
     print(f"------------------------------ {inc+1} of {bun_len}--------------------------------------------")
     print(bun)
 
+print("========================== task refs ====================================")
+print(task_refs)
+print("========================== event refs ====================================")
+print(event_refs)
+print("========================== impact refs ====================================")
+print(impact_refs)
+print("========================== other object refs ====================================")
+print(other_object_refs)
 #########################################################################################################
 # Export bundle
 #########################################################################################################
