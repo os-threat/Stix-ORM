@@ -12,9 +12,5 @@
   "priority": "int-priority",
   "start_time": "start-time",
   "start_time_fidelity": "start-time-fidelity",
-  "owner": "",
-  "on_completion": "",
-  "on_failure": "",
-  "on_success": "",
-  "next_steps": ""
+  "owner": ""
 }

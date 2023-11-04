@@ -24,7 +24,8 @@ define
     anecdote sub stix-cyber-observable-object,
         owns anecdote-value,
         owns report-date,
-        plays provided-by:ancdote;
+        plays provided-by:ancdote,
+        plays anecdote-ext:anecdote-base;
 
     # Incident Sequence Object for Tasks/Events
     sequence sub stix-domain-object, abstract,
@@ -38,12 +39,13 @@ define
         plays on-completion:target,
         plays on-success:target,
         plays on-failure:target,
-        plays next-steps:target;
+        plays next-steps:target,
+        plays sequence-ext:sequence-spec;
 
-    start-sequence sub sequence;
-    end-sequence sub sequence;
-    single-sequence sub sequence;
-    parallel-sequence sub sequence;
+    start-step sub sequence;
+    end-step sub sequence;
+    single-step sub sequence;
+    parallel-step sub sequence;
 
     # Incident Event Object
     event sub stix-domain-object,
@@ -124,6 +126,7 @@ define
         plays contact-for:issue,
         plays participated-in:assisted,
         plays owned-by:owned,
+        plays impact-counter:impact-driver,
         plays performed:outcome;
 
     # Incident State Change Sub Object
@@ -133,30 +136,6 @@ define
         plays  changed-objects-result:changed-objects,
         plays objects-changed:object-list;
 
-    entity-counter sub stix-sub-object,
-        owns computers-mobile-count,
-        owns computers-personal-count,
-        owns computers-server-count,
-        owns customer-count,
-        owns customer-individual-count,
-        owns customer-organization-count,
-        owns domain-controller-count,
-        owns employee-count,
-        owns group-count,
-        owns ics-actuator-count,
-        owns ics-engineering-workstation-count,
-        owns ics-historian-count,
-        owns ics-hmi-count,
-        owns ics-other-count,
-        owns ics-plc-count,
-        owns ics-safety-system-count,
-        owns ics-sensor-count,
-        owns individual-count,
-        owns network-device-count,
-        owns organization-count,
-        owns system-count,
-        owns vehicles-count,
-        plays impact-counter:counters;
 
     incident-score sub stix-sub-object,
         owns name,
@@ -191,10 +170,55 @@ define
         relates occurence as sco,
         relates incident-core as extension;
 
-    # evidence extension objects
-    evidence-extension sub stix-sub-object;
-    sighting-extension sub evidence-extension,
+    # Identity Contact Number Sub Object
+    contact-number-sub sub stix-sub-object,
+        owns description,
+        owns contact-number,
+        owns contact-number-type,
+        plays identity-sub:sub-object;
+
+    # Identity Email Contact Sub Object
+    email-contact-sub sub stix-sub-object,
+        owns description,
+        owns digital-contact-type,
+        plays email-ref:origin,
+        plays identity-sub:sub-object;
+
+    # Identity Social Media Contact Sub Object
+    social-media-sub sub stix-sub-object,
+        owns description,
+        owns digital-contact-type,
+        plays user-account-ref:origin,
+        plays identity-sub:sub-object;
+
+    # Identity contact extension
+    identity-contact sub incident-extension,
+        owns first-name,
+        owns last-name,
+        owns middle-name,
+        owns prefix,
+        owns suffix,
+        owns team,
+        plays identity-sub:object,
+        plays identity-ext:identity-core;
+
+    # Identity contact extension embedded relation
+    identity-ext sub extensions,
+        relates identity-base as sco,
+        relates identity-core as extension;
+
+    # Identity sub-object embedded relation
+    identity-sub sub embedded,
+        relates object as owner,
+        relates sub-object as pointed-to;
+
+    # base evidence extension objects
+    sighting-extension sub stix-sub-object,
         plays evidence-ext:evidence-spec;
+
+    # registered evidence extension
+    evidence-extension sub sighting-extension,
+        owns extension-type;
     # incident core extension embedded relation
     evidence-ext sub extensions,
         relates evidence-base as sco,
@@ -249,6 +273,23 @@ define
         owns payload,
         owns valid-from,
         owns valid-until;
+
+    # anecdote extension object
+    anecdote-extension sub anecdote-extension,
+        plays anecdote-ext:anecdote-spec;
+
+    # task extension embedded relation
+    anecdote-ext sub extensions,
+        relates anecdote-base as sco,
+        relates anecdote-spec as extension;
+
+    # sequence extension object
+    sequence-extension sub incident-extension,
+        plays sequence-ext:sequence-spec;
+    # task extension embedded relation
+    sequence-ext sub extensions,
+        relates sequence-base as sco,
+        relates sequence-spec as extension;
 
     # task extension object
     task-extension sub incident-extension,
@@ -411,7 +452,25 @@ define
     sighting
         plays list-of-sightings:sights;
 
+    # key-value store for Entity-Counter object
+    entity-value sub stix-attribute-integer;
+    entity-key sub stix-attribute-string,
+        owns entity-value,
+        plays impact-counter:counters;
+
+    impact-counter sub embedded,
+        relates impact-driver as owner,
+        relates counters as pointed-to;
+
     # Incident Embedded Relations
+    email-ref sub embedded,
+        relates origin as owner,
+        relates email as pointed-to;
+
+    user-account-ref sub embedded,
+        relates origin as owner,
+        relates account as pointed-to;
+
     list-of-sightings sub embedded,
         relates sighting-event as owner,
         relates sights as pointed-to;
@@ -431,10 +490,6 @@ define
     changed-objects-result sub embedded,
         relates changed-objects as owner,
         relates changed as pointed-to;
-
-    impact-counter sub embedded,
-        relates impact-driver as owner,
-        relates counters as pointed-to;
 
     impacted-refs sub embedded,
         relates the-impact as owner,
@@ -550,7 +605,8 @@ define
 	    plays contact-for:contact,
         plays assigned:owner,
         plays participated-in:contact,
-        plays provided-by:reporter;
+        plays provided-by:reporter,
+        plays identity-ext:identity-base;
 
 	infrastructure
 	    plays impacts:impacted;
@@ -566,6 +622,12 @@ define
 	    plays contact-for:issue,
 	    plays detected:issue,
         plays derived-from:raw-material;
+
+    email-addr
+        plays email-ref:email;
+
+    user-account
+        plays user-account-ref:account;
 
     indicator
         plays detected:method,
@@ -643,6 +705,15 @@ define
     report-submission sub stix-attribute-string;
     sequence-type sub stix-attribute-string;
     anecdote-value sub stix-attribute-string;
+    contact-number sub stix-attribute-string;
+    contact-number-type sub stix-attribute-string;
+    digital-contact-type sub stix-attribute-string;
+    first-name sub stix-attribute-string;
+    last-name sub stix-attribute-string;
+    middle-name sub stix-attribute-string;
+    prefix sub stix-attribute-string;
+    suffix sub stix-attribute-string;
+    team sub stix-attribute-string;
 
     event-seq sub stix-attribute-integer;
     criticality sub stix-attribute-integer;

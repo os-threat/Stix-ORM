@@ -132,17 +132,6 @@
     "icon":""
   },
   {
-    "type":  "impacted_entity_counts",
-    "typeql": "entity-counter",
-    "class": "EntityCountObject",
-    "object": "sub",
-    "url": "",
-    "doc_url": "",
-    "summary": "",
-    "protocol": "os-threat",
-    "icon":""
-  },
-  {
     "type":  "extension-definition--4ca6de00-5b0d-45ef-a1dc-ea7279ea910e",
     "typeql": "event-extension",
     "class": "EventCoreExt",
@@ -265,7 +254,7 @@
   },
   {
     "type":  "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43",
-    "typeql": "sighting-extension",
+    "typeql": "evidence-extension",
     "class": "SightingEvidence",
     "object": "sub",
     "url": "",
@@ -385,8 +374,8 @@
     "icon":""
   },
   {
-    "type":  "social-media-contact",
-    "typeql": "social-media-contact",
+    "type":  "social_media_accounts",
+    "typeql": "social-media-sub",
     "class": "SocialMediaContact",
     "object": "sub",
     "url": "",
@@ -396,8 +385,8 @@
     "icon":""
   },
   {
-    "type":  "email-contact",
-    "typeql": "email-contact",
+    "type":  "email_addresses",
+    "typeql": "email-contact-sub",
     "class": "EmailContact",
     "object": "sub",
     "url": "",
@@ -407,8 +396,8 @@
     "icon":""
   },
   {
-    "type":  "contact-number",
-    "typeql": "contact-number",
+    "type":  "contact_numbers",
+    "typeql": "contact-number-sub",
     "class": "ContactNumber",
     "object": "sub",
     "url": "",
@@ -419,7 +408,7 @@
   },
   {
     "type":  "extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4",
-    "typeql": "anecdote-ext",
+    "typeql": "anecdote-extension",
     "class": "AnecdoteExt",
     "object": "sub",
     "url": "",
@@ -429,8 +418,19 @@
     "icon":""
   },
   {
+    "type":  "sequence",
+    "typeql": "sequence",
+    "class": "Sequence",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "os-threat",
+    "icon":""
+  },
+  {
     "type":  "extension-definition--be0c7c79-1961-43db-afde-637066a87a64",
-    "typeql": "sequence-ext",
+    "typeql": "sequence-extension",
     "class": "SequenceExt",
     "object": "sub",
     "url": "",

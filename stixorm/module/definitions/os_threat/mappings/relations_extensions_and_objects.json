@@ -1,12 +1,5 @@
 [
   {
-    "stix": "impacted_entity_counts",
-    "object": "entity-counter",
-    "relation": "impact-counter",
-    "owner": "impact-driver",
-    "pointed-to": "counters"
-  },
-  {
     "stix": "extension-definition--4ca6de00-5b0d-45ef-a1dc-ea7279ea910e",
     "object": "event-extension",
     "relation": "event-ext",
@@ -91,50 +84,50 @@
     "pointed-to": "task-spec"
   },
   {
-    "stix": "extension-definition--37b19192-905e-4851-912c-1af99ede56ac",
-    "object": "observed-extension",
+    "stix": "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43",
+    "object": "evidence-extension",
     "relation": "evidence-ext",
     "owner": "evidence-base",
     "pointed-to": "evidence-spec"
   },
   {
-    "stix": "observed-alert",
+    "stix": "sighting-alert",
     "object": "alert-evidence",
     "relation": "evidence-ext",
     "owner": "evidence-base",
     "pointed-to": "evidence-spec"
   },
   {
-    "stix": "observed-context",
+    "stix": "sighting-anecdote",
+    "object": "anecdote-evidence",
+    "relation": "evidence-ext",
+    "owner": "evidence-base",
+    "pointed-to": "evidence-spec"
+  },
+  {
+    "stix": "sighting-context",
     "object": "context-evidence",
     "relation": "evidence-ext",
     "owner": "evidence-base",
     "pointed-to": "evidence-spec"
   },
   {
-    "stix": "observed-exclusion",
+    "stix": "sighting-exclusion",
     "object": "exclusion-evidence",
     "relation": "evidence-ext",
     "owner": "evidence-base",
     "pointed-to": "evidence-spec"
   },
   {
-    "stix": "observed-enrichment",
+    "stix": "sighting-enrichment",
     "object": "enrichment-evidence",
     "relation": "evidence-ext",
     "owner": "evidence-base",
     "pointed-to": "evidence-spec"
   },
   {
-    "stix": "observed-hunt",
+    "stix": "sighting-hunt",
     "object": "hunt-evidence",
-    "relation": "evidence-ext",
-    "owner": "evidence-base",
-    "pointed-to": "evidence-spec"
-  },
-  {
-    "stix": "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43",
-    "object": "sighting-extension",
     "relation": "evidence-ext",
     "owner": "evidence-base",
     "pointed-to": "evidence-spec"
@@ -152,5 +145,47 @@
     "relation": "evidence-ext",
     "owner": "evidence-base",
     "pointed-to": "evidence-spec"
+  },
+  {
+    "stix": "extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498",
+    "object": "identity-contact",
+    "relation": "identity-ext",
+    "owner": "identity-base",
+    "pointed-to": "identity-core"
+  },
+  {
+    "stix": "contact_numbers",
+    "object": "contact-number-sub",
+    "relation": "identity-sub",
+    "owner": "object",
+    "pointed-to": "sub-object"
+  },
+  {
+    "stix": "email_addresses",
+    "object": "email-contact-sub",
+    "relation": "identity-sub",
+    "owner": "object",
+    "pointed-to": "sub-object"
+  },
+  {
+    "stix": "social_media_accounts",
+    "object": "social-media-sub",
+    "relation": "identity-sub",
+    "owner": "object",
+    "pointed-to": "sub-object"
+  },
+  {
+    "stix": "extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4",
+    "object": "anecdote-extension",
+    "relation": "anecdote-ext",
+    "owner": "anecdote-base",
+    "pointed-to": "anecdote-spec"
+  },
+  {
+    "stix": "extension-definition--be0c7c79-1961-43db-afde-637066a87a64",
+    "object": "sequence-extension",
+    "relation": "sequence-ext",
+    "owner": "sequence-base",
+    "pointed-to": "sequence-core"
   }
 ]

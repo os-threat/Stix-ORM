@@ -13,6 +13,5 @@
   "name": "name",
   "sighting_refs": "",
   "start_time": "start-time",
-  "start_time_fidelity": "start-time-fidelity",
-  "subevents": ""
+  "start_time_fidelity": "start-time-fidelity"
 }
