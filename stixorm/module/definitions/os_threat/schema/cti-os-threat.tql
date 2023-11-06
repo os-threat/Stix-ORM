@@ -40,7 +40,7 @@ define
         plays on-success:target,
         plays on-failure:target,
         plays next-steps:target,
-        plays sequence-ext:sequence-spec;
+        plays sequence-ext:sequence-base;
 
     start-step sub sequence;
     end-step sub sequence;
@@ -127,7 +127,8 @@ define
         plays participated-in:assisted,
         plays owned-by:owned,
         plays impact-counter:impact-driver,
-        plays performed:outcome;
+        plays performed:outcome,
+        plays task-refs:the-task;
 
     # Incident State Change Sub Object
     state-change sub stix-sub-object,
@@ -161,10 +162,9 @@ define
         plays scores:scored,
         plays task-refs:incident,
         plays event-refs:incident,
-        plays evidence-refs:incident,
-        plays notes-refs:incident,
         plays impact-refs:incident,
-	    plays  occurence-ext:incident-core;
+	    plays occurence-ext:incident-core,
+	    plays other-obj-refs:object;
     # incident core extension embedded relation
     occurence-ext sub extensions,
         relates occurence as sco,
@@ -275,7 +275,7 @@ define
         owns valid-until;
 
     # anecdote extension object
-    anecdote-extension sub anecdote-extension,
+    anecdote-extension sub incident-extension,
         plays anecdote-ext:anecdote-spec;
 
     # task extension embedded relation
@@ -463,6 +463,10 @@ define
         relates counters as pointed-to;
 
     # Incident Embedded Relations
+    other-obj-refs sub embedded,
+		relates referred as pointed-to,
+		relates object as owner;
+
     email-ref sub embedded,
         relates origin as owner,
         relates email as pointed-to;
@@ -531,14 +535,6 @@ define
         relates incident as owner,
         relates the-event as pointed-to;
 
-    evidence-refs sub embedded,
-        relates incident as owner,
-        relates the-evidence as pointed-to;
-
-    notes-refs sub embedded,
-        relates incident as owner,
-        relates the-note as pointed-to;
-
     impact-refs sub embedded,
         relates incident as owner,
         relates the-impact as pointed-to;
@@ -585,16 +581,19 @@ define
 	    plays obj-ref:content,
 	    plays changed-objects-initial:changed,
 	    plays changed-objects-result:changed,
-	    plays impacted-refs:impacted-thing;
+	    plays impacted-refs:impacted-thing,
+	    plays other-obj-refs:referred;
 
 	stix-cyber-observable-object
 	    plays feed-content:content,
 	    plays obj-ref:content,
 	    plays impacted-refs:impacted-thing,
-	    plays impacts:impacted;
+	    plays impacts:impacted,
+	    plays other-obj-refs:referred;
 
 	stix-core-relationship
-	    plays feed-content:content;
+	    plays feed-content:content,
+	    plays other-obj-refs:referred;
 
     marking-definition
 	    plays feed-content:content;
@@ -610,9 +609,6 @@ define
 
 	infrastructure
 	    plays impacts:impacted;
-
-	note
-	    plays notes-refs:the-note;
 
 	incident
 	    plays occurence-ext:occurence,
@@ -637,11 +633,9 @@ define
         plays performed:initiator;
 
     observed-data
-        plays evidence-refs:the-evidence,
         plays evidence-ext:evidence-base;
 
     sighting
-        plays evidence-refs:the-evidence,
         plays evidence-ext:evidence-base;
 
     tool

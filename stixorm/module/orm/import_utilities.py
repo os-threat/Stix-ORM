@@ -201,10 +201,10 @@ def extensions(prop_name: str,
     dep_list = []
     # for each key in the dict (extension type)
     # logger.debug('--------------------- extensions ----------------------------')
-    for ext_type in prop_dict:
+    for num, ext_type in enumerate(prop_dict):
         for ext_type_ql in auth["reln"]["extension_relations"]:
             if ext_type == ext_type_ql["stix"]:
-                match2, insert2, dep_list2 = load_object(ext_type, prop_dict[ext_type], parent_var, inc, import_type, protocol)
+                match2, insert2, dep_list2 = load_object(ext_type, prop_dict[ext_type], parent_var, num, import_type, protocol)
                 match = match + match2
                 insert = insert + insert2
                 dep_list = dep_list + dep_list2
@@ -243,7 +243,7 @@ def load_object(prop_name: str,
             obj_tql = copy.deepcopy(auth["sub_objects"][obj_type])
             obj_var = '$' + obj_type
             reln = prop_type["relation"]
-            rel_var = '$' + reln
+            rel_var = '$' + reln + str(inc)
             rel_owner = prop_type["owner"]
             rel_pointed_to = prop_type["pointed-to"]
             type_ql += ' ' + obj_var + ' isa ' + obj_type
@@ -383,10 +383,10 @@ def key_value_store(prop,
         if isinstance(a_value, list):
             for j, n in enumerate(a_value):
                 value_var = ' $' + d_value + str(j)
-                insert += key_var + ' ' + 'has ' + d_value + ' "' + str(n) + '";\n'
+                insert += key_var + ' ' + 'has ' + d_value + ' ' + val_tql(n) + ';\n'
         else:
             value_var = ' $' + d_value + str(i)
-            insert += key_var + ' ' + 'has ' + d_value + ' "' + str(a_value) + '";\n'
+            insert += key_var + ' ' + 'has ' + d_value + ' ' + val_tql(a_value) + ';\n'
 
     insert += ' $' + rel_typeql + ' (' + role_owner + ':' + obj_var
     for var in field_var_list:
@@ -498,7 +498,7 @@ def get_selector_var(selector, prop_var_list):
 # analysis_sco_refs
 # etc.
 
-def  embedded_relation(prop,
+def embedded_relation(prop,
                       prop_value,
                       obj_var,
                       inc: int,
@@ -584,6 +584,8 @@ def get_source_from_id(stid: str,
     for model in auth["conv"]["sdo"]:
         if model["protocol"] == protocol and model["type"] == tmp_source:
             source = model["typeql"]
+            if tmp_source == "sequence":
+                source = tmp_source
             return source
     for model in auth["conv"]["sro"]:
         if model["protocol"] == protocol and model["type"] == tmp_source:

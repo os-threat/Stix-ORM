@@ -324,10 +324,11 @@ tseq1_0 = Sequence(
 )
 #
 # 1.D.2 Collect objects
+local_list3 = [conv(task1), conv(tseq1_0), conv(tseq1_1)]
 task_refs.append(task1.id)
 sequence_start_refs.append(tseq1_0.id)
 sequence_refs.extend([tseq1_0.id, tseq1_1.id])
-bundle_list.extend((conv(task1), conv(tseq1_0), conv(tseq1_0)))
+bundle_list = bundle_list + local_list3
 #
 # Step 1.D.3. Update  Incident with Task
 #
@@ -364,8 +365,7 @@ reporter = Identity(name="Naive", identity_class="individual", extensions={ident
 # B. Anecdote
 anecdote = Anecdote(
     value="I clicked on the link, and my laptop screen went weird",
-    provided_by_ref=reporter.id, extensions=anec_ext_dict
-)
+    provided_by_ref=reporter.id) # , extensions=anec_ext_dict
 # C. Observation
 obs_refs2 = [anecdote.id]
 observation2 = ObservedData(number_observed=1, object_refs=obs_refs2,
@@ -660,9 +660,9 @@ process = Process(pid=1221, created_time="2023-01-20T14:11:25.55Z",
 # D. SRO "derived-from"
 SRO_Evil = Relationship(relationship_type="derived-from", source_ref=software.id, target_ref=process.id)
 #
-# E. SRO attributed-to
-SRO_click1 = Relationship(relationship_type="attributed-to", source_ref=email_addr2.id, target_ref=software.id)
-SRO_click2 = Relationship(relationship_type="attributed-to", source_ref=email_addr4.id, target_ref=software.id)
+# E. SRO related-to
+SRO_click1 = Relationship(relationship_type="related-to", source_ref=email_addr2.id, target_ref=software.id)
+SRO_click2 = Relationship(relationship_type="related-to", source_ref=email_addr4.id, target_ref=software.id)
 #
 # E. Setup Observation
 obs_refs6 = [software.id, file.id, process.id, SRO_Evil.id, SRO_click1.id, SRO_click2.id,
@@ -713,7 +713,7 @@ tseq1_6 = Sequence(
 # Step 6.A.2 Collect Objects
 #
 local_list7 = [conv(software), conv(file), conv(process), conv(SRO_Evil), conv(SRO_click1), conv(SRO_click2),
-               conv(observation6), conv(sighting6), conv(event2), conv(eseq1_2), conv(avail_impact),
+               conv(observation6), conv(sighting6), conv(event2), conv(eseq1_2), conv(avail_impact2),
                conv(task6), conv(tseq1_6)]
 local_list7_id = [software.id, file.id, process.id, SRO_Evil.id, SRO_click1.id, SRO_click2.id,
                   observation6.id, sighting6.id]
@@ -740,16 +740,22 @@ for bun in bundle_list:
     elif bun["type"] == "sequence" and bun["id"] == tseq1_5.id:
         bun["on_completion"] = tseq1_6.id
     elif bun["type"] == "sequence" and bun["id"] == eseq1_1.id:
-        bun["on_completion"] = tseq1_2.id
+        bun["on_completion"] = eseq1_2.id
 
 #######################################################################################################
 #######################################################################################################
 # Print Bundle on console
 #######################################################################################################
 bun_len = len(bundle_list)
+seq_list = []
 for inc, bun in enumerate(bundle_list):
     print(f"------------------------------ {inc+1} of {bun_len}--------------------------------------------")
     print(bun)
+    if bun["type"] == "sequence":
+        local_seq = copy.deepcopy(bun)
+        if bun["step_type"] == "single_step":
+            local_seq.pop("sequenced_object")
+        seq_list.append(local_seq)
 
 print("========================== task refs ====================================")
 print(task_refs)
@@ -762,8 +768,15 @@ print(other_object_refs)
 #########################################################################################################
 # Export bundle
 #########################################################################################################
-export_dict = bundle_dict["objects"] = bundle_list
-pathfile="test/data/os-threat/test/evidence.json"
+sorted_list = sorted(bundle_list, key=lambda i: i['id'])
+bundle_dict["objects"] = sorted_list
+pathfile="test/data/os-threat/test2/evidence.json"
 
 with open(pathfile, 'w') as outfile:
-    json.dump(export_dict, outfile, indent=6)
+    json.dump(bundle_dict, outfile, indent=6)
+
+pathfile2="test/data/os-threat/test3/sequence.json"
+bundle_dict["objects"] = seq_list
+
+with open(pathfile2, 'w') as outfile:
+    json.dump(bundle_dict, outfile, indent=6)

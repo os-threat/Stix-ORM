@@ -73,13 +73,13 @@ when {
 # and if that identity is using a malware, then we want to create a "use" relation
 # between the threat actor and the malware; the threat actor is using the malware
 # through the identiy
-rule attribution-when-using:
-when {
-	(result: $x, fault-of: $y) isa attributed-to;
-	(used-by: $y, used: $z) isa uses;
-} then {
-	(used-by: $x, used: $z) isa uses;
-};
+#rule attribution-when-using:
+#when {
+#	(result: $x, fault-of: $y) isa attributed-to;
+#	(used-by: $y, used: $z) isa uses;
+#} then {
+#	(used-by: $x, used: $z) isa uses;
+#};
 
 # Description:
 # If y has been attributed to x, and if y is targetting z, then we can infer that x is targetting z
@@ -87,13 +87,13 @@ when {
 # If an attack pattern, for example "spear fishing", has been attributed to a specific identity named "Bravo",
 # and if that attack pattern is targetting a location, for example New York,
 # we can infer that the identiy "Bravo" is targeting the location New York
-rule attribution-when-targeting:
-when {
-	(result: $x, fault-of: $y) isa attributed-to;
-	(targetter: $y, targetted: $z) isa targets;
-} then {
-	(targetter: $x, targetted: $z) isa targets;
-};
+#rule attribution-when-targeting:
+#when {
+#	(result: $x, fault-of: $y) isa attributed-to;
+#	(targetter: $y, targetted: $z) isa targets;
+#} then {
+#	(targetter: $x, targetted: $z) isa targets;
+#};
 
 # Description
 # This rule infers a relation of type inferred-mitigation between a course of action and an intursion set, if the

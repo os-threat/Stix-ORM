@@ -3,6 +3,11 @@
 ],
 "availability":  [],
 "confidentiality":  [],
+"external":  [],
+"integrity":  [],
+"monetary":  [],
+"physical":  [],
+"traceability":  [],
 "entity-counter":  [],
 "event-extension":  [],
 "impact-extension":  [],
@@ -17,11 +22,24 @@
   "notes_refs",
   "evidence_refs"
 ],
-"external":  [],
 "incident-score":  [],
-"integrity":  [],
-"monetary":  [],
-"physical":  [],
-"traceability":  [],
-"state-change":  []
+"state-change":  [],
+"sequence-extension":  [],
+"alert-evidence":  [],
+"anecdote-evidence":  [],
+"context-evidence":  [],
+"exclusion-evidence":  [],
+"enrichment-evidence":  [],
+"hunt-evidence":  [],
+"framework-evidence":  [],
+"external-evidence":  [],
+"anecdote-extension":  [],
+"contact-number-sub":  [],
+"email-contact-sub":  [],
+"social-media-sub":  [],
+"identity-contact":  [
+  "contact_numbers",
+  "email_addresses",
+  "social_media_accounts"
+]
 }

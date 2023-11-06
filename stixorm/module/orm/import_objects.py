@@ -136,8 +136,8 @@ def sdo_to_data(sdo, import_type=default_import_type) -> [dict, Dict[str, str], 
     # b. Instance details
     attack_object = False if not sdo.get("x_mitre_version", False) else True
     step_type = ""
-    if sdo.type == "task":
-        step_type = sdo.get("step_type", "task")
+    if sdo.type == "sequence":
+        step_type = sdo.get("step_type", "sequence")
     sub_technique = False
     if attack_object:
         sub_technique = False if not sdo.get("x_mitre_is_subtechnique", False) else True
@@ -283,7 +283,7 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
         source_var, source_match = get_embedded_match(source_id, 0, protocol, import_type)
         target_id = sro.target_ref
         dep_list.append(target_id)
-        target_var, target_match = get_embedded_match(target_id, 0, protocol, import_type)
+        target_var, target_match = get_embedded_match(target_id, 1, protocol, import_type)
         dep_match += source_match + target_match
         # 3.)  then setup the typeql statement to insert the specific sro relation, from the dict, with the matches
         for record in auth["reln"]["standard_relations"]:

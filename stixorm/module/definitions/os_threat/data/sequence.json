@@ -1,6 +1,6 @@
 {
   "sequenced_object": "",
-  "sequence_type": "task-types",
+  "sequence_type": "sequence-type",
   "step_type": "step-type",
   "on_completion": "",
   "on_success": "",

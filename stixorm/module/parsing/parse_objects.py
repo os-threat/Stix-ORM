@@ -118,8 +118,8 @@ def dict_to_stix(stix_dict: dict,
     if obj_type in auth["types"]["sdo"]:
         logger.debug("Im in sdo")
         step_type = ""
-        if obj_type == "task":
-            step_type = "task"
+        if obj_type == "sequence":
+            step_type = stix_dict["step_type"]
         sub_technique = False
         if attack_object:
             sub_technique = stix_dict.get("x_mitre_is_subtechnique", False)

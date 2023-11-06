@@ -62,7 +62,7 @@ def sdo_type_to_tql(sdo_type: str,
             protocol = "os-threat"
             obj_tql = copy.deepcopy(os_threat_model.get_data(sdo_type))
             is_list.extend(auth["is_lists"]["sdo"][tql_name])
-            if tql_name == "task":
+            if tql_name == "sequence":
                 tql_name = "-".join(step_type.split("_"))
         else:
             logger.error(f'obj_type type {sdo_type} not supported')
@@ -106,7 +106,7 @@ def sdo_type_to_tql(sdo_type: str,
                 protocol = "os-threat"
                 obj_tql = copy.deepcopy(os_threat_model.get_data(sdo_type))
                 is_list.extend(auth["is_lists"]["sdo"][tql_name])
-                if tql_name == "task" and step_type != "task":
+                if tql_name == "sequence" and step_type != "sequence":
                     tql_name = "-".join(step_type.split("_"))
             else:
                 logger.error(f'obj_type type {sdo_type} not in stix_models["dispatch_stix"] or dispatch mitre')

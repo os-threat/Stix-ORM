@@ -63,12 +63,16 @@ stix-object sub stix-entity,
 				owns langs,
 				plays external-references:referenced,
 				plays sighting:sighting-of,
+                plays attributed-to:result,
+                plays attributed-to:fault-of,
 
 				plays indicates:indicated;
 
 			stix-cyber-observable-object sub stix-core-object,
 				owns defanged,
 				plays malware-env:env,
+                plays attributed-to:result,
+                plays attributed-to:fault-of,
 				plays extensions:sco,
 				plays consist:consisted;
 
@@ -175,7 +179,6 @@ campaign sub stix-domain-object,
 	owns objective, 
 
 	# Common Relations
-	plays attributed-to:result,
 	plays compromises:compromising,
 	plays originates-from:originating,
 	plays targets:targetter,
@@ -238,7 +241,6 @@ identity sub stix-domain-object,
 
 	# Reverse Relations
 	plays targets:targetted,
-	plays attributed-to:fault-of, 
 	plays impersonate:impersonated,
 
 	# Embedded Relations
@@ -344,7 +346,6 @@ intrusion-set sub stix-domain-object,
 	owns secondary-motivations,
 
 	# Common Relations
-	plays attributed-to:result,
 	plays compromises:compromising,
 	plays hosts:hosting,
 	plays ownership:owning,
@@ -354,7 +355,6 @@ intrusion-set sub stix-domain-object,
 	plays uses:used,
 
 	# Reverse Relations
-	plays attributed-to:fault-of, 
 	plays authored-by:authored,
 	# plays indicates:indicated; Already defined in SDO
 
@@ -573,7 +573,6 @@ threat-actor sub stix-domain-object,
 
 
 	# Common Relations
-	plays attributed-to:result,
 	plays compromises:compromising,
 	plays hosts:hosting,
 	plays ownership:owning,
@@ -583,7 +582,6 @@ threat-actor sub stix-domain-object,
 	plays uses:used-by,
 
 	# Reverse Relations
-	plays attributed-to:fault-of,
 	plays authored-by:authored;
 	# plays indicates:indicated # defined in SDO
 

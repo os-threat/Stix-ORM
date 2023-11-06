@@ -186,6 +186,6 @@
     "object": "sequence-extension",
     "relation": "sequence-ext",
     "owner": "sequence-base",
-    "pointed-to": "sequence-core"
+    "pointed-to": "sequence-spec"
   }
 ]

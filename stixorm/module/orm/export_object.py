@@ -13,7 +13,7 @@ from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_in
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 
 ###################################################################################################
@@ -131,7 +131,7 @@ def make_sdo(res, import_type: ImportType):
         #logger.debug(f"obj tql -> {obj_tql}\n sdo tql name -> {sdo_tql_name}")
         # 2.B) get the is_list list, the list of properties that are lists for that object
         #is_list = auth["is_lists"]["sdo"]["sdo"] + auth["is_lists"]["sdo"][sdo_tql_name]
-        # 3.A) add the properties onto the the object
+        # 3.A) add the properties onto the  object
         stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
         #logger.debug(f'sdo, add properties, stix_dict -> {stix_dict}\n')
         # 3.B) add the relations onto the object

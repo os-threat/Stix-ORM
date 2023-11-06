@@ -26,7 +26,7 @@ from timeit import default_timer as timer
 
 #from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
-logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 #logger.addHandler(logging.StreamHandler())
 
@@ -103,8 +103,8 @@ def dict_to_typeql(stix_dict, import_type):
     """
     #logger.debug(f"im about to parse \n")
     stix_obj = parse(stix_dict, False, import_type)
-    #logger.debug(f' i have parsed {stix_dict}\n')
-    #logger.debug(f"\n object type {stix_obj}")
+    logger.debug(f' i have parsed {stix_dict}\n')
+    logger.debug(f"\n object type -> {type(stix_obj)} -> {stix_obj}")
     dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
     #logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
     dep_obj["dep_match"] = dep_match
@@ -117,10 +117,11 @@ def dict_to_typeql(stix_dict, import_type):
 def test_insert_statements(pahhway, stid):
     with open(pahhway, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
+        json_text = json_text["objects"]
         for stix_dict in json_text:
             if stix_dict['id'] == stid:
                 dep_obj = dict_to_typeql(stix_dict, import_type)
-                #logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
+                logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
 
 
 def update_layers(layers, indexes, missing, dep_obj, cyclical):
@@ -161,7 +162,7 @@ def backdoor_add_dir(dirpath):
         else:
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 json_text = json.load(f)
-                #json_text = json_text["objects"]
+                json_text = json_text["objects"]
                 for element in json_text:
                     #logger.debug(f'**********==={element}')
                     obj_list.append(element)
@@ -198,11 +199,16 @@ def backdoor_add_dir(dirpath):
                 dep_insert = layer["dep_insert"]
                 indep_ql = layer["indep_ql"]
                 core_ql = layer["core_ql"]
+                print("\n&&&&&&&&&&&&&&&&&&&&&&&&&")
+                print(f'{layer["id"]}      -> {layer["dep_list"]}')
+
                 #print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
                 prestring = ""
                 if dep_match != "":
                     prestring = "match " + dep_match
                 upload_string = prestring + " insert " + indep_ql + dep_insert
+                print(" ")
+                print(upload_string)
                 type_ql_list.append(upload_string)
             else:
                 duplist.append(stid)
@@ -214,9 +220,12 @@ def backdoor_add_dir(dirpath):
     len_files = len(id_set)
     len_typedb = len(id_typedb)
     id_diff = id_set - id_typedb
+    sorted_diff = sorted(list(id_diff))
     print(f'\n\n\n===========================\nduplist -> {duplist}')
     print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
-    #print(f'difference -> {id_diff}')
+    print(f'difference -> ')
+    for id_d in sorted_diff:
+        print(id_d)
 
 
 def backdoor_add(pahhway):
@@ -307,12 +316,12 @@ def load_file(fullname):
     """
     evidence_list = []
     logger.debug(f'inside history file {fullname}')
-    typedb = TypeDBSink(connection, True, import_type)
+    typedb = TypeDBSink(connection, False, import_type)
     input_id_list=[]
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         #print(json_text["objects"])
-        for stix_dict in json_text["objects"]:
+        for stix_dict in json_text: #["objects"]:
             input_id_list.append(stix_dict.get("id", False))
         result = typedb.add(json_text)
     id_set = set(input_id_list)
@@ -399,7 +408,7 @@ def query_id(stixid):
     print(' ---------------------------Query Object----------------------')
     print(stix_obj.serialize(pretty=True))
     dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
-    print(' ---------------------------Delete Object----------------------')
+    print(' ---------------------------Insert Object----------------------')
     print(f'dep_match -> {dep_match}')
     print(f'dep_insert -> {dep_insert}')
     print(f'indep_ql -> {indep_ql}')
@@ -659,7 +668,10 @@ def check_dir(dirpath):
     len_typedb = len(id_typedb)
     id_diff = id_set - id_typedb
     print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
-    #print(f'difference -> {id_diff}')
+    sorted_diff = sorted(list(id_diff))
+    print(f'difference -> ')
+    for id_d in sorted_diff:
+        print(id_d)
 
 
 def cert_dict(cert_root, certs):
@@ -1812,7 +1824,9 @@ if __name__ == '__main__':
 
     data_path = "data/examples/"
     path1 = "test/data/standard/"
-    path2 = "data/mitre/history/"
+    path2 = "test/data/os-threat/test2/"
+    path3 = "test/data/os-threat/incident_adjust/"
+    path4 = "test/data/os-threat/test3/"
     cert_root = "data/stix_cert_data"
     cert1 = "/attack_pattern_sharing/"
     cert2 = "/campaign_sharing/"
@@ -1867,23 +1881,23 @@ if __name__ == '__main__':
     # 019fde1c-
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
-    stid1 = "task--1ffe4af4-3b18-4ee2-8279-0d1264efd0fe"
-    stid2 = "sighting--55183679-1f1d-4824-af63-72ec2ef855a0"
-    stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
-    test_initialise()
+    stid1 = "task--7c5751c2-3c18-41bc-900c-685764c960f3"
+    stid2 = "file--ec3415cc-5f4f-5ec8-bdb1-6f86996ae66d"
+    stid3 = "sequence--9f66bd5a-6391-4e10-9e65-1cab6762f616"
+    #test_initialise()
     #load_file_list(path1, [f30, f21])
     #load_file(incident + "/human_trigger.json")
     #load_file(incident_test + "/incident.json")
-    #load_file(incident_test2 + "/test.json")
     #check_object(mitre + "attack_objects.json")
     #load_file(reports + poison)
     print("=====")
     print("=====")
     print("=====")
-    #query_id(stid2)
+    query_id(stid3)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
-    #check_dir(incident)
+    #check_dir(path2)
+    #load_file(path1 + f24)
     #test_delete(data_path+file1)
     #test_get(stid1)
     #test_get_delete(incident)
@@ -1899,9 +1913,9 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    #backdoor_add_dir(incident_adjust)
+    #backdoor_add_dir(path2)
     #test_get_file(data_path + file1)
-    #test_insert_statements(mitre + "attack_objects.json", stid1)
+    #test_insert_statements(path2 + "evidence.json", stid3)
     #test_insert_statements(path1 + f29, stid2)
     #test_get_del_dir_statements(mitre)
     #test_json(osthreat + "feed.json")

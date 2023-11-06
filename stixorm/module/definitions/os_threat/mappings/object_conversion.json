@@ -66,9 +66,9 @@
     "icon":""
   },
   {
-    "type":  "task",
+    "type":  "sequence",
     "typeql": "start-step",
-    "class": "Task",
+    "class": "Sequence",
     "object": "sdo",
     "url": "",
     "doc_url": "",
@@ -77,9 +77,9 @@
     "icon":""
   },
   {
-    "type":  "task",
+    "type":  "sequence",
     "typeql": "end-step",
-    "class": "Task",
+    "class": "Sequence",
     "object": "sdo",
     "url": "",
     "doc_url": "",
@@ -88,9 +88,9 @@
     "icon":""
   },
   {
-    "type":  "task",
+    "type":  "sequence",
     "typeql": "single-step",
-    "class": "Task",
+    "class": "Sequence",
     "object": "sdo",
     "url": "",
     "doc_url": "",
@@ -99,9 +99,9 @@
     "icon":""
   },
   {
-    "type":  "task",
+    "type":  "sequence",
     "typeql": "parallel-step",
-    "class": "Task",
+    "class": "Sequence",
     "object": "sdo",
     "url": "",
     "doc_url": "",
