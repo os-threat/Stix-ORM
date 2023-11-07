@@ -1,10 +1,10 @@
 import datetime
 from typing import List, Dict
-from stixorm.module.authorise import authorised_mappings
 import copy
 
 import logging
 
+from stixorm.module.parsing.conversion_decisions import get_source_from_id
 from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
 from stixorm.module.typedb_lib.factories.definition_factory import get_definition_factory_instance
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
@@ -538,7 +538,7 @@ def embedded_relation(prop,
         dep_list = prop_value
         logger.debug(f'deplist {dep_list}')
         for i, prop_v in enumerate(prop_value):
-            prop_type = get_source_from_id(prop_v, protocol, import_type)
+            prop_type = get_source_from_id(prop_v, import_type, protocol)
             if prop_type == 'relationship':
                 prop_type = 'stix-core-relationship'
             prop_var = '$' + prop_type + str(i) + inc_add
@@ -547,7 +547,7 @@ def embedded_relation(prop,
     # else, match in the single prop_value
     else:
         dep_list.append(prop_value)
-        prop_type = get_source_from_id(prop_value, protocol, import_type)
+        prop_type = get_source_from_id(prop_value, import_type, protocol)
         logger.debug(f'deplist {dep_list}')
         if prop_type == 'relationship':
             prop_type = 'stix-core-relationship'
@@ -564,98 +564,6 @@ def embedded_relation(prop,
         insert += ', ' + pointed_to + ':' + prop_var
     insert += ') isa ' + relation + ';\n'
     return match, insert, dep_list
-
-
-def get_source_from_id(stid: str,
-                       protocol: str,
-                       import_type: ImportType):
-    """
-        Get the source of the stix object
-    Args:
-        stid (): the stix-id of the object
-
-    Returns:
-        source: the source of the object
-    """
-    tmp_source = stid.split('--')[0]
-    auth_factory = get_auth_factory_instance()
-    auth = auth_factory.get_auth_for_import(import_type)
-    source = ""
-    for model in auth["conv"]["sdo"]:
-        if model["protocol"] == protocol and model["type"] == tmp_source:
-            source = model["typeql"]
-            if tmp_source == "sequence":
-                source = tmp_source
-            return source
-    for model in auth["conv"]["sro"]:
-        if model["protocol"] == protocol and model["type"] == tmp_source:
-            source = model["typeql"]
-            if source == 'relationship' or source == "attack-relation":
-                source = 'stix-core-relationship'
-            return source
-    for model in auth["conv"]["sco"]:
-        if model["protocol"] == protocol and model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    for model in auth["conv"]["meta"]:
-        if model["protocol"] == protocol and model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    for model in auth["conv"]["sdo"]:
-        if model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    for model in auth["conv"]["sro"]:
-        if model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    for model in auth["conv"]["sco"]:
-        if model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    for model in auth["conv"]["meta"]:
-        if model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    return source
-
-
-def get_embedded_match(source_id: str,
-                       i: int,
-                       protocol: str,
-                       import_type: ImportType):
-    """
-        Assemble the typeql variable and match statement given the stix-id, and the increment
-    Args:
-        source_id (): stix-id to use
-        i (): number of times this type of object has been used
-
-    Returns:
-        source_var, the typeql string of the variable
-        match, the typeql match statement
-    """
-    source_type = get_source_from_id(source_id, protocol, import_type)
-    source_var = '$' + source_type + str(i)
-    if source_type == 'relationship' or source_type == "attack-relation":
-        source_type = 'stix-core-relationship'
-    match = f' {source_var} isa {source_type}, has stix-id "{source_id}";\n'
-    return source_var, match
-
-
-def get_full_object_match(source_id: str, protocol: str, import_type: ImportType):
-    """
-        Return a typeql match statement for this stix object
-    Args:
-        source_id (): the stix-id to look for
-
-    Returns:
-        source_var, the typeql string of the variable
-        match, the typeql match statement
-    """
-    source_var, match = get_embedded_match(source_id, 0, protocol, import_type)
-    match += source_var + ' has $properties;\n'
-    # match += '$embedded (owner:' + source_var + ', pointed-to:$point ) isa embedded;\n'
-    return source_var, match
 
 
 # ---------------------------------------------------

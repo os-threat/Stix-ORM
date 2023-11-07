@@ -175,21 +175,21 @@ define
         owns description,
         owns contact-number,
         owns contact-number-type,
-        plays identity-sub:sub-object;
+        plays identity-number:number-object;
 
     # Identity Email Contact Sub Object
     email-contact-sub sub stix-sub-object,
         owns description,
         owns digital-contact-type,
         plays email-ref:origin,
-        plays identity-sub:sub-object;
+        plays identity-email:email-object;
 
     # Identity Social Media Contact Sub Object
     social-media-sub sub stix-sub-object,
         owns description,
         owns digital-contact-type,
         plays user-account-ref:origin,
-        plays identity-sub:sub-object;
+        plays identity-account:account-object;
 
     # Identity contact extension
     identity-contact sub incident-extension,
@@ -199,26 +199,34 @@ define
         owns prefix,
         owns suffix,
         owns team,
-        plays identity-sub:object,
-        plays identity-ext:identity-core;
+        plays identity-email:identity,
+        plays identity-account:identity,
+        plays identity-number:identity,
+        plays identity-ext:identity-spec;
 
     # Identity contact extension embedded relation
     identity-ext sub extensions,
         relates identity-base as sco,
-        relates identity-core as extension;
+        relates identity-spec as extension;
 
     # Identity sub-object embedded relation
-    identity-sub sub embedded,
-        relates object as owner,
-        relates sub-object as pointed-to;
+    identity-email sub embedded,
+        relates identity as owner,
+        relates email-object as pointed-to;
+    identity-account sub embedded,
+        relates identity as owner,
+        relates account-object as pointed-to;
+    identity-number sub embedded,
+        relates identity as owner,
+        relates number-object as pointed-to;
 
     # base evidence extension objects
-    sighting-extension sub stix-sub-object,
-        plays evidence-ext:evidence-spec;
+    sighting-extension sub stix-sub-object;
 
     # registered evidence extension
     evidence-extension sub sighting-extension,
-        owns extension-type;
+        owns extension-type,
+        plays evidence-ext:evidence-spec;
     # incident core extension embedded relation
     evidence-ext sub extensions,
         relates evidence-base as sco,

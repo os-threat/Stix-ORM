@@ -2,9 +2,10 @@ import copy
 from typing import Dict
 
 from stixorm.module.authorise import authorised_mappings, default_import_type
-from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql, meta_type_to_tql
+from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql, \
+    meta_type_to_tql, get_embedded_match
 
-from stixorm.module.orm.import_utilities import clean_props, get_embedded_match, split_on_activity_type, \
+from stixorm.module.orm.import_utilities import clean_props, split_on_activity_type, \
     add_property_to_typeql, add_relation_to_typeql, val_tql
 
 import logging
@@ -280,10 +281,10 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
     if obj_type == 'relationship':
         source_id = sro.source_ref
         dep_list.append(source_id)
-        source_var, source_match = get_embedded_match(source_id, 0, protocol, import_type)
+        source_var, source_match = get_embedded_match(source_id, import_type, 0, protocol)
         target_id = sro.target_ref
         dep_list.append(target_id)
-        target_var, target_match = get_embedded_match(target_id, 1, protocol, import_type)
+        target_var, target_match = get_embedded_match(target_id, import_type, 1, protocol)
         dep_match += source_match + target_match
         # 3.)  then setup the typeql statement to insert the specific sro relation, from the dict, with the matches
         for record in auth["reln"]["standard_relations"]:
@@ -300,7 +301,7 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
     elif obj_type == 'sighting':
         sighting_of_id = sro.sighting_of_ref
         dep_list.append(sighting_of_id)
-        sighting_of_var, sighting_of_match = get_embedded_match(sighting_of_id, 0, protocol, import_type)
+        sighting_of_var, sighting_of_match = get_embedded_match(sighting_of_id, import_type, 0, protocol)
         dep_match += ' \n' + sighting_of_match
         dep_insert += '\n' + sro_var + ' (sighting-of:' + sighting_of_var
         # if there is observed data list, then add it to the match statement
@@ -308,7 +309,7 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
         if (observed_data_list is not None) and (len(observed_data_list) > 0):
             for i, observed_data_id in enumerate(observed_data_list):
                 dep_list.append(observed_data_id)
-                observed_data_var, observed_data_match = get_embedded_match(observed_data_id, i, protocol, import_type)
+                observed_data_var, observed_data_match = get_embedded_match(observed_data_id, import_type, i, protocol)
                 dep_match += observed_data_match
                 dep_insert += ', observed:' + observed_data_var
         # if there is a list of who and where the sighting's occured, then match it in
@@ -316,7 +317,7 @@ def sro_to_typeql(sro, import_type=default_import_type) -> [str, str, str, str, 
         if (where_sighted_list is not None) and (len(where_sighted_list) > 0):
             for where_sighted_id in where_sighted_list:
                 dep_list.append(where_sighted_id)
-                where_sighted_var, where_sighted_match = get_embedded_match(where_sighted_id, 1, protocol, import_type)
+                where_sighted_var, where_sighted_match = get_embedded_match(where_sighted_id, import_type, 1, protocol)
                 dep_match += where_sighted_match
                 dep_insert += ', where-sighted:' + where_sighted_var
 

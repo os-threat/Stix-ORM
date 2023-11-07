@@ -4,13 +4,14 @@ import datetime
 
 #import dateutil.parser
 #from dateutil.parser import *
-from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 from typedb.client import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
 from stixorm.module.orm.delete_object import delete_stix_object
 from stixorm.module.orm.export_object import convert_ans_to_stix
 from stixorm.module.authorise import authorised_mappings, import_type_factory
 from stixorm.module.parsing.parse_objects import parse
+from stixorm.module.parsing.conversion_decisions import get_embedded_match
 from stixorm.module.generate_docs import configure_overview_table_docs, object_tables
 from stixorm.module.initialise import sort_layers, load_typeql_data
 from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
@@ -1883,7 +1884,7 @@ if __name__ == '__main__':
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
     stid1 = "task--7c5751c2-3c18-41bc-900c-685764c960f3"
     stid2 = "file--ec3415cc-5f4f-5ec8-bdb1-6f86996ae66d"
-    stid3 = "sequence--9f66bd5a-6391-4e10-9e65-1cab6762f616"
+    stid3 = "sighting--300cd92e-d184-4c60-a97b-1759dc6780ed"
     #test_initialise()
     #load_file_list(path1, [f30, f21])
     #load_file(incident + "/human_trigger.json")
@@ -1893,10 +1894,10 @@ if __name__ == '__main__':
     print("=====")
     print("=====")
     print("=====")
-    query_id(stid3)
+    #query_id(stid3)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
-    #check_dir(path2)
+    check_dir(path2)
     #load_file(path1 + f24)
     #test_delete(data_path+file1)
     #test_get(stid1)

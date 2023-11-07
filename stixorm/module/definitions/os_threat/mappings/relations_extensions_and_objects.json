@@ -151,28 +151,28 @@
     "object": "identity-contact",
     "relation": "identity-ext",
     "owner": "identity-base",
-    "pointed-to": "identity-core"
+    "pointed-to": "identity-spec"
   },
   {
     "stix": "contact_numbers",
     "object": "contact-number-sub",
-    "relation": "identity-sub",
-    "owner": "object",
-    "pointed-to": "sub-object"
+    "relation": "identity-number",
+    "owner": "identity",
+    "pointed-to": "number-object"
   },
   {
     "stix": "email_addresses",
     "object": "email-contact-sub",
-    "relation": "identity-sub",
-    "owner": "object",
-    "pointed-to": "sub-object"
+    "relation": "identity-email",
+    "owner": "identity",
+    "pointed-to": "email-object"
   },
   {
     "stix": "social_media_accounts",
     "object": "social-media-sub",
-    "relation": "identity-sub",
-    "owner": "object",
-    "pointed-to": "sub-object"
+    "relation": "identity-account",
+    "owner": "identity",
+    "pointed-to": "account-object"
   },
   {
     "stix": "extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4",
