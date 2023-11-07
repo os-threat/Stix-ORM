@@ -16,49 +16,49 @@
   {
     "stix": "availability",
     "object": "availability",
-    "relation": "availability-ext",
+    "relation": "availability-imp",
     "owner": "impact-base",
     "pointed-to": "availability-impact"
   },
   {
     "stix": "confidentiality",
     "object": "confidentiality",
-    "relation": "confidentiality-ext",
+    "relation": "confidentiality-imp",
     "owner": "impact-base",
     "pointed-to": "confidentiality-impact"
   },
   {
     "stix": "external",
     "object": "external",
-    "relation": "external-ext",
+    "relation": "external-imp",
     "owner": "impact-base",
     "pointed-to": "external-impact"
   },
   {
     "stix": "integrity",
     "object": "integrity",
-    "relation": "integrity-ext",
+    "relation": "integrity-imp",
     "owner": "impact-base",
     "pointed-to": "integrity-impact"
   },
   {
     "stix": "monetary",
     "object": "monetary",
-    "relation": "monetary-ext",
+    "relation": "monetary-imp",
     "owner": "impact-base",
     "pointed-to": "monetary-impact"
   },
   {
     "stix": "physical",
     "object": "physical",
-    "relation": "physical-ext",
+    "relation": "physical-imp",
     "owner": "physical-ext",
     "pointed-to": "physical-impact"
   },
   {
     "stix": "traceability",
     "object": "traceability",
-    "relation": "traceability-ext",
+    "relation": "traceability-imp",
     "owner": "impact-base",
     "pointed-to": "traceability-impact"
   },
@@ -93,58 +93,58 @@
   {
     "stix": "sighting-alert",
     "object": "alert-evidence",
-    "relation": "evidence-ext",
-    "owner": "evidence-base",
-    "pointed-to": "evidence-spec"
+    "relation": "alert-ext",
+    "owner": "sighting-base",
+    "pointed-to": "alert-extension"
   },
   {
     "stix": "sighting-anecdote",
     "object": "anecdote-evidence",
-    "relation": "evidence-ext",
-    "owner": "evidence-base",
-    "pointed-to": "evidence-spec"
+    "relation": "anecdote-ext",
+    "owner": "sighting-base",
+    "pointed-to": "anecdote-extension"
   },
   {
     "stix": "sighting-context",
     "object": "context-evidence",
-    "relation": "evidence-ext",
-    "owner": "evidence-base",
-    "pointed-to": "evidence-spec"
+    "relation": "context-ext",
+    "owner": "sighting-base",
+    "pointed-to": "context-extension"
   },
   {
     "stix": "sighting-exclusion",
     "object": "exclusion-evidence",
-    "relation": "evidence-ext",
-    "owner": "evidence-base",
-    "pointed-to": "evidence-spec"
+    "relation": "exclusion-ext",
+    "owner": "sighting-base",
+    "pointed-to": "exclusion-extension"
   },
   {
     "stix": "sighting-enrichment",
     "object": "enrichment-evidence",
-    "relation": "evidence-ext",
-    "owner": "evidence-base",
-    "pointed-to": "evidence-spec"
+    "relation": "enrichment-ext",
+    "owner": "sighting-base",
+    "pointed-to": "enrichment-extension"
   },
   {
     "stix": "sighting-hunt",
     "object": "hunt-evidence",
-    "relation": "evidence-ext",
-    "owner": "evidence-base",
-    "pointed-to": "evidence-spec"
+    "relation": "hunt-ext",
+    "owner": "sighting-base",
+    "pointed-to": "hunt-extension"
   },
   {
     "stix": "sighting-framework",
     "object": "framework-evidence",
-    "relation": "evidence-ext",
-    "owner": "evidence-base",
-    "pointed-to": "evidence-spec"
+    "relation": "framework-ext",
+    "owner": "sighting-base",
+    "pointed-to": "framework-extension"
   },
   {
     "stix": "sighting-external",
     "object": "external-evidence",
-    "relation": "evidence-ext",
-    "owner": "evidence-base",
-    "pointed-to": "evidence-spec"
+    "relation": "external-ext",
+    "owner": "sighting-base",
+    "pointed-to": "external-extension"
   },
   {
     "stix": "extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498",
@@ -176,8 +176,8 @@
   },
   {
     "stix": "extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4",
-    "object": "anecdote-extension",
-    "relation": "anecdote-ext",
+    "object": "anecdote-sco-extension",
+    "relation": "anecdote-sco-ext",
     "owner": "anecdote-base",
     "pointed-to": "anecdote-spec"
   },

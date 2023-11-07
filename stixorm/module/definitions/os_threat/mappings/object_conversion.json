@@ -408,7 +408,7 @@
   },
   {
     "type":  "extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4",
-    "typeql": "anecdote-extension",
+    "typeql": "anecdote-sco-extension",
     "class": "AnecdoteExt",
     "object": "sub",
     "url": "",

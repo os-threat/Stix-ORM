@@ -751,11 +751,6 @@ seq_list = []
 for inc, bun in enumerate(bundle_list):
     print(f"------------------------------ {inc+1} of {bun_len}--------------------------------------------")
     print(bun)
-    if bun["type"] == "sequence":
-        local_seq = copy.deepcopy(bun)
-        if bun["step_type"] == "single_step":
-            local_seq.pop("sequenced_object")
-        seq_list.append(local_seq)
 
 print("========================== task refs ====================================")
 print(task_refs)
@@ -773,10 +768,4 @@ bundle_dict["objects"] = sorted_list
 pathfile="test/data/os-threat/test2/evidence.json"
 
 with open(pathfile, 'w') as outfile:
-    json.dump(bundle_dict, outfile, indent=6)
-
-pathfile2="test/data/os-threat/test3/sequence.json"
-bundle_dict["objects"] = seq_list
-
-with open(pathfile2, 'w') as outfile:
     json.dump(bundle_dict, outfile, indent=6)

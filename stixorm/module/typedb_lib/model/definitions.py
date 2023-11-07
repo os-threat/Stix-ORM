@@ -11,7 +11,6 @@ class DefinitionName(str, Enum):
     KESTREL = "kestrel"
     OS_THREAT = "os_threat"
     STIX_21 = "stix21"
-    US_DoD = "us_dod"
 
 
 class ImportTypeToDefinitionMapper():
@@ -23,8 +22,7 @@ class ImportTypeToDefinitionMapper():
             "CACAO": DefinitionName.CACAO,
             "kestrel": DefinitionName.KESTREL,
             "os_threat": DefinitionName.OS_THREAT,
-            "STIX21": DefinitionName.STIX_21,
-            "US_DoD": DefinitionName.US_DoD,
+            "STIX21": DefinitionName.STIX_21
         }
         return lookup.get(import_type, None)
 
