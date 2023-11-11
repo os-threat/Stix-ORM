@@ -115,10 +115,10 @@ bundle_dict = conv(bundle)
 mitre_identity = {
             "type": "identity",
             "spec_version": "2.1",
-            "id": "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c",
+            "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
             "created": "2023-08-23T13:57:25.455083Z",
             "modified": "2023-08-23T13:57:25.455083Z",
-            "name": "Contoso Customer ltd",
+            "name": "Mitre Ltd",
             "identity_class": "organization"
         }
 mitre_marking = {
@@ -690,11 +690,11 @@ eseq1_2 = Sequence(
     sequence_type="event", extensions=seq_ext_dict
 )
 # H. Availability Impact
-numbers = {"computers-mobile": 2}
+numbers2 = {"computers-mobile": 2}
 availability2 = Availability(availability_impact=99)
 avail_impact2 = Impact(
     impact_category="availability", criticality=99, description="Two Laptops are stuffed",
-    impacted_entity_counts=numbers, recoverability="regular",
+    impacted_entity_counts=numbers2, recoverability="regular",
     extensions={imp_ext_id:imp_ext, "availability":availability2}
 )
 #
@@ -741,6 +741,91 @@ for bun in bundle_list:
         bun["on_completion"] = tseq1_6.id
     elif bun["type"] == "sequence" and bun["id"] == eseq1_1.id:
         bun["on_completion"] = eseq1_2.id
+
+
+######################################################################################################
+# Additional (Fake) Impact Examples for Documentation
+######################################################################################################
+numbers3 = {"computers-personal":2, "computers-server":3}
+availability3 = Availability(availability_impact=99)
+avail_impact3 = Impact(
+    impact_category="availability", criticality=99, description="Two Laptops and 3 Servers are stuffed",
+    impacted_entity_counts=numbers3, recoverability="regular",
+    extensions={imp_ext_id:imp_ext, "availability":availability3}
+)
+
+numbers4 = {"computers-personal":2}
+confidentiality1 = Confidentiality(information_type="credentials-user", loss_type="exploited-loss", record_count=2, record_size=2000)
+confid_impact = Impact(
+    impact_category="confidentiality", criticality=99, description="Two Laptops had credentials stolen",
+    impacted_entity_counts=numbers4, recoverability="regular",
+    extensions={imp_ext_id:imp_ext, "confidentiality":confidentiality1}
+)
+
+external_impact = External(impact_type="public-confidence")
+extern_impact = Impact(
+    impact_category="external", criticality=99, description="Public confidence has taken a hit",impacted_entity_counts=numbers4,
+    recoverability="regular", extensions={imp_ext_id:imp_ext, "external":external_impact}
+)
+integrity_impact = Integrity(alteration="partial-modification", information_type="credentials-user",record_count=2, record_size=2000)
+integ_impact = Impact(
+    impact_category="integrity", criticality=99, description="The credentials were modified",
+    impacted_entity_counts=numbers4, recoverability="regular",
+    extensions={imp_ext_id:imp_ext, "integrity":integrity_impact}
+)
+monetary_impact = Monetary(variety="ransom-demand", conversion_rate=1.538,conversion_time="2023-11-07T08:53:15.645995Z",
+                            currency="USD", currency_actual="AUD", max_amount=100000, min_amount=10000)
+money_impact = Impact(
+    impact_category="monetary", criticality=99, description="The ransom demands were significant",
+    impacted_entity_counts=numbers4, recoverability="regular",
+    extensions={imp_ext_id:imp_ext, "monetary":monetary_impact}
+)
+physical_impact = Physical(impact_type="damaged-nonfunctional", asset_type="computers-personal")
+phys_impact = Impact(
+    impact_category="physical", criticality=99, description="The rcomputers are not usable, but can be fixed",
+    impacted_entity_counts=numbers4, recoverability="regular",
+    extensions={imp_ext_id:imp_ext, "physical":physical_impact}
+)
+traceability_impact = Traceability(traceability_impact="provable-accountability")
+trace_impact = Impact(
+    impact_category="traceability", criticality=99, description="We can reconstruct the attack from the data remaining",
+    impacted_entity_counts=numbers4, recoverability="regular",
+    extensions={imp_ext_id:imp_ext, "traceability":traceability_impact}
+)
+local_list8 = [
+    conv(avail_impact3), conv(confid_impact), conv(confid_impact),
+    conv(integ_impact), conv(money_impact), conv(phys_impact), conv(trace_impact)
+]
+bundle_list = bundle_list + local_list8
+######################################################################################################
+# Additional (Fake) Sighting Examples for Documentation
+######################################################################################################
+
+frame = SightingFramework(framework ="MITRE ATT&CK", version="14.1", domain="Enterprise",
+                          comparison="exclusion list and hunt",
+                          comparison_approach="The Exclusion List confirmed the email was previously sighted and the Hunt confirmed that processes had been started")
+sight_frame_ext = {
+    sight_ext_id: sight_ext,
+    "sighting-framework": frame
+}
+
+sighting7 = Sighting(observed_data_refs=observation6.id, where_sighted_refs=[location.id],
+                     sighting_of_ref=TTP_spear_phishing['id'], extensions=sight_frame_ext)
+
+external = SightingExternal(source ="MISP", version="14.1", pattern=pat1, pattern_type="stix",
+                          payload="Proven Malicious Phishing Source", valid_from="2023-09-07T08:53:15.645995Z",
+                          valid_until="2023-11-07T08:53:15.645995Z")
+sight_external_ext = {
+    sight_ext_id: sight_ext,
+    "sighting-external": external
+}
+sighting8 = Sighting(observed_data_refs=observation6.id, where_sighted_refs=[location.id],
+                     sighting_of_ref=TTP_spear_phishing["id"], extensions=sight_external_ext)
+
+local_list9 = [
+    conv(sighting7), conv(sighting8), TTP_spear_phishing, mitre_identity, mitre_marking
+]
+bundle_list = bundle_list + local_list9
 
 #######################################################################################################
 #######################################################################################################

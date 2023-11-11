@@ -823,9 +823,6 @@ define
     record-count sub stix-attribute-integer;
     record-size sub stix-attribute-integer;
     impacted-availability sub stix-attribute-integer;
-    conversion-rate sub stix-attribute-integer;
-    max-amount sub stix-attribute-integer;
-    min-amount sub stix-attribute-integer;
     score-value sub stix-attribute-integer;
     int-priority sub stix-attribute-integer;
     computers-mobile-count sub stix-attribute-integer;
@@ -851,6 +848,10 @@ define
     system-count sub stix-attribute-integer;
     vehicles-count sub stix-attribute-integer;
 
+
+    conversion-rate sub stix-attribute-double;
+    max-amount sub stix-attribute-double;
+    min-amount sub stix-attribute-double;
 
     end-time sub stix-attribute-timestamp;
     conversion-time sub stix-attribute-timestamp;

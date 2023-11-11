@@ -52,7 +52,7 @@
     "stix": "physical",
     "object": "physical",
     "relation": "physical-imp",
-    "owner": "physical-ext",
+    "owner": "impact-base",
     "pointed-to": "physical-impact"
   },
   {

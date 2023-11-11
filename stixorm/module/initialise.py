@@ -24,7 +24,7 @@ from typedb.client import *
 import logging
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 attack_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
 

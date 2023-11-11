@@ -19,8 +19,7 @@
   "task_refs",
   "event_refs",
   "impact_refs",
-  "notes_refs",
-  "evidence_refs"
+  "other_object_refs"
 ],
 "incident-score":  [],
 "state-change":  [],
