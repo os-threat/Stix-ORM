@@ -10,6 +10,7 @@ from stixorm.module.typedb_lib.model.definitions import DefinitionName
 logger = logging.getLogger(__name__)
 stix_models = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
 attack_models = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
+os_threat_models = get_definition_factory_instance().lookup_definition(DefinitionName.OS_THREAT)
 
 heading_align = [
     ":--------------------|",
@@ -31,6 +32,12 @@ object_docs = [
         "protocol": "stix21",
         "file": "sco.csv",
         "obj_type": "Cyber Obervable"
+    },
+    {
+        "dir": "sub",
+        "protocol": "stix21",
+        "file": "sub.csv",
+        "obj_type": "Extension"
     }
 ]
 
@@ -45,21 +52,27 @@ object_tables = [
         "title": "Mitre ATT&CK",
         "protocol": "attack",
         "objects": attack_models.get_mapping("object_conversion")
+    },
+    {
+        "title": "OS-Threat Stix Extensions",
+        "protocol": "attack",
+        "objects": attack_models.get_mapping("object_conversion")
     }
 ]
 protocols = [
     "stix21",
-    "attack"
+    "attack",
+    "os_threat"
 ]
 
 titles = {
     "stix21": "OASIS Stix 2.1",
     "attack": "MITRE ATT&CK",
-    "os-threat": "OS-Threat Custom",
+    "os-threat": "OS-Threat Stix Extensions",
     "sdo": "Domain Object's Types",
     "sco": "Cyber Observable Object Types",
     "sro": "Relationship Object Types",
-    "sub": "Sub-Object Types"
+    "sub": "Extension Types"
 }
 object_types = [
     "sdo",
@@ -72,6 +85,7 @@ def gen_tables(obj_tables):
     bucket = {}
     bucket["stix21"] = {}
     bucket["attack"] = {}
+    bucket["os_threat"] = {}
     bucket["stix21"]["sdo"] = []
     bucket["stix21"]["sro"] = []
     bucket["stix21"]["sco"] = []
@@ -80,6 +94,10 @@ def gen_tables(obj_tables):
     bucket["attack"]["sro"] = []
     bucket["attack"]["sco"] = []
     bucket["attack"]["sub"] = []
+    bucket["os_threat"]["sdo"] = []
+    bucket["os_threat"]["sro"] = []
+    bucket["os_threat"]["sco"] = []
+    bucket["os_threat"]["sub"] = []
     for table in obj_tables:
         obj_set = table["objects"]
         protocol = table["protocol"]
@@ -192,7 +210,7 @@ def print_summary_tables(rel_dir, outfile, protocol, bucket, size):
                 logger.info(f'local bucket length is -> {len(local_bucket)}')
                 if len(local_bucket) != 0:
                     md_dir = rel_dir + "/" + proto + "/" + obj_type + "/"
-                    icon_dir = rel_dir + "/" + proto + "/icons/"
+                    icon_dir = "https://raw.githubusercontent.com/os-threat/images/main/img/rect-"
                     logger.info(f"#### {titles[proto]} \n", file=outfile)
                     logger.info(head_string, file=outfile)
                     logger.info(under_string, file=outfile)
@@ -249,10 +267,10 @@ def configure_overview_table_docs(obj_tables):
     # Setup Library Overview Document
     rel_dir = "./docs"
     gen_overview_doc(rel_dir, bucket, "all", 3)
-    # Setup Protocol Overview Document
+    # Setup StixORM Overview Document
     rel_dir = "./docs/protocols"
     gen_overview_doc(rel_dir, bucket, "all", 1)
-    # Setup Library Overview Document
+    # Setup Stix 21 Library Overview Document
     rel_dir = "./docs/protocols/stix21"
     gen_overview_doc(rel_dir, bucket, "stix21", 1)
 
