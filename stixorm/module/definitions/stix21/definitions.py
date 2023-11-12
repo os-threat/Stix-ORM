@@ -934,7 +934,7 @@ list_of_object_typeql = [
         "typeql": "kill-chain-usage", 
         "typeql_props": kill_chain_phases_typeql_dict, 
         "owner": "kill-chain-used", 
-        "pointed_to": "kill-chain-using", 
+        "pointed_to": "kill-chain-install",
         "object": "kill-chain-phase"
     },{
         "name": "alternate_data_streams", 

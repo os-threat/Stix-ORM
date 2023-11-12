@@ -76,7 +76,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: stixorm-${{ env.RELEASE_VERSION }}-cp${{ env.PYTHON_VERSION }}cp${{ env.PYTHON_VERSION }}m-${{ env.OS_NAME }}
-        path: dist/*.whl  # Upload the built package (replace with appropriate file format if not using wheels
+        path: dist/*.whl  # Upload the built package (replace with appropriate file format if not install wheels
 
   # This produces a wheel for any version or platform
   pypi-publish:

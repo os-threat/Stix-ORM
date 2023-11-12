@@ -48,8 +48,8 @@ Very quickly we aim to add the following features to the system.
 6. Add import capability for all rulesets, tests and controls (e.g. Control Compass and Engenuity CTID)
 
 The documentation system contains the following sections:
-- [Using the Stix-ORM](using/configuration.md)
-- [How the ORM Works](orm/orm_oveview.md)
+- [Using the Stix-ORM](install/configuration.md)
+- [How the ORM Works](how_it_works/orm_oveview.md)
 - [Protcols Supported](protocols/_orig.md)
 - [Interacting with Stix-ORM](interactions/overview.md)
 
