@@ -1,0 +1,3 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+contains_refs,directory-contains:container,      Required      ,   embedded    ,relation
+comment,comment,      Optional      ,  stix-attribute-string   ,   attribute   

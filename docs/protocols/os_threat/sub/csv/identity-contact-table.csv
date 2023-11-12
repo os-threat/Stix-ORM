@@ -1,0 +1,11 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+extension_type,extension-type,Required,  stix-attribute-string   ,   attribute   
+contact_numbers,identity-number:identity,Optional,embedded,relation
+email_addresses,identity-email:identity,Optional,embedded,relation
+first_name,first-name,Optional,  stix-attribute-string   ,   attribute   
+last_name,last-name,Optional,  stix-attribute-string   ,   attribute   
+middle_name,middle-name,Optional,  stix-attribute-string   ,   attribute   
+prefix,prefix,Optional,  stix-attribute-string   ,   attribute   
+social_media_accounts,identity-account:identity,Optional,embedded,relation
+suffix,suffix,Optional,  stix-attribute-string   ,   attribute   
+team,team,Optional,  stix-attribute-string   ,   attribute   

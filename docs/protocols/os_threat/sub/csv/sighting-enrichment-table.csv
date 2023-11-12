@@ -1,0 +1,5 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+name,name,Required,  stix-attribute-string   ,   attribute   
+url,link-url,Required,  stix-attribute-string   ,   attribute   
+paid,paid,Required,  stix-attribute-boolean   ,   attribute   
+value,enrichment-value,Required,  stix-attribute-string   ,   attribute   

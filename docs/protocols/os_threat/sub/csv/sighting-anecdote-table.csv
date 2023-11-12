@@ -1,0 +1,4 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+person_name,person-name,Required,  stix-attribute-string   ,   attribute   
+person_context,person-context,Required,  stix-attribute-string   ,   attribute   
+report_submission,report-submission,Required,  stix-attribute-string   ,   attribute   

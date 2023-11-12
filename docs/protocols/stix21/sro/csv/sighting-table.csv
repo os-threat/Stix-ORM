@@ -1,0 +1,22 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object  Type, Schema Parent 
+ type                ,            stix-type             ,      Required      ,  stix-attribute-string   ,   attribute   
+ id                  ,             stix-id              ,      Required      ,  stix-attribute-string   ,   attribute   
+ spec_version        ,           spec-version           ,      Required      ,  stix-attribute-string   ,   attribute   
+ created             ,             created              ,      Required      , stix-attribute-timestamp ,   attribute   
+ modified            ,             modified             ,      Required      , stix-attribute-timestamp ,   attribute   
+ description         ,           description            ,      Optional      ,  stix-attribute-string   ,   attribute   
+count,count,      Optional      ,  stix-attribute-integer   ,   attribute   
+sighting_of_ref ,sighting-of (role),      Required      ,   embedded    ,relation
+observed_data_refs ,observed (role),      Optional      ,   embedded    ,relation
+where_sighted_refs,where-sighted (role),      Optional      ,   embedded    ,relation
+first_seen ,start-time,      Optional      , stix-attribute-timestamp ,   attribute   
+last_seen,stop-time,      Optional      , stix-attribute-timestamp ,   attribute   
+ created_by_ref      ,        created-by:created        ,      Optional      ,   embedded    ,relation
+ revoked             ,             revoked              ,      Optional      ,  stix-attribute-boolean  ,   attribute   
+ labels              ,              labels              ,      Optional      ,  stix-attribute-string   ,   attribute   
+ confidence          ,            confidence            ,      Optional      ,  stix-attribute-integer  ,   attribute   
+ lang                ,               lang               ,      Optional      ,  stix-attribute-string   ,   attribute   
+ external_references , external-references:referencing  ,      Optional      ,   embedded    ,relation
+ object_marking_refs ,      object-marking:marked       ,      Optional      ,   embedded    ,relation
+ granular_markings   ,     granular-marking:marked      ,      Optional      ,   embedded    ,relation
+ extensions          ,               n/a                ,        n/a         ,           n/a            ,      n/a      

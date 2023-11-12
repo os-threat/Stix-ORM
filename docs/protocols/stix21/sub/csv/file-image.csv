@@ -1,0 +1,5 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+image_height,image-height,      Optional      ,  stix-attribute-string   ,   attribute   
+image_width,image-width,      Optional      ,  stix-attribute-boolean   ,   attribute   
+bits_per_pixel,bits-per-pixel,      Optional      ,  stix-attribute-string   ,   attribute   
+exif_tags,EXIF-tags:image,      Optional      ,   embedded    ,relation

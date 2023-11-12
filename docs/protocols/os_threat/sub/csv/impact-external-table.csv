@@ -1,0 +1,2 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+impact_type,impact-type,Required,  stix-attribute-string   ,   attribute   

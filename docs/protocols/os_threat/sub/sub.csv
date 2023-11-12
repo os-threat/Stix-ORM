@@ -1,0 +1,1441 @@
+image,table,type,object,para1,para2,url,json_example,typeql_insert,typeql_match,python_match
+impact-availability.svg,impact-availability-table.csv,availability,Availability,Every Impact MUST have an extension that has the same value of the impact_category. The Availability Extension tracks the impact of availability in assets,"The Python class name for the Availability Extension is Availability. The Availability extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""impact"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""impact--22f44c3f-7af8-4bdd-9ce8-eda54209acc9"",
+    ""created"": ""2023-11-11T08:45:49.902967Z"",
+    ""modified"": ""2023-11-11T08:45:49.902967Z"",
+    ""impact_category"": ""availability"",
+    ""criticality"": 99,
+    ""description"": ""Two Laptops and 3 Servers are stuffed"",
+    ""end_time"": ""2023-11-11T08:45:49.902967Z"",
+    ""impacted_entity_counts"": {
+          ""computers-personal"": 2,
+          ""computers-server"": 3
+    },
+    ""recoverability"": ""regular"",
+    ""start_time"": ""2023-11-11T08:45:49.902967Z"",
+    ""extensions"": {
+          ""extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9"": {
+                ""extension_type"": ""new-sdo""
+          },
+          ""availability"": {
+                ""availability_impact"": 99
+          }
+    }
+}","insert $impact isa impact,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has impact-category $impact-category,
+ has criticality $criticality,
+ has description $description,
+ has end-time $end-time,
+ has recoverability $recoverability,
+ has start-time $start-time;
+
+ $stix-type ""impact"";
+ $spec-version ""2.1"";
+ $stix-id ""impact--22f44c3f-7af8-4bdd-9ce8-eda54209acc9"";
+ $created 2023-11-11T08:45:49.902;
+ $modified 2023-11-11T08:45:49.902;
+ $impact-category ""availability"";
+ $criticality 99;
+ $description ""Two Laptops and 3 Servers are stuffed"";
+ $end-time 2023-11-11T08:45:49.902;
+ $recoverability ""regular"";
+ $start-time 2023-11-11T08:45:49.902;
+
+
+ $entity-key0 isa entity-key;  $entity-key0 ""computers-personal"";
+ $entity-key0 has entity-value 2;
+ $entity-key1 isa entity-key;  $entity-key1 ""computers-server"";
+ $entity-key1 has entity-value 3;
+ $impact-counter (impact-driver:$impact, counters: $entity-key0, counters: $entity-key1) isa impact-counter;
+
+ $impact-extension isa impact-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""new-sdo"";
+
+ $impact-ext0 (impact-base:$impact, impact-spec:$impact-extension) isa impact-ext;
+
+ $availability isa availability,
+ has impacted-availability $impacted-availability;
+
+ $impacted-availability 99;
+
+ $availability-imp1 (impact-base:$impact, availability-impact:$availability) isa availability-imp;","match 
+   $a isa impact, 
+      has stix-id  ""impact--22f44c3f-7af8-4bdd-9ce8-eda54209acc9"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""impact--22f44c3f-7af8-4bdd-9ce8-eda54209acc9"")"
+impact-confidentiality.svg,impact-confidentiality-table.csv,confidentiality,Confidentiality,Every Impact MUST have an extension that has the same value of the impact_category. The confidentiality extension tracks the type of information and the type of loss involved as the impact. ,"The Python class name for the Confidentiality Extension is Confidentiality. The Confidentiality extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""impact"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""impact--74e754cb-1fa6-4685-bbd2-77770b3e1816"",
+    ""created"": ""2023-11-11T08:45:49.907971Z"",
+    ""modified"": ""2023-11-11T08:45:49.907971Z"",
+    ""impact_category"": ""confidentiality"",
+    ""criticality"": 99,
+    ""description"": ""Two Laptops had credentials stolen"",
+    ""end_time"": ""2023-11-11T08:45:49.907971Z"",
+    ""impacted_entity_counts"": {
+          ""computers-personal"": 2
+    },
+    ""recoverability"": ""regular"",
+    ""start_time"": ""2023-11-11T08:45:49.907971Z"",
+    ""extensions"": {
+          ""extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9"": {
+                ""extension_type"": ""new-sdo""
+          },
+          ""confidentiality"": {
+                ""information_type"": ""credentials-user"",
+                ""loss_type"": ""exploited-loss"",
+                ""record_count"": 2,
+                ""record_size"": 2000
+          }
+    }
+}","insert $impact isa impact,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has impact-category $impact-category,
+ has criticality $criticality,
+ has description $description,
+ has end-time $end-time,
+ has recoverability $recoverability,
+ has start-time $start-time;
+
+ $stix-type ""impact"";
+ $spec-version ""2.1"";
+ $stix-id ""impact--74e754cb-1fa6-4685-bbd2-77770b3e1816"";
+ $created 2023-11-11T08:45:49.907;
+ $modified 2023-11-11T08:45:49.907;
+ $impact-category ""confidentiality"";
+ $criticality 99;
+ $description ""Two Laptops had credentials stolen"";
+ $end-time 2023-11-11T08:45:49.907;
+ $recoverability ""regular"";
+ $start-time 2023-11-11T08:45:49.907;
+
+
+ $entity-key0 isa entity-key;  $entity-key0 ""computers-personal"";
+ $entity-key0 has entity-value 2;
+ $impact-counter (impact-driver:$impact, counters: $entity-key0) isa impact-counter;
+
+ $impact-extension isa impact-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""new-sdo"";
+
+ $impact-ext0 (impact-base:$impact, impact-spec:$impact-extension) isa impact-ext;
+
+ $confidentiality isa confidentiality,
+ has information-type $information-type,
+ has loss-type $loss-type,
+ has record-count $record-count,
+ has record-size $record-size;
+
+ $information-type ""credentials-user"";
+ $loss-type ""exploited-loss"";
+ $record-count 2;
+ $record-size 2000;
+
+ $confidentiality-imp1 (impact-base:$impact, confidentiality-impact:$confidentiality) isa confidentiality-imp;","match 
+   $a isa impact, 
+      has stix-id  ""impact--74e754cb-1fa6-4685-bbd2-77770b3e1816"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""impact--74e754cb-1fa6-4685-bbd2-77770b3e1816"")"
+impact-external.svg,impact-external-table.csv,external,External,Every Impact MUST have an extension that has the same value of the impact_category. The External Extension tracks the impact on external assets.,"The Python class name for the External Extension is External. The External extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""impact"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""impact--836ed944-db19-4126-a8a6-a9e272c84138"",
+    ""created"": ""2023-11-12T13:19:14.317078Z"",
+    ""modified"": ""2023-11-12T13:19:14.317078Z"",
+    ""impact_category"": ""external"",
+    ""criticality"": 99,
+    ""description"": ""Public confidence has taken a hit"",
+    ""end_time"": ""2023-11-12T13:19:14.317078Z"",
+    ""impacted_entity_counts"": {
+          ""computers-personal"": 2
+    },
+    ""recoverability"": ""regular"",
+    ""start_time"": ""2023-11-12T13:19:14.317078Z"",
+    ""extensions"": {
+          ""extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9"": {
+                ""extension_type"": ""new-sdo""
+          },
+          ""external"": {
+                ""impact_type"": ""public-confidence""
+          }
+    }
+}","insert $impact isa impact,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has impact-category $impact-category,
+ has criticality $criticality,
+ has description $description,
+ has end-time $end-time,
+ has recoverability $recoverability,
+ has start-time $start-time;
+
+ $stix-type ""impact"";
+ $spec-version ""2.1"";
+ $stix-id ""impact--836ed944-db19-4126-a8a6-a9e272c84138"";
+ $created 2023-11-12T13:19:14.317;
+ $modified 2023-11-12T13:19:14.317;
+ $impact-category ""external"";
+ $criticality 99;
+ $description ""Public confidence has taken a hit"";
+ $end-time 2023-11-12T13:19:14.317;
+ $recoverability ""regular"";
+ $start-time 2023-11-12T13:19:14.317;
+
+
+ $entity-key0 isa entity-key;  $entity-key0 ""computers-personal"";
+ $entity-key0 has entity-value 2;
+ $impact-counter (impact-driver:$impact, counters: $entity-key0) isa impact-counter;
+
+ $impact-extension isa impact-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""new-sdo"";
+
+ $impact-ext0 (impact-base:$impact, impact-spec:$impact-extension) isa impact-ext;
+
+ $external isa external,
+ has impact-type $impact-type;
+
+ $impact-type ""public-confidence"";
+
+ $external-imp1 (impact-base:$impact, external-impact:$external) isa external-imp;","match 
+   $a isa impact, 
+      has stix-id  ""impact--836ed944-db19-4126-a8a6-a9e272c84138"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""impact--836ed944-db19-4126-a8a6-a9e272c84138"")"
+impact-integrity.svg,impact-integrity-table.csv,integrity,Integrity,Every Impact MUST have an extension that has the same value of the impact_category. The Integrity Extension tracks the alteration in information assets.,"The Python class name for the Integrity Extension is Integrity. The Integrity extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""impact"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""impact--704fcda9-8d2d-49d8-a521-1c11f848e33e"",
+    ""created"": ""2023-11-11T08:45:49.914967Z"",
+    ""modified"": ""2023-11-11T08:45:49.914967Z"",
+    ""impact_category"": ""integrity"",
+    ""criticality"": 99,
+    ""description"": ""The credentials were modified"",
+    ""end_time"": ""2023-11-11T08:45:49.914967Z"",
+    ""impacted_entity_counts"": {
+          ""computers-personal"": 2
+    },
+    ""recoverability"": ""regular"",
+    ""start_time"": ""2023-11-11T08:45:49.914967Z"",
+    ""extensions"": {
+          ""extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9"": {
+                ""extension_type"": ""new-sdo""
+          },
+          ""integrity"": {
+                ""alteration"": ""partial-modification"",
+                ""information_type"": ""credentials-user"",
+                ""record_count"": 2,
+                ""record_size"": 2000
+          }
+    }
+}","insert $impact isa impact,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has impact-category $impact-category,
+ has criticality $criticality,
+ has description $description,
+ has end-time $end-time,
+ has recoverability $recoverability,
+ has start-time $start-time;
+
+ $stix-type ""impact"";
+ $spec-version ""2.1"";
+ $stix-id ""impact--704fcda9-8d2d-49d8-a521-1c11f848e33e"";
+ $created 2023-11-11T08:45:49.914;
+ $modified 2023-11-11T08:45:49.914;
+ $impact-category ""integrity"";
+ $criticality 99;
+ $description ""The credentials were modified"";
+ $end-time 2023-11-11T08:45:49.914;
+ $recoverability ""regular"";
+ $start-time 2023-11-11T08:45:49.914;
+
+
+ $entity-key0 isa entity-key;  $entity-key0 ""computers-personal"";
+ $entity-key0 has entity-value 2;
+ $impact-counter (impact-driver:$impact, counters: $entity-key0) isa impact-counter;
+
+ $impact-extension isa impact-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""new-sdo"";
+
+ $impact-ext0 (impact-base:$impact, impact-spec:$impact-extension) isa impact-ext;
+
+ $integrity isa integrity,
+ has alteration $alteration,
+ has information-type $information-type,
+ has record-count $record-count,
+ has record-size $record-size;
+
+ $alteration ""partial-modification"";
+ $information-type ""credentials-user"";
+ $record-count 2;
+ $record-size 2000;
+
+ $integrity-imp1 (impact-base:$impact, integrity-impact:$integrity) isa integrity-imp;","match 
+   $a isa impact, 
+      has stix-id  ""impact--704fcda9-8d2d-49d8-a521-1c11f848e33e"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""impact--704fcda9-8d2d-49d8-a521-1c11f848e33e"")"
+impact-monetary.svg,impact-monetary-table.csv,monetary,Monetary,"Every Impact MUST have an extension that has the same value of the impact_category. The Monetary Extension tracks the monetary impact, for example ransom amounts.","The Python class name for the Monetary Extension is Monetary. The Monetary extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""impact"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""impact--28106fd0-1952-4f76-9a5a-5e98a9eb6e7c"",
+    ""created"": ""2023-11-11T08:45:49.919967Z"",
+    ""modified"": ""2023-11-11T08:45:49.919967Z"",
+    ""impact_category"": ""monetary"",
+    ""criticality"": 99,
+    ""description"": ""The ransom demands were significant"",
+    ""end_time"": ""2023-11-11T08:45:49.919967Z"",
+    ""impacted_entity_counts"": {
+          ""computers-personal"": 2
+    },
+    ""recoverability"": ""regular"",
+    ""start_time"": ""2023-11-11T08:45:49.919967Z"",
+    ""extensions"": {
+          ""extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9"": {
+                ""extension_type"": ""new-sdo""
+          },
+          ""monetary"": {
+                ""variety"": ""ransom-demand"",
+                ""conversion_rate"": 1.538,
+                ""conversion_time"": ""2023-11-07T08:53:15.645995Z"",
+                ""currency"": ""USD"",
+                ""currency_actual"": ""AUD"",
+                ""max_amount"": 100000.0,
+                ""min_amount"": 10000.0
+          }
+    }
+}","insert $impact isa impact,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has impact-category $impact-category,
+ has criticality $criticality,
+ has description $description,
+ has end-time $end-time,
+ has recoverability $recoverability,
+ has start-time $start-time;
+
+ $stix-type ""impact"";
+ $spec-version ""2.1"";
+ $stix-id ""impact--28106fd0-1952-4f76-9a5a-5e98a9eb6e7c"";
+ $created 2023-11-11T08:45:49.919;
+ $modified 2023-11-11T08:45:49.919;
+ $impact-category ""monetary"";
+ $criticality 99;
+ $description ""The ransom demands were significant"";
+ $end-time 2023-11-11T08:45:49.919;
+ $recoverability ""regular"";
+ $start-time 2023-11-11T08:45:49.919;
+
+
+ $entity-key0 isa entity-key;  $entity-key0 ""computers-personal"";
+ $entity-key0 has entity-value 2;
+ $impact-counter (impact-driver:$impact, counters: $entity-key0) isa impact-counter;
+
+ $impact-extension isa impact-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""new-sdo"";
+
+ $impact-ext0 (impact-base:$impact, impact-spec:$impact-extension) isa impact-ext;
+
+ $monetary isa monetary,
+ has variety $variety,
+ has conversion-rate $conversion-rate,
+ has conversion-time $conversion-time,
+ has currrency $currrency,
+ has currency-actual $currency-actual,
+ has max-amount $max-amount,
+ has min-amount $min-amount;
+
+ $variety ""ransom-demand"";
+ $conversion-rate 1.538;
+ $conversion-time 2023-11-07T08:53:15.645;
+ $currrency ""USD"";
+ $currency-actual ""AUD"";
+ $max-amount 100000.0;
+ $min-amount 10000.0;
+
+ $monetary-imp1 (impact-base:$impact, monetary-impact:$monetary) isa monetary-imp;","match 
+   $a isa impact, 
+      has stix-id  ""impact--28106fd0-1952-4f76-9a5a-5e98a9eb6e7c"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""impact--28106fd0-1952-4f76-9a5a-5e98a9eb6e7c"")"
+impact-physical.svg,impact-physical-table.csv,physical,Physical,Every Impact MUST have an extension that has the same value of the impact_category. The Physical Extension tracks the physical impact on assets,"The Python class name for the Physical Extension is Physical. The Physical extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""impact"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""impact--686566cc-d24c-4e34-bbc2-c284d0ece358"",
+    ""created"": ""2023-11-11T08:45:49.923966Z"",
+    ""modified"": ""2023-11-11T08:45:49.923966Z"",
+    ""impact_category"": ""physical"",
+    ""criticality"": 99,
+    ""description"": ""The rcomputers are not usable, but can be fixed"",
+    ""end_time"": ""2023-11-11T08:45:49.923966Z"",
+    ""impacted_entity_counts"": {
+          ""computers-personal"": 2
+    },
+    ""recoverability"": ""regular"",
+    ""start_time"": ""2023-11-11T08:45:49.923966Z"",
+    ""extensions"": {
+          ""extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9"": {
+                ""extension_type"": ""new-sdo""
+          },
+          ""physical"": {
+                ""impact_type"": ""damaged-nonfunctional"",
+                ""asset_type"": ""computers-personal""
+          }
+    }
+}","insert $impact isa impact,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has impact-category $impact-category,
+ has criticality $criticality,
+ has description $description,
+ has end-time $end-time,
+ has recoverability $recoverability,
+ has start-time $start-time;
+
+ $stix-type ""impact"";
+ $spec-version ""2.1"";
+ $stix-id ""impact--686566cc-d24c-4e34-bbc2-c284d0ece358"";
+ $created 2023-11-11T08:45:49.923;
+ $modified 2023-11-11T08:45:49.923;
+ $impact-category ""physical"";
+ $criticality 99;
+ $description ""The rcomputers are not usable, but can be fixed"";
+ $end-time 2023-11-11T08:45:49.923;
+ $recoverability ""regular"";
+ $start-time 2023-11-11T08:45:49.923;
+
+
+ $entity-key0 isa entity-key;  $entity-key0 ""computers-personal"";
+ $entity-key0 has entity-value 2;
+ $impact-counter (impact-driver:$impact, counters: $entity-key0) isa impact-counter;
+
+ $impact-extension isa impact-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""new-sdo"";
+
+ $impact-ext0 (impact-base:$impact, impact-spec:$impact-extension) isa impact-ext;
+
+ $physical isa physical,
+ has impact-type $impact-type,
+ has asset-type $asset-type;
+
+ $impact-type ""damaged-nonfunctional"";
+ $asset-type ""computers-personal"";
+
+ $physical-imp1 (impact-base:$impact, physical-impact:$physical) isa physical-imp;","match 
+   $a isa impact, 
+      has stix-id  ""impact--686566cc-d24c-4e34-bbc2-c284d0ece358"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""impact--686566cc-d24c-4e34-bbc2-c284d0ece358"")"
+impact-traceability.svg,impact-traceability-table.csv,traceability,Traceability,"Every Impact MUST have an extension that has the same value of the impact_category. The Traceability Extension tracks whether the traces left by the threat-actor, are sufficient to enable attribution.","The Python class name for the Traceability Extension is Traceability. The Traceability extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""impact"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""impact--79459a66-7dc3-4218-95a1-a4511edeff30"",
+    ""created"": ""2023-11-11T08:45:49.926967Z"",
+    ""modified"": ""2023-11-11T08:45:49.926967Z"",
+    ""impact_category"": ""traceability"",
+    ""criticality"": 99,
+    ""description"": ""We can reconstruct the attack from the data remaining"",
+    ""end_time"": ""2023-11-11T08:45:49.926967Z"",
+    ""impacted_entity_counts"": {
+          ""computers-personal"": 2
+    },
+    ""recoverability"": ""regular"",
+    ""start_time"": ""2023-11-11T08:45:49.926967Z"",
+    ""extensions"": {
+          ""extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9"": {
+                ""extension_type"": ""new-sdo""
+          },
+          ""traceability"": {
+                ""traceability_impact"": ""provable-accountability""
+          }
+    }
+}","insert $impact isa impact,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has impact-category $impact-category,
+ has criticality $criticality,
+ has description $description,
+ has end-time $end-time,
+ has recoverability $recoverability,
+ has start-time $start-time;
+
+ $stix-type ""impact"";
+ $spec-version ""2.1"";
+ $stix-id ""impact--79459a66-7dc3-4218-95a1-a4511edeff30"";
+ $created 2023-11-11T08:45:49.926;
+ $modified 2023-11-11T08:45:49.926;
+ $impact-category ""traceability"";
+ $criticality 99;
+ $description ""We can reconstruct the attack from the data remaining"";
+ $end-time 2023-11-11T08:45:49.926;
+ $recoverability ""regular"";
+ $start-time 2023-11-11T08:45:49.926;
+
+
+ $entity-key0 isa entity-key;  $entity-key0 ""computers-personal"";
+ $entity-key0 has entity-value 2;
+ $impact-counter (impact-driver:$impact, counters: $entity-key0) isa impact-counter;
+
+ $impact-extension isa impact-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""new-sdo"";
+
+ $impact-ext0 (impact-base:$impact, impact-spec:$impact-extension) isa impact-ext;
+
+ $traceability isa traceability,
+ has traceability-type $traceability-type;
+
+ $traceability-type ""provable-accountability"";
+
+ $traceability-imp1 (impact-base:$impact, traceability-impact:$traceability) isa traceability-imp;","match 
+   $a isa impact, 
+      has stix-id  ""impact--79459a66-7dc3-4218-95a1-a4511edeff30"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""impact--79459a66-7dc3-4218-95a1-a4511edeff30"")"
+sighting-alert.svg,sighting-alert-table.csv,sighting-alert,SightingAlert,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","An Alert can be issued by a system or a user. Generally, when an Alert is issued, it is not known whether it is actually nefarious. Alerts are often used to initiailise an incident. Conceivably, once an Alert is qualified as a true positive, it could be joined to another Alert from another Incident. The Python class name is SightingAlert. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""sighting"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""sighting--db6e5af2-437d-46dc-a831-b972f02674de"",
+    ""created"": ""2023-11-12T13:19:14.223465Z"",
+    ""modified"": ""2023-11-12T13:19:14.223465Z"",
+    ""sighting_of_ref"": ""indicator--277f623c-3468-4ba3-9b83-165f3b3827c1"",
+    ""observed_data_refs"": [
+          ""observed-data--f55a1b66-865d-4079-bc3b-1ffb8c7a9ab4""
+    ],
+    ""extensions"": {
+          ""extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43"": {
+                ""extension_type"": ""property-extension""
+          },
+          ""sighting-alert"": {
+                ""name"": ""user-report"",
+                ""log"": ""I have found a suspicious email""
+          }
+    }
+}"," match
+ $indicator0 isa indicator, has stix-id ""indicator--277f623c-3468-4ba3-9b83-165f3b3827c1"";
+ $observed-data0 isa observed-data, has stix-id ""observed-data--f55a1b66-865d-4079-bc3b-1ffb8c7a9ab4"";
+
+insert_tql string?-> insert
+$sighting (sighting-of:$indicator0, observed:$observed-data0) isa sighting,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified;
+
+ $stix-type ""sighting"";
+ $spec-version ""2.1"";
+ $stix-id ""sighting--db6e5af2-437d-46dc-a831-b972f02674de"";
+ $created 2023-11-12T13:19:14.223;
+ $modified 2023-11-12T13:19:14.223;
+
+ $evidence-extension isa evidence-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""property-extension"";
+
+ $evidence-ext0 (evidence-base:$sighting, evidence-spec:$evidence-extension) isa evidence-ext;
+
+ $alert-evidence isa alert-evidence,
+ has name $name,
+ has log $log;
+
+ $name ""user-report"";
+ $log ""I have found a suspicious email"";
+
+ $alert-ext1 (sighting-base:$sighting, alert-extension:$alert-evidence) isa alert-ext;","match 
+   $a ($role:$b) isa sighting,
+      has stix-id  ""sighting--db6e5af2-437d-46dc-a831-b972f02674de"",
+      has $c;
+   $d isa stix-sub-object, 
+      has $e;
+   $f (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""sighting--db6e5af2-437d-46dc-a831-b972f02674de"")"
+sighting-anecdote.svg,sighting-anecdote-table.csv,sighting-anecdote,SightingAnecdote,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","An Anecdote can be issued only by a person. Generally, when an Anecdote is issued, it is not known whether it is actually nefarious. Anecdotes are used to initiailise an incident. Conceivably, an Anecdote may also be issued that defines an Impact, rather than an Event Anecdotes are expected to have low confidence and result in the need to do tasks to increase the confidence. The Python class name is SightingAnecdote. The Python class name is SightingAlert. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""sighting"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""sighting--8d8513f2-1e84-40f0-97a6-b8b4263ccb40"",
+    ""created"": ""2023-11-12T13:19:14.245749Z"",
+    ""modified"": ""2023-11-12T13:19:14.245749Z"",
+    ""sighting_of_ref"": ""identity--27c2fdc0-bf9c-46d8-aab1-658948cd2ed6"",
+    ""observed_data_refs"": [
+          ""observed-data--e41ba03b-548d-4675-ba7e-b0844e1d9ee1""
+    ],
+    ""extensions"": {
+          ""extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43"": {
+                ""extension_type"": ""property-extension""
+          },
+          ""sighting-anecdote"": {
+                ""person_name"": ""Naive Smith"",
+                ""person_context"": ""employee"",
+                ""report_submission"": ""interview""
+          }
+    }
+}","match
+ $identity0 isa identity, has stix-id ""identity--27c2fdc0-bf9c-46d8-aab1-658948cd2ed6"";
+ $observed-data0 isa observed-data, has stix-id ""observed-data--e41ba03b-548d-4675-ba7e-b0844e1d9ee1"";
+insert
+$sighting (sighting-of:$identity0, observed:$observed-data0) isa sighting,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified;
+
+ $stix-type ""sighting"";
+ $spec-version ""2.1"";
+ $stix-id ""sighting--8d8513f2-1e84-40f0-97a6-b8b4263ccb40"";
+ $created 2023-11-12T13:19:14.245;
+ $modified 2023-11-12T13:19:14.245;
+
+ $evidence-extension isa evidence-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""property-extension"";
+
+ $evidence-ext0 (evidence-base:$sighting, evidence-spec:$evidence-extension) isa evidence-ext;
+
+ $anecdote-evidence isa anecdote-evidence,
+ has person-name $person-name,
+ has person-context $person-context,
+ has report-submission $report-submission;
+
+ $person-name ""Naive Smith"";
+ $person-context ""employee"";
+ $report-submission ""interview"";
+
+ $anecdote-ext1 (sighting-base:$sighting, anecdote-extension:$anecdote-evidence) isa anecdote-ext;","match 
+   $a ($role:$b) isa sighting,
+      has stix-id  ""sighting--8d8513f2-1e84-40f0-97a6-b8b4263ccb40"",
+      has $c;
+   $d isa stix-sub-object, 
+      has $e;
+   $f (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""sighting--8d8513f2-1e84-40f0-97a6-b8b4263ccb40"")"
+sighting-context.svg,sighting-context-table.csv,sighting-context,SightingContext,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","Context data is based on querying of internal systems and has 100% confidence It can be of two types:
+
+Non-SCO: Historical or narrative data that would be contained in a Note, and is not an Event. The Note can attach to different objects, depending on the Inicdent type
+
+SCO: For example a list of other user accounts that received the same email, queried from Exchange server, and is an Event. This example is shown to the right
+
+Non-SCO Context data is not an observation, nor a sighting, but it is Evidence. Different Context sources (e.g. SAP, SalesForce etc.) will probably have different provenance formats. The Python class name is SightingContext.  It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""sighting"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""sighting--f782ed66-86ce-463f-a014-c79400f1b79f"",
+    ""created"": ""2023-11-12T13:19:14.262269Z"",
+    ""modified"": ""2023-11-12T13:19:14.262269Z"",
+    ""sighting_of_ref"": ""indicator--277f623c-3468-4ba3-9b83-165f3b3827c1"",
+    ""observed_data_refs"": [
+          ""observed-data--a85f23d2-2bf7-46ea-be6c-dbb7dc05eebf""
+    ],
+    ""extensions"": {
+          ""extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43"": {
+                ""extension_type"": ""property-extension""
+          },
+          ""sighting-context"": {
+                ""name"": ""Exchange"",
+                ""description"": ""query from:evil@northkorea.com, subject:we are coming for you"",
+                ""value"": ""[silly@mycompany.com, strange@mycompany.com, dumbo@mycompany.com]""
+          }
+    }
+}","match
+ $indicator0 isa indicator, has stix-id ""indicator--277f623c-3468-4ba3-9b83-165f3b3827c1"";
+ $observed-data0 isa observed-data, has stix-id ""observed-data--a85f23d2-2bf7-46ea-be6c-dbb7dc05eebf"";
+insert
+$sighting (sighting-of:$indicator0, observed:$observed-data0) isa sighting,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified;
+
+ $stix-type ""sighting"";
+ $spec-version ""2.1"";
+ $stix-id ""sighting--f782ed66-86ce-463f-a014-c79400f1b79f"";
+ $created 2023-11-12T13:19:14.262;
+ $modified 2023-11-12T13:19:14.262;
+
+ $evidence-extension isa evidence-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""property-extension"";
+
+ $evidence-ext0 (evidence-base:$sighting, evidence-spec:$evidence-extension) isa evidence-ext;
+
+ $context-evidence isa context-evidence,
+ has name $name,
+ has description $description,
+ has context-value $context-value;
+
+ $name ""Exchange"";
+ $description ""query from:evil@northkorea.com, subject:we are coming for you"";
+ $context-value ""[silly@mycompany.com, strange@mycompany.com, dumbo@mycompany.com]"";
+
+ $context-ext1 (sighting-base:$sighting, context-extension:$context-evidence) isa context-ext;","match 
+   $a ($role:$b) isa sighting,
+      has stix-id  ""sighting--f782ed66-86ce-463f-a014-c79400f1b79f"",
+      has $c;
+   $d isa stix-sub-object, 
+      has $e;
+   $f (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""sighting--f782ed66-86ce-463f-a014-c79400f1b79f"")"
+sighting-exclusion.svg,sighting-exclusion-table.csv,sighting-exclusion,SightingExclusion,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","An Exclusion List is a source that provides a list of entities that have been shown by their processes (?) to be nefarious. Generally Exclusion lists are focused on specific approaches, such as phshing etc. There are often multiple sources covering the same approach, and it is to be expected that if an entity is found in multiple sources, then it has more confidence than if it is found in one out of many sources. A search on an Exclusion List can result in a sighting, but not an event, as it adds to the data available about. The Python class name is SightingExclusion. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""sighting"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""sighting--5a37c821-b62a-4bb5-b2ea-02abcc6342e8"",
+    ""created"": ""2023-11-12T13:19:14.273322Z"",
+    ""modified"": ""2023-11-12T13:19:14.273322Z"",
+    ""sighting_of_ref"": ""indicator--246ca844-3b6a-441a-a276-3c0120498f3f"",
+    ""observed_data_refs"": [
+          ""observed-data--452d0645-4592-405e-aebc-887992e26739""
+    ],
+    ""extensions"": {
+          ""extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43"": {
+                ""extension_type"": ""property-extension""
+          },
+          ""sighting-exclusion"": {
+                ""source"": ""www.phishdb.com"",
+                ""channel"": ""Last 24 hours""
+          }
+    }
+}","match
+ $indicator0 isa indicator, has stix-id ""indicator--246ca844-3b6a-441a-a276-3c0120498f3f"";
+ $observed-data0 isa observed-data, has stix-id ""observed-data--452d0645-4592-405e-aebc-887992e26739"";
+insert
+$sighting (sighting-of:$indicator0, observed:$observed-data0) isa sighting,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified;
+
+ $stix-type ""sighting"";
+ $spec-version ""2.1"";
+ $stix-id ""sighting--5a37c821-b62a-4bb5-b2ea-02abcc6342e8"";
+ $created 2023-11-12T13:19:14.273;
+ $modified 2023-11-12T13:19:14.273;
+
+ $evidence-extension isa evidence-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""property-extension"";
+
+ $evidence-ext0 (evidence-base:$sighting, evidence-spec:$evidence-extension) isa evidence-ext;
+
+ $exclusion-evidence isa exclusion-evidence,
+ has source $source,
+ has channel $channel;
+
+ $source ""www.phishdb.com"";
+ $channel ""Last 24 hours"";
+
+ $exclusion-ext1 (sighting-base:$sighting, exclusion-extension:$exclusion-evidence) isa exclusion-ext;","match 
+   $a ($role:$b) isa sighting,
+      has stix-id  ""sighting--5a37c821-b62a-4bb5-b2ea-02abcc6342e8"",
+      has $c;
+   $d isa stix-sub-object, 
+      has $e;
+   $f (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""sighting--5a37c821-b62a-4bb5-b2ea-02abcc6342e8"")"
+sighting-enrichment.svg,sighting-enrichment-table.csv,sighting-enrichment,SightingEnrichment,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","An Enrichment is an expansion in the evidence, by leveraging existing data and querying paid or free intel sources to return observables. The results of an Enrichment will generally be an SCO, although SDO’s can also be returned. Note observables may not be in the current SCO list. The Python class name is SightingEnrichment. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""sighting"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""sighting--5397e885-4812-4384-83c7-5bde065ff45d"",
+    ""created"": ""2023-11-12T13:19:14.282084Z"",
+    ""modified"": ""2023-11-12T13:19:14.282084Z"",
+    ""sighting_of_ref"": ""identity--6f410bea-0221-4041-8599-f20905a67519"",
+    ""observed_data_refs"": [
+          ""observed-data--452d0645-4592-405e-aebc-887992e26739""
+    ],
+    ""where_sighted_refs"": [
+          ""location--b1cd3da8-d53f-445b-816e-c1ec520ad5db""
+    ],
+    ""extensions"": {
+          ""extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43"": {
+                ""extension_type"": ""property-extension""
+          },
+          ""sighting-enrichment"": {
+                ""name"": ""maltego"",
+                ""url"": ""maltego.com"",
+                ""paid"": true,
+                ""value"": ""Evil Incarnate Ltd, 666 Infection St, Whyme, NK, lat/long = 39.03385, 125.75432""
+          }
+    }
+}","match
+ $identity0 isa identity, has stix-id ""identity--6f410bea-0221-4041-8599-f20905a67519"";
+ $observed-data0 isa observed-data, has stix-id ""observed-data--452d0645-4592-405e-aebc-887992e26739"";
+ $location1 isa location, has stix-id ""location--b1cd3da8-d53f-445b-816e-c1ec520ad5db"";
+insert
+$sighting (sighting-of:$identity0, observed:$observed-data0, where-sighted:$location1) isa sighting,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified;
+
+ $stix-type ""sighting"";
+ $spec-version ""2.1"";
+ $stix-id ""sighting--5397e885-4812-4384-83c7-5bde065ff45d"";
+ $created 2023-11-12T13:19:14.282;
+ $modified 2023-11-12T13:19:14.282;
+
+ $evidence-extension isa evidence-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""property-extension"";
+
+ $evidence-ext0 (evidence-base:$sighting, evidence-spec:$evidence-extension) isa evidence-ext;
+
+ $enrichment-evidence isa enrichment-evidence,
+ has name $name,
+ has link-url $link-url,
+ has paid $paid,
+ has enrichment-value $enrichment-value;
+
+ $name ""maltego"";
+ $link-url ""maltego.com"";
+ $paid true;
+ $enrichment-value ""Evil Incarnate Ltd, 666 Infection St, Whyme, NK, lat/long = 39.03385, 125.75432"";
+
+ $enrichment-ext1 (sighting-base:$sighting, enrichment-extension:$enrichment-evidence) isa enrichment-ext;","match 
+   $a ($role:$b) isa sighting,
+      has stix-id  ""sighting--5397e885-4812-4384-83c7-5bde065ff45d"",
+      has $c;
+   $d isa stix-sub-object, 
+      has $e;
+   $f (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""sighting--5397e885-4812-4384-83c7-5bde065ff45d"")"
+sighting-hunt.svg,sighting-hunt-table.csv,sighting-hunt,SightingHunt,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","A Hunt is a targeted search using a hunting platform, such as Kestrel, or similar, started as a Task. A Hunt can result in:
+
+1. Confirmation that an Alert has resulted in a negative Impact (e.g. user clicked on link, Outlook, which downloaded software and started a process) ? SCO’s & Impact
+2. Scope of Impact, which machines were impacted ? Impact
+3. An Alert, since an unknown threat has been discovered ? SCO
+
+A Hunt will result in an Event when an SCO is found, but can also result only in an Impact. The Python class name is SightingHunt. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""sighting"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""sighting--03c1cfce-e63c-4eb4-b071-5123e8f2c7ed"",
+    ""created"": ""2023-11-12T13:19:14.290678Z"",
+    ""modified"": ""2023-11-12T13:19:14.290678Z"",
+    ""sighting_of_ref"": ""identity--6f410bea-0221-4041-8599-f20905a67519"",
+    ""observed_data_refs"": [
+          ""observed-data--2d2311be-b85c-4c34-9953-b8e0edf07f3b""
+    ],
+    ""where_sighted_refs"": [
+          ""location--b1cd3da8-d53f-445b-816e-c1ec520ad5db""
+    ],
+    ""extensions"": {
+          ""extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43"": {
+                ""extension_type"": ""property-extension""
+          },
+          ""sighting-hunt"": {
+                ""name"": ""kestrel"",
+                ""playbook_id"": ""playbook_1_1"",
+                ""rule"": ""demo rule string""
+          }
+    }
+}","match
+ $identity0 isa identity, has stix-id ""identity--6f410bea-0221-4041-8599-f20905a67519"";
+ $observed-data0 isa observed-data, has stix-id ""observed-data--2d2311be-b85c-4c34-9953-b8e0edf07f3b"";
+ $location1 isa location, has stix-id ""location--b1cd3da8-d53f-445b-816e-c1ec520ad5db"";
+insert
+$sighting (sighting-of:$identity0, observed:$observed-data0, where-sighted:$location1) isa sighting,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified;
+
+ $stix-type ""sighting"";
+ $spec-version ""2.1"";
+ $stix-id ""sighting--03c1cfce-e63c-4eb4-b071-5123e8f2c7ed"";
+ $created 2023-11-12T13:19:14.290;
+ $modified 2023-11-12T13:19:14.290;
+
+ $evidence-extension isa evidence-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""property-extension"";
+
+ $evidence-ext0 (evidence-base:$sighting, evidence-spec:$evidence-extension) isa evidence-ext;
+
+ $hunt-evidence isa hunt-evidence,
+ has name $name,
+ has playbook-id $playbook-id,
+ has hunt-rule $hunt-rule;
+
+ $name ""kestrel"";
+ $playbook-id ""playbook_1_1"";
+ $hunt-rule ""demo rule string"";
+
+ $hunt-ext1 (sighting-base:$sighting, hunt-extension:$hunt-evidence) isa hunt-ext;","match 
+   $a ($role:$b) isa sighting,
+      has stix-id  ""sighting--03c1cfce-e63c-4eb4-b071-5123e8f2c7ed"",
+      has $c;
+   $d isa stix-sub-object, 
+      has $e;
+   $f (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""sighting--03c1cfce-e63c-4eb4-b071-5123e8f2c7ed"")"
+sighting-framework.svg,sighting-framework-table.csv,sighting-framework,SightingFramework,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","Since SCO’s are ephemeral, the desire is to move up the Pyramid of Pain to more abstract characterisations, which are harder for attackers to evade. Frameworks, such as Mitre ATT&CK and DISARM are commonly used. Assignment of a Framework Component requires a judgement, or a correlation from a knowledge base, and thereby has subjectivity. The Python class name is SightingFramework. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""sighting"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""sighting--dae5afc5-022d-4000-b8d7-a71747f96f0d"",
+    ""created"": ""2023-11-12T13:19:14.337269Z"",
+    ""modified"": ""2023-11-12T13:19:14.337269Z"",
+    ""sighting_of_ref"": ""attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7"",
+    ""observed_data_refs"": [
+          ""observed-data--2d2311be-b85c-4c34-9953-b8e0edf07f3b""
+    ],
+    ""where_sighted_refs"": [
+          ""location--b1cd3da8-d53f-445b-816e-c1ec520ad5db""
+    ],
+    ""extensions"": {
+          ""extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43"": {
+                ""extension_type"": ""property-extension""
+          },
+          ""sighting-framework"": {
+                ""framework"": ""MITRE ATT&CK"",
+                ""version"": ""14.1"",
+                ""domain"": ""Enterprise"",
+                ""comparison"": ""exclusion list and hunt"",
+                ""comparison_approach"": ""The Exclusion List confirmed the email was previously sighted and the Hunt confirmed that processes had been started""
+          }
+    }
+}","match
+ $attack-pattern0 isa attack-pattern, has stix-id ""attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7"";
+ $observed-data0 isa observed-data, has stix-id ""observed-data--2d2311be-b85c-4c34-9953-b8e0edf07f3b"";
+ $location1 isa location, has stix-id ""location--b1cd3da8-d53f-445b-816e-c1ec520ad5db"";
+insert
+$sighting (sighting-of:$attack-pattern0, observed:$observed-data0, where-sighted:$location1) isa sighting,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified;
+
+ $stix-type ""sighting"";
+ $spec-version ""2.1"";
+ $stix-id ""sighting--dae5afc5-022d-4000-b8d7-a71747f96f0d"";
+ $created 2023-11-12T13:19:14.337;
+ $modified 2023-11-12T13:19:14.337;
+
+ $evidence-extension isa evidence-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""property-extension"";
+
+ $evidence-ext0 (evidence-base:$sighting, evidence-spec:$evidence-extension) isa evidence-ext;
+
+ $framework-evidence isa framework-evidence,
+ has framework $framework,
+ has version $version,
+ has domain $domain,
+ has comparison $comparison,
+ has comparison-approach $comparison-approach;
+
+ $framework ""MITRE ATT&CK"";
+ $version ""14.1"";
+ $domain ""Enterprise"";
+ $comparison ""exclusion list and hunt"";
+ $comparison-approach ""The Exclusion List confirmed the email was previously sighted and the Hunt confirmed that processes had been started"";
+
+ $framework-ext1 (sighting-base:$sighting, framework-extension:$framework-evidence) isa framework-ext;","match 
+   $a ($role:$b) isa sighting,
+      has stix-id  ""sighting--dae5afc5-022d-4000-b8d7-a71747f96f0d"",
+      has $c;
+   $d isa stix-sub-object, 
+      has $e;
+   $f (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""sighting--dae5afc5-022d-4000-b8d7-a71747f96f0d"")"
+sighting-external.svg,sighting-external-table.csv,sighting-external,SightingExternal,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","Threat Reports are posted by researchers on free and paid services, such as MISP. This is one method of confirming that an unknown Indicator is actually malicious. However, reliability of a threat report is a concern, and confidence needs to be established for each individual provider in a channel such as MISP. The Python class name is SightingExternal. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""sighting"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""sighting--5e72168a-e37d-4cf3-a429-15c06bd3abf6"",
+    ""created"": ""2023-11-12T13:19:14.343786Z"",
+    ""modified"": ""2023-11-12T13:19:14.343786Z"",
+    ""sighting_of_ref"": ""attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7"",
+    ""observed_data_refs"": [
+          ""observed-data--2d2311be-b85c-4c34-9953-b8e0edf07f3b""
+    ],
+    ""where_sighted_refs"": [
+          ""location--b1cd3da8-d53f-445b-816e-c1ec520ad5db""
+    ],
+    ""extensions"": {
+          ""extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43"": {
+                ""extension_type"": ""property-extension""
+          },
+          ""sighting-external"": {
+                ""source"": ""MISP"",
+                ""version"": ""14.1"",
+                ""last_update"": ""2023-11-12T13:19:14.343786Z"",
+                ""pattern"": ""[email-addr:value = 'evil@northkorea.com' AND email:subject = 'we are coming for you']"",
+                ""pattern_type"": ""stix"",
+                ""payload"": ""Proven Malicious Phishing Source"",
+                ""valid_from"": ""2023-09-07T08:53:15.645995Z"",
+                ""valid_until"": ""2023-11-07T08:53:15.645995Z""
+          }
+    }
+}","match
+ $attack-pattern0 isa attack-pattern, has stix-id ""attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7"";
+ $observed-data0 isa observed-data, has stix-id ""observed-data--2d2311be-b85c-4c34-9953-b8e0edf07f3b"";
+ $location1 isa location, has stix-id ""location--b1cd3da8-d53f-445b-816e-c1ec520ad5db"";
+insert
+$sighting (sighting-of:$attack-pattern0, observed:$observed-data0, where-sighted:$location1) isa sighting,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified;
+
+ $stix-type ""sighting"";
+ $spec-version ""2.1"";
+ $stix-id ""sighting--5e72168a-e37d-4cf3-a429-15c06bd3abf6"";
+ $created 2023-11-12T13:19:14.343;
+ $modified 2023-11-12T13:19:14.343;
+
+ $evidence-extension isa evidence-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""property-extension"";
+
+ $evidence-ext0 (evidence-base:$sighting, evidence-spec:$evidence-extension) isa evidence-ext;
+
+ $external-evidence isa external-evidence,
+ has source $source,
+ has version $version,
+ has last-update $last-update,
+ has pattern $pattern,
+ has pattern-type $pattern-type,
+ has payload $payload,
+ has valid-from $valid-from,
+ has valid-until $valid-until;
+
+ $source ""MISP"";
+ $version ""14.1"";
+ $last-update 2023-11-12T13:19:14.343;
+ $pattern ""[email-addr:value = 'evil@northkorea.com' AND email:subject = 'we are coming for you']"";
+ $pattern-type ""stix"";
+ $payload ""Proven Malicious Phishing Source"";
+ $valid-from 2023-09-07T08:53:15.645;
+ $valid-until 2023-11-07T08:53:15.645;
+
+ $external-ext1 (sighting-base:$sighting, external-extension:$external-evidence) isa external-ext;","match 
+   $a ($role:$b) isa sighting,
+      has stix-id  ""sighting--5e72168a-e37d-4cf3-a429-15c06bd3abf6"",
+      has $c;
+   $d isa stix-sub-object, 
+      has $e;
+   $f (owner:$a, pointed-to:$d) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""sighting--5e72168a-e37d-4cf3-a429-15c06bd3abf6"")"
+identity-contact.svg,identity-contact-table.csv,extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498,IdentityContact,The current STIX 2.1 Identity object only contains a single text field for contact information. This is insufficient to effectively move contact information for individuals between automated systems. This extension adds more granular tracking so that this can be effectively communicated between systems.,"The properties and additional types within the Identity Contact Information Extension are defined below.The Python class name is IdentityContact.  As this is not a top-level object, fields such as identifier are not present. This extension should be mapped to extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498",https://github.com/os-threat/cti-stix-common-objects/tree/main/extension-definition-specifications/identity-contact-information,"{
+    ""type"": ""identity"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""identity--27c2fdc0-bf9c-46d8-aab1-658948cd2ed6"",
+    ""created"": ""2023-11-12T13:19:14.244241Z"",
+    ""modified"": ""2023-11-12T13:19:14.244241Z"",
+    ""name"": ""Naive"",
+    ""identity_class"": ""individual"",
+    ""extensions"": {
+          ""extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498"": {
+                ""extension_type"": ""property-extension"",
+                ""contact_numbers"": [
+                      {
+                            ""contact_number_type"": ""work-phone"",
+                            ""contact_number"": ""0499-999-109""
+                      }
+                ],
+                ""email_addresses"": [
+                      {
+                            ""digital_contact_type"": ""work"",
+                            ""email_address_ref"": ""email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba""
+                      }
+                ],
+                ""first_name"": ""Naive"",
+                ""last_name"": ""Smith"",
+                ""middle_name"": ""Weakling"",
+                ""prefix"": ""Mr"",
+                ""social_media_accounts"": [
+                      {
+                            ""digital_contact_type"": ""work"",
+                            ""user_account_ref"": ""user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0""
+                      }
+                ],
+                ""team"": ""Users""
+          }
+    }
+}",,,

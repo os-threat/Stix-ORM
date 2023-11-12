@@ -1,0 +1,5 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+gid,gid,Optional,  stix-attribute-string   ,   attribute   
+groups,groups,Optional,  stix-attribute-string   ,   attribute   
+home_dir,home-dir,Optional,  stix-attribute-string   ,   attribute   
+shell,shell,Optional,  stix-attribute-string   ,   attribute   

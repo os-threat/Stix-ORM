@@ -1,0 +1,9 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+source,source,Required,  stix-attribute-string   ,   attribute   
+version,version,Required,  stix-attribute-string   ,   attribute   
+last_update,last-update,Required,  stix-attribute-timestamp   ,   attribute   
+pattern,pattern,Required,  stix-attribute-string   ,   attribute   
+pattern_type,pattern-type,Required,  stix-attribute-string   ,   attribute   
+payload,payload,Required,  stix-attribute-string   ,   attribute   
+valid_from,valid-from,Required,  stix-attribute-timestamp   ,   attribute   
+valid_until,valid_until,Required,  stix-attribute-timestamp   ,   attribute   

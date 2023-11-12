@@ -1,0 +1,3 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+src_flags_hex,src-flags-hex,Optional,  stix-attribute-string   ,   attribute   
+dst_flags_hex,dst-flags-hex,Optional,  stix-attribute-string   ,   attribute   

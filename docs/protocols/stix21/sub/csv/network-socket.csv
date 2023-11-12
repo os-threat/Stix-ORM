@@ -1,0 +1,8 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+address_family ,address-family,Required,  stix-attribute-string   ,   attribute   
+is_blocking ,is-blocking,Optional,  stix-attribute-string   ,   attribute   
+is_listening ,is-listening,Optional,  stix-attribute-string   ,   attribute   
+options ,socket-options:socket,Optional,embedded,relation
+socket_type ,socket-type,Optional,  stix-attribute-string   ,   attribute   
+socket_descriptor ,socket-descriptor,Optional,  stix-attribute-string   ,   attribute   
+socket_handle ,socket-handle,Optional,  stix-attribute-string   ,   attribute   

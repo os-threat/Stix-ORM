@@ -1,0 +1,330 @@
+image,table,type,object,para1,para2,url,json_example,typeql_insert,typeql_match,python_match
+event.svg,event-table.csv,event,Event,"Events are created by Sightings of suspicious or malicious activity on systems. Sightings are the footprint of malicious activity, whereas Events are the occurrence. Events integrate the start and end time, the number and type of changed objects, the goal and description to the Sightings.","The Event SDO are organised in serial, and parallel sequences by the Sequence SDO. The Event SDO must be accompanied by a definition extension, which MUST use extension-definition—?4ca6de00-5b0d-45ef-a1dc-ea7279ea910e as its extension ID. The definition extension Python class name is EventCoreExt.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""event"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""event--4d721ce9-5c74-4c02-9f7d-7c393dd302cd"",
+    ""created"": ""2023-11-11T08:45:49.891973Z"",
+    ""modified"": ""2023-11-11T08:45:49.891973Z"",
+    ""status"": ""occured"",
+    ""description"": ""2 users clicked on the email and destroyed their laptops"",
+    ""end_time"": ""2023-11-11T08:45:49.891973Z"",
+    ""event_types"": [
+          ""dissemination-phishing-emails""
+    ],
+    ""name"": ""confirmed impact"",
+    ""sighting_refs"": [
+          ""sighting--6a371768-38f7-4e78-8f8b-f2bf2c61124d""
+    ],
+    ""start_time"": ""2023-11-11T08:45:49.891973Z"",
+    ""extensions"": {
+          ""extension-definition--4ca6de00-5b0d-45ef-a1dc-ea7279ea910e"": {
+                ""extension_type"": ""new-sdo""
+          }
+    }
+}","match  $sighting00 isa sighting, has stix-id ""sighting--6a371768-38f7-4e78-8f8b-f2bf2c61124d"";
+insert $event isa event,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has status $status,
+ has description $description,
+ has end-time $end-time,
+ has event-types $event_types0,
+ has name $name,
+ has start-time $start-time;
+
+ $stix-type ""event"";
+ $spec-version ""2.1"";
+ $stix-id ""event--4d721ce9-5c74-4c02-9f7d-7c393dd302cd"";
+ $created 2023-11-11T08:45:49.891;
+ $modified 2023-11-11T08:45:49.891;
+ $status ""occured"";
+ $description ""2 users clicked on the email and destroyed their laptops"";
+ $end-time 2023-11-11T08:45:49.891;
+ $event_types0 ""dissemination-phishing-emails"";
+ $name ""confirmed impact"";
+ $start-time 2023-11-11T08:45:49.891;
+
+
+ $list-of-sightings0 (sighting-event:$event, sights:$sighting00) isa list-of-sightings;
+ $event-extension isa event-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""new-sdo"";
+
+ $event-ext0 (event-base:$event, event-spec:$event-extension) isa event-ext;","match 
+   $a isa event, 
+      has stix-id  ""event--4d721ce9-5c74-4c02-9f7d-7c393dd302cd"",
+      has $b;
+   $c isa sighting;
+   $d (owner:$a, pointed-to:$c) isa embedded;
+   $e isa stix-sub-object,
+      has $f;
+   $g (owner:$a, pointed-to:$e) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""event--4d721ce9-5c74-4c02-9f7d-7c393dd302cd"")"
+impact.svg,impact-table.csv,impact,Impact,Incidents have Impacts that change over time. Events can cause or influence these Impacts which are in turn mitigated and potentially resolved by tasks performed as part of the incident response process.Change in Impacts over time is recorded in state-change sub-objects within Tasks or Event definitions,"The Impact SDO is currently an extension, but as there are many specific types of impacts with their own unique properties it emulates the File SCO through the use of STIX Extensions to provide the granular details of specific categories of impacts. As such every Impact MUST have an extension that has the same value of the impact_category property (Availability, Confidentiality, External, Integrity, Monetary, Physical or Traceability). This allows consumers to quickly validate their ability to process this category of impact and then load all of its specific details. The Impact SDO must be accopanied by its definition extension, which MUST use extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID. The definition extension Python class name is ImpactCoreExt.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""impact"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""impact--22f44c3f-7af8-4bdd-9ce8-eda54209acc9"",
+    ""created"": ""2023-11-11T08:45:49.902967Z"",
+    ""modified"": ""2023-11-11T08:45:49.902967Z"",
+    ""impact_category"": ""availability"",
+    ""criticality"": 99,
+    ""description"": ""Two Laptops and 3 Servers are stuffed"",
+    ""end_time"": ""2023-11-11T08:45:49.902967Z"",
+    ""impacted_entity_counts"": {
+          ""computers-personal"": 2,
+          ""computers-server"": 3
+    },
+    ""recoverability"": ""regular"",
+    ""start_time"": ""2023-11-11T08:45:49.902967Z"",
+    ""extensions"": {
+          ""extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9"": {
+                ""extension_type"": ""new-sdo""
+          }
+    }
+}","insert $impact isa impact,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has impact-category $impact-category,
+ has criticality $criticality,
+ has description $description,
+ has end-time $end-time,
+ has recoverability $recoverability,
+ has start-time $start-time;
+
+ $stix-type ""impact"";
+ $spec-version ""2.1"";
+ $stix-id ""impact--22f44c3f-7af8-4bdd-9ce8-eda54209acc9"";
+ $created 2023-11-11T08:45:49.902;
+ $modified 2023-11-11T08:45:49.902;
+ $impact-category ""availability"";
+ $criticality 99;
+ $description ""Two Laptops and 3 Servers are stuffed"";
+ $end-time 2023-11-11T08:45:49.902;
+ $recoverability ""regular"";
+ $start-time 2023-11-11T08:45:49.902;
+
+
+ $entity-key0 isa entity-key;  $entity-key0 ""computers-personal"";
+ $entity-key0 has entity-value 2;
+ $entity-key1 isa entity-key;  $entity-key1 ""computers-server"";
+ $entity-key1 has entity-value 3;
+ $impact-counter (impact-driver:$impact, counters: $entity-key0, counters: $entity-key1) isa impact-counter;
+
+ $impact-extension isa impact-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""new-sdo"";
+
+ $impact-ext0 (impact-base:$impact, impact-spec:$impact-extension) isa impact-ext;","match 
+   $a isa impact, 
+      has stix-id  ""impact--22f44c3f-7af8-4bdd-9ce8-eda54209acc9"",
+      has $b;
+   $c isa stix-sub-object,
+      has extension-type $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""impact--22f44c3f-7af8-4bdd-9ce8-eda54209acc9"")"
+task.svg,task-table.csv,task,Task,"Tasks represent the work element needed to respond to, qualify and remediate Events and Impacts within an Incident","The Task SDO's can be arranged in serial or parallel sequences, which enable chaining to be either on-completion, or on-success/on-failure (XOR), or in next-steps (parallel AND). The Task SDO must be accompanied by its definition extension MUST use extension-definition—?2074a052-8be4-4932-849e-f5e7798e0030 as its extension ID. The definition extension Python class name is TaskCoreExt.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""task"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""task--1bf67e27-9601-4125-8202-36f9212274d1"",
+    ""created"": ""2023-11-11T08:45:49.875973Z"",
+    ""modified"": ""2023-11-11T08:45:49.875973Z"",
+    ""task_types"": [
+          ""investigation""
+    ],
+    ""outcome"": ""successful"",
+    ""description"": ""Use Hunting to determine how many clicked the link, and what impact it caused"",
+    ""end_time"": ""2023-11-11T08:45:49.875973Z"",
+    ""name"": ""Hunt the Actual Impact"",
+    ""start_time"": ""2023-11-11T08:45:49.875973Z"",
+    ""owner"": ""identity--ed339e4e-7514-4684-ad80-e4256b40980d"",
+    ""extensions"": {
+          ""extension-definition--2074a052-8be4-4932-849e-f5e7798e0030"": {
+                ""extension_type"": ""new-sdo""
+          }
+    }
+}","match  $identity0 isa identity, has stix-id ""identity--ed339e4e-7514-4684-ad80-e4256b40980d"";
+insert $task isa task,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has task-types $task_types0,
+ has outcome $outcome,
+ has description $description,
+ has end-time $end-time,
+ has name $name,
+ has start-time $start-time;
+
+ $stix-type ""task"";
+ $spec-version ""2.1"";
+ $stix-id ""task--1bf67e27-9601-4125-8202-36f9212274d1"";
+ $created 2023-11-11T08:45:49.875;
+ $modified 2023-11-11T08:45:49.875;
+ $task_types0 ""investigation"";
+ $outcome ""successful"";
+ $description ""Use Hunting to determine how many clicked the link, and what impact it caused"";
+ $end-time 2023-11-11T08:45:49.875;
+ $name ""Hunt the Actual Impact"";
+ $start-time 2023-11-11T08:45:49.875;
+
+
+ $owned-by0 (owned:$task, who:$identity0) isa owned-by;
+ $task-extension isa task-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""new-sdo"";
+
+ $task-ext0 (task-base:$task, task-spec:$task-extension) isa task-ext;","match 
+   $a isa task, 
+      has stix-id  ""task--1bf67e27-9601-4125-8202-36f9212274d1"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""task--1bf67e27-9601-4125-8202-36f9212274d1"")"
+step-single.svg,sequence-table.csv,sequence, Sequence,"The Sequence SDO representes the sequencing of Events or Tasks, using the CACAO approach. Each Sequence object must be of a specific sequence_type (event or task) and step_type (start_step, single-step, parallel_step, end_step). Then the usage of the on_completion, on_succes/on_failure, or next_steps fields are the same as CACAO. Single-step Sequences then link to an event or task viz the sequenced_object field.","The Sequence SDO is represented in TypeDB by four different types, with an automatic conversion.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+    ""type"": ""sequence"",
+    ""spec_version"": ""2.1"",
+    ""id"": ""sequence--4e3f8028-8c05-437b-b8e7-dfe2aa381b25"",
+    ""created"": ""2023-11-11T08:45:49.815448Z"",
+    ""modified"": ""2023-11-11T08:45:49.815448Z"",
+    ""sequenced_object"": ""event--033a2353-d23e-462c-810e-8d88a36386c6"",
+    ""sequence_type"": ""event"",
+    ""step_type"": ""single_step"",
+    ""extensions"": {
+          ""extension-definition--be0c7c79-1961-43db-afde-637066a87a64"": {
+                ""extension_type"": ""new-sdo""
+          }
+    },
+    ""on_completion"": ""sequence--13d9271c-d96b-40e4-bb66-a2f297c03c07""
+}","match  $event0 isa event, has stix-id ""event--033a2353-d23e-462c-810e-8d88a36386c6"";
+ $sequence1 isa sequence, has stix-id ""sequence--13d9271c-d96b-40e4-bb66-a2f297c03c07"";
+insert $single-step isa single-step,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sequence-type $sequence-type,
+ has step-type $step-type;
+
+ $stix-type ""sequence"";
+ $spec-version ""2.1"";
+ $stix-id ""sequence--4e3f8028-8c05-437b-b8e7-dfe2aa381b25"";
+ $created 2023-11-11T08:45:49.815;
+ $modified 2023-11-11T08:45:49.815;
+ $sequence-type ""event"";
+ $step-type ""single_step"";
+
+
+ $sequenced-object0 (sequence:$single-step, object:$event0) isa sequenced-object;
+
+ $on-completion1 (source:$single-step, target:$sequence1) isa on-completion;
+ $sequence-extension isa sequence-extension,
+ has extension-type $extension-type;
+
+ $extension-type ""new-sdo"";
+
+ $sequence-ext0 (sequence-base:$single-step, sequence-spec:$sequence-extension) isa sequence-ext;","match 
+   $a isa sequence, 
+      has stix-id  ""sequence--4e3f8028-8c05-437b-b8e7-dfe2aa381b25"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;
+   $f isa stix-domain-object;
+   $g (owner:$a, pointed-to:$f) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""sequence--4e3f8028-8c05-437b-b8e7-dfe2aa381b25"")"

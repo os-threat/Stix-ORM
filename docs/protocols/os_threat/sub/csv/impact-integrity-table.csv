@@ -1,0 +1,5 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+alteration,alteration,Required,  stix-attribute-string   ,   attribute   
+information_type,information-type,Required,  stix-attribute-string   ,   attribute   
+record_count,record-count,Optional,  stix-attribute-integer   ,   attribute   
+record_size,record-size,Optional,  stix-attribute-integer   ,   attribute   
