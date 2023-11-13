@@ -238,7 +238,7 @@ def load_object(prop_name: str,
     # logger.debug('------------------- history object ------------------------------')
     for prop_type in auth["reln"]["extension_relations"]:
         if prop_name == prop_type["stix"]:
-            tot_prop_list = [tot for tot in prop_dict.keys()]
+            #tot_prop_list = [tot for tot in prop_dict.keys()]
             obj_type = prop_type["object"]
             obj_tql = copy.deepcopy(auth["sub_objects"][obj_type])
             obj_var = '$' + obj_type

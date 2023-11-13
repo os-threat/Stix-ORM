@@ -1,7 +1,7 @@
 {
   "name" : "name",
   "log" : "log",
-  "system_id" : "uuid",
+  "system_id" : "system-id",
   "source" : "source",
   "product" : "product",
   "format" : "format",

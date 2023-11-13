@@ -1914,7 +1914,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    #backdoor_add_dir(path2)
+    #backdoor_add_dir(path4)
     #test_get_file(data_path + file1)
     #test_insert_statements(path2 + "evidence.json", stid3)
     #test_insert_statements(path1 + f29, stid2)

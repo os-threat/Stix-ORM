@@ -793,7 +793,7 @@ trace_impact = Impact(
     extensions={imp_ext_id:imp_ext, "traceability":traceability_impact}
 )
 local_list8 = [
-    conv(avail_impact3), conv(confid_impact), conv(confid_impact),
+    conv(avail_impact3), conv(confid_impact), conv(extern_impact),
     conv(integ_impact), conv(money_impact), conv(phys_impact), conv(trace_impact)
 ]
 bundle_list = bundle_list + local_list8
