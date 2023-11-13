@@ -138,7 +138,7 @@ class ThreatReference(Property):
                 % obj_type,
             )
 
-        return value, allow_custom
+        return value, False
 
 
 
