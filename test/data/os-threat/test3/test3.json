@@ -1,0 +1,58 @@
+{
+      "type": "bundle",
+      "id": "bundle--cb3241fd-6be3-45b9-83ff-49fcc7b182b6",
+      "objects": [
+        {
+                  "type": "user-account",
+                  "spec_version": "2.1",
+                  "id": "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0",
+                  "account_login": "nsmith",
+                  "account_type": "unix",
+                  "display_name": "naive smith"
+            },
+            {
+                  "type": "email-addr",
+                  "spec_version": "2.1",
+                  "id": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+                  "value": "naive@mycompany.com",
+                  "belongs_to_ref": "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0"
+            },
+            {
+                  "type": "identity",
+                  "spec_version": "2.1",
+                  "id": "identity--27c2fdc0-bf9c-46d8-aab1-658948cd2ed6",
+                  "created": "2023-11-12T13:19:14.244241Z",
+                  "modified": "2023-11-12T13:19:14.244241Z",
+                  "name": "Naive",
+                  "identity_class": "individual",
+                  "extensions": {
+                        "extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498": {
+                              "extension_type": "property-extension",
+                              "contact_numbers": [
+                                    {
+                                          "contact_number_type": "work-phone",
+                                          "contact_number": "0499-999-109"
+                                    }
+                              ],
+                              "email_addresses": [
+                                    {
+                                          "digital_contact_type": "work",
+                                          "email_address_ref": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba"
+                                    }
+                              ],
+                              "first_name": "Naive",
+                              "last_name": "Smith",
+                              "middle_name": "Weakling",
+                              "prefix": "Mr",
+                              "social_media_accounts": [
+                                    {
+                                          "digital_contact_type": "work",
+                                          "user_account_ref": "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0"
+                                    }
+                              ],
+                              "team": "Users"
+                        }
+                  }
+            }
+      ]
+}

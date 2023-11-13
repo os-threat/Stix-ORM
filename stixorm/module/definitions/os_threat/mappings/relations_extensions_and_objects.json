@@ -63,13 +63,6 @@
     "pointed-to": "traceability-impact"
   },
   {
-    "stix": "scores",
-    "object": "incident-score",
-    "relation": "scores",
-    "owner": "scored",
-    "pointed-to": "score"
-  },
-  {
     "stix": "extension-definition--ef765651-680c-498d-9894-99799f2fa126",
     "object": "incident-ext",
     "relation": "occurence-ext",
@@ -152,27 +145,6 @@
     "relation": "identity-ext",
     "owner": "identity-base",
     "pointed-to": "identity-spec"
-  },
-  {
-    "stix": "contact_numbers",
-    "object": "contact-number-sub",
-    "relation": "identity-number",
-    "owner": "identity",
-    "pointed-to": "number-object"
-  },
-  {
-    "stix": "email_addresses",
-    "object": "email-contact-sub",
-    "relation": "identity-email",
-    "owner": "identity",
-    "pointed-to": "email-object"
-  },
-  {
-    "stix": "social_media_accounts",
-    "object": "social-media-sub",
-    "relation": "identity-account",
-    "owner": "identity",
-    "pointed-to": "account-object"
   },
   {
     "stix": "extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4",
