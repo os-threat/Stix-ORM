@@ -2,8 +2,7 @@ import json
 import os
 import datetime
 
-import dateutil.parser
-from dateutil.parser import *
+
 from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
 from typedb.client import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
@@ -11,7 +10,7 @@ from stixorm.module.orm.delete_object import delete_stix_object
 from stixorm.module.orm.export_object import convert_ans_to_stix
 from stixorm.module.authorise import authorised_mappings, import_type_factory
 from stixorm.module.parsing.parse_objects import parse
-from stixorm.module.generate_docs import configure_overview_table_docs, object_tables
+from stixorm.module.generate_docs import configure_overview_table_docs, object_docs
 from stixorm.module.initialise import sort_layers, load_typeql_data
 from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
 from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
@@ -59,7 +58,7 @@ file_id = 'file--364fe3e5-b1f4-5ba3-b951-ee5983b3538d'
 def test_generate_docs():
     print("================================================================================")
     print("------------------------ Test Doc Generation ---------------------------------------------")
-    configure_overview_table_docs(object_tables)
+    configure_overview_table_docs(object_docs)
 
 
 def backdoor_get(stix_id, _composite_filters=None):
@@ -1594,7 +1593,7 @@ if __name__ == '__main__':
     #test_initialise()
     #load_file_list(path1, [f30, f21])
     #load_file(mitre_data)
-    #load_file(mitre + "attack_objects.json")
+    load_file(mitre + "attack_objects.json")
     #check_object(mitre + "attack_objects.json")
     #load_file(reports + poison)
     print("=====")
@@ -1603,7 +1602,8 @@ if __name__ == '__main__':
     #query_id(stid1)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
-    check_dir(mitre)
+    #check_dir(mitre)
+    #check_dir(mitre)
     #test_delete(data_path+file1)
     #test_get(stid1)
     #test_get_delete(path2 + "attack_objects.json")
