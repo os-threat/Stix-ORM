@@ -1,4 +1,4 @@
-# Network-HTTP Cyber Obervable Object
+# Network-HTTP Extension Object
 
 **Stix and TypeQL Object Type:**  `http-request-ext`
 
@@ -110,8 +110,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -136,3 +135,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("network-traffic--f8ae967a-3dc3-5cdf-8f94-8505abff00c2")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

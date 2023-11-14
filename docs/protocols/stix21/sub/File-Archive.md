@@ -1,4 +1,4 @@
-# File-Archive Cyber Obervable Object
+# File-Archive Extension Object
 
 **Stix and TypeQL Object Type:**  `archive-ext`
 
@@ -93,8 +93,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -119,3 +118,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("file--9a1f834d-2506-5367-baec-7aa63996ac43")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

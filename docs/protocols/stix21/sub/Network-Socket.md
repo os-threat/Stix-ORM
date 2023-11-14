@@ -1,4 +1,4 @@
-# Network-Socket Cyber Obervable Object
+# Network-Socket Extension Object
 
 **Stix and TypeQL Object Type:**  `socket-ext`
 
@@ -10,13 +10,13 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 
 |  Stix 2.1 Property    |           Schema Name             | Required  Optional  |      Schema Object Type | Schema Parent  |
 |:--------------------|:--------------------------------:|:------------------:|:------------------------:|:-------------:|
-| address_familyï¿½ |address-family |Required |  stix-attribute-string    |   attribute    |
-| is_blockingï¿½ |is-blocking |Optional |  stix-attribute-string    |   attribute    |
-| is_listeningï¿½ |is-listening |Optional |  stix-attribute-string    |   attribute    |
-| optionsï¿½ |socket-options:socket |Optional |embedded |relation |
-| socket_typeï¿½ |socket-type |Optional |  stix-attribute-string    |   attribute    |
-| socket_descriptorï¿½ |socket-descriptor |Optional |  stix-attribute-string    |   attribute    |
-| socket_handleï¿½ |socket-handle |Optional |  stix-attribute-string    |   attribute    |
+| address_family  |address-family |Required |  stix-attribute-string    |   attribute    |
+| is_blocking  |is-blocking |Optional |  stix-attribute-string    |   attribute    |
+| is_listening  |is-listening |Optional |  stix-attribute-string    |   attribute    |
+| options  |socket-options:socket |Optional |embedded |relation |
+| socket_type  |socket-type |Optional |  stix-attribute-string    |   attribute    |
+| socket_descriptor  |socket-descriptor |Optional |  stix-attribute-string    |   attribute    |
+| socket_handle  |socket-handle |Optional |  stix-attribute-string    |   attribute    |
 
 ## The Example Network-Socket in JSON
 The original JSON, accessible in the Python environment
@@ -99,8 +99,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -125,3 +124,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("network-traffic--c95e972a-20a4-5307-b00d-b8393faf02c5")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

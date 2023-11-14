@@ -1,5 +1,5 @@
-image,table,type,object,para1,para2,url,json_example,typeql_insert,typeql_match,python_match
-artifact.svg,artifact.csv,artifact,Artifact,"The Artifact object permits capturing an array of bytes (8-bits), as a base64-encoded string, or linking to a file-like payload.",One of payload_bin or url MUST be provided. It is incumbent on object creators to ensure that the URL is accessible for downstream consumers,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_4jegwl6ojbes,"{
+icon,image,table,type,object,para1,para2,url,json_example,typeql_insert,typeql_match,python_match
+artifact.svg,artifact.png,artifact.csv,artifact,Artifact,"The Artifact object permits capturing an array of bytes (8-bits), as a base64-encoded string, or linking to a file-like payload.",One of payload_bin or url MUST be provided. It is incumbent on object creators to ensure that the URL is accessible for downstream consumers,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_4jegwl6ojbes,"{
     ""type"": ""artifact"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""artifact--ca17bcf8-9846-5ab4-8662-75c1bf6e63ee"",  
@@ -43,7 +43,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""artifact--ca17bcf8-9846-5ab4-8662-75c1bf6e63ee"")"
-autonomous-system.svg,autonomous.csv,autonomous-system,Autonomous-System,This object represents the properties of an Autonomous System (AS).,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_27gux0aol9e3,"{
+autonomous-system.svg,autonomous-system.png,autonomous.csv,autonomous-system,Autonomous-System,This object represents the properties of an Autonomous System (AS).,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_27gux0aol9e3,"{
     ""type"": ""autonomous-system"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74"",  
@@ -90,7 +90,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74"")"
-directory.svg,directory.csv,directory,Directory,The Directory object represents the properties common to a file system directory.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_lyvpga5hlw52,"{
+directory.svg,directory.png,directory.csv,directory,Directory,The Directory object represents the properties common to a file system directory.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_lyvpga5hlw52,"{
     ""type"": ""directory"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""directory--93c0a9b0-520d-545d-9094-1d80adf46b05"",  
@@ -131,7 +131,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""directory--93c0a9b0-520d-545d-9094-1d80adf46b05"")"
-domain.svg,domain.csv,domain-name,Domain-Name,The Domain Name object represents the properties of a network domain name.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_prhhksbxbg87,"{
+domain.svg,domain-name.png,domain.csv,domain-name,Domain-Name,The Domain Name object represents the properties of a network domain name.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_prhhksbxbg87,"{
   ""type"": ""domain-name"",      
   ""spec_version"": ""2.1"",      
   ""id"": ""domain-name--3c10e93f-798e-52a6-a0c1-08156efab7f5"",
@@ -179,7 +179,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""domain-name--3c10e93f-798e-52a6-a0c1-08156efab7f5"")"
-email-addr.svg,email-addr.csv,email-addr,Email-Address,The Email Address object represents a single email address,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_wmenahkvqmgj,"{
+email-addr.svg,email-addr.png,email-addr.csv,email-addr,Email-Address,The Email Address object represents a single email address,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_wmenahkvqmgj,"{
     ""type"": ""email-addr"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""email-addr--2d77a846-6264-5d51-b586-e48322ea1ea3"",
@@ -223,7 +223,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""email-addr--2d77a846-6264-5d51-b586-e48322ea1ea3"")"
-email-message.svg,email-message.csv,email-message,Email-Message,"The Email Message object represents an instance of an email message, corresponding to the internet message format described in [RFC5322] and related RFCs.","Header field values that have been encoded as described in section 2 of [RFC2047] MUST be decoded before inclusion in Email Message object properties. For example, this is some text MUST be used instead of =?iso-8859-1?q?this=20is=20some=20text?=. Any characters in the encoded value which cannot be decoded into Unicode SHOULD be replaced with the 'REPLACEMENT CHARACTER' (U+FFFD). If it is necessary to capture the header value as observed, this can be achieved by referencing an Artifact object through the raw_email_ref property.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_grboc7sq5514,"{
+email-message.svg,email-message.png,email-message.csv,email-message,Email-Message,"The Email Message object represents an instance of an email message, corresponding to the internet message format described in [RFC5322] and related RFCs.","Header field values that have been encoded as described in section 2 of [RFC2047] MUST be decoded before inclusion in Email Message object properties. For example, this is some text MUST be used instead of =?iso-8859-1?q?this=20is=20some=20text?=. Any characters in the encoded value which cannot be decoded into Unicode SHOULD be replaced with the 'REPLACEMENT CHARACTER' (U+FFFD). If it is necessary to capture the header value as observed, this can be achieved by referencing an Artifact object through the raw_email_ref property.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_grboc7sq5514,"{
   ""type"": ""email-message"",      
   ""spec_version"": ""2.1"",      
   ""id"": ""email-message--0c57a381-2a17-5e61-8754-5ef96efb286c"",      
@@ -295,7 +295,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""email-addr--9b7e29b3-fd8d-562e-b3f0-8fc8134f5dda"")"
-file.svg,file.csv,file,File-,The File object represents the properties of a file. A File object MUST contain at least one of hashes or name.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_99bl2dibcztv,"{      
+file.svg,file.png,file.csv,file,File-,The File object represents the properties of a file. A File object MUST contain at least one of hashes or name.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_99bl2dibcztv,"{      
   ""type"": ""file"",      
   ""spec_version"": ""2.1"",      
   ""id"": ""file--5a27d487-c542-5f97-a131-a8866b477b46"",      
@@ -353,7 +353,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""file--5a27d487-c542-5f97-a131-a8866b477b46"")"
-ipv4-addr.svg,ipv4.csv,ipv4-addr,IPv4-Address,The IPv4 Address object represents one or more IPv4 addresses expressed using CIDR notation.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_ki1ufj1ku8s0,"{
+ipv4-addr.svg,ipv4-addr.png,ipv4.csv,ipv4-addr,IPv4-Address,The IPv4 Address object represents one or more IPv4 addresses expressed using CIDR notation.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_ki1ufj1ku8s0,"{
     ""type"": ""ipv4-addr"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""ipv4-addr--ff26c055-6336-5bc5-b89d-13d6226742dd"",
@@ -394,7 +394,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""directory--93c0a9b0-520d-545d-9094-1d80adf46b05"")"
-ipv6-addr.svg,ipv6.csv,ipv6-addr,IPv6-Address,The IPv6 Address object represents one or more IPv6 addresses expressed using CIDR notation.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_oeggeryskriq,"{
+ipv6-addr.svg,ipv6-addr.png,ipv6.csv,ipv6-addr,IPv6-Address,The IPv6 Address object represents one or more IPv6 addresses expressed using CIDR notation.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_oeggeryskriq,"{
     ""type"": ""ipv6-addr"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""ipv6-addr--5daf7456-8863-5481-9d42-237d477697f4"",  
@@ -435,7 +435,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""ipv6-addr--5daf7456-8863-5481-9d42-237d477697f4"")"
-mac-addr.svg,mac.csv,mac-addr,MAC-Address,The MAC Address object represents a single Media Access Control (MAC) address.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_f92nr9plf58y,"{
+mac-addr.svg,mac-addr.png,mac.csv,mac-addr,MAC-Address,The MAC Address object represents a single Media Access Control (MAC) address.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_f92nr9plf58y,"{
     ""type"": ""mac-addr"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""mac-addr--65cfcf98-8a6e-5a1b-8f61-379ac4f92d00"",  
@@ -476,7 +476,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""mac-addr--65cfcf98-8a6e-5a1b-8f61-379ac4f92d00"")"
-mutex.svg,mutex.csv,mutex,Mutex,The Mutex object represents the properties of a mutual exclusion (mutex) object.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_f92nr9plf58y,"{
+mutex.svg,mutex.png,mutex.csv,mutex,Mutex,The Mutex object represents the properties of a mutual exclusion (mutex) object.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_f92nr9plf58y,"{
     ""type"": ""mutex"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""mutex--eba44954-d4e4-5d3b-814c-2b17dd8de300"",  
@@ -517,7 +517,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""mutex--eba44954-d4e4-5d3b-814c-2b17dd8de300"")"
-network-traffic.svg,network-traffic.csv,network-traffic,Network-Traffic,"The Network Traffic object represents arbitrary network traffic that originates from a source and is addressed to a destination. The network traffic MAY or MAY NOT constitute a valid unicast, multicast, or broadcast network connection. This MAY also include traffic that is not established, such as a SYN flood.","To allow for use cases where a source or destination address may be sensitive and not suitable for sharing, such as addresses that are internal to an organization�s network, the source and destination properties (src_ref and dst_ref, respectively) are defined as optional in the properties table below. However, a Network Traffic object MUST contain the protocols property and at least one of the src_ref or dst_ref properties and SHOULD contain the src_port and dst_port properties.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_rgnc3w40xy,"{      
+network-traffic.svg,network-traffic.png,network-traffic.csv,network-traffic,Network-Traffic,"The Network Traffic object represents arbitrary network traffic that originates from a source and is addressed to a destination. The network traffic MAY or MAY NOT constitute a valid unicast, multicast, or broadcast network connection. This MAY also include traffic that is not established, such as a SYN flood.","To allow for use cases where a source or destination address may be sensitive and not suitable for sharing, such as addresses that are internal to an organization�s network, the source and destination properties (src_ref and dst_ref, respectively) are defined as optional in the properties table below. However, a Network Traffic object MUST contain the protocols property and at least one of the src_ref or dst_ref properties and SHOULD contain the src_port and dst_port properties.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_rgnc3w40xy,"{      
     ""type"": ""network-traffic"",      
     ""spec_version"": ""2.1"",      
     ""id"": ""network-traffic--630d7bb1-0bbc-53a6-a6d4-f3c2d35c2734"",      
@@ -590,7 +590,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""network-traffic--630d7bb1-0bbc-53a6-a6d4-f3c2d35c2734"")"
-process.svg,process.csv,process,Process,The Process object represents common properties of an instance of a computer program as executed on an operating system. A Process object MUST contain at least one property (other than type) from this object (or one of its extensions).,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_hpppnm86a1jm,"{      
+process.svg,process.png,process.csv,process,Process,The Process object represents common properties of an instance of a computer program as executed on an operating system. A Process object MUST contain at least one property (other than type) from this object (or one of its extensions).,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_hpppnm86a1jm,"{      
     ""type"": ""process"",      
     ""spec_version"": ""2.1"",      
     ""id"": ""process--d2ec5aab-808d-4492-890a-3c1a1e3cb06e"",      
@@ -644,7 +644,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""process--d2ec5aab-808d-4492-890a-3c1a1e3cb06e"")"
-software.svg,software.csv,software,Software,"The Software object represents high-level properties associated with software, including software products.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_7rkyhtkdthok,"{
+software.svg,software.png,software.csv,software,Software,"The Software object represents high-level properties associated with software, including software products.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_7rkyhtkdthok,"{
     ""type"": ""software"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""software--a1827f6d-ca53-5605-9e93-4316cd22a00a"",  
@@ -694,7 +694,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""software--a1827f6d-ca53-5605-9e93-4316cd22a00a"")"
-url.svg,url.csv,url,URL,The URL object represents the properties of a uniform resource locator (URL).,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_ah3hict2dez0,"{  
+url.svg,url.png,url.csv,url,URL,The URL object represents the properties of a uniform resource locator (URL).,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_ah3hict2dez0,"{  
     ""type"": ""url"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""url--c1477287-23ac-5971-a010-5c287877fa60"",  
@@ -735,7 +735,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""url--c1477287-23ac-5971-a010-5c287877fa60"")"
-user-account.svg,user-account.csv,user-account,User-Account,"The User Account object represents an instance of any type of user account, including but not limited to operating system, device, messaging service, and social media platform accounts. As all properties of this object are optional, at least one of the properties defined below MUST be included when using this object.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_azo70vgj1vm2,"{
+user-account.svg,user-account.png,user-account.csv,user-account,User-Account,"The User Account object represents an instance of any type of user account, including but not limited to operating system, device, messaging service, and social media platform accounts. As all properties of this object are optional, at least one of the properties defined below MUST be included when using this object.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_azo70vgj1vm2,"{
     ""type"": ""user-account"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""user-account--9bd3afcf-deee-54f9-83e2-520653cb6bba"",  
@@ -785,7 +785,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""user-account--9bd3afcf-deee-54f9-83e2-520653cb6bba"")"
-windows-registry-key.svg,registry-key.csv,windows-registry-key,Windows-Registry-Key,"The Registry Key object represents the properties of a Windows registry key. As all properties of this object are optional, at least one of the properties defined below MUST be included when using this object.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_luvw8wjlfo3y,"{
+windows-registry-key.svg,registry-key.png,registry-key.csv,windows-registry-key,Windows-Registry-Key,"The Registry Key object represents the properties of a Windows registry key. As all properties of this object are optional, at least one of the properties defined below MUST be included when using this object.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_luvw8wjlfo3y,"{
     ""type"": ""windows-registry-key"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""windows-registry-key--9d60798d-4e3e-5fe4-af8a-0e4986f0f90b"",  
@@ -826,7 +826,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get""windows-registry-key--9d60798d-4e3e-5fe4-af8a-0e4986f0f90b"")"
-windows-registry-key.svg,registry-key-value.csv,windows-registry-value-type,Windows-Registry-Value,"The Windows Registry Value type captures the properties of a Windows Registry Key Value. As all properties of this type are optional, at least one of the properties defined below MUST be included when using this type.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_u7n4ndghs3qq,"{    ""type"": ""windows-registry-key"",  
+windows-registry-key.svg,registry-value-type.png,registry-key-value.csv,windows-registry-value-type,Windows-Registry-Value,"The Windows Registry Value type captures the properties of a Windows Registry Key Value. As all properties of this type are optional, at least one of the properties defined below MUST be included when using this type.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_u7n4ndghs3qq,"{    ""type"": ""windows-registry-key"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""windows-registry-key--2ba37ae7-2745-5082-9dfd-9486dad41016"",  
     ""key"": ""hkey_local_machine\\system\\bar\\foo"",  
@@ -892,7 +892,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""windows-registry-key--2ba37ae7-2745-5082-9dfd-9486dad41016"")"
-x509-certificate.svg,x509.csv,x509-certificate,X.509-Certificate,"The X.509 Certificate object represents the properties of an X.509 certificate, as defined by ITU recommendation X.509 [X.509]. An X.509 Certificate object MUST contain at least one object specific property (other than type) from this object.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_8abcy1o5x9w1,"{
+x509-certificate.svg,x509.png,x509.csv,x509-certificate,X.509-Certificate,"The X.509 Certificate object represents the properties of an X.509 certificate, as defined by ITU recommendation X.509 [X.509]. An X.509 Certificate object MUST contain at least one object specific property (other than type) from this object.",,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_8abcy1o5x9w1,"{
     ""type"": ""x509-certificate"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""x509-certificate--463d7b2a-8516-5a50-a3d7-6f801465d5de"",  

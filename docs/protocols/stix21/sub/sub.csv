@@ -1,5 +1,5 @@
-image,table,type,object,para1,para2,url,json_example,typeql_insert,typeql_match,python_match
-email-message-mime.svg,email-mime.csv,email-mime-part,Email-MIME-Component,Specifies one component of a multi-part email body.,"There is no property to capture the value of the ""Content-Transfer-Encoding"" header field, since the body MUST be decoded before being represented in the body property.
+icon,image,table,type,object,para1,para2,url,json_example,typeql_insert,typeql_match,python_match
+email-message-mime.svg,email-mime.png,email-mime.csv,email-mime-part,Email-MIME-Component,Specifies one component of a multi-part email body.,"There is no property to capture the value of the ""Content-Transfer-Encoding"" header field, since the body MUST be decoded before being represented in the body property.
 
 One of body OR body_raw_ref MUST be included.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_grboc7sq5514,"{
   ""type"": ""email-message"",      
@@ -123,7 +123,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""email-message--cf9b4b7f-14c8-5955-8065-020e0316b559"")"
-file-archive.svg,file-archive.csv,archive-ext,File-Archive,The Archive File extension specifies a default extension for capturing properties specific to archive files. The key for this extension when used in the extensions dictionary MUST be archive-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_xi3g7dwaigs6,"{      
+file-archive.svg,file-archive.png,file-archive.csv,archive-ext,File-Archive,The Archive File extension specifies a default extension for capturing properties specific to archive files. The key for this extension when used in the extensions dictionary MUST be archive-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_xi3g7dwaigs6,"{      
     ""type"": ""file"",      
     ""spec_version"": ""2.1"",      
     ""id"": ""file--9a1f834d-2506-5367-baec-7aa63996ac43"",      
@@ -198,7 +198,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""file--9a1f834d-2506-5367-baec-7aa63996ac43"")"
-file-ntfs.svg,file-ntfs.csv,ntfs-ext,File-NTFS,The NTFS file extension specifies a default extension for capturing properties specific to the storage of the file on the NTFS file system. The key for this extension when used in the extensions dictionary MUST be ntfs-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,An object using the NTFS File Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_o6cweepfrsci,"
+file-ntfs.svg,file-ntfs.png,file-ntfs.csv,ntfs-ext,File-NTFS,The NTFS file extension specifies a default extension for capturing properties specific to the storage of the file on the NTFS file system. The key for this extension when used in the extensions dictionary MUST be ntfs-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,An object using the NTFS File Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_o6cweepfrsci,"
     ""type"": ""file"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""file--73c4cd13-7206-5100-88ef-822c42d3f02c"",  
@@ -269,7 +269,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""file--73c4cd13-7206-5100-88ef-822c42d3f02c"")"
-file-pdf.svg,file-pdf.csv,pdf-ext,File-PDF,"The PDF file extension specifies a default extension for capturing properties specific to PDF files. The key for this extension when used in the extensions dictionary MUST be pdf-ext. Note that this predefined extension does not use the extension facility described in section 7.3.
+file-pdf.svg,file-pdf.png,file-pdf.csv,pdf-ext,File-PDF,"The PDF file extension specifies a default extension for capturing properties specific to PDF files. The key for this extension when used in the extensions dictionary MUST be pdf-ext. Note that this predefined extension does not use the extension facility described in section 7.3.
 ",An object using the PDF File Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_8xmpb2ghp9km,"{
     ""type"": ""file"",  
     ""spec_version"": ""2.1"",  
@@ -353,7 +353,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""file--ec3415cc-5f4f-5ec8-bdb1-6f86996ae66d"")"
-file-image.svg,file-image.csv,raster-image-ext,File-Raster-Image,The Raster Image file extension specifies a default extension for capturing properties specific to raster image files. The key for this extension when used in the extensions dictionary MUST be raster-image-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,An object using the Raster Image File Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_u5z7i2ox8w4x,"{
+file-img.svg,file-image.png,file-image.csv,raster-image-ext,File-Raster-Image,The Raster Image file extension specifies a default extension for capturing properties specific to raster image files. The key for this extension when used in the extensions dictionary MUST be raster-image-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,An object using the Raster Image File Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_u5z7i2ox8w4x,"{
     ""type"": ""file"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""file--c7d1e135-8b34-549a-bb47-302f5cf998ed"",  
@@ -429,9 +429,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""file--c7d1e135-8b34-549a-bb47-302f5cf998ed"")"
-file-bin.svg,file-windows.csv,windows-pebinary-ext,File-Windows-PE-Binary,"The Windows� PE Binary File extension specifies a default extension for capturing properties specific to Windows portable executable (PE) files. The key for this extension when used in the extensions dictionary MUST be windows-pebinary-ext. Note that this predefined extension does not use the extension facility described in section 7.3.
-
-An object using the Windows� PE Binary File Extension MUST contain at least one property other than the required pe_type property from this extension.","Note that the example below also contains data and properties from the ""windows-pe-optional-header-type"" and the ""windows-pe-section-type"" ",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_gg5zibddf9bs,"{
+file-bin.svg,file-windows.png,file-windows.csv,windows-pebinary-ext,File-Windows-PE-Binary,The Windows PE Binary File extension specifies a default extension for capturing properties specific to Windows portable executable (PE) files. The key for this extension when used in the extensions dictionary MUST be windows-pebinary-ext. Note that this predefined extension does not use the extension facility described in section 7.3. An object using the Windows� PE Binary File Extension MUST contain at least one property other than the required pe_type property from this extension.,"Note that the example below also contains data and properties from the ""windows-pe-optional-header-type"" and the ""windows-pe-section-type"" ",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_gg5zibddf9bs,"{
     ""type"": ""file"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""file--fb0419a8-f09c-57f8-be64-71a80417591c"",  
@@ -641,7 +639,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""file--fb0419a8-f09c-57f8-be64-71a80417591c"",)"
-network-traffic-http.svg,network-http.csv,http-request-ext,Network-HTTP,The HTTP request extension specifies a default extension for capturing network traffic properties specific to HTTP requests. The key for this extension when used in the extensions dictionary MUST be http-request-ext. Note that this predefined extension does not use the extension facility described in section 7.3. The corresponding protocol value for this extension is http.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_b0e376hgtml8,"{      
+network-traffic-http.svg,network-http.png,network-http.csv,http-request-ext,Network-HTTP,The HTTP request extension specifies a default extension for capturing network traffic properties specific to HTTP requests. The key for this extension when used in the extensions dictionary MUST be http-request-ext. Note that this predefined extension does not use the extension facility described in section 7.3. The corresponding protocol value for this extension is http.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_b0e376hgtml8,"{      
     ""type"": ""network-traffic"",      
     ""spec_version"": ""2.1"",      
     ""id"": ""network-traffic--f8ae967a-3dc3-5cdf-8f94-8505abff00c2"",      
@@ -729,7 +727,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""network-traffic--f8ae967a-3dc3-5cdf-8f94-8505abff00c2"")"
-network-traffic-icmp.svg,network-icmp.csv,icmp-ext,Network-ICMP,The ICMP extension specifies a default extension for capturing network traffic properties specific to ICMP. The key for this extension when used in the extensions dictionary MUST be icmp-ext. Note that this predefined extension does not use the extension facility described in section 7.3. The corresponding protocol value for this extension is icmp.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_ozypx0lmkebv,"{      
+network-traffic-icmp.svg,network-icmp.png,network-icmp.csv,icmp-ext,Network-ICMP,The ICMP extension specifies a default extension for capturing network traffic properties specific to ICMP. The key for this extension when used in the extensions dictionary MUST be icmp-ext. Note that this predefined extension does not use the extension facility described in section 7.3. The corresponding protocol value for this extension is icmp.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_ozypx0lmkebv,"{      
     ""type"": ""network-traffic"",      
     ""spec_version"": ""2.1"",      
     ""id"": ""network-traffic--e7a939ca-78c6-5f27-8ae0-4ad112454626"",      
@@ -801,7 +799,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""network-traffic--e7a939ca-78c6-5f27-8ae0-4ad112454626"")"
-network-traffic-sock.svg,network-socket.csv,socket-ext,Network-Socket,The Network Socket extension specifies a default extension for capturing network traffic properties associated with network sockets. The key for this extension when used in the extensions dictionary MUST be socket-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_8jamupj9ubdv,"{      
+network-traffic-sock.svg,network-socket.png,network-socket.csv,socket-ext,Network-Socket,The Network Socket extension specifies a default extension for capturing network traffic properties associated with network sockets. The key for this extension when used in the extensions dictionary MUST be socket-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_8jamupj9ubdv,"{      
   ""type"": ""network-traffic"",      
   ""spec_version"": ""2.1"",      
   ""id"": ""network-traffic--c95e972a-20a4-5307-b00d-b8393faf02c5"",      
@@ -877,7 +875,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""network-traffic--c95e972a-20a4-5307-b00d-b8393faf02c5"")"
-network-traffic-tcp.svg,network-tcp.csv,tcp-ext,Network-TCP,The TCP extension specifies a default extension for capturing network traffic properties specific to TCP. The key for this extension when used in the extensions dictionary MUST be tcp-ext. Note that this predefined extension does not use the extension facility described in section 7.3. The corresponding protocol value for this extension is tcp.,An object using the TCP Extension MUST contain at least one property from this extension,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_k2njqio7f142,"{      
+network-traffic-tcp.svg,network-tcp.png,network-tcp.csv,tcp-ext,Network-TCP,The TCP extension specifies a default extension for capturing network traffic properties specific to TCP. The key for this extension when used in the extensions dictionary MUST be tcp-ext. Note that this predefined extension does not use the extension facility described in section 7.3. The corresponding protocol value for this extension is tcp.,An object using the TCP Extension MUST contain at least one property from this extension,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_k2njqio7f142,"{      
     ""type"": ""network-traffic"",      
     ""spec_version"": ""2.1"",      
     ""id"": ""network-traffic--09ca55c3-97e5-5966-bad0-1d41d557ae13"",      
@@ -952,7 +950,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""network-traffic--09ca55c3-97e5-5966-bad0-1d41d557ae13"")"
-process.svg,process-windows.csv,windows-process-ext,Process-Windows-Process,The Windows Process extension specifies a default extension for capturing properties specific to Windows processes. The key for this extension when used in the extensions dictionary MUST be windows-process-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,An object using the Windows Process Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_oyegq07gjf5t,"{
+process.svg,process-windows.png,process-windows.csv,windows-process-ext,Process-Windows-Process,The Windows Process extension specifies a default extension for capturing properties specific to Windows processes. The key for this extension when used in the extensions dictionary MUST be windows-process-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,An object using the Windows Process Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_oyegq07gjf5t,"{
     ""type"": ""process"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""process--de02a3e4-4b96-460a-b799-684347004444"",  
@@ -1017,7 +1015,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""process--de02a3e4-4b96-460a-b799-684347004444"")"
-process.svg,process-windows-service.csv,windows-service-ext,Process-Windows-Service,The Windows Service extension specifies a default extension for capturing properties specific to Windows services. The key for this extension when used in the extensions dictionary MUST be windows-service-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,"As all properties of this extension are optional, at least one of the properties defined below MUST be included when using this extension.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_lbcvc2ahx1s0,"{      
+process.svg,process-windows-service.png,process-windows-service.csv,windows-service-ext,Process-Windows-Service,The Windows Service extension specifies a default extension for capturing properties specific to Windows services. The key for this extension when used in the extensions dictionary MUST be windows-service-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,"As all properties of this extension are optional, at least one of the properties defined below MUST be included when using this extension.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_lbcvc2ahx1s0,"{      
     ""type"": ""process"",      
     ""spec_version"": ""2.1"",      
     ""id"": ""process--70b17c6c-93e5-4c80-8683-5a4d4e51f2c1"",      
@@ -1094,7 +1092,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""process--70b17c6c-93e5-4c80-8683-5a4d4e51f2c1"")"
-user-account-unix.svg,user-account-unix.csv,unix-account-ext,User-UNIX-Account,The UNIX account extension specifies a default extension for capturing the additional information for an account on a UNIX system. The key for this extension when used in the extensions dictionary MUST be unix-account-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,An object using the UNIX Account Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_hodiamlggpw5,"{
+user-account-unix.svg,user-account-unix.png,user-account-unix.csv,unix-account-ext,User-UNIX-Account,The UNIX account extension specifies a default extension for capturing the additional information for an account on a UNIX system. The key for this extension when used in the extensions dictionary MUST be unix-account-ext. Note that this predefined extension does not use the extension facility described in section 7.3.,An object using the UNIX Account Extension MUST contain at least one property from this extension.,https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_hodiamlggpw5,"{
     ""type"": ""user-account"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""user-account--0d5b424b-93b8-5cd8-ac36-306e1789d63c"",  
@@ -1177,7 +1175,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""user-account--0d5b424b-93b8-5cd8-ac36-306e1789d63c"")"
-x509-certificate.svg,x509-ext.csv,x509-v3-extensions-type,X.509-Certificate Extension,"The X.509 v3 Extensions type captures properties associated with X.509 v3 extensions, which serve as a mechanism for specifying additional information such as alternative subject names. An object using the X.509 v3 Extensions type MUST contain at least one property from this type.","The X.509 v3 Extensions type captures properties associated with X.509 v3 extensions, which serve as a mechanism for specifying additional information such as alternative subject names. An object using the X.509 v3 Extensions type MUST contain at least one property from this type.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_oudvonxzdlku,"{
+x509-certificate.svg,x509-ext.png,x509-ext.csv,x509-v3-extensions-type,X.509-Certificate Extension,"The X.509 v3 Extensions type captures properties associated with X.509 v3 extensions, which serve as a mechanism for specifying additional information such as alternative subject names. An object using the X.509 v3 Extensions type MUST contain at least one property from this type.","The X.509 v3 Extensions type captures properties associated with X.509 v3 extensions, which serve as a mechanism for specifying additional information such as alternative subject names. An object using the X.509 v3 Extensions type MUST contain at least one property from this type.",https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_oudvonxzdlku,"{
     ""type"":""x509-certificate"",  
     ""spec_version"": ""2.1"",  
     ""id"": ""x509-certificate--b595eaf0-0b28-5dad-9e8e-0fab9c1facc9"",  

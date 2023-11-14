@@ -1,4 +1,4 @@
-# Email-MIME-Component Cyber Obervable Object
+# Email-MIME-Component Extension Object
 
 **Stix and TypeQL Object Type:**  `email-mime-part`
 
@@ -146,8 +146,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -172,3 +171,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("email-message--cf9b4b7f-14c8-5955-8065-020e0316b559")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

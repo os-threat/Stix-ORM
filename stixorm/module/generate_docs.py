@@ -8,9 +8,7 @@ import json
 from stixorm.module.typedb_lib.factories.definition_factory import get_definition_factory_instance
 from stixorm.module.typedb_lib.model.definitions import DefinitionName
 logger = logging.getLogger(__name__)
-stix_models = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
-attack_models = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
-os_threat_models = get_definition_factory_instance().lookup_definition(DefinitionName.OS_THREAT)
+
 
 heading_align = [
     ":--------------------|",
@@ -31,34 +29,41 @@ object_docs = [
         "dir": "sco",
         "protocol": "stix21",
         "file": "sco.csv",
-        "obj_type": "Cyber Obervable"
+        "obj_type": "Cyber Observable"
     },
     {
         "dir": "sub",
         "protocol": "stix21",
         "file": "sub.csv",
         "obj_type": "Extension"
-    }
-]
-
-
-object_tables = [
+    },
     {
-        "title": "OASIS Stix 2.1",
+        "dir": "sro",
         "protocol": "stix21",
-        "objects": stix_models.get_mapping("object_conversion")
+        "file": "sro.csv",
+        "obj_type": "Relationship"
+    },
+{
+        "dir": "sdo",
+        "protocol": "os_threat",
+        "file": "sdo.csv",
+        "obj_type": "Domain"
     },
     {
-        "title": "Mitre ATT&CK",
-        "protocol": "attack",
-        "objects": attack_models.get_mapping("object_conversion")
+        "dir": "sco",
+        "protocol": "os_threat",
+        "file": "sco.csv",
+        "obj_type": "Cyber Observable"
     },
     {
-        "title": "OS-Threat Stix Extensions",
-        "protocol": "attack",
-        "objects": attack_models.get_mapping("object_conversion")
+        "dir": "sub",
+        "protocol": "os_threat",
+        "file": "sub.csv",
+        "obj_type": "Extension"
     }
 ]
+
+
 protocols = [
     "stix21",
     "attack",
@@ -68,11 +73,11 @@ protocols = [
 titles = {
     "stix21": "OASIS Stix 2.1",
     "attack": "MITRE ATT&CK",
-    "os-threat": "OS-Threat Stix Extensions",
-    "sdo": "Domain Object's Types",
+    "os_threat": "OS-Threat Stix Extensions",
+    "sdo": "Domain Object Types",
     "sco": "Cyber Observable Object Types",
     "sro": "Relationship Object Types",
-    "sub": "Extension Types"
+    "sub": "Extension Object Types"
 }
 object_types = [
     "sdo",
@@ -81,7 +86,7 @@ object_types = [
     "sub"
 ]
 
-def gen_tables(obj_tables):
+def gen_tables(obj_docs):
     bucket = {}
     bucket["stix21"] = {}
     bucket["attack"] = {}
@@ -98,13 +103,34 @@ def gen_tables(obj_tables):
     bucket["os_threat"]["sro"] = []
     bucket["os_threat"]["sco"] = []
     bucket["os_threat"]["sub"] = []
-    for table in obj_tables:
-        obj_set = table["objects"]
-        protocol = table["protocol"]
-        layer = {}
-        for obj in obj_set:
-            obj_type = obj["object"]
-            bucket[protocol][obj_type].append(obj)
+    for doc in obj_docs:
+        dir = doc["dir"]
+        file = doc["file"]
+        obj_type = doc["obj_type"]
+        protocol = doc["protocol"]
+        base_dir = "./docs/protocols/" + protocol + "/" + dir
+        base_file = base_dir + "/" + file
+        cwd = os.getcwd()
+        if os.path.exists(base_file):
+            layers = []
+            with open(base_file, 'r') as csvfile:
+                # creating a csv reader object
+                csvreader = csv.reader(csvfile)
+                # extracting field names through first row
+                fields = next(csvreader)
+                # collect the icon, the object name and Para1
+                for row in csvreader:
+                    layer = {}
+                    layer["icon"] = row[0]
+                    layer["md"] = row[4] + ".md"
+                    layer["dir"] = dir
+                    layer["object"] = row[4]
+                    layer["para"] = row[5]
+                    bucket[protocol][dir].append(layer)
+
+                length = len( bucket[protocol][dir])
+                print("^^^^^^^^^^^^^^^^^^^^^^")
+                print(f' there are {length}  {protocol}  {dir.upper()} objects in the system')
 
     return bucket
 
@@ -113,26 +139,26 @@ def print_normal_rows(rel_dir, size, outfile, bucket_list, icon_dir, md_dir):
     for obj in bucket_list:
         detail_string = ""
         icon = obj["icon"]
-        name = obj["typeql"]
-        docs = obj["doc_url"]
-        summary = obj["summary"]
-        #logger.info(f"---- summary -> {summary}")
-        logger.info(f"icon dir -> {icon_dir}, md dir {md_dir}")
+        name = obj["object"]
+        doc_name = obj["md"]
+        summary = obj["para"]
+        #print(f"---- summary -> {summary}")
+        print(f"icon dir -> {icon_dir}, rel dir {rel_dir}")
         if icon == "":
             icon_name = ""
             icon_dir_name = ""
         else:
             icon_name = name
             icon_dir_name = icon_dir + icon
-        if docs == "":
+        if doc_name == "":
             name_dir = ""
         else:
-            name_dir = md_dir + docs
+            name_dir = md_dir + doc_name
 
         icon_md = "![" + icon_name + "](" + icon_dir_name + ")"
         name_md = "[" + name + "](" + name_dir + ")"
         detail_string += "| " + icon_md + " | " + name_md + " | " + summary + " |"
-        logger.info(detail_string, file=outfile)
+        print(detail_string, file=outfile)
 
 
 def print_summary_rows(rel_dir, size, outfile, bucket_list, icon_dir, md_dir):
@@ -149,12 +175,12 @@ def print_summary_rows(rel_dir, size, outfile, bucket_list, icon_dir, md_dir):
         for i in range(size):
             icon = ""
             name = ""
-            docs = ""
+            doc_name = ""
             if k < num_objs:
                 layer = bucket_list[k]
                 icon = layer["icon"]
-                name = layer["typeql"]
-                docs = layer["doc_url"]
+                name = layer["object"]
+                doc_name = layer["md"]
 
             if icon == "":
                 icon_name = ""
@@ -162,32 +188,32 @@ def print_summary_rows(rel_dir, size, outfile, bucket_list, icon_dir, md_dir):
             else:
                 icon_name = name
                 icon_dir_name = icon_dir + icon
-            if docs == "":
+            if doc_name == "":
                 name_dir = ""
             else:
-                name_dir = md_dir + docs
+                name_dir = md_dir + doc_name
             icon_md = "![" + icon_name + "](" + icon_dir_name + ")"
             name_md = "[" + name + "](" + name_dir + ")"
             detail_string += "| " + icon_md + " | " + name_md
             k += 1
 
         detail_string += " |"
-        logger.info(detail_string, file=outfile)
+        print(detail_string, file=outfile)
 
 
 def print_summary_tables(rel_dir, outfile, protocol, bucket, size):
-    logger.info("In summary tables")
-    logger.info(f"reldir 1-> {rel_dir}")
+    print("In summary tables")
+    print(f"reldir 1-> {rel_dir}")
 
     # Setup Table Headers
-    if rel_dir == "./docs":
-        rel_dir = "./protocols"
-    elif rel_dir == "./docs/protocols":
-        rel_dir = "."
-    elif rel_dir == "./docs/protocols/stix21":
-        rel_dir = "."
+    # if rel_dir == "./docs":
+    #     rel_dir = "./protocols"
+    # elif rel_dir == "./docs/protocols":
+    #     rel_dir = "."
+    # elif rel_dir == "./docs/protocols/stix21":
+    #     rel_dir = "."
     sub_head = ""
-    logger.info(f"reldir 2-> {rel_dir}")
+    print(f"reldir 2-> {rel_dir}")
     head_string = ""
     under_string = ""
     row_string = ""
@@ -199,47 +225,47 @@ def print_summary_tables(rel_dir, outfile, protocol, bucket, size):
         under_string = "|:----------:|:-----------|:-----------"
     head_string += " |"
     under_string += " |"
-    logger.info(f"I am ready to process summary tables, size {size}")
-    logger.info(f"object types {object_types}")
+    print(f"I am ready to process summary tables, size {size}")
+    print(f"object types {object_types}")
     for obj_type in object_types:
-        logger.info(f"\n###  {titles[obj_type]}\n", file=outfile)
-        logger.info(f'obj type {obj_type}, protocol {protocol}, protocols {protocols}')
+        print(f"\n###  {titles[obj_type]}\n", file=outfile)
+        print(f'obj type {obj_type}, protocol {protocol}, protocols {protocols}')
         if protocol == "all":
             for proto in protocols:
                 local_bucket = bucket[proto][obj_type]
-                logger.info(f'local bucket length is -> {len(local_bucket)}')
+                print(f'local bucket length is -> {len(local_bucket)}')
                 if len(local_bucket) != 0:
                     md_dir = rel_dir + "/" + proto + "/" + obj_type + "/"
                     icon_dir = "https://raw.githubusercontent.com/os-threat/images/main/img/rect-"
-                    logger.info(f"#### {titles[proto]} \n", file=outfile)
-                    logger.info(head_string, file=outfile)
-                    logger.info(under_string, file=outfile)
+                    print(f"#### {titles[proto]} \n", file=outfile)
+                    print(head_string, file=outfile)
+                    print(under_string, file=outfile)
                     if size == 1:
-                        logger.info("go down the size==1 route and protocol !=1")
+                        print("go down the size==1 route and protocol !=1")
                         print_normal_rows(rel_dir, size, outfile, bucket[proto][obj_type], icon_dir, md_dir)
                     else:
-                        logger.info("go down the size!=1 and protocol !=1 route")
+                        print("go down the size!=1 and protocol !=1 route")
                         print_summary_rows(rel_dir, size, outfile, bucket[proto][obj_type], icon_dir, md_dir)
-                    logger.info("\n\n", file=outfile)
+                    print("\n\n", file=outfile)
         else:
             local_bucket = bucket[protocol][obj_type]
             if len(local_bucket) != 0:
                 md_dir = rel_dir + "/" + obj_type + "/"
-                icon_dir = rel_dir + "/icons/"
-                logger.info(f"#### {titles[protocol]} \n", file=outfile)
-                logger.info(head_string, file=outfile)
-                logger.info(under_string, file=outfile)
+                icon_dir = "https://raw.githubusercontent.com/os-threat/images/main/img/rect-"
+                print(f"#### {titles[protocol]} \n", file=outfile)
+                print(head_string, file=outfile)
+                print(under_string, file=outfile)
                 if size == 1:
-                    logger.info("go down the size==1 route")
+                    print("go down the size==1 route")
                     print_normal_rows(rel_dir, size, outfile, bucket[protocol][obj_type], icon_dir, md_dir)
                 else:
-                    logger.info("go down the size!=1 route")
+                    print("go down the size!=1 route")
                     print_summary_rows(rel_dir, size, outfile, bucket[protocol][obj_type], icon_dir, md_dir)
-                logger.info("\n\n", file=outfile)
+                print("\n\n", file=outfile)
 
 
 def gen_overview_doc(rel_dir, bucket, protocol, size):
-    logger.info("generate overview")
+    print("generate overview")
     # open up generic overview doc
     md_name = rel_dir + "/" + "overview.md"
     or_mname = rel_dir + "/" + "_orig.md"
@@ -250,20 +276,20 @@ def gen_overview_doc(rel_dir, bucket, protocol, size):
     origfile = open(or_mname, "r")
     lines = origfile.readlines()
     for line in lines:
-        logger.info(line, file=outfile)
+        print(line, file=outfile)
     # now generate overview table
-    logger.info("## Total Objects in the System\n\n", file=outfile)
+    #print("## Total Original lines in the System\n\n", file=outfile)
     try:
         print_summary_tables(rel_dir, outfile, protocol, bucket, size)
     except:
-        logger.info("ERROR IN OBJECT Table GENERATION")
+        print("ERROR IN OBJECT Table GENERATION")
     # close the overview markdown file
     outfile.close()
 
 
-def configure_overview_table_docs(obj_tables):
-    logger.info("starting to process the list of objects")
-    bucket = gen_tables(obj_tables)
+def configure_overview_table_docs(docs_array):
+    print("starting to process the list of objects")
+    bucket = gen_tables(docs_array)
     # Setup Library Overview Document
     rel_dir = "./docs"
     gen_overview_doc(rel_dir, bucket, "all", 3)
@@ -273,6 +299,12 @@ def configure_overview_table_docs(obj_tables):
     # Setup Stix 21 Library Overview Document
     rel_dir = "./docs/protocols/stix21"
     gen_overview_doc(rel_dir, bucket, "stix21", 1)
+    # Setup ATT&CK Library Overview Document
+    # rel_dir = "./docs/protocols/attack"
+    # gen_overview_doc(rel_dir, bucket, "attack", 1)
+    # Setup OS_Threat Library Overview Document
+    rel_dir = "./docs/protocols/os_threat"
+    gen_overview_doc(rel_dir, bucket, "os_threat", 1)
 
 
 
@@ -281,40 +313,41 @@ def delete_existing_markdown(dir):
     del_dir = cwd + "\\" + dir
     del_pattern = del_dir + "\\" + "*.md"
     fileList = glob.glob(del_pattern)
-    logger.info(f'delete fileList is {fileList}')
+    print(f'delete fileList is {fileList}')
     for filePath in fileList:
         try:
             os.remove(filePath)
         except:
-            logger.info("Error while deleting file : " ,filePath)
+            print("Error while deleting file : " ,filePath)
     return del_dir
 
 
-def generate_object_doc(dir, fields, row, obj_type):
-    image = row[0]
-    table = row[1]
-    stix_type = row[2]
-    obj = row[3]
-    para1 = row[4]
-    para2 = row[5]
-    url = row[6]
-    json_example = row[7]
-    tql_ins = row[8]
-    tql_match = row[9]
-    py_match = row[10]
+def generate_object_doc(doc_set, dir, fields, row, obj_type):
+    icon = row[0]
+    image = row[1]
+    table = row[2]
+    stix_type = row[3]
+    obj = row[4]
+    para1 = row[5]
+    para2 = row[6]
+    url = row[7]
+    json_example = row[8]
+    tql_ins = row[9]
+    tql_match = row[10]
+    py_match = row[11]
     md_name = dir + "\\" + obj + ".md"
     outfile = open(md_name, "w")
     # 1. Setup Page title
-    logger.info(f'# {obj} {obj_type} Object\n', file=outfile)
-    logger.info(f'**Stix and TypeQL Object Type:**  `{stix_type}`\n', file=outfile)
+    print(f'# {obj} {obj_type} Object\n', file=outfile)
+    print(f'**Stix and TypeQL Object Type:**  `{stix_type}`\n', file=outfile)
     # 2. Setup Overview paragraphs
-    logger.info(f'{para1}\n', file=outfile)
+    print(f'{para1}\n', file=outfile)
     if para2 != "":
-        logger.info(f'{para2}\n', file=outfile)
-    logger.info(f'[Reference in Stix2.1 Standard]({url})', file=outfile)
+        print(f'{para2}\n', file=outfile)
+    print(f'[Reference in Stix2.1 Standard]({url})', file=outfile)
     # 3. Setup Table
-    logger.info(f'## Stix 2.1 Properties Converted to TypeQL', file=outfile)
-    logger.info(f'Mapping of the Stix Attack Pattern Properties to TypeDB\n', file=outfile)
+    print(f'## Stix 2.1 Properties Converted to TypeQL', file=outfile)
+    print(f'Mapping of the Stix Attack Pattern Properties to TypeDB\n', file=outfile)
     table_name = dir + "\\csv\\" + table
     rows = []
     with open(table_name, 'r') as csvfile:
@@ -329,40 +362,50 @@ def generate_object_doc(dir, fields, row, obj_type):
         heading = "|"
         for head in heading_align:
             heading += head
-        logger.info(f'{fields}', file=outfile)
-        logger.info(f'{heading}', file=outfile)
+        print(f'{fields}', file=outfile)
+        print(f'{heading}', file=outfile)
         # extracting each data row one by one
         for row in csvreader:
             cols = "| "
             for col in row:
                 cols += col + " |"
-            logger.info(f'{cols}', file=outfile)
+            print(f'{cols}', file=outfile)
     # 4. Setup JSON Section
-    logger.info(f'\n## The Example {obj} in JSON', file=outfile)
-    logger.info(f'The original JSON, accessible in the Python environment', file=outfile)
-    logger.info(f'```json\n{json_example}\n```\n', file=outfile)
+    print(f'\n## The Example {obj} in JSON', file=outfile)
+    print(f'The original JSON, accessible in the Python environment', file=outfile)
+    print(f'```json\n{json_example}\n```\n', file=outfile)
     # 5. Setup TypeQL Insert Section
-    logger.info(f'\n## Inserting the Example {obj} in TypeQL', file=outfile)
-    logger.info(f'The TypeQL insert statement', file=outfile)
-    logger.info(f'```typeql\n{tql_ins}\n```\n', file=outfile)
+    print(f'\n## Inserting the Example {obj} in TypeQL', file=outfile)
+    print(f'The TypeQL insert statement', file=outfile)
+    print(f'```typeql\n{tql_ins}\n```\n', file=outfile)
     # 6. Setup TypeQL Match Section
-    logger.info(f'## Retrieving the Example {obj} in TypeQL', file=outfile)
-    logger.info(f'The typeQL match statement\n', file=outfile)
-    logger.info(f'```typeql\n{tql_match}\n```\n', file=outfile)
+    print(f'## Retrieving the Example {obj} in TypeQL', file=outfile)
+    print(f'The typeQL match statement\n', file=outfile)
+    print(f'```typeql\n{tql_match}\n```\n', file=outfile)
     # 7. Setup Force Graph Image Section
-    logger.info(f'\nwill retrieve the example attack-pattern object in Vaticle Studio', file=outfile)
+    print(f'\nwill retrieve the example attack-pattern object in Vaticle Studio', file=outfile)
     imagefile = "./img/"+image
-    logger.info(f'![{obj} Example]({imagefile})', file=outfile)
+    print(f'![{obj} Example]({imagefile})', file=outfile)
     # 8. Setup Python Match Section
-    logger.info(f'\n## Retrieving the Example {obj}  in Python', file=outfile)
-    logger.info(f'The Python retrieval statement\n', file=outfile)
-    logger.info(f'```python\n{py_match}\n```\n', file=outfile)
-    # 9. Close the File
+    print(f'\n## Retrieving the Example {obj}  in Python', file=outfile)
+    print(f'The Python retrieval statement\n', file=outfile)
+    print(f'```python\n{py_match}\n```\n', file=outfile)
+    # 9. Write in links back to overviews in Docs, Protocols, Specific Protocol
+    sub_dir = doc_set["dir"]
+    prot_type = doc_set["protocol"]
+    specific = "../overview.md"
+    print(f' \n\n[Back to {titles[prot_type]} Overview]({specific})', file=outfile)
+    protocols = "../../overview.md"
+    print(f' \n\n[Back to All Protocols Overview]({protocols})', file=outfile)
+    docs = "../../../overview.md"
+    print(f' \n\n[Back to Overview Doc]({docs})', file=outfile)
+    # 10. Close the File
     outfile.close()
     return
 
 
 def gen_obj_docs(docs):
+    os.chdir('..\\..\\')
     # generate object docs
     for doc_set in docs:
         # Get details for each set of documents
@@ -371,29 +414,34 @@ def gen_obj_docs(docs):
         obj_type = doc_set["obj_type"]
         prot_type = doc_set["protocol"]
         # delete existing markdown documents
-        rel_path = "protocols/" +prot_type +"/" + sub_dir
+        rel_path = "docs\\protocols\\" + prot_type + "\\" + sub_dir
         full_doc_dir = delete_existing_markdown(rel_path)
         # generate new markdown docs in the target directory
         if full_doc_dir != "":
-            file_path = full_doc_dir + "/" + doc_file
+            file_path = full_doc_dir + "\\" + doc_file
             rows=[]
             with open(file_path, 'r') as csvfile:
                 # creating a csv reader object
                 csvreader = csv.reader(csvfile)
+                i=0
 
                 # extracting field names through first row
                 fields = next(csvreader)
 
                 # extracting each data row one by one
                 for row in csvreader:
-                    generate_object_doc(full_doc_dir, fields, row, obj_type)
+                    generate_object_doc(doc_set, full_doc_dir, fields, row, obj_type)
                     rows.append(row)
+                    i += 1
 
                 # get total number of rows
-                logger.info("Total no. of rows: %d" % (csvreader.line_num))
+                print("Total no. of rows: %d" % (i))
+
+def regen_all(docs_array):
+    gen_obj_docs(docs_array)
+    configure_overview_table_docs(docs_array)
 
 
 # if this file is run directly, then start here
 if __name__ == '__main__':
-    #gen_obj_docs(object_docs)
-    configure_overview_table_docs(object_tables)
+    regen_all(object_docs)

@@ -1,4 +1,4 @@
-# Windows-Registry-Value Cyber Obervable Object
+# Windows-Registry-Value Cyber Observable Object
 
 **Stix and TypeQL Object Type:**  `windows-registry-value-type`
 
@@ -79,14 +79,13 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Windows-Registry-Value Example](./img/registry-key-value.png)
+![Windows-Registry-Value Example](./img/registry-value-type.png)
 
 ## Retrieving the Example Windows-Registry-Value  in Python
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -111,3 +110,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("windows-registry-key--2ba37ae7-2745-5082-9dfd-9486dad41016")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

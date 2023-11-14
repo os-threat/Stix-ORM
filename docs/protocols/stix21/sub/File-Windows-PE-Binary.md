@@ -1,10 +1,8 @@
-# File-Windows-PE-Binary Cyber Obervable Object
+# File-Windows-PE-Binary Extension Object
 
 **Stix and TypeQL Object Type:**  `windows-pebinary-ext`
 
-The Windowsï¿½ PE Binary File extension specifies a default extension for capturing properties specific to Windows portable executable (PE) files. The key for this extension when used in the extensions dictionary MUST be windows-pebinary-ext. Note that this predefined extension does not use the extension facility described in section 7.3.
-
-An object using the Windowsï¿½ PE Binary File Extension MUST contain at least one property other than the required pe_type property from this extension.
+The Windows PE Binary File extension specifies a default extension for capturing properties specific to Windows portable executable (PE) files. The key for this extension when used in the extensions dictionary MUST be windows-pebinary-ext. Note that this predefined extension does not use the extension facility described in section 7.3. An object using the Windowsï¿½ PE Binary File Extension MUST contain at least one property other than the required pe_type property from this extension.
 
 Note that the example below also contains data and properties from the "windows-pe-optional-header-type" and the "windows-pe-section-type" 
 
@@ -14,18 +12,18 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 
 |  Stix 2.1 Property    |           Schema Name             | Required  Optional  |      Schema Object Type | Schema Parent  |
 |:--------------------|:--------------------------------:|:------------------:|:------------------------:|:-------------:|
-| pe_typeï¿½ |pe-type, |Required |  stix-attribute-string    |   attribute    |
-| imphashï¿½ |imphash, |      Optional       |  stix-attribute-string    |   attribute    |
-| machine_hexï¿½ |machine-hex, |      Optional       |  stix-attribute-string    |   attribute    |
-| number_of_sectionsï¿½ |number-of-sections, |      Optional       |  stix-attribute-integer    |   attribute    |
-| time_date_stampï¿½ |time-date-stamp, |      Optional       |  stix-attribute-timestamp    |   attribute    |
-| pointer_to_symbol_table_hexï¿½ |pointer-to-symbol-table-hex, |      Optional       |  stix-attribute-string    |   attribute    |
-| number_of_symbolsï¿½ |number-of-symbols, |      Optional       |  stix-attribute-integer    |   attribute    |
-| size_of_optional_headerï¿½ |size-of-optional-header, |      Optional       |  stix-attribute-integer    |   attribute    |
-| characteristics_hexï¿½ |characteristics-hex, |      Optional       |  stix-attribute-string    |   attribute    |
-| file_header_hashesï¿½ |hashes:owner, |      Optional       |embedded |relation |
-| optional_headerï¿½ |optional-headers:pebinary, |      Optional       |embedded |relation |
-| sectionsï¿½ |sections:pebinary, |      Optional       |embedded |relation |
+| pe_type  |pe-type, |Required |  stix-attribute-string    |   attribute    |
+| imphash  |imphash, |      Optional       |  stix-attribute-string    |   attribute    |
+| machine_hex  |machine-hex, |      Optional       |  stix-attribute-string    |   attribute    |
+| number_of_sections  |number-of-sections, |      Optional       |  stix-attribute-integer    |   attribute    |
+| time_date_stamp  |time-date-stamp, |      Optional       |  stix-attribute-timestamp    |   attribute    |
+| pointer_to_symbol_table_hex  |pointer-to-symbol-table-hex, |      Optional       |  stix-attribute-string    |   attribute    |
+| number_of_symbols  |number-of-symbols, |      Optional       |  stix-attribute-integer    |   attribute    |
+| size_of_optional_header  |size-of-optional-header, |      Optional       |  stix-attribute-integer    |   attribute    |
+| characteristics_hex  |characteristics-hex, |      Optional       |  stix-attribute-string    |   attribute    |
+| file_header_hashes  |hashes:owner, |      Optional       |embedded |relation |
+| optional_header  |optional-headers:pebinary, |      Optional       |embedded |relation |
+| sections  |sections:pebinary, |      Optional       |embedded |relation |
 
 ## The Example File-Windows-PE-Binary in JSON
 The original JSON, accessible in the Python environment
@@ -230,8 +228,7 @@ match
         has $d;
     $e (owner:$a, pointed-to:$c) isa embedded;
     $g (owner:$a, pointed-to:$f) isa embedded;
-    $h isa stix-sub-object,
-        has $j;
+    $h has $j;
     $i (owner:$f, pointed-to:$h) isa embedded;
 ```
 
@@ -243,8 +240,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -266,6 +262,15 @@ import_type = {
 }
 
 typedb = TypeDBSource(connection, import_type)
-stix_obj = typedb.get("file--fb0419a8-f09c-57f8-be64-71a80417591c", )
+stix_obj = typedb.get("file--fb0419a8-f09c-57f8-be64-71a80417591c",)
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

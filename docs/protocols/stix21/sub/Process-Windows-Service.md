@@ -1,4 +1,4 @@
-# Process-Windows-Service Cyber Obervable Object
+# Process-Windows-Service Extension Object
 
 **Stix and TypeQL Object Type:**  `windows-service-ext`
 
@@ -12,14 +12,14 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 
 |  Stix 2.1 Property    |           Schema Name             | Required  Optional  |      Schema Object Type | Schema Parent  |
 |:--------------------|:--------------------------------:|:------------------:|:------------------------:|:-------------:|
-| service_nameï¿½ |service-name |Optional |  stix-attribute-string    |   attribute    |
-| descriptionsï¿½ |description |Optional |  stix-attribute-string    |   attribute    |
-| display_nameï¿½ |display-name |Optional |  stix-attribute-string    |   attribute    |
-| group_nameï¿½ |group-name |Optional |  stix-attribute-string    |   attribute    |
-| start_typeï¿½ |start-type |Optional |  stix-attribute-string    |   attribute    |
-| service_dll_refsï¿½ |service-dll:process |Optional |embedded |relation |
-| service_typeï¿½ |service-type |Optional |  stix-attribute-string    |   attribute    |
-| service_statusï¿½ |service-status |Optional |  stix-attribute-string    |   attribute    |
+| service_name  |service-name |Optional |  stix-attribute-string    |   attribute    |
+| descriptions  |description |Optional |  stix-attribute-string    |   attribute    |
+| display_name  |display-name |Optional |  stix-attribute-string    |   attribute    |
+| group_name  |group-name |Optional |  stix-attribute-string    |   attribute    |
+| start_type  |start-type |Optional |  stix-attribute-string    |   attribute    |
+| service_dll_refs  |service-dll:process |Optional |embedded |relation |
+| service_type  |service-type |Optional |  stix-attribute-string    |   attribute    |
+| service_status  |service-status |Optional |  stix-attribute-string    |   attribute    |
 
 ## The Example Process-Windows-Service in JSON
 The original JSON, accessible in the Python environment
@@ -103,8 +103,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -129,3 +128,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("process--70b17c6c-93e5-4c80-8683-5a4d4e51f2c1")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

@@ -1,5 +1,5 @@
-image,table,type,object,para1,para2,url,json_example,typeql_insert,typeql_match,python_match
-impact-availability.svg,impact-availability-table.csv,availability,Availability,Every Impact MUST have an extension that has the same value of the impact_category. The Availability Extension tracks the impact of availability in assets,"The Python class name for the Availability Extension is Availability. The Availability extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+icon,image,table,type,object,para1,para2,url,json_example,typeql_insert,typeql_match,python_match
+impact-availability.svg,availability.png,impact-availability-table.csv,availability,Impact-Availability,Every Impact MUST have an extension that has the same value of the impact_category. The Availability Extension tracks the impact of availability in assets,"The Python class name for the Availability Extension is Availability. The Availability extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""impact"",
     ""spec_version"": ""2.1"",
     ""id"": ""impact--22f44c3f-7af8-4bdd-9ce8-eda54209acc9"",
@@ -96,7 +96,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""impact--22f44c3f-7af8-4bdd-9ce8-eda54209acc9"")"
-impact-confidentiality.svg,impact-confidentiality-table.csv,confidentiality,Confidentiality,Every Impact MUST have an extension that has the same value of the impact_category. The confidentiality extension tracks the type of information and the type of loss involved as the impact. ,"The Python class name for the Confidentiality Extension is Confidentiality. The Confidentiality extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+impact-confidentiality.svg,confidentiality.png,impact-confidentiality-table.csv,confidentiality,Impact-Confidentiality,Every Impact MUST have an extension that has the same value of the impact_category. The confidentiality extension tracks the type of information and the type of loss involved as the impact. ,"The Python class name for the Confidentiality Extension is Confidentiality. The Confidentiality extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""impact"",
     ""spec_version"": ""2.1"",
     ""id"": ""impact--74e754cb-1fa6-4685-bbd2-77770b3e1816"",
@@ -199,7 +199,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""impact--74e754cb-1fa6-4685-bbd2-77770b3e1816"")"
-impact-external.svg,impact-external-table.csv,external,External,Every Impact MUST have an extension that has the same value of the impact_category. The External Extension tracks the impact on external assets.,"The Python class name for the External Extension is External. The External extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+impact-external.svg,external.png,impact-external-table.csv,external,Impact-External,Every Impact MUST have an extension that has the same value of the impact_category. The External Extension tracks the impact on external assets.,"The Python class name for the External Extension is External. The External extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""impact"",
     ""spec_version"": ""2.1"",
     ""id"": ""impact--836ed944-db19-4126-a8a6-a9e272c84138"",
@@ -293,7 +293,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""impact--836ed944-db19-4126-a8a6-a9e272c84138"")"
-impact-integrity.svg,impact-integrity-table.csv,integrity,Integrity,Every Impact MUST have an extension that has the same value of the impact_category. The Integrity Extension tracks the alteration in information assets.,"The Python class name for the Integrity Extension is Integrity. The Integrity extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+impact-integrity.svg,integrity.png,impact-integrity-table.csv,integrity,Impact-Integrity,Every Impact MUST have an extension that has the same value of the impact_category. The Integrity Extension tracks the alteration in information assets.,"The Python class name for the Integrity Extension is Integrity. The Integrity extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""impact"",
     ""spec_version"": ""2.1"",
     ""id"": ""impact--704fcda9-8d2d-49d8-a521-1c11f848e33e"",
@@ -396,7 +396,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""impact--704fcda9-8d2d-49d8-a521-1c11f848e33e"")"
-impact-monetary.svg,impact-monetary-table.csv,monetary,Monetary,"Every Impact MUST have an extension that has the same value of the impact_category. The Monetary Extension tracks the monetary impact, for example ransom amounts.","The Python class name for the Monetary Extension is Monetary. The Monetary extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+impact-monetary.svg,monetary.png,impact-monetary-table.csv,monetary,Impact-Monetary,"Every Impact MUST have an extension that has the same value of the impact_category. The Monetary Extension tracks the monetary impact, for example ransom amounts.","The Python class name for the Monetary Extension is Monetary. The Monetary extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""impact"",
     ""spec_version"": ""2.1"",
     ""id"": ""impact--28106fd0-1952-4f76-9a5a-5e98a9eb6e7c"",
@@ -508,7 +508,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""impact--28106fd0-1952-4f76-9a5a-5e98a9eb6e7c"")"
-impact-physical.svg,impact-physical-table.csv,physical,Physical,Every Impact MUST have an extension that has the same value of the impact_category. The Physical Extension tracks the physical impact on assets,"The Python class name for the Physical Extension is Physical. The Physical extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+impact-physical.svg,physical.png,impact-physical-table.csv,physical,Impact-Physical,Every Impact MUST have an extension that has the same value of the impact_category. The Physical Extension tracks the physical impact on assets,"The Python class name for the Physical Extension is Physical. The Physical extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""impact"",
     ""spec_version"": ""2.1"",
     ""id"": ""impact--686566cc-d24c-4e34-bbc2-c284d0ece358"",
@@ -605,7 +605,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""impact--686566cc-d24c-4e34-bbc2-c284d0ece358"")"
-impact-traceability.svg,impact-traceability-table.csv,traceability,Traceability,"Every Impact MUST have an extension that has the same value of the impact_category. The Traceability Extension tracks whether the traces left by the threat-actor, are sufficient to enable attribution.","The Python class name for the Traceability Extension is Traceability. The Traceability extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+impact-traceability.svg,traceability.png,impact-traceability-table.csv,traceability,Impact-Traceability,"Every Impact MUST have an extension that has the same value of the impact_category. The Traceability Extension tracks whether the traces left by the threat-actor, are sufficient to enable attribution.","The Python class name for the Traceability Extension is Traceability. The Traceability extension MUST be accompanied by the extension-definition—?7cc33dd6-f6a1-489b-98ea-522d351d71b9 as its extension ID, with the Python class name of ImpactCoreExt..",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""impact"",
     ""spec_version"": ""2.1"",
     ""id"": ""impact--79459a66-7dc3-4218-95a1-a4511edeff30"",
@@ -699,7 +699,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""impact--79459a66-7dc3-4218-95a1-a4511edeff30"")"
-sighting-alert.svg,sighting-alert-table.csv,sighting-alert,SightingAlert,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","An Alert can be issued by a system or a user. Generally, when an Alert is issued, it is not known whether it is actually nefarious. Alerts are often used to initiailise an incident. Conceivably, once an Alert is qualified as a true positive, it could be joined to another Alert from another Incident. The Python class name is SightingAlert. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+sighting-alert.svg,sighting-alert.png,sighting-alert-table.csv,sighting-alert,Sighting-Alert,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","An Alert can be issued by a system or a user. Generally, when an Alert is issued, it is not known whether it is actually nefarious. Alerts are often used to initiailise an incident. Conceivably, once an Alert is qualified as a true positive, it could be joined to another Alert from another Incident. The Python class name is SightingAlert. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""sighting"",
     ""spec_version"": ""2.1"",
     ""id"": ""sighting--db6e5af2-437d-46dc-a831-b972f02674de"",
@@ -779,7 +779,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""sighting--db6e5af2-437d-46dc-a831-b972f02674de"")"
-sighting-anecdote.svg,sighting-anecdote-table.csv,sighting-anecdote,SightingAnecdote,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","An Anecdote can be issued only by a person. Generally, when an Anecdote is issued, it is not known whether it is actually nefarious. Anecdotes are used to initiailise an incident. Conceivably, an Anecdote may also be issued that defines an Impact, rather than an Event Anecdotes are expected to have low confidence and result in the need to do tasks to increase the confidence. The Python class name is SightingAnecdote. The Python class name is SightingAlert. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+sighting-anecdote.svg,sighting-anecdote.png,sighting-anecdote-table.csv,sighting-anecdote,Sighting-Anecdote,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","An Anecdote can be issued only by a person. Generally, when an Anecdote is issued, it is not known whether it is actually nefarious. Anecdotes are used to initiailise an incident. Conceivably, an Anecdote may also be issued that defines an Impact, rather than an Event Anecdotes are expected to have low confidence and result in the need to do tasks to increase the confidence. The Python class name is SightingAnecdote. The Python class name is SightingAlert. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""sighting"",
     ""spec_version"": ""2.1"",
     ""id"": ""sighting--8d8513f2-1e84-40f0-97a6-b8b4263ccb40"",
@@ -861,7 +861,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""sighting--8d8513f2-1e84-40f0-97a6-b8b4263ccb40"")"
-sighting-context.svg,sighting-context-table.csv,sighting-context,SightingContext,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","Context data is based on querying of internal systems and has 100% confidence It can be of two types:
+sighting-context.svg,sighting-context.png,sighting-context-table.csv,sighting-context,Sighting-Context,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","Context data is based on querying of internal systems and has 100% confidence It can be of two types:
 
 Non-SCO: Historical or narrative data that would be contained in a Note, and is not an Event. The Note can attach to different objects, depending on the Inicdent type
 
@@ -949,7 +949,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""sighting--f782ed66-86ce-463f-a014-c79400f1b79f"")"
-sighting-exclusion.svg,sighting-exclusion-table.csv,sighting-exclusion,SightingExclusion,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","An Exclusion List is a source that provides a list of entities that have been shown by their processes (?) to be nefarious. Generally Exclusion lists are focused on specific approaches, such as phshing etc. There are often multiple sources covering the same approach, and it is to be expected that if an entity is found in multiple sources, then it has more confidence than if it is found in one out of many sources. A search on an Exclusion List can result in a sighting, but not an event, as it adds to the data available about. The Python class name is SightingExclusion. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+sighting-exclusion.svg,sighting-exclusion.png,sighting-exclusion-table.csv,sighting-exclusion,Sighting-Exclusion,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","An Exclusion List is a source that provides a list of entities that have been shown by their processes (?) to be nefarious. Generally Exclusion lists are focused on specific approaches, such as phshing etc. There are often multiple sources covering the same approach, and it is to be expected that if an entity is found in multiple sources, then it has more confidence than if it is found in one out of many sources. A search on an Exclusion List can result in a sighting, but not an event, as it adds to the data available about. The Python class name is SightingExclusion. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""sighting"",
     ""spec_version"": ""2.1"",
     ""id"": ""sighting--5a37c821-b62a-4bb5-b2ea-02abcc6342e8"",
@@ -1028,7 +1028,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""sighting--5a37c821-b62a-4bb5-b2ea-02abcc6342e8"")"
-sighting-enrichment.svg,sighting-enrichment-table.csv,sighting-enrichment,SightingEnrichment,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","An Enrichment is an expansion in the evidence, by leveraging existing data and querying paid or free intel sources to return observables. The results of an Enrichment will generally be an SCO, although SDO’s can also be returned. Note observables may not be in the current SCO list. The Python class name is SightingEnrichment. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+sighting-enrichment.svg,sighting-enrichment.png,sighting-enrichment-table.csv,sighting-enrichment,Sighting-Enrichment,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","An Enrichment is an expansion in the evidence, by leveraging existing data and querying paid or free intel sources to return observables. The results of an Enrichment will generally be an SCO, although SDO’s can also be returned. Note observables may not be in the current SCO list. The Python class name is SightingEnrichment. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""sighting"",
     ""spec_version"": ""2.1"",
     ""id"": ""sighting--5397e885-4812-4384-83c7-5bde065ff45d"",
@@ -1117,7 +1117,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""sighting--5397e885-4812-4384-83c7-5bde065ff45d"")"
-sighting-hunt.svg,sighting-hunt-table.csv,sighting-hunt,SightingHunt,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","A Hunt is a targeted search using a hunting platform, such as Kestrel, or similar, started as a Task. A Hunt can result in:
+sighting-hunt.svg,sighting-hunt.png,sighting-hunt-table.csv,sighting-hunt,Sighting-Hunt,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","A Hunt is a targeted search using a hunting platform, such as Kestrel, or similar, started as a Task. A Hunt can result in:
 
 1. Confirmation that an Alert has resulted in a negative Impact (e.g. user clicked on link, Outlook, which downloaded software and started a process) ? SCO’s & Impact
 2. Scope of Impact, which machines were impacted ? Impact
@@ -1209,7 +1209,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""sighting--03c1cfce-e63c-4eb4-b071-5123e8f2c7ed"")"
-sighting-framework.svg,sighting-framework-table.csv,sighting-framework,SightingFramework,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","Since SCO’s are ephemeral, the desire is to move up the Pyramid of Pain to more abstract characterisations, which are harder for attackers to evade. Frameworks, such as Mitre ATT&CK and DISARM are commonly used. Assignment of a Framework Component requires a judgement, or a correlation from a knowledge base, and thereby has subjectivity. The Python class name is SightingFramework. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+sighting-framework.svg,sighting-framework.png,sighting-framework-table.csv,sighting-framework,Sighting-Framework,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","Since SCO’s are ephemeral, the desire is to move up the Pyramid of Pain to more abstract characterisations, which are harder for attackers to evade. Frameworks, such as Mitre ATT&CK and DISARM are commonly used. Assignment of a Framework Component requires a judgement, or a correlation from a knowledge base, and thereby has subjectivity. The Python class name is SightingFramework. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""sighting"",
     ""spec_version"": ""2.1"",
     ""id"": ""sighting--dae5afc5-022d-4000-b8d7-a71747f96f0d"",
@@ -1301,7 +1301,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""sighting--dae5afc5-022d-4000-b8d7-a71747f96f0d"")"
-sighting-external.svg,sighting-external-table.csv,sighting-external,SightingExternal,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","Threat Reports are posted by researchers on free and paid services, such as MISP. This is one method of confirming that an unknown Indicator is actually malicious. However, reliability of a threat report is a concern, and confidence needs to be established for each individual provider in a channel such as MISP. The Python class name is SightingExternal. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+sighting-external.svg,sighting-external.png,sighting-external-table.csv,sighting-external,Sighting-External,"The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.","Threat Reports are posted by researchers on free and paid services, such as MISP. This is one method of confirming that an unknown Indicator is actually malicious. However, reliability of a threat report is a concern, and confidence needs to be established for each individual provider in a channel such as MISP. The Python class name is SightingExternal. It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""sighting"",
     ""spec_version"": ""2.1"",
     ""id"": ""sighting--5e72168a-e37d-4cf3-a429-15c06bd3abf6"",
@@ -1402,7 +1402,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""sighting--5e72168a-e37d-4cf3-a429-15c06bd3abf6"")"
-identity-contact.svg,identity-contact-table.csv,extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498,IdentityContact,The current STIX 2.1 Identity object only contains a single text field for contact information. This is insufficient to effectively move contact information for individuals between automated systems. This extension adds more granular tracking so that this can be effectively communicated between systems.,"The properties and additional types within the Identity Contact Information Extension are defined below.The Python class name is IdentityContact.  As this is not a top-level object, fields such as identifier are not present. This extension should be mapped to extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498",https://github.com/os-threat/cti-stix-common-objects/tree/main/extension-definition-specifications/identity-contact-information,"{
+identity-contact.svg,extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498.png,identity-contact-table.csv,extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498,Identity-Contact,The current STIX 2.1 Identity object only contains a single text field for contact information. This is insufficient to effectively move contact information for individuals between automated systems. This extension adds more granular tracking so that this can be effectively communicated between systems.,"The properties and additional types within the Identity Contact Information Extension are defined below.The Python class name is IdentityContact.  As this is not a top-level object, fields such as identifier are not present. This extension should be mapped to extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498",https://github.com/os-threat/cti-stix-common-objects/tree/main/extension-definition-specifications/identity-contact-information,"{
     ""type"": ""identity"",
     ""spec_version"": ""2.1"",
     ""id"": ""identity--27c2fdc0-bf9c-46d8-aab1-658948cd2ed6"",
@@ -1438,4 +1438,95 @@ identity-contact.svg,identity-contact-table.csv,extension-definition--66e2492a-b
                 ""team"": ""Users""
           }
     }
-}",,,
+}","match  $email-addr0 isa email-addr, has stix-id ""email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba"";
+ $user-account0 isa user-account, has stix-id ""user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0"";
+insert $identity isa identity,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has identity-class $identity-class;
+
+ $stix-type ""identity"";
+ $spec-version ""2.1"";
+ $stix-id ""identity--27c2fdc0-bf9c-46d8-aab1-658948cd2ed6"";
+ $created 2023-11-12T13:19:14.244;
+ $modified 2023-11-12T13:19:14.244;
+ $name ""Naive"";
+ $identity-class ""individual"";
+
+ $identity-contact isa identity-contact,
+ has extension-type $extension-type,
+ has first-name $first-name,
+ has last-name $last-name,
+ has middle-name $middle-name,
+ has prefix $prefix,
+ has team $team;
+
+ $extension-type ""property-extension"";
+ $first-name ""Naive"";
+ $last-name ""Smith"";
+ $middle-name ""Weakling"";
+ $prefix ""Mr"";
+ $team ""Users"";
+
+ $identity-ext0 (identity-base:$identity, identity-spec:$identity-contact) isa identity-ext;
+
+
+$contact-number-sub0 isa contact-number-sub,
+ has contact-number ""work-phone"",
+ has contact-number-type ""0499-999-109"";
+
+ $identity-number (identity:$identity-contact, number-object:$contact-number-sub0) isa identity-number;
+
+$email-contact-sub0 isa email-contact-sub,
+ has digital-contact-type ""work"";
+
+ $identity-email (identity:$identity-contact, email-object:$email-contact-sub0) isa identity-email;
+
+ $email-ref0 (origin:$email-contact-sub0, email:$email-addr0) isa email-ref;
+
+$social-media-sub0 isa social-media-sub,
+ has digital-contact-type ""work"";
+
+ $identity-account (identity:$identity-contact, account-object:$social-media-sub0) isa identity-account;
+
+ $user-account-ref0 (origin:$social-media-sub0, account:$user-account0) isa user-account-ref;","match
+   $a isa identity,
+      has stix-id ""identity--27c2fdc0-bf9c-46d8-aab1-658948cd2ed6"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;
+   $f isa stix-sub-object, 
+      has $g;
+   $h (owner:$c, pointed-to:$f) isa embedded;
+   $i isa stix-sub-object,
+      has $j;
+   $k (owner:$c, pointed-to:$i) isa embedded;
+   $l (owner:$i, pointed-to:$m) isa embedded;
+   ","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""identity--27c2fdc0-bf9c-46d8-aab1-658948cd2ed6"")"

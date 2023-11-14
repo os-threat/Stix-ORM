@@ -2,11 +2,7 @@
 
 **Stix and TypeQL Object Type:**  `campaign`
 
-A Campaign is a grouping of adversarial behaviors that describes a set of malicious activities or attacks (sometimes called waves) that occur over a period of time against a specific set of targets. Campaigns usually have well defined objectives and may be part of an Intrusion Set.
-
- 
-
-Campaigns are often attributed to an intrusion set and threat actors. The threat actors may reuse known infrastructure from the intrusion set or may set up new infrastructure specific for conducting that campaign.
+A Campaign is a grouping of adversarial behaviors that describes a set of malicious activities or attacks (sometimes called waves) that occur over a period of time against a specific set of targets. Campaigns usually have well defined objectives and may be part of an Intrusion Set. Campaigns are often attributed to an intrusion set and threat actors. The threat actors may reuse known infrastructure from the intrusion set or may set up new infrastructure specific for conducting that campaign.
 
 Campaigns can be characterized by their objectives and the incidents they cause, people or resources they target, and the resources (infrastructure, intelligence, Malware, Tools, etc.) they use.
 
@@ -108,7 +104,6 @@ The Python retrieval statement
 
 ```python
 from stixorm.module.typedb import TypeDBSink, TypeDBSource
-
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -133,3 +128,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

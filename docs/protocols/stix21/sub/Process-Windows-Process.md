@@ -1,4 +1,4 @@
-# Process-Windows-Process Cyber Obervable Object
+# Process-Windows-Process Extension Object
 
 **Stix and TypeQL Object Type:**  `windows-process-ext`
 
@@ -12,13 +12,13 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 
 |  Stix 2.1 Property    |           Schema Name             | Required  Optional  |      Schema Object Type | Schema Parent  |
 |:--------------------|:--------------------------------:|:------------------:|:------------------------:|:-------------:|
-| aslr_enabledï¿½ |aslr-enabled |Optional |  stix-attribute-string    |   attribute    |
-| dep_enabledï¿½ |dep-enabled |Optional |  stix-attribute-boolean    |   attribute    |
-| priorityï¿½ |priority |Optional |  stix-attribute-string    |   attribute    |
-| owner_sidï¿½ |owner-sid |Optional |  stix-attribute-string    |   attribute    |
-| window_titleï¿½ |window-title |Optional |  stix-attribute-string    |   attribute    |
-| startup_infoï¿½ |startup-info:process |Optional |embedded |relation |
-| integrity_levelï¿½ï¿½ |integrity-level |Optional |  stix-attribute-string    |   attribute    |
+| aslr_enabled  |aslr-enabled |Optional |  stix-attribute-string    |   attribute    |
+| dep_enabled  |dep-enabled |Optional |  stix-attribute-boolean    |   attribute    |
+| priority  |priority |Optional |  stix-attribute-string    |   attribute    |
+| owner_sid  |owner-sid |Optional |  stix-attribute-string    |   attribute    |
+| window_title  |window-title |Optional |  stix-attribute-string    |   attribute    |
+| startup_info  |startup-info:process |Optional |embedded |relation |
+| integrity_level   |integrity-level |Optional |  stix-attribute-string    |   attribute    |
 
 ## The Example Process-Windows-Process in JSON
 The original JSON, accessible in the Python environment
@@ -90,8 +90,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -116,3 +115,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("process--de02a3e4-4b96-460a-b799-684347004444")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

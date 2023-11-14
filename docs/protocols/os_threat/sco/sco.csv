@@ -1,5 +1,5 @@
-image,table,type,object,para1,para2,url,json_example,typeql_insert,typeql_match,python_match
-anecdote.svg,anecdote-table.csv,anecdote,Anecdote,"Anecdotes are reports provided by people that can relate to Events or Impacts. Anecdote SCO's record these details, connecting the identity of the reporter, the date of the report and the text provided.","The Anecdote SCO must be accompanied by a definition extension, which MUST use extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4 as its extension ID. The definition extension Python class name is AnecdoteExt.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
+icon,image,table,type,object,para1,para2,url,json_example,typeql_insert,typeql_match,python_match
+anecdote.svg,anecdote.png,anecdote-table.csv,anecdote,Anecdote,"Anecdotes are reports provided by people that can relate to Events or Impacts. Anecdote SCO's record these details, connecting the identity of the reporter, the date of the report and the text provided.","The Anecdote SCO must be accompanied by a definition extension, which MUST use extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4 as its extension ID. The definition extension Python class name is AnecdoteExt.",https://github.com/os-threat/cti-stix-common-objects/blob/main/extension-definition-specifications/incident-core/Incident%20Extension%20Suite.adoc,"{
     ""type"": ""anecdote"",
     ""spec_version"": ""2.1"",
     ""id"": ""anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f"",

@@ -1,4 +1,4 @@
-# Network-ICMP Cyber Obervable Object
+# Network-ICMP Extension Object
 
 **Stix and TypeQL Object Type:**  `icmp-ext`
 
@@ -90,8 +90,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -116,3 +115,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("network-traffic--e7a939ca-78c6-5f27-8ae0-4ad112454626")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

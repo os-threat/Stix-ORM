@@ -1,4 +1,4 @@
-# Domain-Name Cyber Obervable Object
+# Domain-Name Cyber Observable Object
 
 **Stix and TypeQL Object Type:**  `domain-name`
 
@@ -67,14 +67,13 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Domain-Name Example](./img/domain.png)
+![Domain-Name Example](./img/domain-name.png)
 
 ## Retrieving the Example Domain-Name  in Python
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -99,3 +98,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("domain-name--3c10e93f-798e-52a6-a0c1-08156efab7f5")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)
