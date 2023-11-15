@@ -5,7 +5,7 @@ import string
 import pytest
 
 from stixorm.module.authorise import import_type_factory
-from stixorm.module.typedb import TypeDBSink
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 from stixorm.module.typedb_lib.queries import get_all_databases, delete_database
 
 
@@ -72,8 +72,23 @@ def setup_teardown(generate_connection):
     typedb.clear_db()
 
 
-@pytest.fixture(scope="session")
-def setup_before_all_tests(request):
+@pytest.fixture
+def db_source_for_default(generate_connection):
+    import_type = import_type_factory.get_default_import()
+    typedb = TypeDBSource(connection=generate_connection,
+                        import_type=import_type)
+    return typedb
+
+@pytest.fixture
+def db_sink_for_default(generate_connection):
+    import_type = import_type_factory.get_default_import()
+    typedb = TypeDBSink(connection=generate_connection,
+                        clear=True,
+                        import_type=import_type)
+    return typedb
+
+@pytest.fixture(scope="session", autouse=True)
+def setup_before_all_tests():
     # Put your setup code here
     print("\nClean up before starting")
     all_databases = get_all_databases(data_base_uri(), database_port())

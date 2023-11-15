@@ -14,20 +14,12 @@ from stix2.properties import (
     TimestampProperty, TypeProperty, EmbeddedObjectProperty, ObservableProperty
 )
 
+from stixorm.module.typedb_lib.factories.mappings_factory import get_mapping_factory_instance
 
 DEFAULT_VERSION = '2.1'
 ERROR_INVALID_ID = (
     "not a valid STIX identifier, must match <object-type>--<UUID>: {}"
 )
-
-def get_ext_class(key, spec_version):
-    defin = Definitions()
-    list_of_ext = defin.sub_objects
-    for ext in list_of_ext:
-        if ext["type"] == key:
-            pass
-           # return os_threat_models[ext["class"]]
-
 
 
 # TODO: Kestrel was missing from original definition, does this need to be fixed?
@@ -173,6 +165,7 @@ def _get_dict(data):
             raise ValueError("Cannot convert '%s' to dictionary." % str(data))
 
 
+
 class ThreatExtensionsProperty(DictionaryProperty):
     """Property for representing extensions on Observable objects.
     """
@@ -192,7 +185,7 @@ class ThreatExtensionsProperty(DictionaryProperty):
 
         has_custom = False
         for key, subvalue in dictified.items():
-            cls = get_ext_class(key, self.spec_version)
+            cls = get_mapping_factory_instance().get_ext_class(key, 'os_threat')
             if cls:
                 if isinstance(subvalue, dict):
                     ext = cls(allow_custom=False, **subvalue)

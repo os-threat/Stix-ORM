@@ -15,15 +15,11 @@ import stix2
 
 import_type = import_type_factory.get_default_import()
 
-connection = {
-    "uri": "localhost",
-    "port": "1729",
-    "database": "stixorm",
-    "user": None,
-    "password": None
-}
 
-def test_campaign_data(setup_teardown, db_source_for_default, db_sink_for_default):
+
+
+
+def test_campaign_data(db_sink_for_default, db_source_for_default):
     url1 = "https://raw.githubusercontent.com/os-threat/Stix-ORM/main/test/data/standard/aaa_identity.json"
     url2 = "https://raw.githubusercontent.com/os-threat/Stix-ORM/main/test/data/standard/campaign.json"
     # Insert the identities first
@@ -67,3 +63,4 @@ def test_campaign_data(setup_teardown, db_source_for_default, db_sink_for_defaul
                 assert result.message is None
                 assert result.error is None
 
+        db_sink_for_default.clear_db()

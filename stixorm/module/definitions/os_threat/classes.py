@@ -348,20 +348,20 @@ class IncidentCoreExt(_Extension):
 
     _type = 'extension-definition--ef765651-680c-498d-9894-99799f2fa126'
     _properties = OrderedDict([
-        ('determination', StringProperty()),
         ('extension_type', StringProperty(fixed='property-extension')),
         ('investigation_status', StringProperty()),
-        ('criticality', IntegerProperty(min=0)),
         ('blocked', BooleanProperty()),
         ('malicious', BooleanProperty()),
+        ('criticality', IntegerProperty(min=0)),
+        ('determination', StringProperty()),
+        ('incident_types', ListProperty(StringProperty)),
         ('impacted_entity_counts', EmbeddedObjectProperty(type=EntityCountObject)),
         ('recoverability', ListProperty(StringProperty)),
-        ('scores', EmbeddedObjectProperty(type=IncidentScoreObject)),
-        ('incident_types', ListProperty(StringProperty)),
+        ('scores', ListProperty(EmbeddedObjectProperty(type=IncidentScoreObject))),
         ('task_refs', ListProperty(ThreatReference(valid_types='task'))),
         ('event_refs', ListProperty(ThreatReference(valid_types='event'))),
         ('impact_refs', ListProperty(ThreatReference(valid_types='impact'))),
-        ('notes_refs', ListProperty(ThreatReference(valid_types='notes'))),
+        ('notes_refs', ListProperty(ThreatReference(valid_types='note'))),
         ('evidence_refs', ListProperty(ThreatReference(valid_types='evidence'))),
     ])
 
@@ -393,7 +393,7 @@ class Task(_DomainObject):
         ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('changed_objects', ListProperty(EmbeddedObjectProperty(type=StateChangeObject))),
-        ('task_type', StringProperty()),
+        ('task_types', ListProperty(StringProperty)),
         ('step_type', StringProperty()),
         ('outcome', StringProperty()),
         ('description', StringProperty()),
@@ -416,7 +416,7 @@ class Task(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -452,12 +452,13 @@ class Evidence(_DomainObject):
         ('evidence_type', StringProperty()),
         ('source', StringProperty()),
         ('object_refs', ListProperty(ThreatReference(valid_types=valid_obj, spec_version='2.1'))),
+        ('evidence_refs', ListProperty(ThreatReference(valid_types=valid_obj, spec_version='2.1'))),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
         ('lang', StringProperty()),
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
 
