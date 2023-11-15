@@ -1550,7 +1550,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get( ""course-of-action--93e7968a-9074-4eac-8ae9-9f5200ec3317"")"
-attack-software.svg,software-malware.png,attack-software-malware-table.csv,malware,Software,Software in ATT&CK is the union of two distinct STIX types: malware and tool.,,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#software ,"{
+attack-software.svg,software-malware.png,attack-software-malware-table.csv,malware,Software-Malware,Software in ATT&CK is the union of two distinct STIX types: malware and tool.,,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#software ,"{
     ""object_marking_refs"": [
         ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168""
     ],
@@ -1679,7 +1679,7 @@ import_type = {
 
 typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get(""malware--0f1ad2ef-41d4-4b7a-9304-ddae68ea3005"")"
-attack-software.svg,software-tool.png,attack-software-tool-table.csv,tool,Software,Software in ATT&CK is the union of two distinct STIX types: malware and tool.,,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#software ,"{
+attack-software.svg,software-tool.png,attack-software-tool-table.csv,tool,Software-Tool,Software in ATT&CK is the union of two distinct STIX types: malware and tool.,,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#software ,"{
     ""object_marking_refs"": [
         ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168""
     ],
