@@ -43,7 +43,7 @@ object_docs = [
         "file": "sro.csv",
         "obj_type": "Relationship"
     },
-{
+    {
         "dir": "sdo",
         "protocol": "os_threat",
         "file": "sdo.csv",
@@ -60,6 +60,18 @@ object_docs = [
         "protocol": "os_threat",
         "file": "sub.csv",
         "obj_type": "Extension"
+    },
+    {
+        "dir": "sdo",
+        "protocol": "attack",
+        "file": "sdo.csv",
+        "obj_type": "Domain"
+    },
+    {
+        "dir": "sro",
+        "protocol": "attack",
+        "file": "sro.csv",
+        "obj_type": "Relationship"
     }
 ]
 
@@ -206,12 +218,16 @@ def print_summary_tables(rel_dir, outfile, protocol, bucket, size):
     print(f"reldir 1-> {rel_dir}")
 
     # Setup Table Headers
-    # if rel_dir == "./docs":
-    #     rel_dir = "./protocols"
-    # elif rel_dir == "./docs/protocols":
-    #     rel_dir = "."
-    # elif rel_dir == "./docs/protocols/stix21":
-    #     rel_dir = "."
+    if rel_dir == "./docs":
+        rel_dir = "./protocols"
+    elif rel_dir == "./docs/protocols":
+        rel_dir = "."
+    elif rel_dir == "./docs/protocols/stix21":
+        rel_dir = "."
+    elif rel_dir == "./docs/protocols/attack":
+        rel_dir = "."
+    elif rel_dir == "./docs/protocols/os_threat":
+        rel_dir = "."
     sub_head = ""
     print(f"reldir 2-> {rel_dir}")
     head_string = ""
@@ -300,8 +316,8 @@ def configure_overview_table_docs(docs_array):
     rel_dir = "./docs/protocols/stix21"
     gen_overview_doc(rel_dir, bucket, "stix21", 1)
     # Setup ATT&CK Library Overview Document
-    # rel_dir = "./docs/protocols/attack"
-    # gen_overview_doc(rel_dir, bucket, "attack", 1)
+    rel_dir = "./docs/protocols/attack"
+    gen_overview_doc(rel_dir, bucket, "attack", 1)
     # Setup OS_Threat Library Overview Document
     rel_dir = "./docs/protocols/os_threat"
     gen_overview_doc(rel_dir, bucket, "os_threat", 1)
