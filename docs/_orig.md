@@ -30,7 +30,7 @@ This intentional splitting of the code base enables users to freely modify objec
 It is not exected that users will ever want to or need to customise the ORM code, although they are fully able to do so under the open source license. In short, this arrangement enables all users to make ad-hoc changes as required without cany concern about copy left licensing.
 
 ## What are the Benefits?
-[TypeDB is without a doubt, the most powerful datastore for cybersecurity](typedb_benefits.md), because:
+TypeDB is without a doubt, the most powerful datastore for cybersecurity, because:
 1. Semantic Hypergraph: Enables elegant, succinct representation of intricate cybersecurity objects and relationships
 2. Fully Normalised Attributes: Data is only written once (e.g. Stix-ID, hash etc.), as attrbutes are normalised as a database guarantee
 3. Unique Data Modelling: Unique modelling capabilities of attributes owning attributes (used in key-value store), and relations able to play roles in other relations
@@ -51,7 +51,6 @@ The documentation system contains the following sections:
 - [Using the Stix-ORM](install/configuration.md)
 - [How the ORM Works](how_it_works/orm_oveview.md)
 - [Protcols Supported](protocols/_orig.md)
-- [Interacting with Stix-ORM](interactions/overview.md)
 
 The current supported objects can be viewed here
 
