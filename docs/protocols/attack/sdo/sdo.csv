@@ -1,0 +1,1496 @@
+icon,image,table,type,object,para1,para2,url,json_example,typeql_insert,typeql_match,python_match
+attack-subtechnique.svg,subtechnique.png,attack-subtechnique-table.csv,attack-pattern,Sub-Technique,"A sub-technique in ATT&CK is represented as an attack-pattern and follows the same format as techniques. They differ in that they have a boolean field (x_mitre_is_subtechnique) marking them as sub-techniques, and a relationship of the type subtechnique-of where the source_ref is the sub-technique and the target_ref is the parent technique. A sub-technique can only have 1 parent technique, but techniques can have multiple sub-techniques.","Additionally:
+- Sub-technique ATT&CK IDs are a suffix of their parent IDs. For a given sub-technique ID Txxxx.yyy, Txxxx is the parent technique ID and yyy is the sub-technique ID. Sub-techniques have unique STIX IDs.
+- Sub-techniques have the same tactics as their parent technique.
+- Sub-techniques have a subset of their parent technique's platforms.
+- Sub-techniques only exist in the Enterprise and Mobile domains.",https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#sub-techniques,"{
+        ""type"": ""attack-pattern"",
+        ""modified"": ""2021-04-29T14:49:39.188Z"",
+        ""name"": ""/etc/passwd and /etc/shadow"",
+        ""x_mitre_data_sources"": [
+            ""Command: Command Execution"",
+            ""File: File Access""
+        ],
+        ""x_mitre_version"": ""1.0"",
+        ""created"": ""2020-02-11T18:46:56.263Z"",
+        ""x_mitre_permissions_required"": [
+            ""root""
+        ],
+        ""x_mitre_platforms"": [
+            ""Linux""
+        ],
+        ""x_mitre_is_subtechnique"": true,
+        ""id"": ""attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4"",
+        ""description"": ""Adversaries may attempt to dump the contents of <code>/etc/passwd</code> and <code>/etc/shadow</code> to enable offline password cracking. Most modern Linux operating systems use a combination of <code>/etc/passwd</code> and <code>/etc/shadow</code> to store user account information including password hashes in <code>/etc/shadow</code>. By default, <code>/etc/shadow</code> is only readable by the root user.(Citation: Linux Password and Shadow File Formats)\n\nThe Linux utility, unshadow, can be used to combine the two files in a format suited for password cracking utilities such as John the Ripper:(Citation: nixCraft - John the Ripper) <code># /usr/bin/unshadow /etc/passwd /etc/shadow > /tmp/crack.password.db</code>\n"",
+        ""object_marking_refs"": [
+            ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168""
+        ],
+        ""kill_chain_phases"": [
+            {
+                ""kill_chain_name"": ""mitre-attack"",
+                ""phase_name"": ""credential-access""
+            }
+        ],
+        ""x_mitre_detection"": ""The AuditD monitoring tool, which ships stock in many Linux distributions, can be used to watch for hostile processes attempting to access <code>/etc/passwd</code> and <code>/etc/shadow</code>, alerting on the pid, process name, and arguments of such programs."",
+        ""created_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+        ""external_references"": [
+            {
+                ""source_name"": ""mitre-attack"",
+                ""external_id"": ""T1003.008"",
+                ""url"": ""https://attack.mitre.org/techniques/T1003/008""
+            },
+            {
+                ""source_name"": ""Linux Password and Shadow File Formats"",
+                ""description"": ""The Linux Documentation Project. (n.d.). Linux Password and Shadow File Formats. Retrieved February 19, 2020."",
+                ""url"": ""https://www.tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html""
+            },
+            {
+                ""source_name"": ""nixCraft - John the Ripper"",
+                ""description"": ""Vivek Gite. (2014, September 17). Linux Password Cracking: Explain unshadow and john Commands (John the Ripper Tool). Retrieved February 19, 2020."",
+                ""url"": ""https://www.cyberciti.biz/faq/unix-linux-password-cracking-john-the-ripper/""
+            }
+        ],
+        ""spec_version"": ""2.1"",
+        ""x_mitre_attack_spec_version"": ""2.1.0"",
+        ""x_mitre_domains"": [
+            ""enterprise-attack""
+        ],
+        ""x_mitre_modified_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5""
+    }","match  
+ $identity0 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $identity1 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $attack-marking04 isa attack-marking, has stix-id ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"";
+ 
+insert
+ $sub-technique isa sub-technique,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has x-mitre-version $x-mitre-version,
+ has x-mitre-domains $x_mitre_domains0,
+ has x-mitre-attack-spec-version $x-mitre-attack-spec-version,
+ has x-mitre-network-requirements $x-mitre-network-requirements,
+ has revoked $revoked,
+ has x-mitre-deprecated $x-mitre-deprecated,
+ has x-mitre-detection $x-mitre-detection,
+ has x-mitre-platforms $x_mitre_platforms0,
+ has x-mitre-data-sources $x_mitre_data_sources0,
+ has x-mitre-data-sources $x_mitre_data_sources1,
+ has x-mitre-is-subtechnique $x-mitre-is-subtechnique,
+ has x-mitre-permissions-required $x_mitre_permissions_required0,
+ has x-mitre-remote-support $x-mitre-remote-support;
+
+ $stix-type ""attack-pattern"";
+ $spec-version ""2.1"";
+ $stix-id ""attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4"";
+ $created 2020-02-11T18:46:56.263;
+ $modified 2021-04-29T14:49:39.188;
+ $name ""/etc/passwd and /etc/shadow"";
+ $description ""Adversaries may attempt to dump the contents of <code>/etc/passwd</code> and <code>/etc/shadow</code> to enable offline password cracking. Most modern Linux operating systems use a combination of <code>/etc/passwd</code> and <code>/etc/shadow</code> to store user account information including password hashes in <code>/etc/shadow</code>. By default, <code>/etc/shadow</code> is only readable by the root user.(Citation: Linux Password and Shadow File Formats)
+
+The Linux utility, unshadow, can be used to combine the two files in a format suited for password cracking utilities such as John the Ripper:(Citation: nixCraft - John the Ripper) <code># /usr/bin/unshadow /etc/passwd /etc/shadow > /tmp/crack.password.db</code>
+"";
+ $x-mitre-version ""1.0"";
+ $x_mitre_domains0 ""enterprise-attack"";
+ $x-mitre-attack-spec-version ""2.1.0"";
+ $x-mitre-network-requirements false;
+ $revoked true;
+ $x-mitre-deprecated false;
+ $x-mitre-detection ""The AuditD monitoring tool, which ships stock in many Linux distributions, can be used to watch for hostile processes attempting to access <code>/etc/passwd</code> and <code>/etc/shadow</code>, alerting on the pid, process name, and arguments of such programs."";
+ $x_mitre_platforms0 ""Linux"";
+ $x_mitre_data_sources0 ""Command: Command Execution"";
+ $x_mitre_data_sources1 ""File: File Access"";
+ $x-mitre-is-subtechnique true;
+ $x_mitre_permissions_required0 ""root"";
+ $x-mitre-remote-support false;
+ 
+  $created-by0 (created:$sub-technique, creator:$identity0) isa created-by;
+
+ $x-mitre-modified-by-ref1 (modified:$sub-technique, modifier:$identity1) isa x-mitre-modified-by-ref;
+$kill-chain-phase0 isa kill-chain-phase,
+ has kill-chain-name ""mitre-attack"",
+ has phase-name ""credential-access"";
+
+ $kill-chain-usage (kill-chain-used:$sub-technique, kill-chain-using:$kill-chain-phase0) isa kill-chain-usage;
+$external-reference0 isa external-reference,
+ has source-name ""mitre-attack"",
+ has url-link ""https://attack.mitre.org/techniques/T1003/008"",
+ has external-id ""T1003.008"";
+$external-reference1 isa external-reference,
+ has source-name ""Linux Password and Shadow File Formats"",
+ has description ""The Linux Documentation Project. (n.d.). Linux Password and Shadow File Formats. Retrieved February 19, 2020."",
+ has url-link ""https://www.tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html"";
+$external-reference2 isa external-reference,
+ has source-name ""nixCraft - John the Ripper"",
+ has description ""Vivek Gite. (2014, September 17). Linux Password Cracking: Explain unshadow and john Commands (John the Ripper Tool). Retrieved February 19, 2020."",
+ has url-link ""https://www.cyberciti.biz/faq/unix-linux-password-cracking-john-the-ripper/"";
+
+ $external-references (referenced:$sub-technique, referencing:$external-reference0, referencing:$external-reference1, referencing:$external-reference2) isa external-references;
+
+ $object-marking4 (marked:$sub-technique, marking:$attack-marking04) isa object-marking;","match  
+   $a isa technique,
+      has stix-id ""attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;
+   $f (owner:$a, pointed-to:$g) isa embedded; ","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""attack-pattern--67720091-eee3-4d2d-ae16-8264567f6f5b"")"
+attack-technique.svg,technique.png,attack-technique-table.csv,attack-pattern,Technique,"A Technique in ATT&CK is defined as an attack-pattern object.Techniques map into tactics by use of their kill_chain_phases property. Where the kill_chain_name is mitre-attack, mitre-mobile-attack, or mitre-ics-attack (for enterprise, mobile, and ics domains respectively), the phase_name corresponds to the x_mitre_shortname property of an x-mitre-tactic object.", ,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#techniques,"{
+        ""object_marking_refs"": [
+            ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168""
+        ],
+        ""type"": ""attack-pattern"",
+        ""name"": ""Abuse Elevation Control Mechanism"",
+        ""x_mitre_data_sources"": [
+            ""Process: Process Metadata"",
+            ""Process: Process Creation"",
+            ""Windows Registry: Windows Registry Key Modification"",
+            ""Command: Command Execution"",
+            ""File: File Metadata"",
+            ""File: File Modification"",
+            ""Process: OS API Execution""
+        ],
+        ""x_mitre_version"": ""1.0"",
+        ""modified"": ""2021-04-29T14:49:39.188Z"",
+        ""created"": ""2020-01-30T13:58:14.373Z"",
+        ""x_mitre_permissions_required"": [
+            ""Administrator"",
+            ""User""
+        ],
+        ""x_mitre_platforms"": [
+            ""Linux"",
+            ""macOS"",
+            ""Windows""
+        ],
+        ""x_mitre_is_subtechnique"": false,
+        ""id"": ""attack-pattern--67720091-eee3-4d2d-ae16-8264567f6f5b"",
+        ""description"": ""Adversaries may circumvent mechanisms designed to control elevate privileges to gain higher-level permissions. Most modern systems contain native elevation control mechanisms that are intended to limit privileges that a user can perform on a machine. Authorization has to be granted to specific users in order to perform tasks that can be considered of higher risk. An adversary can perform several methods to take advantage of built-in control mechanisms in order to escalate privileges on a system."",
+        ""kill_chain_phases"": [
+            {
+                ""kill_chain_name"": ""mitre-attack"",
+                ""phase_name"": ""privilege-escalation""
+            },
+            {
+                ""kill_chain_name"": ""mitre-attack"",
+                ""phase_name"": ""defense-evasion""
+            }
+        ],
+        ""x_mitre_detection"": ""Monitor the file system for files that have the setuid or setgid bits set. Also look for any process API calls for behavior that may be indicative of [Process Injection](https://attack.mitre.org/techniques/T1055) and unusual loaded DLLs through [DLL Search Order Hijacking](https://attack.mitre.org/techniques/T1574/001), which indicate attempts to gain access to higher privileged processes. On Linux, auditd can alert every time a user's actual ID and effective ID are different (this is what happens when you sudo).\n\nConsider monitoring for <code>/usr/libexec/security_authtrampoline</code> executions which may indicate that AuthorizationExecuteWithPrivileges is being executed. MacOS system logs may also indicate when AuthorizationExecuteWithPrivileges is being called. Monitoring OS API callbacks for the execution can also be a way to detect this behavior but requires specialized security tooling.\n\nOn Linux, auditd can alert every time a user's actual ID and effective ID are different (this is what happens when you sudo). This technique is abusing normal functionality in macOS and Linux systems, but sudo has the ability to log all input and output based on the <code>LOG_INPUT</code> and <code>LOG_OUTPUT</code> directives in the <code>/etc/sudoers</code> file.\n\nThere are many ways to perform UAC bypasses when a user is in the local administrator group on a system, so it may be difficult to target detection on all variations. Efforts should likely be placed on mitigation and collecting enough information on process launches and actions that could be performed before and after a UAC bypass is performed. Some UAC bypass methods rely on modifying specific, user-accessible Registry settings. Analysts should monitor Registry settings for unauthorized changes."",
+        ""created_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+        ""external_references"": [
+            {
+                ""url"": ""https://attack.mitre.org/techniques/T1548"",
+                ""external_id"": ""T1548"",
+                ""source_name"": ""mitre-attack""
+            }
+        ],
+        ""spec_version"": ""2.1"",
+        ""x_mitre_attack_spec_version"": ""2.1.0"",
+        ""x_mitre_domains"": [
+            ""enterprise-attack""
+        ],
+        ""x_mitre_modified_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5""
+    }","match  $identity0 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $identity1 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $attack-marking04 isa attack-marking, has stix-id ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"";
+ 
+insert
+ $technique isa technique,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has x-mitre-version $x-mitre-version,
+ has x-mitre-domains $x_mitre_domains0,
+ has x-mitre-attack-spec-version $x-mitre-attack-spec-version,
+ has x-mitre-deprecated $x-mitre-deprecated,
+ has x-mitre-network-requirements $x-mitre-network-requirements,
+ has x-mitre-detection $x-mitre-detection,
+ has x-mitre-platforms $x_mitre_platforms0,
+ has x-mitre-platforms $x_mitre_platforms1,
+ has x-mitre-platforms $x_mitre_platforms2,
+ has x-mitre-data-sources $x_mitre_data_sources0,
+ has x-mitre-data-sources $x_mitre_data_sources1,
+ has x-mitre-data-sources $x_mitre_data_sources2,
+ has x-mitre-data-sources $x_mitre_data_sources3,
+ has x-mitre-data-sources $x_mitre_data_sources4,
+ has x-mitre-data-sources $x_mitre_data_sources5,
+ has x-mitre-data-sources $x_mitre_data_sources6,
+ has x-mitre-is-subtechnique $x-mitre-is-subtechnique,
+ has x-mitre-permissions-required $x_mitre_permissions_required0,
+ has x-mitre-permissions-required $x_mitre_permissions_required1,
+ has x-mitre-remote-support $x-mitre-remote-support;
+
+ $stix-type ""attack-pattern"";
+ $spec-version ""2.1"";
+ $stix-id ""attack-pattern--67720091-eee3-4d2d-ae16-8264567f6f5b"";
+ $created 2020-01-30T13:58:14.373;
+ $modified 2021-04-29T14:49:39.188;
+ $name ""Abuse Elevation Control Mechanism"";
+ $description ""Adversaries may circumvent mechanisms designed to control elevate privileges to gain higher-level permissions. Most modern systems contain native elevation control mechanisms that are intended to limit privileges that a user can perform on a machine. Authorization has to be granted to specific users in order to perform tasks that can be considered of higher risk. An adversary can perform several methods to take advantage of built-in control mechanisms in order to escalate privileges on a system."";
+ $x-mitre-version ""1.0"";
+ $x_mitre_domains0 ""enterprise-attack"";
+ $x-mitre-attack-spec-version ""2.1.0"";
+ $x-mitre-deprecated false;
+ $x-mitre-network-requirements false;
+ $x-mitre-detection ""Monitor the file system for files that have the setuid or setgid bits set. Also look for any process API calls for behavior that may be indicative of [Process Injection](https://attack.mitre.org/techniques/T1055) and unusual loaded DLLs through [DLL Search Order Hijacking](https://attack.mitre.org/techniques/T1574/001), which indicate attempts to gain access to higher privileged processes. On Linux, auditd can alert every time a user's actual ID and effective ID are different (this is what happens when you sudo).
+
+Consider monitoring for <code>/usr/libexec/security_authtrampoline</code> executions which may indicate that AuthorizationExecuteWithPrivileges is being executed. MacOS system logs may also indicate when AuthorizationExecuteWithPrivileges is being called. Monitoring OS API callbacks for the execution can also be a way to detect this behavior but requires specialized security tooling.
+
+On Linux, auditd can alert every time a user's actual ID and effective ID are different (this is what happens when you sudo). This technique is abusing normal functionality in macOS and Linux systems, but sudo has the ability to log all input and output based on the <code>LOG_INPUT</code> and <code>LOG_OUTPUT</code> directives in the <code>/etc/sudoers</code> file.
+
+There are many ways to perform UAC bypasses when a user is in the local administrator group on a system, so it may be difficult to target detection on all variations. Efforts should likely be placed on mitigation and collecting enough information on process launches and actions that could be performed before and after a UAC bypass is performed. Some UAC bypass methods rely on modifying specific, user-accessible Registry settings. Analysts should monitor Registry settings for unauthorized changes."";
+ $x_mitre_platforms0 ""Linux"";
+ $x_mitre_platforms1 ""macOS"";
+ $x_mitre_platforms2 ""Windows"";
+ $x_mitre_data_sources0 ""Process: Process Metadata"";
+ $x_mitre_data_sources1 ""Process: Process Creation"";
+ $x_mitre_data_sources2 ""Windows Registry: Windows Registry Key Modification"";
+ $x_mitre_data_sources3 ""Command: Command Execution"";
+ $x_mitre_data_sources4 ""File: File Metadata"";
+ $x_mitre_data_sources5 ""File: File Modification"";
+ $x_mitre_data_sources6 ""Process: OS API Execution"";
+ $x-mitre-is-subtechnique false;
+ $x_mitre_permissions_required0 ""Administrator"";
+ $x_mitre_permissions_required1 ""User"";
+ $x-mitre-remote-support false;
+
+ $created-by0 (created:$technique, creator:$identity0) isa created-by;
+
+ $x-mitre-modified-by-ref1 (modified:$technique, modifier:$identity1) isa x-mitre-modified-by-ref;
+$kill-chain-phase0 isa kill-chain-phase,
+ has kill-chain-name ""mitre-attack"",
+ has phase-name ""privilege-escalation"";
+$kill-chain-phase1 isa kill-chain-phase,
+ has kill-chain-name ""mitre-attack"",
+ has phase-name ""defense-evasion"";
+
+ $kill-chain-usage (kill-chain-used:$technique, kill-chain-using:$kill-chain-phase0, kill-chain-using:$kill-chain-phase1) isa kill-chain-usage;
+$external-reference0 isa external-reference,
+ has source-name ""mitre-attack"",
+ has url-link ""https://attack.mitre.org/techniques/T1548"",
+ has external-id ""T1548"";
+
+ $external-references (referenced:$technique, referencing:$external-reference0) isa external-references;
+
+ $object-marking4 (marked:$technique, marking:$attack-marking04) isa object-marking;","match  
+   $a isa technique,
+      has stix-id ""attack-pattern--67720091-eee3-4d2d-ae16-8264567f6f5b"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;
+   $f (owner:$a, pointed-to:$g) isa embedded; ","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4"")"
+attack-tactic.svg,tactic.png,attack-tactic-table.csv,x-mitre-tactic,Tactic,A Tactic in ATT&CK is defined by an x-mitre-tactic object. As a custom STIX type they follow only the generic STIX Domain Object pattern., ,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#tactics,"{
+        ""object_marking_refs"": [
+            ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168""
+        ],
+        ""type"": ""x-mitre-tactic"",
+        ""name"": ""Collection"",
+        ""description"": ""The adversary is trying to gather data of interest to their goal.\n\nCollection consists of techniques adversaries may use to gather information and the sources information is collected from that are relevant to following through on the adversary's objectives. Frequently, the next goal after collecting data is to steal (exfiltrate) the data. Common target sources include various drive types, browsers, audio, video, and email. Common collection methods include capturing screenshots and keyboard input."",
+        ""x_mitre_shortname"": ""collection"",
+        ""modified"": ""2019-07-19T17:44:53.176Z"",
+        ""id"": ""x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe"",
+        ""created"": ""2018-10-17T00:14:20.652Z"",
+        ""created_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+        ""external_references"": [
+            {
+                ""source_name"": ""mitre-attack"",
+                ""external_id"": ""TA0009"",
+                ""url"": ""https://attack.mitre.org/tactics/TA0009""
+            }
+        ],
+        ""spec_version"": ""2.1"",
+        ""x_mitre_attack_spec_version"": ""2.1.0"",
+        ""x_mitre_domains"": [
+            ""enterprise-attack""
+        ],
+        ""x_mitre_modified_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+        ""x_mitre_version"": ""1.0""
+    }","match
+ $identity0 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $identity1 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $attack-marking03 isa attack-marking, has stix-id ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"";
+ 
+ insert
+ $tactic isa tactic,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has x-mitre-version $x-mitre-version,
+ has x-mitre-domains $x_mitre_domains0,
+ has x-mitre-attack-spec-version $x-mitre-attack-spec-version,
+ has x-mitre-deprecated $x-mitre-deprecated,
+ has x-mitre-shortname $x-mitre-shortname;
+
+ $stix-type ""x-mitre-tactic"";
+ $spec-version ""2.1"";
+ $stix-id ""x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe"";
+ $created 2018-10-17T00:14:20.652;
+ $modified 2019-07-19T17:44:53.176;
+ $name ""Collection"";
+ $description ""The adversary is trying to gather data of interest to their goal.
+
+Collection consists of techniques adversaries may use to gather information and the sources information is collected from that are relevant to following through on the adversary's objectives. Frequently, the next goal after collecting data is to steal (exfiltrate) the data. Common target sources include various drive types, browsers, audio, video, and email. Common collection methods include capturing screenshots and keyboard input."";
+ $x-mitre-version ""1.0"";
+ $x_mitre_domains0 ""enterprise-attack"";
+ $x-mitre-attack-spec-version ""2.1.0"";
+ $x-mitre-deprecated false;
+ $x-mitre-shortname ""collection"";
+
+  $created-by0 (created:$tactic, creator:$identity0) isa created-by;
+
+ $x-mitre-modified-by-ref1 (modified:$tactic, modifier:$identity1) isa x-mitre-modified-by-ref;
+$external-reference0 isa external-reference,
+ has source-name ""mitre-attack"",
+ has url-link ""https://attack.mitre.org/tactics/TA0009"",
+ has external-id ""TA0009"";
+
+ $external-references (referenced:$tactic, referencing:$external-reference0) isa external-references;
+
+ $object-marking3 (marked:$tactic, marking:$attack-marking03) isa object-marking;","match  
+   $a isa tactic,
+      has stix-id  ""x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;
+   $f (owner:$a, pointed-to:$g) isa embedded; ","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get( ""x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe"")"
+attack-campaign.svg,campaign.png,attack-campaign-table.csv,campaign,Campaign,A Campaign in ATT&CK is defined as a campaign object.,,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#campaigns,,,,"from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get( ""x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe"")"
+attack-collection.svg,collection.png,attack-collection-table.csv,x-mitre-collection,Collection,"A collection is a set of related ATT&CK objects; collections may be used to represent specific releases of a dataset such as ""Enterprise ATT&CK v7.2"", or any other set of objects one may want to share with someone else.",,https://github.com/center-for-threat-informed-defense/attack-workbench-frontend/blob/master/docs/collections.md,,,,"from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get( ""x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe"")"
+attack-data-component.svg,data-component.png,attack-data-component-table.csv,x-mitre-data-component,Data-Component,A Data Component in ATT&CK is represented as an x-mitre-data-component object. As a custom STIX type they follow only the generic STIX Domain Object pattern.,,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#data-components,"{
+    ""object_marking_refs"": [
+        ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168""
+    ],
+    ""modified"": ""2021-10-20T15:05:19.274137Z"",
+    ""id"": ""x-mitre-data-component--18b236d8-7224-488f-9d2f-50076a0f653a"",
+    ""description"": ""Initial construction of a new active directory object (ex: Windows EID 5137)"",
+    ""x_mitre_version"": ""1.0"",
+    ""x_mitre_data_source_ref"": ""x-mitre-data-source--d6188aac-17db-4861-845f-57c369f9b4c8"",
+    ""created_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+    ""name"": ""Active Directory Object Creation"",
+    ""created"": ""2021-10-20T15:05:19.274137Z"",
+    ""type"": ""x-mitre-data-component"",
+    ""spec_version"": ""2.1"",
+    ""x_mitre_attack_spec_version"": ""2.1.0"",
+    ""x_mitre_domains"": [
+        ""enterprise-attack""
+    ],
+    ""x_mitre_modified_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5""
+}","match  $identity0 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $identity1 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $attack-marking02 isa attack-marking, has stix-id ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"";
+ $data-source3 isa data-source, has stix-id ""x-mitre-data-source--d6188aac-17db-4861-845f-57c369f9b4c8"";
+ 
+insert $data-component isa data-component,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has x-mitre-version $x-mitre-version,
+ has x-mitre-domains $x_mitre_domains0,
+ has x-mitre-attack-spec-version $x-mitre-attack-spec-version,
+ has x-mitre-deprecated $x-mitre-deprecated;
+
+ $stix-type ""x-mitre-data-component"";
+ $spec-version ""2.1"";
+ $stix-id ""x-mitre-data-component--18b236d8-7224-488f-9d2f-50076a0f653a"";
+ $created 2021-10-20T15:05:19.274;
+ $modified 2021-10-20T15:05:19.274;
+ $name ""Active Directory Object Creation"";
+ $description ""Initial construction of a new active directory object (ex: Windows EID 5137)"";
+ $x-mitre-version ""1.0"";
+ $x_mitre_domains0 ""enterprise-attack"";
+ $x-mitre-attack-spec-version ""2.1.0"";
+ $x-mitre-deprecated false;
+
+ $created-by0 (created:$data-component, creator:$identity0) isa created-by;
+
+ $x-mitre-modified-by-ref1 (modified:$data-component, modifier:$identity1) isa x-mitre-modified-by-ref;
+
+ $object-marking2 (marked:$data-component, marking:$attack-marking02) isa object-marking;
+
+ $x-mitre-data-source-ref3 (component:$data-component, data-source:$data-source3) isa x-mitre-data-source-ref;","match 
+   $a isa data-component, 
+      has stix-id  ""x-mitre-data-component--18b236d8-7224-488f-9d2f-50076a0f653a"",
+      has $b;
+   $e (owner:$a, pointed-to:$c) isa embedded;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get( ""x-mitre-data-component--18b236d8-7224-488f-9d2f-50076a0f653a"")"
+attack-data-source.svg,data-source.png,attack-data-source-table.csv,x-mitre-data-source,Data-Source,A Data Source in ATT&CK is defined by an x-mitre-data-source object. As a custom STIX type they follow only the generic STIX Domain Object pattern.,,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#data-sources ,"{
+    ""object_marking_refs"": [
+        ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168""
+    ],
+    ""modified"": ""2021-11-10T09:30:48.693951Z"",
+    ""name"": ""Active Directory"",
+    ""x_mitre_version"": ""1.0"",
+    ""created_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+    ""type"": ""x-mitre-data-source"",
+    ""x_mitre_platforms"": [
+        ""Windows"",
+        ""Azure AD""
+    ],
+    ""id"": ""x-mitre-data-source--d6188aac-17db-4861-845f-57c369f9b4c8"",
+    ""description"": ""A database and set of services that allows administrators to manage permissions, access to network resources, and stored data objects (user, group, application, or devices)(Citation: Microsoft AD DS Getting Started)"",
+    ""x_mitre_collection_layers"": [
+        ""Host"",
+        ""Cloud Control Plane""
+    ],
+    ""x_mitre_contributors"": [
+        ""Center for Threat-Informed Defense (CTID)""
+    ],
+    ""created"": ""2021-10-20T15:05:19.274110Z"",
+    ""external_references"": [
+        {
+            ""url"": ""https://attack.mitre.org/datasources/DS0026"",
+            ""external_id"": ""DS0026"",
+            ""source_name"": ""mitre-attack""
+        },
+        {
+            ""url"": ""https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/ad-ds-getting-started"",
+            ""description"": ""Foulds, I. et al. (2018, August 7). AD DS Getting Started. Retrieved September 23, 2021."",
+            ""source_name"": ""Microsoft AD DS Getting Started""
+        }
+    ],
+    ""spec_version"": ""2.1"",
+    ""x_mitre_attack_spec_version"": ""2.1.0"",
+    ""x_mitre_domains"": [
+        ""enterprise-attack""
+    ],
+    ""x_mitre_modified_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5""
+}","match  $identity0 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $identity1 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $attack-marking03 isa attack-marking, has stix-id ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"";
+ 
+insert $data-source isa data-source,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has x-mitre-version $x-mitre-version,
+ has x-mitre-contributors $x_mitre_contributors0,
+ has x-mitre-domains $x_mitre_domains0,
+ has x-mitre-attack-spec-version $x-mitre-attack-spec-version,
+ has x-mitre-deprecated $x-mitre-deprecated,
+ has x-mitre-platforms $x_mitre_platforms0,
+ has x-mitre-platforms $x_mitre_platforms1,
+ has x-mitre-collection-layers $x_mitre_collection_layers0,
+ has x-mitre-collection-layers $x_mitre_collection_layers1;
+
+ $stix-type ""x-mitre-data-source"";
+ $spec-version ""2.1"";
+ $stix-id ""x-mitre-data-source--d6188aac-17db-4861-845f-57c369f9b4c8"";
+ $created 2021-10-20T15:05:19.274;
+ $modified 2021-11-10T09:30:48.693;
+ $name ""Active Directory"";
+ $description ""A database and set of services that allows administrators to manage permissions, access to network resources, and stored data objects (user, group, application, or devices)(Citation: Microsoft AD DS Getting Started)"";
+ $x-mitre-version ""1.0"";
+ $x_mitre_contributors0 ""Center for Threat-Informed Defense (CTID)"";
+ $x_mitre_domains0 ""enterprise-attack"";
+ $x-mitre-attack-spec-version ""2.1.0"";
+ $x-mitre-deprecated false;
+ $x_mitre_platforms0 ""Windows"";
+ $x_mitre_platforms1 ""Azure AD"";
+ $x_mitre_collection_layers0 ""Host"";
+ $x_mitre_collection_layers1 ""Cloud Control Plane"";
+
+
+ $created-by0 (created:$data-source, creator:$identity0) isa created-by;
+
+ $x-mitre-modified-by-ref1 (modified:$data-source, modifier:$identity1) isa x-mitre-modified-by-ref;
+$external-reference0 isa external-reference,
+ has source-name ""mitre-attack"",
+ has url-link ""https://attack.mitre.org/datasources/DS0026"",
+ has external-id ""DS0026"";
+$external-reference1 isa external-reference,
+ has source-name ""Microsoft AD DS Getting Started"",
+ has description ""Foulds, I. et al. (2018, August 7). AD DS Getting Started. Retrieved September 23, 2021."",
+ has url-link ""https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/ad-ds-getting-started"";
+
+ $external-references (referenced:$data-source, referencing:$external-reference0, referencing:$external-reference1) isa external-references;
+
+ $object-marking3 (marked:$data-source, marking:$attack-marking03) isa object-marking;","match  
+   $a isa matrix,
+      has stix-id   ""x-mitre-data-source--d6188aac-17db-4861-845f-57c369f9b4c8"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;
+   $f (owner:$a, pointed-to:$g) isa embedded; ","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get( ""x-mitre-data-source--d6188aac-17db-4861-845f-57c369f9b4c8"")"
+attack-group.svg,group.png,attack-group-table.csv,intrusion-set,Group,A Group in ATT&CK is defined as an intrusion-set object. ATT&CK Groups do not depart from the STIX intrusion-set spec.,,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#groups ,"{
+    ""object_marking_refs"": [
+        ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168""
+    ],
+    ""modified"": ""2021-10-14T20:34:57.289Z"",
+    ""name"": ""Leviathan"",
+    ""x_mitre_version"": ""3.0"",
+    ""created"": ""2018-04-18T17:59:24.739Z"",
+    ""type"": ""intrusion-set"",
+    ""id"": ""intrusion-set--7113eaa5-ba79-4fb3-b68a-398ee9cd698e"",
+    ""description"": ""[Leviathan](https://attack.mitre.org/groups/G0065) is a Chinese state-sponsored cyber espionage group that has been attributed to the Ministry of State Security's (MSS) Hainan State Security Department and an affiliated front company.(Citation: CISA AA21-200A APT40 July 2021) Active since at least 2009, [Leviathan](https://attack.mitre.org/groups/G0065) has targeted the following sectors: academia, aerospace/aviation, biomedical, defense industrial base, government, healthcare, manufacturing, maritime, and transportation across the US, Canada, Europe, the Middle East, and Southeast Asia.(Citation: CISA AA21-200A APT40 July 2021)(Citation: Proofpoint Leviathan Oct 2017)(Citation: FireEye Periscope March 2018)"",
+    ""x_mitre_contributors"": [
+        ""Valerii Marchuk, Cybersecurity Help s.r.o.""
+    ],
+    ""external_references"": [
+        {
+            ""url"": ""https://attack.mitre.org/groups/G0065"",
+            ""external_id"": ""G0065"",
+            ""source_name"": ""mitre-attack""
+        },
+        {
+            ""description"": ""(Citation: Proofpoint Leviathan Oct 2017)"",
+            ""source_name"": ""Leviathan""
+        },
+        {
+            ""description"": ""(Citation: CISA AA21-200A APT40 July 2021)(Citation: Accenture MUDCARP March 2019)"",
+            ""source_name"": ""MUDCARP""
+        },
+        {
+            ""description"": ""(Citation: CISA AA21-200A APT40 July 2021)(Citation: Crowdstrike KRYPTONITE PANDA August 2018)"",
+            ""source_name"": ""Kryptonite Panda""
+        },
+        {
+            ""description"": ""(Citation: CISA AA21-200A APT40 July 2021)(Citation: MSTIC GADOLINIUM September 2020)"",
+            ""source_name"": ""Gadolinium""
+        },
+        {
+            ""description"": ""(Citation: CISA AA21-200A APT40 July 2021)(Citation: SecureWorks BRONZE MOHAWK n.d.)"",
+            ""source_name"": ""BRONZE MOHAWK""
+        },
+        {
+            ""description"": ""Leviathan was previously reported upon by FireEye as TEMP.Periscope and TEMP.Jumper.(Citation: CISA AA21-200A APT40 July 2021)(Citation: FireEye APT40 March 2019)"",
+            ""source_name"": ""TEMP.Jumper""
+        },
+        {
+            ""description"": ""FireEye reporting on TEMP.Periscope (which was combined into APT40) indicated TEMP.Periscope was reported upon as Leviathan.(Citation: CISA AA21-200A APT40 July 2021)(Citation: Proofpoint Leviathan Oct 2017)(Citation: FireEye Periscope March 2018)(Citation: FireEye APT40 March 2019)"",
+            ""source_name"": ""APT40""
+        },
+        {
+            ""description"": ""Leviathan was previously reported upon by FireEye as TEMP.Periscope and TEMP.Jumper.(Citation: CISA AA21-200A APT40 July 2021)(Citation: FireEye Periscope March 2018)(Citation: FireEye APT40 March 2019)"",
+            ""source_name"": ""TEMP.Periscope""
+        },
+        {
+            ""url"": ""https://us-cert.cisa.gov/ncas/alerts/aa21-200a"",
+            ""description"": ""CISA. (2021, July 19). (AA21-200A) Joint Cybersecurity Advisory \u2013 Tactics, Techniques, and Procedures of Indicted APT40 Actors Associated with China\u2019s MSS Hainan State Security Department.. Retrieved August 12, 2021."",
+            ""source_name"": ""CISA AA21-200A APT40 July 2021""
+        },
+        {
+            ""source_name"": ""Proofpoint Leviathan Oct 2017"",
+            ""description"": ""Axel F, Pierre T. (2017, October 16). Leviathan: Espionage actor spearphishes maritime and defense targets. Retrieved February 15, 2018."",
+            ""url"": ""https://www.proofpoint.com/us/threat-insight/post/leviathan-espionage-actor-spearphishes-maritime-and-defense-targets""
+        },
+        {
+            ""url"": ""https://www.fireeye.com/blog/threat-research/2018/03/suspected-chinese-espionage-group-targeting-maritime-and-engineering-industries.html"",
+            ""description"": ""FireEye. (2018, March 16). Suspected Chinese Cyber Espionage Group (TEMP.Periscope) Targeting U.S. Engineering and Maritime Industries. Retrieved April 11, 2018."",
+            ""source_name"": ""FireEye Periscope March 2018""
+        },
+        {
+            ""url"": ""https://www.accenture.com/us-en/blogs/cyber-defense/mudcarps-focus-on-submarine-technologies"",
+            ""description"": ""Accenture iDefense Unit. (2019, March 5). Mudcarp's Focus on Submarine Technologies. Retrieved August 24, 2021."",
+            ""source_name"": ""Accenture MUDCARP March 2019""
+        },
+        {
+            ""url"": ""https://www.crowdstrike.com/blog/two-birds-one-stone-panda/"",
+            ""description"": ""Adam Kozy. (2018, August 30). Two Birds, One Stone Panda. Retrieved August 24, 2021."",
+            ""source_name"": ""Crowdstrike KRYPTONITE PANDA August 2018""
+        },
+        {
+            ""url"": ""https://www.microsoft.com/security/blog/2020/09/24/gadolinium-detecting-empires-cloud/"",
+            ""description"": ""Ben Koehl, Joe Hannon. (2020, September 24). Microsoft Security - Detecting Empires in the Cloud. Retrieved August 24, 2021."",
+            ""source_name"": ""MSTIC GADOLINIUM September 2020""
+        },
+        {
+            ""url"": ""https://www.secureworks.com/research/threat-profiles/bronze-mohawk"",
+            ""description"": ""SecureWorks. (n.d.). Threat Profile - BRONZE MOHAWK. Retrieved August 24, 2021."",
+            ""source_name"": ""SecureWorks BRONZE MOHAWK n.d.""
+        },
+        {
+            ""url"": ""https://www.fireeye.com/blog/threat-research/2019/03/apt40-examining-a-china-nexus-espionage-actor.html"",
+            ""description"": ""Plan, F., et al. (2019, March 4). APT40: Examining a China-Nexus Espionage Actor. Retrieved March 18, 2019."",
+            ""source_name"": ""FireEye APT40 March 2019""
+        }
+    ],
+    ""aliases"": [
+        ""Leviathan"",
+        ""MUDCARP"",
+        ""Kryptonite Panda"",
+        ""Gadolinium"",
+        ""BRONZE MOHAWK"",
+        ""TEMP.Jumper"",
+        ""APT40"",
+        ""TEMP.Periscope""
+    ],
+    ""created_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+    ""spec_version"": ""2.1"",
+    ""x_mitre_attack_spec_version"": ""2.1.0"",
+    ""x_mitre_domains"": [
+        ""enterprise-attack""
+    ],
+    ""x_mitre_modified_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5""
+}","match  $identity0 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $identity1 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $attack-marking03 isa attack-marking, has stix-id ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"";
+ 
+insert $attack-group isa attack-group,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has x-mitre-version $x-mitre-version,
+ has x-mitre-contributors $x_mitre_contributors0,
+ has x-mitre-domains $x_mitre_domains0,
+ has x-mitre-attack-spec-version $x-mitre-attack-spec-version,
+ has aliases $aliases0,
+ has aliases $aliases1,
+ has aliases $aliases2,
+ has aliases $aliases3,
+ has aliases $aliases4,
+ has aliases $aliases5,
+ has aliases $aliases6,
+ has aliases $aliases7,
+ has x-mitre-deprecated $x-mitre-deprecated;
+
+ $stix-type ""intrusion-set"";
+ $spec-version ""2.1"";
+ $stix-id ""intrusion-set--7113eaa5-ba79-4fb3-b68a-398ee9cd698e"";
+ $created 2018-04-18T17:59:24.739;
+ $modified 2021-10-14T20:34:57.289;
+ $name ""Leviathan"";
+ $description ""[Leviathan](https://attack.mitre.org/groups/G0065) is a Chinese state-sponsored cyber espionage group that has been attributed to the Ministry of State Security's (MSS) Hainan State Security Department and an affiliated front company.(Citation: CISA AA21-200A APT40 July 2021) Active since at least 2009, [Leviathan](https://attack.mitre.org/groups/G0065) has targeted the following sectors: academia, aerospace/aviation, biomedical, defense industrial base, government, healthcare, manufacturing, maritime, and transportation across the US, Canada, Europe, the Middle East, and Southeast Asia.(Citation: CISA AA21-200A APT40 July 2021)(Citation: Proofpoint Leviathan Oct 2017)(Citation: FireEye Periscope March 2018)"";
+ $x-mitre-version ""3.0"";
+ $x_mitre_contributors0 ""Valerii Marchuk, Cybersecurity Help s.r.o."";
+ $x_mitre_domains0 ""enterprise-attack"";
+ $x-mitre-attack-spec-version ""2.1.0"";
+ $aliases0 ""Leviathan"";
+ $aliases1 ""MUDCARP"";
+ $aliases2 ""Kryptonite Panda"";
+ $aliases3 ""Gadolinium"";
+ $aliases4 ""BRONZE MOHAWK"";
+ $aliases5 ""TEMP.Jumper"";
+ $aliases6 ""APT40"";
+ $aliases7 ""TEMP.Periscope"";
+ $x-mitre-deprecated false;
+
+
+ $created-by0 (created:$attack-group, creator:$identity0) isa created-by;
+
+ $x-mitre-modified-by-ref1 (modified:$attack-group, modifier:$identity1) isa x-mitre-modified-by-ref;
+$external-reference0 isa external-reference,
+ has source-name ""mitre-attack"",
+ has url-link ""https://attack.mitre.org/groups/G0065"",
+ has external-id ""G0065"";
+$external-reference1 isa external-reference,
+ has source-name ""Leviathan"",
+ has description ""(Citation: Proofpoint Leviathan Oct 2017)"";
+$external-reference2 isa external-reference,
+ has source-name ""MUDCARP"",
+ has description ""(Citation: CISA AA21-200A APT40 July 2021)(Citation: Accenture MUDCARP March 2019)"";
+$external-reference3 isa external-reference,
+ has source-name ""Kryptonite Panda"",
+ has description ""(Citation: CISA AA21-200A APT40 July 2021)(Citation: Crowdstrike KRYPTONITE PANDA August 2018)"";
+$external-reference4 isa external-reference,
+ has source-name ""Gadolinium"",
+ has description ""(Citation: CISA AA21-200A APT40 July 2021)(Citation: MSTIC GADOLINIUM September 2020)"";
+$external-reference5 isa external-reference,
+ has source-name ""BRONZE MOHAWK"",
+ has description ""(Citation: CISA AA21-200A APT40 July 2021)(Citation: SecureWorks BRONZE MOHAWK n.d.)"";
+$external-reference6 isa external-reference,
+ has source-name ""TEMP.Jumper"",
+ has description ""Leviathan was previously reported upon by FireEye as TEMP.Periscope and TEMP.Jumper.(Citation: CISA AA21-200A APT40 July 2021)(Citation: FireEye APT40 March 2019)"";
+$external-reference7 isa external-reference,
+ has source-name ""APT40"",
+ has description ""FireEye reporting on TEMP.Periscope (which was combined into APT40) indicated TEMP.Periscope was reported upon as Leviathan.(Citation: CISA AA21-200A APT40 July 2021)(Citation: Proofpoint Leviathan Oct 2017)(Citation: FireEye Periscope March 2018)(Citation: FireEye APT40 March 2019)"";
+$external-reference8 isa external-reference,
+ has source-name ""TEMP.Periscope"",
+ has description ""Leviathan was previously reported upon by FireEye as TEMP.Periscope and TEMP.Jumper.(Citation: CISA AA21-200A APT40 July 2021)(Citation: FireEye Periscope March 2018)(Citation: FireEye APT40 March 2019)"";
+$external-reference9 isa external-reference,
+ has source-name ""CISA AA21-200A APT40 July 2021"",
+ has description ""CISA. (2021, July 19). (AA21-200A) Joint Cybersecurity Advisory – Tactics, Techniques, and Procedures of Indicted APT40 Actors Associated with China’s MSS Hainan State Security Department.. Retrieved August 12, 2021."",
+ has url-link ""https://us-cert.cisa.gov/ncas/alerts/aa21-200a"";
+$external-reference10 isa external-reference,
+ has source-name ""Proofpoint Leviathan Oct 2017"",
+ has description ""Axel F, Pierre T. (2017, October 16). Leviathan: Espionage actor spearphishes maritime and defense targets. Retrieved February 15, 2018."",
+ has url-link ""https://www.proofpoint.com/us/threat-insight/post/leviathan-espionage-actor-spearphishes-maritime-and-defense-targets"";
+$external-reference11 isa external-reference,
+ has source-name ""FireEye Periscope March 2018"",
+ has description ""FireEye. (2018, March 16). Suspected Chinese Cyber Espionage Group (TEMP.Periscope) Targeting U.S. Engineering and Maritime Industries. Retrieved April 11, 2018."",
+ has url-link ""https://www.fireeye.com/blog/threat-research/2018/03/suspected-chinese-espionage-group-targeting-maritime-and-engineering-industries.html"";
+$external-reference12 isa external-reference,
+ has source-name ""Accenture MUDCARP March 2019"",
+ has description ""Accenture iDefense Unit. (2019, March 5). Mudcarp's Focus on Submarine Technologies. Retrieved August 24, 2021."",
+ has url-link ""https://www.accenture.com/us-en/blogs/cyber-defense/mudcarps-focus-on-submarine-technologies"";
+$external-reference13 isa external-reference,
+ has source-name ""Crowdstrike KRYPTONITE PANDA August 2018"",
+ has description ""Adam Kozy. (2018, August 30). Two Birds, One Stone Panda. Retrieved August 24, 2021."",
+ has url-link ""https://www.crowdstrike.com/blog/two-birds-one-stone-panda/"";
+$external-reference14 isa external-reference,
+ has source-name ""MSTIC GADOLINIUM September 2020"",
+ has description ""Ben Koehl, Joe Hannon. (2020, September 24). Microsoft Security - Detecting Empires in the Cloud. Retrieved August 24, 2021."",
+ has url-link ""https://www.microsoft.com/security/blog/2020/09/24/gadolinium-detecting-empires-cloud/"";
+$external-reference15 isa external-reference,
+ has source-name ""SecureWorks BRONZE MOHAWK n.d."",
+ has description ""SecureWorks. (n.d.). Threat Profile - BRONZE MOHAWK. Retrieved August 24, 2021."",
+ has url-link ""https://www.secureworks.com/research/threat-profiles/bronze-mohawk"";
+$external-reference16 isa external-reference,
+ has source-name ""FireEye APT40 March 2019"",
+ has description ""Plan, F., et al. (2019, March 4). APT40: Examining a China-Nexus Espionage Actor. Retrieved March 18, 2019."",
+ has url-link ""https://www.fireeye.com/blog/threat-research/2019/03/apt40-examining-a-china-nexus-espionage-actor.html"";
+
+ $external-references (referenced:$attack-group, referencing:$external-reference0, referencing:$external-reference1, referencing:$external-reference2, referencing:$external-reference3, referencing:$external-reference4, referencing:$external-reference5, referencing:$external-reference6, referencing:$external-reference7, referencing:$external-reference8, referencing:$external-reference9, referencing:$external-reference10, referencing:$external-reference11, referencing:$external-reference12, referencing:$external-reference13, referencing:$external-reference14, referencing:$external-reference15, referencing:$external-reference16) isa external-references;
+
+ $object-marking3 (marked:$attack-group, marking:$attack-marking03) isa object-marking;","match  
+   $a isa attack-group,
+      has stix-id   ""intrusion-set--7113eaa5-ba79-4fb3-b68a-398ee9cd698e"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;
+   $f (owner:$a, pointed-to:$g) isa embedded; ","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get( ""intrusion-set--7113eaa5-ba79-4fb3-b68a-398ee9cd698e"")"
+attack-identity.svg,identity.png,attack-identity-table.csv,identity,Identity,"Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.) as well as classes of individuals, organizations, systems or groups (e.g., the finance sector). The Mitre ATT&CK Identity is generally used to represent Mitre themselves, and contains additional properties not in the standard Identity.","The Identity SDO can capture basic identifying information, contact information, and the sectors that the Identity belongs to. Identity is used in STIX to represent, among other things, targets of attacks, information sources, object creators, and threat actor identities.",https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#groups ,"{
+    ""type"": ""identity"",
+    ""id"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+    ""identity_class"": ""organization"",
+    ""modified"": ""2017-06-01T00:00:00.000Z"",
+    ""created"": ""2017-06-01T00:00:00.000Z"",
+    ""name"": ""The MITRE Corporation"",
+    ""spec_version"": ""2.1"",
+    ""x_mitre_attack_spec_version"": ""2.1.0"",
+    ""x_mitre_domains"": [
+        ""enterprise-attack""
+    ],
+    ""x_mitre_version"": ""1.0""
+}"," insert $attack-identity isa attack-identity,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has x-mitre-version $x-mitre-version,
+ has x-mitre-domains $x_mitre_domains0,
+ has x-mitre-attack-spec-version $x-mitre-attack-spec-version,
+ has identity-class $identity-class;
+
+ $stix-type ""identity"";
+ $spec-version ""2.1"";
+ $stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $created 2017-06-01T00:00:00.000;
+ $modified 2017-06-01T00:00:00.000;
+ $name ""The MITRE Corporation"";
+ $x-mitre-version ""1.0"";
+ $x_mitre_domains0 ""enterprise-attack"";
+ $x-mitre-attack-spec-version ""2.1.0"";
+ $identity-class ""organization"";","match 
+   $a isa identity,
+      has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+      has $b;","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get( ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"")"
+attack-matrix.svg,matrix.png,attack-matrix-table.csv,x-mitre-matrix,Matrix,The overall layout of the ATT&CK Matrices is stored in x-mitre-matrix objects. As a custom STIX type they follow only the generic STIX Domain Object pattern.,,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#matrices ,"{
+    ""object_marking_refs"": [
+        ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168""
+    ],
+    ""type"": ""x-mitre-matrix"",
+    ""name"": ""Enterprise ATT&CK"",
+    ""description"": ""Below are the tactics and technique representing the MITRE ATT&CK Matrix for Enterprise. The Matrix contains information for the following platforms: Windows, macOS, Linux, AWS, GCP, Azure, Azure AD, Office 365, SaaS."",
+    ""modified"": ""2021-11-03T20:11:51.915Z"",
+    ""id"": ""x-mitre-matrix--eafc1b4c-5e56-4965-bd4e-66a6a89c88cc"",
+    ""created"": ""2018-10-17T00:14:20.652Z"",
+    ""tactic_refs"": [
+        ""x-mitre-tactic--daa4cbb1-b4f4-4723-a824-7f1efd6e0592"",
+        ""x-mitre-tactic--d679bca2-e57d-4935-8650-8031c87a4400"",
+        ""x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca"",
+        ""x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5"",
+        ""x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92"",
+        ""x-mitre-tactic--5e29b093-294e-49e9-a803-dab3d73b77dd"",
+        ""x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a"",
+        ""x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263"",
+        ""x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9"",
+        ""x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e"",
+        ""x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe"",
+        ""x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813"",
+        ""x-mitre-tactic--9a4e74ab-5008-408c-84bf-a10dfbc53462"",
+        ""x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8""
+    ],
+    ""created_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+    ""external_references"": [
+        {
+            ""url"": ""https://attack.mitre.org/matrices/enterprise"",
+            ""external_id"": ""enterprise-attack"",
+            ""source_name"": ""mitre-attack""
+        }
+    ],
+    ""spec_version"": ""2.1"",
+    ""x_mitre_attack_spec_version"": ""2.1.0"",
+    ""x_mitre_domains"": [
+        ""enterprise-attack""
+    ],
+    ""x_mitre_modified_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+    ""x_mitre_version"": ""1.0""
+}","match  $identity0 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $identity1 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $attack-marking03 isa attack-marking, has stix-id ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"";
+ 
+insert $matrix isa matrix,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has x-mitre-version $x-mitre-version,
+ has x-mitre-domains $x_mitre_domains0,
+ has x-mitre-attack-spec-version $x-mitre-attack-spec-version,
+ has x-mitre-deprecated $x-mitre-deprecated,
+ has tactic-refs $tactic_refs0,
+ has tactic-refs $tactic_refs1,
+ has tactic-refs $tactic_refs2,
+ has tactic-refs $tactic_refs3,
+ has tactic-refs $tactic_refs4,
+ has tactic-refs $tactic_refs5,
+ has tactic-refs $tactic_refs6,
+ has tactic-refs $tactic_refs7,
+ has tactic-refs $tactic_refs8,
+ has tactic-refs $tactic_refs9,
+ has tactic-refs $tactic_refs10,
+ has tactic-refs $tactic_refs11,
+ has tactic-refs $tactic_refs12,
+ has tactic-refs $tactic_refs13;
+
+ $stix-type ""x-mitre-matrix"";
+ $spec-version ""2.1"";
+ $stix-id ""x-mitre-matrix--eafc1b4c-5e56-4965-bd4e-66a6a89c88cc"";
+ $created 2018-10-17T00:14:20.652;
+ $modified 2021-11-03T20:11:51.915;
+ $name ""Enterprise ATT&CK"";
+ $description ""Below are the tactics and technique representing the MITRE ATT&CK Matrix for Enterprise. The Matrix contains information for the following platforms: Windows, macOS, Linux, AWS, GCP, Azure, Azure AD, Office 365, SaaS."";
+ $x-mitre-version ""1.0"";
+ $x_mitre_domains0 ""enterprise-attack"";
+ $x-mitre-attack-spec-version ""2.1.0"";
+ $x-mitre-deprecated false;
+ $tactic_refs0 ""x-mitre-tactic--daa4cbb1-b4f4-4723-a824-7f1efd6e0592"";
+ $tactic_refs1 ""x-mitre-tactic--d679bca2-e57d-4935-8650-8031c87a4400"";
+ $tactic_refs2 ""x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca"";
+ $tactic_refs3 ""x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5"";
+ $tactic_refs4 ""x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92"";
+ $tactic_refs5 ""x-mitre-tactic--5e29b093-294e-49e9-a803-dab3d73b77dd"";
+ $tactic_refs6 ""x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a"";
+ $tactic_refs7 ""x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263"";
+ $tactic_refs8 ""x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9"";
+ $tactic_refs9 ""x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e"";
+ $tactic_refs10 ""x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe"";
+ $tactic_refs11 ""x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813"";
+ $tactic_refs12 ""x-mitre-tactic--9a4e74ab-5008-408c-84bf-a10dfbc53462"";
+ $tactic_refs13 ""x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8"";
+
+
+ $created-by0 (created:$matrix, creator:$identity0) isa created-by;
+
+ $x-mitre-modified-by-ref1 (modified:$matrix, modifier:$identity1) isa x-mitre-modified-by-ref;
+$external-reference0 isa external-reference,
+ has source-name ""mitre-attack"",
+ has url-link ""https://attack.mitre.org/matrices/enterprise"",
+ has external-id ""enterprise-attack"";
+
+ $external-references (referenced:$matrix, referencing:$external-reference0) isa external-references;
+
+ $object-marking3 (marked:$matrix, marking:$attack-marking03) isa object-marking;","match  
+   $a isa matrix,
+      has stix-id   ""x-mitre-matrix--eafc1b4c-5e56-4965-bd4e-66a6a89c88cc"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;
+   $f (owner:$a, pointed-to:$g) isa embedded; ","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""x-mitre-matrix--eafc1b4c-5e56-4965-bd4e-66a6a89c88cc"")"
+attack-mitigation.svg,mitigation.png,attack-mitigation-table.csv,course-of-action,Mitigation,A Mitigation in ATT&CK is defined as a course-of-action object. ATT&CK Mitigations do not depart from the STIX course-of-action spec.,,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#mitigations ,"{
+    ""object_marking_refs"": [
+        ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168""
+    ],
+    ""type"": ""course-of-action"",
+    ""id"": ""course-of-action--93e7968a-9074-4eac-8ae9-9f5200ec3317"",
+    ""description"": ""Manage the creation, modification, use, and permissions associated to user accounts."",
+    ""x_mitre_version"": ""1.1"",
+    ""modified"": ""2020-05-20T13:49:12.270Z"",
+    ""created"": ""2019-06-06T16:50:58.767Z"",
+    ""name"": ""User Account Management"",
+    ""created_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+    ""external_references"": [
+        {
+            ""url"": ""https://attack.mitre.org/mitigations/M1018"",
+            ""external_id"": ""M1018"",
+            ""source_name"": ""mitre-attack""
+        }
+    ],
+    ""spec_version"": ""2.1"",
+    ""x_mitre_attack_spec_version"": ""2.1.0"",
+    ""x_mitre_domains"": [
+        ""enterprise-attack""
+    ],
+    ""x_mitre_modified_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5""
+}","match  $identity0 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $identity1 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $attack-marking03 isa attack-marking, has stix-id ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"";
+ 
+insert $mitigation isa mitigation,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has x-mitre-version $x-mitre-version,
+ has x-mitre-domains $x_mitre_domains0,
+ has x-mitre-attack-spec-version $x-mitre-attack-spec-version,
+ has x-mitre-deprecated $x-mitre-deprecated;
+
+ $stix-type ""course-of-action"";
+ $spec-version ""2.1"";
+ $stix-id ""course-of-action--93e7968a-9074-4eac-8ae9-9f5200ec3317"";
+ $created 2019-06-06T16:50:58.767;
+ $modified 2020-05-20T13:49:12.270;
+ $name ""User Account Management"";
+ $description ""Manage the creation, modification, use, and permissions associated to user accounts."";
+ $x-mitre-version ""1.1"";
+ $x_mitre_domains0 ""enterprise-attack"";
+ $x-mitre-attack-spec-version ""2.1.0"";
+ $x-mitre-deprecated false;
+
+ $created-by0 (created:$mitigation, creator:$identity0) isa created-by;
+
+ $x-mitre-modified-by-ref1 (modified:$mitigation, modifier:$identity1) isa x-mitre-modified-by-ref;
+$external-reference0 isa external-reference,
+ has source-name ""mitre-attack"",
+ has url-link ""https://attack.mitre.org/mitigations/M1018"",
+ has external-id ""M1018"";
+
+ $external-references (referenced:$mitigation, referencing:$external-reference0) isa external-references;
+
+ $object-marking3 (marked:$mitigation, marking:$attack-marking03) isa object-marking;","match  
+   $a isa mitigation,
+      has stix-id   ""course-of-action--93e7968a-9074-4eac-8ae9-9f5200ec3317"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;
+   $f (owner:$a, pointed-to:$g) isa embedded; ","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get( ""course-of-action--93e7968a-9074-4eac-8ae9-9f5200ec3317"")"
+attack-software.svg,software-malware.png,attack-software-malware-table.csv,malware,Software,Software in ATT&CK is the union of two distinct STIX types: malware and tool.,,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#software ,"{
+    ""object_marking_refs"": [
+        ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168""
+    ],
+    ""type"": ""malware"",
+    ""name"": ""adbupd"",
+    ""x_mitre_aliases"": [
+        ""adbupd""
+    ],
+    ""x_mitre_version"": ""1.1"",
+    ""modified"": ""2020-03-30T18:33:31.623Z"",
+    ""created"": ""2018-04-18T17:59:24.739Z"",
+    ""x_mitre_platforms"": [
+        ""Windows""
+    ],
+    ""id"": ""malware--0f1ad2ef-41d4-4b7a-9304-ddae68ea3005"",
+    ""description"": ""[adbupd](https://attack.mitre.org/software/S0202) is a backdoor used by [PLATINUM](https://attack.mitre.org/groups/G0068) that is similar to [Dipsind](https://attack.mitre.org/software/S0200). (Citation: Microsoft PLATINUM April 2016)"",
+    ""x_mitre_contributors"": [
+        ""Ryan Becwar""
+    ],
+    ""created_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+    ""external_references"": [
+        {
+            ""url"": ""https://attack.mitre.org/software/S0202"",
+            ""external_id"": ""S0202"",
+            ""source_name"": ""mitre-attack""
+        },
+        {
+            ""description"": ""(Citation: Microsoft PLATINUM April 2016)"",
+            ""source_name"": ""adbupd""
+        },
+        {
+            ""source_name"": ""Microsoft PLATINUM April 2016"",
+            ""description"": ""Windows Defender Advanced Threat Hunting Team. (2016, April 29). PLATINUM: Targeted attacks in South and Southeast Asia. Retrieved February 15, 2018."",
+            ""url"": ""https://download.microsoft.com/download/2/2/5/225BFE3E-E1DE-4F5B-A77B-71200928D209/Platinum%20feature%20article%20-%20Targeted%20attacks%20in%20South%20and%20Southeast%20Asia%20April%202016.pdf""
+        }
+    ],
+    ""spec_version"": ""2.1"",
+    ""x_mitre_attack_spec_version"": ""2.1.0"",
+    ""x_mitre_domains"": [
+        ""enterprise-attack""
+    ],
+    ""x_mitre_modified_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+    ""is_family"": true
+}","match  $identity0 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $identity1 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $attack-marking03 isa attack-marking, has stix-id ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"";
+ 
+ insert $software-malware isa software-malware,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has x-mitre-version $x-mitre-version,
+ has x-mitre-contributors $x_mitre_contributors0,
+ has x-mitre-domains $x_mitre_domains0,
+ has x-mitre-attack-spec-version $x-mitre-attack-spec-version,
+ has is-family $is-family,
+ has x-mitre-deprecated $x-mitre-deprecated,
+ has x-mitre-platforms $x_mitre_platforms0,
+ has x-mitre-aliases $x_mitre_aliases0;
+
+ $stix-type ""malware"";
+ $spec-version ""2.1"";
+ $stix-id ""malware--0f1ad2ef-41d4-4b7a-9304-ddae68ea3005"";
+ $created 2018-04-18T17:59:24.739;
+ $modified 2020-03-30T18:33:31.623;
+ $name ""adbupd"";
+ $description ""[adbupd](https://attack.mitre.org/software/S0202) is a backdoor used by [PLATINUM](https://attack.mitre.org/groups/G0068) that is similar to [Dipsind](https://attack.mitre.org/software/S0200). (Citation: Microsoft PLATINUM April 2016)"";
+ $x-mitre-version ""1.1"";
+ $x_mitre_contributors0 ""Ryan Becwar"";
+ $x_mitre_domains0 ""enterprise-attack"";
+ $x-mitre-attack-spec-version ""2.1.0"";
+ $is-family true;
+ $x-mitre-deprecated false;
+ $x_mitre_platforms0 ""Windows"";
+ $x_mitre_aliases0 ""adbupd"";
+
+
+ $created-by0 (created:$software-malware, creator:$identity0) isa created-by;
+
+ $x-mitre-modified-by-ref1 (modified:$software-malware, modifier:$identity1) isa x-mitre-modified-by-ref;
+$external-reference0 isa external-reference,
+ has source-name ""mitre-attack"",
+ has url-link ""https://attack.mitre.org/software/S0202"",
+ has external-id ""S0202"";
+$external-reference1 isa external-reference,
+ has source-name ""adbupd"",
+ has description ""(Citation: Microsoft PLATINUM April 2016)"";
+$external-reference2 isa external-reference,
+ has source-name ""Microsoft PLATINUM April 2016"",
+ has description ""Windows Defender Advanced Threat Hunting Team. (2016, April 29). PLATINUM: Targeted attacks in South and Southeast Asia. Retrieved February 15, 2018."",
+ has url-link ""https://download.microsoft.com/download/2/2/5/225BFE3E-E1DE-4F5B-A77B-71200928D209/Platinum%20feature%20article%20-%20Targeted%20attacks%20in%20South%20and%20Southeast%20Asia%20April%202016.pdf"";
+
+ $external-references (referenced:$software-malware, referencing:$external-reference0, referencing:$external-reference1, referencing:$external-reference2) isa external-references;
+
+ $object-marking3 (marked:$software-malware, marking:$attack-marking03) isa object-marking;","match  
+   $a isa software-malware,
+      has stix-id  ""malware--0f1ad2ef-41d4-4b7a-9304-ddae68ea3005"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;
+   $f (owner:$a, pointed-to:$g) isa embedded; ","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get(""malware--0f1ad2ef-41d4-4b7a-9304-ddae68ea3005"")"
+attack-software.svg,software-tool.png,attack-software-tool-table.csv,tool,Software,Software in ATT&CK is the union of two distinct STIX types: malware and tool.,,https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#software ,"{
+    ""object_marking_refs"": [
+        ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168""
+    ],
+    ""type"": ""tool"",
+    ""name"": ""AdFind"",
+    ""x_mitre_aliases"": [
+        ""AdFind""
+    ],
+    ""x_mitre_version"": ""1.0"",
+    ""modified"": ""2020-12-29T18:04:33.254Z"",
+    ""created"": ""2020-12-28T18:35:50.244Z"",
+    ""x_mitre_platforms"": [
+        ""Windows""
+    ],
+    ""id"": ""tool--f59508a6-3615-47c3-b493-6676e1a39a87"",
+    ""description"": ""[AdFind](https://attack.mitre.org/software/S0552) is a free command-line query tool that can be used for gathering information from Active Directory.(Citation: Red Canary Hospital Thwarted Ryuk October 2020)(Citation: FireEye FIN6 Apr 2019)(Citation: FireEye Ryuk and Trickbot January 2019)"",
+    ""created_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"",
+    ""external_references"": [
+        {
+            ""url"": ""https://attack.mitre.org/software/S0552"",
+            ""external_id"": ""S0552"",
+            ""source_name"": ""mitre-attack""
+        },
+        {
+            ""url"": ""https://redcanary.com/blog/how-one-hospital-thwarted-a-ryuk-ransomware-outbreak/ "",
+            ""description"": ""Brian Donohue, Katie Nickels, Paul Michaud, Adina Bodkins, Taylor Chapman, Tony Lambert, Jeff Felling, Kyle Rainey, Mike Haag, Matt Graeber, Aaron Didier.. (2020, October 29). A Bazar start: How one hospital thwarted a Ryuk ransomware outbreak. Retrieved October 30, 2020."",
+            ""source_name"": ""Red Canary Hospital Thwarted Ryuk October 2020""
+        },
+        {
+            ""source_name"": ""FireEye FIN6 Apr 2019"",
+            ""description"": ""McKeague, B. et al. (2019, April 5). Pick-Six: Intercepting a FIN6 Intrusion, an Actor Recently Tied to Ryuk and LockerGoga Ransomware. Retrieved April 17, 2019."",
+            ""url"": ""https://www.fireeye.com/blog/threat-research/2019/04/pick-six-intercepting-a-fin6-intrusion.html""
+        },
+        {
+            ""url"": ""https://www.fireeye.com/blog/threat-research/2019/01/a-nasty-trick-from-credential-theft-malware-to-business-disruption.html"",
+            ""description"": ""Goody, K., et al (2019, January 11). A Nasty Trick: From Credential Theft Malware to Business Disruption. Retrieved May 12, 2020."",
+            ""source_name"": ""FireEye Ryuk and Trickbot January 2019""
+        }
+    ],
+    ""spec_version"": ""2.1"",
+    ""x_mitre_attack_spec_version"": ""2.1.0"",
+    ""x_mitre_domains"": [
+        ""enterprise-attack""
+    ],
+    ""x_mitre_modified_by_ref"": ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5""
+}","match  $identity0 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $identity1 isa identity, has stix-id ""identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"";
+ $attack-marking03 isa attack-marking, has stix-id ""marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"";
+ 
+ insert $software-tool isa software-tool,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has x-mitre-version $x-mitre-version,
+ has x-mitre-domains $x_mitre_domains0,
+ has x-mitre-attack-spec-version $x-mitre-attack-spec-version,
+ has x-mitre-deprecated $x-mitre-deprecated,
+ has x-mitre-platforms $x_mitre_platforms0,
+ has x-mitre-aliases $x_mitre_aliases0;
+
+ $stix-type ""tool"";
+ $spec-version ""2.1"";
+ $stix-id ""tool--f59508a6-3615-47c3-b493-6676e1a39a87"";
+ $created 2020-12-28T18:35:50.244;
+ $modified 2020-12-29T18:04:33.254;
+ $name ""AdFind"";
+ $description ""[AdFind](https://attack.mitre.org/software/S0552) is a free command-line query tool that can be used for gathering information from Active Directory.(Citation: Red Canary Hospital Thwarted Ryuk October 2020)(Citation: FireEye FIN6 Apr 2019)(Citation: FireEye Ryuk and Trickbot January 2019)"";
+ $x-mitre-version ""1.0"";
+ $x_mitre_domains0 ""enterprise-attack"";
+ $x-mitre-attack-spec-version ""2.1.0"";
+ $x-mitre-deprecated false;
+ $x_mitre_platforms0 ""Windows"";
+ $x_mitre_aliases0 ""AdFind"";
+
+
+ $created-by0 (created:$software-tool, creator:$identity0) isa created-by;
+
+ $x-mitre-modified-by-ref1 (modified:$software-tool, modifier:$identity1) isa x-mitre-modified-by-ref;
+$external-reference0 isa external-reference,
+ has source-name ""mitre-attack"",
+ has url-link ""https://attack.mitre.org/software/S0552"",
+ has external-id ""S0552"";
+$external-reference1 isa external-reference,
+ has source-name ""Red Canary Hospital Thwarted Ryuk October 2020"",
+ has description ""Brian Donohue, Katie Nickels, Paul Michaud, Adina Bodkins, Taylor Chapman, Tony Lambert, Jeff Felling, Kyle Rainey, Mike Haag, Matt Graeber, Aaron Didier.. (2020, October 29). A Bazar start: How one hospital thwarted a Ryuk ransomware outbreak. Retrieved October 30, 2020."",
+ has url-link ""https://redcanary.com/blog/how-one-hospital-thwarted-a-ryuk-ransomware-outbreak/ "";
+$external-reference2 isa external-reference,
+ has source-name ""FireEye FIN6 Apr 2019"",
+ has description ""McKeague, B. et al. (2019, April 5). Pick-Six: Intercepting a FIN6 Intrusion, an Actor Recently Tied to Ryuk and LockerGoga Ransomware. Retrieved April 17, 2019."",
+ has url-link ""https://www.fireeye.com/blog/threat-research/2019/04/pick-six-intercepting-a-fin6-intrusion.html"";
+$external-reference3 isa external-reference,
+ has source-name ""FireEye Ryuk and Trickbot January 2019"",
+ has description ""Goody, K., et al (2019, January 11). A Nasty Trick: From Credential Theft Malware to Business Disruption. Retrieved May 12, 2020."",
+ has url-link ""https://www.fireeye.com/blog/threat-research/2019/01/a-nasty-trick-from-credential-theft-malware-to-business-disruption.html"";
+
+ $external-references (referenced:$software-tool, referencing:$external-reference0, referencing:$external-reference1, referencing:$external-reference2, referencing:$external-reference3) isa external-references;
+
+ $object-marking3 (marked:$software-tool, marking:$attack-marking03) isa object-marking;","match  
+   $a isa software-tool,
+      has stix-id  ""tool--f59508a6-3615-47c3-b493-6676e1a39a87"",
+      has $b;
+   $c isa stix-sub-object,
+      has $d;
+   $e (owner:$a, pointed-to:$c) isa embedded;
+   $f (owner:$a, pointed-to:$g) isa embedded; ","from stixorm.module.typedb import TypeDBSink, TypeDBSource
+connection = {
+    ""uri"": ""localhost"",
+    ""port"": ""1729"",
+    ""database"": ""stix"",
+    ""user"": None,
+    ""password"": None
+}
+
+import_type = {
+    ""STIX21"": True,
+    ""CVE"": False,
+    ""identity"": False,
+    ""location"": False,
+    ""rules"": False,
+    ""ATT&CK"": False,
+    ""ATT&CK_Versions"": [""12.0""],
+    ""ATT&CK_Domains"": [""enterprise-attack"", ""mobile-attack"", ""ics-attack""],
+    ""CACAO"": False
+}
+
+typedb = TypeDBSource(connection, import_type)
+stix_obj = typedb.get( ""tool--f59508a6-3615-47c3-b493-6676e1a39a87"")"
