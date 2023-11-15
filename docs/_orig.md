@@ -50,7 +50,7 @@ Very quickly we aim to add the following features to the system.
 The documentation system contains the following sections:
 - [Using the Stix-ORM](install/configuration.md)
 - [How the ORM Works](how_it_works/orm_oveview.md)
-- [Protcols Supported](protocols/_orig.md)
+- [Protcols Supported](protocols/overview.md)
 
 The current supported objects can be viewed here
 
