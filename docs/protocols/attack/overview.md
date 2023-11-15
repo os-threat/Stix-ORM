@@ -2,7 +2,7 @@
 
 
 
-### CKDomain Objects (SDO)
+### ATT&CK Domain Objects (SDO)
 
 
 
@@ -10,7 +10,11 @@ There are 13 ATT&CK Domain Objects, as shown in the table below
 
 
 
+### ATT&CK Relationship Objects
 
+
+
+There is 1 &ACK Relationship Object,as shown in the table below
 
 
 
@@ -36,8 +40,8 @@ There are 13 ATT&CK Domain Objects, as shown in the table below
 | ![Identity](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-identity.svg) | [Identity](./sdo/Identity.md) | Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.) as well as classes of individuals, organizations, systems or groups (e.g., the finance sector). The Mitre ATT&CK Identity is generally used to represent Mitre themselves, and contains additional properties not in the standard Identity. |
 | ![Matrix](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-matrix.svg) | [Matrix](./sdo/Matrix.md) | The overall layout of the ATT&CK Matrices is stored in x-mitre-matrix objects. As a custom STIX type they follow only the generic STIX Domain Object pattern. |
 | ![Mitigation](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-mitigation.svg) | [Mitigation](./sdo/Mitigation.md) | A Mitigation in ATT&CK is defined as a course-of-action object. ATT&CK Mitigations do not depart from the STIX course-of-action spec. |
-| ![Software](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-software.svg) | [Software](./sdo/Software.md) | Software in ATT&CK is the union of two distinct STIX types: malware and tool. |
-| ![Software](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-software.svg) | [Software](./sdo/Software.md) | Software in ATT&CK is the union of two distinct STIX types: malware and tool. |
+| ![Software-Malware](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-software.svg) | [Software-Malware](./sdo/Software-Malware.md) | Software in ATT&CK is the union of two distinct STIX types: malware and tool. |
+| ![Software-Tool](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-software.svg) | [Software-Tool](./sdo/Software-Tool.md) | Software in ATT&CK is the union of two distinct STIX types: malware and tool. |
 
 
 

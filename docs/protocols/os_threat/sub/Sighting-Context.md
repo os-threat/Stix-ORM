@@ -2,13 +2,9 @@
 
 **Stix and TypeQL Object Type:**  `sighting-context`
 
-The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.
+The Sighting object is used for connecting Observed Data objects to SDO’s, such as Indicators, Malware and Threat Actors, based on Locations. Observations and Sightings have different evidentiary weightings based on their type (what they are) and provenance (how they were derived). Context data is based on querying of internal systems and has 100% confidence It can be of two types: Non-SCO: Historical or narrative data that would be contained in a Note, and is not an Event. The Note can attach to different objects, depending on the Inicdent type. SCO: For example a list of other user accounts that received the same email, queried from Exchange server, and is an Event. This example is shown to the right
 
-Context data is based on querying of internal systems and has 100% confidence It can be of two types:
-
-Non-SCO: Historical or narrative data that would be contained in a Note, and is not an Event. The Note can attach to different objects, depending on the Inicdent type
-
-SCO: For example a list of other user accounts that received the same email, queried from Exchange server, and is an Event. This example is shown to the right
+Weightings cannot be established as provenance data is not collected for each observation, and confidence cannot be established. At present, Observations and Sightings cannot be added together as evidence, as they are different in nature. Sighting Extensions are used to collect the provenance for each type of data source.
 
 Non-SCO Context data is not an observation, nor a sighting, but it is Evidence. Different Context sources (e.g. SAP, SalesForce etc.) will probably have different provenance formats. The Python class name is SightingContext.  It MUST be accompanied by the extension definition with extension-definition—?0d76d6d9-16ca-43fd-bd41-4f800ba8fc43 as its extension ID. The Python class name is SightingEvidence.
 
