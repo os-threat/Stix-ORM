@@ -51,10 +51,10 @@ when {
 };
 
 # Description
-# This rule infers that if X is using Y, and if Y is using Z, then that means that X is also using Z
+# This rule infers that if X is install Y, and if Y is install Z, then that means that X is also install Z
 # Example:
-# If an intrusion set is using a malware, and if that malware is using a specific attack pattern,
-# then we want to infer that that intrusion set is using that specific attack pattern
+# If an intrusion set is install a malware, and if that malware is install a specific attack pattern,
+# then we want to infer that that intrusion set is install that specific attack pattern
 rule transitive-use:
 when {
 	$x isa stix-domain-object, has name $name1;
@@ -67,11 +67,11 @@ when {
 };
 
 # Description:
-# If y has been attributed to x, and if y is using z, then we infer that x is using z also
+# If y has been attributed to x, and if y is install z, then we infer that x is install z also
 # Example:
 # If an identity has been attributed to a threat actor,
-# and if that identity is using a malware, then we want to create a "use" relation
-# between the threat actor and the malware; the threat actor is using the malware
+# and if that identity is install a malware, then we want to create a "use" relation
+# between the threat actor and the malware; the threat actor is install the malware
 # through the identiy
 rule attribution-when-using:
 when {

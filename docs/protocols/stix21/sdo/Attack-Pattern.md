@@ -19,7 +19,7 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 |  modified             |             modified              |      Required       | stix-attribute-timestamp  |   attribute    |
 |  name                 |               name                |      Required       |  stix-attribute-string    |   attribute    |
 |  description          |           description             |      Optional       |  stix-attribute-string    |   attribute    |
-|  aliases              |            stix-role              |      Optional       |  stix-attribute-string    |   attribute    |
+|  aliases              |aliases |      Optional       |  stix-attribute-string    |   attribute    |
 |  kill_chain_phases    | kill-chain-usage:kill-chain-used  |      Optional       |   embedded     |relation |
 |  created_by_ref       |        created-by:created         |      Optional       |   embedded     |relation |
 |  revoked              |             revoked               |      Optional       |  stix-attribute-boolean   |   attribute    |
@@ -118,7 +118,6 @@ The Python retrieval statement
 
 ```python
 from stixorm.module.typedb import TypeDBSink, TypeDBSource
-
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -143,3 +142,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("attack-pattern--8ac90ff3-ecf8-4835-95b8-6aea6a623df5")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

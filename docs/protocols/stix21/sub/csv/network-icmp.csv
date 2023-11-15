@@ -1,0 +1,3 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+icmp_type_hex,icmp-type-hex,Required,  stix-attribute-string   ,   attribute   
+icmp_code_hex,icmp-code-hex,Required,  stix-attribute-string   ,   attribute   

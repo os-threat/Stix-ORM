@@ -2,23 +2,7 @@
 
 **Stix and TypeQL Object Type:**  `report`
 
-Reports are collections of threat intelligence focused on one or more topics, such as a description of a threat actor, malware, or attack technique, including context and related details. They are used to group related threat intelligence together so that it can be published as a comprehensive cyber threat story.
-
- 
-
-The Report SDO contains a list of references to STIX Objects (the CTI objects included in the report) along with a textual description and the name of the report.
-
- Reports are collections of threat intelligence focused on one or more topics, such as a description of a threat actor, malware, or attack technique, including context and related details. They are used to group related threat intelligence together so that it can be published as a comprehensive cyber threat story.
-
- 
-
-The Report SDO contains a list of references to STIX Objects (the CTI objects included in the report) along with a textual description and the name of the report.
-
- Reports are collections of threat intelligence focused on one or more topics, such as a description of a threat actor, malware, or attack technique, including context and related details. They are used to group related threat intelligence together so that it can be published as a comprehensive cyber threat story.
-
- 
-
-The Report SDO contains a list of references to STIX Objects (the CTI objects included in the report) along with a textual description and the name of the report.
+Reports are collections of threat intelligence focused on one or more topics, such as a description of a threat actor, malware, or attack technique, including context and related details. They are used to group related threat intelligence together so that it can be published as a comprehensive cyber threat story. The Report SDO contains a list of references to STIX Objects (the CTI objects included in the report) along with a textual description and the name of the report.  
 
 or example, a threat report produced by ACME Defense Corp. discussing the Glass Gazelle campaign should be represented using Report. The Report itself would contain the narrative of the report while the Campaign SDO and any related SDOs (e.g., Indicators for the Campaign, Malware it uses, and the associated Relationships) would be referenced in the report contents.
 
@@ -126,8 +110,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -152,3 +135,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("report--84e4d88f-44ea-4bcd-bbf3-b2c1c320bcbd")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

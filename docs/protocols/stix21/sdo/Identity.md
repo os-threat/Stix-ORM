@@ -88,7 +88,6 @@ The Python retrieval statement
 
 ```python
 from stixorm.module.typedb import TypeDBSink, TypeDBSource
-
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -113,3 +112,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("identity--8c6af861-7b20-41ef-9b59-6344fd872a8f")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

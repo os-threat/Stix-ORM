@@ -2,8 +2,7 @@ import json
 import os
 import datetime
 
-import dateutil.parser
-from dateutil.parser import *
+
 from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
 from typedb.client import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
@@ -11,7 +10,7 @@ from stixorm.module.orm.delete_object import delete_stix_object
 from stixorm.module.orm.export_object import convert_ans_to_stix
 from stixorm.module.authorise import authorised_mappings, import_type_factory
 from stixorm.module.parsing.parse_objects import parse
-from stixorm.module.generate_docs import configure_overview_table_docs, object_tables
+from stixorm.module.generate_docs import configure_overview_table_docs, object_docs
 from stixorm.module.initialise import sort_layers, load_typeql_data
 from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
 from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
@@ -59,7 +58,7 @@ file_id = 'file--364fe3e5-b1f4-5ba3-b951-ee5983b3538d'
 def test_generate_docs():
     print("================================================================================")
     print("------------------------ Test Doc Generation ---------------------------------------------")
-    configure_overview_table_docs(object_tables)
+    configure_overview_table_docs(object_docs)
 
 
 def backdoor_get(stix_id, _composite_filters=None):
@@ -205,7 +204,7 @@ def backdoor_add_dir(dirpath):
     id_diff = id_set - id_typedb
     print(f'\n\n\n===========================\nduplist -> {duplist}')
     print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
-    #print(f'difference -> {id_diff}')
+    print(f'difference -> {id_diff}')
 
 
 def backdoor_add(pahhway):
@@ -628,7 +627,7 @@ def check_dir(dirpath):
                 json_text = json.load(f)
                 json_list = json_text["objects"]
                 for element in json_list:
-                    #print(f'element is {element}')
+                    print(f'element is {element}')
                     temp_id = element.get('id', False)
                     if temp_id:
                         id_list.append(temp_id)
@@ -642,7 +641,7 @@ def check_dir(dirpath):
     len_typedb = len(id_typedb)
     id_diff = id_set - id_typedb
     print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
-    #print(f'difference -> {id_diff}')
+    print(f'difference -> {id_diff}')
 
 
 def cert_dict(cert_root, certs):
@@ -1582,8 +1581,6 @@ if __name__ == '__main__':
     osthreat = "data/os-threat/"
     reports = "data/threat_reports/"
     poison = "poisonivy.json"
-    incident = "test/data/os-threat/incident"
-    incident_test = "test/data/os-threat/test"
     threattest = "history/"
 
     id_list = ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46', 'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265', 'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559', 'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6', 'attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5', 'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
@@ -1596,7 +1593,7 @@ if __name__ == '__main__':
     #test_initialise()
     #load_file_list(path1, [f30, f21])
     #load_file(mitre_data)
-    #load_file(mitre + "attack_objects.json")
+    load_file(mitre + "attack_objects.json")
     #check_object(mitre + "attack_objects.json")
     #load_file(reports + poison)
     print("=====")
@@ -1605,7 +1602,8 @@ if __name__ == '__main__':
     #query_id(stid1)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
-    #check_dir(incident)
+    #check_dir(mitre)
+    #check_dir(mitre)
     #test_delete(data_path+file1)
     #test_get(stid1)
     #test_get_delete(path2 + "attack_objects.json")
@@ -1621,7 +1619,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    backdoor_add_dir(incident)
+    #backdoor_add_dir(mitre)
     #test_get_file(data_path + file1)
     #test_insert_statements(mitre + "attack_objects.json", stid1)
     #test_insert_statements(path1 + f29, stid2)

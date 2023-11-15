@@ -1,4 +1,4 @@
-# IPv6-Address Cyber Obervable Object
+# IPv6-Address Cyber Observable Object
 
 **Stix and TypeQL Object Type:**  `ipv6-addr`
 
@@ -67,8 +67,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -93,3 +92,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("ipv6-addr--5daf7456-8863-5481-9d42-237d477697f4")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

@@ -1,0 +1,7 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+name,name,Required,  stix-attribute-string   ,   attribute   
+log,log,Required,  stix-attribute-string   ,   attribute   
+system_id,system-id,Required,  stix-attribute-string   ,   attribute   
+source,source,Optional,  stix-attribute-string   ,   attribute   
+product,product,Optional,  stix-attribute-string   ,   attribute   
+format,format,Optional,  stix-attribute-string   ,   attribute   

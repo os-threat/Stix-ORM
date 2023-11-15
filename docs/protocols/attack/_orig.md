@@ -1,4 +1,10 @@
 # MITRE ATT&CK Protocol
 
-Stuff about the mirtre attack prototocol here
+### CKDomain Objects (SDO)
+
+There are 13 ATT&CK Domain Objects, as shown in the table below
+
+
+
+
 

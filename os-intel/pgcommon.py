@@ -54,7 +54,7 @@ def _infer_type(key, value):
     if isinstance(value, bool):
         rtype = 'BOOLEAN'
     elif key in ('src_byte_count', 'dst_byte_count'):
-        rtype = 'NUMERIC'  # Support data sources using uint64
+        rtype = 'NUMERIC'  # Support data sources install uint64
     else:
         # Fall back to defaults
         rtype = infer_type(key, value)

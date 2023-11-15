@@ -1,0 +1,8 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+variety,variety,Required,  stix-attribute-string   ,   attribute   
+conversion_rate,conversion-rate,Required,  stix-attribute-double   ,   attribute   
+conversion_time,conversion_time,Optional,  stix-attribute-timestamp   ,   attribute   
+currency,currency,Optional,  stix-attribute-string   ,   attribute   
+currency_actual,currency-actual,Optional,  stix-attribute-string   ,   attribute   
+max_amount,max-amount,Optional,  stix-attribute-double   ,   attribute   
+min_amount,min-amount,Optional,  stix-attribute-double   ,   attribute   

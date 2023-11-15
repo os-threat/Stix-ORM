@@ -86,7 +86,7 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: ImportType):
 
 def process_entity(thing, r_tx, stix_id: str):
     """
-        If the current returned object from typedb_lib contains an entity then unpack it using grpc commands
+        If the current returned object from typedb_lib contains an entity then unpack it install grpc commands
         into an interim list
     Args:
         thing (): the grpc entity reference

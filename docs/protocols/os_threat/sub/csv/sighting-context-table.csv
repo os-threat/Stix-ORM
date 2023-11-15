@@ -1,0 +1,4 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+name,name,Required,  stix-attribute-string   ,   attribute   
+description,description,Required,  stix-attribute-string   ,   attribute   
+value,context-value,Required,  stix-attribute-string   ,   attribute   
