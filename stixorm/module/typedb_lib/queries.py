@@ -2,13 +2,13 @@ import logging
 import traceback
 from typing import List, Iterator
 from typedb.api.answer.concept_map import ConceptMap
-from typedb.api.connection.client import TypeDBClient
+from typedb.api.connection.driver import TypeDBDriver
 from typedb.api.connection.session import SessionType, TypeDBSession
 from typedb.api.connection.transaction import TransactionType, TypeDBTransaction
-from typedb.api.query.future import QueryFuture
+from typedb.common.promise import Promise
 from typedb.api.query.query_manager import QueryManager
-from typedb.client import TypeDB
-from typedb.stream.bidirectional_stream import BidirectionalStream
+from typedb.driver import TypeDB
+#from typedb.stream.bidirectional_stream import BidirectionalStream
 
 from stixorm.module.typedb_lib.logging import log_delete_layer, log_add_layer
 from stixorm.module.typedb_lib.instructions import Instructions
@@ -59,7 +59,7 @@ def get_core_client(uri: str,
     typedb_url = uri + ":" + port
     return TypeDB.core_client(typedb_url)
 
-def get_data_session(core_client: TypeDBClient,
+def get_data_session(core_client: TypeDBDriver,
                      database: str):
     return core_client.session(database, SessionType.DATA)
 
@@ -180,7 +180,7 @@ def delete_layers(uri: str, port: str, database: str, instructions: Instructions
 
 def delete_layer(transaction: TypeDBTransaction, query: str):
     transaction_query: QueryManager = transaction.query()
-    query_future: QueryFuture = transaction_query.delete(query)
+    query_future: Promise = transaction_query.delete(query)
     bi_d: BidirectionalStream = query_future.get()
     logger.info(
         '\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n' + \

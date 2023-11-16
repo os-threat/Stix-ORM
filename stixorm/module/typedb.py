@@ -2,8 +2,9 @@
 import os.path
 import pathlib
 import traceback
+from typing import Dict
 from dataclasses import dataclass
-from typedb.client import *
+from typedb.driver import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
 from stixorm.module.orm.delete_object import delete_stix_object, add_delete_layers
 from stixorm.module.orm.export_object import convert_ans_to_stix
@@ -204,7 +205,7 @@ class TypeDBSink(DataSink):
         logger.debug("Successfully cleared database")
 
 
-    def __filter_markings(self, stix_ids: List[StringAttribute]) -> List[str]:
+    def __filter_markings(self, stix_ids: List[str]) -> List[str]:
         marking = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
                    "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
                    "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
@@ -214,7 +215,7 @@ class TypeDBSink(DataSink):
         return self.__string_attibute_to_string(filtered_list)
 
     def __string_attibute_to_string(self,
-                                    string_attributes: List[StringAttribute]):
+                                    string_attributes: List[str]):
         return [stix_id.get_value() for stix_id in string_attributes]
 
     def __query_stix_ids(self):
@@ -329,9 +330,9 @@ class TypeDBSink(DataSink):
 
 
 
-    def __get_core_client(self) -> TypeDBClient:
+    def __get_core_client(self) -> TypeDBDriver:
         typedb_url = self.uri + ":" + self.port
-        return TypeDB.core_client(typedb_url)
+        return TypeDB.core_driver(typedb_url)
 
 
     def __get_source_client(self):

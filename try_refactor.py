@@ -1,11 +1,11 @@
 import json
 import os
 import datetime
-
+from typing import Dict
 #import dateutil.parser
 #from dateutil.parser import *
-from stixorm.module.typedb import TypeDBSink, TypeDBSource
-from typedb.client import *
+#from stixorm.module.typedb import TypeDBSink, TypeDBSource
+from typedb.driver import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
 from stixorm.module.orm.delete_object import delete_stix_object
 from stixorm.module.orm.export_object import convert_ans_to_stix
