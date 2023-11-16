@@ -1,8 +1,9 @@
 import json
 import os
 import pathlib
+from typing import List
+
 import pytest
-from typedb.client import *
 import logging
 from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink
