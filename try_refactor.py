@@ -1,11 +1,10 @@
 import json
 import os
 import datetime
+from typing import Dict
 
-import dateutil.parser
-from dateutil.parser import *
 from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
-from typedb.client import *
+from typedb.driver import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
 from stixorm.module.orm.delete_object import delete_stix_object
 from stixorm.module.orm.export_object import convert_ans_to_stix
@@ -18,6 +17,12 @@ from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
 from stixorm.module.orm.import_utilities import val_tql
 #from stixorm.module.definitions.attack import attack_models
 #from stixorm.module.definitions.property_definitions import get_definitions
+
+from stixorm.module.typedb_lib.factories.definition_factory import get_definition_factory_instance
+from stixorm.module.typedb_lib.model.definitions import DefinitionName
+stix_models = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
+attack_models = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
+os_threat_models = get_definition_factory_instance().lookup_definition(DefinitionName.OS_THREAT)
 import copy
 
 import logging
@@ -739,19 +744,19 @@ def test_auth():
 # Setup Feeds import and update code
 #
 ##################################################################################
-def test_feeds():
-    osthreat = "data/os-threat/feed-example/example.json"
-    datetime1 = dateutil.parser.isoparse("2020-10-19T01:01:01.000Z")
-    datetime2 = dateutil.parser.isoparse("2020-10-20T01:01:01.000Z")
-    datetime3 = dateutil.parser.isoparse("2020-10-21T01:01:01.000Z")
-    typedb_source = TypeDBSource(connection, import_type)
-    typedb_sink = TypeDBSink(connection, True, import_type)
-    with open(osthreat, mode="r", encoding="utf-8") as f:
-        json_text = json.load(f)
-        # first lets create the feed
-        feed_id = create_feed(json_text[0], typedb_sink, datetime1)
-        print(f'feed id -> {feed_id}')
-        update_feed(feed_id, json_text[1], datetime2, typedb_source, typedb_sink)
+# def test_feeds():
+#     osthreat = "data/os-threat/feed-example/example.json"
+#     datetime1 = dateutil.parser.isoparse("2020-10-19T01:01:01.000Z")
+#     datetime2 = dateutil.parser.isoparse("2020-10-20T01:01:01.000Z")
+#     datetime3 = dateutil.parser.isoparse("2020-10-21T01:01:01.000Z")
+#     typedb_source = TypeDBSource(connection, import_type)
+#     typedb_sink = TypeDBSink(connection, True, import_type)
+#     with open(osthreat, mode="r", encoding="utf-8") as f:
+#         json_text = json.load(f)
+#         # first lets create the feed
+#         feed_id = create_feed(json_text[0], typedb_sink, datetime1)
+#         print(f'feed id -> {feed_id}')
+#         update_feed(feed_id, json_text[1], datetime2, typedb_source, typedb_sink)
 
 
 def update_feed(feed_id, local_list, loc_datetime, typedb_source, typedb_sink):

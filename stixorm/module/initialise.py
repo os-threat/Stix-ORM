@@ -115,7 +115,7 @@ def load_markings(stix_connection: Dict[str, str]):
 
 def load_typeql_data(data_list, stix_connection: Dict[str, str]):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
-    with TypeDB.core_client(url) as client:
+    with TypeDB.core_driver(url) as client:
         # Stage 1: Create the schema
         with client.session(stix_connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.WRITE) as write_transaction:
