@@ -4,7 +4,7 @@ import datetime
 from typing import Dict
 #import dateutil.parser
 #from dateutil.parser import *
-#from stixorm.module.typedb import TypeDBSink, TypeDBSource
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 from typedb.driver import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
 from stixorm.module.orm.delete_object import delete_stix_object
@@ -1892,7 +1892,7 @@ if __name__ == '__main__':
     stid1 = "task--7c5751c2-3c18-41bc-900c-685764c960f3"
     stid2 = "file--ec3415cc-5f4f-5ec8-bdb1-6f86996ae66d"
     stid3 = "sighting--300cd92e-d184-4c60-a97b-1759dc6780ed"
-    #test_initialise()
+    test_initialise()
     #load_file_list(path1, [f30, f21])
     #load_file(incident + "/human_trigger.json")
     #load_file(mitre + "attack_objects.json")
@@ -1921,7 +1921,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    backdoor_add_dir(mitre)
+    #backdoor_add_dir(mitre)
     #test_get_file(data_path + file1)
     #test_insert_statements(path2 + "evidence.json", stid3)
     #test_insert_statements(path1 + f29, stid2)

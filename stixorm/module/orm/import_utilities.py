@@ -420,9 +420,9 @@ def hashes(prop_name, prop_dict, parent_var):
             logger.error(f'Unknown hash type {key}')
 
     # insert the hash objects into the hashes relation with the parent object
-    insert += '\n $hash_rel (owner:' + parent_var
+    insert += '\n $hash_rel (hash-owner:' + parent_var
     for hash_var in hash_var_list:
-        insert += ', pointed-to:' + hash_var
+        insert += ', hash-actual:' + hash_var
 
     insert += ') isa hashes;\n'
     return match, insert

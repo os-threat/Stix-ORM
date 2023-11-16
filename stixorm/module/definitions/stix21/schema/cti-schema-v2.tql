@@ -40,7 +40,7 @@ stix-object sub stix-entity,
 		owns spec-version,
 
 		# Optional
-		plays object-marking:marked,
+		plays data-marking:marked,
 		plays created-by:created,
 
 		# Common relations for SDOs and SCOs. Defined in 3.7. 
@@ -98,14 +98,14 @@ external-reference sub stix-sub-object,
 	owns description,
 	owns url-link, 
 	owns external-id, 
-	plays hashes:owner,
+	plays hashes:hash-owner,
 	plays external-references:referencing;
 
 
 # 2.7 Hash
 hash sub stix-sub-object,
 	owns hash-value, 
-	plays hashes:pointed-to; 
+	plays hashes:hash-actual;
 
 	md-5 sub hash;
 	sha-1 sub hash; 
@@ -666,7 +666,7 @@ stix-core-relationship sub relation,
 	relates source, 
 	relates target,
 	plays obj-refs:referred,
-	plays object-marking:marked,
+	plays data-marking:marked,
 	plays granular-marking:object, 
 	plays external-references:referenced,
 	plays created-by:created,
@@ -834,7 +834,7 @@ artifact sub stix-cyber-observable-object,
 	owns mime-type,
 	owns payload-bin,
 	owns url-link, 
-	plays hashes:owner,
+	plays hashes:hash-owner,
 	owns encryption-algorithm,
 	owns decryption-key,
 	plays payload-src:payload,
@@ -916,7 +916,7 @@ email-mime-part sub stix-sub-object,
 
 # 6.7 File
 file sub stix-cyber-observable-object,
-	plays hashes:owner, 
+	plays hashes:hash-owner,
 	owns size,
 	owns name,
 	owns name-enc,
@@ -958,7 +958,7 @@ SCO-extension sub stix-sub-object,
 
 	alternate-data-stream sub SCO-extension, 
 		owns name, 
-		plays hashes:owner, 
+		plays hashes:hash-owner,
 		owns size, 
 		plays alt-data-streams:alt-data-stream; 
 
@@ -998,7 +998,7 @@ SCO-extension sub stix-sub-object,
 		owns number-of-symbols,
 		owns size-of-optional-header,
 		owns characteristics-hex,
-		plays hashes:owner, 
+		plays hashes:hash-owner,
 		plays optional-headers:pebinary,
 		plays sections:pebinary,
 		plays windows-pebinary-extension:pebinary;
@@ -1041,7 +1041,7 @@ SCO-extension sub stix-sub-object,
 		owns name, 
 		owns size, 
 		owns entropy, 
-		plays hashes:owner, 
+		plays hashes:hash-owner,
 		plays sections:pe-section;
 
 # 6.8 IPv4 Address
@@ -1272,7 +1272,7 @@ windows-registry-value-type sub stix-sub-object,
 # 6.18 X.509 Certificate
 x509-certificate sub stix-cyber-observable-object, 
 	owns is-self-signed, 
-	plays hashes:owner, 
+	plays hashes:hash-owner,
 	owns version,
 	owns serial-number,
 	owns signature-algorithm,
@@ -1322,7 +1322,7 @@ marking-definition sub stix-object,
 	owns spec-version,
 	plays created-by:created,
 	plays data-marking:marking,
-	plays object-marking:marked,
+	plays data-marking:marked,
 	plays external-references:referencing;
 
 	statement-marking sub marking-definition, 
@@ -1377,7 +1377,9 @@ embedded sub relation,
 		relates referenced as owner,
 		relates referencing as pointed-to;
 
-	hashes sub embedded;
+	hashes sub embedded,
+		relates hash-owner as owner,
+		relates hash-actual as pointed-to;
 
 	malware-env sub embedded,
 		relates object as owner,
@@ -1636,7 +1638,7 @@ inferred-mitigation sub mitigates;
 ##### ATTRIBUTES #####
 
 stix-attribute-string sub attribute, value string, abstract,
-	plays granular-marking:marked;
+	plays data-marking:marked;
 
 	stix-type sub stix-attribute-string;
 	stix-id sub stix-attribute-string;
@@ -1826,7 +1828,7 @@ stix-attribute-string sub attribute, value string, abstract,
 	comment sub stix-attribute-string;
 
 stix-attribute-integer sub attribute, value long, abstract,
-	plays granular-marking:marked;
+	plays data-marking:marked;
 
 	gid sub stix-attribute-integer;
 	image-height sub stix-attribute-integer;
@@ -1875,7 +1877,7 @@ stix-attribute-integer sub attribute, value long, abstract,
 	
 
 stix-attribute-double sub attribute, value double, abstract,
-	plays granular-marking:marked;		
+	plays data-marking:marked;
 
 	latitude sub stix-attribute-double;
 	longitude sub stix-attribute-double;
@@ -1892,7 +1894,7 @@ stix-attribute-double sub attribute, value double, abstract,
 	subject-public-key-exponent sub stix-attribute-double;
 
 stix-attribute-boolean sub attribute, value boolean, abstract, 
-	plays granular-marking:marked;
+	plays data-marking:marked;
 
 	revoked sub stix-attribute-boolean;
 	is-family sub stix-attribute-boolean;
@@ -1912,7 +1914,7 @@ stix-attribute-boolean sub attribute, value boolean, abstract,
 	
 
 stix-attribute-timestamp sub attribute, value datetime, abstract, 
-	plays granular-marking:marked;
+	plays data-marking:marked;
 
 	date sub stix-attribute-timestamp;
 	submitted sub stix-attribute-timestamp;
@@ -1950,7 +1952,7 @@ stix-attribute-timestamp sub attribute, value datetime, abstract,
 	
 
 custom-attribute sub attribute, value string, 
-	plays granular-marking:marked,
+	plays data-marking:marked,
 	owns attribute-type; 
 
 attribute-type sub attribute, value string;

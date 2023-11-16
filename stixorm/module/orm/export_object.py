@@ -845,9 +845,9 @@ def make_hashes(reln, reln_name, stix_dict):
     hashes = {}
     roles = reln["roles"]
     for r in roles:
-        if r["role"] == "owner":
+        if r["role"] == "hash-owner":
             own_players = r["player"]
-        elif r['role'] == "pointed-to":
+        elif r['role'] == "hash-actual":
             own_players = r["player"]
             for p in own_players:
                 hash_type = p["tql"]

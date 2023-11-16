@@ -193,8 +193,8 @@ def del_granular_markings(obj_var):
 
 def del_hashes(rel_name, rel_object, obj_var, i):
     match = '$hash isa hash, has hash-value $h;\n'
-    match += '$hash_rel (owner:'+obj_var
-    match += ', pointed-to:$hash) isa hashes;\n'
+    match += '$hash_rel (hash-owner:'+obj_var
+    match += ', hash-actual:$hash) isa hashes;\n'
     delete = '$hash_rel isa hashes;\n'
     delete += '$hash isa hash;\n'
     return match, delete
