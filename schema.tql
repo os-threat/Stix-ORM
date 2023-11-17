@@ -186,6 +186,7 @@ campaign sub stix-domain-object,
 
 	# Reverse Relations
 	# plays indicates:indicated; -> Defined in SDO
+	# plays indicates:indicated; -> Defined in SDO
 
 	# Embedded relations
 	# created-by
@@ -363,7 +364,7 @@ intrusion-set sub stix-domain-object,
 	# Object marking 
 
 	# Inferred role player
-	plays mitigates:mitigated;
+	plays inferred-mitigation:inferred-mitigation-mitigated;
 
 # 4.10 Location
 location sub stix-domain-object,
@@ -407,7 +408,7 @@ malware sub stix-domain-object,
     
     # Relations defined as properties in STIX
 	plays kill-chain-usage:kill-chain-used,
-	plays malware-sample:sample-for, # ssample_refs
+	plays malware-sample:malware-sample-sample-for, # ssample_refs
 
     # Common Relations
     plays authored-by:authoring,
@@ -433,7 +434,9 @@ malware sub stix-domain-object,
 	plays drop:dropped,
 	plays control:controlled,
 	plays characterise:characterised,
-	plays analysis:analysed,
+	plays av-analysis:av-analysis-analysed,
+	plays static-analysis:static-analysis-analysed,
+	plays dynamic-analysis:dynamic-analysis-analysed,
 
     plays download:downloaded,
     plays exploit:exploiting,
@@ -462,11 +465,13 @@ malware-analysis sub stix-domain-object,
 	# Relations defined as properties in STIX
 	# host_vm_ref, _operating_system_ref, instsalled_software_ref, analysis-sco are all defined as 
 	# playing roles in the analysis relation
-	plays malware-analysis-sample:sample-for, # sample_refs
+	plays malware-analysis-sample:malware-analysis-sample-sample-for, # sample_refs
 
 	# Common Relations
 	plays characterise:characterising,
-	plays analysis:analysing,
+	plays av-analysis:av-analysis-analysing,
+	plays static-analysis:static-analysis-analysing,
+	plays dynamic-analysis:dynamic-analysis-analysing,
 
 	# Reverse Relations
 	# NA
@@ -803,10 +808,10 @@ stix-core-relationship sub relation,
 		relates analysing as source,
 		relates analysed as target;
 
-		av-analysis sub analysis;
-		static-analysis sub analysis;
-		dynamic-analysis sub analysis;
-		analysis-of sub analysis;
+		av-analysis sub analysis, relates av-analysis-analysing as analysing, relates av-analysis-analysed as analysed;
+		static-analysis sub analysis, relates static-analysis-analysing as analysing, relates static-analysis-analysed as analysed;
+		dynamic-analysis sub analysis, relates dynamic-analysis-analysing as analysing, relates dynamic-analysis-analysed as analysed;
+		analysis-of sub analysis, relates analysis-of-analysing as analysing, relates analysis-of-analysed as analysed;
 
 	remediation sub stix-core-relationship,
 		relates remediating as source,
@@ -835,8 +840,8 @@ artifact sub stix-cyber-observable-object,
 	owns decryption-key,
 	plays payload-src:payload,
 	plays payload-dst:payload,
-	plays malware-analysis-sample:sco-sample,
-	plays malware-sample:sco-sample,
+	plays malware-analysis-sample:malware-analysis-sample-sco-sample,
+	plays malware-sample:malware-sco-sample,
 	plays raw-email-references:binary,
 	plays body-raw-references:non-textual,
 	plays content-file:containing-file,
@@ -847,7 +852,7 @@ autonomous-system sub stix-cyber-observable-object,
 	owns number,
 	owns name,
 	owns rir,
-	plays belongs:belongs-to;
+	plays belongs-to-autonomous:belongs-to-autonomous;
 
 # 6.3 Directory Object
 directory sub stix-cyber-observable-object,
@@ -856,10 +861,10 @@ directory sub stix-cyber-observable-object,
 	owns ctime,
 	owns mtime,
 	owns atime,
-	plays directory-contains:container,
-	plays directory-contains:contained,
-	plays directory-parent:contained,
-	plays directory-parent:container;
+	plays directory-contains:directory-contains-container,
+	plays directory-contains:directory-contains-contained,
+	plays directory-parent:directory-parent-contained,
+	plays directory-parent:directory-parent-container;
 
 # 6.4 Domain Name Object
 domain-name sub stix-cyber-observable-object,
@@ -877,7 +882,10 @@ email-addr sub stix-cyber-observable-object,
 	owns stix-value, 
 	owns display-name,
 	plays belongs:belonged,
-	plays email-connection:email-address;
+	plays from-email:from-email-address,
+	plays to-email:to-email-address,
+	plays cc-email:cc-email-address,
+	plays bcc-email:bcc-email-address;
 
 # 6.6 Email Message
 email-message sub stix-cyber-observable-object,
@@ -919,12 +927,12 @@ file sub stix-cyber-observable-object,
 	owns mtime,
 	owns atime, 
 
-	plays directory-contains:contained,
-	plays directory-parent:contained,
+	plays directory-contains:directory-contains-contained,
+	plays directory-parent:directory-parent-contained,
 	plays content-file:containing-file,
 	plays body-raw-references:non-textual,
-	plays malware-analysis-sample:sco-sample,
-	plays malware-sample:sco-sample,
+	plays malware-analysis-sample:malware-analysis-sample-sco-sample,
+	plays malware-sample:malware-sco-sample,
 	plays download:downloaded,
 	plays process-image:executed-image,
 	plays service-dll:loaded-dll,
@@ -941,7 +949,7 @@ SCO-extension sub stix-sub-object,
 
 	archive-ext sub SCO-extension,
 		owns comment,
-		plays directory-contains:container,
+		plays directory-contains:directory-contains-container,
 		plays archive-extension:an-archive;
 
 	ntfs-ext sub SCO-extension,
@@ -1088,13 +1096,15 @@ network-traffic sub stix-cyber-observable-object,
 	owns src-packets,
 	owns dst-packets,
 	plays traffic-src:traffic,
+	plays payload-src:payload-src-traffic,
 	plays traffic-dst:traffic,
+	plays payload-dst:payload-dst-traffic,
 	
-	plays encapsulate:container,
-	plays encapsulate:contained,
-	plays encapsulated:container,
-	plays encapsulated:contained,
-	plays malware-analysis-sample:sco-sample,
+	plays encapsulate:encapsulate-container,
+	plays encapsulate:encapsulate-contained,
+	plays encapsulated:encapsulated-container,
+	plays encapsulated:encapsulated-contained,
+	plays malware-analysis-sample:malware-analysis-sample-sco-sample,
 	plays IPFIX-store:traffic,
 	plays open-connections:opened-connection,
 	plays http-request-extension:traffic,
@@ -1352,13 +1362,12 @@ embedded sub relation,
 		relates created as owner,
 		relates creator as pointed-to;
 
-    malware-sample sub embedded,
-		relates sample-for as owner,
+	sample sub embedded, 
+		relates sample-for as owner, 
 		relates sco-sample as pointed-to;
 
-    malware-analysis-sample sub embedded,
-		relates sample-for as owner,
-		relates sco-sample as pointed-to;
+		malware-sample sub sample, relates malware-sco-sample as sco-sample, relates malware-sample-sample-for as sample-for;
+		malware-analysis-sample sub sample, relates malware-analysis-sample-sco-sample as sco-sample, relates malware-analysis-sample-sample-for as sample-for;
 
 	kill-chain-usage sub embedded,
 		relates kill-chain-used as owner,
@@ -1387,25 +1396,23 @@ embedded sub relation,
 		relates object as owner;
 
 	# file or directory containing relation
-    directory-contains sub embedded,
+	orig-container sub embedded,
 		relates container as owner,
 		relates contained as pointed-to;
 
-    # network traffic enxapsulate
-    encapsulate sub embedded,
-		relates container as owner,
-		relates contained as pointed-to;
+		directory-contains sub orig-container, relates directory-contains-container as container, relates directory-contains-contained as contained;
+		# network traffic enxapsulate
+		encapsulate sub orig-container, relates encapsulate-container as container, relates encapsulate-contained as contained;
 
 	
 	# reverse file or directory containing relation
-    directory-parent sub embedded,
+	orig-contained sub embedded,
 		relates contained as owner,
 		relates container as pointed-to;
-
-    # network-traffic encapsulated-by
-    encapsulated sub embedded,
-		relates contained as owner,
-		relates container as pointed-to;
+		
+		directory-parent sub orig-contained, relates directory-parent-contained as contained, relates directory-parent-container as container;
+		# network-traffic encapsulated-by
+		encapsulated sub orig-contained, relates encapsulated-contained as contained, relates encapsulated-container as container;
 
 	# IP Address or Domain Name
 	resolves-to-ref sub embedded,
@@ -1418,7 +1425,8 @@ embedded sub relation,
 		relates belongs-to as pointed-to;
 
 	# IP belongs to autonomous system
-	belongs-to-autonomous sub belongs;
+	belongs-to-autonomous sub belongs,
+		relates belongs-to-autonomous as belongs-to;
 
 	# Email specific relations
 	body-multipart sub embedded, 
@@ -1434,11 +1442,11 @@ embedded sub relation,
 		relates email as owner,
 		relates email-address as pointed-to;
 
-		from-email sub email-connection;
-		sender-email sub email-connection;
-		to-email sub email-connection;
-		cc-email sub email-connection;
-		bcc-email sub email-connection;
+		from-email sub email-connection, relates from-email-address as email-address;
+		sender-email sub email-connection, relates sender-email-address as email-address;
+		to-email sub email-connection, relates to-email-address as email-address;
+		cc-email sub email-connection, relates cc-email-address as email-address;
+		bcc-email sub email-connection, relates bcc-email-address as email-address;
 	
 	additional-header sub embedded,
 		relates email as owner,
@@ -1459,14 +1467,16 @@ embedded sub relation,
 		relates source as pointed-to;
 
 		payload-src sub traffic-src,
-			relates payload as source;
+			relates payload as source,
+			relates payload-src-traffic as traffic;
 
 	traffic-dst sub embedded, 
 		relates traffic as owner,
 		relates destination as pointed-to;
 
 		payload-dst sub traffic-dst,
-			relates payload as destination;
+			relates payload as destination,
+			relates payload-dst-traffic as traffic;
 
 	IPFIX-store sub embedded, 
 		relates traffic as owner,
@@ -1626,7 +1636,8 @@ kill-chain sub relation,
 	owns kill-chain-name, 
 	relates participating-kill-chain-phase; 
 
-inferred-mitigation sub mitigates;
+inferred-mitigation sub mitigates,
+	relates inferred-mitigation-mitigated as mitigated;
 
 
 ##### ATTRIBUTES #####
@@ -1950,3 +1961,4 @@ custom-attribute sub attribute, value string,
 	owns attribute-type; 
 
 attribute-type sub attribute, value string;
+
