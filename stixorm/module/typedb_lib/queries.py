@@ -40,7 +40,7 @@ def build_insert_query(layer):
 
 
 def build_match_id_query(stix_ids: List[str]):
-    get_ids_tql = 'match $id isa stix-id;'
+    get_ids_tql = 'match $id isa stix-id; '
     len_id = len(stix_ids)
     if len_id == 1:
         get_ids_tql += '$id "' + stix_ids[0] + '";'
@@ -51,13 +51,13 @@ def build_match_id_query(stix_ids: List[str]):
                 get_ids_tql += " ;"
             else:
                 get_ids_tql += ' or '
-    return get_ids_tql
+    return get_ids_tql + " get $id;"
 
 
 def get_core_client(uri: str,
                     port: str):
     typedb_url = uri + ":" + port
-    return TypeDB.core_client(typedb_url)
+    return TypeDB.core_driver(typedb_url)
 
 def get_data_session(core_client: TypeDBDriver,
                      database: str):
@@ -80,7 +80,7 @@ def match_query(uri: str, port: str, database: str, query: str, data_query, **da
             with client_session as session:
                 read_transaction = get_read_transaction(session)
                 with read_transaction as transaction:
-                    answer_iterator = transaction.query().match(query)
+                    answer_iterator = transaction.query.get(query)
                     data = data_query(query, answer_iterator, transaction, **data_query_args)
                     return data
     except Exception as e:
@@ -89,13 +89,13 @@ def match_query(uri: str, port: str, database: str, query: str, data_query, **da
 
 def get_all_databases(uri: str, port: str):
     client = get_core_client(uri, port)
-    return client.databases().all()
+    return client.databases.all()
 
 def delete_database(uri: str, port: str, database: str):
     client = get_core_client(uri, port)
-    if client.databases().contains(database):
+    if client.databases.contains(database):
        logger.info('Database ' + database + ' exists... deleting')
-       client.databases().get(database).delete()
+       client.databases.get(database).delete()
     else:
        logger.info('Database ' + database + ' does not exists... skipping')
 
@@ -179,7 +179,7 @@ def delete_layers(uri: str, port: str, database: str, instructions: Instructions
 
 
 def delete_layer(transaction: TypeDBTransaction, query: str):
-    transaction_query: QueryManager = transaction.query()
+    transaction_query: QueryManager = transaction.query
     query_future: Promise = transaction_query.delete(query)
     bi_d: BidirectionalStream = query_future.get()
     logger.info(

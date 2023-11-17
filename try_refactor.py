@@ -52,7 +52,7 @@ marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
           "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
 
-get_ids = 'match $stix-id isa stix-id;'
+get_ids = 'match $stix-id isa stix-id; get $stix-id;'
 
 
 test_id = "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff"
@@ -82,10 +82,10 @@ def backdoor_get(stix_id, _composite_filters=None):
         match = 'match ' + type_ql
         #logger.debug(f' typeql -->: {match}')
         g_uri = connection["uri"] + ':' + connection["port"]
-        with TypeDB.core_client(g_uri) as client:
+        with TypeDB. core_driver(g_uri) as client:
             with client.session(connection["database"], SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as read_transaction:
-                    answer_iterator = read_transaction.query().match(match)
+                    answer_iterator = read_transaction.query.match(match)
                     #logger.debug((f'have read the query -> {answer_iterator}'))
                     stix_dict = convert_ans_to_stix(match, answer_iterator, read_transaction, import_type)
                     stix_obj = parse(stix_dict, import_type=import_type)
@@ -436,13 +436,14 @@ def get_stix_ids(get_id_query = get_ids):
     query = get_id_query
     g_uri = connection["uri"] + ':' + connection["port"]
     id_list = []
-    with TypeDB.core_client(g_uri) as client:
+    with TypeDB. core_driver(g_uri) as client:
         with client.session(connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.READ) as read_transaction:
-                answer_iterator = read_transaction.query().match(query)
+                logger.debug(f"\n\n query is -> {query}")
+                answer_iterator = read_transaction.query.get(query)
                 ids = [ans.get("stix-id") for ans in answer_iterator]
                 for sid_obj in ids:
-                    sid = sid_obj.get_value()
+                    sid = sid_obj.as_attribute().as_attribute().get_value()
                     if sid in marking:
                         continue
                     else:
@@ -949,14 +950,14 @@ def create_feed(local_list, typedb_sink, loc_datetime):
 
 def update_typeql_data(data_list, stix_connection: Dict[str, str]):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
-    with TypeDB.core_client(url) as client:
+    with TypeDB. core_driver(url) as client:
         # Update the data in the database
         with client.session(stix_connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.WRITE) as update_transaction:
                 logger.debug(f'==================== updating feed concepts =======================')
                 for data in data_list:
                     logger.debug(f'\n\n{data}\n\n')
-                    insert_iterator = update_transaction.query().update(data)
+                    insert_iterator = update_transaction.query.update(data)
 
                     logger.debug(f'insert_iterator response ->\n{insert_iterator}')
                     for result in insert_iterator:
@@ -967,14 +968,14 @@ def update_typeql_data(data_list, stix_connection: Dict[str, str]):
 
 def insert_typeql_data(data_list, stix_connection: Dict[str, str]):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
-    with TypeDB.core_client(url) as client:
+    with TypeDB. core_driver(url) as client:
         # Update the data in the database
         with client.session(stix_connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.WRITE) as insert_transaction:
                 logger.debug(f'=========== inserting feed concepts ===========================')
                 for data in data_list:
                     logger.debug(f'\n\n{data}\n\n')
-                    insert_iterator = insert_transaction.query().insert(data)
+                    insert_iterator = insert_transaction.query.insert(data)
 
                     logger.debug(f'insert_iterator response ->\n{insert_iterator}')
                     for result in insert_iterator:
@@ -1153,7 +1154,7 @@ def get_id_list(match_tql, connection, variable):
     with TypeDB.core_client(g_uri) as client:
         with client.session(connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.READ) as read_transaction:
-                answer_iterator = read_transaction.query().match(match_tql)
+                answer_iterator = read_transaction.query.match(match_tql)
                 ids = [ans.get(variable) for ans in answer_iterator]
                 for sid_obj in ids:
                     sid = sid_obj.get_value()
@@ -1921,7 +1922,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    #backdoor_add_dir(mitre)
+    backdoor_add_dir(mitre)
     #test_get_file(data_path + file1)
     #test_insert_statements(path2 + "evidence.json", stid3)
     #test_insert_statements(path1 + f29, stid2)

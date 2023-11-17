@@ -219,7 +219,7 @@ class TypeDBSink(DataSink):
         return [stix_id.get_value() for stix_id in string_attributes]
 
     def __query_stix_ids(self):
-        get_ids_tql = 'match $ids isa stix-id;'
+        get_ids_tql = 'match $ids isa stix-id; get $ids;'
         data_query = query_ids
         query_data = match_query(self.uri,
                                  self.port,
