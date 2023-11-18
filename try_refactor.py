@@ -660,8 +660,8 @@ def check_dir(dirpath):
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 testtime = datetime.now()
                 print(f"I am opening the file {testtime}")
-                json_text = json.load(f)
-                json_list = json_text["objects"]
+                json_list = json.load(f)
+                #json_list = json_list["objects"]
                 for element in json_list:
                     #print(f'element is {element}')
                     temp_id = element.get('id', False)
@@ -1893,7 +1893,7 @@ if __name__ == '__main__':
     stid1 = "task--7c5751c2-3c18-41bc-900c-685764c960f3"
     stid2 = "file--ec3415cc-5f4f-5ec8-bdb1-6f86996ae66d"
     stid3 = "sighting--300cd92e-d184-4c60-a97b-1759dc6780ed"
-    test_initialise()
+    #test_initialise()
     #load_file_list(path1, [f30, f21])
     #load_file(incident + "/human_trigger.json")
     #load_file(mitre + "attack_objects.json")
@@ -1905,7 +1905,7 @@ if __name__ == '__main__':
     #query_id(stid3)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
-    #check_dir(path2)
+    check_dir(path1)
     #load_file(path1 + f24)
     #test_delete(data_path+file1)
     #test_get(stid1)
@@ -1922,7 +1922,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    backdoor_add_dir(mitre)
+    #backdoor_add_dir(path1)
     #test_get_file(data_path + file1)
     #test_insert_statements(path2 + "evidence.json", stid3)
     #test_insert_statements(path1 + f29, stid2)

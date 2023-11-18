@@ -330,7 +330,7 @@ define
         owns score-value,
         plays scores:score;
     # key-value store for Entity-Counter object
-    entity-value sub stix-attribute-integer;
+    entity-value sub stix-attribute-string;
     entity-key sub stix-attribute-string,
         owns entity-value,
         plays impact-counter:counters;

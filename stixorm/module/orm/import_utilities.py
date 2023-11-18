@@ -383,10 +383,10 @@ def key_value_store(prop,
         if isinstance(a_value, list):
             for j, n in enumerate(a_value):
                 value_var = ' $' + d_value + str(j)
-                insert += key_var + ' ' + 'has ' + d_value + ' ' + val_tql(n) + ';\n'
+                insert += key_var + ' ' + 'has ' + d_value + ' "' + str(n) + '";\n'
         else:
             value_var = ' $' + d_value + str(i)
-            insert += key_var + ' ' + 'has ' + d_value + ' ' + val_tql(a_value) + ';\n'
+            insert += key_var + ' ' + 'has ' + d_value + ' "' + str(a_value) + '";\n'
 
     insert += ' $' + rel_typeql + ' (' + role_owner + ':' + obj_var
     for var in field_var_list:
