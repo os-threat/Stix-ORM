@@ -166,7 +166,7 @@ def backdoor_add_dir(dirpath):
         else:
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 json_text = json.load(f)
-                #json_text = json_text["objects"]
+                json_text = json_text["objects"]
                 length = len(json_text)
                 i=0
                 for element in json_text:
@@ -1882,7 +1882,7 @@ if __name__ == '__main__':
     reports = "test/data/threat_reports/"
     poison = "poisonivy.json"
     incident = "test/data/os-threat/incident"
-    incident_test = "test/data/os-threat/test"
+    incident_test = "test/data/os-threat/test2"
     incident_adjust = "test/data/os-threat/incident_adjust"
     threattest = "history/"
 
@@ -1905,7 +1905,7 @@ if __name__ == '__main__':
     #query_id(stid3)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
-    check_dir(path1)
+    #check_dir(path1)
     #load_file(path1 + f24)
     #test_delete(data_path+file1)
     #test_get(stid1)
@@ -1922,7 +1922,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    #backdoor_add_dir(path1)
+    backdoor_add_dir(incident_test)
     #test_get_file(data_path + file1)
     #test_insert_statements(path2 + "evidence.json", stid3)
     #test_insert_statements(path1 + f29, stid2)

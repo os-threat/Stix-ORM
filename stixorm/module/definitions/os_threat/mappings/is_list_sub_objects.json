@@ -16,6 +16,9 @@
 "incident-ext":  [
   "recoverability",
   "incident_types",
+  "scores",
+  "sequence_start_refs",
+  "sequence_refs",
   "task_refs",
   "event_refs",
   "impact_refs",

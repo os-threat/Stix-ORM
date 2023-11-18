@@ -5,7 +5,7 @@ import datetime
 #import dateutil.parser
 #from dateutil.parser import *
 from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
-from typedb.client import *
+#from typedb.client import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
 from stixorm.module.orm.delete_object import delete_stix_object
 from stixorm.module.orm.export_object import convert_ans_to_stix
@@ -298,10 +298,10 @@ eseq1_1 = Sequence(step_type="single_step", sequenced_object=event1.id, sequence
 eseq1_0 = Sequence(step_type="start_step", on_completion=eseq1_1.id, sequence_type="event")
 incident_ext = IncidentCoreExt(
     determination="suspected", extension_type="property-extension",
-    investigation_status="new", event_refs=[event1.id], incident_types=["dissemination-phishing-emails"])
-#     other_object_refs=other_object_refs, sequence_start_refs=[eseq1_0.id],
-#     sequence_refs=[eseq1_0.id, eseq1_1.id]
-# )
+    investigation_status="new", event_refs=[event1.id], incident_types=["dissemination-phishing-emails"],
+    other_object_refs=other_object_refs, sequence_start_refs=[eseq1_0.id],
+    sequence_refs=[eseq1_0.id, eseq1_1.id]
+)
 incident_ext1 = {"extension-definition--ef765651-680c-498d-9894-99799f2fa126": incident_ext}
 incident = Incident(type="incident", name="potential phishing", extensions=incident_ext1)
 # 1.A.2 Collect objects and ids in lists
