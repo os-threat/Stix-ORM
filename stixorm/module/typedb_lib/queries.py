@@ -200,7 +200,7 @@ def delete_layer(transaction: TypeDBTransaction, query: str):
 
 
 def add_layer(transaction: TypeDBTransaction, layer: str):
-    transaction_query: QueryManager = transaction.query()
+    transaction_query: QueryManager = transaction.query
     query_future: Iterator[ConceptMap] = transaction_query.insert(layer)
 
     logger.debug('\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
