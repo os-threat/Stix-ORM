@@ -13,7 +13,7 @@ from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_in
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 
 ###################################################################################################
@@ -44,15 +44,15 @@ def convert_ans_to_stix(query, answer_iterator, r_tx, import_type: ImportType):
     """
     res = convert_ans_to_res(answer_iterator, r_tx, import_type)
     path = pathlib.Path(__file__).parent.joinpath("export_test.json")
-    # with open(str(path), 'w') as outfile:
-    #    json.dump(res, outfile)
+    with open(str(path), 'w') as outfile:
+       json.dump(res, outfile)
     logger.debug(f'got res, now for stix')
     stix_dict = convert_res_to_stix(res, import_type)
     logger.debug((f'got stix now for object'))
     logger.debug("=========================================")
     path2 = pathlib.Path(__file__).parent.joinpath("export_test2.json")
-    # with open(str(path2), 'w') as outfile:
-    #    json.dump(stix_dict, outfile)
+    with open(str(path2), 'w') as outfile:
+       json.dump(stix_dict, outfile)
     json_object = json.dumps(stix_dict, indent=4)
     logger.debug(json_object)
     logger.debug("=========================================")

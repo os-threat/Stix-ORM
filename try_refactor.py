@@ -79,13 +79,13 @@ def backdoor_get(stix_id, _composite_filters=None):
     """
     try:
         obj_var, type_ql = get_embedded_match(stix_id, import_type)
-        match = 'match ' + type_ql
+        match = 'match ' + type_ql + "get;"
         #logger.debug(f' typeql -->: {match}')
         g_uri = connection["uri"] + ':' + connection["port"]
         with TypeDB. core_driver(g_uri) as client:
             with client.session(connection["database"], SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as read_transaction:
-                    answer_iterator = read_transaction.query.match(match)
+                    answer_iterator = read_transaction.query.get(match)
                     #logger.debug((f'have read the query -> {answer_iterator}'))
                     stix_dict = convert_ans_to_stix(match, answer_iterator, read_transaction, import_type)
                     stix_obj = parse(stix_dict, import_type=import_type)
@@ -1269,9 +1269,9 @@ def test_get_embedded(obj_id):
 # Setup Nodes and Edges Array Stuff for Force Graph Display - including icons
 #
 ########################################################################################
-def try_nodes_and_edges():
+def try_nodes_and_edges(file_path):
     nodes_edges = {}
-    with open(reports + poison, mode="r", encoding="utf-8") as f:
+    with open(file_path, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         obj_list = json_text["objects"]
         print(obj_list[0])
@@ -1286,25 +1286,31 @@ def nodes_and_edges(obj_list):
     edges = []
     for obj in obj_list:
         if obj["type"] == "relationship":
-            edges = setup_edges(obj, edges)
+            edges = setup_relationship(obj, edges)
+        elif obj["type"] == "sighting":
+            nodes, edges = setup_sighting(obj, nodes, edges)
         else:
             nodes, edges = setup_nodes(obj, nodes, edges)
     check_icons = []
     legend = []
+    node_ids = []
     for node in nodes:
+        node_ids.append(node["id"])
         if node["icon"] not in check_icons:
             check_icons.append(node["icon"])
             layer = {}
             layer["icon"] = node["icon"]
             layer["label"] = node["label"]
             legend.append(layer)
+    # remove any edges without nodes
+    edges = [x for x in edges if (x["source"] in node_ids and x["target"] in node_ids)]
     nodes_edges["nodes"] = nodes
     nodes_edges["edges"] = edges
     nodes_edges["legend"] = legend
     return nodes_edges
 
 
-def setup_edges(obj, edges):
+def setup_relationship(obj, edges):
     edge = {}
     edge["id"] = obj["id"]
     edge["type"] = "relationship"
@@ -1314,6 +1320,52 @@ def setup_edges(obj, edges):
     edges.append(edge)
     return edges
 
+
+def setup_sighting(obj, nodes, edges):
+    # sighting_of_ref
+    print(f"==== {obj['id']}")
+    edge = {}
+    edge["id"] = obj["id"]
+    edge["type"] = "sighting"
+    edge["label"] = "Sighting of " + obj["sighting_of_ref"].split('--')[0]
+    edge["source"] = obj["id"]
+    edge["target"] = obj["sighting_of_ref"]
+    edges.append(edge)
+    # list of observed_data_refs
+    for obs in obj["observed_data_refs"]:
+        edge = {}
+        edge["id"] = obj["id"]
+        edge["type"] = "sighting"
+        edge["label"] = "Observed Data"
+        edge["source"] = obj["id"]
+        edge["target"] = obs
+        edges.append(edge)
+    # list of where_sighted_refs
+    if "where_sighted_refs" in obj:
+        for where in obj["where_sighted_refs"]:
+            edge = {}
+            edge["id"] = obj["id"]
+            edge["type"] = "sighting"
+            edge["label"] = "Where Sighted " + where.split('--')[0]
+            edge["source"] = obj["id"]
+            edge["target"] = where
+            edges.append(edge)
+    # sort out node
+    node = {}
+    node["id"] = obj["id"]
+    node["original"] = copy.deepcopy(obj)
+    node["label"] = "Sighting"
+    if "extensions" in obj:
+        for key, value in obj["extensions"].items():
+            if key == "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43":
+                continue
+            else:
+                node["icon"] = key + ".svg"
+    else:
+        node["icon"] = "sighting.svg"
+
+    nodes.append(node)
+    return nodes, edges
 
 def setup_nodes(obj, nodes, edges):
     obj_id = obj["id"]
@@ -1436,29 +1488,52 @@ def sdo_icon(stix_object):
         else:
             attack_type = "attack-" + attack_type
         icon_type = attack_type
+        label = attack_type
     else:
         if sdo_type == "identity":
-            if stix_object.get("identity_class", False):
-                if stix_object["identity_class"] == "individual":
-                    icon_type = "identity-individual"
-                elif stix_object["identity_class"] == "organization":
-                    icon_type = "identity-organization"
-                elif stix_object["identity_class"] == "class":
-                    icon_type = "identity-class"
-                elif stix_object["identity_class"] == "system":
-                    icon_type = "identity-system"
-                elif stix_object["identity_class"] == "group":
-                    icon_type = "identity-group"
+            if "extensions" in stix_object:
+                for key, value in stix_object["extensions"].items():
+                    if key == "extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498":
+                        continue
+                    else:
+                        icon_type = "identity-contact.svg"
+            else:
+                if stix_object.get("identity_class", False):
+                    if stix_object["identity_class"] == "individual":
+                        icon_type = "identity-individual"
+                    elif stix_object["identity_class"] == "organization":
+                        icon_type = "identity-organization"
+                    elif stix_object["identity_class"] == "class":
+                        icon_type = "identity-class"
+                    elif stix_object["identity_class"] == "system":
+                        icon_type = "identity-system"
+                    elif stix_object["identity_class"] == "group":
+                        icon_type = "identity-group"
+                    else:
+                        icon_type = "identity-unknown"
                 else:
                     icon_type = "identity-unknown"
-            else:
-                icon_type = "identity-unknown"
 
         elif sdo_type == "malware":
             if stix_object.get("is_family", False):
                 icon_type = "malware-family"
             else:
                 icon_type = "malware"
+        elif sdo_type == "impact":
+            if "extensions" in stix_object:
+                for key, value in stix_object["extensions"].items():
+                    if key == "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9":
+                        continue
+                    else:
+                        icon_type = "impact-" + key + ".svg"
+            else:
+                icon_type = "impact.svg"
+        elif sdo_type == "incident":
+            if "extensions" in stix_object:
+                icon_type = "incident-ext.svg"
+                label = "extended incident"
+            else:
+                icon_type = "incident.svg"
         else:
             icon_type = sdo_type
     return icon_type, label
@@ -1475,45 +1550,58 @@ def sco_icon(stix_object):
             icon_type = "email-message"
             label = stix_object.get("subject", "")
     elif sco_type == "file":
-        if stix_object["extensions"].get("archive-ext", False):
-            icon_type = "file-archive"
-            label = stix_object.get("name", "")
-        elif stix_object["extensions"].get("pdf-ext", False):
-            icon_type = "file-pdf"
-            label = stix_object.get("name", "")
-        elif stix_object["extensions"].get("raster-image-ext", False):
-            icon_type = "file-img"
-            label = stix_object.get("name", "")
-        elif stix_object["extensions"].get("windows-pebinary-ext", False):
-            icon_type = "file-bin"
-            label = stix_object.get("name", "")
-        elif stix_object["extensions"].get("ntfs-ext", False):
-            icon_type = "file-ntfs"
-            label = stix_object.get("name", "")
+        if "extensions" in stix_object:
+            if stix_object["extensions"].get("archive-ext", False):
+                icon_type = "file-archive"
+                label = stix_object.get("name", "")
+            elif stix_object["extensions"].get("pdf-ext", False):
+                icon_type = "file-pdf"
+                label = stix_object.get("name", "")
+            elif stix_object["extensions"].get("raster-image-ext", False):
+                icon_type = "file-img"
+                label = stix_object.get("name", "")
+            elif stix_object["extensions"].get("windows-pebinary-ext", False):
+                icon_type = "file-bin"
+                label = stix_object.get("name", "")
+            elif stix_object["extensions"].get("ntfs-ext", False):
+                icon_type = "file-ntfs"
+                label = stix_object.get("name", "")
+            else:
+                icon_type = "file"
+                label = stix_object.get("name", "")
         else:
             icon_type = "file"
             label = stix_object.get("name", "")
     elif sco_type == "network-traffic":
-        if stix_object["extensions"].get("http-request-ext", False):
-            icon_type = "network-traffic-http"
-            label = "http-request"
-        elif stix_object["extensions"].get("icmp-ext", False):
-            icon_type = "network-traffic-icmp"
-            label = "icmp"
-        elif stix_object["extensions"].get("tcp-ext", False):
-            icon_type = "network-traffic-tcp"
-            label = "tcp"
-        elif stix_object["extensions"].get("sock-ext", False):
-            icon_type = "network-traffic-sock"
-            label = "socket"
+        if "extensions" in stix_object:
+            if stix_object["extensions"].get("http-request-ext", False):
+                icon_type = "network-traffic-http"
+                label = "http-request"
+            elif stix_object["extensions"].get("icmp-ext", False):
+                icon_type = "network-traffic-icmp"
+                label = "icmp"
+            elif stix_object["extensions"].get("tcp-ext", False):
+                icon_type = "network-traffic-tcp"
+                label = "tcp"
+            elif stix_object["extensions"].get("sock-ext", False):
+                icon_type = "network-traffic-sock"
+                label = "socket"
+            else:
+                icon_type = "network-traffic"
+                for prot in stix_object["protocols"]:
+                    label += prot + ", "
         else:
             icon_type = "network-traffic"
             for prot in stix_object["protocols"]:
                 label += prot + ", "
     elif sco_type == "user-account":
-        if stix_object["extensions"].get("unix-account-ext", False):
-            icon_type = "user-account-unix"
-            label = "unix-account"
+        if "extensions" in stix_object:
+            if stix_object["extensions"].get("unix-account-ext", False):
+                icon_type = "user-account-unix"
+                label = "unix-account"
+            else:
+                icon_type = "user-account"
+                label = "standard-account"
         else:
             icon_type = "user-account"
             label = "standard-account"
@@ -1523,13 +1611,16 @@ def sco_icon(stix_object):
             label = stix_object.get("mime_type", "")
         elif sco_type == "directory":
             label = stix_object.get("path", "")
-        elif sco_type in ["domain-name", "email-addr", "ipv4-addr", "ipv6-addr", "mac-addr", "mutex", "url"]:
+        elif sco_type in ["domain-name", "email-addr", "ipv4-addr", "ipv6-addr", "mac-addr", "mutex", "url", "anecdote"]:
             label = stix_object.get("value", "")
         elif sco_type == "process":
-            if stix_object["extensions"].get("windows-process-ext", False):
-                label = "windows process"
-            elif stix_object["extensions"].get("windows-service-ext", False):
-                label = "windows service"
+            if "extensions" in stix_object:
+                if stix_object["extensions"].get("windows-process-ext", False):
+                    label = "windows process"
+                elif stix_object["extensions"].get("windows-service-ext", False):
+                    label = "windows service"
+                else:
+                    label = "standard process"
             else:
                 label = "standard process"
         elif sco_type == "windows-registry-key":
@@ -1905,7 +1996,7 @@ if __name__ == '__main__':
     #query_id(stid3)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
-    check_dir(path1)
+    #check_dir(path1)
     #load_file(path1 + f24)
     #test_delete(data_path+file1)
     #test_get(stid1)
@@ -1931,5 +2022,5 @@ if __name__ == '__main__':
     #test_feeds()
     #test_get_embedded("report--f2b63e80-b523-4747-a069-35c002c690db")
     #try_subgraph_get(reports + poison)
-    #try_nodes_and_edges()
+    try_nodes_and_edges(incident_test + "/evidence.json")
     #test_get_objects()

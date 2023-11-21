@@ -9,7 +9,7 @@ from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_in
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -45,10 +45,10 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: ImportType):
                 ent = {'type': 'entity', 'symbol': key, 'T_id': thing.get_iid(),
                        'T_name': thing.get_type().get_label().name()}
                 # 2 get and dsecribe properties
-                props_obj = thing.as_remote(r_tx).get_has()
+                props_obj = thing.get_has(r_tx)
                 ent['has'] = process_props(props_obj)
                 # 3. get and describe relations
-                reln_types = thing.as_remote(r_tx).get_relations()
+                reln_types = thing.get_relations(r_tx)
                 ent['relns'] = process_relns(reln_types, r_tx, import_type)
                 res.append(ent)
                 # logger.debug(f'ent -> {ent}')
@@ -58,10 +58,10 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: ImportType):
                 # 1. setup basis
                 rel = {'type': 'relationship', 'symbol': key, 'T_id': thing.get_iid(),
                        'T_name': thing.get_type().get_label().name()}
-                att_obj = thing.as_remote(r_tx).get_has()
+                att_obj = thing.get_has(r_tx)
                 rel['has'] = process_props(att_obj)
                 # 3. get and describe relations
-                reln_types = thing.as_remote(r_tx).get_relations()
+                reln_types = thing.get_relations(r_tx)
                 rel['relns'] = process_relns(reln_types, r_tx, import_type)
                 # 4. get and describe the edges
                 edges = []
