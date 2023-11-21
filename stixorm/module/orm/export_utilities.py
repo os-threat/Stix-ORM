@@ -65,13 +65,13 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: ImportType):
                 rel['relns'] = process_relns(reln_types, r_tx, import_type)
                 # 4. get and describe the edges
                 edges = []
-                edge_types = thing.as_remote(r_tx).get_players_by_role_type()
-                stix_id = r_tx.concepts().get_attribute_type("stix-id")
+                edge_types = thing.get_playing(r_tx)
+                stix_id = r_tx.concepts.get_attribute_type("stix-id")
                 for role, things in edge_types.items():
                     edge = {"role": role.get_label().name(), 'player': []}
                     for thing in things:
                         if thing.is_entity():
-                            edge['player'].append(process_entity(thing, r_tx,stix_id))
+                            edge['player'].append(process_entity(thing, r_tx, stix_id))
 
                     edges.append(edge)
 
@@ -98,7 +98,7 @@ def process_entity(thing, r_tx, stix_id: str):
         play {}: a return dict
     """
     play = {"type": "entity", "tql": thing.get_type().get_label().name()}
-    attr_stix_id = thing.as_remote(r_tx).get_has(attribute_type=stix_id)
+    attr_stix_id = thing.get_has(r_tx, attribute_type=stix_id)
     for attr in attr_stix_id:
         play["stix_id"] = attr.get_value()
 
