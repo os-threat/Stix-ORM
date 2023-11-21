@@ -1360,9 +1360,9 @@ def setup_sighting(obj, nodes, edges):
             if key == "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43":
                 continue
             else:
-                node["icon"] = key + ".svg"
+                node["icon"] = key
     else:
-        node["icon"] = "sighting.svg"
+        node["icon"] = "sighting"
 
     nodes.append(node)
     return nodes, edges
@@ -1525,15 +1525,15 @@ def sdo_icon(stix_object):
                     if key == "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9":
                         continue
                     else:
-                        icon_type = "impact-" + key + ".svg"
+                        icon_type = "impact-" + key
             else:
-                icon_type = "impact.svg"
+                icon_type = "impact"
         elif sdo_type == "incident":
             if "extensions" in stix_object:
-                icon_type = "incident-ext.svg"
+                icon_type = "incident-ext"
                 label = "extended incident"
             else:
-                icon_type = "incident.svg"
+                icon_type = "incident"
         else:
             icon_type = sdo_type
     return icon_type, label
@@ -1613,6 +1613,8 @@ def sco_icon(stix_object):
             label = stix_object.get("path", "")
         elif sco_type in ["domain-name", "email-addr", "ipv4-addr", "ipv6-addr", "mac-addr", "mutex", "url", "anecdote"]:
             label = stix_object.get("value", "")
+            if label == "domain-name":
+                icon_type = "domain"
         elif sco_type == "process":
             if "extensions" in stix_object:
                 if stix_object["extensions"].get("windows-process-ext", False):
