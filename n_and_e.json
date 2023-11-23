@@ -116,7 +116,7 @@
           "ipv4-addr--a40768a0-5841-50d2-838d-bcb35ee92131"
         ]
       },
-      "icon": "domain-name",
+      "icon": "domain",
       "label": "northkorea.com"
     },
     {
@@ -331,7 +331,7 @@
           }
         }
       },
-      "icon": "",
+      "icon": "identity-contact",
       "label": "identity"
     },
     {
@@ -403,7 +403,7 @@
           }
         }
       },
-      "icon": "",
+      "icon": "identity-contact",
       "label": "identity"
     },
     {
@@ -861,7 +861,7 @@
         },
         "x_mitre_attack_spec_version": "2.1.0"
       },
-      "icon": "marking-definition",
+      "icon": "marking",
       "label": "statement"
     },
     {
@@ -1013,8 +1013,8 @@
         },
         "on_completion": "sequence--e5336bdf-238c-4ff2-9db7-9f7ca90348e7"
       },
-      "icon": "sequence",
-      "label": "sequence"
+      "icon": "step-single",
+      "label": "single step"
     },
     {
       "id": "sequence--58babacb-4e15-480e-a73c-3eac9f6e2d52",
@@ -1033,8 +1033,8 @@
           }
         }
       },
-      "icon": "sequence",
-      "label": "sequence"
+      "icon": "step-terminal",
+      "label": "start step"
     },
     {
       "id": "sequence--5d59d1e4-1bce-4599-a763-f05fefa6a9f1",
@@ -1054,8 +1054,8 @@
         },
         "on_completion": "sequence--1521a7d0-c597-4a8a-a074-6d33337b627e"
       },
-      "icon": "sequence",
-      "label": "sequence"
+      "icon": "step-single",
+      "label": "single step"
     },
     {
       "id": "sequence--90ceef43-4484-4126-af05-9c9d60290a36",
@@ -1075,8 +1075,8 @@
         },
         "on_completion": "sequence--cf28bb62-ebba-4a6e-b0d1-c25786f23e92"
       },
-      "icon": "sequence",
-      "label": "sequence"
+      "icon": "step-single",
+      "label": "single step"
     },
     {
       "id": "sequence--9fac1cf7-db8b-4f74-bbd0-14a036459cc3",
@@ -1096,8 +1096,8 @@
         },
         "on_completion": "sequence--edde80dd-c68f-47c9-bd3c-39ed461700a6"
       },
-      "icon": "sequence",
-      "label": "sequence"
+      "icon": "step-single",
+      "label": "single step"
     },
     {
       "id": "sequence--cf28bb62-ebba-4a6e-b0d1-c25786f23e92",
@@ -1116,8 +1116,8 @@
           }
         }
       },
-      "icon": "sequence",
-      "label": "sequence"
+      "icon": "step-single",
+      "label": "single step"
     },
     {
       "id": "sequence--d41c2e05-da07-42ce-85bb-05fa280f3f9f",
@@ -1136,8 +1136,8 @@
           }
         }
       },
-      "icon": "sequence",
-      "label": "sequence"
+      "icon": "step-terminal",
+      "label": "start step"
     },
     {
       "id": "sequence--e5336bdf-238c-4ff2-9db7-9f7ca90348e7",
@@ -1156,8 +1156,8 @@
           }
         }
       },
-      "icon": "sequence",
-      "label": "sequence"
+      "icon": "step-single",
+      "label": "single step"
     },
     {
       "id": "sequence--e84228de-4831-4f98-9f28-1a51744ec4b9",
@@ -1177,8 +1177,8 @@
         },
         "on_completion": "sequence--9fac1cf7-db8b-4f74-bbd0-14a036459cc3"
       },
-      "icon": "sequence",
-      "label": "sequence"
+      "icon": "step-single",
+      "label": "single step"
     },
     {
       "id": "sequence--edde80dd-c68f-47c9-bd3c-39ed461700a6",
@@ -1198,8 +1198,8 @@
         },
         "on_completion": "sequence--5d59d1e4-1bce-4599-a763-f05fefa6a9f1"
       },
-      "icon": "sequence",
-      "label": "sequence"
+      "icon": "step-single",
+      "label": "single step"
     },
     {
       "id": "sighting--1a8ff145-731f-438e-ab1f-03891e58ad43",
@@ -2527,7 +2527,7 @@
       "label": "attack-subtechnique"
     },
     {
-      "icon": "domain-name",
+      "icon": "domain",
       "label": "northkorea.com"
     },
     {
@@ -2551,7 +2551,7 @@
       "label": "identity"
     },
     {
-      "icon": "",
+      "icon": "identity-contact",
       "label": "identity"
     },
     {
@@ -2615,8 +2615,12 @@
       "label": "standard process"
     },
     {
-      "icon": "sequence",
-      "label": "sequence"
+      "icon": "step-single",
+      "label": "single step"
+    },
+    {
+      "icon": "step-terminal",
+      "label": "start step"
     },
     {
       "icon": "sighting-external",

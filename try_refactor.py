@@ -1492,11 +1492,7 @@ def sdo_icon(stix_object):
     else:
         if sdo_type == "identity":
             if "extensions" in stix_object:
-                for key, value in stix_object["extensions"].items():
-                    if key == "extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498":
-                        continue
-                    else:
-                        icon_type = "identity-contact.svg"
+                icon_type = "identity-contact"
             else:
                 if stix_object.get("identity_class", False):
                     if stix_object["identity_class"] == "individual":
@@ -1534,6 +1530,23 @@ def sdo_icon(stix_object):
                 label = "extended incident"
             else:
                 icon_type = "incident"
+        elif sdo_type == "sequence":
+            if stix_object["step_type"] == "start_step" or stix_object["step_type"] == "end_step":
+                icon_type = "step-terminal"
+                label = stix_object["step_type"].replace("_", " ")
+            elif stix_object["step_type"] == "single_step":
+                if "on_completion" in stix_object:
+                    icon_type = "step-single"
+                    label = stix_object["step_type"].replace("_", " ")
+                elif "on_success" in stix_object:
+                    icon_type = "step-xor"
+                    label = stix_object["step_type"].replace("_", " ")
+                else:
+                    icon_type = "step-single"
+                    label = stix_object["step_type"].replace("_", " ")
+            else:
+                icon_type = "step-parallel"
+                label = stix_object["step_type"].replace("_", " ")
         else:
             icon_type = sdo_type
     return icon_type, label
@@ -1613,8 +1626,6 @@ def sco_icon(stix_object):
             label = stix_object.get("path", "")
         elif sco_type in ["domain-name", "email-addr", "ipv4-addr", "ipv6-addr", "mac-addr", "mutex", "url", "anecdote"]:
             label = stix_object.get("value", "")
-            if label == "domain-name":
-                icon_type = "domain"
         elif sco_type == "process":
             if "extensions" in stix_object:
                 if stix_object["extensions"].get("windows-process-ext", False):
@@ -1629,6 +1640,8 @@ def sco_icon(stix_object):
             label = stix_object.get("key", "")
         elif sco_type == "x509-certificate":
             label = stix_object.get("serial_number", "")
+    if icon_type == "domain-name":
+        icon_type = "domain"
     return icon_type, label
 
 
@@ -1644,7 +1657,7 @@ def sro_icon(stix_object):
 
 
 def meta_icon(stix_object):
-    return "marking-definition", stix_object.get("definition_type", "")
+    return "marking", stix_object.get("definition_type", "")
 
 ###################################################################################
 #
