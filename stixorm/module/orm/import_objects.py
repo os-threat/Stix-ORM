@@ -236,7 +236,9 @@ def sro_to_data(sro, import_type=default_import_type) -> [dict, Dict[str, str], 
     attack_object = False if not sro.get("x_mitre_version", False) else True
     if attack_object:
         uses_relation = False if not sro.get("relationship_type", False) == "uses" else True
-        is_procedure = False if not sro.get("target_ref", False) == "attack-pattern" else True
+        if sro.get("target_ref", False):
+            target = sro.get("target_ref", False)
+            is_procedure = False if not target.split('--')[0] == "attack-pattern" else True
     obj_tql = {}
     sro_tql_name = sro.type
     sro_sub_rel = "" if not sro.get("relationship_type", False) else sro["relationship_type"]

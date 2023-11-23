@@ -17,8 +17,11 @@ from stixorm.module.initialise import sort_layers, load_typeql_data
 from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
 from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
 from stixorm.module.orm.import_utilities import val_tql
-#from stixorm.module.definitions.attack import attack_models
-#from stixorm.module.definitions.property_definitions import get_definitions
+from stixorm.module.typedb_lib.factories.definition_factory import get_definition_factory_instance
+from stixorm.module.typedb_lib.model.definitions import DefinitionName
+stix_models = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
+attack_models = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
+os_threat_models = get_definition_factory_instance().lookup_definition(DefinitionName.OS_THREAT)
 import copy
 
 import logging
@@ -107,7 +110,7 @@ def dict_to_typeql(stix_dict, import_type):
     logger.debug(f' i have parsed {stix_dict}\n')
     logger.debug(f"\n object type -> {type(stix_obj)} -> {stix_obj}")
     dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
-    #logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+    logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
     dep_obj["dep_match"] = dep_match
     dep_obj["dep_insert"] = dep_insert
     dep_obj["indep_ql"] = indep_ql
@@ -163,9 +166,13 @@ def backdoor_add_dir(dirpath):
         else:
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 json_text = json.load(f)
-                json_text = json_text["objects"]
+                #json_text = json_text["objects"]
+                length = len(json_text)
+                i=0
                 for element in json_text:
-                    #logger.debug(f'**********==={element}')
+                    i += 1
+                    logger.debug(f' processing {i} of {length}')
+                    logger.debug(f'**********{type(element)}==={element}')
                     obj_list.append(element)
                     temp_id = element.get('id', False)
                     if temp_id:
@@ -1868,7 +1875,7 @@ if __name__ == '__main__':
     mitre_data = "data/mitre/traffic_duplication.json"
 
     mitre_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
-    mitre = "test/data/mitre/check/"
+    mitre = "test/data/mitre/test/"
     mitre_test = "data/mitre/latest/"
     osthreat = "data/os-threat/"
     reports = "test/data/threat_reports/"
@@ -1888,7 +1895,7 @@ if __name__ == '__main__':
     #test_initialise()
     #load_file_list(path1, [f30, f21])
     #load_file(incident + "/human_trigger.json")
-    #load_file(incident_test + "/incident.json")
+    #load_file(mitre + "attack_objects.json")
     #check_object(mitre + "attack_objects.json")
     #load_file(reports + poison)
     print("=====")
@@ -1897,7 +1904,7 @@ if __name__ == '__main__':
     #query_id(stid3)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
-    check_dir(path2)
+    #check_dir(path2)
     #load_file(path1 + f24)
     #test_delete(data_path+file1)
     #test_get(stid1)
@@ -1914,7 +1921,7 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    #backdoor_add_dir(path4)
+    backdoor_add_dir(mitre)
     #test_get_file(data_path + file1)
     #test_insert_statements(path2 + "evidence.json", stid3)
     #test_insert_statements(path1 + f29, stid2)
