@@ -22,6 +22,11 @@ import os
 from typing import Dict
 from typedb.driver import *
 import logging
+from typing import Dict, List
+
+from typedb.api.connection.session import SessionType
+from typedb.api.connection.transaction import TransactionType
+from typedb.driver import TypeDB
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -63,7 +68,7 @@ def setup_database(stix_connection: Dict[str, str], clear: bool):
                 return
                 # raise ValueError(f"Database '{database}' already exists")
         else:
-            driver.databasescreate(stix_connection["database"])
+            driver.databases.create(stix_connection["database"])
 
         logger.debug('.......................... clear complete')
 

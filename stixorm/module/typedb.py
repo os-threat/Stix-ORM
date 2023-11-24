@@ -5,6 +5,11 @@ import traceback
 from typing import Dict
 from dataclasses import dataclass
 from typedb.driver import *
+from typing import List, Optional, Dict
+from typedb.api.connection.driver import TypeDBDriver
+from typedb.api.connection.session import TypeDBSession
+from typedb.api.connection.transaction import TypeDBTransaction
+from typedb.driver import TypeDB
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
 from stixorm.module.orm.delete_object import delete_stix_object, add_delete_layers
 from stixorm.module.orm.export_object import convert_ans_to_stix

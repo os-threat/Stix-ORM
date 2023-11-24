@@ -9,7 +9,8 @@ from typedb.common.promise import Promise
 from typedb.api.query.query_manager import QueryManager
 from typedb.driver import TypeDB
 #from typedb.stream.bidirectional_stream import BidirectionalStream
-
+from typedb.common.promise import Promise
+from typedb.driver import TypeDB
 from stixorm.module.typedb_lib.logging import log_delete_layer, log_add_layer
 from stixorm.module.typedb_lib.instructions import Instructions
 
