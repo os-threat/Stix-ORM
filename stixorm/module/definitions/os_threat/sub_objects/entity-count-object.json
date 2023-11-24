@@ -1,8 +1,0 @@
-{
-  "individual" : "individual-count",
-  "group" : "group-count",
-  "system" : "system-count",
-  "organization" : "organization-count",
-  "class" : "class-count",
-  "unknown" : "class-count"
-}

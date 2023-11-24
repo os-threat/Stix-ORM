@@ -184,5 +184,23 @@
     "typeql": "resolve-to",
     "source": "resolves-from",
     "target": "resolves-to"
+  },
+  {
+    "stix": "derived-from",
+    "typeql": "derived",
+    "source": "derived-from",
+    "target": "deriving"
+  },
+  {
+    "stix": "duplicate-of",
+    "typeql": "duplicated",
+    "source": "original",
+    "target": "duplicate"
+  },
+  {
+    "stix": "related-to",
+    "typeql": "related",
+    "source": "related-from",
+    "target": "related-to"
   }
 ]

@@ -1,0 +1,33 @@
+created,type,name,relationship_type,description,determination,investigation_status,detection_methods,impact_category,status,outcome
+2022-09-15T01:37:47.004Z,marking-definition,,,,,,,,,
+2022-09-15T01:37:47.004Z,marking-definition,,,,,,,,,
+2022-09-15T01:37:47.004Z,identity,Wakandan Expo,,,,,,,,
+2022-09-15T01:37:47.004Z,relationship,,impacts,,,,,,,
+2022-09-15T01:37:47.004Z,identity,Proj Manager,,Incident response manager for the Wakandan Expo,,,,,,
+2022-09-15T13:22:53.231Z,identity,Shuri IT,,Security Response vendor,,,,,,
+2022-09-15T01:37:47.004Z,relationship,,employed-at,,,,,,,
+2022-09-15T01:37:47.004Z,relationship,,contact-for,,,,,,,
+2022-09-15T13:22:53.231Z,relationship,,contact-for,,,,,,,
+2022-09-15T01:37:47.004Z,incident,WKI-20220915-004,,The Wakandan International Technology expo suffered a major disruption in a keynote presentation by Stark Enterprises.,confirmed,open,['system-outage'],,,
+2022-09-15T13:22:53.231Z,impact,,,Due to the highly diverse nature of this Expo and official sponsorship from the Wakandan government it may impact foreign relations,,,,external,,
+2022-09-15T13:22:53.231Z,impact,,,Due to the public nature of this incident it may impact public relations,,,,monetary,,
+2022-09-15T01:37:47.004Z,impact,,,"All servers shutdown,wireless tied to these went down,all displays went down.",,,,availability,,
+2022-09-15T01:37:47.004Z,impact,,,"After bypass mode all servers still shutdown, but wireless and displays are now up in a limited capacity.",,,,availability,,
+2022-09-15T13:22:53.231Z,impact,,,Started to bring back up domain controllers and began to add wireless systems back into a managed mode.,,,,availability,,
+2022-09-15T13:22:53.231Z,malware,ExpoOfficeSwitch,,,,,,,,
+2022-09-15T01:37:47.004Z,event,Server Shutdown,,All servers including domain controllers were shutdown prior to a keynote by a Stark Industry's representative.,,,,,occurred,
+2022-09-15T13:22:53.231Z,sighting,,,,,,,,,
+2022-09-15T13:22:53.231Z,event,Wireless and Display Shutdown,,All wireless and displays were rendered inoperable due to loss of contact with servers and domain controllers.  This pushed back the conference keynote by 2 hours while wireless and displays were put into a bypass mode.,,,,,occurred,
+2022-09-15T01:37:47.004Z,task,Temporary Workaround,,Set basic services including Wi-Fi and TVs to bypass dead gatekeeper machines.,,,,,,ongoing
+2022-09-15T01:37:47.004Z,task,Start Bypass,,,,,,,,successful
+2022-09-15T01:37:47.004Z,task,Stop Bypass,,,,,,,,pending
+2022-09-15T01:37:47.004Z,task,Rebuild Domain Controllers,,Attempted to rebuild domain controllers,,,,,,failed
+2022-09-15T01:37:47.004Z,task,Reported,,,,,,,,successful
+2022-09-15T13:22:53.231Z,task,Isolate Internet,,Cutoff all servers from internet and kept the wireless in bypass mode so that remediation actions could be taken without risk of C2 commands being run to interfere.,,,,,,successful
+2022-09-15T13:22:53.231Z,task,External Outreach,,Reached out to Shuri IT for additional assistance,,,,,,successful
+2022-09-15T13:22:53.231Z,task,Received AV Signatures,,Received AV signatures based on images provided to run on all servers as part of recovery effort,,,,,,successful
+2022-09-15T13:22:53.231Z,task,Password Resets Complete,,Completed reset of all administrator passwords,,,,,,successful
+2022-09-15T13:22:53.231Z,task,First Server Restored in Offline Environment,,A minimal set of servers were restored to the IT environment,,,,,,successful
+2022-09-15T13:22:53.231Z,task,Mandatory Update,,,,,,,,successful
+2022-09-15T13:22:53.231Z,relationship,,related-to,,,,,,,
+2022-09-15T13:22:53.231Z,report,WKI-20220915-004 - Update 1,,This is a fake report for example purposes only,,,,,,

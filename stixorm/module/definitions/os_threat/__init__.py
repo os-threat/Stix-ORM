@@ -23,14 +23,14 @@ from pathlib import Path
 
 from stixorm.module.definitions.os_threat.classes import (
     Feeds, Feed, ThreatSubObject, StateChangeObject, EventCoreExt,
-    Event, EntityCountObject, ImpactCoreExt, Availability, Confidentiality,
+    Event, ImpactCoreExt, Availability, Confidentiality,
     External, Integrity, Monetary, Physical, Traceability, Impact,
-    IncidentScoreObject, IncidentCoreExt, TaskCoreExt, Task,
-    EvidenceCoreExt, Evidence
+    IncidentScoreObject, IncidentCoreExt, TaskCoreExt, Task, SightingEvidence,
+    SightingAnecdote, SightingAlert, SightingContext, SightingExclusion,
+    SightingEnrichment, SightingHunt, SightingFramework, SightingExternal,
+    Sequence, Anecdote, SequenceExt, ContactNumber, EmailContact,
+    SocialMediaContact,IdentityContact, AnecdoteExt
 )
-
-
-
 
 
 name = "os_threat"
@@ -38,18 +38,19 @@ class_model = {}
 class_model["sdo"] = {
     "Feeds": Feeds,
     "Feed": Feed,
-    "Evidence": Evidence,
     "Event": Event,
     "Impact": Impact,
-    "Task": Task
+    "Task": Task,
+    "Sequence": Sequence
 }
-class_model["sco"] = {}
+class_model["sco"] = {
+    "Anecdote": Anecdote
+}
 class_model["sro"] = {}
 class_model["sub"] = {
     "ThreatSubObject" : ThreatSubObject,
     "StateChangeObject": StateChangeObject,
     "EventCoreExt": EventCoreExt,
-    "EntityCountObject": EntityCountObject,
     "ImpactCoreExt": ImpactCoreExt,
     "Availability": Availability,
     "Confidentiality": Confidentiality,
@@ -60,7 +61,21 @@ class_model["sub"] = {
     "Traceability": Traceability,
     "IncidentScoreObject": IncidentScoreObject,
     "IncidentCoreExt": IncidentCoreExt,
+    "SequenceExt": SequenceExt,
+    "SightingEvidence": SightingEvidence,
+    "SightingAnecdote": SightingAnecdote,
+    "SightingAlert": SightingAlert,
+    "SightingContext": SightingContext,
+    "SightingExclusion": SightingExclusion,
+    "SightingEnrichment": SightingEnrichment,
+    "SightingHunt": SightingHunt,
+    "SightingFramework": SightingFramework,
+    "SightingExternal": SightingExternal,
     "TaskCoreExt": TaskCoreExt,
-    "EvidenceCoreExt": EvidenceCoreExt
+    "ContactNumber": ContactNumber,
+    "EmailContact": EmailContact,
+    "SocialMediaContact": SocialMediaContact,
+    "IdentityContact": IdentityContact,
+    "AnecdoteExt": AnecdoteExt
 }
 class_model["meta"] = {}

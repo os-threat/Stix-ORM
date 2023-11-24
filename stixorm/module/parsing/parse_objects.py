@@ -12,7 +12,7 @@ from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
 default_import_type = import_type_factory.get_default_import()
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 
 def parse(data: dict, allow_custom=False, import_type: ImportType=default_import_type):
@@ -117,11 +117,14 @@ def dict_to_stix(stix_dict: dict,
     #logger.info(f'auth is {auth["tql_types"]["meta"]}')
     if obj_type in auth["types"]["sdo"]:
         logger.debug("Im in sdo")
+        step_type = ""
+        if obj_type == "sequence":
+            step_type = stix_dict["step_type"]
         sub_technique = False
         if attack_object:
             sub_technique = stix_dict.get("x_mitre_is_subtechnique", False)
         logger.debug(f'subtechnique {sub_technique}, attack {attack_object}')
-        obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(obj_type, import_type, attack_object, sub_technique)
+        obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(obj_type, import_type, attack_object, sub_technique, step_type)
         logger.debug(f"tql name {sdo_tql_name}, obj tql {obj_tql}")
         obj_class = class_for_type(sdo_tql_name, import_type, "sdo")
         logger.debug(f'output  object class is {obj_class}')

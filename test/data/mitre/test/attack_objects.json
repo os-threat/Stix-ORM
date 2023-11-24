@@ -549,5 +549,140 @@
             "enterprise-attack"
         ],
         "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+    },
+        {
+            "modified": "2023-04-10T19:18:19.033Z",
+            "name": "Operation Dream Job",
+            "description": "[Operation Dream Job](https://attack.mitre.org/campaigns/C0022) was a cyber espionage operation likely conducted by [Lazarus Group](https://attack.mitre.org/groups/G0032) that targeted the defense, aerospace, government, and other sectors in the United States, Israel, Australia, Russia, and India. In at least one case, the cyber actors tried to monetize their network access to conduct a business email compromise (BEC) operation. In 2020, security researchers noted overlapping TTPs, to include fake job lures and code similarities, between [Operation Dream Job](https://attack.mitre.org/campaigns/C0022), Operation North Star, and Operation Interception; by 2022 security researchers described [Operation Dream Job](https://attack.mitre.org/campaigns/C0022) as an umbrella term covering both Operation Interception and Operation North Star.(Citation: ClearSky Lazarus Aug 2020)(Citation: McAfee Lazarus Jul 2020)(Citation: ESET Lazarus Jun 2020)(Citation: The Hacker News Lazarus Aug 2022)",
+            "aliases": [
+                "Operation Dream Job",
+                "Operation North Star",
+                "Operation Interception"
+            ],
+            "first_seen": "2019-09-01T04:00:00.000Z",
+            "last_seen": "2020-08-01T04:00:00.000Z",
+            "x_mitre_first_seen_citation": "(Citation: ESET Lazarus Jun 2020)",
+            "x_mitre_last_seen_citation": "(Citation: ClearSky Lazarus Aug 2020)",
+            "x_mitre_deprecated": false,
+            "x_mitre_version": "1.0",
+            "type": "campaign",
+            "id": "campaign--0257b35b-93ef-4a70-80dd-ad5258e6045b",
+            "created": "2023-03-17T13:37:42.596Z",
+            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "revoked": false,
+            "external_references": [
+                {
+                    "source_name": "mitre-attack",
+                    "url": "https://attack.mitre.org/campaigns/C0022",
+                    "external_id": "C0022"
+                },
+                {
+                    "source_name": "Operation Interception",
+                    "description": "(Citation: ESET Lazarus Jun 2020)"
+                },
+                {
+                    "source_name": "Operation North Star",
+                    "description": "(Citation: McAfee Lazarus Jul 2020)(Citation: McAfee Lazarus Nov 2020)"
+                },
+                {
+                    "source_name": "McAfee Lazarus Nov 2020",
+                    "description": "Beek, C. (2020, November 5). Operation North Star: Behind The Scenes. Retrieved December 20, 2021.",
+                    "url": "https://www.mcafee.com/blogs/other-blogs/mcafee-labs/operation-north-star-behind-the-scenes/"
+                },
+                {
+                    "source_name": "ESET Lazarus Jun 2020",
+                    "description": "Breitenbacher, D and Osis, K. (2020, June 17). OPERATION IN(TER)CEPTION: Targeted Attacks Against European Aerospace and Military Companies. Retrieved December 20, 2021.",
+                    "url": "https://www.welivesecurity.com/wp-content/uploads/2020/06/ESET_Operation_Interception.pdf"
+                },
+                {
+                    "source_name": "McAfee Lazarus Jul 2020",
+                    "description": "Cashman, M. (2020, July 29). Operation North Star Campaign. Retrieved December 20, 2021.",
+                    "url": "https://www.mcafee.com/blogs/other-blogs/mcafee-labs/operation-north-star-a-job-offer-thats-too-good-to-be-true/?hilite=%27Operation%27%2C%27North%27%2C%27Star%27"
+                },
+                {
+                    "source_name": "ClearSky Lazarus Aug 2020",
+                    "description": "ClearSky Research Team. (2020, August 13). Operation 'Dream Job' Widespread North Korean Espionage Campaign. Retrieved December 20, 2021.",
+                    "url": "https://www.clearskysec.com/wp-content/uploads/2020/08/Dream-Job-Campaign.pdf"
+                },
+                {
+                    "source_name": "The Hacker News Lazarus Aug 2022",
+                    "description": "Lakshmanan, R. (2022, August 17). North Korea Hackers Spotted Targeting Job Seekers with macOS Malware. Retrieved April 10, 2023.",
+                    "url": "https://thehackernews.com/2022/08/north-korea-hackers-spotted-targeting.html"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+            ],
+            "x_mitre_attack_spec_version": "3.1.0",
+            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "x_mitre_domains": [
+                "enterprise-attack"
+            ],
+            "spec_version": "2.1"
+        },
+    {
+  "type": "x-mitre-collection",
+  "id": "x-mitre-collection--b76ed159-6b5c-4d89-8286-ccf339d38ad0",
+  "spec_version": "2.1",
+  "x_mitre_attack_spec_version": "2.1.0",
+  "name": "Enterprise ATT&CK",
+  "x_mitre_version": "10.1",
+  "description": "ATT&CK for Enterprise provides a knowledge base of real-world adversary behavior targeting traditional enterprise networks. ATT&CK for Enterprise covers the following platforms: Windows, macOS, Linux, PRE, Office 365, Google Workspace, IaaS, Network, and Containers.",
+  "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+  "created": "2018-01-17T12:56:55.080Z",
+  "modified": "2021-11-10T14:00:00.188Z",
+  "object_marking_refs": [
+    "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+  ],
+  "x_mitre_contents": [
+    {
+      "object_ref": "attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4",
+      "object_modified": "2021-04-29T14:49:39.188Z"
+    },
+    {
+      "object_ref": "attack-pattern--67720091-eee3-4d2d-ae16-8264567f6f5b",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "attack-pattern--67720091-eee3-4d2d-ae16-8264567f6f5b",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "intrusion-set--7113eaa5-ba79-4fb3-b68a-398ee9cd698e",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "course-of-action--93e7968a-9074-4eac-8ae9-9f5200ec3317",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "relationship--d7360dcb-fd97-4775-90fe-a892b9b24b54",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "relationship--b427e519-8ec0-4ae3-9dda-273cc71f00eb",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "x-mitre-data-component--18b236d8-7224-488f-9d2f-50076a0f653a",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "x-mitre-data-source--d6188aac-17db-4861-845f-57c369f9b4c8",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "x-mitre-matrix--eafc1b4c-5e56-4965-bd4e-66a6a89c88cc",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "malware--0f1ad2ef-41d4-4b7a-9304-ddae68ea3005",
+      "object_modified": "2021-07-28T01:04:39.141Z"
+    },
+    {
+      "object_ref": "tool--f59508a6-3615-47c3-b493-6676e1a39a87",
+      "object_modified": "2021-07-28T01:04:39.141Z"
     }
+  ]
+}
 ]

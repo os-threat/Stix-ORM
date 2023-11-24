@@ -44,10 +44,12 @@ stix-object sub stix-entity,
 		plays created-by:created,
 
 		# Common relations for SDOs and SCOs. Defined in 3.7. 
-		plays derivation:derived-from,
-		plays derivation:deriving,
-		plays duplicate:duplicated-object,
-		plays relatedness:related-to;
+		plays derived:derived-from,
+		plays derived:deriving,
+		plays duplicated:original,
+		plays duplicated:duplicate,
+		plays related:related-to,
+		plays related:related-from;
 
 			stix-domain-object sub stix-core-object, 
 				# Required
@@ -61,12 +63,16 @@ stix-object sub stix-entity,
 				owns langs,
 				plays external-references:referenced,
 				plays sighting:sighting-of,
+                plays attributed-to:result,
+                plays attributed-to:fault-of,
 
 				plays indicates:indicated;
 
 			stix-cyber-observable-object sub stix-core-object,
 				owns defanged,
 				plays malware-env:env,
+                plays attributed-to:result,
+                plays attributed-to:fault-of,
 				plays extensions:sco,
 				plays consist:consisted;
 
@@ -173,7 +179,6 @@ campaign sub stix-domain-object,
 	owns objective, 
 
 	# Common Relations
-	plays attributed-to:result,
 	plays compromises:compromising,
 	plays originates-from:originating,
 	plays targets:targetter,
@@ -236,7 +241,6 @@ identity sub stix-domain-object,
 
 	# Reverse Relations
 	plays targets:targetted,
-	plays attributed-to:fault-of, 
 	plays impersonate:impersonated,
 
 	# Embedded Relations
@@ -342,7 +346,6 @@ intrusion-set sub stix-domain-object,
 	owns secondary-motivations,
 
 	# Common Relations
-	plays attributed-to:result,
 	plays compromises:compromising,
 	plays hosts:hosting,
 	plays ownership:owning,
@@ -352,7 +355,6 @@ intrusion-set sub stix-domain-object,
 	plays uses:used,
 
 	# Reverse Relations
-	plays attributed-to:fault-of, 
 	plays authored-by:authored,
 	# plays indicates:indicated; Already defined in SDO
 
@@ -571,7 +573,6 @@ threat-actor sub stix-domain-object,
 
 
 	# Common Relations
-	plays attributed-to:result,
 	plays compromises:compromising,
 	plays hosts:hosting,
 	plays ownership:owning,
@@ -581,7 +582,6 @@ threat-actor sub stix-domain-object,
 	plays uses:used-by,
 
 	# Reverse Relations
-	plays attributed-to:fault-of,
 	plays authored-by:authored;
 	# plays indicates:indicated # defined in SDO
 
@@ -669,8 +669,29 @@ stix-core-relationship sub relation,
 	plays object-marking:marked,
 	plays granular-marking:object, 
 	plays external-references:referenced,
-	plays created-by:created;
+	plays created-by:created,
+    plays derived:derived-from,
+    plays derived:deriving,
+    plays duplicated:original,
+    plays duplicated:duplicate,
+    plays related:related-to,
+    plays related:related-from;
 
+
+    # 3.7 Common Relationships
+    # These are relation types that are shared by SDOs and SCOs
+
+    derived sub stix-core-relationship,
+        relates derived-from as source,
+        relates deriving as target;
+
+    duplicated sub stix-core-relationship,
+        relates original as source,
+        relates duplicate  as target;
+
+    related sub stix-core-relationship,
+        relates related-from as source,
+        relates related-to  as target;
 
 	# Specific Relationships from Appendix C
 	delivers sub stix-core-relationship, 
@@ -1602,24 +1623,6 @@ embedded sub relation,
 			relates v3-extension as extension;
 
 
-
-
-
-
-
-
-# 3.7 Common Relationships 
-# These are relation types that are shared by SDOs and SCOs
-
-derivation sub relation, 
-	relates derived-from,
-	relates deriving;
-
-duplicate sub relation, 
-	relates duplicated-object; 
-
-relatedness sub relation,
-	relates related-to; 
 
 ## INFERRED RELATIONS ## 
 

@@ -7,19 +7,26 @@
   ],
   "event": [
     "changed_objects",
-    "detection_methods",
     "event_types",
-    "sighting_refs",
-    "subevents"
-  ],
-  "evidence": [
-    "object_refs"
+    "sighting_refs"
   ],
   "impact": [
     "impacted_refs"
   ],
   "task": [
     "changed_objects",
+    "task_types"
+  ],
+  "start-step": [
+  ],
+  "end-step": [
+  ],
+  "single-step": [
+  ],
+  "parallel-step": [
+    "next_steps"
+  ],
+  "sequence": [
     "next_steps"
   ]
 }

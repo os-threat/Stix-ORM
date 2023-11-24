@@ -31,6 +31,7 @@ from stixorm.module.typedb_lib.file import write_to_file
 from stixorm.module.typedb_lib.instructions import Instructions, Status, AddInstruction, TypeQLObject, Result
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType, ImportTypeFactory
 from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
+from stixorm.module.parsing.conversion_decisions import get_embedded_match, get_source_from_id
 
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
@@ -39,7 +40,7 @@ logging.basicConfig(filename="typedb_log.txt",
                     filemode='a',
                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                     datefmt='%H:%M:%S',
-                    level=logging.DEBUG)
+                    level=logging.INFO)
 
 
 @dataclass
@@ -706,50 +707,3 @@ class TypeDBSource(DataSource):
         pass
 
 
-
-def get_embedded_match(source_id, import_type):
-    """
-        Assemble the typeql variable and match statement given the stix-id, and the increment
-    Args:
-        source_id (): stix-id to use
-        i (): number of times this type of object has been used
-    Returns:
-        source_var, the typeql string of the variable
-        match, the typeql match statement
-    """
-    source_type = get_source_type(source_id, import_type)
-    source_var = '$' + source_type
-    if source_type == 'relationship':
-        source_type = 'stix-core-relationship'
-    match = f' {source_var} isa {source_type}, has stix-id "{source_id}";\n'
-    return source_var, match
-
-def get_source_type(source_id, import_type):
-    """
-        Get the type of the source_id
-    Args:
-        source_id (): stix-id to use
-    Returns:
-        source_type, the type of the source_id
-    """
-    auth_factory = get_auth_factory_instance()
-    auth = auth_factory.get_auth_for_import(import_type)
-    tmp_source = source_id.split('--')[0]
-    source = ""
-    for model in auth["conv"]["sdo"]:
-        if model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    for model in auth["conv"]["sro"]:
-        if model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    for model in auth["conv"]["sco"]:
-        if model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    for model in auth["conv"]["meta"]:
-        if model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    return source

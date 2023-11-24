@@ -151,11 +151,11 @@ def sort_layers(layers,
     Returns:
 
     """
-    logger.debug(
-        f"################################### enter sort_layers {add_or_del} ###############################################")
-    logger.debug(f'\nlayers -> {layers}\ncyclical indexes -> {cyclical}\nindexes -> {indexes}\nmissing -> {missing}')
-    logger.debug(f'add_or_del -> {add_or_del}\ndep_obj -> {dep_obj}')
-    logger.debug("-------------------------------  ------------------------------------------------")
+    # logger.debug(
+    #     f"################################### enter sort_layers {add_or_del} ###############################################")
+    # logger.debug(f'\nlayers -> {layers}\ncyclical indexes -> {cyclical}\nindexes -> {indexes}\nmissing -> {missing}')
+    # logger.debug(f'add_or_del -> {add_or_del}\ndep_obj -> {dep_obj}')
+    # logger.debug("-------------------------------  ------------------------------------------------")
     # Stage 1 - Initialise Variables
     # 1. Setup key variables
     loc_id = dep_obj['id']
@@ -201,7 +201,7 @@ def sort_layers(layers,
         elif add_or_del == 'add':
             layers.insert(0, dep_obj)
             indexes.insert(0, loc_id)
-        logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
+        #logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
         logger.debug(
             f"################################## end of  sort_layers {add_or_del} ####################################################")
         return layers, indexes, list(mset), cyclical
@@ -213,7 +213,7 @@ def sort_layers(layers,
         cyclical = cyclical + circular
         logger.debug(f' tree -> {tree}')
         layers, indexes = reorder(layers, indexes, tree, dep_obj, add_or_del)
-        logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
+        #logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
         logger.debug(
             f"################################## end of  sort_layers {add_or_del} ####################################################")
         return layers, indexes, list(mset), cyclical
@@ -226,7 +226,7 @@ def sort_layers(layers,
         elif add_or_del == 'add':
             layers.append(dep_obj)
             indexes.append(loc_id)
-        logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
+        #logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
         logger.debug(
             f"################################## end of  sort_layers {add_or_del} ####################################################")
         return layers, indexes, list(mset), cyclical
@@ -238,7 +238,7 @@ def sort_layers(layers,
         cyclical = cyclical + circular
         logger.debug(f' tree -> {tree}')
         layers, indexes = reorder(layers, indexes, tree, dep_obj, add_or_del)
-        logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
+        #logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
         logger.debug(
             f"################################## end of  sort_layers {add_or_del} ####################################################")
         return layers, indexes, list(mset), cyclical
@@ -268,7 +268,7 @@ def reorder(layers, indexes, tree, dep_obj, add_or_del):
     loc_list = dep_obj["dep_list"]
     tree = list(set(tree))
     logger.debug("%%%%%%%%%%%%%%% reorder 1 %%%%%%%%%%%%%%%%%%")
-    logger.debug(f'\n orig indexes -> {indexes}\n orig layers, {layers}\n dep_obj , {dep_obj}')
+    #logger.debug(f'\n orig indexes -> {indexes}\n orig layers, {layers}\n dep_obj , {dep_obj}')
     logger.debug("%%%%%%%%%%%%%%% reorder 2 %%%%%%%%%%dep_obj%%%%%%%%")
     # 1. Copy elements from layers and indexes so they are in the order we want them
     if add_or_del == 'del':
@@ -305,8 +305,7 @@ def reorder(layers, indexes, tree, dep_obj, add_or_del):
         layers = dep_layers + front_layers + layers
         indexes = dep_indexes + front_indexes + indexes
     # 5. Assemble the final lists
-    logger.debug(
-        f'\nfront_indexes -> {front_indexes}\n\nfront_layers, {front_layers}\n\n old layers, {layers}\n\nold indexes -> {indexes}')
+    #logger.debug(f'\nfront_indexes -> {front_indexes}\n\nfront_layers, {front_layers}\n\n old layers, {layers}\n\nold indexes -> {indexes}')
     logger.debug("-------------------------------------------------------------------------------------")
     logger.debug("%%%%%%%%%%%%%%% end reorder %%%%%%%%%%%%%%%%%%")
     return layers, indexes

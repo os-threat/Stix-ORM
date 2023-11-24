@@ -1,0 +1,80 @@
+{
+    "type": "bundle",
+    "id": "bundle--051016fc-15fb-4aa0-9a0c-fc2def87e134",
+    "objects": [
+        {
+            "type": "feed",
+            "spec_version": "2.1",
+            "id": "feed--945b6f0d-38e9-45eb-94b8-31dd97462495",
+            "created": "2023-09-26T21:46:55.849389Z",
+            "modified": "2023-09-26T21:46:55.849389Z",
+            "name": "phishing-db",
+            "description": "the phishing database",
+            "paid": false,
+            "free": true,
+            "labels": [
+                "phishing"
+            ],
+            "lang": "en",
+            "external_references": [
+                {
+                    "source_name": "Phishing Database ACTIVE",
+                    "url": "https://github.com/mitchellkrogza/Phishing.Database/blob/master/phishing-IPs-ACTIVE.txt",
+                    "external_id": "phishing-IPs-ACTIVE.txt"
+                }
+            ]
+        },
+        {
+            "type": "feed",
+            "spec_version": "2.1",
+            "id": "feed--6bd9cb26-f308-48d8-b4e2-ddf6e8680451",
+            "created": "2023-09-26T21:46:55.850039Z",
+            "modified": "2023-09-26T21:46:55.850039Z",
+            "name": "AbuseIpDB",
+            "description": "Abuse IP Database",
+            "paid": false,
+            "free": true,
+            "labels": [
+                "phishing",
+                "abuse"
+            ],
+            "lang": "en",
+            "external_references": [
+                {
+                    "source_name": "AbuseIpDB",
+                    "url": "https://www.abuseipdb.com/"
+                }
+            ]
+        },
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--cd0ee082-784a-4eed-b0fa-9ee05187c2f1",
+            "created": "2023-09-26T21:46:55.850457Z",
+            "modified": "2023-09-26T21:46:55.850457Z",
+            "relationship_type": "confidence",
+            "source_ref": "identity--9669e44f-444c-4484-8766-f16230768372",
+            "target_ref": "feed--945b6f0d-38e9-45eb-94b8-31dd97462495",
+            "confidence": 9
+        },
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--994f33cb-4fa7-4cee-a3d0-84d3e2792e9f",
+            "created": "2023-09-26T21:46:55.850947Z",
+            "modified": "2023-09-26T21:46:55.850947Z",
+            "relationship_type": "confidence",
+            "source_ref": "identity--9669e44f-444c-4484-8766-f16230768372",
+            "target_ref": "feed--945b6f0d-38e9-45eb-94b8-31dd97462495",
+            "confidence": 3
+        },
+        {
+            "type": "identity",
+            "spec_version": "2.1",
+            "id": "identity--9669e44f-444c-4484-8766-f16230768372",
+            "created": "2023-09-26T21:46:55.848632Z",
+            "modified": "2023-09-26T21:46:55.848632Z",
+            "name": "Marco Polo"
+        }
+    ]
+}

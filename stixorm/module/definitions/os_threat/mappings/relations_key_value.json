@@ -1,0 +1,10 @@
+[
+  {
+    "name": "impacted_entity_counts",
+    "typeql": "impact-counter",
+    "owner": "impact-driver",
+    "pointed_to": "counters",
+    "key": "entity-key",
+    "value": "entity-value"
+  }
+]

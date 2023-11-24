@@ -18,7 +18,7 @@
     "target": "new-version"
   },
   {
-    "stix": "uses",
+    "stix": "procedure",
     "typeql": "procedure",
     "source": "user",
     "target": "technique"

@@ -21,10 +21,10 @@ from loguru import logger
 import os
 from pathlib import Path
 from stixorm.module.definitions.stix21.classes import (
-    Note, ObservedData, Incident, Report, Relationship
+    Note, ObservedData, Incident, Report, Relationship, Sighting, Identity
 )
 from stix2.v21.sdo import (
-    AttackPattern, Campaign, CourseOfAction, CustomObject, Grouping, Identity,
+    AttackPattern, Campaign, CourseOfAction, CustomObject, Grouping,
     Indicator, Infrastructure, IntrusionSet, Location, Malware,
     MalwareAnalysis, Opinion, ThreatActor, Tool,
     Vulnerability,
@@ -39,7 +39,7 @@ from stix2.v21.observables import (
     WindowsProcessExt, WindowsRegistryKey, WindowsRegistryValueType,
     WindowsServiceExt, X509Certificate, X509V3ExtensionsType,
 )
-from stix2.v21.sro import Sighting
+from stix2.v21.bundle import Bundle
 from stix2.v21.common import MarkingDefinition
 
 name = "stix21"
@@ -69,6 +69,7 @@ class_model["sdo"] = {
     "ThreatActor":ThreatActor,
     "Tool":Tool,
     "Vulnerability":Vulnerability,
+    "Bundle": Bundle
 }
 class_model["sub"] = {
     "AlternateDataStream":AlternateDataStream,

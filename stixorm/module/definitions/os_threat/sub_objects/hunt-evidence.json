@@ -1,0 +1,6 @@
+{
+  "name" : "name",
+  "playbook_id" : "playbook-id",
+  "rule" : "hunt-rule",
+  "confidence" : "confidence"
+}

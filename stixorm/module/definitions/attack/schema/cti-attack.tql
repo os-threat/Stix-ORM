@@ -76,7 +76,8 @@ define
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
-        plays obj-ref:content;
+        plays obj-ref:content,
+        plays procedure:technique;
 
     # Sub Techniques - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#sub-techniques
     sub-technique sub technique,
@@ -104,7 +105,8 @@ define
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
-        plays obj-ref:content;
+        plays obj-ref:content,
+        plays procedure:user;
 
     # Software- Malware and Tool - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#software
     software-malware sub malware,
@@ -191,7 +193,9 @@ define
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-version,
-        plays obj-ref:content,
+        plays obj-ref:content;
+
+    identity
         plays x-mitre-modified-by-ref:modifier;
 
     # Relations
