@@ -383,10 +383,10 @@ def key_value_store(prop,
         if isinstance(a_value, list):
             for j, n in enumerate(a_value):
                 value_var = ' $' + d_value + str(j)
-                insert += key_var + ' ' + 'has ' + d_value + ' ' + val_tql(n) + ';\n'
+                insert += key_var + ' ' + 'has ' + d_value + ' "' + str(n) + '";\n'
         else:
             value_var = ' $' + d_value + str(i)
-            insert += key_var + ' ' + 'has ' + d_value + ' ' + val_tql(a_value) + ';\n'
+            insert += key_var + ' ' + 'has ' + d_value + ' "' + str(a_value) + '";\n'
 
     insert += ' $' + rel_typeql + ' (' + role_owner + ':' + obj_var
     for var in field_var_list:
@@ -420,9 +420,9 @@ def hashes(prop_name, prop_dict, parent_var):
             logger.error(f'Unknown hash type {key}')
 
     # insert the hash objects into the hashes relation with the parent object
-    insert += '\n $hash_rel (owner:' + parent_var
+    insert += '\n $hash_rel (hash-owner:' + parent_var
     for hash_var in hash_var_list:
-        insert += ', pointed-to:' + hash_var
+        insert += ', hash-actual:' + hash_var
 
     insert += ') isa hashes;\n'
     return match, insert

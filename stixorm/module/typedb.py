@@ -2,7 +2,9 @@
 import os.path
 import pathlib
 import traceback
+from typing import Dict
 from dataclasses import dataclass
+from typedb.driver import *
 from typing import List, Optional, Dict
 from typedb.api.connection.driver import TypeDBDriver
 from typedb.api.connection.session import TypeDBSession
@@ -208,7 +210,7 @@ class TypeDBSink(DataSink):
         logger.debug("Successfully cleared database")
 
 
-    def __filter_markings(self, stix_ids: list) -> List[str]:
+    def __filter_markings(self, stix_ids: List[str]) -> List[str]:
         marking = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
                    "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
                    "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
@@ -218,11 +220,11 @@ class TypeDBSink(DataSink):
         return self.__string_attibute_to_string(filtered_list)
 
     def __string_attibute_to_string(self,
-                                    string_attributes: list):
+                                    string_attributes: List[str]):
         return [stix_id.get_value() for stix_id in string_attributes]
 
     def __query_stix_ids(self):
-        get_ids_tql = 'match $ids isa stix-id;'
+        get_ids_tql = 'match $ids isa stix-id; get $ids;'
         data_query = query_ids
         query_data = match_query(self.uri,
                                  self.port,

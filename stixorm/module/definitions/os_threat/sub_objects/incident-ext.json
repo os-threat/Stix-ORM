@@ -9,6 +9,8 @@
   "recoverability" : "recoverability",
   "scores" : "",
   "incident_types" : "incident-types",
+  "sequence_start_refs": "",
+  "sequence_refs": "",
   "task_refs" : "",
   "event_refs" : "",
   "impact_refs" : "",

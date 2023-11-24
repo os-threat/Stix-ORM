@@ -186,7 +186,7 @@
   {
     "rel": "src_payload_ref",
     "owner": "traffic",
-    "pointed-to": "source",
+    "pointed-to": "payload",
     "typeql": "payload-src",
     "label": "source-payload-of",
     "owner-is-source": false

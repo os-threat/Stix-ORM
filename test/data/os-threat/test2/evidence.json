@@ -1,14 +1,14 @@
 {
       "type": "bundle",
-      "id": "bundle--cb3241fd-6be3-45b9-83ff-49fcc7b182b6",
+      "id": "bundle--9ef82cc8-973f-425d-8e2c-916532c9cf13",
       "objects": [
             {
                   "type": "anecdote",
                   "spec_version": "2.1",
                   "id": "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f",
                   "value": "I clicked on the link, and my laptop screen went weird",
-                  "report_date": "2023-11-12T13:19:14.245749Z",
-                  "provided_by_ref": "identity--27c2fdc0-bf9c-46d8-aab1-658948cd2ed6"
+                  "report_date": "2023-11-18T05:26:43.480683Z",
+                  "provided_by_ref": "identity--b30fc24d-4d5a-49a4-8aee-155788edbae3"
             },
             {
                   "type": "attack-pattern",
@@ -162,20 +162,20 @@
             {
                   "type": "event",
                   "spec_version": "2.1",
-                  "id": "event--01f5c46c-d94a-4086-bbfd-09c5eeb9380a",
-                  "created": "2023-11-12T13:19:14.294686Z",
-                  "modified": "2023-11-12T13:19:14.294686Z",
+                  "id": "event--236d689a-aaa9-4bc1-8401-d86cb2d3c430",
+                  "created": "2023-11-18T05:26:43.461684Z",
+                  "modified": "2023-11-18T05:26:43.461684Z",
                   "status": "occured",
-                  "description": "2 users clicked on the email and destroyed their laptops",
-                  "end_time": "2023-11-12T13:19:14.294686Z",
+                  "description": "user x found a suspicious email",
+                  "end_time": "2023-11-18T05:26:43.461684Z",
                   "event_types": [
                         "dissemination-phishing-emails"
                   ],
-                  "name": "confirmed impact",
+                  "name": "suspiciouse email",
                   "sighting_refs": [
-                        "sighting--03c1cfce-e63c-4eb4-b071-5123e8f2c7ed"
+                        "sighting--49cc5c32-98b8-4d15-94bf-2f867d71a2fa"
                   ],
-                  "start_time": "2023-11-12T13:19:14.294686Z",
+                  "start_time": "2023-11-18T05:26:43.461684Z",
                   "extensions": {
                         "extension-definition--4ca6de00-5b0d-45ef-a1dc-ea7279ea910e": {
                               "extension_type": "new-sdo"
@@ -185,20 +185,20 @@
             {
                   "type": "event",
                   "spec_version": "2.1",
-                  "id": "event--bd28230b-6730-4a67-b197-6cec6831054c",
-                  "created": "2023-11-12T13:19:14.228238Z",
-                  "modified": "2023-11-12T13:19:14.228238Z",
+                  "id": "event--9e41296f-175b-4621-9d7d-bc2f74fb3386",
+                  "created": "2023-11-18T05:26:43.529214Z",
+                  "modified": "2023-11-18T05:26:43.529214Z",
                   "status": "occured",
-                  "description": "user x found a suspicious email",
-                  "end_time": "2023-11-12T13:19:14.228238Z",
+                  "description": "2 users clicked on the email and destroyed their laptops",
+                  "end_time": "2023-11-18T05:26:43.529214Z",
                   "event_types": [
                         "dissemination-phishing-emails"
                   ],
-                  "name": "suspiciouse email",
+                  "name": "confirmed impact",
                   "sighting_refs": [
-                        "sighting--db6e5af2-437d-46dc-a831-b972f02674de"
+                        "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda"
                   ],
-                  "start_time": "2023-11-12T13:19:14.228238Z",
+                  "start_time": "2023-11-18T05:26:43.529214Z",
                   "extensions": {
                         "extension-definition--4ca6de00-5b0d-45ef-a1dc-ea7279ea910e": {
                               "extension_type": "new-sdo"
@@ -217,9 +217,19 @@
             {
                   "type": "identity",
                   "spec_version": "2.1",
-                  "id": "identity--27c2fdc0-bf9c-46d8-aab1-658948cd2ed6",
-                  "created": "2023-11-12T13:19:14.244241Z",
-                  "modified": "2023-11-12T13:19:14.244241Z",
+                  "id": "identity--05bf6d14-9483-423d-b4f3-b19f420c0803",
+                  "created": "2023-11-18T05:26:43.498695Z",
+                  "modified": "2023-11-18T05:26:43.498695Z",
+                  "name": "Microsoft Exchange",
+                  "description": "Microsoft Exchange Server",
+                  "identity_class": "system"
+            },
+            {
+                  "type": "identity",
+                  "spec_version": "2.1",
+                  "id": "identity--b30fc24d-4d5a-49a4-8aee-155788edbae3",
+                  "created": "2023-11-18T05:26:43.477681Z",
+                  "modified": "2023-11-18T05:26:43.477681Z",
                   "name": "Naive",
                   "identity_class": "individual",
                   "extensions": {
@@ -254,9 +264,18 @@
             {
                   "type": "identity",
                   "spec_version": "2.1",
-                  "id": "identity--6f410bea-0221-4041-8599-f20905a67519",
-                  "created": "2023-11-12T13:19:14.281063Z",
-                  "modified": "2023-11-12T13:19:14.281063Z",
+                  "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+                  "created": "2023-08-23T13:57:25.455083Z",
+                  "modified": "2023-08-23T13:57:25.455083Z",
+                  "name": "Mitre Ltd",
+                  "identity_class": "organization"
+            },
+            {
+                  "type": "identity",
+                  "spec_version": "2.1",
+                  "id": "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f",
+                  "created": "2023-11-18T05:26:43.515694Z",
+                  "modified": "2023-11-18T05:26:43.515694Z",
                   "name": "Evil Incarnate Ltd",
                   "description": "Hosted phsihing domain",
                   "identity_class": "organization",
@@ -265,9 +284,9 @@
             {
                   "type": "identity",
                   "spec_version": "2.1",
-                  "id": "identity--927f7e64-06c8-45e7-974f-df79eec92a7f",
-                  "created": "2023-11-12T13:19:14.206656Z",
-                  "modified": "2023-11-12T13:19:14.206656Z",
+                  "id": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+                  "created": "2023-11-18T05:26:43.444691Z",
+                  "modified": "2023-11-18T05:26:43.444691Z",
                   "name": "Me",
                   "identity_class": "individual",
                   "extensions": {
@@ -300,139 +319,20 @@
                   }
             },
             {
-                  "type": "identity",
-                  "spec_version": "2.1",
-                  "id": "identity--9f3ffe58-ab08-45da-aa4b-f093387a8fd4",
-                  "created": "2023-11-12T13:19:14.261269Z",
-                  "modified": "2023-11-12T13:19:14.261269Z",
-                  "name": "Microsoft Exchange",
-                  "description": "Microsoft Exchange Server",
-                  "identity_class": "system"
-            },
-            {
-                  "type": "identity",
-                  "spec_version": "2.1",
-                  "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-                  "created": "2023-08-23T13:57:25.455083Z",
-                  "modified": "2023-08-23T13:57:25.455083Z",
-                  "name": "Mitre Ltd",
-                  "identity_class": "organization"
-            },
-            {
                   "type": "impact",
                   "spec_version": "2.1",
-                  "id": "impact--2ba8b91a-fcbd-4efa-873d-1d741e5d7828",
-                  "created": "2023-11-12T13:19:14.309693Z",
-                  "modified": "2023-11-12T13:19:14.309693Z",
-                  "impact_category": "availability",
-                  "criticality": 99,
-                  "description": "Two Laptops and 3 Servers are stuffed",
-                  "end_time": "2023-11-12T13:19:14.309693Z",
-                  "impacted_entity_counts": {
-                        "computers-personal": 2,
-                        "computers-server": 3
-                  },
-                  "recoverability": "regular",
-                  "start_time": "2023-11-12T13:19:14.309693Z",
-                  "extensions": {
-                        "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
-                              "extension_type": "new-sdo"
-                        },
-                        "availability": {
-                              "availability_impact": 99
-                        }
-                  }
-            },
-            {
-                  "type": "impact",
-                  "spec_version": "2.1",
-                  "id": "impact--4c192fcd-19f3-4704-b123-c65396c128d1",
-                  "created": "2023-11-12T13:19:14.249759Z",
-                  "modified": "2023-11-12T13:19:14.249759Z",
-                  "impact_category": "availability",
-                  "criticality": 99,
-                  "description": "Laptop is stuffed",
-                  "end_time": "2023-11-12T13:19:14.249759Z",
-                  "impacted_entity_counts": {
-                        "computers-mobile": 1
-                  },
-                  "recoverability": "regular",
-                  "start_time": "2023-11-12T13:19:14.249759Z",
-                  "extensions": {
-                        "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
-                              "extension_type": "new-sdo"
-                        },
-                        "availability": {
-                              "availability_impact": 99
-                        }
-                  }
-            },
-            {
-                  "type": "impact",
-                  "spec_version": "2.1",
-                  "id": "impact--5de7e305-6075-4d38-bd89-99f7f7606c90",
-                  "created": "2023-11-12T13:19:14.320985Z",
-                  "modified": "2023-11-12T13:19:14.320985Z",
-                  "impact_category": "integrity",
-                  "criticality": 99,
-                  "description": "The credentials were modified",
-                  "end_time": "2023-11-12T13:19:14.320985Z",
-                  "impacted_entity_counts": {
-                        "computers-personal": 2
-                  },
-                  "recoverability": "regular",
-                  "start_time": "2023-11-12T13:19:14.320985Z",
-                  "extensions": {
-                        "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
-                              "extension_type": "new-sdo"
-                        },
-                        "integrity": {
-                              "alteration": "partial-modification",
-                              "information_type": "credentials-user",
-                              "record_count": 2,
-                              "record_size": 2000
-                        }
-                  }
-            },
-            {
-                  "type": "impact",
-                  "spec_version": "2.1",
-                  "id": "impact--65cbb7ec-a950-43ee-8b18-96c4ab87015a",
-                  "created": "2023-11-12T13:19:14.332765Z",
-                  "modified": "2023-11-12T13:19:14.332765Z",
-                  "impact_category": "traceability",
-                  "criticality": 99,
-                  "description": "We can reconstruct the attack from the data remaining",
-                  "end_time": "2023-11-12T13:19:14.332765Z",
-                  "impacted_entity_counts": {
-                        "computers-personal": 2
-                  },
-                  "recoverability": "regular",
-                  "start_time": "2023-11-12T13:19:14.332765Z",
-                  "extensions": {
-                        "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
-                              "extension_type": "new-sdo"
-                        },
-                        "traceability": {
-                              "traceability_impact": "provable-accountability"
-                        }
-                  }
-            },
-            {
-                  "type": "impact",
-                  "spec_version": "2.1",
-                  "id": "impact--7339fe8d-7b92-4098-b73a-22d10ae72150",
-                  "created": "2023-11-12T13:19:14.325669Z",
-                  "modified": "2023-11-12T13:19:14.325669Z",
+                  "id": "impact--0be23aab-cabb-40ca-a142-e232a5e38288",
+                  "created": "2023-11-18T05:26:43.564206Z",
+                  "modified": "2023-11-18T05:26:43.564206Z",
                   "impact_category": "monetary",
                   "criticality": 99,
                   "description": "The ransom demands were significant",
-                  "end_time": "2023-11-12T13:19:14.325669Z",
+                  "end_time": "2023-11-18T05:26:43.564206Z",
                   "impacted_entity_counts": {
                         "computers-personal": 2
                   },
                   "recoverability": "regular",
-                  "start_time": "2023-11-12T13:19:14.325669Z",
+                  "start_time": "2023-11-18T05:26:43.564206Z",
                   "extensions": {
                         "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
                               "extension_type": "new-sdo"
@@ -451,42 +351,19 @@
             {
                   "type": "impact",
                   "spec_version": "2.1",
-                  "id": "impact--836ed944-db19-4126-a8a6-a9e272c84138",
-                  "created": "2023-11-12T13:19:14.317078Z",
-                  "modified": "2023-11-12T13:19:14.317078Z",
-                  "impact_category": "external",
-                  "criticality": 99,
-                  "description": "Public confidence has taken a hit",
-                  "end_time": "2023-11-12T13:19:14.317078Z",
-                  "impacted_entity_counts": {
-                        "computers-personal": 2
-                  },
-                  "recoverability": "regular",
-                  "start_time": "2023-11-12T13:19:14.317078Z",
-                  "extensions": {
-                        "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
-                              "extension_type": "new-sdo"
-                        },
-                        "external": {
-                              "impact_type": "public-confidence"
-                        }
-                  }
-            },
-            {
-                  "type": "impact",
-                  "spec_version": "2.1",
-                  "id": "impact--83d407f9-7f42-4c14-b70e-b133394a9f65",
-                  "created": "2023-11-12T13:19:14.300372Z",
-                  "modified": "2023-11-12T13:19:14.300372Z",
+                  "id": "impact--23489d6a-c48f-4899-9da3-6e558dbbe01e",
+                  "created": "2023-11-18T05:26:43.545122Z",
+                  "modified": "2023-11-18T05:26:43.545122Z",
                   "impact_category": "availability",
                   "criticality": 99,
-                  "description": "Two Laptops are stuffed",
-                  "end_time": "2023-11-12T13:19:14.300372Z",
+                  "description": "Two Laptops and 3 Servers are stuffed",
+                  "end_time": "2023-11-18T05:26:43.545122Z",
                   "impacted_entity_counts": {
-                        "computers-mobile": 2
+                        "computers-personal": 2,
+                        "computers-server": 3
                   },
                   "recoverability": "regular",
-                  "start_time": "2023-11-12T13:19:14.300372Z",
+                  "start_time": "2023-11-18T05:26:43.545122Z",
                   "extensions": {
                         "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
                               "extension_type": "new-sdo"
@@ -499,18 +376,94 @@
             {
                   "type": "impact",
                   "spec_version": "2.1",
-                  "id": "impact--c2cc72aa-8c0b-4636-8c25-27984c81199a",
-                  "created": "2023-11-12T13:19:14.313378Z",
-                  "modified": "2023-11-12T13:19:14.313378Z",
-                  "impact_category": "confidentiality",
+                  "id": "impact--50f243b5-d6d4-4354-b9bf-a5600281e5aa",
+                  "created": "2023-11-18T05:26:43.559218Z",
+                  "modified": "2023-11-18T05:26:43.559218Z",
+                  "impact_category": "integrity",
                   "criticality": 99,
-                  "description": "Two Laptops had credentials stolen",
-                  "end_time": "2023-11-12T13:19:14.313378Z",
+                  "description": "The credentials were modified",
+                  "end_time": "2023-11-18T05:26:43.559218Z",
                   "impacted_entity_counts": {
                         "computers-personal": 2
                   },
                   "recoverability": "regular",
-                  "start_time": "2023-11-12T13:19:14.313378Z",
+                  "start_time": "2023-11-18T05:26:43.559218Z",
+                  "extensions": {
+                        "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+                              "extension_type": "new-sdo"
+                        },
+                        "integrity": {
+                              "alteration": "partial-modification",
+                              "information_type": "credentials-user",
+                              "record_count": 2,
+                              "record_size": 2000
+                        }
+                  }
+            },
+            {
+                  "type": "impact",
+                  "spec_version": "2.1",
+                  "id": "impact--6b37da34-fc8b-4c0e-90a1-55e445b31b75",
+                  "created": "2023-11-18T05:26:43.569212Z",
+                  "modified": "2023-11-18T05:26:43.569212Z",
+                  "impact_category": "physical",
+                  "criticality": 99,
+                  "description": "The rcomputers are not usable, but can be fixed",
+                  "end_time": "2023-11-18T05:26:43.569212Z",
+                  "impacted_entity_counts": {
+                        "computers-personal": 2
+                  },
+                  "recoverability": "regular",
+                  "start_time": "2023-11-18T05:26:43.569212Z",
+                  "extensions": {
+                        "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+                              "extension_type": "new-sdo"
+                        },
+                        "physical": {
+                              "impact_type": "damaged-nonfunctional",
+                              "asset_type": "computers-personal"
+                        }
+                  }
+            },
+            {
+                  "type": "impact",
+                  "spec_version": "2.1",
+                  "id": "impact--86625ce2-4b1f-4fc7-8a6b-fc70e086c006",
+                  "created": "2023-11-18T05:26:43.487599Z",
+                  "modified": "2023-11-18T05:26:43.487599Z",
+                  "impact_category": "availability",
+                  "criticality": 99,
+                  "description": "Laptop is stuffed",
+                  "end_time": "2023-11-18T05:26:43.487599Z",
+                  "impacted_entity_counts": {
+                        "computers-mobile": 1
+                  },
+                  "recoverability": "regular",
+                  "start_time": "2023-11-18T05:26:43.487599Z",
+                  "extensions": {
+                        "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+                              "extension_type": "new-sdo"
+                        },
+                        "availability": {
+                              "availability_impact": 99
+                        }
+                  }
+            },
+            {
+                  "type": "impact",
+                  "spec_version": "2.1",
+                  "id": "impact--9dc0d17d-4b07-4498-86ed-42c0cc2dffc4",
+                  "created": "2023-11-18T05:26:43.550123Z",
+                  "modified": "2023-11-18T05:26:43.550123Z",
+                  "impact_category": "confidentiality",
+                  "criticality": 99,
+                  "description": "Two Laptops had credentials stolen",
+                  "end_time": "2023-11-18T05:26:43.550123Z",
+                  "impacted_entity_counts": {
+                        "computers-personal": 2
+                  },
+                  "recoverability": "regular",
+                  "start_time": "2023-11-18T05:26:43.550123Z",
                   "extensions": {
                         "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
                               "extension_type": "new-sdo"
@@ -526,34 +479,173 @@
             {
                   "type": "impact",
                   "spec_version": "2.1",
-                  "id": "impact--fcbc2b40-4f17-45d6-9f4a-046d8439f3f9",
-                  "created": "2023-11-12T13:19:14.328754Z",
-                  "modified": "2023-11-12T13:19:14.328754Z",
-                  "impact_category": "physical",
+                  "id": "impact--b9062b38-c151-439a-bcaa-5922aa38a52d",
+                  "created": "2023-11-18T05:26:43.556125Z",
+                  "modified": "2023-11-18T05:26:43.556125Z",
+                  "impact_category": "external",
                   "criticality": 99,
-                  "description": "The rcomputers are not usable, but can be fixed",
-                  "end_time": "2023-11-12T13:19:14.328754Z",
+                  "description": "Public confidence has taken a hit",
+                  "end_time": "2023-11-18T05:26:43.556125Z",
                   "impacted_entity_counts": {
                         "computers-personal": 2
                   },
                   "recoverability": "regular",
-                  "start_time": "2023-11-12T13:19:14.328754Z",
+                  "start_time": "2023-11-18T05:26:43.556125Z",
                   "extensions": {
                         "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
                               "extension_type": "new-sdo"
                         },
-                        "physical": {
-                              "impact_type": "damaged-nonfunctional",
-                              "asset_type": "computers-personal"
+                        "external": {
+                              "impact_type": "public-confidence"
+                        }
+                  }
+            },
+            {
+                  "type": "impact",
+                  "spec_version": "2.1",
+                  "id": "impact--d82add0b-eb43-42d3-98c0-ae73ca232bf8",
+                  "created": "2023-11-18T05:26:43.534206Z",
+                  "modified": "2023-11-18T05:26:43.534206Z",
+                  "impact_category": "availability",
+                  "criticality": 99,
+                  "description": "Two Laptops are stuffed",
+                  "end_time": "2023-11-18T05:26:43.534206Z",
+                  "impacted_entity_counts": {
+                        "computers-mobile": 2
+                  },
+                  "recoverability": "regular",
+                  "start_time": "2023-11-18T05:26:43.534206Z",
+                  "extensions": {
+                        "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+                              "extension_type": "new-sdo"
+                        },
+                        "availability": {
+                              "availability_impact": 99
+                        }
+                  }
+            },
+            {
+                  "type": "impact",
+                  "spec_version": "2.1",
+                  "id": "impact--e0689a9e-e45c-4da3-a8f1-244243f51d46",
+                  "created": "2023-11-18T05:26:43.576216Z",
+                  "modified": "2023-11-18T05:26:43.576216Z",
+                  "impact_category": "traceability",
+                  "criticality": 99,
+                  "description": "We can reconstruct the attack from the data remaining",
+                  "end_time": "2023-11-18T05:26:43.576216Z",
+                  "impacted_entity_counts": {
+                        "computers-personal": 2
+                  },
+                  "recoverability": "regular",
+                  "start_time": "2023-11-18T05:26:43.576216Z",
+                  "extensions": {
+                        "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+                              "extension_type": "new-sdo"
+                        },
+                        "traceability": {
+                              "traceability_impact": "provable-accountability"
+                        }
+                  }
+            },
+            {
+                  "type": "incident",
+                  "spec_version": "2.1",
+                  "id": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+                  "created": "2023-11-18T05:26:43.46768Z",
+                  "modified": "2023-11-18T05:26:43.46768Z",
+                  "name": "potential phishing",
+                  "extensions": {
+                        "extension-definition--ef765651-680c-498d-9894-99799f2fa126": {
+                              "extension_type": "property-extension",
+                              "investigation_status": "new",
+                              "determination": "suspected",
+                              "incident_types": [
+                                    "dissemination-phishing-emails"
+                              ],
+                              "sequence_start_refs": [
+                                    "sequence--58babacb-4e15-480e-a73c-3eac9f6e2d52"
+                              ],
+                              "sequence_refs": [
+                                    "sequence--58babacb-4e15-480e-a73c-3eac9f6e2d52",
+                                    "sequence--90ceef43-4484-4126-af05-9c9d60290a36",
+                                    "sequence--d41c2e05-da07-42ce-85bb-05fa280f3f9f",
+                                    "sequence--e84228de-4831-4f98-9f28-1a51744ec4b9",
+                                    "sequence--9fac1cf7-db8b-4f74-bbd0-14a036459cc3",
+                                    "sequence--edde80dd-c68f-47c9-bd3c-39ed461700a6",
+                                    "sequence--5d59d1e4-1bce-4599-a763-f05fefa6a9f1",
+                                    "sequence--1521a7d0-c597-4a8a-a074-6d33337b627e",
+                                    "sequence--cf28bb62-ebba-4a6e-b0d1-c25786f23e92",
+                                    "sequence--e5336bdf-238c-4ff2-9db7-9f7ca90348e7"
+                              ],
+                              "event_refs": [
+                                    "event--236d689a-aaa9-4bc1-8401-d86cb2d3c430"
+                              ],
+                              "other_object_refs": [
+                                    "email-addr--64157c44-5eb7-5d01-8710-b288f8ccb625",
+                                    "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0",
+                                    "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+                                    "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8",
+                                    "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7",
+                                    "relationship--a8a2a45a-e3a9-4ebc-a1f5-4fdf91960fd4",
+                                    "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776",
+                                    "indicator--3f624ff1-7c2e-40db-8d7c-acc8723afe95",
+                                    "sighting--49cc5c32-98b8-4d15-94bf-2f867d71a2fa",
+                                    "identity--b30fc24d-4d5a-49a4-8aee-155788edbae3",
+                                    "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f",
+                                    "observed-data--fb077ab9-4a21-4a3d-91b1-02bfb9c6c493",
+                                    "sighting--d0a71341-cf9b-474f-8cdb-eba6d9e96a68",
+                                    "user-account--47df6d33-0005-5b45-9875-e7a609b12e9b",
+                                    "user-account--47df6d33-0005-5b45-9875-e7a609b12e9b",
+                                    "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109",
+                                    "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5",
+                                    "user-account--5aaaa4e2-0974-5ab4-9069-41a16197f0ff",
+                                    "email-addr--30d9a416-203b-55c8-b796-8eb65ab5275e",
+                                    "sighting--575ca2c4-7d0f-4984-86a1-e0f7422f6237",
+                                    "relationship--9789896d-1c02-485f-88e3-7bc6c749f284",
+                                    "relationship--9789896d-1c02-485f-88e3-7bc6c749f284",
+                                    "relationship--524cee6e-3108-4c27-97f3-d0f290f4324c",
+                                    "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+                                    "identity--05bf6d14-9483-423d-b4f3-b19f420c0803",
+                                    "ipv4-addr--a40768a0-5841-50d2-838d-bcb35ee92131",
+                                    "domain-name--aa90a5c6-6a78-520b-bcfd-e2bf0c25bce1",
+                                    "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6",
+                                    "indicator--00c82e87-a7c4-4cbb-b58a-577d988dd84e",
+                                    "sighting--feb6fbd9-ff3f-45f8-ae59-2976fc766196",
+                                    "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1",
+                                    "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f",
+                                    "relationship--c5bcfa3f-2086-4122-a1f1-dc46ace79baa",
+                                    "sighting--791d2177-e8ae-4021-ac17-5a68f5ccabed",
+                                    "software--3974613c-1980-5209-8f08-17920a04da04",
+                                    "file--e7c7ddeb-d693-53e7-bcd8-f40951888120",
+                                    "process--fe3c9253-8490-4647-9b45-41a918fb6e15",
+                                    "relationship--2ca1e438-492d-45a1-b0a9-7285db39342f",
+                                    "relationship--1995ce47-c1bf-401b-944f-9661c9da43a2",
+                                    "relationship--50929fe5-29e9-4433-9a74-ae834e96f00c",
+                                    "observed-data--c177cd97-7226-4572-a60a-5caf70f49873",
+                                    "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda"
+                              ],
+                              "task_refs": [
+                                    "task--3d00a36b-506f-4ccb-8888-ec8d099f399d",
+                                    "task--0b663052-5d31-4c42-9f06-7343985cce6c",
+                                    "task--44a9d7fa-028d-4fa0-b822-32680eda7d7e",
+                                    "task--43b3b336-4774-4267-9ffd-175f83b7cf7c",
+                                    "task--6be4f7f4-8ece-4b94-9ec7-e7009e38c547",
+                                    "task--6be4f7f4-8ece-4b94-9ec7-e7009e38c547"
+                              ],
+                              "impact_refs": [
+                                    "impact--86625ce2-4b1f-4fc7-8a6b-fc70e086c006",
+                                    "impact--d82add0b-eb43-42d3-98c0-ae73ca232bf8"
+                              ]
                         }
                   }
             },
             {
                   "type": "indicator",
                   "spec_version": "2.1",
-                  "id": "indicator--246ca844-3b6a-441a-a276-3c0120498f3f",
-                  "created": "2023-11-12T13:19:14.271302Z",
-                  "modified": "2023-11-12T13:19:14.271302Z",
+                  "id": "indicator--00c82e87-a7c4-4cbb-b58a-577d988dd84e",
+                  "created": "2023-11-18T05:26:43.506597Z",
+                  "modified": "2023-11-18T05:26:43.506597Z",
                   "name": "Suspicious Email",
                   "indicator_types": [
                         "malicious-activity"
@@ -561,14 +653,14 @@
                   "pattern": "[domain-name:value = 'northkorea.com' AND ipv4-addr:value = '197.133.142.27']",
                   "pattern_type": "stix",
                   "pattern_version": "2.1",
-                  "valid_from": "2023-11-12T13:19:14.271302Z"
+                  "valid_from": "2023-11-18T05:26:43.506597Z"
             },
             {
                   "type": "indicator",
                   "spec_version": "2.1",
-                  "id": "indicator--277f623c-3468-4ba3-9b83-165f3b3827c1",
-                  "created": "2023-11-12T13:19:14.212432Z",
-                  "modified": "2023-11-12T13:19:14.212432Z",
+                  "id": "indicator--3f624ff1-7c2e-40db-8d7c-acc8723afe95",
+                  "created": "2023-11-18T05:26:43.448688Z",
+                  "modified": "2023-11-18T05:26:43.448688Z",
                   "name": "Suspicious Email",
                   "indicator_types": [
                         "unknown"
@@ -576,7 +668,7 @@
                   "pattern": "[email-addr:value = 'evil@northkorea.com' AND email:subject = 'we are coming for you']",
                   "pattern_type": "stix",
                   "pattern_version": "2.1",
-                  "valid_from": "2023-11-12T13:19:14.212432Z"
+                  "valid_from": "2023-11-18T05:26:43.448688Z"
             },
             {
                   "type": "ipv4-addr",
@@ -587,9 +679,9 @@
             {
                   "type": "location",
                   "spec_version": "2.1",
-                  "id": "location--b1cd3da8-d53f-445b-816e-c1ec520ad5db",
-                  "created": "2023-11-12T13:19:14.281063Z",
-                  "modified": "2023-11-12T13:19:14.281063Z",
+                  "id": "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1",
+                  "created": "2023-11-18T05:26:43.515694Z",
+                  "modified": "2023-11-18T05:26:43.515694Z",
                   "name": "Evil Incarnate Ltd",
                   "latitude": 39.03385,
                   "longitude": 125.75432,
@@ -612,31 +704,9 @@
             {
                   "type": "observed-data",
                   "spec_version": "2.1",
-                  "id": "observed-data--2d2311be-b85c-4c34-9953-b8e0edf07f3b",
-                  "created": "2023-11-12T13:19:14.290678Z",
-                  "modified": "2023-11-12T13:19:14.290678Z",
-                  "first_observed": "2020-10-19T01:01:01Z",
-                  "last_observed": "2020-10-19T01:01:01Z",
-                  "number_observed": 1,
-                  "object_refs": [
-                        "software--3974613c-1980-5209-8f08-17920a04da04",
-                        "file--e7c7ddeb-d693-53e7-bcd8-f40951888120",
-                        "process--8550e5a1-d8e5-4b5f-8e00-450ca5e8699f",
-                        "relationship--4275d204-c62b-4f64-b976-43c79252f022",
-                        "relationship--03af0775-6402-436f-bc64-f680ceee9c0c",
-                        "relationship--cd1cc117-0bd7-47d1-a461-07604b47f3ba",
-                        "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
-                        "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5",
-                        "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0",
-                        "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109"
-                  ]
-            },
-            {
-                  "type": "observed-data",
-                  "spec_version": "2.1",
-                  "id": "observed-data--452d0645-4592-405e-aebc-887992e26739",
-                  "created": "2023-11-12T13:19:14.271302Z",
-                  "modified": "2023-11-12T13:19:14.271302Z",
+                  "id": "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6",
+                  "created": "2023-11-18T05:26:43.506597Z",
+                  "modified": "2023-11-18T05:26:43.506597Z",
                   "first_observed": "2020-10-19T01:01:01Z",
                   "last_observed": "2020-10-19T01:01:01Z",
                   "number_observed": 1,
@@ -648,9 +718,9 @@
             {
                   "type": "observed-data",
                   "spec_version": "2.1",
-                  "id": "observed-data--a85f23d2-2bf7-46ea-be6c-dbb7dc05eebf",
-                  "created": "2023-11-12T13:19:14.261269Z",
-                  "modified": "2023-11-12T13:19:14.261269Z",
+                  "id": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+                  "created": "2023-11-18T05:26:43.498695Z",
+                  "modified": "2023-11-18T05:26:43.498695Z",
                   "first_observed": "2020-10-19T01:01:01Z",
                   "last_observed": "2020-10-19T01:01:01Z",
                   "number_observed": 1,
@@ -658,37 +728,46 @@
                         "email-addr--64157c44-5eb7-5d01-8710-b288f8ccb625",
                         "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8",
                         "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7",
-                        "relationship--acc67d76-ce68-4eeb-9f46-fd0520c36c74",
+                        "relationship--a8a2a45a-e3a9-4ebc-a1f5-4fdf91960fd4",
                         "email-addr--a7155ffe-8ea7-563a-a54c-e94e23ec50c8",
                         "user-account--47df6d33-0005-5b45-9875-e7a609b12e9b",
                         "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5",
                         "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109",
                         "email-addr--30d9a416-203b-55c8-b796-8eb65ab5275e",
                         "user-account--5aaaa4e2-0974-5ab4-9069-41a16197f0ff",
-                        "relationship--c9b4545c-e132-4092-8c56-616fbdaca0d5",
-                        "relationship--b2feb69f-fddc-4c4c-b1cd-ce1519a8322d",
-                        "relationship--61a505ec-463e-4b22-a620-8578b51faf1e"
+                        "relationship--9789896d-1c02-485f-88e3-7bc6c749f284",
+                        "relationship--9d503bd4-1fde-417b-b6ac-6446d28e65b7",
+                        "relationship--524cee6e-3108-4c27-97f3-d0f290f4324c"
                   ]
             },
             {
                   "type": "observed-data",
                   "spec_version": "2.1",
-                  "id": "observed-data--e41ba03b-548d-4675-ba7e-b0844e1d9ee1",
-                  "created": "2023-11-12T13:19:14.245749Z",
-                  "modified": "2023-11-12T13:19:14.245749Z",
-                  "first_observed": "2023-11-12T13:19:14.245749Z",
-                  "last_observed": "2023-11-12T13:19:14.245749Z",
+                  "id": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873",
+                  "created": "2023-11-18T05:26:43.526206Z",
+                  "modified": "2023-11-18T05:26:43.526206Z",
+                  "first_observed": "2020-10-19T01:01:01Z",
+                  "last_observed": "2020-10-19T01:01:01Z",
                   "number_observed": 1,
                   "object_refs": [
-                        "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f"
+                        "software--3974613c-1980-5209-8f08-17920a04da04",
+                        "file--e7c7ddeb-d693-53e7-bcd8-f40951888120",
+                        "process--fe3c9253-8490-4647-9b45-41a918fb6e15",
+                        "relationship--2ca1e438-492d-45a1-b0a9-7285db39342f",
+                        "relationship--1995ce47-c1bf-401b-944f-9661c9da43a2",
+                        "relationship--50929fe5-29e9-4433-9a74-ae834e96f00c",
+                        "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+                        "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5",
+                        "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0",
+                        "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109"
                   ]
             },
             {
                   "type": "observed-data",
                   "spec_version": "2.1",
-                  "id": "observed-data--f55a1b66-865d-4079-bc3b-1ffb8c7a9ab4",
-                  "created": "2023-11-12T13:19:14.212432Z",
-                  "modified": "2023-11-12T13:19:14.212432Z",
+                  "id": "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776",
+                  "created": "2023-11-18T05:26:43.448688Z",
+                  "modified": "2023-11-18T05:26:43.448688Z",
                   "first_observed": "2020-10-19T01:01:01Z",
                   "last_observed": "2020-10-19T01:01:01Z",
                   "number_observed": 1,
@@ -696,15 +775,28 @@
                         "email-addr--64157c44-5eb7-5d01-8710-b288f8ccb625",
                         "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8",
                         "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7",
-                        "relationship--acc67d76-ce68-4eeb-9f46-fd0520c36c74",
+                        "relationship--a8a2a45a-e3a9-4ebc-a1f5-4fdf91960fd4",
                         "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
                         "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0"
                   ]
             },
             {
+                  "type": "observed-data",
+                  "spec_version": "2.1",
+                  "id": "observed-data--fb077ab9-4a21-4a3d-91b1-02bfb9c6c493",
+                  "created": "2023-11-18T05:26:43.48171Z",
+                  "modified": "2023-11-18T05:26:43.48171Z",
+                  "first_observed": "2023-11-18T05:26:43.480683Z",
+                  "last_observed": "2023-11-18T05:26:43.480683Z",
+                  "number_observed": 1,
+                  "object_refs": [
+                        "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f"
+                  ]
+            },
+            {
                   "type": "process",
                   "spec_version": "2.1",
-                  "id": "process--8550e5a1-d8e5-4b5f-8e00-450ca5e8699f",
+                  "id": "process--fe3c9253-8490-4647-9b45-41a918fb6e15",
                   "pid": 1221,
                   "created_time": "2023-01-20T14:11:25.55Z",
                   "command_line": "./gedit-bin --destroy-alll",
@@ -713,9 +805,9 @@
             {
                   "type": "relationship",
                   "spec_version": "2.1",
-                  "id": "relationship--03af0775-6402-436f-bc64-f680ceee9c0c",
-                  "created": "2023-11-12T13:19:14.290678Z",
-                  "modified": "2023-11-12T13:19:14.290678Z",
+                  "id": "relationship--1995ce47-c1bf-401b-944f-9661c9da43a2",
+                  "created": "2023-11-18T05:26:43.525212Z",
+                  "modified": "2023-11-18T05:26:43.525212Z",
                   "relationship_type": "related-to",
                   "source_ref": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
                   "target_ref": "software--3974613c-1980-5209-8f08-17920a04da04"
@@ -723,19 +815,29 @@
             {
                   "type": "relationship",
                   "spec_version": "2.1",
-                  "id": "relationship--4275d204-c62b-4f64-b976-43c79252f022",
-                  "created": "2023-11-12T13:19:14.290678Z",
-                  "modified": "2023-11-12T13:19:14.290678Z",
+                  "id": "relationship--2ca1e438-492d-45a1-b0a9-7285db39342f",
+                  "created": "2023-11-18T05:26:43.525212Z",
+                  "modified": "2023-11-18T05:26:43.525212Z",
                   "relationship_type": "derived-from",
                   "source_ref": "software--3974613c-1980-5209-8f08-17920a04da04",
-                  "target_ref": "process--8550e5a1-d8e5-4b5f-8e00-450ca5e8699f"
+                  "target_ref": "process--fe3c9253-8490-4647-9b45-41a918fb6e15"
             },
             {
                   "type": "relationship",
                   "spec_version": "2.1",
-                  "id": "relationship--61a505ec-463e-4b22-a620-8578b51faf1e",
-                  "created": "2023-11-12T13:19:14.261269Z",
-                  "modified": "2023-11-12T13:19:14.261269Z",
+                  "id": "relationship--50929fe5-29e9-4433-9a74-ae834e96f00c",
+                  "created": "2023-11-18T05:26:43.526206Z",
+                  "modified": "2023-11-18T05:26:43.526206Z",
+                  "relationship_type": "related-to",
+                  "source_ref": "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5",
+                  "target_ref": "software--3974613c-1980-5209-8f08-17920a04da04"
+            },
+            {
+                  "type": "relationship",
+                  "spec_version": "2.1",
+                  "id": "relationship--524cee6e-3108-4c27-97f3-d0f290f4324c",
+                  "created": "2023-11-18T05:26:43.498695Z",
+                  "modified": "2023-11-18T05:26:43.498695Z",
                   "relationship_type": "duplicate-of",
                   "source_ref": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
                   "target_ref": "email-addr--30d9a416-203b-55c8-b796-8eb65ab5275e"
@@ -743,39 +845,9 @@
             {
                   "type": "relationship",
                   "spec_version": "2.1",
-                  "id": "relationship--acc67d76-ce68-4eeb-9f46-fd0520c36c74",
-                  "created": "2023-11-12T13:19:14.211345Z",
-                  "modified": "2023-11-12T13:19:14.211345Z",
-                  "relationship_type": "derived-from",
-                  "source_ref": "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8",
-                  "target_ref": "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7"
-            },
-            {
-                  "type": "relationship",
-                  "spec_version": "2.1",
-                  "id": "relationship--b2feb69f-fddc-4c4c-b1cd-ce1519a8322d",
-                  "created": "2023-11-12T13:19:14.261269Z",
-                  "modified": "2023-11-12T13:19:14.261269Z",
-                  "relationship_type": "duplicate-of",
-                  "source_ref": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
-                  "target_ref": "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5"
-            },
-            {
-                  "type": "relationship",
-                  "spec_version": "2.1",
-                  "id": "relationship--c4e8a257-00ce-401b-8776-c69ce37d5636",
-                  "created": "2023-11-12T13:19:14.281063Z",
-                  "modified": "2023-11-12T13:19:14.281063Z",
-                  "relationship_type": "located-at",
-                  "source_ref": "identity--6f410bea-0221-4041-8599-f20905a67519",
-                  "target_ref": "location--b1cd3da8-d53f-445b-816e-c1ec520ad5db"
-            },
-            {
-                  "type": "relationship",
-                  "spec_version": "2.1",
-                  "id": "relationship--c9b4545c-e132-4092-8c56-616fbdaca0d5",
-                  "created": "2023-11-12T13:19:14.260274Z",
-                  "modified": "2023-11-12T13:19:14.260274Z",
+                  "id": "relationship--9789896d-1c02-485f-88e3-7bc6c749f284",
+                  "created": "2023-11-18T05:26:43.497687Z",
+                  "modified": "2023-11-18T05:26:43.497687Z",
                   "relationship_type": "duplicate-of",
                   "source_ref": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
                   "target_ref": "email-addr--a7155ffe-8ea7-563a-a54c-e94e23ec50c8"
@@ -783,50 +855,40 @@
             {
                   "type": "relationship",
                   "spec_version": "2.1",
-                  "id": "relationship--cd1cc117-0bd7-47d1-a461-07604b47f3ba",
-                  "created": "2023-11-12T13:19:14.290678Z",
-                  "modified": "2023-11-12T13:19:14.290678Z",
-                  "relationship_type": "related-to",
-                  "source_ref": "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5",
-                  "target_ref": "software--3974613c-1980-5209-8f08-17920a04da04"
+                  "id": "relationship--9d503bd4-1fde-417b-b6ac-6446d28e65b7",
+                  "created": "2023-11-18T05:26:43.498695Z",
+                  "modified": "2023-11-18T05:26:43.498695Z",
+                  "relationship_type": "duplicate-of",
+                  "source_ref": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+                  "target_ref": "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5"
+            },
+            {
+                  "type": "relationship",
+                  "spec_version": "2.1",
+                  "id": "relationship--a8a2a45a-e3a9-4ebc-a1f5-4fdf91960fd4",
+                  "created": "2023-11-18T05:26:43.448688Z",
+                  "modified": "2023-11-18T05:26:43.448688Z",
+                  "relationship_type": "derived-from",
+                  "source_ref": "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8",
+                  "target_ref": "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7"
+            },
+            {
+                  "type": "relationship",
+                  "spec_version": "2.1",
+                  "id": "relationship--c5bcfa3f-2086-4122-a1f1-dc46ace79baa",
+                  "created": "2023-11-18T05:26:43.515694Z",
+                  "modified": "2023-11-18T05:26:43.515694Z",
+                  "relationship_type": "located-at",
+                  "source_ref": "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f",
+                  "target_ref": "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
             },
             {
                   "type": "sequence",
                   "spec_version": "2.1",
-                  "id": "sequence--1847ec88-bc15-412d-9736-6fd71ad221c4",
-                  "created": "2023-11-12T13:19:14.307389Z",
-                  "modified": "2023-11-12T13:19:14.307389Z",
-                  "sequenced_object": "task--dd3883e7-8b4a-4efb-ab1e-33f4150d98fe",
-                  "sequence_type": "task",
-                  "step_type": "single_step",
-                  "extensions": {
-                        "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
-                              "extension_type": "new-sdo"
-                        }
-                  }
-            },
-            {
-                  "type": "sequence",
-                  "spec_version": "2.1",
-                  "id": "sequence--2c835388-d845-45e7-9b05-1323ccf795f6",
-                  "created": "2023-11-12T13:19:14.296384Z",
-                  "modified": "2023-11-12T13:19:14.296384Z",
-                  "sequenced_object": "event--01f5c46c-d94a-4086-bbfd-09c5eeb9380a",
-                  "sequence_type": "event",
-                  "step_type": "single_step",
-                  "extensions": {
-                        "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
-                              "extension_type": "new-sdo"
-                        }
-                  }
-            },
-            {
-                  "type": "sequence",
-                  "spec_version": "2.1",
-                  "id": "sequence--30e7e510-0eec-4c5d-9db7-b153f5c36a3e",
-                  "created": "2023-11-12T13:19:14.23823Z",
-                  "modified": "2023-11-12T13:19:14.23823Z",
-                  "sequenced_object": "task--e71f0f91-67bf-4029-8218-898d4acee996",
+                  "id": "sequence--1521a7d0-c597-4a8a-a074-6d33337b627e",
+                  "created": "2023-11-18T05:26:43.522118Z",
+                  "modified": "2023-11-18T05:26:43.522118Z",
+                  "sequenced_object": "task--6be4f7f4-8ece-4b94-9ec7-e7009e38c547",
                   "sequence_type": "task",
                   "step_type": "single_step",
                   "extensions": {
@@ -834,33 +896,17 @@
                               "extension_type": "new-sdo"
                         }
                   },
-                  "on_completion": "sequence--3834e103-ffd4-4038-8cf6-d72f9a32cea7"
+                  "on_completion": "sequence--e5336bdf-238c-4ff2-9db7-9f7ca90348e7"
             },
             {
                   "type": "sequence",
                   "spec_version": "2.1",
-                  "id": "sequence--3834e103-ffd4-4038-8cf6-d72f9a32cea7",
-                  "created": "2023-11-12T13:19:14.256309Z",
-                  "modified": "2023-11-12T13:19:14.256309Z",
-                  "sequenced_object": "task--0f0e314e-dccb-4cf3-8337-5aef124e3ba7",
-                  "sequence_type": "task",
-                  "step_type": "single_step",
-                  "extensions": {
-                        "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
-                              "extension_type": "new-sdo"
-                        }
-                  },
-                  "on_completion": "sequence--b4ad8bb3-d704-4949-bcd7-b08b1620028b"
-            },
-            {
-                  "type": "sequence",
-                  "spec_version": "2.1",
-                  "id": "sequence--71b27fc0-ca5f-4919-856d-6868a6fff02f",
-                  "created": "2023-11-12T13:19:14.232241Z",
-                  "modified": "2023-11-12T13:19:14.232241Z",
+                  "id": "sequence--58babacb-4e15-480e-a73c-3eac9f6e2d52",
+                  "created": "2023-11-18T05:26:43.465678Z",
+                  "modified": "2023-11-18T05:26:43.465678Z",
                   "sequence_type": "event",
                   "step_type": "start_step",
-                  "on_completion": "sequence--9a9239d0-0dd0-43fd-aa62-8ecb78f9e302",
+                  "on_completion": "sequence--90ceef43-4484-4126-af05-9c9d60290a36",
                   "extensions": {
                         "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
                               "extension_type": "new-sdo"
@@ -870,10 +916,26 @@
             {
                   "type": "sequence",
                   "spec_version": "2.1",
-                  "id": "sequence--9a9239d0-0dd0-43fd-aa62-8ecb78f9e302",
-                  "created": "2023-11-12T13:19:14.23024Z",
-                  "modified": "2023-11-12T13:19:14.23024Z",
-                  "sequenced_object": "event--bd28230b-6730-4a67-b197-6cec6831054c",
+                  "id": "sequence--5d59d1e4-1bce-4599-a763-f05fefa6a9f1",
+                  "created": "2023-11-18T05:26:43.513684Z",
+                  "modified": "2023-11-18T05:26:43.513684Z",
+                  "sequenced_object": "task--43b3b336-4774-4267-9ffd-175f83b7cf7c",
+                  "sequence_type": "task",
+                  "step_type": "single_step",
+                  "extensions": {
+                        "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
+                              "extension_type": "new-sdo"
+                        }
+                  },
+                  "on_completion": "sequence--1521a7d0-c597-4a8a-a074-6d33337b627e"
+            },
+            {
+                  "type": "sequence",
+                  "spec_version": "2.1",
+                  "id": "sequence--90ceef43-4484-4126-af05-9c9d60290a36",
+                  "created": "2023-11-18T05:26:43.464688Z",
+                  "modified": "2023-11-18T05:26:43.464688Z",
+                  "sequenced_object": "event--236d689a-aaa9-4bc1-8401-d86cb2d3c430",
                   "sequence_type": "event",
                   "step_type": "single_step",
                   "extensions": {
@@ -881,17 +943,48 @@
                               "extension_type": "new-sdo"
                         }
                   },
-                  "on_completion": "sequence--2c835388-d845-45e7-9b05-1323ccf795f6"
+                  "on_completion": "sequence--cf28bb62-ebba-4a6e-b0d1-c25786f23e92"
             },
             {
                   "type": "sequence",
                   "spec_version": "2.1",
-                  "id": "sequence--a1beae14-a5ff-4f5a-a0e0-58dd90b79a00",
-                  "created": "2023-11-12T13:19:14.24024Z",
-                  "modified": "2023-11-12T13:19:14.24024Z",
+                  "id": "sequence--9fac1cf7-db8b-4f74-bbd0-14a036459cc3",
+                  "created": "2023-11-18T05:26:43.494679Z",
+                  "modified": "2023-11-18T05:26:43.494679Z",
+                  "sequenced_object": "task--0b663052-5d31-4c42-9f06-7343985cce6c",
+                  "sequence_type": "task",
+                  "step_type": "single_step",
+                  "extensions": {
+                        "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
+                              "extension_type": "new-sdo"
+                        }
+                  },
+                  "on_completion": "sequence--edde80dd-c68f-47c9-bd3c-39ed461700a6"
+            },
+            {
+                  "type": "sequence",
+                  "spec_version": "2.1",
+                  "id": "sequence--cf28bb62-ebba-4a6e-b0d1-c25786f23e92",
+                  "created": "2023-11-18T05:26:43.532206Z",
+                  "modified": "2023-11-18T05:26:43.532206Z",
+                  "sequenced_object": "event--9e41296f-175b-4621-9d7d-bc2f74fb3386",
+                  "sequence_type": "event",
+                  "step_type": "single_step",
+                  "extensions": {
+                        "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
+                              "extension_type": "new-sdo"
+                        }
+                  }
+            },
+            {
+                  "type": "sequence",
+                  "spec_version": "2.1",
+                  "id": "sequence--d41c2e05-da07-42ce-85bb-05fa280f3f9f",
+                  "created": "2023-11-18T05:26:43.474603Z",
+                  "modified": "2023-11-18T05:26:43.474603Z",
                   "sequence_type": "task",
                   "step_type": "start_step",
-                  "on_completion": "sequence--30e7e510-0eec-4c5d-9db7-b153f5c36a3e",
+                  "on_completion": "sequence--e84228de-4831-4f98-9f28-1a51744ec4b9",
                   "extensions": {
                         "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
                               "extension_type": "new-sdo"
@@ -901,26 +994,25 @@
             {
                   "type": "sequence",
                   "spec_version": "2.1",
-                  "id": "sequence--a8f61180-b39d-4972-bc67-24e46059876a",
-                  "created": "2023-11-12T13:19:14.279079Z",
-                  "modified": "2023-11-12T13:19:14.279079Z",
-                  "sequenced_object": "task--960ffda9-03fa-43e6-92ad-40e44e18724e",
+                  "id": "sequence--e5336bdf-238c-4ff2-9db7-9f7ca90348e7",
+                  "created": "2023-11-18T05:26:43.542122Z",
+                  "modified": "2023-11-18T05:26:43.542122Z",
+                  "sequenced_object": "task--d3142f7e-4e2c-47d8-87cb-7f43277142d4",
                   "sequence_type": "task",
                   "step_type": "single_step",
                   "extensions": {
                         "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
                               "extension_type": "new-sdo"
                         }
-                  },
-                  "on_completion": "sequence--aa857e27-356b-4bf8-902a-e1731766b3ea"
+                  }
             },
             {
                   "type": "sequence",
                   "spec_version": "2.1",
-                  "id": "sequence--aa857e27-356b-4bf8-902a-e1731766b3ea",
-                  "created": "2023-11-12T13:19:14.287594Z",
-                  "modified": "2023-11-12T13:19:14.287594Z",
-                  "sequenced_object": "task--9631d556-68f0-400f-9c27-01618c26f40f",
+                  "id": "sequence--e84228de-4831-4f98-9f28-1a51744ec4b9",
+                  "created": "2023-11-18T05:26:43.472597Z",
+                  "modified": "2023-11-18T05:26:43.472597Z",
+                  "sequenced_object": "task--3d00a36b-506f-4ccb-8888-ec8d099f399d",
                   "sequence_type": "task",
                   "step_type": "single_step",
                   "extensions": {
@@ -928,15 +1020,15 @@
                               "extension_type": "new-sdo"
                         }
                   },
-                  "on_completion": "sequence--1847ec88-bc15-412d-9736-6fd71ad221c4"
+                  "on_completion": "sequence--9fac1cf7-db8b-4f74-bbd0-14a036459cc3"
             },
             {
                   "type": "sequence",
                   "spec_version": "2.1",
-                  "id": "sequence--b4ad8bb3-d704-4949-bcd7-b08b1620028b",
-                  "created": "2023-11-12T13:19:14.266788Z",
-                  "modified": "2023-11-12T13:19:14.266788Z",
-                  "sequenced_object": "task--e47602d4-6db3-47f8-ad8e-8d348e7f13be",
+                  "id": "sequence--edde80dd-c68f-47c9-bd3c-39ed461700a6",
+                  "created": "2023-11-18T05:26:43.503679Z",
+                  "modified": "2023-11-18T05:26:43.503679Z",
+                  "sequenced_object": "task--44a9d7fa-028d-4fa0-b822-32680eda7d7e",
                   "sequence_type": "task",
                   "step_type": "single_step",
                   "extensions": {
@@ -944,89 +1036,20 @@
                               "extension_type": "new-sdo"
                         }
                   },
-                  "on_completion": "sequence--a8f61180-b39d-4972-bc67-24e46059876a"
+                  "on_completion": "sequence--5d59d1e4-1bce-4599-a763-f05fefa6a9f1"
             },
             {
                   "type": "sighting",
                   "spec_version": "2.1",
-                  "id": "sighting--03c1cfce-e63c-4eb4-b071-5123e8f2c7ed",
-                  "created": "2023-11-12T13:19:14.290678Z",
-                  "modified": "2023-11-12T13:19:14.290678Z",
-                  "sighting_of_ref": "identity--6f410bea-0221-4041-8599-f20905a67519",
-                  "observed_data_refs": [
-                        "observed-data--2d2311be-b85c-4c34-9953-b8e0edf07f3b"
-                  ],
-                  "where_sighted_refs": [
-                        "location--b1cd3da8-d53f-445b-816e-c1ec520ad5db"
-                  ],
-                  "extensions": {
-                        "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
-                              "extension_type": "property-extension"
-                        },
-                        "sighting-hunt": {
-                              "name": "kestrel",
-                              "playbook_id": "playbook_1_1",
-                              "rule": "demo rule string"
-                        }
-                  }
-            },
-            {
-                  "type": "sighting",
-                  "spec_version": "2.1",
-                  "id": "sighting--5397e885-4812-4384-83c7-5bde065ff45d",
-                  "created": "2023-11-12T13:19:14.282084Z",
-                  "modified": "2023-11-12T13:19:14.282084Z",
-                  "sighting_of_ref": "identity--6f410bea-0221-4041-8599-f20905a67519",
-                  "observed_data_refs": [
-                        "observed-data--452d0645-4592-405e-aebc-887992e26739"
-                  ],
-                  "where_sighted_refs": [
-                        "location--b1cd3da8-d53f-445b-816e-c1ec520ad5db"
-                  ],
-                  "extensions": {
-                        "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
-                              "extension_type": "property-extension"
-                        },
-                        "sighting-enrichment": {
-                              "name": "maltego",
-                              "url": "maltego.com",
-                              "paid": true,
-                              "value": "Evil Incarnate Ltd, 666 Infection St, Whyme, NK, lat/long = 39.03385, 125.75432"
-                        }
-                  }
-            },
-            {
-                  "type": "sighting",
-                  "spec_version": "2.1",
-                  "id": "sighting--5a37c821-b62a-4bb5-b2ea-02abcc6342e8",
-                  "created": "2023-11-12T13:19:14.273322Z",
-                  "modified": "2023-11-12T13:19:14.273322Z",
-                  "sighting_of_ref": "indicator--246ca844-3b6a-441a-a276-3c0120498f3f",
-                  "observed_data_refs": [
-                        "observed-data--452d0645-4592-405e-aebc-887992e26739"
-                  ],
-                  "extensions": {
-                        "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
-                              "extension_type": "property-extension"
-                        },
-                        "sighting-exclusion": {
-                              "source": "www.phishdb.com",
-                              "channel": "Last 24 hours"
-                        }
-                  }
-            },
-            {
-                  "type": "sighting",
-                  "spec_version": "2.1",
-                  "id": "sighting--5e72168a-e37d-4cf3-a429-15c06bd3abf6",
-                  "created": "2023-11-12T13:19:14.343786Z",
-                  "modified": "2023-11-12T13:19:14.343786Z",
+                  "id": "sighting--1a8ff145-731f-438e-ab1f-03891e58ad43",
+                  "created": "2023-11-18T05:26:43.585525Z",
+                  "modified": "2023-11-18T05:26:43.585525Z",
                   "sighting_of_ref": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7",
                   "observed_data_refs": [
-                        "observed-data--2d2311be-b85c-4c34-9953-b8e0edf07f3b"
+                        "observed-data--c177cd97-7226-4572-a60a-5caf70f49873"
                   ],
                   "where_sighted_refs": [
-                        "location--b1cd3da8-d53f-445b-816e-c1ec520ad5db"
+                        "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
                   ],
                   "extensions": {
                         "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
@@ -1035,7 +1058,7 @@
                         "sighting-external": {
                               "source": "MISP",
                               "version": "14.1",
-                              "last_update": "2023-11-12T13:19:14.343786Z",
+                              "last_update": "2023-11-18T05:26:43.584214Z",
                               "pattern": "[email-addr:value = 'evil@northkorea.com' AND email:subject = 'we are coming for you']",
                               "pattern_type": "stix",
                               "payload": "Proven Malicious Phishing Source",
@@ -1047,36 +1070,56 @@
             {
                   "type": "sighting",
                   "spec_version": "2.1",
-                  "id": "sighting--8d8513f2-1e84-40f0-97a6-b8b4263ccb40",
-                  "created": "2023-11-12T13:19:14.245749Z",
-                  "modified": "2023-11-12T13:19:14.245749Z",
-                  "sighting_of_ref": "identity--27c2fdc0-bf9c-46d8-aab1-658948cd2ed6",
+                  "id": "sighting--49cc5c32-98b8-4d15-94bf-2f867d71a2fa",
+                  "created": "2023-11-18T05:26:43.45768Z",
+                  "modified": "2023-11-18T05:26:43.45768Z",
+                  "sighting_of_ref": "indicator--3f624ff1-7c2e-40db-8d7c-acc8723afe95",
                   "observed_data_refs": [
-                        "observed-data--e41ba03b-548d-4675-ba7e-b0844e1d9ee1"
+                        "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776"
                   ],
                   "extensions": {
                         "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
                               "extension_type": "property-extension"
                         },
-                        "sighting-anecdote": {
-                              "person_name": "Naive Smith",
-                              "person_context": "employee",
-                              "report_submission": "interview"
+                        "sighting-alert": {
+                              "name": "user-report",
+                              "log": "I have found a suspicious email"
                         }
                   }
             },
             {
                   "type": "sighting",
                   "spec_version": "2.1",
-                  "id": "sighting--dae5afc5-022d-4000-b8d7-a71747f96f0d",
-                  "created": "2023-11-12T13:19:14.337269Z",
-                  "modified": "2023-11-12T13:19:14.337269Z",
+                  "id": "sighting--575ca2c4-7d0f-4984-86a1-e0f7422f6237",
+                  "created": "2023-11-18T05:26:43.499685Z",
+                  "modified": "2023-11-18T05:26:43.499685Z",
+                  "sighting_of_ref": "indicator--3f624ff1-7c2e-40db-8d7c-acc8723afe95",
+                  "observed_data_refs": [
+                        "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f"
+                  ],
+                  "extensions": {
+                        "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
+                              "extension_type": "property-extension"
+                        },
+                        "sighting-context": {
+                              "name": "Exchange",
+                              "description": "query from:evil@northkorea.com, subject:we are coming for you",
+                              "value": "[silly@mycompany.com, strange@mycompany.com, dumbo@mycompany.com]"
+                        }
+                  }
+            },
+            {
+                  "type": "sighting",
+                  "spec_version": "2.1",
+                  "id": "sighting--5b098c08-9215-4b7b-b268-d8d0e99c2674",
+                  "created": "2023-11-18T05:26:43.58124Z",
+                  "modified": "2023-11-18T05:26:43.58124Z",
                   "sighting_of_ref": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7",
                   "observed_data_refs": [
-                        "observed-data--2d2311be-b85c-4c34-9953-b8e0edf07f3b"
+                        "observed-data--c177cd97-7226-4572-a60a-5caf70f49873"
                   ],
                   "where_sighted_refs": [
-                        "location--b1cd3da8-d53f-445b-816e-c1ec520ad5db"
+                        "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
                   ],
                   "extensions": {
                         "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
@@ -1094,41 +1137,90 @@
             {
                   "type": "sighting",
                   "spec_version": "2.1",
-                  "id": "sighting--db6e5af2-437d-46dc-a831-b972f02674de",
-                  "created": "2023-11-12T13:19:14.223465Z",
-                  "modified": "2023-11-12T13:19:14.223465Z",
-                  "sighting_of_ref": "indicator--277f623c-3468-4ba3-9b83-165f3b3827c1",
+                  "id": "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda",
+                  "created": "2023-11-18T05:26:43.526206Z",
+                  "modified": "2023-11-18T05:26:43.526206Z",
+                  "sighting_of_ref": "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f",
                   "observed_data_refs": [
-                        "observed-data--f55a1b66-865d-4079-bc3b-1ffb8c7a9ab4"
+                        "observed-data--c177cd97-7226-4572-a60a-5caf70f49873"
+                  ],
+                  "where_sighted_refs": [
+                        "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
                   ],
                   "extensions": {
                         "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
                               "extension_type": "property-extension"
                         },
-                        "sighting-alert": {
-                              "name": "user-report",
-                              "log": "I have found a suspicious email"
+                        "sighting-hunt": {
+                              "name": "kestrel",
+                              "playbook_id": "playbook_1_1",
+                              "rule": "demo rule string"
                         }
                   }
             },
             {
                   "type": "sighting",
                   "spec_version": "2.1",
-                  "id": "sighting--f782ed66-86ce-463f-a014-c79400f1b79f",
-                  "created": "2023-11-12T13:19:14.262269Z",
-                  "modified": "2023-11-12T13:19:14.262269Z",
-                  "sighting_of_ref": "indicator--277f623c-3468-4ba3-9b83-165f3b3827c1",
+                  "id": "sighting--791d2177-e8ae-4021-ac17-5a68f5ccabed",
+                  "created": "2023-11-18T05:26:43.515694Z",
+                  "modified": "2023-11-18T05:26:43.515694Z",
+                  "sighting_of_ref": "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f",
                   "observed_data_refs": [
-                        "observed-data--a85f23d2-2bf7-46ea-be6c-dbb7dc05eebf"
+                        "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6"
+                  ],
+                  "where_sighted_refs": [
+                        "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
                   ],
                   "extensions": {
                         "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
                               "extension_type": "property-extension"
                         },
-                        "sighting-context": {
-                              "name": "Exchange",
-                              "description": "query from:evil@northkorea.com, subject:we are coming for you",
-                              "value": "[silly@mycompany.com, strange@mycompany.com, dumbo@mycompany.com]"
+                        "sighting-enrichment": {
+                              "name": "maltego",
+                              "url": "maltego.com",
+                              "paid": true,
+                              "value": "Evil Incarnate Ltd, 666 Infection St, Whyme, NK, lat/long = 39.03385, 125.75432"
+                        }
+                  }
+            },
+            {
+                  "type": "sighting",
+                  "spec_version": "2.1",
+                  "id": "sighting--d0a71341-cf9b-474f-8cdb-eba6d9e96a68",
+                  "created": "2023-11-18T05:26:43.48171Z",
+                  "modified": "2023-11-18T05:26:43.48171Z",
+                  "sighting_of_ref": "identity--b30fc24d-4d5a-49a4-8aee-155788edbae3",
+                  "observed_data_refs": [
+                        "observed-data--fb077ab9-4a21-4a3d-91b1-02bfb9c6c493"
+                  ],
+                  "extensions": {
+                        "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
+                              "extension_type": "property-extension"
+                        },
+                        "sighting-anecdote": {
+                              "person_name": "Naive Smith",
+                              "person_context": "employee",
+                              "report_submission": "interview"
+                        }
+                  }
+            },
+            {
+                  "type": "sighting",
+                  "spec_version": "2.1",
+                  "id": "sighting--feb6fbd9-ff3f-45f8-ae59-2976fc766196",
+                  "created": "2023-11-18T05:26:43.508682Z",
+                  "modified": "2023-11-18T05:26:43.508682Z",
+                  "sighting_of_ref": "indicator--00c82e87-a7c4-4cbb-b58a-577d988dd84e",
+                  "observed_data_refs": [
+                        "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6"
+                  ],
+                  "extensions": {
+                        "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
+                              "extension_type": "property-extension"
+                        },
+                        "sighting-exclusion": {
+                              "source": "www.phishdb.com",
+                              "channel": "Last 24 hours"
                         }
                   }
             },
@@ -1141,18 +1233,18 @@
             {
                   "type": "task",
                   "spec_version": "2.1",
-                  "id": "task--0f0e314e-dccb-4cf3-8337-5aef124e3ba7",
-                  "created": "2023-11-12T13:19:14.253754Z",
-                  "modified": "2023-11-12T13:19:14.253754Z",
+                  "id": "task--0b663052-5d31-4c42-9f06-7343985cce6c",
+                  "created": "2023-11-18T05:26:43.492678Z",
+                  "modified": "2023-11-18T05:26:43.492678Z",
                   "task_types": [
                         "investigation"
                   ],
                   "outcome": "successful",
                   "description": "Query Exchange to find out who else got the suspicious email",
-                  "end_time": "2023-11-12T13:19:14.253754Z",
+                  "end_time": "2023-11-18T05:26:43.492678Z",
                   "name": "Query Exchange Server",
-                  "start_time": "2023-11-12T13:19:14.253754Z",
-                  "owner": "identity--927f7e64-06c8-45e7-974f-df79eec92a7f",
+                  "start_time": "2023-11-18T05:26:43.492678Z",
+                  "owner": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
                   "extensions": {
                         "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
                               "extension_type": "new-sdo"
@@ -1162,102 +1254,102 @@
             {
                   "type": "task",
                   "spec_version": "2.1",
-                  "id": "task--960ffda9-03fa-43e6-92ad-40e44e18724e",
-                  "created": "2023-11-12T13:19:14.27707Z",
-                  "modified": "2023-11-12T13:19:14.27707Z",
-                  "task_types": [
-                        "investigation"
-                  ],
-                  "outcome": "successful",
-                  "description": "Check known email, domain, IP address to see if we can get enrichments",
-                  "end_time": "2023-11-12T13:19:14.27707Z",
-                  "name": "Check Enrichments",
-                  "start_time": "2023-11-12T13:19:14.27707Z",
-                  "owner": "identity--927f7e64-06c8-45e7-974f-df79eec92a7f",
-                  "extensions": {
-                        "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
-                              "extension_type": "new-sdo"
-                        }
-                  }
-            },
-            {
-                  "type": "task",
-                  "spec_version": "2.1",
-                  "id": "task--9631d556-68f0-400f-9c27-01618c26f40f",
-                  "created": "2023-11-12T13:19:14.285586Z",
-                  "modified": "2023-11-12T13:19:14.285586Z",
-                  "task_types": [
-                        "investigation"
-                  ],
-                  "outcome": "successful",
-                  "description": "Use Hunting to determine how many clicked the link, and what impact it caused",
-                  "end_time": "2023-11-12T13:19:14.285586Z",
-                  "name": "Hunt the Actual Impact",
-                  "start_time": "2023-11-12T13:19:14.285586Z",
-                  "owner": "identity--927f7e64-06c8-45e7-974f-df79eec92a7f",
-                  "extensions": {
-                        "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
-                              "extension_type": "new-sdo"
-                        }
-                  }
-            },
-            {
-                  "type": "task",
-                  "spec_version": "2.1",
-                  "id": "task--dd3883e7-8b4a-4efb-ab1e-33f4150d98fe",
-                  "created": "2023-11-12T13:19:14.305379Z",
-                  "modified": "2023-11-12T13:19:14.305379Z",
-                  "task_types": [
-                        "investigation"
-                  ],
-                  "outcome": "pending",
-                  "description": "Use the Mitre ATT&CK Phishing TTP to confirm the technique",
-                  "end_time": "2023-11-12T13:19:14.305379Z",
-                  "name": "Add Phishing TTP",
-                  "start_time": "2023-11-12T13:19:14.305379Z",
-                  "owner": "identity--927f7e64-06c8-45e7-974f-df79eec92a7f",
-                  "extensions": {
-                        "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
-                              "extension_type": "new-sdo"
-                        }
-                  }
-            },
-            {
-                  "type": "task",
-                  "spec_version": "2.1",
-                  "id": "task--e47602d4-6db3-47f8-ad8e-8d348e7f13be",
-                  "created": "2023-11-12T13:19:14.265268Z",
-                  "modified": "2023-11-12T13:19:14.265268Z",
-                  "task_types": [
-                        "investigation"
-                  ],
-                  "outcome": "successful",
-                  "description": "Check OS-Threat Exclusion List to see if email address is a known phisher",
-                  "end_time": "2023-11-12T13:19:14.265268Z",
-                  "name": "Check Exclusion Lists",
-                  "start_time": "2023-11-12T13:19:14.265268Z",
-                  "owner": "identity--927f7e64-06c8-45e7-974f-df79eec92a7f",
-                  "extensions": {
-                        "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
-                              "extension_type": "new-sdo"
-                        }
-                  }
-            },
-            {
-                  "type": "task",
-                  "spec_version": "2.1",
-                  "id": "task--e71f0f91-67bf-4029-8218-898d4acee996",
-                  "created": "2023-11-12T13:19:14.235155Z",
-                  "modified": "2023-11-12T13:19:14.235155Z",
+                  "id": "task--3d00a36b-506f-4ccb-8888-ec8d099f399d",
+                  "created": "2023-11-18T05:26:43.46969Z",
+                  "modified": "2023-11-18T05:26:43.46969Z",
                   "task_types": [
                         "investigation"
                   ],
                   "outcome": "successful",
                   "description": "Talk to user and determine what they say",
-                  "end_time": "2023-11-12T13:19:14.235155Z",
+                  "end_time": "2023-11-18T05:26:43.46969Z",
                   "name": "Speak to User",
-                  "start_time": "2023-11-12T13:19:14.235155Z",
-                  "owner": "identity--927f7e64-06c8-45e7-974f-df79eec92a7f",
+                  "start_time": "2023-11-18T05:26:43.46969Z",
+                  "owner": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+                  "extensions": {
+                        "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
+                              "extension_type": "new-sdo"
+                        }
+                  }
+            },
+            {
+                  "type": "task",
+                  "spec_version": "2.1",
+                  "id": "task--43b3b336-4774-4267-9ffd-175f83b7cf7c",
+                  "created": "2023-11-18T05:26:43.511697Z",
+                  "modified": "2023-11-18T05:26:43.511697Z",
+                  "task_types": [
+                        "investigation"
+                  ],
+                  "outcome": "successful",
+                  "description": "Check known email, domain, IP address to see if we can get enrichments",
+                  "end_time": "2023-11-18T05:26:43.511697Z",
+                  "name": "Check Enrichments",
+                  "start_time": "2023-11-18T05:26:43.511697Z",
+                  "owner": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+                  "extensions": {
+                        "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
+                              "extension_type": "new-sdo"
+                        }
+                  }
+            },
+            {
+                  "type": "task",
+                  "spec_version": "2.1",
+                  "id": "task--44a9d7fa-028d-4fa0-b822-32680eda7d7e",
+                  "created": "2023-11-18T05:26:43.502678Z",
+                  "modified": "2023-11-18T05:26:43.502678Z",
+                  "task_types": [
+                        "investigation"
+                  ],
+                  "outcome": "successful",
+                  "description": "Check OS-Threat Exclusion List to see if email address is a known phisher",
+                  "end_time": "2023-11-18T05:26:43.502678Z",
+                  "name": "Check Exclusion Lists",
+                  "start_time": "2023-11-18T05:26:43.502678Z",
+                  "owner": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+                  "extensions": {
+                        "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
+                              "extension_type": "new-sdo"
+                        }
+                  }
+            },
+            {
+                  "type": "task",
+                  "spec_version": "2.1",
+                  "id": "task--6be4f7f4-8ece-4b94-9ec7-e7009e38c547",
+                  "created": "2023-11-18T05:26:43.520698Z",
+                  "modified": "2023-11-18T05:26:43.520698Z",
+                  "task_types": [
+                        "investigation"
+                  ],
+                  "outcome": "successful",
+                  "description": "Use Hunting to determine how many clicked the link, and what impact it caused",
+                  "end_time": "2023-11-18T05:26:43.520698Z",
+                  "name": "Hunt the Actual Impact",
+                  "start_time": "2023-11-18T05:26:43.520698Z",
+                  "owner": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+                  "extensions": {
+                        "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
+                              "extension_type": "new-sdo"
+                        }
+                  }
+            },
+            {
+                  "type": "task",
+                  "spec_version": "2.1",
+                  "id": "task--d3142f7e-4e2c-47d8-87cb-7f43277142d4",
+                  "created": "2023-11-18T05:26:43.539128Z",
+                  "modified": "2023-11-18T05:26:43.539128Z",
+                  "task_types": [
+                        "investigation"
+                  ],
+                  "outcome": "pending",
+                  "description": "Use the Mitre ATT&CK Phishing TTP to confirm the technique",
+                  "end_time": "2023-11-18T05:26:43.539128Z",
+                  "name": "Add Phishing TTP",
+                  "start_time": "2023-11-18T05:26:43.539128Z",
+                  "owner": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
                   "extensions": {
                         "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
                               "extension_type": "new-sdo"

@@ -19,8 +19,8 @@
 # under the License.
 #
 import os
-
-
+from typing import Dict
+from typedb.driver import *
 import logging
 from typing import Dict, List
 
@@ -58,17 +58,17 @@ tlp_ids = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
 
 def setup_database(stix_connection: Dict[str, str], clear: bool):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
-    with TypeDB.core_driver(url) as client:
+    with TypeDB.core_driver(url) as driver:
         logger.debug(f'Database Clearing is [{clear}]')
-        if client.databases.contains(stix_connection["database"]):
+        if driver.databases.contains(stix_connection["database"]):
             if clear:
-                client.databases.get(stix_connection["database"]).delete()
-                client.databases.create(stix_connection["database"])
+                driver.databases.get(stix_connection["database"]).delete()
+                driver.databases.create(stix_connection["database"])
             else:
                 return
                 # raise ValueError(f"Database '{database}' already exists")
         else:
-            client.databases.create(stix_connection["database"])
+            driver.databases.create(stix_connection["database"])
 
         logger.debug('.......................... clear complete')
 
@@ -81,9 +81,9 @@ def load_schema(stix_connection: Dict[str, str], rel_path=None, schema_type: str
     assert os.path.exists(rel_path), "File path needs to exist"
 
     url = stix_connection["uri"] + ":" + stix_connection["port"]
-    with TypeDB.core_driver(url) as client:
+    with TypeDB.core_driver(url) as driver:
         # Stage 1: Create the schema
-        with client.session(stix_connection["database"], SessionType.SCHEMA) as session:
+        with driver.session(stix_connection["database"], SessionType.SCHEMA) as session:
             # Load schema from file
             with open(rel_path, "r") as schema_file:
                 schema = schema_file.read()
@@ -115,14 +115,14 @@ def load_markings(stix_connection: Dict[str, str]):
 
 def load_typeql_data(data_list, stix_connection: Dict[str, str]):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
-    with TypeDB.core_driver(url) as client:
+    with TypeDB.core_driver(url) as driver:
         # Stage 1: Create the schema
-        with client.session(stix_connection["database"], SessionType.DATA) as session:
+        with driver.session(stix_connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.WRITE) as write_transaction:
                 logger.debug(f'Loading TLP markings')
                 for data in data_list:
                     logger.debug(f'\n\n{data}\n\n')
-                    insert_iterator = write_transaction.query().insert(data)
+                    insert_iterator = write_transaction.query.insert(data)
 
                     logger.debug(f'insert_iterator response ->\n{insert_iterator}')
                     for result in insert_iterator:

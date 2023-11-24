@@ -82,7 +82,7 @@ task_ext = TaskCoreExt(extension_type="new-sdo")
 task_ext_id = 'extension-definition--2074a052-8be4-4932-849e-f5e7798e0030'
 task_ext_dict = {task_ext_id: task_ext}
 ident_ext_id = 'extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498'
-inc_ext_id = 'extension-definition--2074a052-8be4-4932-849e-f5e7798e0030'
+inc_ext_id = "extension-definition--ef765651-680c-498d-9894-99799f2fa126"
 #
 # Step 0-B - Description of Me, the Worker
 #
@@ -247,7 +247,8 @@ observation1 = ObservedData(number_observed=1, object_refs=obs_refs1,
                             first_observed=email_message1.date,last_observed=email_message1.date)
 #
 # 1.A.2 Collect objects and id's in lists
-local_list1 = [conv(email_addr1), conv(user_account2), conv(email_addr2), conv(email_message1), conv(url1), conv(rel1), conv(observation1)]
+local_list1 = [conv(email_addr1), conv(user_account2), conv(email_addr2), conv(email_message1), conv(url1),
+               conv(rel1), conv(observation1)]
 local_list_id1 = [email_addr1.id, user_account2.id, email_addr2.id, email_message1.id, url1.id, rel1.id, observation1.id]
 other_object_refs = other_object_refs + local_list_id1
 bundle_list = bundle_list + local_list1
@@ -289,17 +290,17 @@ eseq1_0 = Sequence(
     step_type="start_step", on_completion=eseq1_1.id,
     sequence_type="event", extensions=seq_ext_dict
 )
-# incident_ext = IncidentCoreExt(
-#     determination="suspected", extension_type="property-extension",
-#     investigation_status="new", event_refs=[event1.id], incident_types=["dissemination-phishing-emails"])
-#     other_object_refs=other_object_refs, sequence_start_refs=[eseq1_0.id],
-#     sequence_refs=[eseq1_0.id, eseq1_1.id]
-# )
-# incident_ext1 = {"extension-definition--ef765651-680c-498d-9894-99799f2fa126": incident_ext}
-# incident = Incident(type="incident", name="potential phishing", extensions=incident_ext1)
+incident_ext = IncidentCoreExt(
+    determination="suspected", extension_type="property-extension",
+    investigation_status="new", event_refs=[event1.id], incident_types=["dissemination-phishing-emails"],
+    other_object_refs=other_object_refs, sequence_start_refs=[eseq1_0.id],
+    sequence_refs=[eseq1_0.id, eseq1_1.id]
+)
+incident_ext1 = {"extension-definition--ef765651-680c-498d-9894-99799f2fa126": incident_ext}
+incident = Incident(type="incident", name="potential phishing", extensions=incident_ext1)
 #
 # 1.C.2 Collect objects and ids in lists
-local_list3 = [conv(event1), conv(eseq1_1), conv(eseq1_0)]
+local_list3 = [conv(event1), conv(eseq1_1), conv(eseq1_0), conv(incident)]
 event_refs.append(event1.id)
 sequence_start_refs.append(eseq1_0.id)
 sequence_refs=[eseq1_0.id, eseq1_1.id]
