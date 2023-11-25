@@ -2,11 +2,7 @@
 
 **Stix and TypeQL Object Type:**  `indicator`
 
-Indicators contain a pattern that can be used to detect suspicious or malicious cyber activity. For example, an Indicator may be used to represent a set of malicious domains and use the STIX Patterning Language (see section 9) to specify these domains.
-
- 
-
-The Indicator SDO contains a simple textual description, the Kill Chain Phases that it detects behavior in, a time window for when the Indicator is valid or useful, and a required pattern property to capture a structured detection pattern. Conforming STIX implementations MUST support the STIX Patterning Language as defined in section 9.
+Indicators contain a pattern that can be used to detect suspicious or malicious cyber activity. For example, an Indicator may be used to represent a set of malicious domains and use the STIX Patterning Language (see section 9) to specify these domains. The Indicator SDO contains a simple textual description, the Kill Chain Phases that it detects behavior in, a time window for when the Indicator is valid or useful, and a required pattern property to capture a structured detection pattern. Conforming STIX implementations MUST support the STIX Patterning Language as defined in section 9. 
 
 Relationships from the Indicator can describe the malicious or suspicious behavior that it directly detects (Malware, Tool, and Attack Pattern). In addition, it may also imply the presence of a Campaigns, Intrusion Sets, and Threat Actors, etc.
 
@@ -119,8 +115,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -145,3 +140,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("indicator--1ed8caa7-a708-4706-b651-f1186ede6ca1")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

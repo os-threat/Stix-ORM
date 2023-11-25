@@ -6,7 +6,7 @@ The Stix-ORM Library is an open-source Python Library built on top of the [OASIS
 
 
 
-## What is it?
+## What is the Stix-ORM?
 
 The [OASIS Stix2 Python Library](https://stix2.readthedocs.io/en/latest/index.html) is designed to make it as easy as possible to produce and consume Stix 2.1 content. It is comprised of three layers:
 
@@ -42,9 +42,27 @@ An image of these concepts is shown below.
 
 
 
+## Stix ORM has an Apache 2 Client, and an AGPL3 Server
+
+The OS-Threat Stix-ORM Library is split into two repos:
+
+1. The object definitions and documents ("the client") as a github sub module under an Apache 2 license
+
+2. The ORM (Object Role Modelling) code and associated libraries ("the server") under an AGPL3 license
+
+
+
+This intentional splitting of the code base enables users to freely modify objects, or create their own objects and extensions, without any license restriction. Ideally, users make their own documentation for these customisations as well.
+
+
+
+It is not exected that users will ever want to or need to customise the ORM code, although they are fully able to do so under the open source license. In short, this arrangement enables all users to make ad-hoc changes as required without cany concern about copy left licensing.
+
+
+
 ## What are the Benefits?
 
-[TypeDB is without a doubt, the most powerful datastore for cybersecurity](typedb_benefits.md), because:
+TypeDB is without a doubt, the most powerful datastore for cybersecurity, because:
 
 1. Semantic Hypergraph: Enables elegant, succinct representation of intricate cybersecurity objects and relationships
 
@@ -80,13 +98,11 @@ Very quickly we aim to add the following features to the system.
 
 The documentation system contains the following sections:
 
-- [Using the Stix-ORM](using/configuration.md)
+- [Using the Stix-ORM](install/configuration.md)
 
-- [How the ORM Works](orm/orm_oveview.md)
+- [How the ORM Works](how_it_works/orm_oveview.md)
 
-- [Protcols Supported](protocols/_orig.md)
-
-- [Interacting with Stix-ORM](interactions/overview.md)
+- [Protcols Supported](protocols/overview.md)
 
 
 
@@ -98,23 +114,20 @@ The current supported objects can be viewed here
 
 
 
-## Total Objects in the System
 
-
-
-###  Domain Object's Types
+###  Domain Object Types
 
 #### OASIS Stix 2.1 
 
 | Icon | Object Type | Icon | Object Type | Icon | Object Type  |
 |:----------:|:-----------|:----------:|:-----------|:----------:|:----------- |
-| ![attack-pattern](./protocols/stix21/icons/stix2_attack_pattern_icon_tiny_round_v1.png) | [attack-pattern](./protocols/stix21/sdo/Attack-Pattern.md)| ![campaign](./protocols/stix21/icons/stix2_campaign_icon_tiny_round_v1.png) | [campaign](./protocols/stix21/sdo/Campaign.md)| ![course-of-action'](./protocols/stix21/icons/stix2_course_of_action_icon_tiny_round_v1.png) | [course-of-action'](./protocols/stix21/sdo/Course-of-Action.md) |
-| ![grouping](./protocols/stix21/icons/stix2_grouping_icon_tiny_round_v1.png) | [grouping](./protocols/stix21/sdo/Grouping.md)| ![identity](./protocols/stix21/icons/stix2_identity_icon_tiny_round_v1.png) | [identity](./protocols/stix21/sdo/Identity.md)| ![incident](./protocols/stix21/icons/stix2_incident_icon_tiny_round_v1.png) | [incident](./protocols/stix21/sdo/Incident.md) |
-| ![indicator](./protocols/stix21/icons/stix2_indicator_icon_tiny_round_v1.png) | [indicator](./protocols/stix21/sdo/Indicator.md)| ![infrastructure](./protocols/stix21/icons/stix2_infrastructure_icon_tiny_round_v1.png) | [infrastructure](./protocols/stix21/sdo/Infrastructure.md)| ![intrusion-set](./protocols/stix21/icons/stix2_intrusion_set_icon_tiny_round_v1.png) | [intrusion-set](./protocols/stix21/sdo/Intrusion-Set.md) |
-| ![location](./protocols/stix21/icons/stix2_location_icon_tiny_round_v1.png) | [location](./protocols/stix21/sdo/Location.md)| ![malware](./protocols/stix21/icons/stix2_malware_icon_tiny_round_v1.png) | [malware](./protocols/stix21/sdo/Malware.md)| ![malware-analysis](./protocols/stix21/icons/stix2_malware_analysis_icon_tiny_round_v1.png) | [malware-analysis](./protocols/stix21/sdo/Malware-Analysis.md) |
-| ![note](./protocols/stix21/icons/stix2_note_icon_tiny_round_v1.png) | [note](./protocols/stix21/sdo/Note.md)| ![observed-data](./protocols/stix21/icons/stix2_observed_data_icon_tiny_round_v1.png) | [observed-data](./protocols/stix21/sdo/Observed-Data.md)| ![opinion](./protocols/stix21/icons/stix2_opinion_icon_tiny_round_v1.png) | [opinion](./protocols/stix21/sdo/Opinion.md) |
-| ![report](./protocols/stix21/icons/stix2_report_icon_tiny_round_v1.png) | [report](./protocols/stix21/sdo/Report.md)| ![threat-actor](./protocols/stix21/icons/stix2_report_icon_tiny_round_v1.png) | [threat-actor](./protocols/stix21/sdo/Threat-Actor.md)| ![tool](./protocols/stix21/icons/stix2_tool_icon_tiny_round_v1.png) | [tool](./protocols/stix21/sdo/Tool.md) |
-| ![vulnerability](./protocols/stix21/icons/stix2_vulnerability_icon_tiny_round_v1.png) | [vulnerability](./protocols/stix21/sdo/Vulnerability.md)| ![]() | []()| ![]() | []() |
+| ![Attack-Pattern](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-pattern.svg) | [Attack-Pattern](./protocols/stix21/sdo/Attack-Pattern.md)| ![Campaign](https://raw.githubusercontent.com/os-threat/images/main/img/rect-campaign.svg) | [Campaign](./protocols/stix21/sdo/Campaign.md)| ![Course-of-Action](https://raw.githubusercontent.com/os-threat/images/main/img/rect-course-of-action.svg) | [Course-of-Action](./protocols/stix21/sdo/Course-of-Action.md) |
+| ![Grouping](https://raw.githubusercontent.com/os-threat/images/main/img/rect-grouping.svg) | [Grouping](./protocols/stix21/sdo/Grouping.md)| ![Identity](https://raw.githubusercontent.com/os-threat/images/main/img/rect-identity-individual.svg) | [Identity](./protocols/stix21/sdo/Identity.md)| ![Incident](https://raw.githubusercontent.com/os-threat/images/main/img/rect-incident.svg) | [Incident](./protocols/stix21/sdo/Incident.md) |
+| ![Indicator](https://raw.githubusercontent.com/os-threat/images/main/img/rect-indicator.svg) | [Indicator](./protocols/stix21/sdo/Indicator.md)| ![Infrastructure](https://raw.githubusercontent.com/os-threat/images/main/img/rect-infrastructure.svg) | [Infrastructure](./protocols/stix21/sdo/Infrastructure.md)| ![Intrusion-Set](https://raw.githubusercontent.com/os-threat/images/main/img/rect-intrusion-set.svg) | [Intrusion-Set](./protocols/stix21/sdo/Intrusion-Set.md) |
+| ![Location](https://raw.githubusercontent.com/os-threat/images/main/img/rect-location.svg) | [Location](./protocols/stix21/sdo/Location.md)| ![Malware](https://raw.githubusercontent.com/os-threat/images/main/img/rect-malware.svg) | [Malware](./protocols/stix21/sdo/Malware.md)| ![Malware-Analysis](https://raw.githubusercontent.com/os-threat/images/main/img/rect-malware-analysis.svg) | [Malware-Analysis](./protocols/stix21/sdo/Malware-Analysis.md) |
+| ![Note](https://raw.githubusercontent.com/os-threat/images/main/img/rect-note.svg) | [Note](./protocols/stix21/sdo/Note.md)| ![Observed-Data](https://raw.githubusercontent.com/os-threat/images/main/img/rect-observed-data.svg) | [Observed-Data](./protocols/stix21/sdo/Observed-Data.md)| ![Opinion](https://raw.githubusercontent.com/os-threat/images/main/img/rect-opinion.svg) | [Opinion](./protocols/stix21/sdo/Opinion.md) |
+| ![Report](https://raw.githubusercontent.com/os-threat/images/main/img/rect-report.svg) | [Report](./protocols/stix21/sdo/Report.md)| ![Threat-Actor](https://raw.githubusercontent.com/os-threat/images/main/img/rect-threat-actor.svg) | [Threat-Actor](./protocols/stix21/sdo/Threat-Actor.md)| ![Tool](https://raw.githubusercontent.com/os-threat/images/main/img/rect-tool.svg) | [Tool](./protocols/stix21/sdo/Tool.md) |
+| ![Vulnerability](https://raw.githubusercontent.com/os-threat/images/main/img/rect-vulnerability.svg) | [Vulnerability](./protocols/stix21/sdo/Vulnerability.md)| ![]() | []()| ![]() | []() |
 
 
 
@@ -122,10 +135,20 @@ The current supported objects can be viewed here
 
 | Icon | Object Type | Icon | Object Type | Icon | Object Type  |
 |:----------:|:-----------|:----------:|:-----------|:----------:|:----------- |
-| ![matrix](./protocols/attack/icons/attack_icon_matrix.png) | [matrix]()| ![tactic](./protocols/attack/icons/attack_icon_tactic.png) | [tactic]()| ![technique](./protocols/attack/icons/attack_icon_technique.png) | [technique]() |
-| ![subtechnique](./protocols/attack/icons/attack_icon_subtechnique.png) | [subtechnique]()| ![mitigation](./protocols/attack/icons/attack_icon_mitigation.png) | [mitigation]()| ![group](./protocols/attack/icons/attack_icon_group.png) | [group]() |
-| ![software-malware](./protocols/attack/icons/attack_icon_software.png) | [software-malware]()| ![software-tool](./protocols/attack/icons/attack_icon_software.png) | [software-tool]()| ![collection](./protocols/attack/icons/attack_icon_collection.png) | [collection]() |
-| ![data-source](./protocols/attack/icons/attack_icon_data_source.png) | [data-source]()| ![data-component](./protocols/attack/icons/attack_icon_data_component.png) | [data-component]()| ![attack-campaign](./protocols/attack/icons/attack_icon_campaign.png) | [attack-campaign]() |
+| ![Sub-Technique](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-subtechnique.svg) | [Sub-Technique](./protocols/attack/sdo/Sub-Technique.md)| ![Technique](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-technique.svg) | [Technique](./protocols/attack/sdo/Technique.md)| ![Tactic](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-tactic.svg) | [Tactic](./protocols/attack/sdo/Tactic.md) |
+| ![Campaign](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-campaign.svg) | [Campaign](./protocols/attack/sdo/Campaign.md)| ![Collection](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-collection.svg) | [Collection](./protocols/attack/sdo/Collection.md)| ![Data-Component](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-data-component.svg) | [Data-Component](./protocols/attack/sdo/Data-Component.md) |
+| ![Data-Source](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-data-source.svg) | [Data-Source](./protocols/attack/sdo/Data-Source.md)| ![Group](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-group.svg) | [Group](./protocols/attack/sdo/Group.md)| ![Identity](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-identity.svg) | [Identity](./protocols/attack/sdo/Identity.md) |
+| ![Matrix](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-matrix.svg) | [Matrix](./protocols/attack/sdo/Matrix.md)| ![Mitigation](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-mitigation.svg) | [Mitigation](./protocols/attack/sdo/Mitigation.md)| ![Software-Malware](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-software.svg) | [Software-Malware](./protocols/attack/sdo/Software-Malware.md) |
+| ![Software-Tool](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-software.svg) | [Software-Tool](./protocols/attack/sdo/Software-Tool.md)| ![]() | []()| ![]() | []() |
+
+
+
+#### OS-Threat Stix Extensions 
+
+| Icon | Object Type | Icon | Object Type | Icon | Object Type  |
+|:----------:|:-----------|:----------:|:-----------|:----------:|:----------- |
+| ![Event](https://raw.githubusercontent.com/os-threat/images/main/img/rect-event.svg) | [Event](./protocols/os_threat/sdo/Event.md)| ![Impact](https://raw.githubusercontent.com/os-threat/images/main/img/rect-impact.svg) | [Impact](./protocols/os_threat/sdo/Impact.md)| ![Task](https://raw.githubusercontent.com/os-threat/images/main/img/rect-task.svg) | [Task](./protocols/os_threat/sdo/Task.md) |
+| ![Sequence](https://raw.githubusercontent.com/os-threat/images/main/img/rect-step-single.svg) | [Sequence](./protocols/os_threat/sdo/Sequence.md)| ![]() | []()| ![]() | []() |
 
 
 
@@ -136,12 +159,21 @@ The current supported objects can be viewed here
 
 | Icon | Object Type | Icon | Object Type | Icon | Object Type  |
 |:----------:|:-----------|:----------:|:-----------|:----------:|:----------- |
-| ![artifact](./protocols/stix21/icons/stix2_artifact_icon_tiny_round_v1.png) | [artifact](./protocols/stix21/sco/Artifact.md)| ![autonomous-system](./protocols/stix21/icons/stix2_autonomous_system_icon_tiny_round_v1.png) | [autonomous-system](./protocols/stix21/sco/Autonomous-System.md)| ![directory](./protocols/stix21/icons/stix2_directory_icon_tiny_round_v1.png) | [directory](./protocols/stix21/sco/Directory.md) |
-| ![domain-name](./protocols/stix21/icons/stix2_domain_name_icon_tiny_round_v1.png) | [domain-name](./protocols/stix21/sco/Domain-Name.md)| ![email-addr](./protocols/stix21/icons/stix2_email_addr_icon_tiny_round_v1.png) | [email-addr](./protocols/stix21/sco/Email-Address.md)| ![email-message](./protocols/stix21/icons/stix2_email_message_icon_tiny_round_v1.png) | [email-message](./protocols/stix21/sco/Email-Message.md) |
-| ![file](./protocols/stix21/icons/stix2_file_icon_tiny_round_v1.png) | [file](./protocols/stix21/sco/File.md)| ![ipv4-addr](./protocols/stix21/icons/stix2_ipv4_addr_icon_tiny_round_v1.png) | [ipv4-addr](./protocols/stix21/sco/IPv4-Address.md)| ![ipv6-addr](./protocols/stix21/icons/stix2_ipv6_addr_icon_tiny_round_v1.png) | [ipv6-addr](./protocols/stix21/sco/IPv6-Address.md) |
-| ![mac-addr](./protocols/stix21/icons/stix2_mac_addr_icon_tiny_round_v1.png) | [mac-addr](./protocols/stix21/sco/MAC-Address.md)| ![mutex](./protocols/stix21/icons/stix2_mutex_icon_tiny_round_v1.png) | [mutex](./protocols/stix21/sco/Mutex.md)| ![network-traffic](./protocols/stix21/icons/stix2_network_traffic_icon_tiny_round_v1.png) | [network-traffic](./protocols/stix21/sco/Network-Traffic.md) |
-| ![process](./protocols/stix21/icons/stix2_process_icon_tiny_round_v1.png) | [process](./protocols/stix21/sco/Process.md)| ![software](./protocols/stix21/icons/stix2_software_icon_tiny_round_v1.png) | [software](./protocols/stix21/sco/Software.md)| ![url](./protocols/stix21/icons/stix2_url_icon_tiny_round_v1.png) | [url](./protocols/stix21/sco/URL.md) |
-| ![user-account](./protocols/stix21/icons/stix2_user_account_icon_tiny_round_v1.png) | [user-account](./protocols/stix21/sco/User-Account.md)| ![windows-registry-key](./protocols/stix21/icons/stix2_windows_registry_key_icon_tiny_round_v1.png) | [windows-registry-key](./protocols/stix21/sco/Windows-Regaistry-Key.md)| ![x509-certificate](./protocols/stix21/icons/stix2_x509_certificate_icon_tiny_round_v1.png) | [x509-certificate](./protocols/stix21/sco/X.509-Certificate.md) |
+| ![Artifact](https://raw.githubusercontent.com/os-threat/images/main/img/rect-artifact.svg) | [Artifact](./protocols/stix21/sco/Artifact.md)| ![Autonomous-System](https://raw.githubusercontent.com/os-threat/images/main/img/rect-autonomous-system.svg) | [Autonomous-System](./protocols/stix21/sco/Autonomous-System.md)| ![Directory](https://raw.githubusercontent.com/os-threat/images/main/img/rect-directory.svg) | [Directory](./protocols/stix21/sco/Directory.md) |
+| ![Domain-Name](https://raw.githubusercontent.com/os-threat/images/main/img/rect-domain.svg) | [Domain-Name](./protocols/stix21/sco/Domain-Name.md)| ![Email-Address](https://raw.githubusercontent.com/os-threat/images/main/img/rect-email-addr.svg) | [Email-Address](./protocols/stix21/sco/Email-Address.md)| ![Email-Message](https://raw.githubusercontent.com/os-threat/images/main/img/rect-email-message.svg) | [Email-Message](./protocols/stix21/sco/Email-Message.md) |
+| ![File-](https://raw.githubusercontent.com/os-threat/images/main/img/rect-file.svg) | [File-](./protocols/stix21/sco/File-.md)| ![IPv4-Address](https://raw.githubusercontent.com/os-threat/images/main/img/rect-ipv4-addr.svg) | [IPv4-Address](./protocols/stix21/sco/IPv4-Address.md)| ![IPv6-Address](https://raw.githubusercontent.com/os-threat/images/main/img/rect-ipv6-addr.svg) | [IPv6-Address](./protocols/stix21/sco/IPv6-Address.md) |
+| ![MAC-Address](https://raw.githubusercontent.com/os-threat/images/main/img/rect-mac-addr.svg) | [MAC-Address](./protocols/stix21/sco/MAC-Address.md)| ![Mutex](https://raw.githubusercontent.com/os-threat/images/main/img/rect-mutex.svg) | [Mutex](./protocols/stix21/sco/Mutex.md)| ![Network-Traffic](https://raw.githubusercontent.com/os-threat/images/main/img/rect-network-traffic.svg) | [Network-Traffic](./protocols/stix21/sco/Network-Traffic.md) |
+| ![Process](https://raw.githubusercontent.com/os-threat/images/main/img/rect-process.svg) | [Process](./protocols/stix21/sco/Process.md)| ![Software](https://raw.githubusercontent.com/os-threat/images/main/img/rect-software.svg) | [Software](./protocols/stix21/sco/Software.md)| ![URL](https://raw.githubusercontent.com/os-threat/images/main/img/rect-url.svg) | [URL](./protocols/stix21/sco/URL.md) |
+| ![User-Account](https://raw.githubusercontent.com/os-threat/images/main/img/rect-user-account.svg) | [User-Account](./protocols/stix21/sco/User-Account.md)| ![Windows-Registry-Key](https://raw.githubusercontent.com/os-threat/images/main/img/rect-windows-registry-key.svg) | [Windows-Registry-Key](./protocols/stix21/sco/Windows-Registry-Key.md)| ![Windows-Registry-Value](https://raw.githubusercontent.com/os-threat/images/main/img/rect-windows-registry-key.svg) | [Windows-Registry-Value](./protocols/stix21/sco/Windows-Registry-Value.md) |
+| ![X.509-Certificate](https://raw.githubusercontent.com/os-threat/images/main/img/rect-x509-certificate.svg) | [X.509-Certificate](./protocols/stix21/sco/X.509-Certificate.md)| ![]() | []()| ![]() | []() |
+
+
+
+#### OS-Threat Stix Extensions 
+
+| Icon | Object Type | Icon | Object Type | Icon | Object Type  |
+|:----------:|:-----------|:----------:|:-----------|:----------:|:----------- |
+| ![Anecdote](https://raw.githubusercontent.com/os-threat/images/main/img/rect-anecdote.svg) | [Anecdote](./protocols/os_threat/sco/Anecdote.md)| ![]() | []()| ![]() | []() |
 
 
 
@@ -152,7 +184,7 @@ The current supported objects can be viewed here
 
 | Icon | Object Type | Icon | Object Type | Icon | Object Type  |
 |:----------:|:-----------|:----------:|:-----------|:----------:|:----------- |
-| ![stix-core-relationship](./protocols/stix21/icons/stix2_relationship_icon_tiny_round_v1.png) | [stix-core-relationship]()| ![sighting](./protocols/stix21/icons/stix2_sighting_icon_tiny_round_v1.png) | [sighting]()| ![]() | []() |
+| ![Relationship](https://raw.githubusercontent.com/os-threat/images/main/img/rect-relationship.svg) | [Relationship](./protocols/stix21/sro/Relationship.md)| ![Sighting](https://raw.githubusercontent.com/os-threat/images/main/img/rect-sighting.svg) | [Sighting](./protocols/stix21/sro/Sighting.md)| ![]() | []() |
 
 
 
@@ -160,32 +192,35 @@ The current supported objects can be viewed here
 
 | Icon | Object Type | Icon | Object Type | Icon | Object Type  |
 |:----------:|:-----------|:----------:|:-----------|:----------:|:----------- |
-| ![]() | [attack-relation]()| ![]() | []()| ![]() | []() |
+| ![Procedure](https://raw.githubusercontent.com/os-threat/images/main/img/rect-attack-procedure.svg) | [Procedure](./protocols/attack/sro/Procedure.md)| ![]() | []()| ![]() | []() |
 
 
 
 
-###  Sub-Object Types
+###  Extension Object Types
 
 #### OASIS Stix 2.1 
 
 | Icon | Object Type | Icon | Object Type | Icon | Object Type  |
 |:----------:|:-----------|:----------:|:-----------|:----------:|:----------- |
-| ![]() | [alternate-data-stream](./protocols/stix21/sub/File-NTFS.md)| ![]() | [archive-ext](./protocols/stix21/sub/File-Archive.md)| ![]() | [email-mime-part](./protocols/stix21/sub/Email-MIME-Component.md) |
-| ![]() | [external-reference]()| ![]() | [hash_typeql_dict]()| ![]() | [http-request-ext](./protocols/stix21/sub/Network-HTTP.md) |
-| ![]() | [icmp-ext](./protocols/stix21/sub/Network-ICMP.md)| ![]() | [kill-chain-phase]()| ![]() | [ntfs-ext](./protocols/stix21/sub/File-NTFS.md) |
-| ![]() | [pdf-ext](./protocols/stix21/sub/File-PDF)| ![]() | [raster-image-ext](./protocols/stix21/sub/File-Raster-Image.md)| ![]() | [socket-ext](./protocols/stix21/sub/Network-Socket.md) |
-| ![]() | [tcp-ext](./protocols/stix21/sub/Network-TCP.md)| ![]() | [unix-account-ext](./protocols/stix21/sub/User-UNIX-Account.md)| ![]() | [windows-pe-optional-header-type](./protocols/stix21/sub/File-Windows-PE-Binary.md) |
-| ![]() | [windows-pe-section]()| ![]() | [windows-pebinary-ext](./protocols/stix21/sub/File-Windows-PE-Binary.md)| ![]() | [windows-process-ext](./protocols/stix21/sub/Process-Windows-Process.md) |
-| ![]() | [windows-registry-value-type](./protocols/stix21/sub/Windows-Registry-Value.md)| ![]() | [windows-service-ext](./protocols/stix21/sub/Process-Windows-Service.md)| ![]() | [x509-v3-extension](./protocols/stix21/sub/X.509-Certificate Extension.md) |
+| ![Email-MIME-Component](https://raw.githubusercontent.com/os-threat/images/main/img/rect-email-message-mime.svg) | [Email-MIME-Component](./protocols/stix21/sub/Email-MIME-Component.md)| ![File-Archive](https://raw.githubusercontent.com/os-threat/images/main/img/rect-file-archive.svg) | [File-Archive](./protocols/stix21/sub/File-Archive.md)| ![File-NTFS](https://raw.githubusercontent.com/os-threat/images/main/img/rect-file-ntfs.svg) | [File-NTFS](./protocols/stix21/sub/File-NTFS.md) |
+| ![File-PDF](https://raw.githubusercontent.com/os-threat/images/main/img/rect-file-pdf.svg) | [File-PDF](./protocols/stix21/sub/File-PDF.md)| ![File-Raster-Image](https://raw.githubusercontent.com/os-threat/images/main/img/rect-file-img.svg) | [File-Raster-Image](./protocols/stix21/sub/File-Raster-Image.md)| ![File-Windows-PE-Binary](https://raw.githubusercontent.com/os-threat/images/main/img/rect-file-bin.svg) | [File-Windows-PE-Binary](./protocols/stix21/sub/File-Windows-PE-Binary.md) |
+| ![Network-HTTP](https://raw.githubusercontent.com/os-threat/images/main/img/rect-network-traffic-http.svg) | [Network-HTTP](./protocols/stix21/sub/Network-HTTP.md)| ![Network-ICMP](https://raw.githubusercontent.com/os-threat/images/main/img/rect-network-traffic-icmp.svg) | [Network-ICMP](./protocols/stix21/sub/Network-ICMP.md)| ![Network-Socket](https://raw.githubusercontent.com/os-threat/images/main/img/rect-network-traffic-sock.svg) | [Network-Socket](./protocols/stix21/sub/Network-Socket.md) |
+| ![Network-TCP](https://raw.githubusercontent.com/os-threat/images/main/img/rect-network-traffic-tcp.svg) | [Network-TCP](./protocols/stix21/sub/Network-TCP.md)| ![Process-Windows-Process](https://raw.githubusercontent.com/os-threat/images/main/img/rect-process.svg) | [Process-Windows-Process](./protocols/stix21/sub/Process-Windows-Process.md)| ![Process-Windows-Service](https://raw.githubusercontent.com/os-threat/images/main/img/rect-process.svg) | [Process-Windows-Service](./protocols/stix21/sub/Process-Windows-Service.md) |
+| ![User-UNIX-Account](https://raw.githubusercontent.com/os-threat/images/main/img/rect-user-account-unix.svg) | [User-UNIX-Account](./protocols/stix21/sub/User-UNIX-Account.md)| ![X.509-Certificate-Extension](https://raw.githubusercontent.com/os-threat/images/main/img/rect-x509-certificate.svg) | [X.509-Certificate-Extension](./protocols/stix21/sub/X.509-Certificate-Extension.md)| ![]() | []() |
 
 
 
-#### MITRE ATT&CK 
+#### OS-Threat Stix Extensions 
 
 | Icon | Object Type | Icon | Object Type | Icon | Object Type  |
 |:----------:|:-----------|:----------:|:-----------|:----------:|:----------- |
-| ![]() | [object-version]()| ![]() | []()| ![]() | []() |
+| ![Impact-Availability](https://raw.githubusercontent.com/os-threat/images/main/img/rect-impact-availability.svg) | [Impact-Availability](./protocols/os_threat/sub/Impact-Availability.md)| ![Impact-Confidentiality](https://raw.githubusercontent.com/os-threat/images/main/img/rect-impact-confidentiality.svg) | [Impact-Confidentiality](./protocols/os_threat/sub/Impact-Confidentiality.md)| ![Impact-External](https://raw.githubusercontent.com/os-threat/images/main/img/rect-impact-external.svg) | [Impact-External](./protocols/os_threat/sub/Impact-External.md) |
+| ![Impact-Integrity](https://raw.githubusercontent.com/os-threat/images/main/img/rect-impact-integrity.svg) | [Impact-Integrity](./protocols/os_threat/sub/Impact-Integrity.md)| ![Impact-Monetary](https://raw.githubusercontent.com/os-threat/images/main/img/rect-impact-monetary.svg) | [Impact-Monetary](./protocols/os_threat/sub/Impact-Monetary.md)| ![Impact-Physical](https://raw.githubusercontent.com/os-threat/images/main/img/rect-impact-physical.svg) | [Impact-Physical](./protocols/os_threat/sub/Impact-Physical.md) |
+| ![Impact-Traceability](https://raw.githubusercontent.com/os-threat/images/main/img/rect-impact-traceability.svg) | [Impact-Traceability](./protocols/os_threat/sub/Impact-Traceability.md)| ![Sighting-Alert](https://raw.githubusercontent.com/os-threat/images/main/img/rect-sighting-alert.svg) | [Sighting-Alert](./protocols/os_threat/sub/Sighting-Alert.md)| ![Sighting-Anecdote](https://raw.githubusercontent.com/os-threat/images/main/img/rect-sighting-anecdote.svg) | [Sighting-Anecdote](./protocols/os_threat/sub/Sighting-Anecdote.md) |
+| ![Sighting-Context](https://raw.githubusercontent.com/os-threat/images/main/img/rect-sighting-context.svg) | [Sighting-Context](./protocols/os_threat/sub/Sighting-Context.md)| ![Sighting-Exclusion](https://raw.githubusercontent.com/os-threat/images/main/img/rect-sighting-exclusion.svg) | [Sighting-Exclusion](./protocols/os_threat/sub/Sighting-Exclusion.md)| ![Sighting-Enrichment](https://raw.githubusercontent.com/os-threat/images/main/img/rect-sighting-enrichment.svg) | [Sighting-Enrichment](./protocols/os_threat/sub/Sighting-Enrichment.md) |
+| ![Sighting-Hunt](https://raw.githubusercontent.com/os-threat/images/main/img/rect-sighting-hunt.svg) | [Sighting-Hunt](./protocols/os_threat/sub/Sighting-Hunt.md)| ![Sighting-Framework](https://raw.githubusercontent.com/os-threat/images/main/img/rect-sighting-framework.svg) | [Sighting-Framework](./protocols/os_threat/sub/Sighting-Framework.md)| ![Sighting-External](https://raw.githubusercontent.com/os-threat/images/main/img/rect-sighting-external.svg) | [Sighting-External](./protocols/os_threat/sub/Sighting-External.md) |
+| ![Identity-Contact](https://raw.githubusercontent.com/os-threat/images/main/img/rect-identity-contact.svg) | [Identity-Contact](./protocols/os_threat/sub/Identity-Contact.md)| ![]() | []()| ![]() | []() |
 
 
 

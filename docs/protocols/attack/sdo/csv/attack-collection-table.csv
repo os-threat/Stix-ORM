@@ -1,0 +1,14 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object       , Schema Parent 
+ type                ,            stix-type             ,      Required      ,  stix-attribute-string   ,   attribute   
+ id                  ,             stix-id              ,      Required      ,  stix-attribute-string   ,   attribute   
+ spec_version        ,           spec-version           ,      Required      ,  stix-attribute-string   ,   attribute   
+ created             ,             created              ,      Required      , stix-attribute-timestamp ,   attribute   
+ modified            ,             modified             ,      Required      , stix-attribute-timestamp ,   attribute   
+ name                ,               name               ,      Required      ,  stix-attribute-string   ,   attribute   
+ description         ,           description            ,      Optional      ,  stix-attribute-string   ,   attribute   
+ aliases             , aliases             ,      Optional      ,  stix-attribute-string   ,   attribute   
+action,action,Reserved,  stix-attribute-string   ,   attribute   
+ created_by_ref      ,        created-by:created        ,      Optional      ,   embedded    ,relation
+x_mitre_version,x-mitre-version,Required,  stix-attribute-string   ,   attribute   
+x_mitre_attack_spec_version,x-mitre-attack-spec-version,Required,  stix-attribute-string   ,   attribute   
+x_mitre_contents,x-mitre-content:collector,Required,   embedded    ,relation

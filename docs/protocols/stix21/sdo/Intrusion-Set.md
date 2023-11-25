@@ -2,11 +2,7 @@
 
 **Stix and TypeQL Object Type:**  `intrusion-set`
 
-An Intrusion Set is a grouped set of adversarial behaviors and resources with common properties that is believed to be orchestrated by a single organization. An Intrusion Set may capture multiple Campaigns or other activities that are all tied together by shared attributes indicating a commonly known or unknown Threat Actor. New activity can be attributed to an Intrusion Set even if the Threat Actors behind the attack are not known. Threat Actors can move from supporting one Intrusion Set to supporting another, or they may support multiple Intrusion Sets.
-
- 
-
-Where a Campaign is a set of attacks over a period of time against a specific set of targets to achieve some objective, an Intrusion Set is the entire attack package and may be used over a very long period of time in multiple Campaigns to achieve potentially multiple purposes.
+An Intrusion Set is a grouped set of adversarial behaviors and resources with common properties that is believed to be orchestrated by a single organization. An Intrusion Set may capture multiple Campaigns or other activities that are all tied together by shared attributes indicating a commonly known or unknown Threat Actor. New activity can be attributed to an Intrusion Set even if the Threat Actors behind the attack are not known. Threat Actors can move from supporting one Intrusion Set to supporting another, or they may support multiple Intrusion Sets. Where a Campaign is a set of attacks over a period of time against a specific set of targets to achieve some objective, an Intrusion Set is the entire attack package and may be used over a very long period of time in multiple Campaigns to achieve potentially multiple purposes. 
 
 While sometimes an Intrusion Set is not active, or changes focus, it is usually difficult to know if it has truly disappeared or ended. Analysts may have varying level of fidelity on attributing an Intrusion Set back to Threat Actors and may be able to only attribute it back to a nation state or perhaps back to an organization within that nation state.
 
@@ -121,8 +117,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -147,3 +142,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("intrusion-set--ed69450a-f067-4b51-9ba2-c4616b9a6713")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

@@ -2,11 +2,7 @@
 
 **Stix and TypeQL Object Type:**  `threat-actor`
 
-Threat Actors are actual individuals, groups, or organizations believed to be operating with malicious intent. A Threat Actor is not an Intrusion Set but may support or be affiliated with various Intrusion Sets, groups, or organizations over time.
-
- 
-
-Threat Actors leverage their resources, and possibly the resources of an Intrusion Set, to conduct attacks and run Campaigns against targets.
+Threat Actors are actual individuals, groups, or organizations believed to be operating with malicious intent. A Threat Actor is not an Intrusion Set but may support or be affiliated with various Intrusion Sets, groups, or organizations over time. Threat Actors leverage their resources, and possibly the resources of an Intrusion Set, to conduct attacks and run Campaigns against targets.
 
 Threat Actors can be characterized by their motives, capabilities, goals, sophistication level, past activities, resources they have access to, and their role in the organization.
 
@@ -123,8 +119,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -149,3 +144,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("threat-actor--56f3f0db-b5d5-431c-ae56-c18f02caf500")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

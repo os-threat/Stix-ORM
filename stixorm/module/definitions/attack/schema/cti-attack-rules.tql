@@ -2,13 +2,17 @@
 # needs fixing to work
 
 define
-  software sub stix-domain-object,
-    plays domain-object-union:object; // or truth/reference/main/?
+  attack-software sub stix-domain-object,
+    plays domain-object-union:object; # or truth/reference/main/?
 
-  malware-software sub malware,
-    plays domain-object-union:secondary; // or member/view/?
-  tool-software sub tool,
+  software-malware
+    plays domain-object-union:secondary; # or member/view/?
+  software-tool
     plays domain-object-union:secondary;
+
+  domain-object-union sub relation,
+    relates object,
+    relates secondary;
 
 rule transfer-union-attrs:
 when {
@@ -17,10 +21,9 @@ when {
   (object: $x, secondary: $y) isa domain-object-union;
 } then {
   $x has $a;
-}
+};
 
 rule transfer-union-rels:
-when {
 when {
   $x isa stix-domain-object;
   $y isa stix-domain-object;
@@ -28,4 +31,4 @@ when {
   ($role-y: $y, $role-z: $z) isa! $rel-type; $rel-type relates $role-y; $rel-type relates $role-z;
 } then {
   ($role-y: $x, $role-z) isa $rel-type;
-}
+};

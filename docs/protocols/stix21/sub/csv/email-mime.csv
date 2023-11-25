@@ -1,0 +1,5 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+body,body,      Optional      ,  stix-attribute-string   ,   attribute   
+body_raw_ref,body-raw-references:containing-mime,      Optional      ,   embedded    ,relation
+content_type, content-type,      Optional      ,  stix-attribute-string   ,   attribute   
+content_disposition,content-disposition,      Optional      ,  stix-attribute-string   ,   attribute   

@@ -2,11 +2,7 @@
 
 **Stix and TypeQL Object Type:**  `tool`
 
-Tools are legitimate software that can be used by threat actors to perform attacks. Knowing how and when threat actors use such tools can be important for understanding how campaigns are executed. Unlike malware, these tools or software packages are often found on a system and have legitimate purposes for power users, system administrators, network administrators, or even normal users. Remote access tools (e.g., RDP) and network scanning tools (e.g., Nmap) are examples of Tools that may be used by a Threat Actor during an attack.
-
- 
-
-The Tool SDO characterizes the properties of these software tools and can be used as a basis for making an assertion about how a Threat Actor uses them during an attack. It contains properties to name and describe the tool, a list of Kill Chain Phases the tool can be used to carry out, and the version of the tool.
+Tools are legitimate software that can be used by threat actors to perform attacks. Knowing how and when threat actors use such tools can be important for understanding how campaigns are executed. Unlike malware, these tools or software packages are often found on a system and have legitimate purposes for power users, system administrators, network administrators, or even normal users. Remote access tools (e.g., RDP) and network scanning tools (e.g., Nmap) are examples of Tools that may be used by a Threat Actor during an attack. The Tool SDO characterizes the properties of these software tools and can be used as a basis for making an assertion about how a Threat Actor uses them during an attack. It contains properties to name and describe the tool, a list of Kill Chain Phases the tool can be used to carry out, and the version of the tool.
 
 This SDO MUST NOT be used to characterize malware. Further, Tool MUST NOT be used to characterize tools used as part of a course of action in response to an attack.
 
@@ -100,8 +96,7 @@ will retrieve the example attack-pattern object in Vaticle Studio
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -126,3 +121,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("tool--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

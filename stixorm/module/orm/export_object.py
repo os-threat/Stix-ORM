@@ -25,7 +25,7 @@ logger.setLevel(logging.DEBUG)
 
 # --------------------------------------------------------------------------------------------------------
 #  Overview:
-#     1. Convert TypeQL Ans to Res, using the transaction
+#     1. Convert TypeQL Ans to Res, install the transaction
 #     2. Convert Res to Stix, creating first the dict, then parsing the dict to Stix object
 # --------------------------------------------------------------------------------------------------------
 

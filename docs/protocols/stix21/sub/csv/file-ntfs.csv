@@ -1,0 +1,3 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+sid,sid,      Optional      ,  stix-attribute-string   ,   attribute   
+alternate_data_streams,alt-data-streams:ntfs-ext,      Optional      ,   embedded    ,relation

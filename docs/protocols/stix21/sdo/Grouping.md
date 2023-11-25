@@ -110,7 +110,6 @@ The Python retrieval statement
 
 ```python
 from stixorm.module.typedb import TypeDBSink, TypeDBSource
-
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -132,6 +131,18 @@ import_type = {
 }
 
 typedb = TypeDBSource(connection, import_type)
-stix_obj = typedb.get('match $a isa campaign, has stix-id "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e", has $b;')
+stix_obj = typedb.get("match
+    $a isa campaign,
+        has stix-id "campaign--e5268b6e-4931-42f1-b379-87f48eb41b1e",
+        has $b;")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

@@ -1,4 +1,4 @@
-# Network-Traffic Cyber Obervable Object
+# Network-Traffic Cyber Observable Object
 
 **Stix and TypeQL Object Type:**  `network-traffic`
 
@@ -19,23 +19,23 @@ Mapping of the Stix Attack Pattern Properties to TypeDB
 |  granular_markings    |     granular-marking:marked       |      Optional       |   embedded     |relation |
 | defanged |defanged |      Optional       |stix-attribute-boolean |   attribute    |
 |  extensions           |               n/a                 |        n/a          |           n/a             |      n/a       |
-| startï¿½ |start, |      Optional       |  stix-attribute-timestamp    |   attribute    |
-| endï¿½ |end, |      Optional       |  stix-attribute-timestamp    |   attribute    |
-| is_activeï¿½ |is-active, |      Optional       |  stix-attribute-boolean    |   attribute    |
-| src_refï¿½ |traffic-src:traffic, |      Optional       |   embedded     |relation |
-| dst_refï¿½ |traffic-dst:traffic, |      Optional       |   embedded     |relation |
-| src_portï¿½ |src-port, |      Optional       |  stix-attribute-integer    |   attribute    |
-| dst_portï¿½ |dst-port, |      Optional       |  stix-attribute-integer    |   attribute    |
-| protocolsï¿½ |protocols, |      Optional       |  stix-attribute-string    |   attribute    |
-| src_byte_countï¿½ |src-byte-count, |      Optional       |  stix-attribute-integer    |   attribute    |
-| dst_byte_countï¿½ |dst-byte-count, |      Optional       |  stix-attribute-integer    |   attribute    |
-| src_packetsï¿½ |src-packets, |      Optional       |  stix-attribute-integer    |   attribute    |
-| dst_packetsï¿½ |dst-packets, |      Optional       |  stix-attribute-integer    |   attribute    |
-| ipfixï¿½ |IPFIX-store:traffic |      Optional       |   embedded     |relation |
-| src_payload_refï¿½ |payload-src:traffic, |      Optional       |   embedded     |relation |
-| dst_payload_refï¿½ |payload-dst:traffic, |      Optional       |   embedded     |relation |
-| encapsulates_refsï¿½ |encapsulate:container |      Optional       |   embedded     |relation |
-| encapsulated_by_refï¿½ |encapsulated:contained |      Optional       |   embedded     |relation |
+| start  |start, |      Optional       |  stix-attribute-timestamp    |   attribute    |
+| end  |end, |      Optional       |  stix-attribute-timestamp    |   attribute    |
+| is_active  |is-active, |      Optional       |  stix-attribute-boolean    |   attribute    |
+| src_ref  |traffic-src:traffic, |      Optional       |   embedded     |relation |
+| dst_ref  |traffic-dst:traffic, |      Optional       |   embedded     |relation |
+| src_port  |src-port, |      Optional       |  stix-attribute-integer    |   attribute    |
+| dst_port  |dst-port, |      Optional       |  stix-attribute-integer    |   attribute    |
+| protocols  |protocols, |      Optional       |  stix-attribute-string    |   attribute    |
+| src_byte_count  |src-byte-count, |      Optional       |  stix-attribute-integer    |   attribute    |
+| dst_byte_count  |dst-byte-count, |      Optional       |  stix-attribute-integer    |   attribute    |
+| src_packets  |src-packets, |      Optional       |  stix-attribute-integer    |   attribute    |
+| dst_packets  |dst-packets, |      Optional       |  stix-attribute-integer    |   attribute    |
+| ipfix  |IPFIX-store:traffic |      Optional       |   embedded     |relation |
+| src_payload_ref  |payload-src:traffic, |      Optional       |   embedded     |relation |
+| dst_payload_ref  |payload-dst:traffic, |      Optional       |   embedded     |relation |
+| encapsulates_refs  |encapsulate:container |      Optional       |   embedded     |relation |
+| encapsulated_by_ref  |encapsulated:contained |      Optional       |   embedded     |relation |
 
 ## The Example Network-Traffic in JSON
 The original JSON, accessible in the Python environment
@@ -109,14 +109,13 @@ match
 
 
 will retrieve the example attack-pattern object in Vaticle Studio
-![Network-Traffic Example](./img/network.png)
+![Network-Traffic Example](./img/network-traffic.png)
 
 ## Retrieving the Example Network-Traffic  in Python
 The Python retrieval statement
 
 ```python
-from stixorm.module.typedb_lib import TypeDBSink, TypeDBSource
-
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
 connection = {
     "uri": "localhost",
     "port": "1729",
@@ -141,3 +140,12 @@ typedb = TypeDBSource(connection, import_type)
 stix_obj = typedb.get("network-traffic--630d7bb1-0bbc-53a6-a6d4-f3c2d35c2734")
 ```
 
+ 
+
+[Back to OASIS Stix 2.1 Overview](../overview.md)
+ 
+
+[Back to All Protocols Overview](../../overview.md)
+ 
+
+[Back to Overview Doc](../../../overview.md)

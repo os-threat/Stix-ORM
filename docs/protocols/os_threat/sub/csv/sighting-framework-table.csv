@@ -1,0 +1,5 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+framework,framework,Required,  stix-attribute-string   ,   attribute   
+version,version,Required,  stix-attribute-string   ,   attribute   
+domain,domain,Required,  stix-attribute-boolean   ,   attribute   
+comparison_approach,comparison-approach,Required,  stix-attribute-boolean   ,   attribute   

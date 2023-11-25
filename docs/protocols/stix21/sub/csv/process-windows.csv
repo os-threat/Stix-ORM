@@ -1,0 +1,8 @@
+ Stix 2.1 Property   ,           Schema Name            , Required  Optional ,      Schema Object Type, Schema Parent 
+aslr_enabled ,aslr-enabled,Optional,  stix-attribute-string   ,   attribute   
+dep_enabled ,dep-enabled,Optional,  stix-attribute-boolean   ,   attribute   
+priority ,priority,Optional,  stix-attribute-string   ,   attribute   
+owner_sid ,owner-sid,Optional,  stix-attribute-string   ,   attribute   
+window_title ,window-title,Optional,  stix-attribute-string   ,   attribute   
+startup_info ,startup-info:process,Optional,embedded,relation
+integrity_level  ,integrity-level,Optional,  stix-attribute-string   ,   attribute   
