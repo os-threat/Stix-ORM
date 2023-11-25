@@ -94,4 +94,4 @@ def setup_before_all_tests():
     all_databases = get_all_databases(data_base_uri(), database_port())
     for database in all_databases:
         if database.name.startswith(data_base_prefix()):
-            delete_database(data_base_uri(), database_port(), database.name())
+            delete_database(data_base_uri(), database_port(), database.name)
