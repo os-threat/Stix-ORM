@@ -159,7 +159,7 @@ def process_relation(p, r_tx, stix_id):
         plays {}: a dict containing the unpacked relation
     """
     plays = {"type": "attribute", "tql": p.get_type().get_label().name}
-    attr_stix_id = p.as_remote(r_tx).get_has(attribute_type=stix_id)
+    attr_stix_id = p.get_has(r_tx, attribute_type=stix_id)
     for attr in attr_stix_id:
         plays["stix_id"] = attr.get_value()
 
@@ -282,7 +282,7 @@ def reln_map_entity_attribute(reln_map, r_tx, stix_id: str, is_kv):
                 play["tql"] = p.get_type().get_label().name()
                 play["value"] = process_value(p)
                 if is_kv:
-                    att_obj = p.as_remote(r_tx).get_has()
+                    att_obj = p.get_has(r_tx)
                     play['props'] = process_props(att_obj)
                 role_i['player'].append(play)
 
@@ -304,8 +304,8 @@ def get_granular_marking(r, r_tx):
     Returns:
         roles []: list of dict objects
     """
-    stix_id = r_tx.concepts().get_attribute_type("stix-id")
-    reln_map = r.as_remote(r_tx).get_players_by_role_type()
+    stix_id = r_tx.concepts().get_attribute_type("stix-id").resolve()
+    reln_map = r.get_players(r_tx)
     is_kv: object = False
     roles = reln_map_entity_attribute(reln_map, r_tx, stix_id, is_kv)
     return roles
@@ -322,9 +322,9 @@ def get_hashes(r, r_tx):
         roles []: list of dict objects
     """
     roles = []
-    stix_id = r_tx.concepts().get_attribute_type("stix-id")
+    stix_id = r_tx.concepts().get_attribute_type("stix-id").resolve()
     hash_value = r_tx.concepts().get_attribute_type("hash-value")
-    reln_map = r.as_remote(r_tx).get_players_by_role_type()
+    reln_map = r.get_players(r_tx)
 
     for role, player in reln_map.items():
         role_name = role.get_label().name
@@ -333,13 +333,13 @@ def get_hashes(r, r_tx):
             play = {}
             if p.is_entity():
                 play["type"] = "entity"
-                play["tql"] = p.get_type().get_label().name()
+                play["tql"] = p.get_type().get_label().name
                 if role_name == "owner":
-                    attr_stix_id = p.as_remote(r_tx).get_has(attribute_type=stix_id)
+                    attr_stix_id = p.get_has(r_tx, attribute_type=stix_id)
                     for attr in attr_stix_id:
                         play["stix_id"] = attr.get_value()
                 else:
-                    attr_hash_value = p.as_remote(r_tx).get_has(attribute_type=hash_value)
+                    attr_hash_value = p.get_has(r_tx, attribute_type=hash_value)
                     for attr in attr_hash_value:
                         play["hash_value"] = attr.get_value()
 
@@ -362,8 +362,8 @@ def get_key_value_relations(r, r_tx):
     Returns:
         roles []: list of dict objects
     """
-    stix_id = r_tx.concepts().get_attribute_type("stix-id")
-    reln_map = r.as_remote(r_tx).get_players_by_role_type()
+    stix_id = r_tx.concepts().get_attribute_type("stix-id").resolve()
+    reln_map = r.get_players(r_tx)
     is_kv: object = True
     roles = reln_map_entity_attribute(reln_map, r_tx, stix_id, is_kv)
     return roles
@@ -496,8 +496,8 @@ def get_extension_relations(r,
         if ext['relation'] == reln_name:
             reln_object = ext['object']
 
-    stix_id = r_tx.concepts().get_attribute_type("stix-id")
-    reln_map = r.as_remote(r_tx).get_players_by_role_type()
+    stix_id = r_tx.concepts().get_attribute_type("stix-id").resolve()
+    reln_map = r.get_players(r_tx)
     roles = []
     for role, player in reln_map.items():
         role_i = {'role': role.get_label().name, 'player': []}
@@ -508,10 +508,10 @@ def get_extension_relations(r,
                 p_name = p.get_type().get_label().name
                 play["tql"] = p_name
                 if p_name == reln_object:
-                    props_obj = p.as_remote(r_tx).get_has()
+                    props_obj = p.get_has(r_tx)
                     play['has'] = process_props(props_obj)
                     # 3. get and describe relations
-                    reln_types = p.as_remote(r_tx).get_relations()
+                    reln_types = p.get_relations(r_tx)
                     relns = []
                     for rel in reln_types:
                         reln = {}
@@ -524,7 +524,7 @@ def get_extension_relations(r,
                     play['relns'] = relns
 
                 else:
-                    attr_stix_id = p.as_remote(r_tx).get_has(attribute_type=stix_id)
+                    attr_stix_id = p.get_has(r_tx, attribute_type=stix_id)
                     for attr in attr_stix_id:
                         play["stix_id"] = attr.get_value()
 
@@ -612,7 +612,7 @@ def return_valid_relations(rel,
     Returns:
         reln {}: a dict containing the reln details
     """
-    reln_map = rel.as_remote(r_tx).get_players_by_role_type()
+    reln_map = rel.get_players(r_tx)
     for role, player in reln_map.items():
         role_name = role.get_label().name()
         if role_name == role_owner:
