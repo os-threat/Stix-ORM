@@ -404,7 +404,7 @@ def get_list_of_objects(r,
                 relns = []
                 for rel in reln_types:
                     reln = {}
-                    reln_name = rel.get_type().get_label().name()
+                    reln_name = rel.get_type().get_label().name
 
                     reln['T_name'] = reln_name
                     reln['T_id'] = rel.get_iid()
@@ -487,7 +487,7 @@ def get_extension_relations(r,
     """
     auth_factory = get_auth_factory_instance()
     auth = auth_factory.get_auth_for_import(import_type)
-    reln_name = r.get_type().get_label().name()
+    reln_name = r.get_type().get_label().name
     for ext in auth["reln"]["extension_relations"]:
         if ext['relation'] == reln_name:
             reln_object = ext['object']
@@ -496,12 +496,12 @@ def get_extension_relations(r,
     reln_map = r.as_remote(r_tx).get_players_by_role_type()
     roles = []
     for role, player in reln_map.items():
-        role_i = {'role': role.get_label().name(), 'player': []}
+        role_i = {'role': role.get_label().name, 'player': []}
         for p in player:
             play = {}
             if p.is_entity():
                 play["type"] = "entity"
-                p_name = p.get_type().get_label().name()
+                p_name = p.get_type().get_label().name
                 play["tql"] = p_name
                 if p_name == reln_object:
                     props_obj = p.as_remote(r_tx).get_has()
@@ -527,7 +527,7 @@ def get_extension_relations(r,
                 role_i['player'].append(play)
             elif p.is_attribute():
                 play["type"] = "attribute"
-                play["tql"] = p.get_type().get_label().name()
+                play["tql"] = p.get_type().get_label().name
                 play["value"] = process_value(p)
                 role_i['player'].append(play)
 
@@ -556,7 +556,7 @@ def validate_get_relns(rel,
     auth_factory = get_auth_factory_instance()
     auth = auth_factory.get_auth_for_import(import_type)
     reln={}
-    reln_name = rel.get_type().get_label().name()
+    reln_name = rel.get_type().get_label().name
     if reln_name in auth["tql_types"]["embedded_relations"]:
         for emb in auth["reln"]["embedded_relations"]:
             if emb['typeql'] == reln_name:
@@ -614,7 +614,7 @@ def return_valid_relations(rel,
         if role_name == role_owner:
             for p in player:
                 if p.is_entity():
-                    play_name = p.get_type().get_label().name()
+                    play_name = p.get_type().get_label().name
                     if play_name == obj_name:
                         return get_relation_details(rel, r_tx, import_type)
 
