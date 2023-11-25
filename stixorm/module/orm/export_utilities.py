@@ -279,7 +279,7 @@ def reln_map_entity_attribute(reln_map, r_tx, stix_id: str, is_kv):
                 role_i['player'].append(process_entity(p, r_tx, stix_id))
             elif p.is_attribute():
                 play["type"] = "attribute"
-                play["tql"] = p.get_type().get_label().name()
+                play["tql"] = p.get_type().get_label().name
                 play["value"] = process_value(p)
                 if is_kv:
                     att_obj = p.get_has(r_tx)
@@ -304,7 +304,7 @@ def get_granular_marking(r, r_tx):
     Returns:
         roles []: list of dict objects
     """
-    stix_id = r_tx.concepts().get_attribute_type("stix-id").resolve()
+    stix_id = r_tx.concepts.get_attribute_type("stix-id").resolve()
     reln_map = r.get_players(r_tx)
     is_kv: object = False
     roles = reln_map_entity_attribute(reln_map, r_tx, stix_id, is_kv)
@@ -322,8 +322,8 @@ def get_hashes(r, r_tx):
         roles []: list of dict objects
     """
     roles = []
-    stix_id = r_tx.concepts().get_attribute_type("stix-id").resolve()
-    hash_value = r_tx.concepts().get_attribute_type("hash-value")
+    stix_id = r_tx.concepts.get_attribute_type("stix-id").resolve()
+    hash_value = r_tx.concepts.get_attribute_type("hash-value").resolve()
     reln_map = r.get_players(r_tx)
 
     for role, player in reln_map.items():
@@ -362,7 +362,7 @@ def get_key_value_relations(r, r_tx):
     Returns:
         roles []: list of dict objects
     """
-    stix_id = r_tx.concepts().get_attribute_type("stix-id").resolve()
+    stix_id = r_tx.concepts.get_attribute_type("stix-id").resolve()
     reln_map = r.get_players(r_tx)
     is_kv: object = True
     roles = reln_map_entity_attribute(reln_map, r_tx, stix_id, is_kv)
@@ -496,7 +496,7 @@ def get_extension_relations(r,
         if ext['relation'] == reln_name:
             reln_object = ext['object']
 
-    stix_id = r_tx.concepts().get_attribute_type("stix-id").resolve()
+    stix_id = r_tx.concepts.get_attribute_type("stix-id").resolve()
     reln_map = r.get_players(r_tx)
     roles = []
     for role, player in reln_map.items():
@@ -614,7 +614,7 @@ def return_valid_relations(rel,
     """
     reln_map = rel.get_players(r_tx)
     for role, player in reln_map.items():
-        role_name = role.get_label().name()
+        role_name = role.get_label().name
         if role_name == role_owner:
             for p in player:
                 if p.is_entity():
