@@ -48,7 +48,9 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: ImportType):
             if concept.is_entity():
                 # 1. describe entity
                 thing = concept.as_entity()
-                ent = {'type': 'entity', 'symbol': key, 'T_id': thing.get_iid(),
+                ent = {'type': 'entity',
+                       'symbol': key,
+                       'T_id': thing.get_iid(),
                        'T_name': thing.get_type().get_label().name}
                 # 2 get and dsecribe properties
                 props_obj = thing.get_has(r_tx)
@@ -63,7 +65,9 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: ImportType):
             elif concept.is_relation():
                 # 1. setup basis
                 thing = concept.as_relation()
-                rel = {'type': 'relationship', 'symbol': key, 'T_id': thing.get_iid(),
+                rel = {'type': 'relationship',
+                       'symbol': key,
+                       'T_id': thing.get_iid(),
                        'T_name': thing.get_type().get_label().name}
                 att_obj = thing.get_has(r_tx)
                 rel['has'] = process_props(att_obj)
@@ -72,8 +76,8 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: ImportType):
                 rel['relns'] = process_relns(reln_types, r_tx, import_type)
                 # 4. get and describe the edges
                 edges = []
-                edge_types = thing.get_playing(r_tx)
-                stix_id = r_tx.concepts.get_attribute_type("stix-id")
+                edge_types = thing.get_players(r_tx)
+                stix_id = r_tx.concepts.get_attribute_type("stix-id").resolve()
                 for role, things in edge_types.items():
                     edge = {"role": role.get_label().name, 'player': []}
                     for thing in things:
@@ -379,7 +383,7 @@ def get_list_of_objects(r,
     """
     auth_factory = get_auth_factory_instance()
     auth = auth_factory.get_auth_for_import(import_type)
-    reln_name = r.get_type().get_label().name()
+    reln_name = r.get_type().get_label().name
     for lot in auth["reln"]["list_of_objects"]:
         if reln_name == lot["typeql"]:
             reln_pointed_to = lot["pointed_to"]
@@ -387,20 +391,20 @@ def get_list_of_objects(r,
             reln_object_props = copy.deepcopy(auth["sub_objects"][reln_object])
             reln_stix = lot["name"]
 
-    stix_id = r_tx.concepts().get_attribute_type("stix-id")
-    reln_map = r.as_remote(r_tx).get_players_by_role_type()
+    stix_id = r_tx.concepts.get_attribute_type("stix-id").resolve()
+    reln_map = r.get_players(r_tx)
     roles = []
     for role, player in reln_map.items():
-        role_i = {'role': role.get_label().name(), 'player': []}
+        role_i = {'role': role.get_label().name, 'player': []}
         for p in player:
             play = {}
             if p.is_entity():
                 play["type"] = "entity"
-                play["tql"] = p.get_type().get_label().name()
-                props_obj = p.as_remote(r_tx).get_has()
+                play["tql"] = p.get_type().get_label().name
+                props_obj = p.get_has(r_tx)
                 play['has'] = process_props(props_obj)
                 # 3. get and describe relations
-                reln_types = p.as_remote(r_tx).get_relations()
+                reln_types = p.get_relations(r_tx)
                 relns = []
                 for rel in reln_types:
                     reln = {}
@@ -408,7 +412,7 @@ def get_list_of_objects(r,
 
                     reln['T_name'] = reln_name
                     reln['T_id'] = rel.get_iid()
-                    reln_map = rel.as_remote(r_tx).get_players_by_role_type()
+                    reln_map = rel.get_players(r_tx)
                     reln['roles'] = reln_map_entity_relation(reln_map, r_tx, stix_id)
                     relns.append(reln)
 
