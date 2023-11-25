@@ -1,0 +1,23 @@
+created,name,description,type,determination,investigation_status,impact_category,outcome,status,relationship_type
+2023-05-02T20:00:00.0002Z,Sample ransomware incident,Received a ransom demand for 0.5 BTC that was negotiated and then paid,incident,confirmed,closed,,,,
+2023-05-02T20:00:00.0002Z,,Loss of integrity due to encryption.,impact,,,integrity,,,
+2023-05-02T20:00:00.0002Z,,Received a ransom demand for 0.5 BTC.,impact,,,monetary,,,
+2023-05-02T20:00:00.0002Z,,"Paid the ransom of $10,000 USD as roughly 0.346 BTC.",impact,,,monetary,,,
+2023-05-02T20:00:00.0002Z,Negotiated Ransomware Payment,Update mail server from version 8.2 to 8.3.,task,,,,successful,,
+2023-05-02T20:00:00.0002Z,,,impact,,,availability,,,
+2023-05-02T20:00:00.0002Z,Ransomware encrypted server and provided a message to the system administrator when they logged in advising they contact evil@decryptyourstuff.zip,,event,,,,,occurred,
+,,,email-addr,,,,,,
+2022-09-16T01:12:18.951Z,,,observed-data,,,,,,
+2022-09-16T01:12:18.951Z,,,sighting,,,,,,
+2023-05-02T20:00:00.0002Z,Negotiation over Email,Ransomware distributors provide an email address to contact them to begin negotiations for payment.,attack-pattern,,,,,,
+2023-05-02T20:00:00.0002Z,A negotiation took place using FakeApp,,event,,,,,occurred,
+,,,user-account,,,,,,
+2022-09-16T01:12:18.951Z,,,observed-data,,,,,,
+2022-09-16T01:12:18.951Z,,,sighting,,,,,,
+2023-05-02T20:00:00.0002Z,Ransom Negotiation using Well Known App,Ransomware distributors provide a user's account or channel to negotiate payment with in real time over a well known chat application.,attack-pattern,,,,,,
+2023-05-02T20:00:00.0002Z,Ransom Payment,,event,,,,,occurred,
+2022-09-16T01:12:18.951Z,,,sighting,,,,,,
+2023-05-02T20:00:00.0002Z,Ransom Payment using Cryptocurrency,Ransomware distributors provide a cryptocurrency address to accept a payment.,attack-pattern,,,,,,
+2023-05-02T20:00:00.0002Z,,,relationship,,,,,,related-to
+2023-05-02T20:00:00.0002Z,,,relationship,,,,,,related-to
+2023-05-02T20:00:00.0002Z,Ransomware Incident Example,,report,,,,,,

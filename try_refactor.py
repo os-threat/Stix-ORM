@@ -1,22 +1,27 @@
 import json
 import os
 import datetime
-
-
-from stixorm.module.typedb import TypeDBSink, TypeDBSource, get_embedded_match
-from typedb.client import *
+from typing import Dict
+#import dateutil.parser
+#from dateutil.parser import *
+from stixorm.module.typedb import TypeDBSink, TypeDBSource
+from typedb.driver import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
 from stixorm.module.orm.delete_object import delete_stix_object
 from stixorm.module.orm.export_object import convert_ans_to_stix
 from stixorm.module.authorise import authorised_mappings, import_type_factory
 from stixorm.module.parsing.parse_objects import parse
-from stixorm.module.generate_docs import configure_overview_table_docs, object_docs
+from stixorm.module.parsing.conversion_decisions import get_embedded_match
+from stixorm.module.generate_docs import configure_overview_table_docs, object_tables
 from stixorm.module.initialise import sort_layers, load_typeql_data
 from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
 from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
 from stixorm.module.orm.import_utilities import val_tql
-#from stixorm.module.definitions.attack import attack_models
-#from stixorm.module.definitions.property_definitions import get_definitions
+from stixorm.module.typedb_lib.factories.definition_factory import get_definition_factory_instance
+from stixorm.module.typedb_lib.model.definitions import DefinitionName
+stix_models = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
+attack_models = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
+os_threat_models = get_definition_factory_instance().lookup_definition(DefinitionName.OS_THREAT)
 import copy
 
 import logging
@@ -25,7 +30,7 @@ from timeit import default_timer as timer
 
 #from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
-logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 #logger.addHandler(logging.StreamHandler())
 
@@ -47,7 +52,7 @@ marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
           "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
           "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
 
-get_ids = 'match $ids isa stix-id;'
+get_ids = 'match $stix-id isa stix-id; get $stix-id;'
 
 
 test_id = "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff"
@@ -58,7 +63,7 @@ file_id = 'file--364fe3e5-b1f4-5ba3-b951-ee5983b3538d'
 def test_generate_docs():
     print("================================================================================")
     print("------------------------ Test Doc Generation ---------------------------------------------")
-    configure_overview_table_docs(object_docs)
+    configure_overview_table_docs(object_tables)
 
 
 def backdoor_get(stix_id, _composite_filters=None):
@@ -74,13 +79,13 @@ def backdoor_get(stix_id, _composite_filters=None):
     """
     try:
         obj_var, type_ql = get_embedded_match(stix_id, import_type)
-        match = 'match ' + type_ql
+        match = 'match ' + type_ql + "get;"
         #logger.debug(f' typeql -->: {match}')
         g_uri = connection["uri"] + ':' + connection["port"]
-        with TypeDB.core_client(g_uri) as client:
+        with TypeDB. core_driver(g_uri) as client:
             with client.session(connection["database"], SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as read_transaction:
-                    answer_iterator = read_transaction.query().match(match)
+                    answer_iterator = read_transaction.query.get(match)
                     #logger.debug((f'have read the query -> {answer_iterator}'))
                     stix_dict = convert_ans_to_stix(match, answer_iterator, read_transaction, import_type)
                     stix_obj = parse(stix_dict, import_type=import_type)
@@ -102,9 +107,10 @@ def dict_to_typeql(stix_dict, import_type):
     """
     #logger.debug(f"im about to parse \n")
     stix_obj = parse(stix_dict, False, import_type)
-    #logger.debug(f' i have parsed\n')
+    logger.debug(f' i have parsed {stix_dict}\n')
+    logger.debug(f"\n object type -> {type(stix_obj)} -> {stix_obj}")
     dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
-    #logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+    logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
     dep_obj["dep_match"] = dep_match
     dep_obj["dep_insert"] = dep_insert
     dep_obj["indep_ql"] = indep_ql
@@ -115,6 +121,7 @@ def dict_to_typeql(stix_dict, import_type):
 def test_insert_statements(pahhway, stid):
     with open(pahhway, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
+        json_text = json_text["objects"]
         for stix_dict in json_text:
             if stix_dict['id'] == stid:
                 dep_obj = dict_to_typeql(stix_dict, import_type)
@@ -160,23 +167,37 @@ def backdoor_add_dir(dirpath):
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 json_text = json.load(f)
                 json_text = json_text["objects"]
+                length = len(json_text)
+                i=0
                 for element in json_text:
-                    #logger.debug(f'**********==={element}')
+                    i += 1
+                    logger.debug(f' processing {i} of {length}')
+                    logger.debug(f'**********{type(element)}==={element}')
                     obj_list.append(element)
                     temp_id = element.get('id', False)
                     if temp_id:
                         id_list.append(temp_id)
 
                     dep_obj = dict_to_typeql(element, import_type)
-                    logger.debug('----------------------------------------------------------------------------------------------------')
-                    logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
-                    logger.debug('----------------------------------------------------------------------------------------------------')
+                    # logger.debug('----------------------------------------------------------------------------------------------------')
+                    # myobj1 = parse(element, False, import_type)
+                    # logger.debug(myobj1.serialize(pretty=True))
+                    # logger.debug(f'\n================\n{dep_obj["dep_list"]}')
+                    # logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
+                    # logger.debug('----------------------------------------------------------------------------------------------------')
                     layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
 
     logger.debug(f'missing {missing}, cyclical {cyclical}')
     newlist = []
     duplist = []
-    if missing == [] and cyclical == []:
+    missing2 = []
+    if missing != []:
+        missing2 = [x for x in missing if x not in id_list]
+        print(f'\n\n-----------------')
+        print(f'missing ->{missing}')
+        print(f'missing2 -> {missing2}')
+
+    if missing2 == [] and cyclical == []:
         # add the layers into a list of strings
         for layer in layers:
             stid = layer["id"]
@@ -186,11 +207,16 @@ def backdoor_add_dir(dirpath):
                 dep_insert = layer["dep_insert"]
                 indep_ql = layer["indep_ql"]
                 core_ql = layer["core_ql"]
+                print("\n&&&&&&&&&&&&&&&&&&&&&&&&&")
+                print(f'{layer["id"]}      -> {layer["dep_list"]}')
+
                 #print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
                 prestring = ""
                 if dep_match != "":
                     prestring = "match " + dep_match
                 upload_string = prestring + " insert " + indep_ql + dep_insert
+                print(" ")
+                print(upload_string)
                 type_ql_list.append(upload_string)
             else:
                 duplist.append(stid)
@@ -202,9 +228,12 @@ def backdoor_add_dir(dirpath):
     len_files = len(id_set)
     len_typedb = len(id_typedb)
     id_diff = id_set - id_typedb
+    sorted_diff = sorted(list(id_diff))
     print(f'\n\n\n===========================\nduplist -> {duplist}')
     print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
-    print(f'difference -> {id_diff}')
+    print(f'difference -> ')
+    for id_d in sorted_diff:
+        print(id_d)
 
 
 def backdoor_add(pahhway):
@@ -293,15 +322,16 @@ def load_file(fullname):
     Args:
         fullname (): path and filename
     """
+    evidence_list = []
     logger.debug(f'inside history file {fullname}')
-    typedb = TypeDBSink(connection, True, import_type)
+    typedb = TypeDBSink(connection, False, import_type)
     input_id_list=[]
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
-        print(json_text)
-        for stix_dict in json_text:
+        #print(json_text["objects"])
+        for stix_dict in json_text: #["objects"]:
             input_id_list.append(stix_dict.get("id", False))
-        typedb.add(json_text)
+        result = typedb.add(json_text)
     id_set = set(input_id_list)
     id_typedb = set(get_stix_ids())
     len_files = len(id_set)
@@ -309,6 +339,9 @@ def load_file(fullname):
     id_diff = id_set - id_typedb
     print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
     print(f'difference -> {id_diff}')
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    for item in result:
+        print(item.id + " " + str(item.status) + " " + str(item.message))
 
 
 def check_object(fullname):
@@ -362,8 +395,9 @@ def test_get_del_dir_statements(dirpath):
 def test_get_delete(fullname):
     #load_file(fullname)
     id_list = get_stix_ids()
-    print("\n\n=============\n-------------\n$$$$$$$$$$$$$$$$$$$$$\n")
-    for obj_id in id_list:
+    print(f"\n\n=============\n------{id_list}-------\n$$$$$$$$$$$$$$$$$$$$$\n")
+    for inc, obj_id in enumerate(id_list):
+        print(f'\n==========\n---------- {inc + 1} of {len(id_list)} -------\n===========')
         query_id(obj_id)
     print(f'id list -> {id_list}')
 
@@ -382,7 +416,7 @@ def query_id(stixid):
     print(' ---------------------------Query Object----------------------')
     print(stix_obj.serialize(pretty=True))
     dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
-    print(' ---------------------------Delete Object----------------------')
+    print(' ---------------------------Insert Object----------------------')
     print(f'dep_match -> {dep_match}')
     print(f'dep_insert -> {dep_insert}')
     print(f'indep_ql -> {indep_ql}')
@@ -393,21 +427,23 @@ def query_id(stixid):
     print(f'del_tql -> {del_tql}')
 
 
-def get_stix_ids():
+def get_stix_ids(get_id_query = get_ids):
     """ Get all the stix-ids in a database, should be moved to typedb_lib file
 
     Returns:
         id_list : list of the stix-ids in the database
     """
+    query = get_id_query
     g_uri = connection["uri"] + ':' + connection["port"]
     id_list = []
-    with TypeDB.core_client(g_uri) as client:
+    with TypeDB. core_driver(g_uri) as client:
         with client.session(connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.READ) as read_transaction:
-                answer_iterator = read_transaction.query().match(get_ids)
-                ids = [ans.get("ids") for ans in answer_iterator]
+                logger.debug(f"\n\n query is -> {query}")
+                answer_iterator = read_transaction.query.get(query)
+                ids = [ans.get("stix-id") for ans in answer_iterator]
                 for sid_obj in ids:
-                    sid = sid_obj.get_value()
+                    sid = sid_obj.as_attribute().as_attribute().get_value()
                     if sid in marking:
                         continue
                     else:
@@ -624,10 +660,10 @@ def check_dir(dirpath):
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 testtime = datetime.now()
                 print(f"I am opening the file {testtime}")
-                json_text = json.load(f)
-                json_list = json_text["objects"]
+                json_list = json.load(f)
+                #json_list = json_list["objects"]
                 for element in json_list:
-                    print(f'element is {element}')
+                    #print(f'element is {element}')
                     temp_id = element.get('id', False)
                     if temp_id:
                         id_list.append(temp_id)
@@ -641,7 +677,10 @@ def check_dir(dirpath):
     len_typedb = len(id_typedb)
     id_diff = id_set - id_typedb
     print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
-    print(f'difference -> {id_diff}')
+    sorted_diff = sorted(list(id_diff))
+    print(f'difference -> ')
+    for id_d in sorted_diff:
+        print(id_d)
 
 
 def cert_dict(cert_root, certs):
@@ -740,17 +779,17 @@ def test_auth():
 ##################################################################################
 def test_feeds():
     osthreat = "data/os-threat/feed-example/example.json"
-    datetime1 = dateutil.parser.isoparse("2020-10-19T01:01:01.000Z")
-    datetime2 = dateutil.parser.isoparse("2020-10-20T01:01:01.000Z")
-    datetime3 = dateutil.parser.isoparse("2020-10-21T01:01:01.000Z")
-    typedb_source = TypeDBSource(connection, import_type)
-    typedb_sink = TypeDBSink(connection, True, import_type)
-    with open(osthreat, mode="r", encoding="utf-8") as f:
-        json_text = json.load(f)
-        # first lets create the feed
-        feed_id = create_feed(json_text[0], typedb_sink, datetime1)
-        print(f'feed id -> {feed_id}')
-        update_feed(feed_id, json_text[1], datetime2, typedb_source, typedb_sink)
+    # # datetime1 = dateutil.parser.isoparse("2020-10-19T01:01:01.000Z")
+    # # datetime2 = dateutil.parser.isoparse("2020-10-20T01:01:01.000Z")
+    # # datetime3 = dateutil.parser.isoparse("2020-10-21T01:01:01.000Z")
+    # typedb_source = TypeDBSource(connection, import_type)
+    # typedb_sink = TypeDBSink(connection, True, import_type)
+    # with open(osthreat, mode="r", encoding="utf-8") as f:
+    #     json_text = json.load(f)
+    #     # first lets create the feed
+    #     feed_id = create_feed(json_text[0], typedb_sink, datetime1)
+    #     print(f'feed id -> {feed_id}')
+    #     update_feed(feed_id, json_text[1], datetime2, typedb_source, typedb_sink)
 
 
 def update_feed(feed_id, local_list, loc_datetime, typedb_source, typedb_sink):
@@ -911,14 +950,14 @@ def create_feed(local_list, typedb_sink, loc_datetime):
 
 def update_typeql_data(data_list, stix_connection: Dict[str, str]):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
-    with TypeDB.core_client(url) as client:
+    with TypeDB. core_driver(url) as client:
         # Update the data in the database
         with client.session(stix_connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.WRITE) as update_transaction:
                 logger.debug(f'==================== updating feed concepts =======================')
                 for data in data_list:
                     logger.debug(f'\n\n{data}\n\n')
-                    insert_iterator = update_transaction.query().update(data)
+                    insert_iterator = update_transaction.query.update(data)
 
                     logger.debug(f'insert_iterator response ->\n{insert_iterator}')
                     for result in insert_iterator:
@@ -929,14 +968,14 @@ def update_typeql_data(data_list, stix_connection: Dict[str, str]):
 
 def insert_typeql_data(data_list, stix_connection: Dict[str, str]):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
-    with TypeDB.core_client(url) as client:
+    with TypeDB. core_driver(url) as client:
         # Update the data in the database
         with client.session(stix_connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.WRITE) as insert_transaction:
                 logger.debug(f'=========== inserting feed concepts ===========================')
                 for data in data_list:
                     logger.debug(f'\n\n{data}\n\n')
-                    insert_iterator = insert_transaction.query().insert(data)
+                    insert_iterator = insert_transaction.query.insert(data)
 
                     logger.debug(f'insert_iterator response ->\n{insert_iterator}')
                     for result in insert_iterator:
@@ -1115,7 +1154,7 @@ def get_id_list(match_tql, connection, variable):
     with TypeDB.core_client(g_uri) as client:
         with client.session(connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.READ) as read_transaction:
-                answer_iterator = read_transaction.query().match(match_tql)
+                answer_iterator = read_transaction.query.match(match_tql)
                 ids = [ans.get(variable) for ans in answer_iterator]
                 for sid_obj in ids:
                     sid = sid_obj.get_value()
@@ -1230,9 +1269,9 @@ def test_get_embedded(obj_id):
 # Setup Nodes and Edges Array Stuff for Force Graph Display - including icons
 #
 ########################################################################################
-def try_nodes_and_edges():
+def try_nodes_and_edges(file_path):
     nodes_edges = {}
-    with open(reports + poison, mode="r", encoding="utf-8") as f:
+    with open(file_path, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         obj_list = json_text["objects"]
         print(obj_list[0])
@@ -1247,15 +1286,31 @@ def nodes_and_edges(obj_list):
     edges = []
     for obj in obj_list:
         if obj["type"] == "relationship":
-            edges = setup_edges(obj, edges)
+            edges = setup_relationship(obj, edges)
+        elif obj["type"] == "sighting":
+            nodes, edges = setup_sighting(obj, nodes, edges)
         else:
             nodes, edges = setup_nodes(obj, nodes, edges)
+    check_icons = []
+    legend = []
+    node_ids = []
+    for node in nodes:
+        node_ids.append(node["id"])
+        if node["icon"] not in check_icons:
+            check_icons.append(node["icon"])
+            layer = {}
+            layer["icon"] = node["icon"]
+            layer["label"] = node["label"]
+            legend.append(layer)
+    # remove any edges without nodes
+    edges = [x for x in edges if (x["source"] in node_ids and x["target"] in node_ids)]
     nodes_edges["nodes"] = nodes
     nodes_edges["edges"] = edges
+    nodes_edges["legend"] = legend
     return nodes_edges
 
 
-def setup_edges(obj, edges):
+def setup_relationship(obj, edges):
     edge = {}
     edge["id"] = obj["id"]
     edge["type"] = "relationship"
@@ -1265,6 +1320,52 @@ def setup_edges(obj, edges):
     edges.append(edge)
     return edges
 
+
+def setup_sighting(obj, nodes, edges):
+    # sighting_of_ref
+    print(f"==== {obj['id']}")
+    edge = {}
+    edge["id"] = obj["id"]
+    edge["type"] = "sighting"
+    edge["label"] = "Sighting of " + obj["sighting_of_ref"].split('--')[0]
+    edge["source"] = obj["id"]
+    edge["target"] = obj["sighting_of_ref"]
+    edges.append(edge)
+    # list of observed_data_refs
+    for obs in obj["observed_data_refs"]:
+        edge = {}
+        edge["id"] = obj["id"]
+        edge["type"] = "sighting"
+        edge["label"] = "Observed Data"
+        edge["source"] = obj["id"]
+        edge["target"] = obs
+        edges.append(edge)
+    # list of where_sighted_refs
+    if "where_sighted_refs" in obj:
+        for where in obj["where_sighted_refs"]:
+            edge = {}
+            edge["id"] = obj["id"]
+            edge["type"] = "sighting"
+            edge["label"] = "Where Sighted " + where.split('--')[0]
+            edge["source"] = obj["id"]
+            edge["target"] = where
+            edges.append(edge)
+    # sort out node
+    node = {}
+    node["id"] = obj["id"]
+    node["original"] = copy.deepcopy(obj)
+    node["label"] = "Sighting"
+    if "extensions" in obj:
+        for key, value in obj["extensions"].items():
+            if key == "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43":
+                continue
+            else:
+                node["icon"] = key
+    else:
+        node["icon"] = "sighting"
+
+    nodes.append(node)
+    return nodes, edges
 
 def setup_nodes(obj, nodes, edges):
     obj_id = obj["id"]
@@ -1359,48 +1460,93 @@ def find_icon(stix_object, node):
 
 def sdo_icon(stix_object):
     sdo_type = stix_object["type"]
-    label = stix_object.get("name", "")
+    label = sdo_type
     icon_type = ""
     attack_type = ""
     attack_object = False if not stix_object.get("x_mitre_version", False) else True
     if attack_object:
         sub_technique = False if not stix_object.get("x_mitre_is_subtechnique", False) else True
-        for model in attack_models["mappings"]["object_conversion"]:
-            logger.debug(f'chacking models, type is {model["type"]}')
-            if model["type"] == sdo_type:
-                attack_type = model["typeql"]
-                logger.debug(f'attack type is {attack_type}')
-                if attack_type == "technique" and sub_technique:
-                    attack_type = "subtechnique"
-                break
+        if sdo_type[:7] == "x-mitre":
+            attack_type = sdo_type[8:]
+        elif sdo_type == "attack-pattern":
+            attack_type = "technique"
+            if sub_technique:
+                attack_type = "subtechnique"
+        elif sdo_type == "course-of-action":
+            attack_type = "mitigation"
+        elif sdo_type == "intrusion-set":
+            attack_type = "group"
+        elif sdo_type == "malware" or sdo_type == "tool":
+            attack_type = "software"
+        elif sdo_type == "campaign":
+            attack_type = "campaign"
+        else:
+            attack_type = "unknown"
+
         if "attack-" in attack_type:
             pass
         else:
             attack_type = "attack-" + attack_type
         icon_type = attack_type
+        label = attack_type
     else:
         if sdo_type == "identity":
-            if stix_object.get("identity_class", False):
-                if stix_object["identity_class"] == "individual":
-                    icon_type = "identity-individual"
-                elif stix_object["identity_class"] == "organization":
-                    icon_type = "identity-organization"
-                elif stix_object["identity_class"] == "class":
-                    icon_type = "identity-class"
-                elif stix_object["identity_class"] == "system":
-                    icon_type = "identity-system"
-                elif stix_object["identity_class"] == "group":
-                    icon_type = "identity-group"
+            if "extensions" in stix_object:
+                icon_type = "identity-contact"
+            else:
+                if stix_object.get("identity_class", False):
+                    if stix_object["identity_class"] == "individual":
+                        icon_type = "identity-individual"
+                    elif stix_object["identity_class"] == "organization":
+                        icon_type = "identity-organization"
+                    elif stix_object["identity_class"] == "class":
+                        icon_type = "identity-class"
+                    elif stix_object["identity_class"] == "system":
+                        icon_type = "identity-system"
+                    elif stix_object["identity_class"] == "group":
+                        icon_type = "identity-group"
+                    else:
+                        icon_type = "identity-unknown"
                 else:
                     icon_type = "identity-unknown"
-            else:
-                icon_type = "identity-unknown"
 
         elif sdo_type == "malware":
             if stix_object.get("is_family", False):
                 icon_type = "malware-family"
             else:
                 icon_type = "malware"
+        elif sdo_type == "impact":
+            if "extensions" in stix_object:
+                for key, value in stix_object["extensions"].items():
+                    if key == "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9":
+                        continue
+                    else:
+                        icon_type = "impact-" + key
+            else:
+                icon_type = "impact"
+        elif sdo_type == "incident":
+            if "extensions" in stix_object:
+                icon_type = "incident-ext"
+                label = "extended incident"
+            else:
+                icon_type = "incident"
+        elif sdo_type == "sequence":
+            if stix_object["step_type"] == "start_step" or stix_object["step_type"] == "end_step":
+                icon_type = "step-terminal"
+                label = stix_object["step_type"].replace("_", " ")
+            elif stix_object["step_type"] == "single_step":
+                if "on_completion" in stix_object:
+                    icon_type = "step-single"
+                    label = stix_object["step_type"].replace("_", " ")
+                elif "on_success" in stix_object:
+                    icon_type = "step-xor"
+                    label = stix_object["step_type"].replace("_", " ")
+                else:
+                    icon_type = "step-single"
+                    label = stix_object["step_type"].replace("_", " ")
+            else:
+                icon_type = "step-parallel"
+                label = stix_object["step_type"].replace("_", " ")
         else:
             icon_type = sdo_type
     return icon_type, label
@@ -1417,45 +1563,58 @@ def sco_icon(stix_object):
             icon_type = "email-message"
             label = stix_object.get("subject", "")
     elif sco_type == "file":
-        if stix_object["extensions"].get("archive-ext", False):
-            icon_type = "file-archive"
-            label = stix_object.get("name", "")
-        elif stix_object["extensions"].get("pdf-ext", False):
-            icon_type = "file-pdf"
-            label = stix_object.get("name", "")
-        elif stix_object["extensions"].get("raster-image-ext", False):
-            icon_type = "file-img"
-            label = stix_object.get("name", "")
-        elif stix_object["extensions"].get("windows-pebinary-ext", False):
-            icon_type = "file-bin"
-            label = stix_object.get("name", "")
-        elif stix_object["extensions"].get("ntfs-ext", False):
-            icon_type = "file-ntfs"
-            label = stix_object.get("name", "")
+        if "extensions" in stix_object:
+            if stix_object["extensions"].get("archive-ext", False):
+                icon_type = "file-archive"
+                label = stix_object.get("name", "")
+            elif stix_object["extensions"].get("pdf-ext", False):
+                icon_type = "file-pdf"
+                label = stix_object.get("name", "")
+            elif stix_object["extensions"].get("raster-image-ext", False):
+                icon_type = "file-img"
+                label = stix_object.get("name", "")
+            elif stix_object["extensions"].get("windows-pebinary-ext", False):
+                icon_type = "file-bin"
+                label = stix_object.get("name", "")
+            elif stix_object["extensions"].get("ntfs-ext", False):
+                icon_type = "file-ntfs"
+                label = stix_object.get("name", "")
+            else:
+                icon_type = "file"
+                label = stix_object.get("name", "")
         else:
             icon_type = "file"
             label = stix_object.get("name", "")
     elif sco_type == "network-traffic":
-        if stix_object["extensions"].get("http-request-ext", False):
-            icon_type = "network-traffic-http"
-            label = "http-request"
-        elif stix_object["extensions"].get("icmp-ext", False):
-            icon_type = "network-traffic-icmp"
-            label = "icmp"
-        elif stix_object["extensions"].get("tcp-ext", False):
-            icon_type = "network-traffic-tcp"
-            label = "tcp"
-        elif stix_object["extensions"].get("sock-ext", False):
-            icon_type = "network-traffic-sock"
-            label = "socket"
+        if "extensions" in stix_object:
+            if stix_object["extensions"].get("http-request-ext", False):
+                icon_type = "network-traffic-http"
+                label = "http-request"
+            elif stix_object["extensions"].get("icmp-ext", False):
+                icon_type = "network-traffic-icmp"
+                label = "icmp"
+            elif stix_object["extensions"].get("tcp-ext", False):
+                icon_type = "network-traffic-tcp"
+                label = "tcp"
+            elif stix_object["extensions"].get("sock-ext", False):
+                icon_type = "network-traffic-sock"
+                label = "socket"
+            else:
+                icon_type = "network-traffic"
+                for prot in stix_object["protocols"]:
+                    label += prot + ", "
         else:
             icon_type = "network-traffic"
             for prot in stix_object["protocols"]:
                 label += prot + ", "
     elif sco_type == "user-account":
-        if stix_object["extensions"].get("unix-account-ext", False):
-            icon_type = "user-account-unix"
-            label = "unix-account"
+        if "extensions" in stix_object:
+            if stix_object["extensions"].get("unix-account-ext", False):
+                icon_type = "user-account-unix"
+                label = "unix-account"
+            else:
+                icon_type = "user-account"
+                label = "standard-account"
         else:
             icon_type = "user-account"
             label = "standard-account"
@@ -1465,19 +1624,24 @@ def sco_icon(stix_object):
             label = stix_object.get("mime_type", "")
         elif sco_type == "directory":
             label = stix_object.get("path", "")
-        elif sco_type in ["domain-name", "email-addr", "ipv4-addr", "ipv6-addr", "mac-addr", "mutex", "url"]:
+        elif sco_type in ["domain-name", "email-addr", "ipv4-addr", "ipv6-addr", "mac-addr", "mutex", "url", "anecdote"]:
             label = stix_object.get("value", "")
         elif sco_type == "process":
-            if stix_object["extensions"].get("windows-process-ext", False):
-                label = "windows process"
-            elif stix_object["extensions"].get("windows-service-ext", False):
-                label = "windows service"
+            if "extensions" in stix_object:
+                if stix_object["extensions"].get("windows-process-ext", False):
+                    label = "windows process"
+                elif stix_object["extensions"].get("windows-service-ext", False):
+                    label = "windows service"
+                else:
+                    label = "standard process"
             else:
                 label = "standard process"
         elif sco_type == "windows-registry-key":
             label = stix_object.get("key", "")
         elif sco_type == "x509-certificate":
             label = stix_object.get("serial_number", "")
+    if icon_type == "domain-name":
+        icon_type = "domain"
     return icon_type, label
 
 
@@ -1485,16 +1649,256 @@ def sro_icon(stix_object):
     sro_type = stix_object["type"]
     if sro_type == "sighting":
         icon_type = "sighting"
-        label = ""
+        label = "sighting"
     else:
         icon_type = "relationship"
-        label = stix_object.get("retlationship_type", "")
+        label = stix_object.get("retlationship_type", "relationship")
     return icon_type, label
 
 
 def meta_icon(stix_object):
-    return "marking-definition", stix_object.get("definition_type", "")
+    return "marking", stix_object.get("definition_type", "")
 
+###################################################################################
+#
+#  Build TypeDB Source
+#
+#############################################################################
+
+compare = {
+    "GT" : " > ",
+    "LT": " < ",
+    "EQ": " ",
+    "GE": " >= ",
+    "LE": " <= ",
+    "NE": " != "
+}
+
+def get_list(stix_id_list):
+    '''
+    TypeDBSource Method
+    To be poarallelised and sped-up by Denis, main
+
+    Args:
+        - stix_id_list ([stix-id]) - a list of valid stix-id's that exists in the database
+
+    Returns
+        - list of stix objects or an error message
+    '''
+    obj_list = []
+    typedb = TypeDBSource(connection, import_type)
+    for stix_id in stix_id_list:
+        obj = typedb.get(stix_id)
+        obj_list.append(obj)
+
+    return obj_list
+
+
+
+
+def get_objects(obj, properties, embedded=[], sub_prop=[], import_type=import_type):
+    """Interface for getting one or more STIX objects from TypeDB.
+
+    Can be based on object tpe, with property constraints, embedded and sub-object constraints
+
+    Args:
+        - obj_typeql (string) - a valid Stx-ORM object that exists in the database
+        - properties ([dict]) - a list of dicts providing comparisons between properties and constants
+                                  - dict:
+                                          - property-name - a TypeDB property
+                                          - comparator - a two letter comparison
+                                          - constant - a constant against which the property value is compared
+        - embedded([stix-id]) - a list of valid stix-ids that exist in the database
+        - sub_prop([dict]) - a list of valid stix-ids that exist in the database
+                                  - dict:
+                                          - sub-object typeql name
+                                          - property-name - a TypeDB property
+                                          - comparator - a two letter comparison
+                                          - constant - a constant against which the property value is compared
+
+    """
+    id_list = []
+    logger.debug("----------------------- Incoming Definition --------------------------------------")
+    logger.debug(f"object is -> {obj}")
+    for prop in properties:
+        logger.debug(f"prop -> {prop}")
+    logger.debug(f"embedded is -> {embedded}")
+    for sub in sub_prop:
+        logger.debug(f"sub_prop -> {sub}")
+    match = _get_objects_tql(obj, properties, embedded, sub_prop, import_type)
+    logger.debug("------------------- Resulting Match Statement ------------------------------------------")
+    logger.debug(f"match is -> \n{match}")
+    logger.debug("-------------------------------------------------------------")
+    id_list = get_stix_ids(match)
+    obj_list = get_list(id_list)
+    return obj_list
+
+
+
+def test_get_objects():
+    # 0. Load the human_trigger.json file into typedb
+    load_file(incident + "/human_trigger.json")
+    # 1. Find incident created by identity
+    # Return -> "incident--1a074418-9248-4a21-9918-a79d0f1dbc5b"
+    obj = "incident"
+    properties = []
+    embedded = [
+        "identity--2242662b-d581-4864-8696-fff719dc0500"
+    ]
+    sub_prop= []
+    print("\n***** Test Incident - 1 ************")
+    test_result  = get_objects(obj, properties, embedded, sub_prop, import_type)
+    print(test_result)
+
+    # 2. Find Email Address with Property  Equal to constant
+    # Return -> "email-addr--9b7e29b3-fd8d-562e-b3f0-8fc8134f5dda"
+    obj = "email-addr"
+    properties = [{
+        "prop_name": "value",
+        "comparator" : "EQ",
+        "prop_value": "admin@microsft.support.com"
+    }]
+    embedded = []    
+    sub_prop= []
+    print("\n***** Test Identity - 2 property equals ************")
+    test_result  = get_objects(obj, properties, embedded, sub_prop, import_type)
+    print(test_result)
+
+    # 3. Find identity where Proeprty is Not Equal to Constant
+    # Return -> { $stix-id "identity--1621d4d4-b67d-41e3-9670-f01faf20d111" isa stix-id; }
+    #           { $stix-id "identity--2242662b-d581-4864-8696-fff719dc0500" isa stix-id; }
+    #           { $stix-id "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c" isa stix-id; }
+    #           { $stix-id "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5" isa stix-id; }
+    obj = "identity"
+    properties = [{
+        "prop_name": "identity_class",
+        "comparator" : "NE",
+        "prop_value": "individual"
+    }]
+    embedded = []    
+    sub_prop= []
+    print("\n***** Test Identity - 3 proeprty not equals ************")
+    test_result  = get_objects(obj, properties, embedded, sub_prop, import_type)
+    print(test_result)
+
+    # 4. Find identity where both of two Property's EQ Constants
+    # Return -> { $stix-id "identity--2242662b-d581-4864-8696-fff719dc0500" isa stix-id; }
+    obj = "identity"
+    properties = [{
+        "prop_name": "identity_class",
+        "comparator" : "EQ",
+        "prop_value": "organization"
+    },
+    {
+        "prop_name": "name",
+        "comparator" : "EQ",
+        "prop_value": "OS Threat"
+    }]
+    embedded = []    
+    sub_prop= []
+    print("\n***** identity Test -  two Property EQ ************")
+    test_result  = get_objects(obj, properties, embedded, sub_prop, import_type)
+    print(test_result)
+
+    # 5. Find attack-pattern where one Ext Ref sub-object has a Property EQ Constant --> Mitre ATT&CK object
+    # Return -> { $stix-id "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7" isa stix-id; }
+    #           { $stix-id "attack-pattern--9db0cf3a-a3c9-4012-8268-123b9db6fd82" isa stix-id; }
+    
+    obj = "attack-pattern"
+    sub_prop = [{
+        "prop_name": "source_name",
+        "comparator" : "EQ",
+        "prop_value": "mitre-attack"
+    }]
+    embedded = []    
+    properties = []
+    print("\n***** Attack-Pattern Test - Ext Ref property EQ ************")
+    test_result  = get_objects(obj, properties, embedded, sub_prop, import_type)
+    print(test_result)
+
+
+    # 6. Find impact where a property of an Extension equals a contant
+    # Return -> { $stix-id "impact--1032f48b-28d1-451f-970e-78b736db8e13" isa stix-id; }
+    obj = "impact"
+    sub_prop = [{
+        "prop_name": "information_type",
+        "comparator" : "EQ",
+        "prop_value": "credentials-user"
+    }]
+    embedded = []    
+    properties = []
+    print("\n***** impact Test - Extension proeprty equals ************")
+    test_result  = get_objects(obj, properties, embedded, sub_prop, import_type)
+    print(test_result)
+
+
+
+def _get_objects_tql(obj, properties, embedded=[], sub_prop=[], import_type=import_type):
+    """Function to return the typeQL for a Get Objects call.
+
+    Can be based on object tpe, with property constraints, embedded and sub-object constraints
+
+    Args:
+        - obj_typeql (string) - a valid Stx-ORM object that exists in the database
+        - properties ([dict]) - a list of dicts providing comparisons between properties 
+                    with stix json property names (not typeql names) and constants
+                                  - dict:
+                                          - property-name - a TypeDB property
+                                          - comparator - a two letter comparison
+                                          - constant - a constant against which the property value is compared
+        - embedded([stix-id]) - a list of valid stix-ids that exist in the database
+        - sub_prop([dict]) - a list of valid stix-ids that exist in the database
+                                  - dict:
+                                          - sub-object typeql name
+                                          - property-name - a TypeDB property
+                                          - comparator - a two letter comparison
+                                          - constant - a constant against which the property value is compared
+
+    """
+    auth = authorised_mappings(import_type)
+    # object match statement
+    obj_tql = auth["objects"][obj]
+    obj_var = "$" + obj
+    match = "match\n   " + obj_var + " isa " + obj +",\n         has stix-id $stix-id;\n"
+    value = ""
+
+    # object properties
+    for prop in properties:
+        prop_var = "$" + prop["prop_name"]
+        match += "   " + obj_var + " has " + obj_tql[prop["prop_name"]] + " " + prop_var + ";\n"
+        value += "   " + prop_var + compare[prop["comparator"]] + val_tql(prop["prop_value"]) + ";\n"
+
+    # embedded properties
+    for inc, embed in enumerate(embedded):
+        prop_var = "$" + "Stix-Object" + str(inc)
+        match += "   "  + prop_var + ' isa stix-core-object,\n' 
+        match += "         "  + 'has stix-id "' + embed + '";\n'
+        value += "   "  + "(owner:" +obj_var + ", pointed-to:" + prop_var +  ") isa embedded;\n"
+
+    sub_obj_props = {}
+    print(type(auth["sub_objects"]))
+    for raw_key, raw_sub in auth["sub_objects"].items():
+        for prop_key, prop_value in raw_sub.items():
+            if prop_key not in sub_obj_props:
+                sub_obj_props[prop_key] = prop_value
+
+    # sub-object properties
+    for inc, sub in enumerate(sub_prop):
+         sub_var = "$Sub-Object" + str(inc) 
+         prop_var = "$" + sub["prop_name"]
+         prop_name = sub_obj_props[sub["prop_name"]]
+         match +=  "   "  + sub_var + " isa stix-sub-object,\n"
+         match +=  "         "  + "has " + prop_name + " " + prop_var + ";\n"
+         match +=  "   "  + "(owner:" + obj_var + ", pointed-to:" + sub_var + ") isa embedded;\n"
+         value +=  "   "  + prop_var + compare[sub["comparator"]] + val_tql(sub["prop_value"]) + ";\n"
+
+    get = "   get $stix-id;\n"
+    return match + value + get
+
+
+
+
+##############################################################################
 
 # if this file is run directly, then start here
 if __name__ == '__main__':
@@ -1535,7 +1939,9 @@ if __name__ == '__main__':
 
     data_path = "data/examples/"
     path1 = "test/data/standard/"
-    path2 = "data/mitre/history/"
+    path2 = "test/data/os-threat/test2/"
+    path3 = "test/data/os-threat/incident_adjust/"
+    path4 = "test/data/os-threat/test3/"
     cert_root = "data/stix_cert_data"
     cert1 = "/attack_pattern_sharing/"
     cert2 = "/campaign_sharing/"
@@ -1576,37 +1982,40 @@ if __name__ == '__main__':
     mitre_data = "data/mitre/traffic_duplication.json"
 
     mitre_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
-    mitre = "test/data/mitre/check/"
+    mitre = "test/data/mitre/test/"
     mitre_test = "data/mitre/latest/"
     osthreat = "data/os-threat/"
-    reports = "data/threat_reports/"
+    reports = "test/data/threat_reports/"
     poison = "poisonivy.json"
+    incident = "test/data/os-threat/incident"
+    incident_test = "test/data/os-threat/test2"
+    incident_adjust = "test/data/os-threat/incident_adjust"
     threattest = "history/"
 
     id_list = ['file--94ca-5967-8b3c-a906a51d87ac', 'file--5a27d487-c542-5f97-a131-a8866b477b46', 'email-message--72b7698f-10c2-565a-a2a6-b4996a2f2265', 'email-message--cf9b4b7f-14c8-5955-8065-020e0316b559', 'intrusion-set--0c7e22ad-b099-4dc3-b0df-2ea3f49ae2e6', 'attack-pattern--7e33a43e-e34b-40ec-89da-36c9bb2cacd5', 'autonomous-system--f720c34b-98ae-597f-ade5-27dc241e8c74']
     # 019fde1c-
     id_list2 = ['file--94ca-5967-8b3c-a906a51d87ac']
     id_list3 = ['file--019fde1c-94ca-5967-8b3c-a906a51d87ac']
-    stid1 = "file--fb0419a8-f09c-57f8-be64-71a80417591c"
-    stid2 = "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"
-    stid3 = "ipv4-addr--efcd5e80-570d-4131-b213-62cb18eaa6a8"
+    stid1 = "task--7c5751c2-3c18-41bc-900c-685764c960f3"
+    stid2 = "file--ec3415cc-5f4f-5ec8-bdb1-6f86996ae66d"
+    stid3 = "sighting--300cd92e-d184-4c60-a97b-1759dc6780ed"
     #test_initialise()
     #load_file_list(path1, [f30, f21])
-    #load_file(mitre_data)
-    load_file(mitre + "attack_objects.json")
+    #load_file(incident + "/human_trigger.json")
+    #load_file(mitre + "attack_objects.json")
     #check_object(mitre + "attack_objects.json")
     #load_file(reports + poison)
     print("=====")
     print("=====")
     print("=====")
-    #query_id(stid1)
+    #query_id(stid3)
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
-    #check_dir(mitre)
-    #check_dir(mitre)
+    #check_dir(path1)
+    #load_file(path1 + f24)
     #test_delete(data_path+file1)
     #test_get(stid1)
-    #test_get_delete(path2 + "attack_objects.json")
+    #test_get_delete(incident)
     #test_initialise()
     #test_delete_dir(path1)
     #clean_db()
@@ -1619,13 +2028,14 @@ if __name__ == '__main__':
     #test_generate_docs()
     #backdoor_add(mitre + "attack_collection.json")
     #backdoor_add_dir(osthreat + threattest)
-    #backdoor_add_dir(mitre)
+    #backdoor_add_dir(incident_test)
     #test_get_file(data_path + file1)
-    #test_insert_statements(mitre + "attack_objects.json", stid1)
+    #test_insert_statements(path2 + "evidence.json", stid3)
     #test_insert_statements(path1 + f29, stid2)
     #test_get_del_dir_statements(mitre)
     #test_json(osthreat + "feed.json")
     #test_feeds()
     #test_get_embedded("report--f2b63e80-b523-4747-a069-35c002c690db")
     #try_subgraph_get(reports + poison)
-    #try_nodes_and_edges()
+    try_nodes_and_edges(incident_test + "/evidence.json")
+    #test_get_objects()

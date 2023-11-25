@@ -1,0 +1,7 @@
+
+(stix-orm) C:\Users\brett\PycharmProjects\Stix-ORM>python try_refactor.py 
+=====
+=====
+=====
+the number in the list is 20050
+processed 0 out of 20050

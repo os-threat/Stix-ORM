@@ -1,0 +1,8 @@
+{
+  "framework" : "framework",
+  "version" : "version",
+  "domain" : "domain",
+  "comparison" : "comparison",
+  "comparison_approach" : "comparison-approach",
+  "confidence" : "confidence"
+}

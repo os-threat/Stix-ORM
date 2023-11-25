@@ -2,14 +2,15 @@ import logging
 import traceback
 from typing import List, Iterator
 from typedb.api.answer.concept_map import ConceptMap
-from typedb.api.connection.client import TypeDBClient
+from typedb.api.connection.driver import TypeDBDriver
 from typedb.api.connection.session import SessionType, TypeDBSession
 from typedb.api.connection.transaction import TransactionType, TypeDBTransaction
-from typedb.api.query.future import QueryFuture
+from typedb.common.promise import Promise
 from typedb.api.query.query_manager import QueryManager
-from typedb.client import TypeDB
-from typedb.stream.bidirectional_stream import BidirectionalStream
-
+from typedb.driver import TypeDB
+#from typedb.stream.bidirectional_stream import BidirectionalStream
+from typedb.common.promise import Promise
+from typedb.driver import TypeDB
 from stixorm.module.typedb_lib.logging import log_delete_layer, log_add_layer
 from stixorm.module.typedb_lib.instructions import Instructions
 
@@ -29,8 +30,8 @@ def build_insert_query(layer):
         insert_tql = ''
     else:
         insert_tql = 'insert ' + indep_ql + dep_insert
-    logger.info(f'\n match_tql string?-> {match_tql}')
-    logger.info(f'\n insert_tql string?-> {insert_tql}')
+    logger.debug(f'\n match_tql string?-> {match_tql}')
+    logger.debug(f'\n insert_tql string?-> {insert_tql}')
     typeql_string = match_tql + insert_tql
 
     insertion_is_empty = len(insert_tql) == 0
@@ -40,7 +41,7 @@ def build_insert_query(layer):
 
 
 def build_match_id_query(stix_ids: List[str]):
-    get_ids_tql = 'match $id isa stix-id;'
+    get_ids_tql = 'match $id isa stix-id; '
     len_id = len(stix_ids)
     if len_id == 1:
         get_ids_tql += '$id "' + stix_ids[0] + '";'
@@ -51,15 +52,15 @@ def build_match_id_query(stix_ids: List[str]):
                 get_ids_tql += " ;"
             else:
                 get_ids_tql += ' or '
-    return get_ids_tql
+    return get_ids_tql + " get $id;"
 
 
 def get_core_client(uri: str,
                     port: str):
     typedb_url = uri + ":" + port
-    return TypeDB.core_client(typedb_url)
+    return TypeDB.core_driver(typedb_url)
 
-def get_data_session(core_client: TypeDBClient,
+def get_data_session(core_client: TypeDBDriver,
                      database: str):
     return core_client.session(database, SessionType.DATA)
 
@@ -80,7 +81,7 @@ def match_query(uri: str, port: str, database: str, query: str, data_query, **da
             with client_session as session:
                 read_transaction = get_read_transaction(session)
                 with read_transaction as transaction:
-                    answer_iterator = transaction.query().match(query)
+                    answer_iterator = transaction.query.get(query)
                     data = data_query(query, answer_iterator, transaction, **data_query_args)
                     return data
     except Exception as e:
@@ -89,13 +90,13 @@ def match_query(uri: str, port: str, database: str, query: str, data_query, **da
 
 def get_all_databases(uri: str, port: str):
     client = get_core_client(uri, port)
-    return client.databases().all()
+    return client.databases.all()
 
 def delete_database(uri: str, port: str, database: str):
     client = get_core_client(uri, port)
-    if client.databases().contains(database):
+    if client.databases.contains(database):
        logger.info('Database ' + database + ' exists... deleting')
-       client.databases().get(database).delete()
+       client.databases.get(database).delete()
     else:
        logger.info('Database ' + database + ' does not exists... skipping')
 
@@ -179,9 +180,9 @@ def delete_layers(uri: str, port: str, database: str, instructions: Instructions
 
 
 def delete_layer(transaction: TypeDBTransaction, query: str):
-    transaction_query: QueryManager = transaction.query()
-    query_future: QueryFuture = transaction_query.delete(query)
-    bi_d: BidirectionalStream = query_future.get()
+    transaction_query: QueryManager = transaction.query
+    query_future: Promise = transaction_query.delete(query)
+    bi_d = query_future.resolve()
     logger.info(
         '\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n' + \
         '---------------------------------------------------------------------------------------- Delete Layer Query ------------------------------------------------------------------------------\n' + \
@@ -200,7 +201,7 @@ def delete_layer(transaction: TypeDBTransaction, query: str):
 
 
 def add_layer(transaction: TypeDBTransaction, layer: str):
-    transaction_query: QueryManager = transaction.query()
+    transaction_query: QueryManager = transaction.query
     query_future: Iterator[ConceptMap] = transaction_query.insert(layer)
 
     logger.debug('\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n')

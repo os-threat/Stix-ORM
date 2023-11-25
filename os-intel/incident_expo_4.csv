@@ -1,0 +1,185 @@
+created,type,name,description,relationship_type,determination,investigation_status,detection_methods,impact_category,status,goal,outcome
+2022-09-15T01:37:47.004Z,marking-definition,,,,,,,,,,
+2022-09-15T01:37:47.004Z,marking-definition,,,,,,,,,,
+2022-09-16T01:38:27.921Z,threat-actor,Hydra,A fake intrusion set that frequently loses and replaces heads,,,,,,,,
+2022-11-17T09:27:57.156Z,threat-actor,Dr. Doom,A fake intrusion set that is run by a person with metal grafted to their skin and a hatred of someone named Richards,,,,,,,,
+2022-09-15T01:37:47.004Z,identity,Wakandan Expo,,,,,,,,,
+2022-09-15T01:37:47.004Z,relationship,,,impacts,,,,,,,
+2022-09-15T01:37:47.004Z,identity,Proj Manager,Incident response manager for the Wakandan Expo,,,,,,,,
+2022-09-15T13:22:53.231Z,identity,Shuri IT,Security Response vendor,,,,,,,,
+2022-09-15T01:37:47.004Z,relationship,,,employed-at,,,,,,,
+2022-09-15T01:37:47.004Z,relationship,,,contact-for,,,,,,,
+2022-09-15T13:22:53.231Z,relationship,,,contact-for,,,,,,,
+2022-09-15T01:37:47.004Z,relationship,,,attributed-to,,,,,,,
+2022-11-17T09:27:57.156Z,relationship,,,attributed-to,,,,,,,
+2022-09-15T01:37:47.004Z,incident,WKI-20220915-004,The Wakandan International Technology expo suffered a major disruption in a keynote presentation by Stark Enterprises.,,confirmed,open,['system-outage'],,,,
+2022-09-15T13:22:53.231Z,impact,,Due to the highly diverse nature of this Expo and official sponsorship from the Wakandan government it may impact foreign relations,,,,,external,,,
+2022-09-15T13:22:53.231Z,impact,,Due to the public nature of this incident it may impact public relations,,,,,monetary,,,
+2022-09-15T01:37:47.004Z,impact,,"All servers shutdown,wireless tied to these went down,all displays went down.",,,,,availability,,,
+2022-09-15T01:37:47.004Z,impact,,"After bypass mode all servers still shutdown, but wireless and displays are now up in a limited capacity.",,,,,availability,,,
+2022-09-15T13:22:53.231Z,impact,,Started to bring back up domain controllers and began to add wireless systems back into a managed mode.,,,,,availability,,,
+2022-11-17T09:27:57.156Z,impact,,The user credential data for external systems may have been stolen through a man-in-the-middle attack performed while wireless services were operating in a disconnected mode without monitoring.,,,,,confidentiality,,,
+2022-09-16T01:12:18.951Z,event,Delivery,"Multiple emails were found with malicious Word documents attached, but it is unclear exactly which one(s) were executed to cause the incident.",,,,,,occurred,Initial delivery,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,event,Exploitation via Word Macro,Analysis found that when opened Word spawns a number of processes to laterally move through the network,,,,,,occurred,Initial delivery,
+2022-11-17T09:27:57.156Z,event,Data Theft,Credentials for presenter and visitor systems were stolen while in bypass mode.,,,,,,occurred,Credential theft for future activities in other environments.,
+2022-11-17T09:27:57.156Z,relationship,,,related-to,,,,,,,
+2022-11-17T09:27:57.156Z,sighting,,,,,,,,,,
+2022-11-17T09:27:57.156Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,attack-pattern,Exploitation of Word Macro,If a user is convinced to enable macros on a Word document it can allow malicious code to be run or installed.,,,,,,,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-15T13:22:53.231Z,malware,ExpoOfficeSwitch,,,,,,,,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,event,Lateral Movement,Analysis found that when opened Word spawns a number of processes to laterally move through the network,,,,,,occurred,Lateral Movement and Entrenchment,
+2022-09-16T01:12:18.951Z,event,Credential Theft,Tooling ran to extract credentials from LSASS and web browsers ,,,,,,occurred,Lateral Movement and Entrenchment,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,event,Human Control,There was evidence of human control of the lateral movement of this worm as logs indicated it was most active during the normal operating hours of Hydra.,,,,,,occurred,Lateral Movement and Entrenchment,
+2022-09-16T01:12:18.951Z,event,Obfuscation,Logs are cleared after prior commands have been run.,,,,,,occurred,Hide activity,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-15T01:37:47.004Z,event,Server Shutdown,All servers including domain controllers were shutdown prior to a keynote by a Stark Industry's representative.,,,,,,occurred,,
+2022-09-16T01:12:18.951Z,event,Stop Services,,,,,,,occurred,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,event,Data Destruction,,,,,,,occurred,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,event,Obfuscation,,,,,,,occurred,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-16T01:12:18.951Z,event,Shutdown,,,,,,,occurred,,
+2022-09-16T01:12:18.951Z,sighting,,,,,,,,,,
+2022-09-15T13:22:53.231Z,event,Wireless and Display Shutdown,All wireless and displays were rendered inoperable due to loss of contact with servers and domain controllers.  This pushed back the conference keynote by 2 hours while wireless and displays were put into a bypass mode.,,,,,,occurred,,
+2022-09-15T01:37:47.004Z,task,Temporary Workaround,Set basic services including Wi-Fi and TVs to bypass dead gatekeeper machines.,,,,,,,,ongoing
+2022-09-15T01:37:47.004Z,task,Start Bypass,,,,,,,,,successful
+2022-09-15T01:37:47.004Z,task,Stop Bypass,,,,,,,,,successful
+2022-09-15T01:37:47.004Z,task,Rebuild Domain Controllers,Attempted to rebuild domain controllers,,,,,,,,failed
+2022-09-15T01:37:47.004Z,task,Reported,,,,,,,,,successful
+2022-09-15T13:22:53.231Z,task,Isolate Internet,Cutoff all servers from internet and kept the wireless in bypass mode so that remediation actions could be taken without risk of C2 commands being run to interfere.,,,,,,,,successful
+2022-09-15T13:22:53.231Z,task,External Outreach,Reached out to Shuri IT for additional assistance,,,,,,,,successful
+2022-09-15T13:22:53.231Z,task,Received AV Signatures,Received AV signatures based on images provided to run on all servers as part of recovery effort,,,,,,,,successful
+2022-09-15T13:22:53.231Z,task,Password Resets Complete,Completed reset of all administrator passwords,,,,,,,,successful
+2022-09-15T13:22:53.231Z,task,First Server Restored in Offline Environment,A minimal set of servers were restored to the IT environment,,,,,,,,successful
+2022-09-15T13:22:53.231Z,task,Mandatory Update,,,,,,,,,successful
+2022-09-16T01:38:27.921Z,task,Root cause investigation,Perform root cause investigation,,,,,,,,ongoing
+2022-09-16T01:38:27.921Z,task,IT systems restored,Completed restore of IT systems,,,,,,,,successful
+2022-09-16T01:38:27.921Z,task,Final Mandatory Update,,,,,,,,,successful
+2017-05-31T21:30:44.329Z,attack-pattern,Windows Management Instrumentation,"Adversaries may abuse Windows Management Instrumentation (WMI) to execute malicious commands and payloads. WMI is an administration feature that provides a uniform environment to access Windows system components. The WMI service enables both local and remote access, though the latter is facilitated by [Remote Services](https://attack.mitre.org/techniques/T1021) such as [Distributed Component Object Model](https://attack.mitre.org/techniques/T1021/003) (DCOM) and [Windows Remote Management](https://attack.mitre.org/techniques/T1021/006) (WinRM).(Citation: MSDN WMI) Remote WMI over DCOM operates using port 135, whereas WMI over WinRM operates over port 5985 when using HTTP and 5986 for HTTPS.(Citation: MSDN WMI)(Citation: FireEye WMI 2015)
+
+An adversary can use WMI to interact with local and remote systems and use it as a means to execute various behaviors, such as gathering information for Discovery as well as remote Execution of files as part of Lateral Movement. (Citation: FireEye WMI SANS 2015) (Citation: FireEye WMI 2015)",,,,,,,,
+2020-02-11T18:25:28.212Z,attack-pattern,SMB/Windows Admin Shares,"Adversaries may use [Valid Accounts](https://attack.mitre.org/techniques/T1078) to interact with a remote network share using Server Message Block (SMB). The adversary may then perform actions as the logged-on user.
+
+SMB is a file, printer, and serial port sharing protocol for Windows machines on the same network or domain. Adversaries may use SMB to interact with file shares, allowing them to move laterally throughout a network. Linux and macOS implementations of SMB typically use Samba.
+
+Windows systems have hidden network shares that are accessible only to administrators and provide the ability for remote file copy and other administrative functions. Example network shares include `C$`, `ADMIN$`, and `IPC$`. Adversaries may use this technique in conjunction with administrator-level [Valid Accounts](https://attack.mitre.org/techniques/T1078) to remotely access a networked system over SMB,(Citation: Wikipedia Server Message Block) to interact with systems using remote procedure calls (RPCs),(Citation: TechNet RPC) transfer files, and run transferred binaries through remote Execution. Example execution techniques that rely on authenticated sessions over SMB/RPC are [Scheduled Task/Job](https://attack.mitre.org/techniques/T1053), [Service Execution](https://attack.mitre.org/techniques/T1569/002), and [Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047). Adversaries can also use NTLM hashes to access administrator shares on systems with [Pass the Hash](https://attack.mitre.org/techniques/T1550/002) and certain configuration and patch levels.(Citation: Microsoft Admin Shares)",,,,,,,,
+2020-02-12T18:57:36.041Z,attack-pattern,Credentials from Web Browsers,"Adversaries may acquire credentials from web browsers by reading files specific to the target browser.(Citation: Talos Olympic Destroyer 2018) Web browsers commonly save credentials such as website usernames and passwords so that they do not need to be entered manually in the future. Web browsers typically store the credentials in an encrypted format within a credential store; however, methods exist to extract plaintext credentials from web browsers.
+
+For example, on Windows systems, encrypted credentials may be obtained from Google Chrome by reading a database file, <code>AppData\Local\Google\Chrome\User Data\Default\Login Data</code> and executing a SQL query: <code>SELECT action_url, username_value, password_value FROM logins;</code>. The plaintext password can then be obtained by passing the encrypted credentials to the Windows API function <code>CryptUnprotectData</code>, which uses the victim’s cached logon credentials as the decryption key.(Citation: Microsoft CryptUnprotectData April 2018)
+ 
+Adversaries have executed similar procedures for common web browsers such as FireFox, Safari, Edge, etc.(Citation: Proofpoint Vega Credential Stealer May 2018)(Citation: FireEye HawkEye Malware July 2017) Windows stores Internet Explorer and Microsoft Edge credentials in Credential Lockers managed by the [Windows Credential Manager](https://attack.mitre.org/techniques/T1555/004).
+
+Adversaries may also acquire credentials by searching web browser process memory for patterns that commonly match credentials.(Citation: GitHub Mimikittenz July 2016)
+
+After acquiring credentials from web browsers, adversaries may attempt to recycle the credentials across different systems and/or accounts in order to expand access. This can result in significantly furthering an adversary's objective in cases where credentials gained from web browsers overlap with privileged accounts (e.g. domain administrator).",,,,,,,,
+2020-01-28T17:05:14.707Z,attack-pattern,Clear Windows Event Logs,"Adversaries may clear Windows Event Logs to hide the activity of an intrusion. Windows Event Logs are a record of a computer's alerts and notifications. There are three system-defined sources of events: System, Application, and Security, with five event types: Error, Warning, Information, Success Audit, and Failure Audit.
+
+The event logs can be cleared with the following utility commands:
+
+* <code>wevtutil cl system</code>
+* <code>wevtutil cl application</code>
+* <code>wevtutil cl security</code>
+
+These logs may also be cleared through other mechanisms, such as the event viewer GUI or [PowerShell](https://attack.mitre.org/techniques/T1059/001). For example, adversaries may use the PowerShell command <code>Remove-EventLog -LogName Security</code> to delete the Security EventLog and after reboot, disable future logging. Note: events may still be generated and logged in the .evtx file between the time the command is run and the reboot.(Citation: disable_win_evt_logging)",,,,,,,,
+2020-02-11T18:41:44.783Z,attack-pattern,LSASS Memory,"Adversaries may attempt to access credential material stored in the process memory of the Local Security Authority Subsystem Service (LSASS). After a user logs on, the system generates and stores a variety of credential materials in LSASS process memory. These credential materials can be harvested by an administrative user or SYSTEM and used to conduct [Lateral Movement](https://attack.mitre.org/tactics/TA0008) using [Use Alternate Authentication Material](https://attack.mitre.org/techniques/T1550).
+
+As well as in-memory techniques, the LSASS process memory can be dumped from the target host and analyzed on a local system.
+
+For example, on the target host use procdump:
+
+* <code>procdump -ma lsass.exe lsass_dump</code>
+
+Locally, mimikatz can be run using:
+
+* <code>sekurlsa::Minidump lsassdump.dmp</code>
+* <code>sekurlsa::logonPasswords</code>
+
+Built-in Windows tools such as comsvcs.dll can also be used:
+
+* <code>rundll32.exe C:\Windows\System32\comsvcs.dll MiniDump PID  lsass.dmp full</code>(Citation: Volexity Exchange Marauder March 2021)(Citation: Symantec Attacks Against Government Sector)
+
+
+Windows Security Support Provider (SSP) DLLs are loaded into LSASS process at system start. Once loaded into the LSA, SSP DLLs have access to encrypted and plaintext passwords that are stored in Windows, such as any logged-on user's Domain password or smart card PINs. The SSP configuration is stored in two Registry keys: <code>HKLM\SYSTEM\CurrentControlSet\Control\Lsa\Security Packages</code> and <code>HKLM\SYSTEM\CurrentControlSet\Control\Lsa\OSConfig\Security Packages</code>. An adversary may modify these Registry keys to add new SSPs, which will be loaded the next time the system boots, or when the AddSecurityPackage Windows API function is called.(Citation: Graeber 2014)
+
+The following SSPs can be used to access credentials:
+
+* Msv: Interactive logons, batch logons, and service logons are done through the MSV authentication package.
+* Wdigest: The Digest Authentication protocol is designed for use with Hypertext Transfer Protocol (HTTP) and Simple Authentication Security Layer (SASL) exchanges.(Citation: TechNet Blogs Credential Protection)
+* Kerberos: Preferred for mutual client-server domain authentication in Windows 2000 and later.
+* CredSSP:  Provides SSO and Network Level Authentication for Remote Desktop Services.(Citation: TechNet Blogs Credential Protection)
+",,,,,,,,
+2017-05-31T21:30:27.342Z,attack-pattern,System Network Configuration Discovery,"Adversaries may look for details about the network configuration and settings, such as IP and/or MAC addresses, of systems they access or through information discovery of remote systems. Several operating system administration utilities exist that can be used to gather this information. Examples include [Arp](https://attack.mitre.org/software/S0099), [ipconfig](https://attack.mitre.org/software/S0100)/[ifconfig](https://attack.mitre.org/software/S0101), [nbtstat](https://attack.mitre.org/software/S0102), and [route](https://attack.mitre.org/software/S0103).
+
+Adversaries may also leverage a [Network Device CLI](https://attack.mitre.org/techniques/T1059/008) on network devices to gather information about configurations and settings, such as IP addresses of configured interfaces and static/dynamic routes (e.g. <code>show ip route</code>, <code>show ip interface</code>).(Citation: US-CERT-TA18-106A)(Citation: Mandiant APT41 Global Intrusion )
+
+Adversaries may use the information from [System Network Configuration Discovery](https://attack.mitre.org/techniques/T1016) during automated discovery to shape follow-on behaviors, including determining certain access within the target network and what actions to do next. ",,,,,,,,
+2020-03-02T18:45:07.892Z,attack-pattern,Phishing,"Adversaries may send phishing messages to gain access to victim systems. All forms of phishing are electronically delivered social engineering. Phishing can be targeted, known as spearphishing. In spearphishing, a specific individual, company, or industry will be targeted by the adversary. More generally, adversaries can conduct non-targeted phishing, such as in mass malware spam campaigns.
+
+Adversaries may send victims emails containing malicious attachments or links, typically to execute malicious code on victim systems. Phishing may also be conducted via third-party services, like social media platforms. Phishing may also involve social engineering techniques, such as posing as a trusted source, as well as evasive techniques such as removing or manipulating emails or metadata/headers from compromised accounts being abused to send messages (e.g., [Email Hiding Rules](https://attack.mitre.org/techniques/T1564/008)).(Citation: Microsoft OAuth Spam 2022)(Citation: Palo Alto Unit 42 VBA Infostealer 2014) Another way to accomplish this is by forging or spoofing(Citation: Proofpoint-spoof) the identity of the sender which can be used to fool both the human recipient as well as automated security tools.(Citation: cyberproof-double-bounce) 
+
+Victims may also receive phishing messages that instruct them to call a phone number where they are directed to visit a malicious URL, download malware,(Citation: sygnia Luna Month)(Citation: CISA Remote Monitoring and Management Software) or install adversary-accessible remote management tools onto their computer (i.e., [User Execution](https://attack.mitre.org/techniques/T1204)).(Citation: Unit42 Luna Moth)",,,,,,,,
+2020-03-11T21:01:00.959Z,attack-pattern,Lateral Tool Transfer,"Adversaries may transfer tools or other files between systems in a compromised environment. Once brought into the victim environment (i.e. [Ingress Tool Transfer](https://attack.mitre.org/techniques/T1105)) files may then be copied from one system to another to stage adversary tools or other files over the course of an operation. Adversaries may copy files between internal victim systems to support lateral movement using inherent file sharing protocols such as file sharing over [SMB/Windows Admin Shares](https://attack.mitre.org/techniques/T1021/002) to connected network shares or with authenticated connections via [Remote Desktop Protocol](https://attack.mitre.org/techniques/T1021/001).(Citation: Unit42 LockerGoga 2019)
+
+Files can also be transferred using native or otherwise present tools on the victim system, such as scp, rsync, curl, sftp, and [ftp](https://attack.mitre.org/software/S0095).",,,,,,,,
+2017-05-31T21:30:28.187Z,attack-pattern,Remote System Discovery,"Adversaries may attempt to get a listing of other systems by IP address, hostname, or other logical identifier on a network that may be used for Lateral Movement from the current system. Functionality could exist within remote access tools to enable this, but utilities available on the operating system could also be used such as  [Ping](https://attack.mitre.org/software/S0097) or <code>net view</code> using [Net](https://attack.mitre.org/software/S0039).
+
+Adversaries may also analyze data from local host files (ex: <code>C:\Windows\System32\Drivers\etc\hosts</code> or <code>/etc/hosts</code>) or other passive means (such as local [Arp](https://attack.mitre.org/software/S0099) cache entries) in order to discover the presence of remote systems in an environment.
+
+Adversaries may also target discovery of network infrastructure as well as leverage [Network Device CLI](https://attack.mitre.org/techniques/T1059/008) commands on network devices to gather detailed information about systems within a network (e.g. <code>show cdp neighbors</code>, <code>show arp</code>).(Citation: US-CERT-TA18-106A)(Citation: CISA AR21-126A FIVEHANDS May 2021)  
+",,,,,,,,
+2020-03-10T18:33:36.159Z,attack-pattern,Service Execution,"Adversaries may abuse the Windows service control manager to execute malicious commands or payloads. The Windows service control manager (<code>services.exe</code>) is an interface to manage and manipulate services.(Citation: Microsoft Service Control Manager) The service control manager is accessible to users via GUI components as well as system utilities such as <code>sc.exe</code> and [Net](https://attack.mitre.org/software/S0039).
+
+[PsExec](https://attack.mitre.org/software/S0029) can also be used to execute commands or payloads via a temporary Windows service created through the service control manager API.(Citation: Russinovich Sysinternals) Tools such as [PsExec](https://attack.mitre.org/software/S0029) and <code>sc.exe</code> can accept remote servers as arguments and may be used to conduct remote execution.
+
+Adversaries may leverage these mechanisms to execute malicious content. This can be done by either executing a new or modified service. This technique is the execution used in conjunction with [Windows Service](https://attack.mitre.org/techniques/T1543/003) during service persistence or privilege escalation.",,,,,,,,
+2019-03-29T19:00:55.901Z,attack-pattern,Service Stop,"Adversaries may stop or disable services on a system to render those services unavailable to legitimate users. Stopping critical services or processes can inhibit or stop response to an incident or aid in the adversary's overall objectives to cause damage to the environment.(Citation: Talos Olympic Destroyer 2018)(Citation: Novetta Blockbuster) 
+
+Adversaries may accomplish this by disabling individual services of high importance to an organization, such as <code>MSExchangeIS</code>, which will make Exchange content inaccessible (Citation: Novetta Blockbuster). In some cases, adversaries may stop or disable many or all services to render systems unusable.(Citation: Talos Olympic Destroyer 2018) Services or processes may not allow for modification of their data stores while running. Adversaries may stop services or processes in order to conduct [Data Destruction](https://attack.mitre.org/techniques/T1485) or [Data Encrypted for Impact](https://attack.mitre.org/techniques/T1486) on the data stores of services like Exchange and SQL Server.(Citation: SecureWorks WannaCry Analysis)",,,,,,,,
+2019-03-14T18:47:17.701Z,attack-pattern,Data Destruction,"Adversaries may destroy data and files on specific systems or in large numbers on a network to interrupt availability to systems, services, and network resources. Data destruction is likely to render stored data irrecoverable by forensic techniques through overwriting files or data on local and remote drives.(Citation: Symantec Shamoon 2012)(Citation: FireEye Shamoon Nov 2016)(Citation: Palo Alto Shamoon Nov 2016)(Citation: Kaspersky StoneDrill 2017)(Citation: Unit 42 Shamoon3 2018)(Citation: Talos Olympic Destroyer 2018) Common operating system file deletion commands such as <code>del</code> and <code>rm</code> often only remove pointers to files without wiping the contents of the files themselves, making the files recoverable by proper forensic methodology. This behavior is distinct from [Disk Content Wipe](https://attack.mitre.org/techniques/T1561/001) and [Disk Structure Wipe](https://attack.mitre.org/techniques/T1561/002) because individual files are destroyed rather than sections of a storage disk or the disk's logical structure.
+
+Adversaries may attempt to overwrite files and directories with randomly generated data to make it irrecoverable.(Citation: Kaspersky StoneDrill 2017)(Citation: Unit 42 Shamoon3 2018) In some cases politically oriented image files have been used to overwrite data.(Citation: FireEye Shamoon Nov 2016)(Citation: Palo Alto Shamoon Nov 2016)(Citation: Kaspersky StoneDrill 2017)
+
+To maximize impact on the target organization in operations where network-wide availability interruption is the goal, malware designed for destroying data may have worm-like features to propagate across a network by leveraging additional techniques like [Valid Accounts](https://attack.mitre.org/techniques/T1078), [OS Credential Dumping](https://attack.mitre.org/techniques/T1003), and [SMB/Windows Admin Shares](https://attack.mitre.org/techniques/T1021/002).(Citation: Symantec Shamoon 2012)(Citation: FireEye Shamoon Nov 2016)(Citation: Palo Alto Shamoon Nov 2016)(Citation: Kaspersky StoneDrill 2017)(Citation: Talos Olympic Destroyer 2018).
+
+In cloud environments, adversaries may leverage access to delete cloud storage, cloud storage accounts, machine images, and other infrastructure crucial to operations to damage an organization or their customers.(Citation: Data Destruction - Threat Post)(Citation: DOJ  - Cisco Insider)",,,,,,,,
+2019-04-02T13:54:43.136Z,attack-pattern,Inhibit System Recovery,"Adversaries may delete or remove built-in data and turn off services designed to aid in the recovery of a corrupted system to prevent recovery.(Citation: Talos Olympic Destroyer 2018)(Citation: FireEye WannaCry 2017) This may deny access to available backups and recovery options.
+
+Operating systems may contain features that can help fix corrupted systems, such as a backup catalog, volume shadow copies, and automatic repair features. Adversaries may disable or delete system recovery features to augment the effects of [Data Destruction](https://attack.mitre.org/techniques/T1485) and [Data Encrypted for Impact](https://attack.mitre.org/techniques/T1486).(Citation: Talos Olympic Destroyer 2018)(Citation: FireEye WannaCry 2017) Furthermore, adversaries may disable recovery notifications, then corrupt backups.(Citation: disable_notif_synology_ransom)
+
+A number of native Windows utilities have been used by adversaries to disable or delete system recovery features:
+
+* <code>vssadmin.exe</code> can be used to delete all volume shadow copies on a system - <code>vssadmin.exe delete shadows /all /quiet</code>
+* [Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047) can be used to delete volume shadow copies - <code>wmic shadowcopy delete</code>
+* <code>wbadmin.exe</code> can be used to delete the Windows Backup Catalog - <code>wbadmin.exe delete catalog -quiet</code>
+* <code>bcdedit.exe</code> can be used to disable automatic Windows recovery features by modifying boot configuration data - <code>bcdedit.exe /set {default} bootstatuspolicy ignoreallfailures & bcdedit /set {default} recoveryenabled no</code>
+* <code>REAgentC.exe</code> can be used to disable Windows Recovery Environment (WinRE) repair/recovery options of an infected system
+
+On network devices, adversaries may leverage [Disk Wipe](https://attack.mitre.org/techniques/T1561) to delete backup firmware images and reformat the file system, then [System Shutdown/Reboot](https://attack.mitre.org/techniques/T1529) to reload the device. Together this activity may leave network devices completely inoperable and inhibit recovery operations.
+
+Adversaries may also delete “online” backups that are connected to their network – whether via network storage media or through folders that sync to cloud services.(Citation: ZDNet Ransomware Backups 2020) In cloud environments, adversaries may disable versioning and backup policies and delete snapshots, machine images, and prior versions of objects designed to be used in disaster recovery scenarios.(Citation: Dark Reading Code Spaces Cyber Attack)(Citation: Rhino Security Labs AWS S3 Ransomware)",,,,,,,,
+2019-10-04T20:42:28.541Z,attack-pattern,System Shutdown/Reboot,"Adversaries may shutdown/reboot systems to interrupt access to, or aid in the destruction of, those systems. Operating systems may contain commands to initiate a shutdown/reboot of a machine or network device. In some cases, these commands may also be used to initiate a shutdown/reboot of a remote computer or network device via [Network Device CLI](https://attack.mitre.org/techniques/T1059/008) (e.g. <code>reload</code>).(Citation: Microsoft Shutdown Oct 2017)(Citation: alert_TA18_106A)
+
+Shutting down or rebooting systems may disrupt access to computer resources for legitimate users while also impeding incident response/recovery.
+
+Adversaries may attempt to shutdown/reboot a system after impacting it in other ways, such as [Disk Structure Wipe](https://attack.mitre.org/techniques/T1561/002) or [Inhibit System Recovery](https://attack.mitre.org/techniques/T1490), to hasten the intended effects on system availability.(Citation: Talos Nyetya June 2017)(Citation: Talos Olympic Destroyer 2018)",,,,,,,,
+2020-02-11T19:07:12.114Z,attack-pattern,Adversary-in-the-Middle,"Adversaries may attempt to position themselves between two or more networked devices using an adversary-in-the-middle (AiTM) technique to support follow-on behaviors such as [Network Sniffing](https://attack.mitre.org/techniques/T1040) or [Transmitted Data Manipulation](https://attack.mitre.org/techniques/T1565/002). By abusing features of common networking protocols that can determine the flow of network traffic (e.g. ARP, DNS, LLMNR, etc.), adversaries may force a device to communicate through an adversary controlled system so they can collect information or perform additional actions.(Citation: Rapid7 MiTM Basics)
+
+For example, adversaries may manipulate victim DNS settings to enable other malicious activities such as preventing/redirecting users from accessing legitimate sites and/or pushing additional malware.(Citation: ttint_rat)(Citation: dns_changer_trojans)(Citation: ad_blocker_with_miner) Adversaries may also manipulate DNS and leverage their position in order to intercept user credentials and session cookies.(Citation: volexity_0day_sophos_FW) [Downgrade Attack](https://attack.mitre.org/techniques/T1562/010)s can also be used to establish an AiTM position, such as by negotiating a less secure, deprecated, or weaker version of communication protocol (SSL/TLS) or encryption algorithm.(Citation: mitm_tls_downgrade_att)(Citation: taxonomy_downgrade_att_tls)(Citation: tlseminar_downgrade_att)
+
+Adversaries may also leverage the AiTM position to attempt to monitor and/or modify traffic, such as in [Transmitted Data Manipulation](https://attack.mitre.org/techniques/T1565/002). Adversaries can setup a position similar to AiTM to prevent traffic from flowing to the appropriate destination, potentially to [Impair Defenses](https://attack.mitre.org/techniques/T1562) and/or in support of a [Network Denial of Service](https://attack.mitre.org/techniques/T1498).",,,,,,,,
+2017-05-31T21:30:48.323Z,attack-pattern,Input Capture,"Adversaries may use methods of capturing user input to obtain credentials or collect information. During normal system usage, users often provide credentials to various different locations, such as login pages/portals or system dialog boxes. Input capture mechanisms may be transparent to the user (e.g. [Credential API Hooking](https://attack.mitre.org/techniques/T1056/004)) or rely on deceiving the user into providing input into what they believe to be a genuine service (e.g. [Web Portal Capture](https://attack.mitre.org/techniques/T1056/003)).",,,,,,,,
+2022-11-17T09:27:57.156Z,relationship,,,related-to,,,,,,,
+2022-11-17T09:27:57.156Z,report,WKI-20220915-004 - Update 2,This is a fake report for example purposes only,,,,,,,,

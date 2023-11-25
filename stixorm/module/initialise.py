@@ -19,9 +19,14 @@
 # under the License.
 #
 import os
-
-from typedb.client import *
+from typing import Dict
+from typedb.driver import *
 import logging
+from typing import Dict, List
+
+from typedb.api.connection.session import SessionType
+from typedb.api.connection.transaction import TransactionType
+from typedb.driver import TypeDB
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -53,17 +58,17 @@ tlp_ids = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
 
 def setup_database(stix_connection: Dict[str, str], clear: bool):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
-    with TypeDB.core_client(url) as client:
+    with TypeDB.core_driver(url) as driver:
         logger.debug(f'Database Clearing is [{clear}]')
-        if client.databases().contains(stix_connection["database"]):
+        if driver.databases.contains(stix_connection["database"]):
             if clear:
-                client.databases().get(stix_connection["database"]).delete()
-                client.databases().create(stix_connection["database"])
+                driver.databases.get(stix_connection["database"]).delete()
+                driver.databases.create(stix_connection["database"])
             else:
                 return
                 # raise ValueError(f"Database '{database}' already exists")
         else:
-            client.databases().create(stix_connection["database"])
+            driver.databases.create(stix_connection["database"])
 
         logger.debug('.......................... clear complete')
 
@@ -76,9 +81,9 @@ def load_schema(stix_connection: Dict[str, str], rel_path=None, schema_type: str
     assert os.path.exists(rel_path), "File path needs to exist"
 
     url = stix_connection["uri"] + ":" + stix_connection["port"]
-    with TypeDB.core_client(url) as client:
+    with TypeDB.core_driver(url) as driver:
         # Stage 1: Create the schema
-        with client.session(stix_connection["database"], SessionType.SCHEMA) as session:
+        with driver.session(stix_connection["database"], SessionType.SCHEMA) as session:
             # Load schema from file
             with open(rel_path, "r") as schema_file:
                 schema = schema_file.read()
@@ -86,7 +91,7 @@ def load_schema(stix_connection: Dict[str, str], rel_path=None, schema_type: str
             logger.debug(f'Inserting {schema_type} ...')
             logger.debug('.....')
             with session.transaction(TransactionType.WRITE) as write_transaction:
-                write_transaction.query().define(schema)
+                write_transaction.query.define(schema)
                 write_transaction.commit()
             logger.debug('.....')
             logger.debug('Successfully committed schema!')
@@ -110,14 +115,14 @@ def load_markings(stix_connection: Dict[str, str]):
 
 def load_typeql_data(data_list, stix_connection: Dict[str, str]):
     url = stix_connection["uri"] + ":" + stix_connection["port"]
-    with TypeDB.core_client(url) as client:
+    with TypeDB.core_driver(url) as driver:
         # Stage 1: Create the schema
-        with client.session(stix_connection["database"], SessionType.DATA) as session:
+        with driver.session(stix_connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.WRITE) as write_transaction:
                 logger.debug(f'Loading TLP markings')
                 for data in data_list:
                     logger.debug(f'\n\n{data}\n\n')
-                    insert_iterator = write_transaction.query().insert(data)
+                    insert_iterator = write_transaction.query.insert(data)
 
                     logger.debug(f'insert_iterator response ->\n{insert_iterator}')
                     for result in insert_iterator:
@@ -146,11 +151,11 @@ def sort_layers(layers,
     Returns:
 
     """
-    logger.debug(
-        f"################################### enter sort_layers {add_or_del} ###############################################")
-    logger.debug(f'\nlayers -> {layers}\ncyclical indexes -> {cyclical}\nindexes -> {indexes}\nmissing -> {missing}')
-    logger.debug(f'add_or_del -> {add_or_del}\ndep_obj -> {dep_obj}')
-    logger.debug("-------------------------------  ------------------------------------------------")
+    # logger.debug(
+    #     f"################################### enter sort_layers {add_or_del} ###############################################")
+    # logger.debug(f'\nlayers -> {layers}\ncyclical indexes -> {cyclical}\nindexes -> {indexes}\nmissing -> {missing}')
+    # logger.debug(f'add_or_del -> {add_or_del}\ndep_obj -> {dep_obj}')
+    # logger.debug("-------------------------------  ------------------------------------------------")
     # Stage 1 - Initialise Variables
     # 1. Setup key variables
     loc_id = dep_obj['id']
@@ -196,7 +201,7 @@ def sort_layers(layers,
         elif add_or_del == 'add':
             layers.insert(0, dep_obj)
             indexes.insert(0, loc_id)
-        logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
+        #logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
         logger.debug(
             f"################################## end of  sort_layers {add_or_del} ####################################################")
         return layers, indexes, list(mset), cyclical
@@ -208,7 +213,7 @@ def sort_layers(layers,
         cyclical = cyclical + circular
         logger.debug(f' tree -> {tree}')
         layers, indexes = reorder(layers, indexes, tree, dep_obj, add_or_del)
-        logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
+        #logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
         logger.debug(
             f"################################## end of  sort_layers {add_or_del} ####################################################")
         return layers, indexes, list(mset), cyclical
@@ -221,7 +226,7 @@ def sort_layers(layers,
         elif add_or_del == 'add':
             layers.append(dep_obj)
             indexes.append(loc_id)
-        logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
+        #logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
         logger.debug(
             f"################################## end of  sort_layers {add_or_del} ####################################################")
         return layers, indexes, list(mset), cyclical
@@ -233,7 +238,7 @@ def sort_layers(layers,
         cyclical = cyclical + circular
         logger.debug(f' tree -> {tree}')
         layers, indexes = reorder(layers, indexes, tree, dep_obj, add_or_del)
-        logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
+        #logger.debug(f'layers -> {layers}\nindexes -> {indexes}\nmset -> {mset}')
         logger.debug(
             f"################################## end of  sort_layers {add_or_del} ####################################################")
         return layers, indexes, list(mset), cyclical
@@ -263,7 +268,7 @@ def reorder(layers, indexes, tree, dep_obj, add_or_del):
     loc_list = dep_obj["dep_list"]
     tree = list(set(tree))
     logger.debug("%%%%%%%%%%%%%%% reorder 1 %%%%%%%%%%%%%%%%%%")
-    logger.debug(f'\n orig indexes -> {indexes}\n orig layers, {layers}\n dep_obj , {dep_obj}')
+    #logger.debug(f'\n orig indexes -> {indexes}\n orig layers, {layers}\n dep_obj , {dep_obj}')
     logger.debug("%%%%%%%%%%%%%%% reorder 2 %%%%%%%%%%dep_obj%%%%%%%%")
     # 1. Copy elements from layers and indexes so they are in the order we want them
     if add_or_del == 'del':
@@ -300,8 +305,7 @@ def reorder(layers, indexes, tree, dep_obj, add_or_del):
         layers = dep_layers + front_layers + layers
         indexes = dep_indexes + front_indexes + indexes
     # 5. Assemble the final lists
-    logger.debug(
-        f'\nfront_indexes -> {front_indexes}\n\nfront_layers, {front_layers}\n\n old layers, {layers}\n\nold indexes -> {indexes}')
+    #logger.debug(f'\nfront_indexes -> {front_indexes}\n\nfront_layers, {front_layers}\n\n old layers, {layers}\n\nold indexes -> {indexes}')
     logger.debug("-------------------------------------------------------------------------------------")
     logger.debug("%%%%%%%%%%%%%%% end reorder %%%%%%%%%%%%%%%%%%")
     return layers, indexes

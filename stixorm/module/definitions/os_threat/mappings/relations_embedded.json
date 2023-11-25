@@ -3,90 +3,128 @@
     "rel": "contained",
     "owner": "feed-list-owner",
     "pointed-to": "single-feed",
-    "typeql": "list-of-feeds"
+    "typeql": "list-of-feeds",
+    "label": "list of feeds",
+    "owner-is-source": true
   },
   {
     "rel": "sighting_refs",
     "owner": "sighting-event",
     "pointed-to": "sights",
-    "typeql": "list-of-sightings"
-  },
-  {
-    "rel": "subevents",
-    "owner": "parent",
-    "pointed-to": "sub-event",
-    "typeql": "subevents"
+    "typeql": "list-of-sightings",
+    "label": "event sightings",
+    "owner-is-source": true
   },
   {
     "rel": "impacted_refs",
     "owner": "the-impact",
     "pointed-to": "impacted-thing",
-    "typeql": "impacted-refs"
+    "typeql": "impacted-refs",
+    "label": "impacted things",
+    "owner-is-source": true
   },
   {
     "rel": "superseded_by_ref",
     "owner": "precedes",
     "pointed-to": "superseded-by",
-    "typeql": "superseded"
+    "typeql": "superseded",
+    "label": "suoerseded by",
+    "owner-is-source": true
   },
   {
     "rel": "owner",
     "owner": "owned",
     "pointed-to": "who",
-    "typeql": "owned-by"
+    "typeql": "owned-by",
+    "label": "owned by",
+    "owner-is-source": false
   },
   {
     "rel": "on_completion",
     "owner": "source",
     "pointed-to": "target",
-    "typeql": "on-completion"
+    "typeql": "on-completion",
+    "label": "on completion",
+    "owner-is-source": true
   },
   {
     "rel": "on_failure",
     "owner": "source",
     "pointed-to": "target",
-    "typeql": "on-failure"
+    "typeql": "on-failure",
+    "label": "on failure",
+    "owner-is-source": true
   },
   {
     "rel": "on_success",
     "owner": "source",
-    "pointed-to": "source",
-    "typeql": "on-success"
+    "pointed-to": "target",
+    "typeql": "on-success",
+    "label": "on success",
+    "owner-is-source": true
   },
   {
     "rel": "next_steps",
     "owner": "source",
     "pointed-to": "target",
-    "typeql": "next-steps"
+    "typeql": "next-steps",
+    "label": "next steps",
+    "owner-is-source": true
   },
   {
     "rel": "task_refs",
     "owner": "incident",
     "pointed-to": "the-task",
-    "typeql": "task-refs"
+    "typeql": "task-refs",
+    "label": "incident task",
+    "owner-is-source": true
   },
   {
     "rel": "event_refs",
     "owner": "incident",
     "pointed-to": "the-event",
-    "typeql": "event-refs"
+    "typeql": "event-refs",
+    "label": "incident events",
+    "owner-is-source": true
   },
   {
     "rel": "impact_refs",
     "owner": "incident",
     "pointed-to": "the-impact",
-    "typeql": "impact-refs"
+    "typeql": "impact-refs",
+    "label": "incident impact",
+    "owner-is-source": true
   },
   {
-    "rel": "notes_refs",
-    "owner": "incident",
-    "pointed-to": "the-note",
-    "typeql": "notes-refs"
+    "rel": "other_object_refs",
+    "owner": "object",
+    "pointed-to": "referred",
+    "typeql": "other-obj-refs",
+    "label": "other incident objects",
+    "owner-is-source": true
   },
   {
-    "rel": "evidence_refs",
-    "owner": "incident",
-    "pointed-to": "the-evidence",
-    "typeql": "evidence-refs"
+    "rel": "sequenced_object",
+    "owner": "sequence",
+    "pointed-to": "object",
+    "typeql": "sequenced-object",
+    "label": "sequenced object",
+    "owner-is-source": true
+  },
+  {
+    "rel": "email_address_ref",
+    "owner": "origin",
+    "pointed-to": "email",
+    "typeql": "email-ref",
+    "label": "email address",
+    "owner-is-source": true
+  },
+  {
+    "rel": "user_account_ref",
+    "owner": "origin",
+    "pointed-to": "account",
+    "typeql": "user-account-ref",
+    "label": "user account",
+    "owner-is-source": true
   }
 ]

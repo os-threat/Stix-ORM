@@ -1,0 +1,2674 @@
+{
+  "nodes": [
+    {
+      "id": "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f",
+      "original": {
+        "type": "anecdote",
+        "spec_version": "2.1",
+        "id": "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f",
+        "value": "I clicked on the link, and my laptop screen went weird",
+        "report_date": "2023-11-18T05:26:43.480683Z",
+        "provided_by_ref": "identity--b30fc24d-4d5a-49a4-8aee-155788edbae3"
+      },
+      "icon": "anecdote",
+      "label": "I clicked on the link, and my laptop screen went weird"
+    },
+    {
+      "id": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7",
+      "original": {
+        "type": "attack-pattern",
+        "spec_version": "2.1",
+        "id": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7",
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "created": "2020-03-02T19:15:44.182Z",
+        "modified": "2022-11-08T14:00:00.188Z",
+        "name": "Spearphishing Link",
+        "x_mitre_attack_spec_version": "2.1.0",
+        "description": "Adversaries may send spearphishing emails with a malicious link in an attempt to gain access to victim systems. Spearphishing with a link is a specific variant of spearphishing. It is different from other forms of spearphishing in that it employs the use of links to download malware contained in email, instead of attaching malicious files to the email itself, to avoid defenses that may inspect email attachments. Spearphishing may also involve social engineering techniques, such as posing as a trusted source.\n\nAll forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this case, the malicious emails contain links. Generally, the links will be accompanied by social engineering text and require the user to actively click or copy and paste a URL into a browser, leveraging [User Execution](https://attack.mitre.org/techniques/T1204). The visited website may compromise the web browser using an exploit, or the user will be prompted to download applications, documents, zip files, or even executables depending on the pretext for the email in the first place. Adversaries may also include links that are intended to interact directly with an email reader, including embedded images intended to exploit the end system directly or verify the receipt of an email (i.e. web bugs/web beacons). Additionally, adversaries may use seemingly benign links that abuse special characters to mimic legitimate websites (known as an \"IDN homograph attack\").(Citation: CISA IDN ST05-016)\n\nAdversaries may also utilize links to perform consent phishing, typically with OAuth 2.0 request URLs that when accepted by the user provide permissions/access for malicious applications, allowing adversaries to  [Steal Application Access Token](https://attack.mitre.org/techniques/T1528)s.(Citation: Trend Micro Pawn Storm OAuth 2017) These stolen access tokens allow the adversary to perform various actions on behalf of the user via API calls. (Citation: Microsoft OAuth 2.0 Consent Phishing 2021)",
+        "kill_chain_phases": [
+          {
+            "kill_chain_name": "mitre-attack",
+            "phase_name": "initial-access"
+          }
+        ],
+        "external_references": [
+          {
+            "source_name": "mitre-attack",
+            "url": "https://attack.mitre.org/techniques/T1566/002",
+            "external_id": "T1566.002"
+          },
+          {
+            "source_name": "ACSC Email Spoofing",
+            "description": "Australian Cyber Security Centre. (2012, December). Mitigating Spoofed Emails Using Sender Policy Framework. Retrieved October 19, 2020.",
+            "url": "https://www.cyber.gov.au/sites/default/files/2019-03/spoof_email_sender_policy_framework.pdf"
+          },
+          {
+            "source_name": "CISA IDN ST05-016",
+            "description": "CISA. (2019, September 27). Security Tip (ST05-016): Understanding Internationalized Domain Names. Retrieved October 20, 2020.",
+            "url": "https://us-cert.cisa.gov/ncas/tips/ST05-016"
+          },
+          {
+            "source_name": "Trend Micro Pawn Storm OAuth 2017",
+            "description": "Hacquebord, F.. (2017, April 25). Pawn Storm Abuses Open Authentication in Advanced Social Engineering Attacks. Retrieved October 4, 2019.",
+            "url": "https://blog.trendmicro.com/trendlabs-security-intelligence/pawn-storm-abuses-open-authentication-advanced-social-engineering-attacks"
+          },
+          {
+            "source_name": "Microsoft OAuth 2.0 Consent Phishing 2021",
+            "description": "Microsoft 365 Defender Threat Intelligence Team. (2021, June 14). Microsoft delivers comprehensive solution to battle rise in consent phishing emails. Retrieved December 13, 2021.",
+            "url": "https://www.microsoft.com/security/blog/2021/07/14/microsoft-delivers-comprehensive-solution-to-battle-rise-in-consent-phishing-emails/"
+          },
+          {
+            "source_name": "Microsoft Anti Spoofing",
+            "description": "Microsoft. (2020, October 13). Anti-spoofing protection in EOP. Retrieved October 19, 2020.",
+            "url": "https://docs.microsoft.com/en-us/microsoft-365/security/office-365-security/anti-spoofing-protection?view=o365-worldwide"
+          },
+          {
+            "source_name": "capec",
+            "url": "https://capec.mitre.org/data/definitions/163.html",
+            "external_id": "CAPEC-163"
+          }
+        ],
+        "object_marking_refs": [
+          "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ],
+        "x_mitre_contributors": [
+          "Philip Winther",
+          "Shailesh Tiwary (Indian Army)",
+          "Mark Wee",
+          "Jeff Sakowicz, Microsoft Identity Developer Platform Services (IDPM Services)",
+          "Saisha Agrawal, Microsoft Threat Intelligent Center (MSTIC)",
+          "Kobi Haimovich, CardinalOps",
+          "Menachem Goldstein"
+        ],
+        "x_mitre_data_sources": [
+          "Application Log: Application Log Content",
+          "Network Traffic: Network Traffic Flow",
+          "Network Traffic: Network Traffic Content"
+        ],
+        "x_mitre_deprecated": false,
+        "x_mitre_detection": "URL inspection within email (including expanding shortened links) can help detect links leading to known malicious sites as well as links redirecting to adversary infrastructure based by upon suspicious OAuth patterns with unusual TLDs.(Citation: Microsoft OAuth 2.0 Consent Phishing 2021). Detonation chambers can be used to detect these links and either automatically go to these sites to determine if they're potentially malicious, or wait and capture the content if a user visits the link.\n\nFiltering based on DKIM+SPF or header analysis can help detect when the email sender is spoofed.(Citation: Microsoft Anti Spoofing)(Citation: ACSC Email Spoofing)\n\nBecause this technique usually involves user interaction on the endpoint, many of the possible detections take place once [User Execution](https://attack.mitre.org/techniques/T1204) occurs.",
+        "x_mitre_domains": [
+          "enterprise-attack"
+        ],
+        "x_mitre_is_subtechnique": true,
+        "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "x_mitre_platforms": [
+          "Linux",
+          "macOS",
+          "Windows",
+          "Office 365",
+          "SaaS",
+          "Google Workspace"
+        ],
+        "x_mitre_version": "2.3"
+      },
+      "icon": "attack-subtechnique",
+      "label": "attack-subtechnique"
+    },
+    {
+      "id": "domain-name--aa90a5c6-6a78-520b-bcfd-e2bf0c25bce1",
+      "original": {
+        "type": "domain-name",
+        "spec_version": "2.1",
+        "id": "domain-name--aa90a5c6-6a78-520b-bcfd-e2bf0c25bce1",
+        "value": "northkorea.com",
+        "resolves_to_refs": [
+          "ipv4-addr--a40768a0-5841-50d2-838d-bcb35ee92131"
+        ]
+      },
+      "icon": "domain",
+      "label": "northkorea.com"
+    },
+    {
+      "id": "email-addr--30d9a416-203b-55c8-b796-8eb65ab5275e",
+      "original": {
+        "type": "email-addr",
+        "spec_version": "2.1",
+        "id": "email-addr--30d9a416-203b-55c8-b796-8eb65ab5275e",
+        "value": "dumbo@mycompany.com",
+        "belongs_to_ref": "user-account--5aaaa4e2-0974-5ab4-9069-41a16197f0ff"
+      },
+      "icon": "email-addr",
+      "label": "dumbo@mycompany.com"
+    },
+    {
+      "id": "email-addr--64157c44-5eb7-5d01-8710-b288f8ccb625",
+      "original": {
+        "type": "email-addr",
+        "spec_version": "2.1",
+        "id": "email-addr--64157c44-5eb7-5d01-8710-b288f8ccb625",
+        "value": "evil@northkorea.com"
+      },
+      "icon": "email-addr",
+      "label": "evil@northkorea.com"
+    },
+    {
+      "id": "email-addr--a7155ffe-8ea7-563a-a54c-e94e23ec50c8",
+      "original": {
+        "type": "email-addr",
+        "spec_version": "2.1",
+        "id": "email-addr--a7155ffe-8ea7-563a-a54c-e94e23ec50c8",
+        "value": "silly@mycompany.com",
+        "belongs_to_ref": "user-account--47df6d33-0005-5b45-9875-e7a609b12e9b"
+      },
+      "icon": "email-addr",
+      "label": "silly@mycompany.com"
+    },
+    {
+      "id": "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5",
+      "original": {
+        "type": "email-addr",
+        "spec_version": "2.1",
+        "id": "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5",
+        "value": "strange@mycompany.com",
+        "belongs_to_ref": "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109"
+      },
+      "icon": "email-addr",
+      "label": "strange@mycompany.com"
+    },
+    {
+      "id": "email-addr--d8a2a664-fbc3-5eac-8187-4870141c97c5",
+      "original": {
+        "type": "email-addr",
+        "spec_version": "2.1",
+        "id": "email-addr--d8a2a664-fbc3-5eac-8187-4870141c97c5",
+        "value": "me@mycompany.com",
+        "belongs_to_ref": "user-account--6edc343b-93fc-5d12-b68e-b693d26b74bd"
+      },
+      "icon": "email-addr",
+      "label": "me@mycompany.com"
+    },
+    {
+      "id": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+      "original": {
+        "type": "email-addr",
+        "spec_version": "2.1",
+        "id": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+        "value": "naive@mycompany.com",
+        "belongs_to_ref": "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0"
+      },
+      "icon": "email-addr",
+      "label": "naive@mycompany.com"
+    },
+    {
+      "id": "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8",
+      "original": {
+        "type": "email-message",
+        "spec_version": "2.1",
+        "id": "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8",
+        "is_multipart": false,
+        "date": "2020-10-19T01:01:01Z",
+        "from_ref": "email-addr--64157c44-5eb7-5d01-8710-b288f8ccb625",
+        "to_refs": [
+          "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba"
+        ],
+        "subject": "we are coming for you"
+      },
+      "icon": "email-message",
+      "label": "we are coming for you"
+    },
+    {
+      "id": "event--236d689a-aaa9-4bc1-8401-d86cb2d3c430",
+      "original": {
+        "type": "event",
+        "spec_version": "2.1",
+        "id": "event--236d689a-aaa9-4bc1-8401-d86cb2d3c430",
+        "created": "2023-11-18T05:26:43.461684Z",
+        "modified": "2023-11-18T05:26:43.461684Z",
+        "status": "occured",
+        "description": "user x found a suspicious email",
+        "end_time": "2023-11-18T05:26:43.461684Z",
+        "event_types": [
+          "dissemination-phishing-emails"
+        ],
+        "name": "suspiciouse email",
+        "sighting_refs": [
+          "sighting--49cc5c32-98b8-4d15-94bf-2f867d71a2fa"
+        ],
+        "start_time": "2023-11-18T05:26:43.461684Z",
+        "extensions": {
+          "extension-definition--4ca6de00-5b0d-45ef-a1dc-ea7279ea910e": {
+            "extension_type": "new-sdo"
+          }
+        }
+      },
+      "icon": "event",
+      "label": "event"
+    },
+    {
+      "id": "event--9e41296f-175b-4621-9d7d-bc2f74fb3386",
+      "original": {
+        "type": "event",
+        "spec_version": "2.1",
+        "id": "event--9e41296f-175b-4621-9d7d-bc2f74fb3386",
+        "created": "2023-11-18T05:26:43.529214Z",
+        "modified": "2023-11-18T05:26:43.529214Z",
+        "status": "occured",
+        "description": "2 users clicked on the email and destroyed their laptops",
+        "end_time": "2023-11-18T05:26:43.529214Z",
+        "event_types": [
+          "dissemination-phishing-emails"
+        ],
+        "name": "confirmed impact",
+        "sighting_refs": [
+          "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda"
+        ],
+        "start_time": "2023-11-18T05:26:43.529214Z",
+        "extensions": {
+          "extension-definition--4ca6de00-5b0d-45ef-a1dc-ea7279ea910e": {
+            "extension_type": "new-sdo"
+          }
+        }
+      },
+      "icon": "event",
+      "label": "event"
+    },
+    {
+      "id": "file--e7c7ddeb-d693-53e7-bcd8-f40951888120",
+      "original": {
+        "type": "file",
+        "spec_version": "2.1",
+        "id": "file--e7c7ddeb-d693-53e7-bcd8-f40951888120",
+        "hashes": {
+          "SHA-256": "fe90a7e910cb3a4739bed9180e807e93fa70c90f25a8915476f5e4bfbac681db"
+        },
+        "name": "evil.exe"
+      },
+      "icon": "file",
+      "label": "evil.exe"
+    },
+    {
+      "id": "identity--05bf6d14-9483-423d-b4f3-b19f420c0803",
+      "original": {
+        "type": "identity",
+        "spec_version": "2.1",
+        "id": "identity--05bf6d14-9483-423d-b4f3-b19f420c0803",
+        "created": "2023-11-18T05:26:43.498695Z",
+        "modified": "2023-11-18T05:26:43.498695Z",
+        "name": "Microsoft Exchange",
+        "description": "Microsoft Exchange Server",
+        "identity_class": "system"
+      },
+      "icon": "identity-system",
+      "label": "identity"
+    },
+    {
+      "id": "identity--b30fc24d-4d5a-49a4-8aee-155788edbae3",
+      "original": {
+        "type": "identity",
+        "spec_version": "2.1",
+        "id": "identity--b30fc24d-4d5a-49a4-8aee-155788edbae3",
+        "created": "2023-11-18T05:26:43.477681Z",
+        "modified": "2023-11-18T05:26:43.477681Z",
+        "name": "Naive",
+        "identity_class": "individual",
+        "extensions": {
+          "extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498": {
+            "extension_type": "property-extension",
+            "contact_numbers": [
+              {
+                "contact_number_type": "work-phone",
+                "contact_number": "0499-999-109"
+              }
+            ],
+            "email_addresses": [
+              {
+                "digital_contact_type": "work",
+                "email_address_ref": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba"
+              }
+            ],
+            "first_name": "Naive",
+            "last_name": "Smith",
+            "middle_name": "Weakling",
+            "prefix": "Mr",
+            "social_media_accounts": [
+              {
+                "digital_contact_type": "work",
+                "user_account_ref": "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0"
+              }
+            ],
+            "team": "Users"
+          }
+        }
+      },
+      "icon": "identity-contact",
+      "label": "identity"
+    },
+    {
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "original": {
+        "type": "identity",
+        "spec_version": "2.1",
+        "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "created": "2023-08-23T13:57:25.455083Z",
+        "modified": "2023-08-23T13:57:25.455083Z",
+        "name": "Mitre Ltd",
+        "identity_class": "organization"
+      },
+      "icon": "identity-organization",
+      "label": "identity"
+    },
+    {
+      "id": "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f",
+      "original": {
+        "type": "identity",
+        "spec_version": "2.1",
+        "id": "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f",
+        "created": "2023-11-18T05:26:43.515694Z",
+        "modified": "2023-11-18T05:26:43.515694Z",
+        "name": "Evil Incarnate Ltd",
+        "description": "Hosted phsihing domain",
+        "identity_class": "organization",
+        "contact_information": "666 Infection St, Whyme, NK"
+      },
+      "icon": "identity-organization",
+      "label": "identity"
+    },
+    {
+      "id": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+      "original": {
+        "type": "identity",
+        "spec_version": "2.1",
+        "id": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+        "created": "2023-11-18T05:26:43.444691Z",
+        "modified": "2023-11-18T05:26:43.444691Z",
+        "name": "Me",
+        "identity_class": "individual",
+        "extensions": {
+          "extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498": {
+            "extension_type": "property-extension",
+            "contact_numbers": [
+              {
+                "contact_number_type": "work-phone",
+                "contact_number": "0418-208-368"
+              }
+            ],
+            "email_addresses": [
+              {
+                "digital_contact_type": "work",
+                "email_address_ref": "email-addr--d8a2a664-fbc3-5eac-8187-4870141c97c5"
+              }
+            ],
+            "first_name": "Me",
+            "last_name": "Jones",
+            "middle_name": "Percival",
+            "prefix": "Dr",
+            "social_media_accounts": [
+              {
+                "digital_contact_type": "work",
+                "user_account_ref": "user-account--6edc343b-93fc-5d12-b68e-b693d26b74bd"
+              }
+            ],
+            "team": "All_Stars"
+          }
+        }
+      },
+      "icon": "identity-contact",
+      "label": "identity"
+    },
+    {
+      "id": "impact--0be23aab-cabb-40ca-a142-e232a5e38288",
+      "original": {
+        "type": "impact",
+        "spec_version": "2.1",
+        "id": "impact--0be23aab-cabb-40ca-a142-e232a5e38288",
+        "created": "2023-11-18T05:26:43.564206Z",
+        "modified": "2023-11-18T05:26:43.564206Z",
+        "impact_category": "monetary",
+        "criticality": 99,
+        "description": "The ransom demands were significant",
+        "end_time": "2023-11-18T05:26:43.564206Z",
+        "impacted_entity_counts": {
+          "computers-personal": 2
+        },
+        "recoverability": "regular",
+        "start_time": "2023-11-18T05:26:43.564206Z",
+        "extensions": {
+          "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+            "extension_type": "new-sdo"
+          },
+          "monetary": {
+            "variety": "ransom-demand",
+            "conversion_rate": 1.538,
+            "conversion_time": "2023-11-07T08:53:15.645995Z",
+            "currency": "USD",
+            "currency_actual": "AUD",
+            "max_amount": 100000.0,
+            "min_amount": 10000.0
+          }
+        }
+      },
+      "icon": "impact-monetary",
+      "label": "impact"
+    },
+    {
+      "id": "impact--23489d6a-c48f-4899-9da3-6e558dbbe01e",
+      "original": {
+        "type": "impact",
+        "spec_version": "2.1",
+        "id": "impact--23489d6a-c48f-4899-9da3-6e558dbbe01e",
+        "created": "2023-11-18T05:26:43.545122Z",
+        "modified": "2023-11-18T05:26:43.545122Z",
+        "impact_category": "availability",
+        "criticality": 99,
+        "description": "Two Laptops and 3 Servers are stuffed",
+        "end_time": "2023-11-18T05:26:43.545122Z",
+        "impacted_entity_counts": {
+          "computers-personal": 2,
+          "computers-server": 3
+        },
+        "recoverability": "regular",
+        "start_time": "2023-11-18T05:26:43.545122Z",
+        "extensions": {
+          "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+            "extension_type": "new-sdo"
+          },
+          "availability": {
+            "availability_impact": 99
+          }
+        }
+      },
+      "icon": "impact-availability",
+      "label": "impact"
+    },
+    {
+      "id": "impact--50f243b5-d6d4-4354-b9bf-a5600281e5aa",
+      "original": {
+        "type": "impact",
+        "spec_version": "2.1",
+        "id": "impact--50f243b5-d6d4-4354-b9bf-a5600281e5aa",
+        "created": "2023-11-18T05:26:43.559218Z",
+        "modified": "2023-11-18T05:26:43.559218Z",
+        "impact_category": "integrity",
+        "criticality": 99,
+        "description": "The credentials were modified",
+        "end_time": "2023-11-18T05:26:43.559218Z",
+        "impacted_entity_counts": {
+          "computers-personal": 2
+        },
+        "recoverability": "regular",
+        "start_time": "2023-11-18T05:26:43.559218Z",
+        "extensions": {
+          "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+            "extension_type": "new-sdo"
+          },
+          "integrity": {
+            "alteration": "partial-modification",
+            "information_type": "credentials-user",
+            "record_count": 2,
+            "record_size": 2000
+          }
+        }
+      },
+      "icon": "impact-integrity",
+      "label": "impact"
+    },
+    {
+      "id": "impact--6b37da34-fc8b-4c0e-90a1-55e445b31b75",
+      "original": {
+        "type": "impact",
+        "spec_version": "2.1",
+        "id": "impact--6b37da34-fc8b-4c0e-90a1-55e445b31b75",
+        "created": "2023-11-18T05:26:43.569212Z",
+        "modified": "2023-11-18T05:26:43.569212Z",
+        "impact_category": "physical",
+        "criticality": 99,
+        "description": "The rcomputers are not usable, but can be fixed",
+        "end_time": "2023-11-18T05:26:43.569212Z",
+        "impacted_entity_counts": {
+          "computers-personal": 2
+        },
+        "recoverability": "regular",
+        "start_time": "2023-11-18T05:26:43.569212Z",
+        "extensions": {
+          "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+            "extension_type": "new-sdo"
+          },
+          "physical": {
+            "impact_type": "damaged-nonfunctional",
+            "asset_type": "computers-personal"
+          }
+        }
+      },
+      "icon": "impact-physical",
+      "label": "impact"
+    },
+    {
+      "id": "impact--86625ce2-4b1f-4fc7-8a6b-fc70e086c006",
+      "original": {
+        "type": "impact",
+        "spec_version": "2.1",
+        "id": "impact--86625ce2-4b1f-4fc7-8a6b-fc70e086c006",
+        "created": "2023-11-18T05:26:43.487599Z",
+        "modified": "2023-11-18T05:26:43.487599Z",
+        "impact_category": "availability",
+        "criticality": 99,
+        "description": "Laptop is stuffed",
+        "end_time": "2023-11-18T05:26:43.487599Z",
+        "impacted_entity_counts": {
+          "computers-mobile": 1
+        },
+        "recoverability": "regular",
+        "start_time": "2023-11-18T05:26:43.487599Z",
+        "extensions": {
+          "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+            "extension_type": "new-sdo"
+          },
+          "availability": {
+            "availability_impact": 99
+          }
+        }
+      },
+      "icon": "impact-availability",
+      "label": "impact"
+    },
+    {
+      "id": "impact--9dc0d17d-4b07-4498-86ed-42c0cc2dffc4",
+      "original": {
+        "type": "impact",
+        "spec_version": "2.1",
+        "id": "impact--9dc0d17d-4b07-4498-86ed-42c0cc2dffc4",
+        "created": "2023-11-18T05:26:43.550123Z",
+        "modified": "2023-11-18T05:26:43.550123Z",
+        "impact_category": "confidentiality",
+        "criticality": 99,
+        "description": "Two Laptops had credentials stolen",
+        "end_time": "2023-11-18T05:26:43.550123Z",
+        "impacted_entity_counts": {
+          "computers-personal": 2
+        },
+        "recoverability": "regular",
+        "start_time": "2023-11-18T05:26:43.550123Z",
+        "extensions": {
+          "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+            "extension_type": "new-sdo"
+          },
+          "confidentiality": {
+            "information_type": "credentials-user",
+            "loss_type": "exploited-loss",
+            "record_count": 2,
+            "record_size": 2000
+          }
+        }
+      },
+      "icon": "impact-confidentiality",
+      "label": "impact"
+    },
+    {
+      "id": "impact--b9062b38-c151-439a-bcaa-5922aa38a52d",
+      "original": {
+        "type": "impact",
+        "spec_version": "2.1",
+        "id": "impact--b9062b38-c151-439a-bcaa-5922aa38a52d",
+        "created": "2023-11-18T05:26:43.556125Z",
+        "modified": "2023-11-18T05:26:43.556125Z",
+        "impact_category": "external",
+        "criticality": 99,
+        "description": "Public confidence has taken a hit",
+        "end_time": "2023-11-18T05:26:43.556125Z",
+        "impacted_entity_counts": {
+          "computers-personal": 2
+        },
+        "recoverability": "regular",
+        "start_time": "2023-11-18T05:26:43.556125Z",
+        "extensions": {
+          "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+            "extension_type": "new-sdo"
+          },
+          "external": {
+            "impact_type": "public-confidence"
+          }
+        }
+      },
+      "icon": "impact-external",
+      "label": "impact"
+    },
+    {
+      "id": "impact--d82add0b-eb43-42d3-98c0-ae73ca232bf8",
+      "original": {
+        "type": "impact",
+        "spec_version": "2.1",
+        "id": "impact--d82add0b-eb43-42d3-98c0-ae73ca232bf8",
+        "created": "2023-11-18T05:26:43.534206Z",
+        "modified": "2023-11-18T05:26:43.534206Z",
+        "impact_category": "availability",
+        "criticality": 99,
+        "description": "Two Laptops are stuffed",
+        "end_time": "2023-11-18T05:26:43.534206Z",
+        "impacted_entity_counts": {
+          "computers-mobile": 2
+        },
+        "recoverability": "regular",
+        "start_time": "2023-11-18T05:26:43.534206Z",
+        "extensions": {
+          "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+            "extension_type": "new-sdo"
+          },
+          "availability": {
+            "availability_impact": 99
+          }
+        }
+      },
+      "icon": "impact-availability",
+      "label": "impact"
+    },
+    {
+      "id": "impact--e0689a9e-e45c-4da3-a8f1-244243f51d46",
+      "original": {
+        "type": "impact",
+        "spec_version": "2.1",
+        "id": "impact--e0689a9e-e45c-4da3-a8f1-244243f51d46",
+        "created": "2023-11-18T05:26:43.576216Z",
+        "modified": "2023-11-18T05:26:43.576216Z",
+        "impact_category": "traceability",
+        "criticality": 99,
+        "description": "We can reconstruct the attack from the data remaining",
+        "end_time": "2023-11-18T05:26:43.576216Z",
+        "impacted_entity_counts": {
+          "computers-personal": 2
+        },
+        "recoverability": "regular",
+        "start_time": "2023-11-18T05:26:43.576216Z",
+        "extensions": {
+          "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+            "extension_type": "new-sdo"
+          },
+          "traceability": {
+            "traceability_impact": "provable-accountability"
+          }
+        }
+      },
+      "icon": "impact-traceability",
+      "label": "impact"
+    },
+    {
+      "id": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "original": {
+        "type": "incident",
+        "spec_version": "2.1",
+        "id": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+        "created": "2023-11-18T05:26:43.46768Z",
+        "modified": "2023-11-18T05:26:43.46768Z",
+        "name": "potential phishing",
+        "extensions": {
+          "extension-definition--ef765651-680c-498d-9894-99799f2fa126": {
+            "extension_type": "property-extension",
+            "investigation_status": "new",
+            "determination": "suspected",
+            "incident_types": [
+              "dissemination-phishing-emails"
+            ],
+            "sequence_start_refs": [
+              "sequence--58babacb-4e15-480e-a73c-3eac9f6e2d52"
+            ],
+            "sequence_refs": [
+              "sequence--58babacb-4e15-480e-a73c-3eac9f6e2d52",
+              "sequence--90ceef43-4484-4126-af05-9c9d60290a36",
+              "sequence--d41c2e05-da07-42ce-85bb-05fa280f3f9f",
+              "sequence--e84228de-4831-4f98-9f28-1a51744ec4b9",
+              "sequence--9fac1cf7-db8b-4f74-bbd0-14a036459cc3",
+              "sequence--edde80dd-c68f-47c9-bd3c-39ed461700a6",
+              "sequence--5d59d1e4-1bce-4599-a763-f05fefa6a9f1",
+              "sequence--1521a7d0-c597-4a8a-a074-6d33337b627e",
+              "sequence--cf28bb62-ebba-4a6e-b0d1-c25786f23e92",
+              "sequence--e5336bdf-238c-4ff2-9db7-9f7ca90348e7"
+            ],
+            "event_refs": [
+              "event--236d689a-aaa9-4bc1-8401-d86cb2d3c430"
+            ],
+            "other_object_refs": [
+              "email-addr--64157c44-5eb7-5d01-8710-b288f8ccb625",
+              "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0",
+              "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+              "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8",
+              "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7",
+              "relationship--a8a2a45a-e3a9-4ebc-a1f5-4fdf91960fd4",
+              "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776",
+              "indicator--3f624ff1-7c2e-40db-8d7c-acc8723afe95",
+              "sighting--49cc5c32-98b8-4d15-94bf-2f867d71a2fa",
+              "identity--b30fc24d-4d5a-49a4-8aee-155788edbae3",
+              "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f",
+              "observed-data--fb077ab9-4a21-4a3d-91b1-02bfb9c6c493",
+              "sighting--d0a71341-cf9b-474f-8cdb-eba6d9e96a68",
+              "user-account--47df6d33-0005-5b45-9875-e7a609b12e9b",
+              "user-account--47df6d33-0005-5b45-9875-e7a609b12e9b",
+              "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109",
+              "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5",
+              "user-account--5aaaa4e2-0974-5ab4-9069-41a16197f0ff",
+              "email-addr--30d9a416-203b-55c8-b796-8eb65ab5275e",
+              "sighting--575ca2c4-7d0f-4984-86a1-e0f7422f6237",
+              "relationship--9789896d-1c02-485f-88e3-7bc6c749f284",
+              "relationship--9789896d-1c02-485f-88e3-7bc6c749f284",
+              "relationship--524cee6e-3108-4c27-97f3-d0f290f4324c",
+              "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+              "identity--05bf6d14-9483-423d-b4f3-b19f420c0803",
+              "ipv4-addr--a40768a0-5841-50d2-838d-bcb35ee92131",
+              "domain-name--aa90a5c6-6a78-520b-bcfd-e2bf0c25bce1",
+              "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6",
+              "indicator--00c82e87-a7c4-4cbb-b58a-577d988dd84e",
+              "sighting--feb6fbd9-ff3f-45f8-ae59-2976fc766196",
+              "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1",
+              "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f",
+              "relationship--c5bcfa3f-2086-4122-a1f1-dc46ace79baa",
+              "sighting--791d2177-e8ae-4021-ac17-5a68f5ccabed",
+              "software--3974613c-1980-5209-8f08-17920a04da04",
+              "file--e7c7ddeb-d693-53e7-bcd8-f40951888120",
+              "process--fe3c9253-8490-4647-9b45-41a918fb6e15",
+              "relationship--2ca1e438-492d-45a1-b0a9-7285db39342f",
+              "relationship--1995ce47-c1bf-401b-944f-9661c9da43a2",
+              "relationship--50929fe5-29e9-4433-9a74-ae834e96f00c",
+              "observed-data--c177cd97-7226-4572-a60a-5caf70f49873",
+              "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda"
+            ],
+            "task_refs": [
+              "task--3d00a36b-506f-4ccb-8888-ec8d099f399d",
+              "task--0b663052-5d31-4c42-9f06-7343985cce6c",
+              "task--44a9d7fa-028d-4fa0-b822-32680eda7d7e",
+              "task--43b3b336-4774-4267-9ffd-175f83b7cf7c",
+              "task--6be4f7f4-8ece-4b94-9ec7-e7009e38c547",
+              "task--6be4f7f4-8ece-4b94-9ec7-e7009e38c547"
+            ],
+            "impact_refs": [
+              "impact--86625ce2-4b1f-4fc7-8a6b-fc70e086c006",
+              "impact--d82add0b-eb43-42d3-98c0-ae73ca232bf8"
+            ]
+          }
+        }
+      },
+      "icon": "incident-ext",
+      "label": "extended incident"
+    },
+    {
+      "id": "indicator--00c82e87-a7c4-4cbb-b58a-577d988dd84e",
+      "original": {
+        "type": "indicator",
+        "spec_version": "2.1",
+        "id": "indicator--00c82e87-a7c4-4cbb-b58a-577d988dd84e",
+        "created": "2023-11-18T05:26:43.506597Z",
+        "modified": "2023-11-18T05:26:43.506597Z",
+        "name": "Suspicious Email",
+        "indicator_types": [
+          "malicious-activity"
+        ],
+        "pattern": "[domain-name:value = 'northkorea.com' AND ipv4-addr:value = '197.133.142.27']",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "valid_from": "2023-11-18T05:26:43.506597Z"
+      },
+      "icon": "indicator",
+      "label": "indicator"
+    },
+    {
+      "id": "indicator--3f624ff1-7c2e-40db-8d7c-acc8723afe95",
+      "original": {
+        "type": "indicator",
+        "spec_version": "2.1",
+        "id": "indicator--3f624ff1-7c2e-40db-8d7c-acc8723afe95",
+        "created": "2023-11-18T05:26:43.448688Z",
+        "modified": "2023-11-18T05:26:43.448688Z",
+        "name": "Suspicious Email",
+        "indicator_types": [
+          "unknown"
+        ],
+        "pattern": "[email-addr:value = 'evil@northkorea.com' AND email:subject = 'we are coming for you']",
+        "pattern_type": "stix",
+        "pattern_version": "2.1",
+        "valid_from": "2023-11-18T05:26:43.448688Z"
+      },
+      "icon": "indicator",
+      "label": "indicator"
+    },
+    {
+      "id": "ipv4-addr--a40768a0-5841-50d2-838d-bcb35ee92131",
+      "original": {
+        "type": "ipv4-addr",
+        "spec_version": "2.1",
+        "id": "ipv4-addr--a40768a0-5841-50d2-838d-bcb35ee92131",
+        "value": "197.133.142.27"
+      },
+      "icon": "ipv4-addr",
+      "label": "197.133.142.27"
+    },
+    {
+      "id": "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1",
+      "original": {
+        "type": "location",
+        "spec_version": "2.1",
+        "id": "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1",
+        "created": "2023-11-18T05:26:43.515694Z",
+        "modified": "2023-11-18T05:26:43.515694Z",
+        "name": "Evil Incarnate Ltd",
+        "latitude": 39.03385,
+        "longitude": 125.75432,
+        "region": "south-eastern-asi",
+        "country": "PRK",
+        "city": "Whyme",
+        "street_address": "666 Infection St"
+      },
+      "icon": "location",
+      "label": "location"
+    },
+    {
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "original": {
+        "type": "marking-definition",
+        "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+        "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "created": "2017-06-01T00:00:00.000Z",
+        "definition_type": "statement",
+        "definition": {
+          "statement": "Copyright 2015-2023, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+        },
+        "x_mitre_attack_spec_version": "2.1.0"
+      },
+      "icon": "marking",
+      "label": "statement"
+    },
+    {
+      "id": "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6",
+      "original": {
+        "type": "observed-data",
+        "spec_version": "2.1",
+        "id": "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6",
+        "created": "2023-11-18T05:26:43.506597Z",
+        "modified": "2023-11-18T05:26:43.506597Z",
+        "first_observed": "2020-10-19T01:01:01Z",
+        "last_observed": "2020-10-19T01:01:01Z",
+        "number_observed": 1,
+        "object_refs": [
+          "ipv4-addr--a40768a0-5841-50d2-838d-bcb35ee92131",
+          "domain-name--aa90a5c6-6a78-520b-bcfd-e2bf0c25bce1"
+        ]
+      },
+      "icon": "observed-data",
+      "label": "observed-data"
+    },
+    {
+      "id": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+      "original": {
+        "type": "observed-data",
+        "spec_version": "2.1",
+        "id": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+        "created": "2023-11-18T05:26:43.498695Z",
+        "modified": "2023-11-18T05:26:43.498695Z",
+        "first_observed": "2020-10-19T01:01:01Z",
+        "last_observed": "2020-10-19T01:01:01Z",
+        "number_observed": 1,
+        "object_refs": [
+          "email-addr--64157c44-5eb7-5d01-8710-b288f8ccb625",
+          "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8",
+          "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7",
+          "relationship--a8a2a45a-e3a9-4ebc-a1f5-4fdf91960fd4",
+          "email-addr--a7155ffe-8ea7-563a-a54c-e94e23ec50c8",
+          "user-account--47df6d33-0005-5b45-9875-e7a609b12e9b",
+          "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5",
+          "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109",
+          "email-addr--30d9a416-203b-55c8-b796-8eb65ab5275e",
+          "user-account--5aaaa4e2-0974-5ab4-9069-41a16197f0ff",
+          "relationship--9789896d-1c02-485f-88e3-7bc6c749f284",
+          "relationship--9d503bd4-1fde-417b-b6ac-6446d28e65b7",
+          "relationship--524cee6e-3108-4c27-97f3-d0f290f4324c"
+        ]
+      },
+      "icon": "observed-data",
+      "label": "observed-data"
+    },
+    {
+      "id": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873",
+      "original": {
+        "type": "observed-data",
+        "spec_version": "2.1",
+        "id": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873",
+        "created": "2023-11-18T05:26:43.526206Z",
+        "modified": "2023-11-18T05:26:43.526206Z",
+        "first_observed": "2020-10-19T01:01:01Z",
+        "last_observed": "2020-10-19T01:01:01Z",
+        "number_observed": 1,
+        "object_refs": [
+          "software--3974613c-1980-5209-8f08-17920a04da04",
+          "file--e7c7ddeb-d693-53e7-bcd8-f40951888120",
+          "process--fe3c9253-8490-4647-9b45-41a918fb6e15",
+          "relationship--2ca1e438-492d-45a1-b0a9-7285db39342f",
+          "relationship--1995ce47-c1bf-401b-944f-9661c9da43a2",
+          "relationship--50929fe5-29e9-4433-9a74-ae834e96f00c",
+          "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+          "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5",
+          "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0",
+          "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109"
+        ]
+      },
+      "icon": "observed-data",
+      "label": "observed-data"
+    },
+    {
+      "id": "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776",
+      "original": {
+        "type": "observed-data",
+        "spec_version": "2.1",
+        "id": "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776",
+        "created": "2023-11-18T05:26:43.448688Z",
+        "modified": "2023-11-18T05:26:43.448688Z",
+        "first_observed": "2020-10-19T01:01:01Z",
+        "last_observed": "2020-10-19T01:01:01Z",
+        "number_observed": 1,
+        "object_refs": [
+          "email-addr--64157c44-5eb7-5d01-8710-b288f8ccb625",
+          "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8",
+          "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7",
+          "relationship--a8a2a45a-e3a9-4ebc-a1f5-4fdf91960fd4",
+          "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+          "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0"
+        ]
+      },
+      "icon": "observed-data",
+      "label": "observed-data"
+    },
+    {
+      "id": "observed-data--fb077ab9-4a21-4a3d-91b1-02bfb9c6c493",
+      "original": {
+        "type": "observed-data",
+        "spec_version": "2.1",
+        "id": "observed-data--fb077ab9-4a21-4a3d-91b1-02bfb9c6c493",
+        "created": "2023-11-18T05:26:43.48171Z",
+        "modified": "2023-11-18T05:26:43.48171Z",
+        "first_observed": "2023-11-18T05:26:43.480683Z",
+        "last_observed": "2023-11-18T05:26:43.480683Z",
+        "number_observed": 1,
+        "object_refs": [
+          "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f"
+        ]
+      },
+      "icon": "observed-data",
+      "label": "observed-data"
+    },
+    {
+      "id": "process--fe3c9253-8490-4647-9b45-41a918fb6e15",
+      "original": {
+        "type": "process",
+        "spec_version": "2.1",
+        "id": "process--fe3c9253-8490-4647-9b45-41a918fb6e15",
+        "pid": 1221,
+        "created_time": "2023-01-20T14:11:25.55Z",
+        "command_line": "./gedit-bin --destroy-alll",
+        "image_ref": "file--e7c7ddeb-d693-53e7-bcd8-f40951888120"
+      },
+      "icon": "process",
+      "label": "standard process"
+    },
+    {
+      "id": "sequence--1521a7d0-c597-4a8a-a074-6d33337b627e",
+      "original": {
+        "type": "sequence",
+        "spec_version": "2.1",
+        "id": "sequence--1521a7d0-c597-4a8a-a074-6d33337b627e",
+        "created": "2023-11-18T05:26:43.522118Z",
+        "modified": "2023-11-18T05:26:43.522118Z",
+        "sequenced_object": "task--6be4f7f4-8ece-4b94-9ec7-e7009e38c547",
+        "sequence_type": "task",
+        "step_type": "single_step",
+        "extensions": {
+          "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
+            "extension_type": "new-sdo"
+          }
+        },
+        "on_completion": "sequence--e5336bdf-238c-4ff2-9db7-9f7ca90348e7"
+      },
+      "icon": "step-single",
+      "label": "single step"
+    },
+    {
+      "id": "sequence--58babacb-4e15-480e-a73c-3eac9f6e2d52",
+      "original": {
+        "type": "sequence",
+        "spec_version": "2.1",
+        "id": "sequence--58babacb-4e15-480e-a73c-3eac9f6e2d52",
+        "created": "2023-11-18T05:26:43.465678Z",
+        "modified": "2023-11-18T05:26:43.465678Z",
+        "sequence_type": "event",
+        "step_type": "start_step",
+        "on_completion": "sequence--90ceef43-4484-4126-af05-9c9d60290a36",
+        "extensions": {
+          "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
+            "extension_type": "new-sdo"
+          }
+        }
+      },
+      "icon": "step-terminal",
+      "label": "start step"
+    },
+    {
+      "id": "sequence--5d59d1e4-1bce-4599-a763-f05fefa6a9f1",
+      "original": {
+        "type": "sequence",
+        "spec_version": "2.1",
+        "id": "sequence--5d59d1e4-1bce-4599-a763-f05fefa6a9f1",
+        "created": "2023-11-18T05:26:43.513684Z",
+        "modified": "2023-11-18T05:26:43.513684Z",
+        "sequenced_object": "task--43b3b336-4774-4267-9ffd-175f83b7cf7c",
+        "sequence_type": "task",
+        "step_type": "single_step",
+        "extensions": {
+          "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
+            "extension_type": "new-sdo"
+          }
+        },
+        "on_completion": "sequence--1521a7d0-c597-4a8a-a074-6d33337b627e"
+      },
+      "icon": "step-single",
+      "label": "single step"
+    },
+    {
+      "id": "sequence--90ceef43-4484-4126-af05-9c9d60290a36",
+      "original": {
+        "type": "sequence",
+        "spec_version": "2.1",
+        "id": "sequence--90ceef43-4484-4126-af05-9c9d60290a36",
+        "created": "2023-11-18T05:26:43.464688Z",
+        "modified": "2023-11-18T05:26:43.464688Z",
+        "sequenced_object": "event--236d689a-aaa9-4bc1-8401-d86cb2d3c430",
+        "sequence_type": "event",
+        "step_type": "single_step",
+        "extensions": {
+          "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
+            "extension_type": "new-sdo"
+          }
+        },
+        "on_completion": "sequence--cf28bb62-ebba-4a6e-b0d1-c25786f23e92"
+      },
+      "icon": "step-single",
+      "label": "single step"
+    },
+    {
+      "id": "sequence--9fac1cf7-db8b-4f74-bbd0-14a036459cc3",
+      "original": {
+        "type": "sequence",
+        "spec_version": "2.1",
+        "id": "sequence--9fac1cf7-db8b-4f74-bbd0-14a036459cc3",
+        "created": "2023-11-18T05:26:43.494679Z",
+        "modified": "2023-11-18T05:26:43.494679Z",
+        "sequenced_object": "task--0b663052-5d31-4c42-9f06-7343985cce6c",
+        "sequence_type": "task",
+        "step_type": "single_step",
+        "extensions": {
+          "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
+            "extension_type": "new-sdo"
+          }
+        },
+        "on_completion": "sequence--edde80dd-c68f-47c9-bd3c-39ed461700a6"
+      },
+      "icon": "step-single",
+      "label": "single step"
+    },
+    {
+      "id": "sequence--cf28bb62-ebba-4a6e-b0d1-c25786f23e92",
+      "original": {
+        "type": "sequence",
+        "spec_version": "2.1",
+        "id": "sequence--cf28bb62-ebba-4a6e-b0d1-c25786f23e92",
+        "created": "2023-11-18T05:26:43.532206Z",
+        "modified": "2023-11-18T05:26:43.532206Z",
+        "sequenced_object": "event--9e41296f-175b-4621-9d7d-bc2f74fb3386",
+        "sequence_type": "event",
+        "step_type": "single_step",
+        "extensions": {
+          "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
+            "extension_type": "new-sdo"
+          }
+        }
+      },
+      "icon": "step-single",
+      "label": "single step"
+    },
+    {
+      "id": "sequence--d41c2e05-da07-42ce-85bb-05fa280f3f9f",
+      "original": {
+        "type": "sequence",
+        "spec_version": "2.1",
+        "id": "sequence--d41c2e05-da07-42ce-85bb-05fa280f3f9f",
+        "created": "2023-11-18T05:26:43.474603Z",
+        "modified": "2023-11-18T05:26:43.474603Z",
+        "sequence_type": "task",
+        "step_type": "start_step",
+        "on_completion": "sequence--e84228de-4831-4f98-9f28-1a51744ec4b9",
+        "extensions": {
+          "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
+            "extension_type": "new-sdo"
+          }
+        }
+      },
+      "icon": "step-terminal",
+      "label": "start step"
+    },
+    {
+      "id": "sequence--e5336bdf-238c-4ff2-9db7-9f7ca90348e7",
+      "original": {
+        "type": "sequence",
+        "spec_version": "2.1",
+        "id": "sequence--e5336bdf-238c-4ff2-9db7-9f7ca90348e7",
+        "created": "2023-11-18T05:26:43.542122Z",
+        "modified": "2023-11-18T05:26:43.542122Z",
+        "sequenced_object": "task--d3142f7e-4e2c-47d8-87cb-7f43277142d4",
+        "sequence_type": "task",
+        "step_type": "single_step",
+        "extensions": {
+          "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
+            "extension_type": "new-sdo"
+          }
+        }
+      },
+      "icon": "step-single",
+      "label": "single step"
+    },
+    {
+      "id": "sequence--e84228de-4831-4f98-9f28-1a51744ec4b9",
+      "original": {
+        "type": "sequence",
+        "spec_version": "2.1",
+        "id": "sequence--e84228de-4831-4f98-9f28-1a51744ec4b9",
+        "created": "2023-11-18T05:26:43.472597Z",
+        "modified": "2023-11-18T05:26:43.472597Z",
+        "sequenced_object": "task--3d00a36b-506f-4ccb-8888-ec8d099f399d",
+        "sequence_type": "task",
+        "step_type": "single_step",
+        "extensions": {
+          "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
+            "extension_type": "new-sdo"
+          }
+        },
+        "on_completion": "sequence--9fac1cf7-db8b-4f74-bbd0-14a036459cc3"
+      },
+      "icon": "step-single",
+      "label": "single step"
+    },
+    {
+      "id": "sequence--edde80dd-c68f-47c9-bd3c-39ed461700a6",
+      "original": {
+        "type": "sequence",
+        "spec_version": "2.1",
+        "id": "sequence--edde80dd-c68f-47c9-bd3c-39ed461700a6",
+        "created": "2023-11-18T05:26:43.503679Z",
+        "modified": "2023-11-18T05:26:43.503679Z",
+        "sequenced_object": "task--44a9d7fa-028d-4fa0-b822-32680eda7d7e",
+        "sequence_type": "task",
+        "step_type": "single_step",
+        "extensions": {
+          "extension-definition--be0c7c79-1961-43db-afde-637066a87a64": {
+            "extension_type": "new-sdo"
+          }
+        },
+        "on_completion": "sequence--5d59d1e4-1bce-4599-a763-f05fefa6a9f1"
+      },
+      "icon": "step-single",
+      "label": "single step"
+    },
+    {
+      "id": "sighting--1a8ff145-731f-438e-ab1f-03891e58ad43",
+      "original": {
+        "type": "sighting",
+        "spec_version": "2.1",
+        "id": "sighting--1a8ff145-731f-438e-ab1f-03891e58ad43",
+        "created": "2023-11-18T05:26:43.585525Z",
+        "modified": "2023-11-18T05:26:43.585525Z",
+        "sighting_of_ref": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7",
+        "observed_data_refs": [
+          "observed-data--c177cd97-7226-4572-a60a-5caf70f49873"
+        ],
+        "where_sighted_refs": [
+          "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
+        ],
+        "extensions": {
+          "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
+            "extension_type": "property-extension"
+          },
+          "sighting-external": {
+            "source": "MISP",
+            "version": "14.1",
+            "last_update": "2023-11-18T05:26:43.584214Z",
+            "pattern": "[email-addr:value = 'evil@northkorea.com' AND email:subject = 'we are coming for you']",
+            "pattern_type": "stix",
+            "payload": "Proven Malicious Phishing Source",
+            "valid_from": "2023-09-07T08:53:15.645995Z",
+            "valid_until": "2023-11-07T08:53:15.645995Z"
+          }
+        }
+      },
+      "label": "Sighting",
+      "icon": "sighting-external"
+    },
+    {
+      "id": "sighting--49cc5c32-98b8-4d15-94bf-2f867d71a2fa",
+      "original": {
+        "type": "sighting",
+        "spec_version": "2.1",
+        "id": "sighting--49cc5c32-98b8-4d15-94bf-2f867d71a2fa",
+        "created": "2023-11-18T05:26:43.45768Z",
+        "modified": "2023-11-18T05:26:43.45768Z",
+        "sighting_of_ref": "indicator--3f624ff1-7c2e-40db-8d7c-acc8723afe95",
+        "observed_data_refs": [
+          "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776"
+        ],
+        "extensions": {
+          "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
+            "extension_type": "property-extension"
+          },
+          "sighting-alert": {
+            "name": "user-report",
+            "log": "I have found a suspicious email"
+          }
+        }
+      },
+      "label": "Sighting",
+      "icon": "sighting-alert"
+    },
+    {
+      "id": "sighting--575ca2c4-7d0f-4984-86a1-e0f7422f6237",
+      "original": {
+        "type": "sighting",
+        "spec_version": "2.1",
+        "id": "sighting--575ca2c4-7d0f-4984-86a1-e0f7422f6237",
+        "created": "2023-11-18T05:26:43.499685Z",
+        "modified": "2023-11-18T05:26:43.499685Z",
+        "sighting_of_ref": "indicator--3f624ff1-7c2e-40db-8d7c-acc8723afe95",
+        "observed_data_refs": [
+          "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f"
+        ],
+        "extensions": {
+          "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
+            "extension_type": "property-extension"
+          },
+          "sighting-context": {
+            "name": "Exchange",
+            "description": "query from:evil@northkorea.com, subject:we are coming for you",
+            "value": "[silly@mycompany.com, strange@mycompany.com, dumbo@mycompany.com]"
+          }
+        }
+      },
+      "label": "Sighting",
+      "icon": "sighting-context"
+    },
+    {
+      "id": "sighting--5b098c08-9215-4b7b-b268-d8d0e99c2674",
+      "original": {
+        "type": "sighting",
+        "spec_version": "2.1",
+        "id": "sighting--5b098c08-9215-4b7b-b268-d8d0e99c2674",
+        "created": "2023-11-18T05:26:43.58124Z",
+        "modified": "2023-11-18T05:26:43.58124Z",
+        "sighting_of_ref": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7",
+        "observed_data_refs": [
+          "observed-data--c177cd97-7226-4572-a60a-5caf70f49873"
+        ],
+        "where_sighted_refs": [
+          "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
+        ],
+        "extensions": {
+          "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
+            "extension_type": "property-extension"
+          },
+          "sighting-framework": {
+            "framework": "MITRE ATT&CK",
+            "version": "14.1",
+            "domain": "Enterprise",
+            "comparison": "exclusion list and hunt",
+            "comparison_approach": "The Exclusion List confirmed the email was previously sighted and the Hunt confirmed that processes had been started"
+          }
+        }
+      },
+      "label": "Sighting",
+      "icon": "sighting-framework"
+    },
+    {
+      "id": "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda",
+      "original": {
+        "type": "sighting",
+        "spec_version": "2.1",
+        "id": "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda",
+        "created": "2023-11-18T05:26:43.526206Z",
+        "modified": "2023-11-18T05:26:43.526206Z",
+        "sighting_of_ref": "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f",
+        "observed_data_refs": [
+          "observed-data--c177cd97-7226-4572-a60a-5caf70f49873"
+        ],
+        "where_sighted_refs": [
+          "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
+        ],
+        "extensions": {
+          "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
+            "extension_type": "property-extension"
+          },
+          "sighting-hunt": {
+            "name": "kestrel",
+            "playbook_id": "playbook_1_1",
+            "rule": "demo rule string"
+          }
+        }
+      },
+      "label": "Sighting",
+      "icon": "sighting-hunt"
+    },
+    {
+      "id": "sighting--791d2177-e8ae-4021-ac17-5a68f5ccabed",
+      "original": {
+        "type": "sighting",
+        "spec_version": "2.1",
+        "id": "sighting--791d2177-e8ae-4021-ac17-5a68f5ccabed",
+        "created": "2023-11-18T05:26:43.515694Z",
+        "modified": "2023-11-18T05:26:43.515694Z",
+        "sighting_of_ref": "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f",
+        "observed_data_refs": [
+          "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6"
+        ],
+        "where_sighted_refs": [
+          "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
+        ],
+        "extensions": {
+          "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
+            "extension_type": "property-extension"
+          },
+          "sighting-enrichment": {
+            "name": "maltego",
+            "url": "maltego.com",
+            "paid": true,
+            "value": "Evil Incarnate Ltd, 666 Infection St, Whyme, NK, lat/long = 39.03385, 125.75432"
+          }
+        }
+      },
+      "label": "Sighting",
+      "icon": "sighting-enrichment"
+    },
+    {
+      "id": "sighting--d0a71341-cf9b-474f-8cdb-eba6d9e96a68",
+      "original": {
+        "type": "sighting",
+        "spec_version": "2.1",
+        "id": "sighting--d0a71341-cf9b-474f-8cdb-eba6d9e96a68",
+        "created": "2023-11-18T05:26:43.48171Z",
+        "modified": "2023-11-18T05:26:43.48171Z",
+        "sighting_of_ref": "identity--b30fc24d-4d5a-49a4-8aee-155788edbae3",
+        "observed_data_refs": [
+          "observed-data--fb077ab9-4a21-4a3d-91b1-02bfb9c6c493"
+        ],
+        "extensions": {
+          "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
+            "extension_type": "property-extension"
+          },
+          "sighting-anecdote": {
+            "person_name": "Naive Smith",
+            "person_context": "employee",
+            "report_submission": "interview"
+          }
+        }
+      },
+      "label": "Sighting",
+      "icon": "sighting-anecdote"
+    },
+    {
+      "id": "sighting--feb6fbd9-ff3f-45f8-ae59-2976fc766196",
+      "original": {
+        "type": "sighting",
+        "spec_version": "2.1",
+        "id": "sighting--feb6fbd9-ff3f-45f8-ae59-2976fc766196",
+        "created": "2023-11-18T05:26:43.508682Z",
+        "modified": "2023-11-18T05:26:43.508682Z",
+        "sighting_of_ref": "indicator--00c82e87-a7c4-4cbb-b58a-577d988dd84e",
+        "observed_data_refs": [
+          "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6"
+        ],
+        "extensions": {
+          "extension-definition--0d76d6d9-16ca-43fd-bd41-4f800ba8fc43": {
+            "extension_type": "property-extension"
+          },
+          "sighting-exclusion": {
+            "source": "www.phishdb.com",
+            "channel": "Last 24 hours"
+          }
+        }
+      },
+      "label": "Sighting",
+      "icon": "sighting-exclusion"
+    },
+    {
+      "id": "software--3974613c-1980-5209-8f08-17920a04da04",
+      "original": {
+        "type": "software",
+        "spec_version": "2.1",
+        "id": "software--3974613c-1980-5209-8f08-17920a04da04",
+        "name": "evil.exe"
+      },
+      "icon": "software",
+      "label": "evil.exe"
+    },
+    {
+      "id": "task--0b663052-5d31-4c42-9f06-7343985cce6c",
+      "original": {
+        "type": "task",
+        "spec_version": "2.1",
+        "id": "task--0b663052-5d31-4c42-9f06-7343985cce6c",
+        "created": "2023-11-18T05:26:43.492678Z",
+        "modified": "2023-11-18T05:26:43.492678Z",
+        "task_types": [
+          "investigation"
+        ],
+        "outcome": "successful",
+        "description": "Query Exchange to find out who else got the suspicious email",
+        "end_time": "2023-11-18T05:26:43.492678Z",
+        "name": "Query Exchange Server",
+        "start_time": "2023-11-18T05:26:43.492678Z",
+        "owner": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+        "extensions": {
+          "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
+            "extension_type": "new-sdo"
+          }
+        }
+      },
+      "icon": "task",
+      "label": "task"
+    },
+    {
+      "id": "task--3d00a36b-506f-4ccb-8888-ec8d099f399d",
+      "original": {
+        "type": "task",
+        "spec_version": "2.1",
+        "id": "task--3d00a36b-506f-4ccb-8888-ec8d099f399d",
+        "created": "2023-11-18T05:26:43.46969Z",
+        "modified": "2023-11-18T05:26:43.46969Z",
+        "task_types": [
+          "investigation"
+        ],
+        "outcome": "successful",
+        "description": "Talk to user and determine what they say",
+        "end_time": "2023-11-18T05:26:43.46969Z",
+        "name": "Speak to User",
+        "start_time": "2023-11-18T05:26:43.46969Z",
+        "owner": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+        "extensions": {
+          "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
+            "extension_type": "new-sdo"
+          }
+        }
+      },
+      "icon": "task",
+      "label": "task"
+    },
+    {
+      "id": "task--43b3b336-4774-4267-9ffd-175f83b7cf7c",
+      "original": {
+        "type": "task",
+        "spec_version": "2.1",
+        "id": "task--43b3b336-4774-4267-9ffd-175f83b7cf7c",
+        "created": "2023-11-18T05:26:43.511697Z",
+        "modified": "2023-11-18T05:26:43.511697Z",
+        "task_types": [
+          "investigation"
+        ],
+        "outcome": "successful",
+        "description": "Check known email, domain, IP address to see if we can get enrichments",
+        "end_time": "2023-11-18T05:26:43.511697Z",
+        "name": "Check Enrichments",
+        "start_time": "2023-11-18T05:26:43.511697Z",
+        "owner": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+        "extensions": {
+          "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
+            "extension_type": "new-sdo"
+          }
+        }
+      },
+      "icon": "task",
+      "label": "task"
+    },
+    {
+      "id": "task--44a9d7fa-028d-4fa0-b822-32680eda7d7e",
+      "original": {
+        "type": "task",
+        "spec_version": "2.1",
+        "id": "task--44a9d7fa-028d-4fa0-b822-32680eda7d7e",
+        "created": "2023-11-18T05:26:43.502678Z",
+        "modified": "2023-11-18T05:26:43.502678Z",
+        "task_types": [
+          "investigation"
+        ],
+        "outcome": "successful",
+        "description": "Check OS-Threat Exclusion List to see if email address is a known phisher",
+        "end_time": "2023-11-18T05:26:43.502678Z",
+        "name": "Check Exclusion Lists",
+        "start_time": "2023-11-18T05:26:43.502678Z",
+        "owner": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+        "extensions": {
+          "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
+            "extension_type": "new-sdo"
+          }
+        }
+      },
+      "icon": "task",
+      "label": "task"
+    },
+    {
+      "id": "task--6be4f7f4-8ece-4b94-9ec7-e7009e38c547",
+      "original": {
+        "type": "task",
+        "spec_version": "2.1",
+        "id": "task--6be4f7f4-8ece-4b94-9ec7-e7009e38c547",
+        "created": "2023-11-18T05:26:43.520698Z",
+        "modified": "2023-11-18T05:26:43.520698Z",
+        "task_types": [
+          "investigation"
+        ],
+        "outcome": "successful",
+        "description": "Use Hunting to determine how many clicked the link, and what impact it caused",
+        "end_time": "2023-11-18T05:26:43.520698Z",
+        "name": "Hunt the Actual Impact",
+        "start_time": "2023-11-18T05:26:43.520698Z",
+        "owner": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+        "extensions": {
+          "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
+            "extension_type": "new-sdo"
+          }
+        }
+      },
+      "icon": "task",
+      "label": "task"
+    },
+    {
+      "id": "task--d3142f7e-4e2c-47d8-87cb-7f43277142d4",
+      "original": {
+        "type": "task",
+        "spec_version": "2.1",
+        "id": "task--d3142f7e-4e2c-47d8-87cb-7f43277142d4",
+        "created": "2023-11-18T05:26:43.539128Z",
+        "modified": "2023-11-18T05:26:43.539128Z",
+        "task_types": [
+          "investigation"
+        ],
+        "outcome": "pending",
+        "description": "Use the Mitre ATT&CK Phishing TTP to confirm the technique",
+        "end_time": "2023-11-18T05:26:43.539128Z",
+        "name": "Add Phishing TTP",
+        "start_time": "2023-11-18T05:26:43.539128Z",
+        "owner": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+        "extensions": {
+          "extension-definition--2074a052-8be4-4932-849e-f5e7798e0030": {
+            "extension_type": "new-sdo"
+          }
+        }
+      },
+      "icon": "task",
+      "label": "task"
+    },
+    {
+      "id": "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7",
+      "original": {
+        "type": "url",
+        "spec_version": "2.1",
+        "id": "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7",
+        "value": "https://www.northkorea.nk/we/are/mad/"
+      },
+      "icon": "url",
+      "label": "https://www.northkorea.nk/we/are/mad/"
+    },
+    {
+      "id": "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0",
+      "original": {
+        "type": "user-account",
+        "spec_version": "2.1",
+        "id": "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0",
+        "account_login": "nsmith",
+        "account_type": "unix",
+        "display_name": "naive smith"
+      },
+      "icon": "user-account",
+      "label": "standard-account"
+    },
+    {
+      "id": "user-account--47df6d33-0005-5b45-9875-e7a609b12e9b",
+      "original": {
+        "type": "user-account",
+        "spec_version": "2.1",
+        "id": "user-account--47df6d33-0005-5b45-9875-e7a609b12e9b",
+        "account_login": "sthor",
+        "account_type": "unix",
+        "display_name": "silly thor"
+      },
+      "icon": "user-account",
+      "label": "standard-account"
+    },
+    {
+      "id": "user-account--5aaaa4e2-0974-5ab4-9069-41a16197f0ff",
+      "original": {
+        "type": "user-account",
+        "spec_version": "2.1",
+        "id": "user-account--5aaaa4e2-0974-5ab4-9069-41a16197f0ff",
+        "account_login": "dguy",
+        "account_type": "unix",
+        "display_name": "dumbo guy"
+      },
+      "icon": "user-account",
+      "label": "standard-account"
+    },
+    {
+      "id": "user-account--6edc343b-93fc-5d12-b68e-b693d26b74bd",
+      "original": {
+        "type": "user-account",
+        "spec_version": "2.1",
+        "id": "user-account--6edc343b-93fc-5d12-b68e-b693d26b74bd",
+        "account_login": "me",
+        "account_type": "unix",
+        "display_name": "me jones"
+      },
+      "icon": "user-account",
+      "label": "standard-account"
+    },
+    {
+      "id": "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109",
+      "original": {
+        "type": "user-account",
+        "spec_version": "2.1",
+        "id": "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109",
+        "account_login": "sguy",
+        "account_type": "unix",
+        "display_name": "strange guy"
+      },
+      "icon": "user-account",
+      "label": "standard-account"
+    }
+  ],
+  "edges": [
+    {
+      "label": "created-by",
+      "type": "embedded",
+      "source": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7",
+      "target": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+    },
+    {
+      "label": "applies-to",
+      "type": "embedded",
+      "source": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "target": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7"
+    },
+    {
+      "label": "modified-by",
+      "type": "embedded",
+      "source": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "target": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7"
+    },
+    {
+      "label": "resolves-to",
+      "type": "embedded",
+      "source": "domain-name--aa90a5c6-6a78-520b-bcfd-e2bf0c25bce1",
+      "target": "ipv4-addr--a40768a0-5841-50d2-838d-bcb35ee92131"
+    },
+    {
+      "label": "belongs-to",
+      "type": "embedded",
+      "source": "email-addr--30d9a416-203b-55c8-b796-8eb65ab5275e",
+      "target": "user-account--5aaaa4e2-0974-5ab4-9069-41a16197f0ff"
+    },
+    {
+      "label": "belongs-to",
+      "type": "embedded",
+      "source": "email-addr--a7155ffe-8ea7-563a-a54c-e94e23ec50c8",
+      "target": "user-account--47df6d33-0005-5b45-9875-e7a609b12e9b"
+    },
+    {
+      "label": "belongs-to",
+      "type": "embedded",
+      "source": "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5",
+      "target": "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109"
+    },
+    {
+      "label": "belongs-to",
+      "type": "embedded",
+      "source": "email-addr--d8a2a664-fbc3-5eac-8187-4870141c97c5",
+      "target": "user-account--6edc343b-93fc-5d12-b68e-b693d26b74bd"
+    },
+    {
+      "label": "belongs-to",
+      "type": "embedded",
+      "source": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+      "target": "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0"
+    },
+    {
+      "label": "from",
+      "type": "embedded",
+      "source": "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8",
+      "target": "email-addr--64157c44-5eb7-5d01-8710-b288f8ccb625"
+    },
+    {
+      "label": "to",
+      "type": "embedded",
+      "source": "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8",
+      "target": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba"
+    },
+    {
+      "label": "event sightings",
+      "type": "embedded",
+      "source": "event--236d689a-aaa9-4bc1-8401-d86cb2d3c430",
+      "target": "sighting--49cc5c32-98b8-4d15-94bf-2f867d71a2fa"
+    },
+    {
+      "label": "event sightings",
+      "type": "embedded",
+      "source": "event--9e41296f-175b-4621-9d7d-bc2f74fb3386",
+      "target": "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda"
+    },
+    {
+      "label": "email address",
+      "type": "embedded",
+      "source": "identity--b30fc24d-4d5a-49a4-8aee-155788edbae3",
+      "target": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba"
+    },
+    {
+      "label": "user account",
+      "type": "embedded",
+      "source": "identity--b30fc24d-4d5a-49a4-8aee-155788edbae3",
+      "target": "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0"
+    },
+    {
+      "label": "email address",
+      "type": "embedded",
+      "source": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+      "target": "email-addr--d8a2a664-fbc3-5eac-8187-4870141c97c5"
+    },
+    {
+      "label": "user account",
+      "type": "embedded",
+      "source": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+      "target": "user-account--6edc343b-93fc-5d12-b68e-b693d26b74bd"
+    },
+    {
+      "label": "incident events",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "event--236d689a-aaa9-4bc1-8401-d86cb2d3c430"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "email-addr--64157c44-5eb7-5d01-8710-b288f8ccb625"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "indicator--3f624ff1-7c2e-40db-8d7c-acc8723afe95"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "sighting--49cc5c32-98b8-4d15-94bf-2f867d71a2fa"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "identity--b30fc24d-4d5a-49a4-8aee-155788edbae3"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "observed-data--fb077ab9-4a21-4a3d-91b1-02bfb9c6c493"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "sighting--d0a71341-cf9b-474f-8cdb-eba6d9e96a68"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "user-account--47df6d33-0005-5b45-9875-e7a609b12e9b"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "user-account--47df6d33-0005-5b45-9875-e7a609b12e9b"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "user-account--5aaaa4e2-0974-5ab4-9069-41a16197f0ff"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "email-addr--30d9a416-203b-55c8-b796-8eb65ab5275e"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "sighting--575ca2c4-7d0f-4984-86a1-e0f7422f6237"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "identity--05bf6d14-9483-423d-b4f3-b19f420c0803"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "ipv4-addr--a40768a0-5841-50d2-838d-bcb35ee92131"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "domain-name--aa90a5c6-6a78-520b-bcfd-e2bf0c25bce1"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "indicator--00c82e87-a7c4-4cbb-b58a-577d988dd84e"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "sighting--feb6fbd9-ff3f-45f8-ae59-2976fc766196"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "sighting--791d2177-e8ae-4021-ac17-5a68f5ccabed"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "software--3974613c-1980-5209-8f08-17920a04da04"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "file--e7c7ddeb-d693-53e7-bcd8-f40951888120"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "process--fe3c9253-8490-4647-9b45-41a918fb6e15"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873"
+    },
+    {
+      "label": "other incident objects",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda"
+    },
+    {
+      "label": "incident task",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "task--3d00a36b-506f-4ccb-8888-ec8d099f399d"
+    },
+    {
+      "label": "incident task",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "task--0b663052-5d31-4c42-9f06-7343985cce6c"
+    },
+    {
+      "label": "incident task",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "task--44a9d7fa-028d-4fa0-b822-32680eda7d7e"
+    },
+    {
+      "label": "incident task",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "task--43b3b336-4774-4267-9ffd-175f83b7cf7c"
+    },
+    {
+      "label": "incident task",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "task--6be4f7f4-8ece-4b94-9ec7-e7009e38c547"
+    },
+    {
+      "label": "incident task",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "task--6be4f7f4-8ece-4b94-9ec7-e7009e38c547"
+    },
+    {
+      "label": "incident impact",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "impact--86625ce2-4b1f-4fc7-8a6b-fc70e086c006"
+    },
+    {
+      "label": "incident impact",
+      "type": "embedded",
+      "source": "incident--8e94bc9d-79d6-4612-aa97-1fab55f35d76",
+      "target": "impact--d82add0b-eb43-42d3-98c0-ae73ca232bf8"
+    },
+    {
+      "label": "created-by",
+      "type": "embedded",
+      "source": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "target": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6",
+      "target": "ipv4-addr--a40768a0-5841-50d2-838d-bcb35ee92131"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6",
+      "target": "domain-name--aa90a5c6-6a78-520b-bcfd-e2bf0c25bce1"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+      "target": "email-addr--64157c44-5eb7-5d01-8710-b288f8ccb625"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+      "target": "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+      "target": "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+      "target": "email-addr--a7155ffe-8ea7-563a-a54c-e94e23ec50c8"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+      "target": "user-account--47df6d33-0005-5b45-9875-e7a609b12e9b"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+      "target": "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+      "target": "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+      "target": "email-addr--30d9a416-203b-55c8-b796-8eb65ab5275e"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f",
+      "target": "user-account--5aaaa4e2-0974-5ab4-9069-41a16197f0ff"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873",
+      "target": "software--3974613c-1980-5209-8f08-17920a04da04"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873",
+      "target": "file--e7c7ddeb-d693-53e7-bcd8-f40951888120"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873",
+      "target": "process--fe3c9253-8490-4647-9b45-41a918fb6e15"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873",
+      "target": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873",
+      "target": "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873",
+      "target": "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873",
+      "target": "user-account--74f5352e-ea3f-526c-8430-1cbb9ccd3109"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776",
+      "target": "email-addr--64157c44-5eb7-5d01-8710-b288f8ccb625"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776",
+      "target": "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776",
+      "target": "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776",
+      "target": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776",
+      "target": "user-account--41b2b7c4-6950-5d22-88e0-b376c93097d0"
+    },
+    {
+      "label": "refers-to",
+      "type": "embedded",
+      "source": "observed-data--fb077ab9-4a21-4a3d-91b1-02bfb9c6c493",
+      "target": "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f"
+    },
+    {
+      "label": "image-of",
+      "type": "embedded",
+      "source": "file--e7c7ddeb-d693-53e7-bcd8-f40951888120",
+      "target": "process--fe3c9253-8490-4647-9b45-41a918fb6e15"
+    },
+    {
+      "id": "relationship--1995ce47-c1bf-401b-944f-9661c9da43a2",
+      "type": "relationship",
+      "label": "related-to",
+      "source": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+      "target": "software--3974613c-1980-5209-8f08-17920a04da04"
+    },
+    {
+      "id": "relationship--2ca1e438-492d-45a1-b0a9-7285db39342f",
+      "type": "relationship",
+      "label": "derived-from",
+      "source": "software--3974613c-1980-5209-8f08-17920a04da04",
+      "target": "process--fe3c9253-8490-4647-9b45-41a918fb6e15"
+    },
+    {
+      "id": "relationship--50929fe5-29e9-4433-9a74-ae834e96f00c",
+      "type": "relationship",
+      "label": "related-to",
+      "source": "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5",
+      "target": "software--3974613c-1980-5209-8f08-17920a04da04"
+    },
+    {
+      "id": "relationship--524cee6e-3108-4c27-97f3-d0f290f4324c",
+      "type": "relationship",
+      "label": "duplicate-of",
+      "source": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+      "target": "email-addr--30d9a416-203b-55c8-b796-8eb65ab5275e"
+    },
+    {
+      "id": "relationship--9789896d-1c02-485f-88e3-7bc6c749f284",
+      "type": "relationship",
+      "label": "duplicate-of",
+      "source": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+      "target": "email-addr--a7155ffe-8ea7-563a-a54c-e94e23ec50c8"
+    },
+    {
+      "id": "relationship--9d503bd4-1fde-417b-b6ac-6446d28e65b7",
+      "type": "relationship",
+      "label": "duplicate-of",
+      "source": "email-addr--df33039b-3a3c-5653-9cd1-13923a63fcba",
+      "target": "email-addr--b8048a91-def8-5ef7-8cd3-a7b3db9278e5"
+    },
+    {
+      "id": "relationship--a8a2a45a-e3a9-4ebc-a1f5-4fdf91960fd4",
+      "type": "relationship",
+      "label": "derived-from",
+      "source": "email-message--5cb8312b-26e9-5346-8794-936f3f5288c8",
+      "target": "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7"
+    },
+    {
+      "id": "relationship--c5bcfa3f-2086-4122-a1f1-dc46ace79baa",
+      "type": "relationship",
+      "label": "located-at",
+      "source": "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f",
+      "target": "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
+    },
+    {
+      "label": "sequenced object",
+      "type": "embedded",
+      "source": "sequence--1521a7d0-c597-4a8a-a074-6d33337b627e",
+      "target": "task--6be4f7f4-8ece-4b94-9ec7-e7009e38c547"
+    },
+    {
+      "label": "on completion",
+      "type": "embedded",
+      "source": "sequence--1521a7d0-c597-4a8a-a074-6d33337b627e",
+      "target": "sequence--e5336bdf-238c-4ff2-9db7-9f7ca90348e7"
+    },
+    {
+      "label": "on completion",
+      "type": "embedded",
+      "source": "sequence--58babacb-4e15-480e-a73c-3eac9f6e2d52",
+      "target": "sequence--90ceef43-4484-4126-af05-9c9d60290a36"
+    },
+    {
+      "label": "sequenced object",
+      "type": "embedded",
+      "source": "sequence--5d59d1e4-1bce-4599-a763-f05fefa6a9f1",
+      "target": "task--43b3b336-4774-4267-9ffd-175f83b7cf7c"
+    },
+    {
+      "label": "on completion",
+      "type": "embedded",
+      "source": "sequence--5d59d1e4-1bce-4599-a763-f05fefa6a9f1",
+      "target": "sequence--1521a7d0-c597-4a8a-a074-6d33337b627e"
+    },
+    {
+      "label": "sequenced object",
+      "type": "embedded",
+      "source": "sequence--90ceef43-4484-4126-af05-9c9d60290a36",
+      "target": "event--236d689a-aaa9-4bc1-8401-d86cb2d3c430"
+    },
+    {
+      "label": "on completion",
+      "type": "embedded",
+      "source": "sequence--90ceef43-4484-4126-af05-9c9d60290a36",
+      "target": "sequence--cf28bb62-ebba-4a6e-b0d1-c25786f23e92"
+    },
+    {
+      "label": "sequenced object",
+      "type": "embedded",
+      "source": "sequence--9fac1cf7-db8b-4f74-bbd0-14a036459cc3",
+      "target": "task--0b663052-5d31-4c42-9f06-7343985cce6c"
+    },
+    {
+      "label": "on completion",
+      "type": "embedded",
+      "source": "sequence--9fac1cf7-db8b-4f74-bbd0-14a036459cc3",
+      "target": "sequence--edde80dd-c68f-47c9-bd3c-39ed461700a6"
+    },
+    {
+      "label": "sequenced object",
+      "type": "embedded",
+      "source": "sequence--cf28bb62-ebba-4a6e-b0d1-c25786f23e92",
+      "target": "event--9e41296f-175b-4621-9d7d-bc2f74fb3386"
+    },
+    {
+      "label": "on completion",
+      "type": "embedded",
+      "source": "sequence--d41c2e05-da07-42ce-85bb-05fa280f3f9f",
+      "target": "sequence--e84228de-4831-4f98-9f28-1a51744ec4b9"
+    },
+    {
+      "label": "sequenced object",
+      "type": "embedded",
+      "source": "sequence--e5336bdf-238c-4ff2-9db7-9f7ca90348e7",
+      "target": "task--d3142f7e-4e2c-47d8-87cb-7f43277142d4"
+    },
+    {
+      "label": "sequenced object",
+      "type": "embedded",
+      "source": "sequence--e84228de-4831-4f98-9f28-1a51744ec4b9",
+      "target": "task--3d00a36b-506f-4ccb-8888-ec8d099f399d"
+    },
+    {
+      "label": "on completion",
+      "type": "embedded",
+      "source": "sequence--e84228de-4831-4f98-9f28-1a51744ec4b9",
+      "target": "sequence--9fac1cf7-db8b-4f74-bbd0-14a036459cc3"
+    },
+    {
+      "label": "sequenced object",
+      "type": "embedded",
+      "source": "sequence--edde80dd-c68f-47c9-bd3c-39ed461700a6",
+      "target": "task--44a9d7fa-028d-4fa0-b822-32680eda7d7e"
+    },
+    {
+      "label": "on completion",
+      "type": "embedded",
+      "source": "sequence--edde80dd-c68f-47c9-bd3c-39ed461700a6",
+      "target": "sequence--5d59d1e4-1bce-4599-a763-f05fefa6a9f1"
+    },
+    {
+      "id": "sighting--1a8ff145-731f-438e-ab1f-03891e58ad43",
+      "type": "sighting",
+      "label": "Sighting of attack-pattern",
+      "source": "sighting--1a8ff145-731f-438e-ab1f-03891e58ad43",
+      "target": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7"
+    },
+    {
+      "id": "sighting--1a8ff145-731f-438e-ab1f-03891e58ad43",
+      "type": "sighting",
+      "label": "Observed Data",
+      "source": "sighting--1a8ff145-731f-438e-ab1f-03891e58ad43",
+      "target": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873"
+    },
+    {
+      "id": "sighting--1a8ff145-731f-438e-ab1f-03891e58ad43",
+      "type": "sighting",
+      "label": "Where Sighted location",
+      "source": "sighting--1a8ff145-731f-438e-ab1f-03891e58ad43",
+      "target": "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
+    },
+    {
+      "id": "sighting--49cc5c32-98b8-4d15-94bf-2f867d71a2fa",
+      "type": "sighting",
+      "label": "Sighting of indicator",
+      "source": "sighting--49cc5c32-98b8-4d15-94bf-2f867d71a2fa",
+      "target": "indicator--3f624ff1-7c2e-40db-8d7c-acc8723afe95"
+    },
+    {
+      "id": "sighting--49cc5c32-98b8-4d15-94bf-2f867d71a2fa",
+      "type": "sighting",
+      "label": "Observed Data",
+      "source": "sighting--49cc5c32-98b8-4d15-94bf-2f867d71a2fa",
+      "target": "observed-data--c76d0cae-3c1c-4593-9aa1-8963b63e4776"
+    },
+    {
+      "id": "sighting--575ca2c4-7d0f-4984-86a1-e0f7422f6237",
+      "type": "sighting",
+      "label": "Sighting of indicator",
+      "source": "sighting--575ca2c4-7d0f-4984-86a1-e0f7422f6237",
+      "target": "indicator--3f624ff1-7c2e-40db-8d7c-acc8723afe95"
+    },
+    {
+      "id": "sighting--575ca2c4-7d0f-4984-86a1-e0f7422f6237",
+      "type": "sighting",
+      "label": "Observed Data",
+      "source": "sighting--575ca2c4-7d0f-4984-86a1-e0f7422f6237",
+      "target": "observed-data--7a59a0f6-448b-45c6-ac4b-2c6ce71d439f"
+    },
+    {
+      "id": "sighting--5b098c08-9215-4b7b-b268-d8d0e99c2674",
+      "type": "sighting",
+      "label": "Sighting of attack-pattern",
+      "source": "sighting--5b098c08-9215-4b7b-b268-d8d0e99c2674",
+      "target": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7"
+    },
+    {
+      "id": "sighting--5b098c08-9215-4b7b-b268-d8d0e99c2674",
+      "type": "sighting",
+      "label": "Observed Data",
+      "source": "sighting--5b098c08-9215-4b7b-b268-d8d0e99c2674",
+      "target": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873"
+    },
+    {
+      "id": "sighting--5b098c08-9215-4b7b-b268-d8d0e99c2674",
+      "type": "sighting",
+      "label": "Where Sighted location",
+      "source": "sighting--5b098c08-9215-4b7b-b268-d8d0e99c2674",
+      "target": "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
+    },
+    {
+      "id": "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda",
+      "type": "sighting",
+      "label": "Sighting of identity",
+      "source": "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda",
+      "target": "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f"
+    },
+    {
+      "id": "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda",
+      "type": "sighting",
+      "label": "Observed Data",
+      "source": "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda",
+      "target": "observed-data--c177cd97-7226-4572-a60a-5caf70f49873"
+    },
+    {
+      "id": "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda",
+      "type": "sighting",
+      "label": "Where Sighted location",
+      "source": "sighting--7270fd2c-05c7-401d-a553-deea53d5ecda",
+      "target": "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
+    },
+    {
+      "id": "sighting--791d2177-e8ae-4021-ac17-5a68f5ccabed",
+      "type": "sighting",
+      "label": "Sighting of identity",
+      "source": "sighting--791d2177-e8ae-4021-ac17-5a68f5ccabed",
+      "target": "identity--da2ce49d-c608-4126-8efe-dbf96b5f070f"
+    },
+    {
+      "id": "sighting--791d2177-e8ae-4021-ac17-5a68f5ccabed",
+      "type": "sighting",
+      "label": "Observed Data",
+      "source": "sighting--791d2177-e8ae-4021-ac17-5a68f5ccabed",
+      "target": "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6"
+    },
+    {
+      "id": "sighting--791d2177-e8ae-4021-ac17-5a68f5ccabed",
+      "type": "sighting",
+      "label": "Where Sighted location",
+      "source": "sighting--791d2177-e8ae-4021-ac17-5a68f5ccabed",
+      "target": "location--7cd4b991-d086-47a0-a430-c92f17a0c2e1"
+    },
+    {
+      "id": "sighting--d0a71341-cf9b-474f-8cdb-eba6d9e96a68",
+      "type": "sighting",
+      "label": "Sighting of identity",
+      "source": "sighting--d0a71341-cf9b-474f-8cdb-eba6d9e96a68",
+      "target": "identity--b30fc24d-4d5a-49a4-8aee-155788edbae3"
+    },
+    {
+      "id": "sighting--d0a71341-cf9b-474f-8cdb-eba6d9e96a68",
+      "type": "sighting",
+      "label": "Observed Data",
+      "source": "sighting--d0a71341-cf9b-474f-8cdb-eba6d9e96a68",
+      "target": "observed-data--fb077ab9-4a21-4a3d-91b1-02bfb9c6c493"
+    },
+    {
+      "id": "sighting--feb6fbd9-ff3f-45f8-ae59-2976fc766196",
+      "type": "sighting",
+      "label": "Sighting of indicator",
+      "source": "sighting--feb6fbd9-ff3f-45f8-ae59-2976fc766196",
+      "target": "indicator--00c82e87-a7c4-4cbb-b58a-577d988dd84e"
+    },
+    {
+      "id": "sighting--feb6fbd9-ff3f-45f8-ae59-2976fc766196",
+      "type": "sighting",
+      "label": "Observed Data",
+      "source": "sighting--feb6fbd9-ff3f-45f8-ae59-2976fc766196",
+      "target": "observed-data--232ef32d-3b74-4404-92e9-a04a6da2edb6"
+    },
+    {
+      "label": "owned by",
+      "type": "embedded",
+      "source": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+      "target": "task--0b663052-5d31-4c42-9f06-7343985cce6c"
+    },
+    {
+      "label": "owned by",
+      "type": "embedded",
+      "source": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+      "target": "task--3d00a36b-506f-4ccb-8888-ec8d099f399d"
+    },
+    {
+      "label": "owned by",
+      "type": "embedded",
+      "source": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+      "target": "task--43b3b336-4774-4267-9ffd-175f83b7cf7c"
+    },
+    {
+      "label": "owned by",
+      "type": "embedded",
+      "source": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+      "target": "task--44a9d7fa-028d-4fa0-b822-32680eda7d7e"
+    },
+    {
+      "label": "owned by",
+      "type": "embedded",
+      "source": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+      "target": "task--6be4f7f4-8ece-4b94-9ec7-e7009e38c547"
+    },
+    {
+      "label": "owned by",
+      "type": "embedded",
+      "source": "identity--f836cb07-ff56-4e78-a90c-e3721f01226f",
+      "target": "task--d3142f7e-4e2c-47d8-87cb-7f43277142d4"
+    }
+  ],
+  "legend": [
+    {
+      "icon": "anecdote",
+      "label": "I clicked on the link, and my laptop screen went weird"
+    },
+    {
+      "icon": "attack-subtechnique",
+      "label": "attack-subtechnique"
+    },
+    {
+      "icon": "domain",
+      "label": "northkorea.com"
+    },
+    {
+      "icon": "email-addr",
+      "label": "dumbo@mycompany.com"
+    },
+    {
+      "icon": "email-message",
+      "label": "we are coming for you"
+    },
+    {
+      "icon": "event",
+      "label": "event"
+    },
+    {
+      "icon": "file",
+      "label": "evil.exe"
+    },
+    {
+      "icon": "identity-system",
+      "label": "identity"
+    },
+    {
+      "icon": "identity-contact",
+      "label": "identity"
+    },
+    {
+      "icon": "identity-organization",
+      "label": "identity"
+    },
+    {
+      "icon": "impact-monetary",
+      "label": "impact"
+    },
+    {
+      "icon": "impact-availability",
+      "label": "impact"
+    },
+    {
+      "icon": "impact-integrity",
+      "label": "impact"
+    },
+    {
+      "icon": "impact-physical",
+      "label": "impact"
+    },
+    {
+      "icon": "impact-confidentiality",
+      "label": "impact"
+    },
+    {
+      "icon": "impact-external",
+      "label": "impact"
+    },
+    {
+      "icon": "impact-traceability",
+      "label": "impact"
+    },
+    {
+      "icon": "incident-ext",
+      "label": "extended incident"
+    },
+    {
+      "icon": "indicator",
+      "label": "indicator"
+    },
+    {
+      "icon": "ipv4-addr",
+      "label": "197.133.142.27"
+    },
+    {
+      "icon": "location",
+      "label": "location"
+    },
+    {
+      "icon": "marking-definition",
+      "label": "statement"
+    },
+    {
+      "icon": "observed-data",
+      "label": "observed-data"
+    },
+    {
+      "icon": "process",
+      "label": "standard process"
+    },
+    {
+      "icon": "step-single",
+      "label": "single step"
+    },
+    {
+      "icon": "step-terminal",
+      "label": "start step"
+    },
+    {
+      "icon": "sighting-external",
+      "label": "Sighting"
+    },
+    {
+      "icon": "sighting-alert",
+      "label": "Sighting"
+    },
+    {
+      "icon": "sighting-context",
+      "label": "Sighting"
+    },
+    {
+      "icon": "sighting-framework",
+      "label": "Sighting"
+    },
+    {
+      "icon": "sighting-hunt",
+      "label": "Sighting"
+    },
+    {
+      "icon": "sighting-enrichment",
+      "label": "Sighting"
+    },
+    {
+      "icon": "sighting-anecdote",
+      "label": "Sighting"
+    },
+    {
+      "icon": "sighting-exclusion",
+      "label": "Sighting"
+    },
+    {
+      "icon": "software",
+      "label": "evil.exe"
+    },
+    {
+      "icon": "task",
+      "label": "task"
+    },
+    {
+      "icon": "url",
+      "label": "https://www.northkorea.nk/we/are/mad/"
+    },
+    {
+      "icon": "user-account",
+      "label": "standard-account"
+    }
+  ]
+}

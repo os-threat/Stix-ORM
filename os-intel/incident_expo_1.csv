@@ -1,0 +1,19 @@
+created,type,name,relationship_type,description,determination,investigation_status,detection_methods,impact_category,status,outcome
+2022-09-15T01:37:47.004Z,marking-definition,,,,,,,,,
+2022-09-15T01:37:47.004Z,marking-definition,,,,,,,,,
+2022-09-15T01:37:47.004Z,identity,Wakandan Expo,,,,,,,,
+2022-09-15T01:37:47.004Z,relationship,,impacts,,,,,,,
+2022-09-15T01:37:47.004Z,identity,Proj Manager,,Incident response manager for the Wakandan Expo,,,,,,
+2022-09-15T01:37:47.004Z,relationship,,employed-at,,,,,,,
+2022-09-15T01:37:47.004Z,relationship,,contact-for,,,,,,,
+2022-09-15T01:37:47.004Z,incident,WKI-20220915-004,,The Wakandan International Technology expo suffered a major disruption in a keynote presentation by Stark Enterprises.,confirmed,open,['system-outage'],,,
+2022-09-15T01:37:47.004Z,impact,,,"All servers shutdown,wireless tied to these went down,all displays went down.",,,,availability,,
+2022-09-15T01:37:47.004Z,impact,,,"After bypass mode all servers still shutdown, but wireless and displays are now up in a limited capacity.",,,,availability,,
+2022-09-15T01:37:47.004Z,event,Keynote Shutdown,,All computers and displays cutoff one minute into the keynote on day two of four of the conference by a Stark Industry's representative.,,,,,occurred,
+2022-09-15T01:37:47.004Z,task,Temporary Workaround,,Set basic services including Wi-Fi and TVs to bypass dead gatekeeper machines.,,,,,,ongoing
+2022-09-15T01:37:47.004Z,task,Start Bypass,,,,,,,,successful
+2022-09-15T01:37:47.004Z,task,Stop Bypass,,,,,,,,pending
+2022-09-15T01:37:47.004Z,task,Rebuild Domain Controllers,,Attempted to rebuild domain controllers,,,,,,failed
+2022-09-15T01:37:47.004Z,task,Reported,,,,,,,,successful
+2022-09-15T01:37:47.004Z,relationship,,related-to,,,,,,,
+2022-09-15T01:37:47.004Z,report,WKI-20220915-004,,This is a fake report for example purposes only,,,,,,

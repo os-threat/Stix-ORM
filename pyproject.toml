@@ -24,8 +24,8 @@ stix2 = "3.0.1"
 networkx = "^3.1"
 pydantic = "^2.1.1"
 loguru = "^0.7.0"
-typedb-client = "^2.18.0"
 validators = "^0.20.0"
+typedb-driver = "^2.25.6"
 
 
 [tool.poetry.group.dev.dependencies]

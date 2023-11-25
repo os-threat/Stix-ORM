@@ -12,5 +12,33 @@
     "owner": "change-driver",
     "pointed_to": "object-list",
     "object": "state-change"
+  },
+  {
+    "name": "contact_numbers",
+    "typeql": "identity-number",
+    "owner": "identity",
+    "pointed_to": "number-object",
+    "object": "contact-number-sub"
+  },
+  {
+    "name": "email_addresses",
+    "typeql": "identity-email",
+    "owner": "identity",
+    "pointed_to": "email-object",
+    "object": "email-contact-sub"
+  },
+  {
+    "name": "social_media_accounts",
+    "typeql": "identity-account",
+    "owner": "identity",
+    "pointed_to": "account-object",
+    "object": "social-media-sub"
+  },
+  {
+    "name": "scores",
+    "typeql": "scores",
+    "owner": "scored",
+    "pointed_to": "score",
+    "object": "incident-score"
   }
 ]

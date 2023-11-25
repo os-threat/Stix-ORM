@@ -1,6 +1,8 @@
 import copy
 from datetime import timezone
 
+from typedb.api.concept.type.attribute_type import AttributeType
+
 from stixorm.module.authorise import authorised_mappings
 
 import logging
@@ -9,6 +11,7 @@ from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_in
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -36,41 +39,50 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: ImportType):
     res = []
 
     for answer in answer_iterator:
-        dict_answer = answer.map()
-        for key, thing in dict_answer.items():
+        #concepts = answer.concepts()
+        variables = answer.variables()
+        for variable in variables:
+            concept = answer.get(variable)
+            key = variable
             # pull entity data
-            if thing.is_entity():
+            if concept.is_entity():
                 # 1. describe entity
-                ent = {'type': 'entity', 'symbol': key, 'T_id': thing.get_iid(),
-                       'T_name': thing.get_type().get_label().name()}
+                thing = concept.as_entity()
+                ent = {'type': 'entity',
+                       'symbol': key,
+                       'T_id': thing.get_iid(),
+                       'T_name': thing.get_type().get_label().name}
                 # 2 get and dsecribe properties
-                props_obj = thing.as_remote(r_tx).get_has()
+                props_obj = thing.get_has(r_tx)
                 ent['has'] = process_props(props_obj)
                 # 3. get and describe relations
-                reln_types = thing.as_remote(r_tx).get_relations()
+                reln_types = thing.get_relations(r_tx)
                 ent['relns'] = process_relns(reln_types, r_tx, import_type)
                 res.append(ent)
                 # logger.debug(f'ent -> {ent}')
 
             # pull relation data
-            elif thing.is_relation():
+            elif concept.is_relation():
                 # 1. setup basis
-                rel = {'type': 'relationship', 'symbol': key, 'T_id': thing.get_iid(),
-                       'T_name': thing.get_type().get_label().name()}
-                att_obj = thing.as_remote(r_tx).get_has()
+                thing = concept.as_relation()
+                rel = {'type': 'relationship',
+                       'symbol': key,
+                       'T_id': thing.get_iid(),
+                       'T_name': thing.get_type().get_label().name}
+                att_obj = thing.get_has(r_tx)
                 rel['has'] = process_props(att_obj)
                 # 3. get and describe relations
-                reln_types = thing.as_remote(r_tx).get_relations()
+                reln_types = thing.get_relations(r_tx)
                 rel['relns'] = process_relns(reln_types, r_tx, import_type)
                 # 4. get and describe the edges
                 edges = []
-                edge_types = thing.as_remote(r_tx).get_players_by_role_type()
-                stix_id = r_tx.concepts().get_attribute_type("stix-id")
+                edge_types = thing.get_players(r_tx)
+                stix_id = r_tx.concepts.get_attribute_type("stix-id").resolve()
                 for role, things in edge_types.items():
-                    edge = {"role": role.get_label().name(), 'player': []}
+                    edge = {"role": role.get_label().name, 'player': []}
                     for thing in things:
                         if thing.is_entity():
-                            edge['player'].append(process_entity(thing, r_tx,stix_id))
+                            edge['player'].append(process_entity(thing, r_tx, stix_id))
 
                     edges.append(edge)
 
@@ -78,8 +90,20 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: ImportType):
                 res.append(rel)
 
             # else log out error condition
-            else:
-                logger.debug(f'Error key is {key}, thing is {thing}')
+            elif concept.is_type():
+                logger.debug(f'Error key is {key}, thing is type')
+            elif concept.is_thing_type():
+                logger.debug(f'Error key is {key}, thing is thing type')
+            elif concept.is_attribute_type():
+                logger.debug(f'Error key is {key}, thing is attribute type')
+            elif concept.is_relation_type():
+                logger.debug(f'Error key is {key}, thing is relation type')
+            elif concept.is_attribute():
+                logger.debug(f'Error key is {key}, thing is attributee')
+            elif concept.is_value():
+                logger.debug(f'Error key is {key}, thing is value')
+            elif concept.is_role_type():
+                logger.debug(f'Error key is {key}, thing is role type')
 
     return res
 
@@ -96,8 +120,8 @@ def process_entity(thing, r_tx, stix_id: str):
     Returns:
         play {}: a return dict
     """
-    play = {"type": "entity", "tql": thing.get_type().get_label().name()}
-    attr_stix_id = thing.as_remote(r_tx).get_has(attribute_type=stix_id)
+    play = {"type": "entity", "tql": thing.get_type().get_label().name}
+    attr_stix_id = thing.get_has(r_tx, attribute_type=stix_id)
     for attr in attr_stix_id:
         play["stix_id"] = attr.get_value()
 
@@ -134,8 +158,8 @@ def process_relation(p, r_tx, stix_id):
     Returns:
         plays {}: a dict containing the unpacked relation
     """
-    plays = {"type": "attribute", "tql": p.get_type().get_label().name()}
-    attr_stix_id = p.as_remote(r_tx).get_has(attribute_type=stix_id)
+    plays = {"type": "attribute", "tql": p.get_type().get_label().name}
+    attr_stix_id = p.get_has(r_tx, attribute_type=stix_id)
     for attr in attr_stix_id:
         plays["stix_id"] = attr.get_value()
 
@@ -153,7 +177,7 @@ def process_props(props_obj):
     """
     props = []
     for a in props_obj:
-        prop = {"typeql": a.get_type().get_label().name()}
+        prop = {"typeql": a.get_type().get_label().name}
         if a.is_datetime():
             nt_obj = a.get_value()
             dt_obj = nt_obj.astimezone(timezone.utc)
@@ -204,7 +228,7 @@ def get_relation_details(r, r_tx, import_type: ImportType):
     auth_factory = get_auth_factory_instance()
     auth = auth_factory.get_auth_for_import(import_type)
     reln = {}
-    reln_name = r.get_type().get_label().name()
+    reln_name = r.get_type().get_label().name
     reln['T_name'] = reln_name
     reln['T_id'] = r.get_iid()
     if reln_name in auth["tql_types"]["embedded_relations"]:
@@ -248,17 +272,17 @@ def reln_map_entity_attribute(reln_map, r_tx, stix_id: str, is_kv):
     """
     roles = []
     for role, player in reln_map.items():
-        role_i = {'role': role.get_label().name(), 'player': []}
+        role_i = {'role': role.get_label().name, 'player': []}
         for p in player:
             play = {}
             if p.is_entity():
                 role_i['player'].append(process_entity(p, r_tx, stix_id))
             elif p.is_attribute():
                 play["type"] = "attribute"
-                play["tql"] = p.get_type().get_label().name()
+                play["tql"] = p.get_type().get_label().name
                 play["value"] = process_value(p)
                 if is_kv:
-                    att_obj = p.as_remote(r_tx).get_has()
+                    att_obj = p.get_has(r_tx)
                     play['props'] = process_props(att_obj)
                 role_i['player'].append(play)
 
@@ -280,8 +304,8 @@ def get_granular_marking(r, r_tx):
     Returns:
         roles []: list of dict objects
     """
-    stix_id = r_tx.concepts().get_attribute_type("stix-id")
-    reln_map = r.as_remote(r_tx).get_players_by_role_type()
+    stix_id = r_tx.concepts.get_attribute_type("stix-id").resolve()
+    reln_map = r.get_players(r_tx)
     is_kv: object = False
     roles = reln_map_entity_attribute(reln_map, r_tx, stix_id, is_kv)
     return roles
@@ -298,24 +322,24 @@ def get_hashes(r, r_tx):
         roles []: list of dict objects
     """
     roles = []
-    stix_id = r_tx.concepts().get_attribute_type("stix-id")
-    hash_value = r_tx.concepts().get_attribute_type("hash-value")
-    reln_map = r.as_remote(r_tx).get_players_by_role_type()
+    stix_id = r_tx.concepts.get_attribute_type("stix-id").resolve()
+    hash_value = r_tx.concepts.get_attribute_type("hash-value").resolve()
+    reln_map = r.get_players(r_tx)
 
     for role, player in reln_map.items():
-        role_name = role.get_label().name()
+        role_name = role.get_label().name
         role_i = {'role': role_name, 'player': []}
         for p in player:
             play = {}
             if p.is_entity():
                 play["type"] = "entity"
-                play["tql"] = p.get_type().get_label().name()
+                play["tql"] = p.get_type().get_label().name
                 if role_name == "owner":
-                    attr_stix_id = p.as_remote(r_tx).get_has(attribute_type=stix_id)
+                    attr_stix_id = p.get_has(r_tx, attribute_type=stix_id)
                     for attr in attr_stix_id:
                         play["stix_id"] = attr.get_value()
                 else:
-                    attr_hash_value = p.as_remote(r_tx).get_has(attribute_type=hash_value)
+                    attr_hash_value = p.get_has(r_tx, attribute_type=hash_value)
                     for attr in attr_hash_value:
                         play["hash_value"] = attr.get_value()
 
@@ -338,8 +362,8 @@ def get_key_value_relations(r, r_tx):
     Returns:
         roles []: list of dict objects
     """
-    stix_id = r_tx.concepts().get_attribute_type("stix-id")
-    reln_map = r.as_remote(r_tx).get_players_by_role_type()
+    stix_id = r_tx.concepts.get_attribute_type("stix-id").resolve()
+    reln_map = r.get_players(r_tx)
     is_kv: object = True
     roles = reln_map_entity_attribute(reln_map, r_tx, stix_id, is_kv)
     return roles
@@ -359,7 +383,7 @@ def get_list_of_objects(r,
     """
     auth_factory = get_auth_factory_instance()
     auth = auth_factory.get_auth_for_import(import_type)
-    reln_name = r.get_type().get_label().name()
+    reln_name = r.get_type().get_label().name
     for lot in auth["reln"]["list_of_objects"]:
         if reln_name == lot["typeql"]:
             reln_pointed_to = lot["pointed_to"]
@@ -367,28 +391,28 @@ def get_list_of_objects(r,
             reln_object_props = copy.deepcopy(auth["sub_objects"][reln_object])
             reln_stix = lot["name"]
 
-    stix_id = r_tx.concepts().get_attribute_type("stix-id")
-    reln_map = r.as_remote(r_tx).get_players_by_role_type()
+    stix_id = r_tx.concepts.get_attribute_type("stix-id").resolve()
+    reln_map = r.get_players(r_tx)
     roles = []
     for role, player in reln_map.items():
-        role_i = {'role': role.get_label().name(), 'player': []}
+        role_i = {'role': role.get_label().name, 'player': []}
         for p in player:
             play = {}
             if p.is_entity():
                 play["type"] = "entity"
-                play["tql"] = p.get_type().get_label().name()
-                props_obj = p.as_remote(r_tx).get_has()
+                play["tql"] = p.get_type().get_label().name
+                props_obj = p.get_has(r_tx)
                 play['has'] = process_props(props_obj)
                 # 3. get and describe relations
-                reln_types = p.as_remote(r_tx).get_relations()
+                reln_types = p.get_relations(r_tx)
                 relns = []
                 for rel in reln_types:
                     reln = {}
-                    reln_name = rel.get_type().get_label().name()
+                    reln_name = rel.get_type().get_label().name
 
                     reln['T_name'] = reln_name
                     reln['T_id'] = rel.get_iid()
-                    reln_map = rel.as_remote(r_tx).get_players_by_role_type()
+                    reln_map = rel.get_players(r_tx)
                     reln['roles'] = reln_map_entity_relation(reln_map, r_tx, stix_id)
                     relns.append(reln)
 
@@ -417,19 +441,20 @@ def reln_map_entity_relation(reln_map,
 
     """
     roles = []
-    for role, player in reln_map.items():
-        role_i = {'role': role.get_label().name(), 'player': []}
-        for p in player:
+    for role_type, relns in reln_map.items():
+        for reln in relns:
+            role_i = {'role': role_type.get_label().name, 'player': []}
             play = {}
-            if p.is_entity():
-                role_i['player'].append(process_entity(p, r_tx, stix_id))
-            elif p.is_relation():
-                role_i['player'].append(process_relation(p, r_tx, stix_id))
+            if reln.is_entity():
+                role_i['player'].append(process_entity(reln, r_tx, stix_id))
+            elif reln.is_relation():
+                role_i['player'].append(process_relation(reln, r_tx, stix_id))
 
             else:
-                logger.debug(f'player is not entity type {p}')
+                logger.debug(f'player is not entity type {reln.get_type().get_label().name}')
 
-        roles.append(role_i)
+
+            roles.append(role_i)
 
     return roles
 
@@ -444,9 +469,11 @@ def get_embedded_relations(r, r_tx):
     Returns:
         roles []: list of dict objects
     """
-    stix_id = r_tx.concepts().get_attribute_type("stix-id")
-    reln_map = r.as_remote(r_tx).get_players_by_role_type()
-    roles = reln_map_entity_relation(reln_map, r_tx, stix_id)
+    stix_id_attribute_type: AttributeType = r_tx.concepts.get_attribute_type("stix-id").resolve()
+
+    #stix_id = stix_id_attribute_type.get(r_tx, str)
+    reln_map = r.get_players(r_tx)
+    roles = reln_map_entity_relation(reln_map, r_tx, stix_id_attribute_type)
     return roles
 
 
@@ -464,27 +491,27 @@ def get_extension_relations(r,
     """
     auth_factory = get_auth_factory_instance()
     auth = auth_factory.get_auth_for_import(import_type)
-    reln_name = r.get_type().get_label().name()
+    reln_name = r.get_type().get_label().name
     for ext in auth["reln"]["extension_relations"]:
         if ext['relation'] == reln_name:
             reln_object = ext['object']
 
-    stix_id = r_tx.concepts().get_attribute_type("stix-id")
-    reln_map = r.as_remote(r_tx).get_players_by_role_type()
+    stix_id = r_tx.concepts.get_attribute_type("stix-id").resolve()
+    reln_map = r.get_players(r_tx)
     roles = []
     for role, player in reln_map.items():
-        role_i = {'role': role.get_label().name(), 'player': []}
+        role_i = {'role': role.get_label().name, 'player': []}
         for p in player:
             play = {}
             if p.is_entity():
                 play["type"] = "entity"
-                p_name = p.get_type().get_label().name()
+                p_name = p.get_type().get_label().name
                 play["tql"] = p_name
                 if p_name == reln_object:
-                    props_obj = p.as_remote(r_tx).get_has()
+                    props_obj = p.get_has(r_tx)
                     play['has'] = process_props(props_obj)
                     # 3. get and describe relations
-                    reln_types = p.as_remote(r_tx).get_relations()
+                    reln_types = p.get_relations(r_tx)
                     relns = []
                     for rel in reln_types:
                         reln = {}
@@ -497,14 +524,14 @@ def get_extension_relations(r,
                     play['relns'] = relns
 
                 else:
-                    attr_stix_id = p.as_remote(r_tx).get_has(attribute_type=stix_id)
+                    attr_stix_id = p.get_has(r_tx, attribute_type=stix_id)
                     for attr in attr_stix_id:
                         play["stix_id"] = attr.get_value()
 
                 role_i['player'].append(play)
             elif p.is_attribute():
                 play["type"] = "attribute"
-                play["tql"] = p.get_type().get_label().name()
+                play["tql"] = p.get_type().get_label().name
                 play["value"] = process_value(p)
                 role_i['player'].append(play)
 
@@ -533,7 +560,7 @@ def validate_get_relns(rel,
     auth_factory = get_auth_factory_instance()
     auth = auth_factory.get_auth_for_import(import_type)
     reln={}
-    reln_name = rel.get_type().get_label().name()
+    reln_name = rel.get_type().get_label().name
     if reln_name in auth["tql_types"]["embedded_relations"]:
         for emb in auth["reln"]["embedded_relations"]:
             if emb['typeql'] == reln_name:
@@ -585,13 +612,13 @@ def return_valid_relations(rel,
     Returns:
         reln {}: a dict containing the reln details
     """
-    reln_map = rel.as_remote(r_tx).get_players_by_role_type()
+    reln_map = rel.get_players(r_tx)
     for role, player in reln_map.items():
-        role_name = role.get_label().name()
+        role_name = role.get_label().name
         if role_name == role_owner:
             for p in player:
                 if p.is_entity():
-                    play_name = p.get_type().get_label().name()
+                    play_name = p.get_type().get_label().name
                     if play_name == obj_name:
                         return get_relation_details(rel, r_tx, import_type)
 

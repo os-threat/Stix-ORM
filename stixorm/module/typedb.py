@@ -2,8 +2,14 @@
 import os.path
 import pathlib
 import traceback
+from typing import Dict
 from dataclasses import dataclass
-from typedb.client import *
+from typedb.driver import *
+from typing import List, Optional, Dict
+from typedb.api.connection.driver import TypeDBDriver
+from typedb.api.connection.session import TypeDBSession
+from typedb.api.connection.transaction import TypeDBTransaction
+from typedb.driver import TypeDB
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
 from stixorm.module.orm.delete_object import delete_stix_object, add_delete_layers
 from stixorm.module.orm.export_object import convert_ans_to_stix
@@ -27,6 +33,7 @@ from stixorm.module.typedb_lib.file import write_to_file
 from stixorm.module.typedb_lib.instructions import Instructions, Status, AddInstruction, TypeQLObject, Result
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType, ImportTypeFactory
 from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
+from stixorm.module.parsing.conversion_decisions import get_embedded_match, get_source_from_id
 
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
@@ -35,7 +42,7 @@ logging.basicConfig(filename="typedb_log.txt",
                     filemode='a',
                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                     datefmt='%H:%M:%S',
-                    level=logging.DEBUG)
+                    level=logging.INFO)
 
 
 @dataclass
@@ -203,7 +210,7 @@ class TypeDBSink(DataSink):
         logger.debug("Successfully cleared database")
 
 
-    def __filter_markings(self, stix_ids: List[StringAttribute]) -> List[str]:
+    def __filter_markings(self, stix_ids: List[str]) -> List[str]:
         marking = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
                    "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
                    "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
@@ -213,11 +220,11 @@ class TypeDBSink(DataSink):
         return self.__string_attibute_to_string(filtered_list)
 
     def __string_attibute_to_string(self,
-                                    string_attributes: List[StringAttribute]):
+                                    string_attributes: List[str]):
         return [stix_id.get_value() for stix_id in string_attributes]
 
     def __query_stix_ids(self):
-        get_ids_tql = 'match $ids isa stix-id;'
+        get_ids_tql = 'match $ids isa stix-id; get $ids;'
         data_query = query_ids
         query_data = match_query(self.uri,
                                  self.port,
@@ -328,9 +335,9 @@ class TypeDBSink(DataSink):
 
 
 
-    def __get_core_client(self) -> TypeDBClient:
+    def __get_core_client(self) -> TypeDBDriver:
         typedb_url = self.uri + ":" + self.port
-        return TypeDB.core_client(typedb_url)
+        return TypeDB.core_driver(typedb_url)
 
 
     def __get_source_client(self):
@@ -618,7 +625,7 @@ class TypeDBSource(DataSource):
                                stix_id: str):
         logger.debug(f'__retrieve_stix_object: {stix_id}')
         obj_var, type_ql = get_embedded_match(stix_id, self.import_type)
-        query = 'match ' + type_ql
+        query = 'match ' + type_ql + "get;"
         logger.debug(f'query is {query}')
 
         data = match_query(uri=self.uri,
@@ -702,50 +709,3 @@ class TypeDBSource(DataSource):
         pass
 
 
-
-def get_embedded_match(source_id, import_type):
-    """
-        Assemble the typeql variable and match statement given the stix-id, and the increment
-    Args:
-        source_id (): stix-id to use
-        i (): number of times this type of object has been used
-    Returns:
-        source_var, the typeql string of the variable
-        match, the typeql match statement
-    """
-    source_type = get_source_type(source_id, import_type)
-    source_var = '$' + source_type
-    if source_type == 'relationship':
-        source_type = 'stix-core-relationship'
-    match = f' {source_var} isa {source_type}, has stix-id "{source_id}";\n'
-    return source_var, match
-
-def get_source_type(source_id, import_type):
-    """
-        Get the type of the source_id
-    Args:
-        source_id (): stix-id to use
-    Returns:
-        source_type, the type of the source_id
-    """
-    auth_factory = get_auth_factory_instance()
-    auth = auth_factory.get_auth_for_import(import_type)
-    tmp_source = source_id.split('--')[0]
-    source = ""
-    for model in auth["conv"]["sdo"]:
-        if model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    for model in auth["conv"]["sro"]:
-        if model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    for model in auth["conv"]["sco"]:
-        if model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    for model in auth["conv"]["meta"]:
-        if model["type"] == tmp_source:
-            source = model["typeql"]
-            return source
-    return source

@@ -1,0 +1,93 @@
+[
+  {
+    "type": "entity",
+    "symbol": "observed-data0",
+    "T_id": "0x826e80018000000000000001",
+    "T_name": "observed-data",
+    "has": [
+      {
+        "typeql": "stix-type",
+        "value": "observed-data",
+        "datetime": false
+      },
+      {
+        "typeql": "stix-id",
+        "value": "observed-data--bb3aaad5-accc-4e55-8375-f4b30b17c980",
+        "datetime": false
+      },
+      {
+        "typeql": "spec-version",
+        "value": "2.1",
+        "datetime": false
+      },
+      {
+        "typeql": "last-observed",
+        "value": "2020-10-18T14:01:01.000000Z",
+        "datetime": true
+      },
+      {
+        "typeql": "modified",
+        "value": "2023-11-06T21:53:15.616000Z",
+        "datetime": true
+      },
+      {
+        "typeql": "number-observed",
+        "value": 1,
+        "datetime": false
+      },
+      {
+        "typeql": "first-observed",
+        "value": "2020-10-18T14:01:01.000000Z",
+        "datetime": true
+      },
+      {
+        "typeql": "created",
+        "value": "2023-11-06T21:53:15.616000Z",
+        "datetime": true
+      }
+    ],
+    "relns": [
+      {
+        "T_name": "sighting",
+        "T_id": "0x847080178000000000000001",
+        "roles": []
+      },
+      {
+        "T_name": "sighting",
+        "T_id": "0x847080178000000000000002",
+        "roles": []
+      },
+      {
+        "T_name": "obj-refs",
+        "T_id": "0x847080628000000000000001",
+        "roles": [
+          {
+            "role": "object",
+            "player": [
+              {
+                "type": "entity",
+                "tql": "observed-data",
+                "stix_id": "observed-data--bb3aaad5-accc-4e55-8375-f4b30b17c980"
+              }
+            ]
+          },
+          {
+            "role": "referred",
+            "player": [
+              {
+                "type": "entity",
+                "tql": "ipv4-addr",
+                "stix_id": "ipv4-addr--a40768a0-5841-50d2-838d-bcb35ee92131"
+              },
+              {
+                "type": "entity",
+                "tql": "domain-name",
+                "stix_id": "domain-name--aa90a5c6-6a78-520b-bcfd-e2bf0c25bce1"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

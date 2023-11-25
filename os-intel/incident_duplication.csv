@@ -1,0 +1,9 @@
+created,name,description,type,investigation_status,determination,detection_methods,outcome,relationship_type
+2020-10-19T01:01:01.000Z,Stolen Laptop,Someone stole a laptop,incident,closed,confirmed,['user-report'],,
+2020-10-19T01:01:01.000Z,,User alerted security,task,,,,successful,
+2020-10-19T01:01:01.000Z,,,task,,,,successful,
+2020-10-19T02:15:01.000Z,Stolen Laptop,Someone stole a laptop,incident,closed,confirmed,['user-report'],,
+2020-10-19T01:01:01.000Z,,Determined this was a duplicate of another ticket,task,,,,successful,
+2020-10-19T03:12:23.000Z,,,relationship,,,,,duplicate-of
+2020-10-19T03:12:23.000Z,,,relationship,,,,,related-to
+2020-10-19T03:12:23.000Z,Duplicate Incident Report,,report,,,,,

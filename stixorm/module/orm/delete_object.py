@@ -164,7 +164,7 @@ def delete_sub_reln(rel, obj, obj_var, i, import_type):
         match, delete = del_load_object(rel, obj[rel], obj_var, i, import_type)
 
     # insert  SCO Extensions here, a possible dict of sub-objects
-    elif rel in auth["reln_name"]["extension_relations"]:
+    elif rel == "extensions":
         match, delete = del_extensions(rel, obj[rel], obj_var, i, import_type)
 
     # ignore the following relations as they are already processed, for Relationships, Sightings and Extensions
@@ -193,8 +193,8 @@ def del_granular_markings(obj_var):
 
 def del_hashes(rel_name, rel_object, obj_var, i):
     match = '$hash isa hash, has hash-value $h;\n'
-    match += '$hash_rel (owner:'+obj_var
-    match += ', pointed-to:$hash) isa hashes;\n'
+    match += '$hash_rel (hash-owner:'+obj_var
+    match += ', hash-actual:$hash) isa hashes;\n'
     delete = '$hash_rel isa hashes;\n'
     delete += '$hash isa hash;\n'
     return match, delete
@@ -321,7 +321,7 @@ def del_load_object(prop_name, prop_dict, parent_var, i, import_type):
             # add each of the relations to the match and insert statements
             for rel in relations:
                 # split off for relation processing
-                match2, delete2= delete_sub_reln(rel, prop_dict, obj_var, i+1)
+                match2, delete2= delete_sub_reln(rel, prop_dict, obj_var, i+1, import_type)
                 # then add it back together
                 match = match + match2
                 delete = delete + "\n" + delete2
@@ -346,7 +346,7 @@ def del_extensions(prop_name, prop_dict, parent_var, i, import_type):
     for ext_type in prop_dict:
         for ext_type_ql in auth["reln"]["extension_relations"]:
             if ext_type == ext_type_ql["stix"]:
-                match2, delete2 = del_load_object(ext_type, prop_dict[ext_type], parent_var, i)
+                match2, delete2 = del_load_object(ext_type, prop_dict[ext_type], parent_var, i, import_type)
                 match = match + match2
                 delete = delete + delete2
                 break

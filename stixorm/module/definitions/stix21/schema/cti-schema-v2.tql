@@ -40,14 +40,16 @@ stix-object sub stix-entity,
 		owns spec-version,
 
 		# Optional
-		plays object-marking:marked,
+		plays data-marking:marked,
 		plays created-by:created,
 
 		# Common relations for SDOs and SCOs. Defined in 3.7. 
-		plays derivation:derived-from,
-		plays derivation:deriving,
-		plays duplicate:duplicated-object,
-		plays relatedness:related-to;
+		plays derived:derived-from,
+		plays derived:deriving,
+		plays duplicated:original,
+		plays duplicated:duplicate,
+		plays related:related-to,
+		plays related:related-from;
 
 			stix-domain-object sub stix-core-object, 
 				# Required
@@ -61,12 +63,16 @@ stix-object sub stix-entity,
 				owns langs,
 				plays external-references:referenced,
 				plays sighting:sighting-of,
+                plays attributed-to:result,
+                plays attributed-to:fault-of,
 
 				plays indicates:indicated;
 
 			stix-cyber-observable-object sub stix-core-object,
 				owns defanged,
 				plays malware-env:env,
+                plays attributed-to:result,
+                plays attributed-to:fault-of,
 				plays extensions:sco,
 				plays consist:consisted;
 
@@ -92,14 +98,14 @@ external-reference sub stix-sub-object,
 	owns description,
 	owns url-link, 
 	owns external-id, 
-	plays hashes:owner,
+	plays hashes:hash-owner,
 	plays external-references:referencing;
 
 
 # 2.7 Hash
 hash sub stix-sub-object,
 	owns hash-value, 
-	plays hashes:pointed-to; 
+	plays hashes:hash-actual;
 
 	md-5 sub hash;
 	sha-1 sub hash; 
@@ -173,14 +179,13 @@ campaign sub stix-domain-object,
 	owns objective, 
 
 	# Common Relations
-	plays attributed-to:result,
 	plays compromises:compromising,
 	plays originates-from:originating,
 	plays targets:targetter,
 	plays uses:used-by;
 
 	# Reverse Relations
-	# plays indicates:indicated; -> Defined in SDO
+	# plays indicates:indicated; -> Defined in SDO
 
 	# Embedded relations
 	# created-by
@@ -236,7 +241,6 @@ identity sub stix-domain-object,
 
 	# Reverse Relations
 	plays targets:targetted,
-	plays attributed-to:fault-of, 
 	plays impersonate:impersonated,
 
 	# Embedded Relations
@@ -342,7 +346,6 @@ intrusion-set sub stix-domain-object,
 	owns secondary-motivations,
 
 	# Common Relations
-	plays attributed-to:result,
 	plays compromises:compromising,
 	plays hosts:hosting,
 	plays ownership:owning,
@@ -352,7 +355,6 @@ intrusion-set sub stix-domain-object,
 	plays uses:used,
 
 	# Reverse Relations
-	plays attributed-to:fault-of, 
 	plays authored-by:authored,
 	# plays indicates:indicated; Already defined in SDO
 
@@ -361,7 +363,7 @@ intrusion-set sub stix-domain-object,
 	# Object marking 
 
 	# Inferred role player
-	plays inferred-mitigation:mitigated;
+	plays mitigates:mitigated;
 
 # 4.10 Location
 location sub stix-domain-object,
@@ -387,7 +389,7 @@ location sub stix-domain-object,
 	plays sighting:where-sighted;
 
 	# Embedded Relations
-	# created-by
+	# created-by
 	# Object marking
 
 # 4.11 Malware
@@ -431,16 +433,14 @@ malware sub stix-domain-object,
 	plays drop:dropped,
 	plays control:controlled,
 	plays characterise:characterised,
-	plays av-analysis:analysed,
-	plays static-analysis:analysed,
-	plays dynamic-analysis:analysed,
+	plays analysis:analysed,
 
     plays download:downloaded,
     plays exploit:exploiting,
 
     # Embedded Relations
     # created-by
-    # Obejct marking
+    # Obejct marking
     # Sample ref
 	plays malware-env:object;
 
@@ -466,9 +466,7 @@ malware-analysis sub stix-domain-object,
 
 	# Common Relations
 	plays characterise:characterising,
-	plays av-analysis:analysing,
-	plays static-analysis:analysing,
-	plays dynamic-analysis:analysing,
+	plays analysis:analysing,
 
 	# Reverse Relations
 	# NA
@@ -514,8 +512,8 @@ observed-data sub stix-domain-object,
 	plays sighting:observed, # This is for SRO 5.2 sighting
 
 	# Embedded Relations
-	# created-by
-	# Object marking
+	# created-by
+	# Object marking
 	plays obj-refs:object; # Object ref
 
 # 4.15 Opinion
@@ -571,7 +569,6 @@ threat-actor sub stix-domain-object,
 
 
 	# Common Relations
-	plays attributed-to:result,
 	plays compromises:compromising,
 	plays hosts:hosting,
 	plays ownership:owning,
@@ -581,7 +578,6 @@ threat-actor sub stix-domain-object,
 	plays uses:used-by,
 
 	# Reverse Relations
-	plays attributed-to:fault-of,
 	plays authored-by:authored;
 	# plays indicates:indicated # defined in SDO
 
@@ -600,7 +596,7 @@ tool sub stix-domain-object,
 	# Relations defined as properties in STIX
 	plays kill-chain-usage:kill-chain-used,
 
-	# Common Relations
+	# Common Relations
 	plays delivers:delivering,
 	plays drop:dropping,
 	plays have:having,
@@ -666,11 +662,32 @@ stix-core-relationship sub relation,
 	relates source, 
 	relates target,
 	plays obj-refs:referred,
-	plays object-marking:marked,
+	plays data-marking:marked,
 	plays granular-marking:object, 
 	plays external-references:referenced,
-	plays created-by:created;
+	plays created-by:created,
+    plays derived:derived-from,
+    plays derived:deriving,
+    plays duplicated:original,
+    plays duplicated:duplicate,
+    plays related:related-to,
+    plays related:related-from;
 
+
+    # 3.7 Common Relationships
+    # These are relation types that are shared by SDOs and SCOs
+
+    derived sub stix-core-relationship,
+        relates derived-from as source,
+        relates deriving as target;
+
+    duplicated sub stix-core-relationship,
+        relates original as source,
+        relates duplicate  as target;
+
+    related sub stix-core-relationship,
+        relates related-from as source,
+        relates related-to  as target;
 
 	# Specific Relationships from Appendix C
 	delivers sub stix-core-relationship, 
@@ -813,7 +830,7 @@ artifact sub stix-cyber-observable-object,
 	owns mime-type,
 	owns payload-bin,
 	owns url-link, 
-	plays hashes:owner,
+	plays hashes:hash-owner,
 	owns encryption-algorithm,
 	owns decryption-key,
 	plays payload-src:payload,
@@ -830,7 +847,7 @@ autonomous-system sub stix-cyber-observable-object,
 	owns number,
 	owns name,
 	owns rir,
-	plays belongs-to-autonomous:belongs-to;
+	plays belongs:belongs-to;
 
 # 6.3 Directory Object
 directory sub stix-cyber-observable-object,
@@ -860,10 +877,7 @@ email-addr sub stix-cyber-observable-object,
 	owns stix-value, 
 	owns display-name,
 	plays belongs:belonged,
-	plays from-email:email-address,
-	plays to-email:email-address,
-	plays cc-email:email-address,
-	plays bcc-email:email-address;
+	plays email-connection:email-address;
 
 # 6.6 Email Message
 email-message sub stix-cyber-observable-object,
@@ -895,7 +909,7 @@ email-mime-part sub stix-sub-object,
 
 # 6.7 File
 file sub stix-cyber-observable-object,
-	plays hashes:owner, 
+	plays hashes:hash-owner,
 	owns size,
 	owns name,
 	owns name-enc,
@@ -937,7 +951,7 @@ SCO-extension sub stix-sub-object,
 
 	alternate-data-stream sub SCO-extension, 
 		owns name, 
-		plays hashes:owner, 
+		plays hashes:hash-owner,
 		owns size, 
 		plays alt-data-streams:alt-data-stream; 
 
@@ -977,7 +991,7 @@ SCO-extension sub stix-sub-object,
 		owns number-of-symbols,
 		owns size-of-optional-header,
 		owns characteristics-hex,
-		plays hashes:owner, 
+		plays hashes:hash-owner,
 		plays optional-headers:pebinary,
 		plays sections:pebinary,
 		plays windows-pebinary-extension:pebinary;
@@ -1013,14 +1027,14 @@ SCO-extension sub stix-sub-object,
 		owns size-of-heap-commit,
 		owns loader-flags-hex,
 		owns number-of-rva-and-sizes, 
-		plays hashes:owner,
+		plays hashes:hash-owner,
 		plays optional-headers:optional-header;
 
 	windows-pe-section sub SCO-extension,
 		owns name, 
 		owns size, 
 		owns entropy, 
-		plays hashes:owner, 
+		plays hashes:hash-owner,
 		plays sections:pe-section;
 
 # 6.8 IPv4 Address
@@ -1028,7 +1042,7 @@ ipv4-addr sub stix-cyber-observable-object,
 	owns stix-value, 
 	plays resolves-to-ref:to-ref,
 	plays resolves-to-ref:from-ref,
-	plays belongs-to-autonomous:belonged,
+	plays belongs:belonged,
 	plays communicates-with:communicated,
 	plays traffic-src:source,
 	plays traffic-dst:destination,
@@ -1041,7 +1055,7 @@ ipv6-addr sub stix-cyber-observable-object,
 	owns stix-value, 
 	plays resolves-to-ref:to-ref,
 	plays resolves-to-ref:from-ref,
-	plays belongs-to-autonomous:belonged,	
+	plays belongs:belonged,
 	plays communicates-with:communicated,
 	plays traffic-src:source,
 	plays traffic-dst:destination,
@@ -1074,9 +1088,7 @@ network-traffic sub stix-cyber-observable-object,
 	owns src-packets,
 	owns dst-packets,
 	plays traffic-src:traffic,
-	plays payload-src:traffic,
 	plays traffic-dst:traffic,
-	plays payload-dst:traffic,
 	
 	plays encapsulate:container,
 	plays encapsulate:contained,
@@ -1251,7 +1263,7 @@ windows-registry-value-type sub stix-sub-object,
 # 6.18 X.509 Certificate
 x509-certificate sub stix-cyber-observable-object, 
 	owns is-self-signed, 
-	plays hashes:owner, 
+	plays hashes:hash-owner,
 	owns version,
 	owns serial-number,
 	owns signature-algorithm,
@@ -1301,7 +1313,7 @@ marking-definition sub stix-object,
 	owns spec-version,
 	plays created-by:created,
 	plays data-marking:marking,
-	plays object-marking:marked,
+	plays data-marking:marked,
 	plays external-references:referencing;
 
 	statement-marking sub marking-definition, 
@@ -1340,12 +1352,13 @@ embedded sub relation,
 		relates created as owner,
 		relates creator as pointed-to;
 
-	sample sub embedded, 
-		relates sample-for as owner, 
+    malware-sample sub embedded,
+		relates sample-for as owner,
 		relates sco-sample as pointed-to;
 
-		malware-sample sub sample;
-		malware-analysis-sample sub sample;
+    malware-analysis-sample sub embedded,
+		relates sample-for as owner,
+		relates sco-sample as pointed-to;
 
 	kill-chain-usage sub embedded,
 		relates kill-chain-used as owner,
@@ -1356,7 +1369,9 @@ embedded sub relation,
 		relates referenced as owner,
 		relates referencing as pointed-to;
 
-	hashes sub embedded;
+	hashes sub embedded,
+		relates hash-owner as owner,
+		relates hash-actual as pointed-to;
 
 	malware-env sub embedded,
 		relates object as owner,
@@ -1372,23 +1387,25 @@ embedded sub relation,
 		relates object as owner;
 
 	# file or directory containing relation
-	orig-container sub embedded,
+    directory-contains sub embedded,
 		relates container as owner,
 		relates contained as pointed-to;
 
-		directory-contains sub orig-container;
-		# network traffic enxapsulate
-		encapsulate sub orig-container;
+    # network traffic enxapsulate
+    encapsulate sub embedded,
+		relates container as owner,
+		relates contained as pointed-to;
 
 	
 	# reverse file or directory containing relation
-	orig-contained sub embedded,
+    directory-parent sub embedded,
 		relates contained as owner,
 		relates container as pointed-to;
-		
-		directory-parent sub orig-contained;
-		# network-traffic encapsulated-by
-		encapsulated sub orig-contained;
+
+    # network-traffic encapsulated-by
+    encapsulated sub embedded,
+		relates contained as owner,
+		relates container as pointed-to;
 
 	# IP Address or Domain Name
 	resolves-to-ref sub embedded,
@@ -1603,24 +1620,6 @@ embedded sub relation,
 
 
 
-
-
-
-
-
-# 3.7 Common Relationships 
-# These are relation types that are shared by SDOs and SCOs
-
-derivation sub relation, 
-	relates derived-from,
-	relates deriving;
-
-duplicate sub relation, 
-	relates duplicated-object; 
-
-relatedness sub relation,
-	relates related-to; 
-
 ## INFERRED RELATIONS ## 
 
 kill-chain sub relation, 
@@ -1633,7 +1632,7 @@ inferred-mitigation sub mitigates;
 ##### ATTRIBUTES #####
 
 stix-attribute-string sub attribute, value string, abstract,
-	plays granular-marking:marked;
+	plays data-marking:marked;
 
 	stix-type sub stix-attribute-string;
 	stix-id sub stix-attribute-string;
@@ -1823,7 +1822,7 @@ stix-attribute-string sub attribute, value string, abstract,
 	comment sub stix-attribute-string;
 
 stix-attribute-integer sub attribute, value long, abstract,
-	plays granular-marking:marked;
+	plays data-marking:marked;
 
 	gid sub stix-attribute-integer;
 	image-height sub stix-attribute-integer;
@@ -1872,7 +1871,7 @@ stix-attribute-integer sub attribute, value long, abstract,
 	
 
 stix-attribute-double sub attribute, value double, abstract,
-	plays granular-marking:marked;		
+	plays data-marking:marked;
 
 	latitude sub stix-attribute-double;
 	longitude sub stix-attribute-double;
@@ -1889,7 +1888,7 @@ stix-attribute-double sub attribute, value double, abstract,
 	subject-public-key-exponent sub stix-attribute-double;
 
 stix-attribute-boolean sub attribute, value boolean, abstract, 
-	plays granular-marking:marked;
+	plays data-marking:marked;
 
 	revoked sub stix-attribute-boolean;
 	is-family sub stix-attribute-boolean;
@@ -1909,7 +1908,7 @@ stix-attribute-boolean sub attribute, value boolean, abstract,
 	
 
 stix-attribute-timestamp sub attribute, value datetime, abstract, 
-	plays granular-marking:marked;
+	plays data-marking:marked;
 
 	date sub stix-attribute-timestamp;
 	submitted sub stix-attribute-timestamp;
@@ -1947,7 +1946,7 @@ stix-attribute-timestamp sub attribute, value datetime, abstract,
 	
 
 custom-attribute sub attribute, value string, 
-	plays granular-marking:marked,
+	plays data-marking:marked,
 	owns attribute-type; 
 
 attribute-type sub attribute, value string;
