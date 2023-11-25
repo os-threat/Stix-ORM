@@ -182,7 +182,7 @@ def delete_layers(uri: str, port: str, database: str, instructions: Instructions
 def delete_layer(transaction: TypeDBTransaction, query: str):
     transaction_query: QueryManager = transaction.query
     query_future: Promise = transaction_query.delete(query)
-    bi_d: BidirectionalStream = query_future.get()
+    bi_d = query_future.resolve()
     logger.info(
         '\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n' + \
         '---------------------------------------------------------------------------------------- Delete Layer Query ------------------------------------------------------------------------------\n' + \

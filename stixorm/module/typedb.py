@@ -625,7 +625,7 @@ class TypeDBSource(DataSource):
                                stix_id: str):
         logger.debug(f'__retrieve_stix_object: {stix_id}')
         obj_var, type_ql = get_embedded_match(stix_id, self.import_type)
-        query = 'match ' + type_ql
+        query = 'match ' + type_ql + "get;"
         logger.debug(f'query is {query}')
 
         data = match_query(uri=self.uri,
