@@ -12,7 +12,7 @@ from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 
 logger = logging.getLogger(__name__)
 default_import_type = import_type_factory.get_default_import()
-logger.setLevel(logging.INFO)
+
 
 
 def parse(data: dict, allow_custom=False, import_type: ImportType=default_import_type):

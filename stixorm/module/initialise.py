@@ -29,7 +29,7 @@ from typedb.api.connection.transaction import TransactionType
 from typedb.driver import TypeDB
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+
 
 attack_raw = "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/index.json"
 

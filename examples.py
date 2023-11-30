@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 import_type = import_type_factory.get_attack_import()
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+
 
 connection = {
     "uri": "localhost",
