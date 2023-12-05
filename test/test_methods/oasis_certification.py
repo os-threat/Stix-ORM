@@ -23,7 +23,7 @@ for l in loggers:
 format = '[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s'
 formatter = logging.Formatter(format)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+
 
 stdout_handler = logging.StreamHandler(sys.stdout)
 stdout_handler.setLevel(logging.DEBUG)
