@@ -12,7 +12,7 @@ from stixorm.module.orm.export_object import convert_ans_to_stix
 from stixorm.module.authorise import authorised_mappings, import_type_factory
 from stixorm.module.parsing.parse_objects import parse
 from stixorm.module.parsing.conversion_decisions import get_embedded_match
-from stixorm.module.generate_docs import configure_overview_table_docs, object_tables
+#from stixorm.module.generate_docs import configure_overview_table_docs, object_tables
 from stixorm.module.initialise import sort_layers, load_typeql_data
 from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
 from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
@@ -329,7 +329,7 @@ def load_file(fullname):
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
         #print(json_text["objects"])
-        for stix_dict in json_text: #["objects"]:
+        for stix_dict in json_text["objects"]:
             input_id_list.append(stix_dict.get("id", False))
         result = typedb.add(json_text)
     id_set = set(input_id_list)
@@ -2012,7 +2012,7 @@ if __name__ == '__main__':
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
     #check_dir(path1)
-    #load_file(path1 + f24)
+    load_file(incident_test + "/evidence.json")
     #test_delete(data_path+file1)
     #test_get(stid1)
     #test_get_delete(incident)
@@ -2037,5 +2037,5 @@ if __name__ == '__main__':
     #test_feeds()
     #test_get_embedded("report--f2b63e80-b523-4747-a069-35c002c690db")
     #try_subgraph_get(reports + poison)
-    try_nodes_and_edges(incident_test + "/evidence.json")
+    #try_nodes_and_edges(incident_test + "/evidence.json")
     #test_get_objects()

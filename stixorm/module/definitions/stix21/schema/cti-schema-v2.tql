@@ -1742,7 +1742,6 @@ stix-attribute-string sub attribute, value string, abstract,
 
 	content-disposition sub stix-attribute-string;
 	sid sub stix-attribute-string;
-	is-optimized sub stix-attribute-string;
 	pdfid0 sub stix-attribute-string;
 	pdfid1 sub stix-attribute-string;
 	exif-tags sub stix-attribute-string;
@@ -1905,6 +1904,7 @@ stix-attribute-boolean sub attribute, value boolean, abstract,
 	is-disabled sub stix-attribute-boolean;
 	is-self-signed sub stix-attribute-boolean;
 	defanged sub stix-attribute-boolean;
+	is-optimized sub stix-attribute-boolean;
 	
 
 stix-attribute-timestamp sub attribute, value datetime, abstract, 
