@@ -74,6 +74,7 @@ stix-object sub stix-entity,
                 plays attributed-to:result,
                 plays attributed-to:fault-of,
 				plays extensions:sco,
+				plays directory-contains:contained,
 				plays consist:consisted;
 
 	stix-sub-object sub stix-entity,
@@ -857,7 +858,6 @@ directory sub stix-cyber-observable-object,
 	owns mtime,
 	owns atime,
 	plays directory-contains:container,
-	plays directory-contains:contained,
 	plays directory-parent:contained,
 	plays directory-parent:container;
 
@@ -919,7 +919,8 @@ file sub stix-cyber-observable-object,
 	owns mtime,
 	owns atime, 
 
-	plays directory-contains:contained,
+
+	plays directory-contains:container,
 	plays directory-parent:contained,
 	plays content-file:containing-file,
 	plays body-raw-references:non-textual,
