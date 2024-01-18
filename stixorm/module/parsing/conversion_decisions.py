@@ -221,7 +221,7 @@ def sro_type_to_tql(sro_type: str,
     return obj_tql, sro_tql_name, is_list, protocol
 
 
-def sco__type_to_tql(sco_type: str, import_type=default_import_type) -> [Dict[str, str], str, List[str], str]:
+def sco_type_to_tql(sco_type: str, import_type=default_import_type) -> [Dict[str, str], str, List[str], str]:
     """ convert Stix object into a data model for processing
 
         Args:

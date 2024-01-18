@@ -112,6 +112,22 @@
     "owner-is-source": true
   },
   {
+    "rel": "sequence_start_refs",
+    "owner": "incident",
+    "pointed-to": "sequence-start",
+    "typeql": "sequence-start-refs",
+    "label": "sequence start object",
+    "owner-is-source": true
+  },
+  {
+    "rel": "sequence_refs",
+    "owner": "incident",
+    "pointed-to": "the-steps",
+    "typeql": "sequence-refs",
+    "label": "sequence object",
+    "owner-is-source": true
+  },
+  {
     "rel": "email_address_ref",
     "owner": "origin",
     "pointed-to": "email",

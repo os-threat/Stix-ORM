@@ -324,7 +324,7 @@ def load_file(fullname):
     """
     evidence_list = []
     logger.debug(f'inside history file {fullname}')
-    typedb = TypeDBSink(connection, False, import_type)
+    typedb = TypeDBSink(connection, True, import_type)
     input_id_list=[]
     with open(fullname, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)

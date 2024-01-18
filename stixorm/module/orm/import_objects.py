@@ -2,7 +2,7 @@ import copy
 from typing import Dict
 
 from stixorm.module.authorise import authorised_mappings, default_import_type
-from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql, \
+from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco_type_to_tql, \
     meta_type_to_tql, get_embedded_match
 
 from stixorm.module.orm.import_utilities import clean_props, split_on_activity_type, \
@@ -387,7 +387,7 @@ def sco_to_data(sco, import_type=default_import_type) -> [dict, dict, str]:
     # - work out the type of object
     sco_tql_name = sco.type
     # - get the object-specific typeql names, sighting or relationship
-    obj_tql, sco_tql_name, is_list, protocol = sco__type_to_tql(sco_tql_name, import_type)
+    obj_tql, sco_tql_name, is_list, protocol = sco_type_to_tql(sco_tql_name, import_type)
 
     return total_props, obj_tql, sco_tql_name, protocol
 

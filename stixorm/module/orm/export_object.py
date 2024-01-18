@@ -5,7 +5,7 @@ from typing import List
 import copy
 
 from stixorm.module.authorise import authorised_mappings
-from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco__type_to_tql, meta_type_to_tql
+from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco_type_to_tql, meta_type_to_tql
 from stixorm.module.orm.export_utilities import convert_ans_to_res
 import logging
 
@@ -286,7 +286,7 @@ def make_sco(res: dict, import_type: ImportType):
     # - work out the type of object
     sco_tql_name = obj_type
     # - get the object-specific typeql names, sighting or relationship
-    obj_tql, sco_tql_name, is_list, protocol = sco__type_to_tql(sco_tql_name, import_type)
+    obj_tql, sco_tql_name, is_list, protocol = sco_type_to_tql(sco_tql_name, import_type)
 
     # 2.A) get the typeql properties and relations
     props = res["has"]

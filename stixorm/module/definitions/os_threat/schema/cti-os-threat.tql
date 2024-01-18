@@ -59,6 +59,8 @@ define
         plays on-success:target,
         plays on-failure:target,
         plays next-steps:target,
+        plays sequence-start-refs:sequence-start,
+        plays sequence-refs:the-steps,
         plays sequence-ext:sequence-base;
     # Sequence Type Objects
     start-step sub sequence;
@@ -305,6 +307,8 @@ define
         owns incident-types,
         plays impact-counter:impact-driver,
         plays scores:scored,
+        plays sequence-start-refs:incident,
+        plays sequence-refs:incident,
         plays task-refs:incident,
         plays event-refs:incident,
         plays impact-refs:incident,
@@ -654,6 +658,15 @@ define
     scores sub embedded,
         relates scored as owner,
         relates score as pointed-to;
+
+    sequence-start-refs sub embedded,
+        relates incident as owner,
+        relates sequence-start as pointed-to;
+
+    sequence-refs sub embedded,
+        relates incident as owner,
+        relates the-steps as pointed-to;
+
 
     task-refs sub embedded,
         relates incident as owner,
