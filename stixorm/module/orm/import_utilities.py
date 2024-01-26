@@ -593,6 +593,10 @@ def val_tql(val):
     elif isinstance(val, float):
         return str(val)
     elif isinstance(val, datetime.datetime):
+        dt = val.strftime("%Y-%m-%dT%H:%M:%S.%f")
+        millisecs = int(round(val.microsecond/1000))
+        dt_split = dt.split('.')
+        actual = dt_split[0] + "." + str(millisecs) + "Z"
         return str(val.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3])
     else:
         return logger.error(f'value  not supported: {val}')

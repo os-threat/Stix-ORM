@@ -63,7 +63,7 @@ file_id = 'file--364fe3e5-b1f4-5ba3-b951-ee5983b3538d'
 def test_generate_docs():
     print("================================================================================")
     print("------------------------ Test Doc Generation ---------------------------------------------")
-    configure_overview_table_docs(object_tables)
+    #configure_overview_table_docs(object_tables)
 
 
 def backdoor_get(stix_id, _composite_filters=None):
