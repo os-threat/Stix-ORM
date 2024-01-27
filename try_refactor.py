@@ -58,7 +58,19 @@ get_ids = 'match $stix-id isa stix-id; get $stix-id;'
 test_id = "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff"
 marking_id = "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
 file_id = 'file--364fe3e5-b1f4-5ba3-b951-ee5983b3538d'
-
+comp_ident = {
+    "type": "identity",
+    "spec_version": "2.1",
+    "id": "identity--c90a815e-46ee-4e05-9a6e-20daf7b5348d",
+    "created": "2024-01-27T02:28:18.780Z",
+    "modified": "2024-01-27T02:28:18.780Z",
+    "name": "Example Company",
+    "description": "An Example Organisation",
+    "identity_class": "organization",
+    "sectors": [
+        "technology"
+    ]
+}
 
 def test_generate_docs():
     print("================================================================================")
@@ -1896,6 +1908,16 @@ def _get_objects_tql(obj, properties, embedded=[], sub_prop=[], import_type=impo
     return match + value + get
 
 
+def test_time():
+    typedb_sink = TypeDBSink(connection, True, import_type)
+    typedb_source = TypeDBSource(connection)
+    result = typedb_sink.add([comp_ident])
+    returned = typedb_source.get(comp_ident["id"])
+    ret = json.loads(returned.serialize())
+    print(f" created in {comp_ident['created']}")
+    print(f" created out {ret['created']}")
+    print(returned.serialize(pretty=True))
+
 
 
 ##############################################################################
@@ -2012,7 +2034,7 @@ if __name__ == '__main__':
     #check_dir_ids2(osthreat)
     #check_dir_ids(path1)
     #check_dir(path1)
-    load_file(incident_test + "/evidence.json")
+    #load_file(incident_test + "/evidence.json")
     #test_delete(data_path+file1)
     #test_get(stid1)
     #test_get_delete(incident)
@@ -2039,3 +2061,4 @@ if __name__ == '__main__':
     #try_subgraph_get(reports + poison)
     #try_nodes_and_edges(incident_test + "/evidence.json")
     #test_get_objects()
+    test_time()

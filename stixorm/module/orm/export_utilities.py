@@ -180,8 +180,11 @@ def process_props(props_obj):
         prop = {"typeql": a.get_type().get_label().name}
         if a.is_datetime():
             nt_obj = a.get_value()
-            dt_obj = nt_obj.astimezone(timezone.utc)
-            prop["value"] = dt_obj.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+            #dt_obj = nt_obj.astimezone(timezone.utc)
+            dt = nt_obj.strftime("%Y-%m-%dT%H:%M:%S.%f")
+            millisecs = int(round(nt_obj.microsecond/1000))
+            dt_split = dt.split('.')
+            prop["value"] = dt_split[0] + "." + str(millisecs) + "Z"
             prop['datetime'] = True
         elif a.is_string():
             temp_string = a.get_value()
