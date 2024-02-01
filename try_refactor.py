@@ -58,19 +58,33 @@ get_ids = 'match $stix-id isa stix-id; get $stix-id;'
 test_id = "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff"
 marking_id = "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
 file_id = 'file--364fe3e5-b1f4-5ba3-b951-ee5983b3538d'
-comp_ident = {
-    "type": "identity",
-    "spec_version": "2.1",
-    "id": "identity--c90a815e-46ee-4e05-9a6e-20daf7b5348d",
-    "created": "2024-01-27T02:28:18.780Z",
-    "modified": "2024-01-27T02:28:18.780Z",
-    "name": "Example Company",
-    "description": "An Example Organisation",
-    "identity_class": "organization",
-    "sectors": [
-        "technology"
-    ]
-}
+test_ident = {
+          "type": "identity",
+          "spec_version": "2.1",
+          "id": "identity--b349b84d-c237-4959-a658-d431e502b4b0",
+          "created": "2024-01-27T08:17:42.861Z",
+          "modified": "2024-01-27T08:17:42.861Z",
+          "name": "Whooping",
+          "description": "A Whooping Individual",
+          "roles": [
+            "user",
+            "sales"
+          ],
+          "identity_class": "individual",
+          "sectors": [
+            "technology"
+          ],
+          "extensions": {
+            "extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017a498": {
+              "extension_type": "property-extension",
+              "first_name": "Whooping",
+              "last_name": "Whilly",
+              "middle_name": "Wee",
+              "prefix": "Mr",
+              "team": "Sales"
+            }
+          }
+        }
 
 def test_generate_docs():
     print("================================================================================")
@@ -1909,13 +1923,19 @@ def _get_objects_tql(obj, properties, embedded=[], sub_prop=[], import_type=impo
 
 
 def test_time():
-    typedb_sink = TypeDBSink(connection, True, import_type)
-    typedb_source = TypeDBSource(connection)
-    result = typedb_sink.add([comp_ident])
-    returned = typedb_source.get(comp_ident["id"])
+    connection = {
+        "uri": "localhost",
+        "port": "1729",
+        "database": "stix_test",
+        "user": None,
+        "password": None
+    }
+    #typedb_sink = TypeDBSink(connection, True, import_type)
+    typedb_source = TypeDBSource(connection, all_imports)
+    #result = typedb_sink.add([test_ident])
+    returned = typedb_source.get("observed-data--a1a91d94-04be-4451-bb0f-5632414dd003")
     ret = json.loads(returned.serialize())
-    print(f" created in {comp_ident['created']}")
-    print(f" created out {ret['created']}")
+
     print(returned.serialize(pretty=True))
 
 

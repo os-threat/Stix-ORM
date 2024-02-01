@@ -44,15 +44,15 @@ def convert_ans_to_stix(query, answer_iterator, r_tx, import_type: ImportType):
     """
     res = convert_ans_to_res(answer_iterator, r_tx, import_type)
     path = pathlib.Path(__file__).parent.joinpath("export_test.json")
-    # with open(str(path), 'w') as outfile:
-    #    json.dump(res, outfile)
+    with open(str(path), 'w') as outfile:
+       json.dump(res, outfile)
     logger.debug(f'got res, now for stix')
     stix_dict = convert_res_to_stix(res, import_type)
     logger.debug((f'got stix now for object'))
     logger.debug("=========================================")
     path2 = pathlib.Path(__file__).parent.joinpath("export_test2.json")
-    # with open(str(path2), 'w') as outfile:
-    #    json.dump(stix_dict, outfile)
+    with open(str(path2), 'w') as outfile:
+       json.dump(stix_dict, outfile)
     json_object = json.dumps(stix_dict, indent=4)
     logger.debug(json_object)
     logger.debug("=========================================")
@@ -126,7 +126,7 @@ def make_sdo(res, import_type: ImportType):
                 attack_object = True
             if prop["typeql"] == "x-mitre-is-subtechnique" and prop["value"] is True:
                 sub_technique = True
-            if prop["typeql"] == "step_type":
+            if prop["typeql"] == "step-type":
                 step_type = prop["value"]
 
         obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(sdo_type, import_type, attack_object, sub_technique, step_type)
@@ -573,7 +573,12 @@ def make_extension_relations(reln, reln_name, stix_dict, is_list, obj_type, impo
 
     local_dict = {}
     local_dict = make_object(reln, reln_name, local_dict, is_list, obj_type, import_type)
-    stix_dict["extensions"] = local_dict
+    if "extensions" in stix_dict:
+        temp_dict = stix_dict["extensions"]
+        for key, value in local_dict.items():
+            temp_dict[key] = value
+    else:
+        stix_dict["extensions"] = local_dict
     return stix_dict
 
 
