@@ -467,14 +467,23 @@ def make_embedded_relations(reln, reln_name, stix_dict, is_list: bool, obj_name,
             stix_name = embedded_r["rel"]
             role_owner = embedded_r["owner"]
 
-    roles = reln["roles"]
-    for role in roles:
+    point = []
+    own = []
+    for role in reln["roles"]:
         if role["role"] == role_pointed:
-            pointed = role
+            point.append(role)
         elif role["role"] == role_owner:
-            owner = role
+            own.append(role)
         else:
             logger.error(f'unsupported role in embedded relation {role["role"]}')
+
+    #collect players in point
+    pointed = {}
+    owner = own[0]
+    pointed["role"] = point[0]["role"]
+    pointed["player"] = []
+    for p in point:
+        pointed["player"] = pointed["player"] + p["player"]
 
     # 1. Is Owner correct, basically my super object?
     # - should be only one object in the owner role list, and its type is the same as my super object type
