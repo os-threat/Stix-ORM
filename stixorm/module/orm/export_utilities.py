@@ -210,8 +210,11 @@ def process_value(p):
     """
     if p.is_datetime():
         nt_obj = p.get_value()
-        dt_obj = nt_obj.astimezone(timezone.utc)
-        ret_value = dt_obj.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        #dt_obj = nt_obj.astimezone(timezone.utc)
+        dt = nt_obj.strftime("%Y-%m-%dT%H:%M:%S.%f")
+        millisecs = int(round(nt_obj.microsecond/1000))
+        dt_split = dt.split('.')
+        ret_value = dt_split[0] + "." + str(millisecs) + "Z"
     else:
         ret_value = p.get_value()
 

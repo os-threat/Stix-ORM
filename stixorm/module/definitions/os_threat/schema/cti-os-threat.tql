@@ -558,8 +558,24 @@ define
 
 
     ##############################
+    # Custom SRO's
+    ########################
+    employed-by sub stix-core-relationship,
+		relates employer as source,
+		relates employee as target;
+
+    asset-of sub stix-core-relationship,
+		relates asset-owner as source,
+		relates asset as target;
+
+    system-of sub stix-core-relationship,
+		relates system-owner as source,
+		relates system as target;
+
+    ##############################
     # Incident SRO's
     ########################
+
     led-to sub stix-core-relationship,
 		relates initial as source,
 		relates subsequent as target;
@@ -730,7 +746,13 @@ define
         plays assigned:owner,
         plays participated-in:contact,
         plays provided-by:reporter,
-        plays identity-ext:identity-base;
+        plays identity-ext:identity-base,
+        plays employed-by:employer,
+        plays employed-by:employee,
+        plays asset-of:asset-owner,
+        plays asset-of:asset,
+        plays system-of:system-owner,
+        plays system-of:system;
 
 	infrastructure
 	    plays impacts:impacted;

@@ -82,5 +82,23 @@
     "typeql": "derived-from",
     "source": "result",
     "target": "raw-material"
+  },
+  {
+    "stix": "employed-by",
+    "typeql": "employed-by",
+    "source": "employer",
+    "target": "employee"
+  },
+  {
+    "stix": "asset-of",
+    "typeql": "asset-of",
+    "source": "asset-owner",
+    "target": "asset"
+  },
+  {
+    "stix": "system-of",
+    "typeql": "system-of",
+    "source": "system-owner",
+    "target": "system"
   }
 ]
