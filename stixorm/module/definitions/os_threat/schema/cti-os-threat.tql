@@ -572,6 +572,10 @@ define
 		relates system-owner as source,
 		relates system as target;
 
+    contracted-by sub stix-core-relationship,
+		relates contracted-for as source,
+		relates contractor as target;
+
     ##############################
     # Incident SRO's
     ########################
@@ -752,7 +756,9 @@ define
         plays asset-of:asset-owner,
         plays asset-of:asset,
         plays system-of:system-owner,
-        plays system-of:system;
+        plays system-of:system,
+        plays contracted-by:contracted-for,
+        plays contracted-by:contractor;
 
 	infrastructure
 	    plays impacts:impacted;

@@ -100,5 +100,11 @@
     "typeql": "system-of",
     "source": "system-owner",
     "target": "system"
+  },
+  {
+    "stix": "contracted-by",
+    "typeql": "contracted-by",
+    "source": "contracted-for",
+    "target": "contractor"
   }
 ]
