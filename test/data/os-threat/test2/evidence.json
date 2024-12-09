@@ -408,7 +408,7 @@
                   "modified": "2023-11-18T05:26:43.569212Z",
                   "impact_category": "physical",
                   "criticality": 99,
-                  "description": "The rcomputers are not usable, but can be fixed",
+                  "description": "The computers are not usable, but can be fixed",
                   "end_time": "2023-11-18T05:26:43.569212Z",
                   "impacted_entity_counts": {
                         "computers-personal": 2
@@ -425,30 +425,30 @@
                         }
                   }
             },
-            {
-                  "type": "impact",
-                  "spec_version": "2.1",
-                  "id": "impact--86625ce2-4b1f-4fc7-8a6b-fc70e086c006",
-                  "created": "2023-11-18T05:26:43.487599Z",
-                  "modified": "2023-11-18T05:26:43.487599Z",
-                  "impact_category": "availability",
-                  "criticality": 99,
-                  "description": "Laptop is stuffed",
-                  "end_time": "2023-11-18T05:26:43.487599Z",
-                  "impacted_entity_counts": {
-                        "computers-mobile": 1
-                  },
-                  "recoverability": "regular",
-                  "start_time": "2023-11-18T05:26:43.487599Z",
-                  "extensions": {
-                        "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
-                              "extension_type": "new-sdo"
-                        },
-                        "availability": {
-                              "availability_impact": 99
-                        }
-                  }
+{
+      "type": "impact",
+      "spec_version": "2.1",
+      "id": "impact--86625ce2-4b1f-4fc7-8a6b-fc70e086c006",
+      "created": "2023-11-18T05:26:43.487599Z",
+      "modified": "2023-11-18T05:26:43.487599Z",
+      "impact_category": "availability",
+      "criticality": 99,
+      "description": "Laptop is stuffed",
+      "end_time": "2023-11-18T05:26:43.487599Z",
+      "impacted_entity_counts": {
+            "computers-mobile": 1
+      },
+      "recoverability": "regular",
+      "start_time": "2023-11-18T05:26:43.487599Z",
+      "extensions": {
+            "extension-definition--7cc33dd6-f6a1-489b-98ea-522d351d71b9": {
+                  "extension_type": "new-sdo"
             },
+            "availability": {
+                  "availability_impact": 99
+            }
+      }
+},
             {
                   "type": "impact",
                   "spec_version": "2.1",
