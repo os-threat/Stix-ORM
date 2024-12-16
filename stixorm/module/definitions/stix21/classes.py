@@ -36,6 +36,68 @@ logger = logging.getLogger(__name__)
 
 valid_obj =  get_mapping_factory_instance().get_all_types()
 
+##################################################################################
+#       SDO
+##################################################################################
+
+
+
+class CourseOfAction(_DomainObject):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_a925mpw39txn>`__.
+    """
+
+    _type = 'course-of-action'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty(required=True)),
+        ('description', StringProperty()),
+        ('revoked', BooleanProperty(default=lambda: False)),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+    ])
+
+
+
+class Incident(_DomainObject):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_sczfhw64pjxt>`__.
+    """
+
+    _type = 'incident'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty(required=True)),
+        ('description', StringProperty()),
+        ('kill_chain_phases', ListProperty(KillChainPhase)),
+        ('revoked', BooleanProperty(default=lambda: False)),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+    ])
+
+
+
+
 
 class Note(_DomainObject):
     """For more detailed information on this object's properties, see
@@ -117,33 +179,6 @@ class ObservedData(_DomainObject):
         self._check_mutually_exclusive_properties(
             ["objects", "object_refs"],
         )
-
-class Incident(_DomainObject):
-    """For more detailed information on this object's properties, see
-    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_sczfhw64pjxt>`__.
-    """
-
-    _type = 'incident'
-    _properties = OrderedDict([
-        ('type', TypeProperty(_type, spec_version='2.1')),
-        ('spec_version', StringProperty(fixed='2.1')),
-        ('id', IDProperty(_type, spec_version='2.1')),
-        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
-        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('name', StringProperty(required=True)),
-        ('description', StringProperty()),
-        ('kill_chain_phases', ListProperty(KillChainPhase)),
-        ('revoked', BooleanProperty(default=lambda: False)),
-        ('labels', ListProperty(StringProperty)),
-        ('confidence', IntegerProperty()),
-        ('lang', StringProperty()),
-        ('external_references', ListProperty(ExternalReference)),
-        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
-        ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
-    ])
-
 
 valid_obj =  get_mapping_factory_instance().get_all_types()
 

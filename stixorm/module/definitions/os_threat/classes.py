@@ -103,7 +103,7 @@ class Feeds(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
         ('contained', ListProperty(ThreatReference(valid_types='feed', spec_version='2.1'))),
     ])
 
