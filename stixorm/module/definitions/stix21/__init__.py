@@ -21,19 +21,20 @@ from loguru import logger
 import os
 from pathlib import Path
 from stixorm.module.definitions.stix21.classes import (
-    Note, ObservedData, Incident, Report, Relationship, Sighting, Identity
+    Note, ObservedData, Incident, Report, Relationship, Sighting, Identity, CourseOfAction, Tool,
+    File, NetworkTraffic
 )
 from stix2.v21.sdo import (
-    AttackPattern, Campaign, CourseOfAction, CustomObject, Grouping,
+    AttackPattern, Campaign, CustomObject, Grouping,
     Indicator, Infrastructure, IntrusionSet, Location, Malware,
-    MalwareAnalysis, Opinion, ThreatActor, Tool,
+    MalwareAnalysis, Opinion, ThreatActor,
     Vulnerability,
 )
 from stix2.v21.observables import (
     URL, AlternateDataStream, ArchiveExt, Artifact, AutonomousSystem,
     CustomObservable, Directory, DomainName, EmailAddress, EmailMessage,
-    EmailMIMEComponent, File, HTTPRequestExt, ICMPExt, IPv4Address,
-    IPv6Address, MACAddress, Mutex, NetworkTraffic, NTFSExt, PDFExt, Process,
+    EmailMIMEComponent, HTTPRequestExt, ICMPExt, IPv4Address,
+    IPv6Address, MACAddress, Mutex, NTFSExt, PDFExt, Process,
     RasterImageExt, SocketExt, Software, TCPExt, UNIXAccountExt, UserAccount,
     WindowsPEBinaryExt, WindowsPEOptionalHeaderType, WindowsPESection,
     WindowsProcessExt, WindowsRegistryKey, WindowsRegistryValueType,
