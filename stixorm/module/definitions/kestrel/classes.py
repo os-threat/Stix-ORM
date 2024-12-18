@@ -380,7 +380,7 @@ class OCANetworkTraffic(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["start", "end", "src_ref", "dst_ref", "src_port", "dst_port", "protocols", "extensions"]
 
@@ -484,7 +484,7 @@ class OCAProcess(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = []
 
@@ -549,7 +549,7 @@ class OCASoftware(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["name", "cpe", "swid", "vendor", "version"]
 
@@ -600,7 +600,7 @@ class OCAUserAccount(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["account_type", "user_id", "account_login"]
 
@@ -640,7 +640,7 @@ class OCAWindowsRegistryKeyExt(_Extension):
 
 
 
-class Finding(_Observable):
+class OCAFinding(_Observable):
     """For more detailed information on this object's properties, see
     `https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/x-ibm-finding.md
     """
@@ -684,14 +684,30 @@ class Finding(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["value"]
 
 
 ##########################################################################################
-# OCA Extended File SCO
+# OCA Extended TTP-Tagging SCO
 
+
+
+class IBMTaggingExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/x-ibm-ttp-tagging.md
+    """
+
+    _type = 'mitre-attack-ext'
+    _properties = OrderedDict([
+        ('tactic_id', StringProperty()),
+        ('tactic_url', StringProperty()),
+        ('tactic_name', StringProperty()),
+        ('technique_id', StringProperty()),
+        ('technique_url', StringProperty()),
+        ('technique_name', StringProperty()),
+    ])
 
 
 class IBMTagging(_Observable):
@@ -705,85 +721,240 @@ class IBMTagging(_Observable):
         ('spec_version', StringProperty(fixed='2.1')),
         ('id', IDProperty(_type, spec_version='2.1')),
         ('name', StringProperty(required=True)),
-        ('report_date', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('provided_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('url', StringProperty()),
+        ('confidence', FloatProperty()),
+        ('kill_chain_phases', ListProperty(KillChainPhase)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["value"]
+
+
+##########################################################################################
+# OCA Asset SCO
+
+
+#
+# OCA Asset Sub Object
+
+class OCAIntefaceSubObject(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/x-oca-asset.md
+    """
+    _properties = OrderedDict([
+        ('alias', StringProperty()),
+        ('interface_id', StringProperty()),
+        ('name', StringProperty()),
+    ])
+
+
+class OCATrafficSubObject(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/x-oca-asset.md
+    """
+    _properties = OrderedDict([
+        ('zone', StringProperty()),
+        ('interfaces', ListProperty(EmbeddedObjectProperty(type=OCAIntefaceSubObject))),
+    ])
+
+
+class OCAPodExt(_Extension):
+    """For more detailed information on this object's properties, see
+    https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/x-oca-asset.md
+    """
+
+    _type = 'x-oca-pod-ext'
+    _properties = OrderedDict([
+        ('type', StringProperty()),
+        ('name', StringProperty()),
+        ('ip_refs',  ListProperty(ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr'], spec_version='2.1'))),
+    ])
+
+
+class OCAContainerExt(_Extension):
+    """For more detailed information on this object's properties, see
+    https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/x-oca-asset.md
+    """
+
+    _type = 'x-oca-container-ext'
+    _properties = OrderedDict([
+        ('tactic_id', StringProperty()),
+        ('name', StringProperty()),
+        ('container_id', StringProperty()),
+        ('image_name', StringProperty()),
+        ('image_id', StringProperty()),
+        ('container_type', StringProperty()),
+        ('privileged', BooleanProperty()),
+    ])
+
+class OCAAsset(_Observable):
+    """For more detailed information on this object's properties, see
+    `https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/x-oca-asset.md
+    """
+
+    _type = 'x-oca-asset'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('device_id', StringProperty()),
+        ('hostname', StringProperty()),
+        ('ip_refs',  ListProperty(ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr'], spec_version='2.1'))),
+        ('mac_refs', ListProperty(ReferenceProperty(valid_types='mac-addr', spec_version='2.1'))),
+        ('os_ref', ReferenceProperty(valid_types='software', spec_version='2.1')),
+        ('architecture', StringProperty()),
+        ('uptime', StringProperty()),
+        ('host_type', StringProperty()),
+        ('ingress', EmbeddedObjectProperty(type=OCATrafficSubObject)),
+        ('egress', EmbeddedObjectProperty(type=OCATrafficSubObject)),
+        ('geo_ref', ReferenceProperty(valid_types='x-oca-geo', spec_version='2.1')),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('defanged', BooleanProperty(default=lambda: False)),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+    ])
+    _id_contributing_properties = ["value"]
+
 
 
 ##########################################################################################
 # OCA Extended File SCO
 
 
-
-class AnecdoteExt(_Extension):
+class OCAIAMExt(_Extension):
     """For more detailed information on this object's properties, see
-    `the __.
+    https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/x-oca-event.md
     """
 
-    _type = 'extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4'
+    _type = 'x-iam-ext'
     _properties = OrderedDict([
-        ('extension_type', StringProperty(fixed='new-sco'))
+        ('result', StringProperty()),
+        ('name', StringProperty()),
+        ('sub_category', StringProperty()),
+        ('realm', StringProperty()),
+        ('application_id', StringProperty()),
+        ('user_id', StringProperty()),
+        ('application_type', StringProperty()),
+        ('browser_agent', StringProperty()),
+        ('application_name', StringProperty()),
+        ('cause', StringProperty()),
+        ('messageid', StringProperty()),
+        ('target', StringProperty()),
+        ('targetid', StringProperty()),
+        ('targetid_realm', StringProperty()),
+        ('targetid_username', StringProperty()),
+        ('performedby_clientname', StringProperty()),
+        ('performedby_realm', StringProperty()),
+        ('performedby_username', StringProperty()),
+        ('continent_name', StringProperty()),
+        ('country_iso_code', StringProperty()),
+        ('country_name', StringProperty()),
+        ('city_name', StringProperty()),
+        ('policy_action', StringProperty()),
+        ('policy_name', StringProperty()),
+        ('rule_name', StringProperty()),
+        ('decision_reason', StringProperty()),
+        ('location_lat', StringProperty()),
+        ('location_lon', StringProperty()),
+        ('risk_level', StringProperty()),
+        ('risk_score', StringProperty()),
+        ('deviceid', StringProperty()),
+        ('is_device_compliant', StringProperty()),
+        ('is_device_managed', StringProperty()),
+        ('mdm_customerid', StringProperty()),
     ])
 
-class Anecdote(_Observable):
+class OCAEvent(_Observable):
     """For more detailed information on this object's properties, see
-    `the xxxxxxxxx`__.
+    https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/x-oca-event.md
     """
 
-    _type = 'anecdote'
+    _type = 'x-oca-event'
     _properties = OrderedDict([
         ('type', TypeProperty(_type, spec_version='2.1')),
         ('spec_version', StringProperty(fixed='2.1')),
         ('id', IDProperty(_type, spec_version='2.1')),
-        ('value', StringProperty(required=True)),
-        ('report_date', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('provided_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('action', StringProperty()),
+        ('category', ListProperty(StringProperty)),
+        ('code', StringProperty()),
+        ('description', StringProperty()),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('start', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('end', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('duration', IntegerProperty()),
+        ('module', StringProperty()),
+        ('original_ref',  ReferenceProperty(valid_types='artifact', spec_version='2.1')),
+        ('provider', StringProperty()),
+        ('agent', StringProperty()),
+        ('host_ref',  ReferenceProperty(valid_types='x-oca-asset', spec_version='2.1')),
+        ('url_ref',  ReferenceProperty(valid_types='url', spec_version='2.1')),
+        ('file_ref',  ReferenceProperty(valid_types='file', spec_version='2.1')),
+        ('process_ref',  ReferenceProperty(valid_types='process', spec_version='2.1')),
+        ('parent_process_ref',  ReferenceProperty(valid_types='process', spec_version='2.1')),
+        ('cross_process_target_ref',  ReferenceProperty(valid_types='process', spec_version='2.1')),
+        ('domain_ref',  ReferenceProperty(valid_types='domain-name', spec_version='2.1')),
+        ('registry_ref',  ReferenceProperty(valid_types='windows-registry-key', spec_version='2.1')),
+        ('network_ref',  ReferenceProperty(valid_types='network-traffic', spec_version='2.1')),
+        ('ip_refs', ListProperty(ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr'], spec_version='2.1'))),
+        ('user_ref', ReferenceProperty(valid_types='tagging', spec_version='2.1')),
+        ('severity', IntegerProperty()),
+        ('start', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('end', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('timezone', StringProperty()),
+        ('duration', StringProperty()),
+        ('dataset', StringProperty()),
+        ('pipe_name', StringProperty()),
+        ('x_ttp_tagging_refs', ListProperty(ReferenceProperty(valid_types='x-ibm-ttp-tagging', spec_version='2.1'))),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["value"]
+
 
 
 
 ##########################################################################################
-# OCA Extended File SCO
+# OCA locations SCO
 
 
-class AnecdoteExt(_Extension):
+
+class OCACoordinatesSubObject(_STIXBase21):
     """For more detailed information on this object's properties, see
-    `the __.
+    https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/x-oca-geo.md
     """
-
-    _type = 'extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4'
     _properties = OrderedDict([
-        ('extension_type', StringProperty(fixed='new-sco'))
+        ('lon', FloatProperty()),
+        ('lat', FloatProperty()),
     ])
 
-class Anecdote(_Observable):
+
+class OCALocation(_Observable):
     """For more detailed information on this object's properties, see
-    `the xxxxxxxxx`__.
+    https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/x-oca-geo.md
     """
 
-    _type = 'anecdote'
+    _type = 'x-oca-geo'
     _properties = OrderedDict([
         ('type', TypeProperty(_type, spec_version='2.1')),
         ('spec_version', StringProperty(fixed='2.1')),
         ('id', IDProperty(_type, spec_version='2.1')),
-        ('value', StringProperty(required=True)),
-        ('report_date', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('provided_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('city_name', StringProperty()),
+        ('continent_name', StringProperty()),
+        ('country_iso_code', StringProperty()),
+        ('country_name', StringProperty()),
+        ('location', EmbeddedObjectProperty(type=OCACoordinatesSubObject)),
+        ('name', StringProperty()),
+        ('region_iso_code', StringProperty()),
+        ('region_name', StringProperty()),
+        ('time_zone', StringProperty()),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["value"]
-
 

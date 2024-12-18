@@ -11,20 +11,20 @@ from stix2.exceptions import (
     PropertyPresenceError, STIXDeprecationWarning, )
 from stix2.properties import (
     BooleanProperty, ExtensionsProperty, IDProperty, IntegerProperty, ListProperty,
-    OpenVocabProperty, ReferenceProperty, StringProperty,
-    TimestampProperty, TypeProperty, EmbeddedObjectProperty, ObservableProperty
+    OpenVocabProperty, ReferenceProperty, StringProperty, DictionaryProperty,
+    TimestampProperty, TypeProperty, EmbeddedObjectProperty, ObservableProperty, HexProperty, HashesProperty
 )
 from stix2.utils import NOW, _get_dict
 from stix2.markings import _MarkingsMixin
 from stix2.markings.utils import check_tlp_marking
-from stix2.v21.base import _DomainObject, _STIXBase21, _RelationshipObject
+from stix2.v21.base import _DomainObject, _STIXBase21, _RelationshipObject, _Extension, _Observable
 from stix2.v21.common import (
     ExternalReference, GranularMarking, KillChainPhase,
     MarkingProperty, TLPMarking, StatementMarking,
 )
 from stix2.v21.vocab import (
     ATTACK_MOTIVATION, ATTACK_RESOURCE_LEVEL, IMPLEMENTATION_LANGUAGE, MALWARE_CAPABILITIES, MALWARE_TYPE,
-    PROCESSOR_ARCHITECTURE, TOOL_TYPE, IDENTITY_CLASS, INDUSTRY_SECTOR, REPORT_TYPE
+    PROCESSOR_ARCHITECTURE, TOOL_TYPE, IDENTITY_CLASS, INDUSTRY_SECTOR, REPORT_TYPE,HASHING_ALGORITHM
 )
 
 import logging
@@ -95,6 +95,36 @@ class Incident(_DomainObject):
         ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
 
+
+
+class Identity(_DomainObject):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_wh296fiwpklp>`__.
+    """
+
+    _type = 'identity'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty(required=True)),
+        ('description', StringProperty()),
+        ('roles', ListProperty(StringProperty)),
+        ('identity_class', OpenVocabProperty(IDENTITY_CLASS)),
+        ('sectors', ListProperty(OpenVocabProperty(INDUSTRY_SECTOR))),
+        ('contact_information', StringProperty()),
+        ('revoked', BooleanProperty(default=lambda: False)),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+    ])
 
 
 
@@ -211,6 +241,138 @@ class Report(_DomainObject):
         ('extensions', ExtensionsProperty(spec_version='2.1')),
     ])
 
+
+
+
+class Tool(_DomainObject):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_z4voa9ndw8v>`__.
+    """
+
+    _type = 'tool'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty(required=True)),
+        ('description', StringProperty()),
+        ('tool_types', ListProperty(OpenVocabProperty(TOOL_TYPE))),
+        ('aliases', ListProperty(StringProperty)),
+        ('kill_chain_phases', ListProperty(KillChainPhase)),
+        ('tool_version', StringProperty()),
+        ('revoked', BooleanProperty(default=lambda: False)),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ExtensionsProperty(spec_version='2.1')),
+    ])
+
+
+#############################################################################################################
+#   SCO Objects
+#############################################################################################################
+
+
+class File(_Observable):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_99bl2dibcztv>`__.
+    """
+
+    _type = 'file'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('hashes', HashesProperty(HASHING_ALGORITHM, spec_version="2.1")),
+        ('size', IntegerProperty(min=0)),
+        ('name', StringProperty()),
+        ('name_enc', StringProperty()),
+        ('magic_number_hex', HexProperty()),
+        ('mime_type', StringProperty()),
+        ('ctime', TimestampProperty()),
+        ('mtime', TimestampProperty()),
+        ('atime', TimestampProperty()),
+        ('parent_directory_ref', ReferenceProperty(valid_types='directory', spec_version='2.1')),
+        ('contains_refs', ListProperty(ReferenceProperty(valid_types=["SCO"], spec_version='2.1'))),
+        ('content_ref', ReferenceProperty(valid_types='artifact', spec_version='2.1')),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('defanged', BooleanProperty(default=lambda: False)),
+        ('extensions', ExtensionsProperty(spec_version='2.1')),
+    ])
+    _id_contributing_properties = ["hashes", "name", "parent_directory_ref", "extensions"]
+
+    def _check_object_constraints(self):
+        super(File, self)._check_object_constraints()
+        self._check_at_least_one_property(['hashes', 'name'])
+
+
+
+class NetworkTraffic(_Observable):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_rgnc3w40xy>`__.
+    """
+
+    _type = 'network-traffic'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('start', TimestampProperty()),
+        ('end', TimestampProperty()),
+        ('is_active', BooleanProperty()),
+        ('src_ref', ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr', 'mac-addr', 'domain-name'], spec_version='2.1')),
+        ('dst_ref', ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr', 'mac-addr', 'domain-name'], spec_version='2.1')),
+        ('src_port', IntegerProperty(min=0, max=65535)),
+        ('dst_port', IntegerProperty(min=0, max=65535)),
+        ('protocols', ListProperty(StringProperty, required=True)),
+        ('src_byte_count', IntegerProperty(min=0)),
+        ('dst_byte_count', IntegerProperty(min=0)),
+        ('src_packets', IntegerProperty(min=0)),
+        ('dst_packets', IntegerProperty(min=0)),
+        ('ipfix', DictionaryProperty(spec_version='2.1')),
+        ('src_payload_ref', ReferenceProperty(valid_types='artifact', spec_version='2.1')),
+        ('dst_payload_ref', ReferenceProperty(valid_types='artifact', spec_version='2.1')),
+        ('encapsulates_refs', ListProperty(ReferenceProperty(valid_types='network-traffic', spec_version='2.1'))),
+        ('encapsulated_by_ref', ReferenceProperty(valid_types='network-traffic', spec_version='2.1')),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('defanged', BooleanProperty(default=lambda: False)),
+        ('extensions', ExtensionsProperty(spec_version='2.1')),
+    ])
+    _id_contributing_properties = ["start", "end", "src_ref", "dst_ref", "src_port", "dst_port", "protocols", "extensions"]
+
+    def _check_object_constraints(self):
+        super(NetworkTraffic, self)._check_object_constraints()
+        self._check_at_least_one_property(['src_ref', 'dst_ref'])
+
+        start = self.get('start')
+        end = self.get('end')
+        is_active = self.get('is_active')
+
+        if end and is_active is not False:
+            msg = "{0.id} 'is_active' must be False if 'end' is present"
+            raise ValueError(msg.format(self))
+
+        if end and is_active is True:
+            msg = "{0.id} if 'is_active' is True, 'end' must not be included"
+            raise ValueError(msg.format(self))
+
+        if start and end and end < start:
+            msg = "{0.id} 'end' must be greater than or equal to 'start'"
+            raise ValueError(msg.format(self))
+
+
+#############################################################################################################
+#   SRO Objects
+#############################################################################################################
+
 class Relationship(_RelationshipObject):
     """For more detailed information on this object's properties, see
     `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_e2e1szrqfoan>`__.
@@ -315,32 +477,3 @@ class Sighting(_RelationshipObject):
         if first_seen and last_seen and last_seen < first_seen:
             msg = "{0.id} 'last_seen' must be greater than or equal to 'first_seen'"
             raise ValueError(msg.format(self))
-
-class Identity(_DomainObject):
-    """For more detailed information on this object's properties, see
-    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_wh296fiwpklp>`__.
-    """
-
-    _type = 'identity'
-    _properties = OrderedDict([
-        ('type', TypeProperty(_type, spec_version='2.1')),
-        ('spec_version', StringProperty(fixed='2.1')),
-        ('id', IDProperty(_type, spec_version='2.1')),
-        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
-        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('name', StringProperty(required=True)),
-        ('description', StringProperty()),
-        ('roles', ListProperty(StringProperty)),
-        ('identity_class', OpenVocabProperty(IDENTITY_CLASS)),
-        ('sectors', ListProperty(OpenVocabProperty(INDUSTRY_SECTOR))),
-        ('contact_information', StringProperty()),
-        ('revoked', BooleanProperty(default=lambda: False)),
-        ('labels', ListProperty(StringProperty)),
-        ('confidence', IntegerProperty()),
-        ('lang', StringProperty()),
-        ('external_references', ListProperty(ExternalReference)),
-        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
-        ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
-    ])
