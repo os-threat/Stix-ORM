@@ -379,7 +379,7 @@ def key_value_store(prop,
         a_value = prop_value_dict[key]
         key_var = ' $' + d_key + str(i)
         field_var_list.append(key_var)
-        insert += key_var + ' isa ' + d_key + '; ' + key_var + ' "' + key + '";\n'
+        insert += key_var + ' isa ' + d_key + '; ' + key_var + ' has dict-key "' + key + '";\n'
         if isinstance(a_value, list):
             for j, n in enumerate(a_value):
                 value_var = ' $' + d_value + str(j)

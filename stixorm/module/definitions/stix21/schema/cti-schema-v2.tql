@@ -896,7 +896,8 @@ email-message sub stix-cyber-observable-object,
 
 
 header-value sub stix-attribute-string;
-header-key sub stix-attribute-string,
+header-key sub stix-sub-object,
+    owns dict-key,
 	owns header-value,
 	plays additional-header:item;
 
@@ -965,7 +966,8 @@ SCO-extension sub stix-sub-object,
 		plays pdf-extension:pdf;
 
 	doc-value sub stix-attribute-string;
-	doc-key sub stix-attribute-string,
+	doc-key sub stix-sub-object,
+        owns dict-key,
 		owns doc-value,
 		plays doc-info:info;
 
@@ -977,7 +979,8 @@ SCO-extension sub stix-sub-object,
 		plays raster-image-extension:image; 
 	
 	EXIF-value sub stix-attribute-string;
-	EXIF-key sub stix-attribute-string,
+	EXIF-key sub stix-sub-object,
+        owns dict-key,
 		owns EXIF-value,
 		plays EXIF-tags:info;
 
@@ -1104,7 +1107,8 @@ network-traffic sub stix-cyber-observable-object,
 	plays tcp-extension:traffic;
 
 	IPFIX-value sub stix-attribute-string;
-	IPFIX-key sub stix-attribute-string,
+	IPFIX-key sub stix-sub-object,
+        owns dict-key,
 		owns IPFIX-value,
 		plays IPFIX-store:item;
 
@@ -1120,7 +1124,8 @@ network-traffic sub stix-cyber-observable-object,
 		plays http-request-extension:request;
 
 	HTTP-value sub stix-attribute-string;
-	HTTP-key sub stix-attribute-string,
+	HTTP-key sub stix-sub-object,
+        owns dict-key,
 		owns HTTP-value,
 		plays HTTP-header:header;
 
@@ -1141,7 +1146,8 @@ network-traffic sub stix-cyber-observable-object,
 		plays socket-extension:socket;
 
 	socket-value sub stix-attribute-string;
-	socket-key sub stix-attribute-string,
+	socket-key sub stix-sub-object,
+        owns dict-key,
 		owns socket-value,
 		plays socket-options:option;
 
@@ -1170,7 +1176,8 @@ process sub stix-cyber-observable-object,
 	plays windows-service-extension:process;
 
 	environment-value sub stix-attribute-string;
-	environment-key sub stix-attribute-string,
+	environment-key sub stix-sub-object,
+        owns dict-key,
 		owns environment-value,
 		plays environment-variables:env-variable;
 
@@ -1188,7 +1195,8 @@ process sub stix-cyber-observable-object,
 		plays windows-process-extension:win-process;
 
 	startup-value sub stix-attribute-string;
-	startup-key sub stix-attribute-string,
+	startup-key sub stix-sub-object,
+        owns dict-key,
 		owns startup-value,
 		plays startup-info:info;
 
@@ -1635,6 +1643,7 @@ inferred-mitigation sub mitigates;
 stix-attribute-string sub attribute, value string, abstract,
 	plays data-marking:marked;
 
+    dict-key sub stix-attribute-string;
 	stix-type sub stix-attribute-string;
 	stix-id sub stix-attribute-string;
 	stix-value sub stix-attribute-string;
