@@ -48,6 +48,7 @@ valid_obj =  get_mapping_factory_instance().get_all_types()
 ############################################################################################
 
 
+
 class BehaviorExt(_Extension):
     """For more detailed information on this object's properties, see
     `the  https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SDO/x-oca-behavior.md`__.
@@ -147,6 +148,33 @@ class Playbook(_DomainObject):
         ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
 
+# the below class is not yet validated, hence a dictionary Property is used
+class OCADataSourceSubObject(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SDO/x-oca-detection.md
+    """
+    _properties = OrderedDict([
+        ('LogName', StringProperty()),
+        ('data_type', StringProperty()),
+        ('EventCode', StringProperty()),
+        ('TaskCategory', StringProperty()),
+        ('message', StringProperty()),
+        ('Category', StringProperty()),
+        ('score_num', StringProperty()),
+        ('Creator_Process_Name', ListProperty(StringProperty())),
+        ('Creator_Command_Line', ListProperty(StringProperty())),
+        ('New_Process_Name', ListProperty(StringProperty())),
+    ])
+
+
+class OCAAnalyticSubObject(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SDO/x-oca-detection.md
+    """
+    _properties = OrderedDict([
+        ('type', StringProperty()),
+        ('rule', StringProperty()),
+    ])
 
 
 class DetectionExt(_Extension):
@@ -174,7 +202,7 @@ class Detection(_DomainObject):
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('name', StringProperty(required=True)),
         ('data_sources', ListProperty(DictionaryProperty(spec_version='2.1'))),
-        ('analytic', DictionaryProperty(spec_version='2.1')),
+        ('analytic', EmbeddedObjectProperty(type=OCAAnalyticSubObject)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
         ('lang', StringProperty()),
@@ -331,7 +359,46 @@ class OCAFile(_Observable):
 ################################################################################
 # OCA Extended Nwtwork Traffic SCO
 
+# OCA Network Traffic RITA extension
+class OCANetworkTrafficRITAExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/network-traffic-ext.md
+    """
+    _type = 'extension-definition--3b7505ce-2a18-496e-aa58-311dac6c1473'
+    _properties = OrderedDict([
+        ('extension_type', StringProperty(fixed='property-extension')),
+        ('connections', IntegerProperty()),
+        ('score', FloatProperty()),
+        ('computer', StringProperty()),
+    ])
 
+
+
+# Name Ref Object
+class NameRefSubObject(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/network-traffic-ext.md
+    """
+    _properties = OrderedDict([
+        ('name_ref', ReferenceProperty(valid_types='domain-name', spec_version='2.1')),
+    ])
+
+
+
+# DNS extensions
+
+class DNSExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/dns-ext.md
+    """
+    _type = 'dns-ext'
+    _properties = OrderedDict([
+        ('question', EmbeddedObjectProperty(type=NameRefSubObject)),
+        ('resolved_ip_refs', ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr'], spec_version='2.1')),
+    ])
+
+
+# VLan Sub Object
 class NetworkTrafficVLanSubObject(_STIXBase21):
     """For more detailed information on this object's properties, see
     https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/network-traffic-ext.md
@@ -343,7 +410,7 @@ class NetworkTrafficVLanSubObject(_STIXBase21):
     ])
 
 
-
+# OCA Network Traffic Class
 class OCANetworkTraffic(_Observable):
     """For more detailed information on this object's properties, see
     `https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/network-traffic-ext.md
@@ -403,51 +470,6 @@ class OCANetworkTraffic(_Observable):
         if start and end and end < start:
             msg = "{0.id} 'end' must be greater than or equal to 'start'"
             raise ValueError(msg.format(self))
-
-
-#
-# OCA DNS Extensions for Network Traffic SCO
-class NameRefSubObject(_STIXBase21):
-    """For more detailed information on this object's properties, see
-    https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/dns-ext.md
-    """
-    _properties = OrderedDict([
-        ('name_ref', ReferenceProperty(valid_types=['domain-name'], spec_version='2.1')),
-    ])
-
-
-
-
-class DNSExt(_Extension):
-    """For more detailed information on this object's properties, see
-    `the  https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/dns-ext.md
-    """
-
-    _type = 'dns-ext'
-    _properties = OrderedDict([
-        ('question', EmbeddedObjectProperty(type=NameRefSubObject)),
-        ('resolved_ip_refs', ListProperty(ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr'], spec_version='2.1'))),
-    ])
-
-
-#
-# OCA Extended File SCO
-
-
-
-
-class NetworkTrafficExt(_Extension):
-    """For more detailed information on this object's properties, see
-    `the  https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/network-traffic-ext.md
-    """
-
-    _type = 'extension-definition--3b7505ce-2a18-496e-aa58-311dac6c1473'
-    _properties = OrderedDict([
-        ('extension_type', StringProperty(fixed='property-extension')),
-        ('connections', IntegerProperty()),
-        ('score', FloatProperty()),
-        ('computer', StringProperty()),
-    ])
 
 
 
@@ -820,7 +842,7 @@ class OCAAsset(_Observable):
 
 
 ##########################################################################################
-# OCA Extended File SCO
+# OCA Event SCO
 
 
 class OCAIAMExt(_Extension):
@@ -900,10 +922,7 @@ class OCAEvent(_Observable):
         ('ip_refs', ListProperty(ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr'], spec_version='2.1'))),
         ('user_ref', ReferenceProperty(valid_types='tagging', spec_version='2.1')),
         ('severity', IntegerProperty()),
-        ('start', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('end', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('timezone', StringProperty()),
-        ('duration', StringProperty()),
         ('dataset', StringProperty()),
         ('pipe_name', StringProperty()),
         ('x_ttp_tagging_refs', ListProperty(ReferenceProperty(valid_types='x-ibm-ttp-tagging', spec_version='2.1'))),
@@ -932,7 +951,7 @@ class OCACoordinatesSubObject(_STIXBase21):
     ])
 
 
-class OCALocation(_Observable):
+class OCAGeo(_Observable):
     """For more detailed information on this object's properties, see
     https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/x-oca-geo.md
     """

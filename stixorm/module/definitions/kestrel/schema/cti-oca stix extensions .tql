@@ -19,36 +19,969 @@
 # under the License.
 #
 define
+    #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    # Generic OCA Extension Object/Relation
+    #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    oca-extension sub incident-extension;
+    oca-extensions sub embedded,
+        relates oca as owner,
+        relates extension as pointed-to;
+
+
+
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     # OCA Extensions SDO Models
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     ##############################
-    # Sequence Object for Tasks/Events
+    # Behavior Object
     ################################
     behavior sub stix-domain-object,
         owns name,
         owns description,
+        owns behavior-class,
         owns tactic-type,
         owns technique-type,
-        owns first-seen;
+        owns first-seen,
+        plays platforms:behavior-head,
+	    plays behavior-ext:behavior-base;
+
+    # Platform Dictionary Property
+    platform-value sub stix-attribute-string;
+    platform-key sub stix-sub-object,
+        owns dict-key,
+        owns platform-value,
+        plays platforms:platform;
+
+    # Platforms Relation
+	platforms sub embedded,
+		relates behavior-head as owner,
+		relates platform as pointed-to;
+
+	# Behaviour Extension
+	behavior-ext sub oca-extensions,
+	    relates behavior-base as oca,
+	    relates behavior-spec as extension;
+
+	behavior-extension sub oca-extension,
+	    plays behavior-ext:behavior-spec;
+
+
+    ##############################
+    # OCA Course of Action Playbook Extension
+    ################################
+    course-of-action-ext sub oca-extension,
+        plays playbooks:coa-ext,
+        plays coa-extension:course-of-action-ext;
+
+    # Playbook Dictionary Property
+    playbook-value sub stix-attribute-string;
+    playbook-key sub stix-sub-object,
+        owns dict-key,
+        owns playbook-value,
+        plays playbooks:playbook-detail;
+
+    # Playbooks Relation
+	playbooks sub embedded,
+		relates coa-ext as owner,
+		relates playbook-detail as pointed-to;
+
+    # CoA Extension
+    coa-extension sub oca-extensions,
+        relates course-of-action as oca,
+        relates course-of-action-ext as extension;
+
+    # Connect in the Stix Course of Action SDO
+    course-of-action
+        plays  coa-extension:course-of-action;
+
+    ##############################
+    # OCA Playbook Object
+    ################################
+    # Playbook Hashes
+    playbook-hashes sub hashes;
+    # Playbook created by
+	playbook-creator sub created-by;
+	identity
+	    plays playbook-creator:creator;
+	# Playbook SDO
+    playbook sub stix-domain-object,
+        owns name,
+        owns description,
+        owns playbook_id,
+        owns playbook_creation_time,
+        owns playbook_modification_time,
+        owns is-playbook-template,
+        owns playbook-format,
+        owns playbook-type,
+        owns playbook-impact,
+        owns playbook-severity,
+        owns playbook-priority,
+        owns playbook-bin,
+        owns playbook-url,
+        plays playbook_creator:created,
+        plays playbook-hashes:hash-owner;
+
+	# Playbook Extension
+	playbook-ext sub oca-extensions,
+	    relates playbook-base as oca,
+	    relates playbook-spec as extension;
+
+	playbook-extension sub oca-extension,
+	    plays playbook-ext:playbook-spec;
+
+
+    ##############################
+    # OCA Detection Object
+    ################################
+    detection sub stix-domain-object,
+        owns name,
+        plays data-sources:data-detection,
+        plays analytics:analytic-owner,
+	    plays detection-ext:detection-base;
+
+    # Data Source Dictionary Property
+    data-source-value sub stix-attribute-string;
+    data-source-key sub stix-sub-object,
+        owns dict-key,
+        owns data-source-value,
+        plays data-sources:data-source;
+
+    # Data Sources Relation
+	data-sources sub embedded,
+		relates data-detection as owner,
+		relates data-source as pointed-to;
+
+    # Analytic Sub-Object Property
+    analytic sub stix-sub-object,
+        owns analytic-type,
+        owns analytic-rule,
+        plays analytics:analytic-obj;
+
+    # Analytics Relation
+	analytics sub embedded,
+		relates analytic-owner as owner,
+		relates analytic-obj as pointed-to;
+
+	# Detection Extension
+	detection-ext sub oca-extensions,
+	    relates detection-base as oca,
+	    relates detection-spec as extension;
+
+	detection-extension sub oca-extension,
+	    plays detection-ext:detection-spec;
+
+
+    ##############################
+    # OCA Detector Object
+    ################################
+    detector sub stix-domain-object,
+        owns name,
+        owns description,
+        owns cpe,
+        owns valid-until,
+        owns vendor,
+        owns vendor-url,
+        owns product,
+        owns product-url,
+        owns detection-types,
+        owns detector-data-categories,
+        owns detector-data-sources,
+        plays detector-ext:detector-base;
+
+	# Detector Extension
+	detector-ext sub oca-extensions,
+	    relates detector-base as oca,
+	    relates detector-spec as extension;
+
+	detector-extension sub oca-extension,
+	    plays detector-ext:detector-spec;
+
+
+    ##############################
+    # OCA High Value Tool Extension
+    ################################
+    tool
+        plays hvt-tool-extensions:hvt-tool-base;
+
+    hvt-tool-ext sub oca-extension,
+        owns high-value-target-attributes,
+        plays hvt-tool-extensions:hvt-tool-spec;
+
+	# Tool Extension relation
+	hvt-tool-extensions sub oca-extensions,
+	    relates hvt-tool-base as oca,
+	    relates hvt-tool-spec as extension;
 
 
 
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    # OCA Extensions SCO Models
+    # OCA Extensions to STIX SCO Models
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+    ##############################
+    # OCA Extended File Object
+    ################################
+
+    oca-file sub file,
+        owns x-atributes,
+        owns x-extension,
+        owns x-path,
+        owns x-target-path,
+        owns x-type,
+        owns x-win-drive-letter,
+        plays x-unix:file-owner,
+        plays x-code-signature:file-owner,
+	    plays file-extension:file-base,
+	    plays x-owner-ref:file-base,
+	    plays x-software-ref:file-base;
+
+	# x_software_ref relation
+	x-software-ref sub embedded,
+	    relates file-base as owner,
+	    relates software-ref as pointed-to;
+
+	software
+	    plays x-software-ref:software-ref;
+
+	# x_owner_ref relation
+	x-owner-ref sub embedded,
+	    relates file-base as owner,
+	    relates usr-account as pointed-to;
+
+	user-account
+	    plays x-owner-ref:usr-account;
+
+    # Unix file Sub-Object Property
+    unix-file sub stix-sub-object,
+        owns file-device,
+        owns gid,
+        owns unix-group,
+        owns inode,
+        owns mode,
+        plays x-unix:unix-file-obj;
+    # Unix file Relation
+	x-unix sub embedded,
+		relates file-owner as owner,
+		relates unix-file-obj as pointed-to;
+
+    # Code signature file Sub-Object Property
+    code-signature sub stix-sub-object,
+        owns exists,
+        owns status,
+        owns subject_name,
+        owns trusted,
+        owns valid,
+        plays x-code-signature:x-code-sig;
+    # Unix file Relation
+	x-code-signature sub embedded,
+		relates file-owner as owner,
+		relates x-code-sig as pointed-to;
+
+	# OCA File Extension
+	file-extension sub oca-extensions,
+	    relates file-base as oca,
+	    relates file-spec as extension;
+
+	file-ext sub oca-extension,
+	    plays file-extension:file-spec;
 
 
+    ##############################
+    # Stix Network Traffic Object, OCA Extension
+    ################################
+    #  OCA Network Traffic RITA Extension Relation
+	rita-extension sub oca-extensions,
+	    relates rita-base as oca,
+	    relates rita-spec as extension;
+
+    # OCA Network Traffic Extension Object
+	rita-ext sub oca-extension,
+	    owns connections,
+	    owns rita-score,
+	    owns computer,
+	    plays rita-extension:rita-spec;
+
+    # DNS Extension Relation
+	dns-extension sub oca-extensions,
+	    relates dns-base as oca,
+	    relates dns-spec as extension;
+
+    # DNS Extension Object
+	dns-ext sub oca-extension,
+	    plays dns-extension:dns-spec,
+	    plays question:network-traffic-dns-ext;
+
+    # Question relation
+    question sub embedded,
+        relates network-traffic-dns-ext as owner,
+        relates a-name as pointed-to;
+
+    # Name Ref Object
+    name_ref sub stix-sub-object,
+	    plays question:a-name,
+	    plays name-ref:nameref;
+
+	# Name-ref relation
+	name-ref sub embedded,
+	    relates nameref as owner,
+	    relates referred as pointed-to;
+
+    domain-name
+        plays name-ref:referred;
+
+    # Finally, connect the extensions to the object
+    network-traffic
+	    plays dns-extension:dns-base,
+	    plays rita-extension:rita-spec;
+
+
+    ##############################
+    # OCA Extended Network Traffic Object
+    ################################
+    # OCA Network Traffic VLan
+    vlan sub stix-sub-object,
+        owns id,
+        owns name,
+        plays x-vlan:vlan-obj,
+        plays inner:head,
+        plays inner:tail;
+    # Inner relation
+    inner sub embedded,
+        relates head as owner,
+        relates tail as pointed-to;
+    # Unix file Relation
+	x-vlan sub embedded,
+		relates vlan-owner as owner,
+		relates vlan-obj as pointed-to;
+
+    # OCA Network Traffic
+    oca-network-traffic sub network-traffic,
+        owns x-name,
+        owns x-application,
+        owns x-direction,
+        plays x-forwarded-ip:network-traffic-owner,
+        owns x-community-id,
+        plays x-vlan:vlan-owner;
+
+    # x_forwarded_ip
+    x-forwarded-ip sub embedded,
+        relates network-traffic-owner as owner,
+        relates forwarded-ip as pointed-to;
+
+    ipv4-addr
+        plays x-forwarded-ip:forwarded-ip;
+    ipv6-addr
+        plays x-forwarded-ip:forwarded-ip;
+
+    ##############################
+    # OCA Extended Process Object
+    ################################
+
+    oca-process sub process,
+        owns x-window-title,
+        owns x-thread-id,
+        owns x-exit-code,
+        owns x-uptime,
+        owns x-unique-id,
+        owns x-tags;
+
+
+    ##############################
+    # OCA Extension to Stix Process SCO
+    ################################
+    #  OCA Process Extension Relation
+	process-extension sub oca-extensions,
+	    relates process-base as oca,
+	    relates process-spec as extension;
+
+    # OCA Process Extension Object
+	process-ext sub oca-extension,
+	    owns operation-type,
+	    owns computer,
+	    owns name,
+	    owns win-event-code,
+	    owns creator-user,
+	    plays process-extension:process-spec;
+
+    # Connect to original Stix Process object
+    process
+        plays process-extension:process-base;
+
+    ##############################
+    # OCA Extended Software Object
+    ################################
+
+    oca-software sub software,
+        owns x-product,
+        owns x-description;
+
+    ##############################
+    # OCA Extended User Account Object
+    ################################
+    # OCA x_group relation
+    x-group sub embedded,
+        relates account as owner,
+        relates usr-group as pointed-to;
+    # OCA User group sub object
+    oca-user-group sub stix-sub-object,
+        owns domain,
+        owns gid,
+        owns name,
+        plays x-group:usr-group;
+    # Add this plus suome properties to the Stix object
+    oca-user-account sub user-account,
+        owns x-domain,
+        owns x-hash,
+        plays x-group:account;
+
+
+    ##############################
+    # Stix Windows Registry Key, OCA Extension
+    ################################
+    #  OCA Network Traffic RITA Extension Relation
+	regkey-extension sub oca-extensions,
+	    relates regkey-base as oca,
+	    relates regkey-spec as extension;
+
+    # OCA Network Traffic Extension Object
+	regkey-ext sub oca-extension,
+	    owns operation-type,
+	    owns computer,
+	    owns new-value,
+	    owns win-event-code,
+	    owns process-id,
+	    owns process-name,
+	    plays regkey-extension:regkey-spec;
+
+	# OCA Windows Registry Key
+	windows-registry-key
+	    plays regkey-extension:regkey-base;
 
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    # OCA Extensions SRO Models
+    # OCA New SCO Models
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+    ##############################
+    # OCA Finding SCO
+    ################################
+    # OCA Finding Object
+	finding sub stix-cyber-observable-object,
+	    owns finding-type,
+	    owns x-window-title,
+	    owns name,
+	    owns description,
+	    owns alert-id,
+	    owns source-device,
+	    owns dst-device,
+	    owns severity,
+	    owns confidence-string,
+	    owns magnitude,
+	    owns rule-trigger-count,
+	    owns rule-names,
+	    owns event-count,
+	    owns time-observed,
+	    owns start-integer,
+	    owns end-integer,
+	    plays src-ip-ref:ip-base,
+	    plays dst-ip-ref:ip-base,
+	    plays src-os-ref:os-base,
+	    plays dst-os-ref:os-base,
+	    plays src-app-ref:app-base,
+	    plays dst-app-ref:app-base,
+	    plays src-geo-ref:geo-base,
+        plays src-app-user-ref:app-user-base,
+        plays dst-app-user-ref:app-user-base,
+        plays src-db-user-ref:db-user-base,
+        plays dst-db-user-ref:db-user-base,
+        plays src-os-user-ref:os-user-base,
+        plays dst-os-user-ref:os-user-base,
+        plays ttp-tag-ref:ttp-tag-base,
+        plays ioc-ref:ioc-base,
+        plays src-geo-ref:geo-base;
+    #######################
+    #  OCA Source IP Relation
+	src-ip-ref sub embedded,
+	    relates ip-base as owner,
+	    relates ip-actual as pointed-to;
+    #  OCA Destination IP Relation
+	dst-ip-ref sub embedded,
+	    relates ip-base as owner,
+	    relates ip-actual as pointed-to;
+    ## connect relations to ip addresses
+    ipv4-addr
+        plays src-ip-ref:ip-actual,
+        plays dst-ip-ref:ip-actual,
+        plays ioc-ref:ioc-actual;
+    ipv6-addr
+        plays src-ip-ref:ip-actual,
+        plays dst-ip-ref:ip-actual,
+        plays ioc-ref:ioc-actual;
+    #############################
+    #  OCA Source OS Relation
+	src-os-ref sub embedded,
+	    relates os-base as owner,
+	    relates os-actual as pointed-to;
+    #  OCA Destination OS Relation
+	dst-os-ref sub embedded,
+	    relates os-base as owner,
+	    relates os-actual as pointed-to;
+    #  OCA Source Application Relation
+	src-app-ref sub embedded,
+	    relates app-base as owner,
+	    relates app-actual as pointed-to;
+    #  OCA Destination Application Relation
+	dst-app-ref sub embedded,
+	    relates app-base as owner,
+	    relates app-actual as pointed-to;
+    #connect to Software
+    software
+        plays src-or-ref:os-actual,
+        plays dst-od-ref:os-actual,
+        plays src-app-ref:app-actual,
+        plays dst-app-ref:app-actual;
+    ############################
+    #  OCA Source Geo Relation
+	src-geo-ref sub embedded,
+	    relates geo-base as owner,
+	    relates geo-actual as pointed-to;
+    x-oca-geo
+        plays src-geo-ref:geo-actual;
+    ##################################
+    #  OCA Source Application User Relation
+	src-app-user-ref sub embedded,
+	    relates app-user-base as owner,
+	    relates app-user-actual as pointed-to;
+    #  OCA Destination Application User Relation
+	dst-app-user-ref sub embedded,
+	    relates app-user-base as owner,
+	    relates app-user-actual as pointed-to;
+    #  OCA Source Database User Relation
+	src-db-user-ref sub embedded,
+	    relates db-user-base as owner,
+	    relates db-user-actual as pointed-to;
+    #  OCA Destination Database User Relation
+	dst-db-user-ref sub embedded,
+	    relates db-user-base as owner,
+	    relates db-user-actual as pointed-to;
+    #  OCA Source OS User Relation
+	src-os-user-ref sub embedded,
+	    relates os-user-base as owner,
+	    relates os-user-actual as pointed-to;
+    #  OCA Destination OS User Relation
+	dst-os-user-ref sub embedded,
+	    relates os-user-base as owner,
+	    relates os-user-actual as pointed-to;
+    # connect to user account
+    user-account
+        plays src-app-user-ref:app-user-actual,
+        plays dst-app-user-ref:app-user-actual,
+        plays src-db-user-ref:db-user-actual,
+        plays dst-db-user-ref:db-user-actual,
+        plays src-os-user-ref:os-user-actual,
+        plays dst-os-user-ref:os-user-actual;
+    #################################
+    #  OCA TTP Tagging Relation
+	ttp-tag-ref sub embedded,
+	    relates ttp-tag-base as owner,
+	    relates ttp-tag-actual as pointed-to;
+    attack-pattern
+        plays ttp-tag-ref:ttp-tag-actual;
+    x-mitre-tactic
+        plays ttp-tag-ref:ttp-tag-actual;
+    stix-core-relationship
+        plays ttp-tag-ref:ttp-tag-actual;
+    ###########################
+    #  OCA IoC Refs Relation
+	ioc-ref sub embedded,
+	    relates ioc-base as owner,
+	    relates ioc-actual as pointed-to;
+    file
+        plays ioc-ref:ioc-actual;
+    domain
+        plays ioc-ref:ioc-actual;
+    url
+        plays ioc-ref:ioc-actual;
+
+
+    ##############################
+    # OCA TTP Tagging SCO
+    ################################
+    # OCA TTP Tagging Object
+	tagging sub stix-cyber-observable-object,
+	    owns name,
+	    owns url-string,
+	    owns float-confidence,
+	    plays kill-chain-usage:kill-chain-used,
+	    plays tagging-extension:tagging-base;
+
+    #  OCA TTP Tagging Extension Relation
+	tagging-extension sub oca-extensions,
+	    relates tagging-base as oca,
+	    relates tagging-spec as extension;
+
+    # OCA TTP Tagging Extension Object
+	tagging-ext sub oca-extension,
+	    owns tactic-id,
+	    owns tactic-url,
+	    owns tactic-name,
+	    owns technique-id,
+	    owns technique-url,
+	    owns technique-name,
+	    plays tagging-extension:tagging-spec;
+
+    ##############################
+    # OCA Asset Object
+    ################################
+    # OCA Traffic Inteface relation
+    interfaces sub embedded,
+        relates traffic-type as owner,
+        relates its-interface as pointed-to;
+    # OCA Interface sub object
+    interface sub stix-sub-object,
+        owns alias,
+        owns interface-id,
+        owns name,
+        plays interfaces:its-interface;
+    # OCA Traffic sub object
+    traffic sub stix-sub-object,
+        owns zone,
+        plays interfaces:traffic-type,
+        plays ingress:its-ingress,
+        plays egress:its-egress;
+    # ingress,egress relations
+    ingress sub embedded,
+        relates the-asset as owner,
+        relates its-ingress as pointed-to;
+    egress sub embedded,
+        relates the-asset as owner,
+        relates its-egress as pointed-to;
+    #  OCA Pod Extension Relation
+	pod-extension sub oca-extensions,
+	    relates pod-base as oca,
+	    relates pod-spec as extension;
+
+    # OCA Pod Extension Object
+	pod-ext sub oca-extension,
+	    owns pod-type,
+	    owns name,
+	    plays pod-extension:pod-spec,
+	    plays ip-refs:the-owner;
+
+    #  OCA ContainerExtension Relation
+	container-extension sub oca-extensions,
+	    relates container-base as oca,
+	    relates container-spec as extension;
+
+    # OCA Container Extension Object
+	container-ext sub oca-extension,
+	    owns tactic-id,
+	    owns container-id,
+	    owns image-name,
+	    owns image-id,
+	    owns container-type,
+	    owns privileged,
+	    plays container-extension:container-spec;
+
+    # OCA Asset SCO
+    asset sub stix-cyber-observable-object,
+        owns device-id,
+        owns hostname,
+        owns architecture,
+        owns uptime,
+        owns host-type,
+	    plays container-extension:container-base,
+	    plays pod-extension:pod-spec,
+        plays ingress:the-asset,
+        plays egress:the-asset,
+	    plays ip-refs:the-owner,
+	    plays mac-refs:the-owner,
+	    plays os-ref:the-owner;
+
+	# OCA Asset ip_refs -> ipv4, ipv6
+	io-refs sub embedded,
+	    relates the-owner as owner,
+	    relates the-ip as pointed-to;
+	# OCA Asset mac_refs -> MAC
+	mac-refs sub embedded,
+	    relates the-owner as owner,
+	    relates the-mac as pointed-to;
+	# OCA Asset os_ref -> software
+	os-ref sub embedded,
+	    relates the-owner as owner,
+	    relates the-os as pointed-to;
+	# Connect them to the Stix objects
+	ipv4-addr
+	    plays ip-refs:the-ip;
+	ipv6-addr
+	    plays ip-refs:the-ip;
+	mac-addr
+	    plays mac-refs:the-mac;
+	software
+        plays os-ref:the-os;
+
+    ##############################
+    # OCA Event SCO
+    ################################
+    # Original ref
+    original-ref sub embedded,
+        relates the-event as owner,
+        relates the-artifact as pointed-to;
+    artifact
+        plays original-ref:the-artifact;
+    # host ref
+    host-ref sub embedded,
+        relates the-event as owner,
+        relates the-asset as pointed-to;
+    asset
+        plays host-ref:the-asset;
+    # OCA Event Object
+	event sub stix-cyber-observable-object,
+	    owns action,
+	    owns category,
+	    owns code,
+	    owns description,
+	    owns created,
+	    owns start-integer,
+	    owns end-integer,
+	    owns duration,
+	    owns module,
+	    owns provider,
+	    owns agent,
+	    owns severity,
+	    owns timezone,
+	    owns dataset,
+	    owns pipe_name,
+	    plays iam-extension:event-base;
+
+    #  OCA TTP Tagging Extension Relation
+	iam-extension sub oca-extensions,
+	    relates event-base as oca,
+	    relates iam-spec as extension;
+
+    # OCA Event IAM Extension Object
+	iam-ext sub oca-extension,
+	    owns result,
+	    owns name,
+	    owns sub-category,
+	    owns realm,
+	    owns application-id,
+	    owns user-id,
+	    owns application-type,
+	    owns browser-agent,
+	    owns application-name,
+	    owns cause,
+	    owns messageid,
+	    owns target,
+	    owns targetid,
+	    owns targetid-realm,
+	    owns targetid-username,
+	    owns performedby-clientname,
+	    owns performedby-realm,
+	    owns performedby-username,
+	    owns continent-name,
+	    owns country-iso-code,
+	    owns country-name,
+	    owns city-name,
+	    owns policy-action,
+	    owns policy-name,
+	    owns rule-name,
+	    owns decision-reason,
+	    owns location-lat,
+	    owns location-lon,
+	    owns rick-level,
+	    owns risk-score,
+	    owns deviceid,
+	    owns is-device-compliant,
+	    owns is-device-managed,
+	    plays iam-extension:iam-spec;
+
+    ##############################
+    # OCA Geo Object
+    ################################
+    # OCA Location relation
+    oca-location sub embedded,
+        relates the-location as owner,
+        relates its-coordinates as pointed-to;
+    # OCA Coordinates sub object
+    coordinates sub stix-sub-object,
+        owns lon,
+        owns lat,
+        plays oca-location:its-coordinates;
+    # OCA Geo Object
+	oca-geo sub stix-cyber-observable-object,
+	    owns city-name,
+	    owns continent-name,
+	    owns country-iso-code,
+	    owns description,
+	    owns created,
+	    owns start,
+	    plays oca-location:the-location;
 
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     # OCA Attributes
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    tactic-type sub stix-attribute-string;
-    technique-type sub stix-attribute-string;
+    # String
+	    result sub  stix-attribute-string;
+	    name sub  stix-attribute-string;
+	    sub-category sub  stix-attribute-string;
+	    realm sub  stix-attribute-string;
+	    application-id sub  stix-attribute-string;
+	    user-id sub  stix-attribute-string;
+	    application-type sub  stix-attribute-string;
+	    browser-agent sub  stix-attribute-string;
+	    application-name sub  stix-attribute-string;
+	    cause sub  stix-attribute-string;
+	    messageid sub  stix-attribute-string;
+	    target sub  stix-attribute-string;
+	    targetid sub  stix-attribute-string;
+	    targetid-realm sub  stix-attribute-string;
+	    targetid-username sub  stix-attribute-string;
+	    performedby-clientname sub  stix-attribute-string;
+	    performedby-realm sub  stix-attribute-string;
+	    performedby-username sub  stix-attribute-string;
+	    continent-name sub  stix-attribute-string;
+	    country-iso-code sub  stix-attribute-string;
+	    country-name sub  stix-attribute-string;
+	    city-name sub  stix-attribute-string;
+	    policy-action sub  stix-attribute-string;
+	    policy-name sub  stix-attribute-string;
+	    rule-name sub  stix-attribute-string;
+	    decision-reason sub  stix-attribute-string;
+	    location-lat sub  stix-attribute-string;
+	    location-lon sub  stix-attribute-string;
+	    rick-level sub  stix-attribute-string;
+	    risk-score sub  stix-attribute-string;
+	    deviceid sub  stix-attribute-string;
+	    is-device-compliant sub  stix-attribute-string;
+	    is-device-managed sub  stix-attribute-string;
+	    category sub  stix-attribute-string;
+	    code sub  stix-attribute-string;
+	    module sub  stix-attribute-string;
+	    provider sub  stix-attribute-string;
+	    agent sub  stix-attribute-string;
+	    timezone sub  stix-attribute-string;
+	    dataset sub  stix-attribute-string;
+	    pipe_name sub  stix-attribute-string;
+        device-id sub  stix-attribute-string;
+        hostname sub  stix-attribute-string;
+        architecture sub  stix-attribute-string;
+        uptime sub  stix-attribute-string;
+        host-type sub  stix-attribute-string;
+	    tactic-id sub  stix-attribute-string;
+	    container-id sub  stix-attribute-string;
+	    image-name sub  stix-attribute-string;
+	    image-id sub  stix-attribute-string;
+	    container-type sub  stix-attribute-string;
+	    pod-type sub  stix-attribute-string;
+        zone sub  stix-attribute-string;
+        alias sub  stix-attribute-string;
+        interface-id sub  stix-attribute-string;
+	    tactic-id sub  stix-attribute-string;
+	    tactic-url sub  stix-attribute-string;
+	    tactic-name sub  stix-attribute-string;
+	    technique-id sub  stix-attribute-string;
+	    technique-url sub  stix-attribute-string;
+	    technique-name sub  stix-attribute-string;
+	    url-string sub  stix-attribute-string;
+	    finding-type sub  stix-attribute-string;
+	    x-window-title sub  stix-attribute-string;
+	    alert-id sub  stix-attribute-string;
+	    source-device sub  stix-attribute-string;
+	    dst-device sub  stix-attribute-string;
+	    severity sub  stix-attribute-string;
+	    confidence-string sub  stix-attribute-string;
+	    rule-trigger-count sub  stix-attribute-string;
+	    rule-names sub  stix-attribute-string;
+	    event-count sub  stix-attribute-string;
+	    time-observed sub  stix-attribute-string;
+        x-domain sub  stix-attribute-string;
+        x-hash sub  stix-attribute-string;
+        x-product sub  stix-attribute-string;
+        x-descriptio sub  stix-attribute-string;
+        x-window-title sub  stix-attribute-string;
+        x-thread-id sub  stix-attribute-string;
+        x-exit-code sub  stix-attribute-string;
+        x-uptime sub  stix-attribute-string;
+        x-unique-id sub  stix-attribute-string;
+        x-tags sub  stix-attribute-string;
+        x-name sub  stix-attribute-string;
+        x-application sub  stix-attribute-string;
+        x-direction sub  stix-attribute-string;
+        x-community-id sub  stix-attribute-string;
+        x-atributes sub  stix-attribute-string;
+        x-extension sub  stix-attribute-string;
+        x-path sub  stix-attribute-string;
+        x-target-path sub  stix-attribute-string;
+        x-type sub  stix-attribute-string;
+        x-win-drive-letter sub  stix-attribute-string;
+        high-value-target-attributes sub  stix-attribute-string;
+        detection-types sub  stix-attribute-string;
+        detector-data-categories sub  stix-attribute-string;
+        detector-data-sources sub  stix-attribute-string;
+        analytic-type sub  stix-attribute-string;
+        analytic-rule sub  stix-attribute-string;
+        data-source-value sub  stix-attribute-string;
+        playbook_id sub  stix-attribute-string;
+        playbook_creation_time sub  stix-attribute-string;
+        playbook_modification_time sub  stix-attribute-string;
+        is-playbook-template sub  stix-attribute-string;
+        playbook-format sub  stix-attribute-string;
+        playbook-type sub  stix-attribute-string;
+        playbook-impact sub  stix-attribute-string;
+        playbook-severity sub  stix-attribute-string;
+        playbook-priority sub  stix-attribute-string;
+        playbook-bin sub  stix-attribute-string;
+        playbook-url sub  stix-attribute-string;
+        playbook-value sub  stix-attribute-string;
+        platform-value sub  stix-attribute-string;
+        file-group sub  stix-attribute-string;
+	    city-name sub  stix-attribute-string;
+	    continent-name sub  stix-attribute-string;
+	    country-iso-code sub  stix-attribute-string;
+	    operation-type sub stix-attribute-string;
+	    computer sub stix-attribute-string;
+	    new-value sub stix-attribute-string;
+	    win-event-code sub stix-attribute-string;
+	    process-id sub stix-attribute-string;
+	    process-name sub stix-attribute-string;
+        file-device sub stix-attribute-string;
+        inode sub stix-attribute-string;
+        mode sub stix-attribute-string;
+        domain sub stix-attribute-string;
+	    win-event-code sub stix-attribute-string;
+	    creator-user sub stix-attribute-string;
+	    connections sub stix-attribute-string;
+	    rita-score sub stix-attribute-string;
+	    computer sub stix-attribute-string;
+        status sub stix-attribute-string;
+        subject_name sub stix-attribute-string;
+        cpe sub stix-attribute-string;
+        valid-until sub stix-attribute-string;
+        vendor sub stix-attribute-string;
+        vendor-url sub stix-attribute-string;
+        product sub stix-attribute-string;
+        product-url sub stix-attribute-string;
+        behavior-class sub stix-attribute-string;
+        tactic-type sub stix-attribute-string;
+        technique-type sub stix-attribute-string;
+        first-seen sub stix-attribute-string;
+
+# Integer
+
+	    duration sub stix-attribute-integer;
+	    severity sub stix-attribute-integer;
+	    start-integer  sub stix-attribute-integer;
+	    end-integer sub  stix-attribute-integer;
+	    magnitude  sub stix-attribute-integer;
+
+# Double
+	    privileged sub stix-attribute-double;
+	    float-confidence sub stix-attribute-double;
+	    lon sub stix-attribute-double;
+	    lat sub stix-attribute-double;
+
+# Boolean
+        trusted sub stix-attribute-double;
+        valid sub stix-attribute-double;
+        exists sub stix-attribute-double;
