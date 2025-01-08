@@ -1,1 +1,34 @@
-{"external-reference": [], "email-mime-part": [], "archive-ext": ["contains_refs"], "ntfs-ext": ["alternate_data_streams"], "alternate-data-stream": [], "pdf-ext": [], "raster-image-ext": [], "windows-pebinary-ext": ["sections"], "windows-pe-optional-header-type": [], "windows-pe-section": [], "http-request-ext": [], "icmp-ext": [], "socket-ext": [], "tcp-ext": [], "unix-account-ext": ["groups"], "windows-process-ext": [], "windows-service-ext": ["descriptions", "service_dll_refs"], "kill-chain-phase": [], "windows-registry-value-type": [], "x509-v3-extension": []}
+{
+  "behavior-extension": [],
+  "platform-key": [],
+  "course-of-action-ext": [],
+  "playbook-key": [],
+  "playbook-extension": [],
+  "data-source-key": [],
+  "analytic": [],
+  "detection-extension": [],
+  "detector-extension": [],
+  "hvt-tool-ext": [],
+  "unix-file": [],
+  "code-signature": [],
+  "rita-ext": [],
+  "dns-ext": [
+    "resolved_ip_refs"
+  ],
+  "name_ref": [],
+  "vlan": [],
+  "process-ext": [],
+  "oca-user-group": [],
+  "regkey-ext": [],
+  "tagging-ext": [],
+  "interface": [],
+  "traffic": [
+    "interfaces"
+  ],
+  "pod-ext": [
+    "ip_refs"
+  ],
+  "container-ext" : [],
+  "iam-ext": [],
+  "coordinates": []
+}

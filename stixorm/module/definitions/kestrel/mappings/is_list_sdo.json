@@ -1,0 +1,11 @@
+{
+  "behavior": [],
+  "detection": [
+    "data_sources"
+  ],
+  "detector" : [
+    "detection_types",
+    "detector_data_categories",
+    "detector_data_sources"
+  ]
+}

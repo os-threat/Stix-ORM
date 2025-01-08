@@ -466,7 +466,7 @@ define
     # OCA Finding SCO
     ################################
     # OCA Finding Object
-	finding sub stix-cyber-observable-object,
+	oca-finding sub stix-cyber-observable-object,
 	    owns finding-type,
 	    owns x-window-title,
 	    owns name,
@@ -608,7 +608,7 @@ define
     # OCA TTP Tagging SCO
     ################################
     # OCA TTP Tagging Object
-	tagging sub stix-cyber-observable-object,
+	oca-tagging sub stix-cyber-observable-object,
 	    owns name,
 	    owns url-string,
 	    owns float-confidence,
@@ -684,7 +684,7 @@ define
 	    plays container-extension:container-spec;
 
     # OCA Asset SCO
-    asset sub stix-cyber-observable-object,
+    oca-asset sub stix-cyber-observable-object,
         owns device-id,
         owns hostname,
         owns architecture,
@@ -736,7 +736,7 @@ define
     asset
         plays host-ref:the-asset;
     # OCA Event Object
-	event sub stix-cyber-observable-object,
+	oca-event sub stix-cyber-observable-object,
 	    owns action,
 	    owns category,
 	    owns code,
@@ -968,7 +968,6 @@ define
         first-seen sub stix-attribute-string;
 
 # Integer
-
 	    duration sub stix-attribute-integer;
 	    severity sub stix-attribute-integer;
 	    start-integer  sub stix-attribute-integer;

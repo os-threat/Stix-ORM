@@ -1,0 +1,29 @@
+{
+  "oca-file": [
+    "x_attributes"
+  ],
+  "oca-network-traffic": [],
+  "oca-process": [
+    "x_tags"
+  ],
+  "oca-software": [],
+  "oca-user-account": [],
+  "oca-finding": [
+    "rule_names",
+    "ttp_tagging_refs",
+    "ioc_refs"
+  ],
+  "oca-tagging": [
+    "kill-chain-phases"
+  ],
+  "oca-asset": [
+    "ip_refs",
+    "mac_refs"
+  ],
+  "oca-event": [
+    "category",
+    "ip_refs",
+    "x_ttp_tagging_refs"
+  ],
+  "oca-geo": []
+}
