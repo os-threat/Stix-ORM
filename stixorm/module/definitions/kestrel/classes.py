@@ -97,7 +97,7 @@ class CoAPlaybookExt(_Extension):
     _type = 'extension-definition--bbc1d5c8-7ddc-4e89-be9c-f33ad02d71dd'
     _properties = OrderedDict([
         ('extension_type', StringProperty(fixed='property-extension')),
-        ('playbooks ', DictionaryProperty(spec_version='2.1')),
+        ('playbooks', DictionaryProperty(spec_version='2.1')),
     ])
 
 
@@ -201,7 +201,7 @@ class Detection(_DomainObject):
         ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('name', StringProperty(required=True)),
-        ('data_sources', ListProperty(DictionaryProperty(spec_version='2.1'))),
+        ('data_sources', ListProperty(EmbeddedObjectProperty(type=OCAAnalyticSubObject))),
         ('analytic', EmbeddedObjectProperty(type=OCAAnalyticSubObject)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),

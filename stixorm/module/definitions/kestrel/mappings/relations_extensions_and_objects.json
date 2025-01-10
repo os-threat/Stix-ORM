@@ -1,0 +1,9 @@
+[
+  {
+    "stix": "test",
+    "object": "test",
+    "relation": "test",
+    "owner": "test",
+    "pointed-to": "test"
+  }
+]

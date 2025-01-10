@@ -140,11 +140,18 @@ define
         plays analytics:analytic-owner,
 	    plays detection-ext:detection-base;
 
-    # Data Source Dictionary Property
-    data-source-value sub stix-attribute-string;
-    data-source-key sub stix-sub-object,
-        owns dict-key,
-        owns data-source-value,
+    # Data Source Sub Object
+    data-source sub stix-sub-object,
+        owns logname,
+        owns data-type,
+        owns event-code,
+        owns task-category,
+        owns message,
+        owns category,
+        owns score-num,
+        owns creator-process-name,
+        owns creator-command-line,
+        owns new-process-name,
         plays data-sources:data-source;
 
     # Data Sources Relation

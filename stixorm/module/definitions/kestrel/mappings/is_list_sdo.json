@@ -7,5 +7,9 @@
     "detection_types",
     "detector_data_categories",
     "detector_data_sources"
+  ],
+  "playbook": [
+    "playbook_format",
+    "playbook_type"
   ]
 }

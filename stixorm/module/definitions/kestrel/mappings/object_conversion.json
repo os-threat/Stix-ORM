@@ -201,9 +201,9 @@
     "icon":""
   },
   {
-    "type":  "extension",
+    "type":  "extension-definition--3b7505ce-2a18-496e-aa58-311dac6c1473",
     "typeql": "rita-ext",
-    "class": "ext",
+    "class": "OCANetworkTrafficRITAExt",
     "object": "sub",
     "url": "",
     "doc_url": "",
@@ -212,9 +212,9 @@
     "icon":""
   },
   {
-    "type":  "extension",
+    "type":  "dns-ext",
     "typeql": "dns-ext",
-    "class": "ext",
+    "class": "DNSExt",
     "object": "sub",
     "url": "",
     "doc_url": "",
@@ -223,9 +223,9 @@
     "icon":""
   },
   {
-    "type":  "extension",
+    "type":  "name_ref",
     "typeql": "name_ref",
-    "class": "ext",
+    "class": "NameRefSubObject",
     "object": "sub",
     "url": "",
     "doc_url": "",
@@ -234,9 +234,9 @@
     "icon":""
   },
   {
-    "type":  "extension",
+    "type":  "x_vlan",
     "typeql": "vlan",
-    "class": "ext",
+    "class": "NetworkTrafficVLanSubObject",
     "object": "sub",
     "url": "",
     "doc_url": "",
@@ -245,64 +245,9 @@
     "icon":""
   },
   {
-    "type":  "extension",
+    "type":  "network-traffic",
     "typeql": "oca-network-traffic",
-    "class": "ext",
-    "object": "sub",
-    "url": "",
-    "doc_url": "",
-    "summary": "",
-    "protocol": "oca-kestrel",
-    "icon":""
-  },
-  {
-    "type":  "extension",
-    "typeql": "oca-process",
-    "class": "ext",
-    "object": "sub",
-    "url": "",
-    "doc_url": "",
-    "summary": "",
-    "protocol": "oca-kestrel",
-    "icon":""
-  },
-  {
-    "type":  "extension",
-    "typeql": "process-ext",
-    "class": "ext",
-    "object": "sub",
-    "url": "",
-    "doc_url": "",
-    "summary": "",
-    "protocol": "oca-kestrel",
-    "icon":""
-  },
-  {
-    "type":  "extension",
-    "typeql": "oca-software",
-    "class": "ext",
-    "object": "sub",
-    "url": "",
-    "doc_url": "",
-    "summary": "",
-    "protocol": "oca-kestrel",
-    "icon":""
-  },
-  {
-    "type":  "extension",
-    "typeql": "oca-user-group",
-    "class": "ext",
-    "object": "sub",
-    "url": "",
-    "doc_url": "",
-    "summary": "",
-    "protocol": "oca-kestrel",
-    "icon":""
-  },
-  {
-    "type":  "extension",
-    "typeql": "oca-user-account",
-    "class": "ext",
+    "class": "OCANetworkTraffic",
     "object": "sco",
     "url": "",
     "doc_url": "",
@@ -311,9 +256,9 @@
     "icon":""
   },
   {
-    "type":  "extension",
-    "typeql": "regkey-extension",
-    "class": "ext",
+    "type":  "process",
+    "typeql": "oca-process",
+    "class": "OCAProcess",
     "object": "sub",
     "url": "",
     "doc_url": "",
@@ -322,9 +267,53 @@
     "icon":""
   },
   {
-    "type":  "extension",
+    "type":  "extension-definition--f9dbe89c-0030-4a9d-8b78-0dcd0a0de874",
+    "typeql": "process-ext",
+    "class": "OCAProcessExt",
+    "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "oca-kestrel",
+    "icon":""
+  },
+  {
+    "type":  "software",
+    "typeql": "oca-software",
+    "class": "OCASoftware",
+    "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "oca-kestrel",
+    "icon":""
+  },
+  {
+    "type":  "x_group",
+    "typeql": "oca-user-group",
+    "class": "UserGroupSubObject",
+    "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "oca-kestrel",
+    "icon":""
+  },
+  {
+    "type":  "user-account",
+    "typeql": "oca-user-account",
+    "class": "OCAUserAccount",
+    "object": "sco",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "oca-kestrel",
+    "icon":""
+  },
+  {
+    "type":  "extension-definition--2cf8c8c2-69f5-40f7-aa34-efcef2b912b1",
     "typeql": "regkey-ext",
-    "class": "ext",
+    "class": "OCAWindowsRegistryKeyExt",
     "object": "sub",
     "url": "",
     "doc_url": "",
@@ -333,9 +322,31 @@
     "icon":""
   },
   {
-    "type":  "extension",
-    "typeql": "extension",
-    "class": "ext",
+    "type":  "x-ibm-finding",
+    "typeql": "oca-finding",
+    "class": "OCAFinding",
+    "object": "sco",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "oca-kestrel",
+    "icon":""
+  },
+  {
+    "type":  "x-ibm-ttp-tagging",
+    "typeql": "oca-tagging",
+    "class": "IBMTagging",
+    "object": "sco",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "oca-kestrel",
+    "icon":""
+  },
+  {
+    "type":  "mitre-attack-ext",
+    "typeql": "tagging-ext",
+    "class": "IBMTaggingExt",
     "object": "sub",
     "url": "",
     "doc_url": "",
@@ -344,9 +355,9 @@
     "icon":""
   },
   {
-    "type":  "extension",
-    "typeql": "extension",
-    "class": "ext",
+    "type":  "interfaces",
+    "typeql": "interface",
+    "class": " OCAIntefaceSubObject",
     "object": "sub",
     "url": "",
     "doc_url": "",
@@ -355,9 +366,9 @@
     "icon":""
   },
   {
-    "type":  "extension",
-    "typeql": "extension",
-    "class": "ext",
+    "type":  "ingress",
+    "typeql": "traffic",
+    "class": "OCATrafficSubObject",
     "object": "sub",
     "url": "",
     "doc_url": "",
@@ -366,9 +377,9 @@
     "icon":""
   },
   {
-    "type":  "extension",
-    "typeql": "extension",
-    "class": "ext",
+    "type":  "egress",
+    "typeql": "traffic",
+    "class": "OCATrafficSubObject",
     "object": "sub",
     "url": "",
     "doc_url": "",
@@ -377,9 +388,9 @@
     "icon":""
   },
   {
-    "type":  "extension",
-    "typeql": "extension",
-    "class": "ext",
+    "type":  "x-oca-pod-ext",
+    "typeql": "pod-ext",
+    "class": "OCAPodExt",
     "object": "sub",
     "url": "",
     "doc_url": "",
@@ -388,10 +399,65 @@
     "icon":""
   },
   {
-    "type":  "extension",
-    "typeql": "extension",
-    "class": "ext",
+    "type":  "x-oca-container-ext",
+    "typeql": "container-ext",
+    "class": "OCAContainerExt",
     "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "oca-kestrel",
+    "icon":""
+  },
+  {
+    "type":  "x-oca-asset",
+    "typeql": "oca-asset",
+    "class": "OCAAsset",
+    "object": "sco",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "oca-kestrel",
+    "icon":""
+  },
+  {
+    "type":  "x-oca-event",
+    "typeql": "oca-event",
+    "class": "OCAEvent",
+    "object": "sco",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "oca-kestrel",
+    "icon":""
+  },
+  {
+    "type":  "x-iam-ext",
+    "typeql": "iam-ext",
+    "class": "OCAIAMExt",
+    "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "oca-kestrel",
+    "icon":""
+  },
+  {
+    "type":  "location",
+    "typeql": "coordinates",
+    "class": "OCACoordinatesSubObject",
+    "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "oca-kestrel",
+    "icon":""
+  },
+  {
+    "type":  "x-oca-geo",
+    "typeql": "oca-geo",
+    "class": "OCAGeo",
+    "object": "sco",
     "url": "",
     "doc_url": "",
     "summary": "",

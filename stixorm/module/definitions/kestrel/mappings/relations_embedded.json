@@ -1,0 +1,10 @@
+[
+  {
+    "rel": "test",
+    "owner": "test",
+    "pointed-to": "test",
+    "typeql": "test",
+    "label": "test",
+    "owner-is-source": true
+  }
+]

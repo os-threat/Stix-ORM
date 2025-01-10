@@ -4,7 +4,11 @@
   "course-of-action-ext": [],
   "playbook-key": [],
   "playbook-extension": [],
-  "data-source-key": [],
+  "data-source": [
+    "Creator_Process_Name",
+    "Creator_Command_Line",
+    "New_Process_Name"
+  ],
   "analytic": [],
   "detection-extension": [],
   "detector-extension": [],
