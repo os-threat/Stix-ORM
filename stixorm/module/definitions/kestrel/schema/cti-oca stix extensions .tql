@@ -136,7 +136,7 @@ define
     ################################
     detection sub stix-domain-object,
         owns name,
-        plays data-sources:data-detection,
+        plays data-sources:the-detection,
         plays analytics:analytic-owner,
 	    plays detection-ext:detection-base;
 
@@ -152,12 +152,12 @@ define
         owns creator-process-name,
         owns creator-command-line,
         owns new-process-name,
-        plays data-sources:data-source;
+        plays data-sources:a-source;
 
     # Data Sources Relation
 	data-sources sub embedded,
-		relates data-detection as owner,
-		relates data-source as pointed-to;
+		relates the-detection as owner,
+		relates a-source as pointed-to;
 
     # Analytic Sub-Object Property
     analytic sub stix-sub-object,
