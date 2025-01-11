@@ -23,6 +23,7 @@
   "oca-event": [
     "category",
     "ip_refs",
+    "mac_refs",
     "x_ttp_tagging_refs"
   ],
   "oca-geo": []

@@ -703,7 +703,8 @@ define
         plays egress:the-asset,
 	    plays ip-refs:the-owner,
 	    plays mac-refs:the-owner,
-	    plays os-ref:the-owner;
+	    plays os-ref:the-owner,
+	    plays geo-ref:the-owner;
 
 	# OCA Asset ip_refs -> ipv4, ipv6
 	ip-refs sub embedded,
@@ -717,6 +718,10 @@ define
 	os-ref sub embedded,
 	    relates the-owner as owner,
 	    relates the-os as pointed-to;
+    # OCA Geo Ref
+    geo-ref sub embedded,
+        relates the-owner as owner,
+        relates the-geo as pointed-to;
 	# Connect them to the Stix objects
 	ipv4-addr
 	    plays ip-refs:the-ip;
@@ -726,7 +731,8 @@ define
 	    plays mac-refs:the-mac;
 	software
         plays os-ref:the-os;
-
+    oca-geo
+        plays geo-ref:the-geo;
     ##############################
     # OCA Event SCO
     ################################
