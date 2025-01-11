@@ -706,7 +706,7 @@ define
 	    plays os-ref:the-owner;
 
 	# OCA Asset ip_refs -> ipv4, ipv6
-	io-refs sub embedded,
+	ip-refs sub embedded,
 	    relates the-owner as owner,
 	    relates the-ip as pointed-to;
 	# OCA Asset mac_refs -> MAC
