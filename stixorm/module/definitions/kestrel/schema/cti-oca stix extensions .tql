@@ -136,28 +136,9 @@ define
     ################################
     detection sub stix-domain-object,
         owns name,
-        plays data-sources:the-detection,
+        owns description,
         plays analytics:analytic-owner,
 	    plays detection-ext:detection-base;
-
-    # Data Source Sub Object
-    data-source sub stix-sub-object,
-        owns logname,
-        owns data-type,
-        owns event-code,
-        owns task-category,
-        owns message,
-        owns category,
-        owns score-num,
-        owns creator-process-name,
-        owns creator-command-line,
-        owns new-process-name,
-        plays data-sources:a-source;
-
-    # Data Sources Relation
-	data-sources sub embedded,
-		relates the-detection as owner,
-		relates a-source as pointed-to;
 
     # Analytic Sub-Object Property
     analytic sub stix-sub-object,
@@ -736,6 +717,66 @@ define
     ##############################
     # OCA Event SCO
     ################################
+
+    # x ttp tagging
+    x-ttp-tagging sub embedded,
+        relates the-owner as owner,
+        relates the-ttp-tag as pointed-to;
+    oca-tagging
+        plays x-ttp-tagging:the-ttp-tag;
+    # user ref
+    user-ref sub embedded,
+        relates the-owner as owner,
+        relates the-user as pointed-to;
+    user-account
+        plays user-ref:the-user;
+    # network ref
+    network-ref sub embedded,
+        relates the-owner as owner,
+        relates the-traffic as pointed-to;
+    network-traffic
+        plays network-ref:the-traffic;
+    # registry ref
+    registry-ref sub embedded,
+        relates the-owner as owner,
+        relates the-key as pointed-to;
+    windows-registry-key
+        plays registry-ref:the-key;
+    # domain ref
+    domain-ref sub embedded,
+        relates the-owner as owner,
+        relates the-domain as pointed-to;
+    domain-name
+        plays domain-ref:the-domain;
+    # cross process ref
+    cross-process-ref sub embedded,
+        relates the-owner as owner,
+        relates cross-process as pointed-to;
+    # parent process ref
+    parent-process-ref sub embedded,
+        relates the-owner as owner,
+        relates parent-process as pointed-to;
+    # process ref
+    process-ref sub embedded,
+        relates the-owner as owner,
+        relates the-process as pointed-to;
+    # connect to process
+    process
+        plays cross-process-ref:cross-process,
+        plays parent-process-ref:parent-process,
+        plays process-ref:the-process;
+    # file ref
+    file-ref sub embedded,
+        relates the-owner as owner,
+        relates the-file as pointed-to;
+    file
+        plays file-ref:the-file;
+    # url ref
+    url-ref sub embedded,
+        relates the-owner as owner,
+        relates the-url as pointed-to;
+    url
+        plays url-ref:the-url;
     # Original ref
     original-ref sub embedded,
         relates the-event as owner,
@@ -765,6 +806,19 @@ define
 	    owns timezone,
 	    owns dataset,
 	    owns pipe_name,
+	    plays original-ref:the-event,
+	    plays host-ref:the-event,
+        plays file-ref:the-owner,
+        plays url-ref:the-owner,
+        plays cross-process-ref:the-owner,
+        plays parent-process-ref:the-owner,
+        plays process-ref:the-owner,
+        plays domain-ref:the-owner,
+        plays registry-ref:the-owner,
+        plays network-ref:the-owner,
+	    plays ip-refs:the-owner,
+        plays user-ref:the-owner,
+        plays x-ttp-tagging:the-owner,
 	    plays iam-extension:event-base;
 
     #  OCA TTP Tagging Extension Relation

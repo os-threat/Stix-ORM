@@ -148,23 +148,7 @@ class Playbook(_DomainObject):
         ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
 
-# the below class is not yet validated, hence a dictionary Property is used
-class OCADataSourceSubObject(_STIXBase21):
-    """For more detailed information on this object's properties, see
-    `https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SDO/x-oca-detection.md
-    """
-    _properties = OrderedDict([
-        ('LogName', StringProperty()),
-        ('data_type', StringProperty()),
-        ('EventCode', StringProperty()),
-        ('TaskCategory', StringProperty()),
-        ('message', StringProperty()),
-        ('Category', StringProperty()),
-        ('score_num', StringProperty()),
-        ('Creator_Process_Name', ListProperty(StringProperty())),
-        ('Creator_Command_Line', ListProperty(StringProperty())),
-        ('New_Process_Name', ListProperty(StringProperty())),
-    ])
+
 
 
 class OCAAnalyticSubObject(_STIXBase21):
@@ -201,7 +185,7 @@ class Detection(_DomainObject):
         ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('name', StringProperty(required=True)),
-        ('data_sources', ListProperty(EmbeddedObjectProperty(type=OCAAnalyticSubObject))),
+        ('description', StringProperty()),
         ('analytic', EmbeddedObjectProperty(type=OCAAnalyticSubObject)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
