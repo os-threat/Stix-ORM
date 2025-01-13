@@ -1,9 +1,184 @@
 [
-  {
-    "stix": "test",
-    "object": "test",
-    "relation": "test",
-    "owner": "test",
-    "pointed-to": "test"
-  }
+    {
+        "stix": "extension-definition--9c59fd79-4215-4ba2-920d-3e4f320e1e62",
+        "object": "behavior-extension",
+        "relation": "behavior-ext",
+        "owner": "behavior-base",
+        "pointed-to": "behavior-spec"
+    },
+    {
+        "stix": "extension-definition--bbc1d5c8-7ddc-4e89-be9c-f33ad02d71dd",
+        "object": "course-of-action-ext",
+        "relation": "coa-extension",
+        "owner": "course-of-action",
+        "pointed-to": "course-of-action-ext"
+    },
+    {
+        "stix": "extension-definition--809c4d84-7a6e-4039-97b4-da9fea03fcf9",
+        "object": "playbook-extension",
+        "relation": "playbook-ext",
+        "owner": "playbook-base",
+        "pointed-to": "playbook-spec"
+    },
+    {
+        "stix": "analytic",
+        "object": "analytic",
+        "relation": "analytics",
+        "owner": "analytic-owner",
+        "pointed-to": "analytic-obj"
+    },
+    {
+        "stix": "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89",
+        "object": "detection-extension",
+        "relation": "detection-ext",
+        "owner": "detection-base",
+        "pointed-to": "detection-spec"
+    },
+    {
+        "stix": "extension-definition--5cccba5c-0be4-450c-8672-b66e98515754",
+        "object": "detector-extension",
+        "relation": "detector-ext",
+        "owner": "detector-base",
+        "pointed-to": "detector-spec"
+    },
+    {
+        "stix": "extension-definition--fb58a27d-32d2-4b8d-9705-e3cfd2d3dcdf",
+        "object": "hvt-tool-ext",
+        "relation": "hvt-tool-extensions",
+        "owner": "hvt-tool-base",
+        "pointed-to": "hvt-tool-spec"
+    },
+    {
+        "stix": "x_unix",
+        "object": "unix-file",
+        "relation": "x-unix",
+        "owner": "file-owner",
+        "pointed-to": "unix-file-obj"
+    },
+    {
+        "stix": "x_code_signature",
+        "object": "code-signature",
+        "relation": "x-code-signature",
+        "owner": "file-owner",
+        "pointed-to": "x-code-sig"
+    },
+    {
+        "stix": "extension-definition--23676abf-481e-4fee-ac8c-e3d0947287a4",
+        "object": "file-ext",
+        "relation": "file-extension",
+        "owner": "file-base",
+        "pointed-to": "file-spec"
+    },
+    {
+        "stix": "extension-definition--3b7505ce-2a18-496e-aa58-311dac6c1473",
+        "object": "rita-ext",
+        "relation": "rita-extension",
+        "owner": "rita-base",
+        "pointed-to": "rita-spec"
+    },
+    {
+        "stix": "dns-ext",
+        "object": "dns-ext",
+        "relation": "dns-extension",
+        "owner": "dns-base",
+        "pointed-to": "dns-spec"
+    },
+    {
+        "stix": "question",
+        "object": "name_ref",
+        "relation": "question",
+        "owner": "network-traffic-dns-ext",
+        "pointed-to": "a-name"
+    },
+    {
+        "stix": "x_vlan",
+        "object": "vlan",
+        "relation": "x-vlan",
+        "owner": "vlan-owner",
+        "pointed-to": "vlan-obj"
+    },
+    {
+        "stix": "inner",
+        "object": "vlan",
+        "relation": "inner",
+        "owner": "head",
+        "pointed-to": "tail"
+    },
+    {
+        "stix": "extension-definition--f9dbe89c-0030-4a9d-8b78-0dcd0a0de874",
+        "object": "process-ext",
+        "relation": "process-extension",
+        "owner": "process-base",
+        "pointed-to": "process-spec"
+    },
+    {
+        "stix": "x_group",
+        "object": "oca-user-group",
+        "relation": "x-group",
+        "owner": "account",
+        "pointed-to": "usr-group"
+    },
+    {
+        "stix": "extension-definition--2cf8c8c2-69f5-40f7-aa34-efcef2b912b1",
+        "object": "regkey-ext",
+        "relation": "regkey-extension",
+        "owner": "regkey-base",
+        "pointed-to": "regkey-spec"
+    },
+    {
+        "stix": "mitre-attack-ext",
+        "object": "tagging-ext",
+        "relation": "tagging-extension",
+        "owner": "tagging-base",
+        "pointed-to": "tagging-spec"
+    },
+    {
+        "stix": "interfaces",
+        "object": "interface",
+        "relation": "interfaces",
+        "owner": "traffic-type",
+        "pointed-to": "its-interface"
+    },
+    {
+        "stix": "ingress",
+        "object": "traffic",
+        "relation": "ingress",
+        "owner": "the-asset",
+        "pointed-to": "its-ingress"
+    },
+    {
+        "stix": "egress",
+        "object": "traffic",
+        "relation": "egress",
+        "owner": "the-asset",
+        "pointed-to": "its-egress"
+    },
+    {
+        "stix": "x-oca-pod-ext",
+        "object": "pod-ext",
+        "relation": "pod-extension",
+        "owner": "pod-base",
+        "pointed-to": "pod-spec"
+    },
+    {
+        "stix": "x-oca-container-ext",
+        "object": "container-ext",
+        "relation": "container-extension",
+        "owner": "container-base",
+        "pointed-to": "container-spec"
+    },
+    {
+        "stix": "x-iam-ext",
+        "object": "iam-ext",
+        "relation": "iam-extension",
+        "owner": "event-base",
+        "pointed-to": " iam-spec"
+    },
+    {
+        "stix": "location",
+        "object": "coordinates",
+        "relation": "oca-location",
+        "owner": "the-location",
+        "pointed-to": "its-coordinates"
+    }
 ]

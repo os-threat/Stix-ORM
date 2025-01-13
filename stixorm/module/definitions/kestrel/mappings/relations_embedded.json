@@ -1,10 +1,290 @@
 [
-  {
-    "rel": "test",
-    "owner": "test",
-    "pointed-to": "test",
-    "typeql": "test",
-    "label": "test",
-    "owner-is-source": true
-  }
+    {
+        "rel": "playbook_creator",
+        "owner": "creator",
+        "pointed-to": "created",
+        "typeql": "playbook-creator",
+        "label": "playbook creator",
+        "owner-is-source": true
+    },
+    {
+        "rel": "x_software_ref",
+        "owner": "file-base",
+        "pointed-to": "software-ref",
+        "typeql": "x-software-ref",
+        "label": "software reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "x_owner_ref",
+        "owner": "file-base",
+        "pointed-to": "usr-account",
+        "typeql": "x-owner-ref",
+        "label": "user owner",
+        "owner-is-source": true
+    },
+    {
+        "rel": "name_ref",
+        "owner": "nameref",
+        "pointed-to": "referred",
+        "typeql": "name-ref",
+        "label": "name reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "x_forwarded_ip",
+        "owner": "network-traffic-owner",
+        "pointed-to": "forwarded-ip",
+        "typeql": "x-forwarded-ip",
+        "label": "forwarded ip",
+        "owner-is-source": true
+    },
+    {
+        "rel": "src_ip_ref",
+        "owner": "ip-base",
+        "pointed-to": "ip-actual",
+        "typeql": "src-ip-ref",
+        "label": "source-ip",
+        "owner-is-source": true
+    },
+    {
+        "rel": "dst_ip_ref",
+        "owner": "ip-base",
+        "pointed-to": "ip-actual",
+        "typeql": "dst-ip-ref",
+        "label": "destination ip",
+        "owner-is-source": true
+    },
+    {
+        "rel": "src_os_ref",
+        "owner": "os-base",
+        "pointed-to": "os-actual",
+        "typeql": "src-os-ref",
+        "label": "source-os",
+        "owner-is-source": true
+    },
+    {
+        "rel": "dst_os_ref",
+        "owner": "os-base",
+        "pointed-to": "os-actual",
+        "typeql": "dst-os-ref",
+        "label": "destination os",
+        "owner-is-source": true
+    },
+    {
+        "rel": "src_application_ref",
+        "owner": " app-base",
+        "pointed-to": "app-actual",
+        "typeql": "src-app-ref",
+        "label": "source app",
+        "owner-is-source": true
+    },
+    {
+        "rel": "dst_application_ref",
+        "owner": " app-base",
+        "pointed-to": "app-actual",
+        "typeql": "dst-app-ref",
+        "label": "destination app",
+        "owner-is-source": true
+    },
+    {
+        "rel": "src_geo_ref",
+        "owner": "geo-base",
+        "pointed-to": "geo-actual",
+        "typeql": "src-geo-ref",
+        "label": "source-geo",
+        "owner-is-source": true
+    },
+    {
+        "rel": "src_application_user_ref",
+        "owner": "app-user-base",
+        "pointed-to": "app-user-actual",
+        "typeql": "src-app-user-ref",
+        "label": "source-app-user",
+        "owner-is-source": true
+    },
+    {
+        "rel": "dst_application_user_ref",
+        "owner": "app-user-base",
+        "pointed-to": "app-user-actual",
+        "typeql": "dst-app-user-ref",
+        "label": "destination-app-user",
+        "owner-is-source": true
+    },
+    {
+        "rel": "src_database_user_ref",
+        "owner": "db-user-base",
+        "pointed-to": "db-user-actual",
+        "typeql": "src-db-user-ref",
+        "label": "source-db-user",
+        "owner-is-source": true
+    },
+    {
+        "rel": "dst_database_user_ref",
+        "owner": "db-user-base",
+        "pointed-to": "db-user-actual",
+        "typeql": "dst-db-user-ref",
+        "label": "desitnation-db-user",
+        "owner-is-source": true
+    },
+    {
+        "rel": "src_os_user_ref",
+        "owner": "os-user-base",
+        "pointed-to": "os-user-actual",
+        "typeql": "src-os-user-ref",
+        "label": "source-os-user",
+        "owner-is-source": true
+    },
+    {
+        "rel": "dst_os_user_ref",
+        "owner": "os-user-base",
+        "pointed-to": "os-user-actual",
+        "typeql": "dst-os-user-ref",
+        "label": "destination-os-user",
+        "owner-is-source": true
+    },
+    {
+        "rel": "ttp_tagging_refs",
+        "owner": "ttp-tag-base",
+        "pointed-to": "ttp-tag-actual",
+        "typeql": "ttp-tag-ref",
+        "label": "ttp-tagging",
+        "owner-is-source": true
+    },
+    {
+        "rel": "ioc_refs",
+        "owner": "ioc-base",
+        "pointed-to": "ioc-actual",
+        "typeql": "ioc-ref",
+        "label": "ioc reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "ip_refs",
+        "owner": "the-owner",
+        "pointed-to": "the-ip",
+        "typeql": "ip-refs",
+        "label": "ip reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "mac_refs",
+        "owner": "the-owner",
+        "pointed-to": "the-max",
+        "typeql": "mac-refs",
+        "label": "max reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "os_refs",
+        "owner": "the-owner",
+        "pointed-to": "the-os",
+        "typeql": "os-ref",
+        "label": "os reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "geo_ref",
+        "owner": "the-owner",
+        "pointed-to": "the-geo",
+        "typeql": "geo-ref",
+        "label": "geo reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "original_ref",
+        "owner": "the-event",
+        "pointed-to": "the-artifact",
+        "typeql": "original-ref",
+        "label": "original reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "host_ref",
+        "owner": "the-event",
+        "pointed-to": "the-asset",
+        "typeql": "host-ref",
+        "label": "host reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "url_ref",
+        "owner": "the-owner",
+        "pointed-to": "the-url",
+        "typeql": "url-ref",
+        "label": "url reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "file_ref",
+        "owner": "the-owner",
+        "pointed-to": "the-file",
+        "typeql": "file-ref",
+        "label": "file reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "process_ref",
+        "owner": "the-owner",
+        "pointed-to": "the-process",
+        "typeql": "process-ref",
+        "label": "process reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "parent_process_ref",
+        "owner": "the-owner",
+        "pointed-to": "parent-process",
+        "typeql": "parent-process-ref",
+        "label": "parent reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "cross_process_target_ref",
+        "owner": "the-owner",
+        "pointed-to": "cross-process",
+        "typeql": "cross-process-ref",
+        "label": "cross reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "domain_ref",
+        "owner": "the-owner",
+        "pointed-to": "the-domain",
+        "typeql": "domain-ref",
+        "label": "domain reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "registry_ref",
+        "owner": "the-owner",
+        "pointed-to": "the-ley",
+        "typeql": "registry-ref",
+        "label": "registry reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "network_ref",
+        "owner": "the-owner",
+        "pointed-to": "the-traffic",
+        "typeql": "network-ref",
+        "label": "traffic reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "user_ref",
+        "owner": "the-owner",
+        "pointed-to": "the-user",
+        "typeql": "user-ref",
+        "label": "user reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "x_ttp_tagging_refs",
+        "owner": "the-owner",
+        "pointed-to": "the-ttp-tag",
+        "typeql": "x-ttp-tagging",
+        "label": "ttp tagging",
+        "owner-is-source": true
+    }
 ]
