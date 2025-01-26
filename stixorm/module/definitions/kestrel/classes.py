@@ -786,7 +786,6 @@ class OCAContainerExt(_Extension):
 
     _type = 'x-oca-container-ext'
     _properties = OrderedDict([
-        ('tactic_id', StringProperty()),
         ('name', StringProperty()),
         ('container_id', StringProperty()),
         ('image_name', StringProperty()),

@@ -329,7 +329,7 @@ define
     ################################
     # OCA Network Traffic VLan
     vlan sub stix-sub-object,
-        owns id,
+        owns vlan-id,
         owns name,
         plays x-vlan:vlan-obj,
         plays inner:head,
@@ -529,8 +529,11 @@ define
         plays src-app-ref:app-actual,
         plays dst-app-ref:app-actual;
     ############################
-    #  OCA Source Geo Relation
+    #  OCA  Geo Relations
 	src-geo-ref sub embedded,
+	    relates geo-base as owner,
+	    relates geo-actual as pointed-to;
+	dst-geo-ref sub enbedded,
 	    relates geo-base as owner,
 	    relates geo-actual as pointed-to;
     x-oca-geo
@@ -663,7 +666,6 @@ define
 
     # OCA Container Extension Object
 	container-ext sub oca-extension,
-	    owns tactic-id,
 	    owns container-id,
 	    owns image-name,
 	    owns image-id,

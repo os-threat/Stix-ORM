@@ -1,0 +1,9 @@
+{
+  "extension_type": "extension-type",
+  "operation_type": "operation-type",
+  "user": "user",
+  "computer": "computer",
+  "new_value": "new-value",
+  "process_id": "process-id",
+  "process_name": "process-name"
+}

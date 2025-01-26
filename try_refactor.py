@@ -1,6 +1,7 @@
 import json
 import os
 import datetime
+import csv
 from typing import Dict
 #import dateutil.parser
 #from dateutil.parser import *
@@ -1938,6 +1939,59 @@ def test_time():
 
     print(returned.serialize(pretty=True))
 
+############################################################################
+##      OCA Stuff
+############################################################################
+def extract_sro_iob(path, iob):
+    reln_types = []
+    reln_types_list = []
+    the_path = path + iob
+    i = 0
+    with open(the_path, mode="r", encoding="utf-8") as f:
+        iob_bundle = json.load(f)
+        iob_object_list = iob_bundle["objects"]
+        for iob_object in iob_object_list:
+            if iob_object["type"] == "relationship":
+                i += 1
+                reln_type = iob_object["relationship_type"]
+                src_id = iob_object["source_ref"]
+                src_type = src_id.split('--')[0]
+                tgt_id = iob_object["target_ref"]
+                tgt_type = tgt_id.split('--')[0]
+                if reln_type in reln_types_list:
+                    # collect a list of the existing reln type records
+                    subset = [x for x in reln_types if x["reln_type"] == reln_type]
+                    new = True
+                    for sub in subset:
+                        if sub["source_type"] == src_type and sub["target_type"] == tgt_type:
+                            new = False
+                    if new:
+                        new_reln = {}
+                        new_reln["source_type"] = src_type
+                        new_reln["target_type"] = tgt_type
+                        new_reln["reln_type"] = reln_type
+                        reln_types.append(new_reln)
+                        reln_types_list.append(reln_type)
+                else:
+                    new_reln = {}
+                    new_reln["source_type"] = src_type
+                    new_reln["target_type"] = tgt_type
+                    new_reln["reln_type"] = reln_type
+                    reln_types.append(new_reln)
+                    reln_types_list.append(reln_type)
+
+        out_path = path + "oca_sro_roles_in_iob_bundle.csv"
+        with open(out_path, 'w') as csvfile:
+            fieldnames = ['reln_type', 'source_type', 'target_type']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(reln_types)
+
+        print(f'total relns ->{i}, in list -> {len(reln_types)}')
+        for rel in reln_types:
+            print(f'type:-> {rel["reln_type"]} source:->{rel["source_type"]}, target -> {rel["target_type"]} ')
+
+
 
 
 ##############################################################################
@@ -2041,6 +2095,8 @@ if __name__ == '__main__':
     stid1 = "task--7c5751c2-3c18-41bc-900c-685764c960f3"
     stid2 = "file--ec3415cc-5f4f-5ec8-bdb1-6f86996ae66d"
     stid3 = "sighting--300cd92e-d184-4c60-a97b-1759dc6780ed"
+    oca_path = "test/data/oca/iob/"
+    oca = "BehaviorBundle.json"
     #test_initialise()
     #load_file_list(path1, [f30, f21])
     #load_file(incident + "/human_trigger.json")
@@ -2081,4 +2137,5 @@ if __name__ == '__main__':
     #try_subgraph_get(reports + poison)
     #try_nodes_and_edges(incident_test + "/evidence.json")
     #test_get_objects()
-    test_time()
+    #test_time()
+    extract_sro_iob(oca_path, oca)

@@ -1,0 +1,8 @@
+{
+  "name": "name",
+  "container_id": "container-id",
+  "image_name": "image-name",
+  "image_id": "image-id",
+  "container_type": "container-type",
+  "privileged": "privileged"
+}

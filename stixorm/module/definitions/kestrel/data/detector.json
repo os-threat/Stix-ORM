@@ -1,0 +1,13 @@
+{
+  "name": "name",
+  "description": "description",
+  "cpe": "cpe",
+  "valid_until": "valid-until",
+  "vendor": "vendor",
+  "vendor_url": "vendor-url",
+  "product": "product",
+  "product_url": "product-url",
+  "detection_types": "detection-types",
+  "detector_data_categories": "detector-data-categories",
+  "detector_data_sources": "detector-data-sources"
+}

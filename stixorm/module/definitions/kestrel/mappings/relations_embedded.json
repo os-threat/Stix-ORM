@@ -286,5 +286,13 @@
         "typeql": "x-ttp-tagging",
         "label": "ttp tagging",
         "owner-is-source": true
+    },
+    {
+        "rel": "dst_geo_ref",
+        "owner": "geo-base",
+        "pointed-to": "geo-actual",
+        "typeql": "dst-geo-ref",
+        "label": "destination geo-reference",
+        "owner-is-source": true
     }
 ]

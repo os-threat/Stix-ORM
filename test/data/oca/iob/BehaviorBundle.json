@@ -302,13 +302,6 @@
       "created": "2022-03-31T13:00:00.000Z",
       "modified": "2022-03-31T13:00:00.000Z",
       "name": "Beacon Detection with RITA analytics",
-      "data_sources": [
-        {
-          "LogName": "Rita",
-          "Category": "show-beacons",
-          "score_num": "> 0.7"
-        }
-      ],
       "analytic": {
         "rule": "LS0tCmRhdGU6IDIwMjIvMDMvMTYKdGl0bGU6IFJpdGEgQmVhY29uCmlkOiA5MmEyMWJlZi00MTM4LTQwYjYtYTk1NS00OTdiMGNlMDUxNTkKc3RhdHVzOiBleHBlcmltZW50YWwKZGVzY3JpcHRpb246IERldGVjdGlvbiBiZWFjb25pbmcgd2l0aCBhIGhpZ2ggZW5vdWdoIHNjb3JlCnRhZ3M6CiAgLSBhdHRhY2suY29tbWFuZF9hbmRfY29udHJvbAogIC0gYXR0YWNrLnQxMDcxCmF1dGhvcjogZGVtbwpsb2dzb3VyY2U6CiAgcHJvZHVjdDogcml0YQogIGluZGV4OiBtYWluCiAgY2F0ZWdvcnk6IHNob3ctYmVhY29ucwpkZXRlY3Rpb246CiAgc2VsZWN0aW9uOgogICAgc291cmNldHlwZTogcml0YS1sb2dzCiAgICBzY29yZV9udW18Z3Q6IDAuNwogIGNvbmRpdGlvbjogc2VsZWN0aW9uCmZhbHNlcG9zaXRpdmVzOgogIC0gVW5rbm93bgpsZXZlbDogbWVkaXVt",
         "type": "Sigma Rule - base64 encoded YAML file"
@@ -426,15 +419,6 @@
       "created": "2022-03-31T13:00:00.000Z",
       "modified": "2022-03-31T13:00:00.000Z",
       "name": "Secondary Payload Privilege Escalation Detection",
-      "data_sources": [
-        {
-          "data_type": "WinEventLog",
-          "LogName": "Security",
-          "EventCode": "4688",
-          "TaskCategory": "Process Creation",
-          "Message": "A new process has been created.\r\n\r\nCreator Subject:\r\n\tSecurity ID:\t\tS-1-5-21-3073171905-3635715100-2267507973-1219\r\n\tAccount Name:\t\tjsmith\r\n\tAccount Domain:\t\tCBIS\r\n\tLogon ID:\t\t0x502695\r\n\r\nTarget Subject:\r\n\tSecurity ID:\t\tS-1-5-18\r\n\tAccount Name:\t\tSP25-TARGET$\r\n\tAccount Domain:\t\tCBIS\r\n\tLogon ID:\t\t0x3E7\r\n\r\nProcess Information:\r\n\tNew Process ID:\t\t0x27584\r\n\tNew Process Name:\tC:\\Users\\jsmith.CBIS\\AppData\\Local\\beacon.exe\r\n\tToken Elevation Type:\t%%1936\r\n\tMandatory Label:\t\tS-1-16-16384\r\n\tCreator Process ID:\t0x26b70\r\n\tCreator Process Name:\tC:\\Users\\jsmith\\AppData\\Local\\PrintSpoofer64.exe\r\n\tProcess Command Line:\tC:\\Users\\jsmith.CBIS\\Appdata\\local\\Beacon.exe\r\n\r\nToken Elevation Type indicates the type of token that was assigned to the new process in accordance with User Account Control policy.\r\n\r\nType 1 is a full token with no privileges removed or groups disabled.  A full token is only used if User Account Control is disabled or if the user is the built-in Administrator account or a service account.\r\n\r\nType 2 is an elevated token with no privileges removed or groups disabled.  An elevated token is used when User Account Control is enabled and the user chooses to start the program using Run as administrator.  An elevated token is also used when an application is configured to always require administrative privilege or to always require maximum privilege, and the user is a member of the Administrators group.\r\n\r\nType 3 is a limited token with administrative privileges removed and administrative groups disabled.  The limited token is used when User Account Control is enabled, the application does not require administrative privilege, and the user does not choose to start the program using Run as administrator."
-        }
-      ],
       "analytic": {
         "type": "Sigma Rule",
         "rule": "LS0tCmF1dGhvcjogZGVtbwpkYXRlOiAyMDIyLzAzLzA0CmRlc2NyaXB0aW9uOiBEZXRlY3RzIGxvY2FsIHVzZXIgc3Bhd25pbmcgYSBwcm9jZXNzIGFzIFNZU1RFTQpkZXRlY3Rpb246CiAgY29uZGl0aW9uOiBzZWxlY3Rpb24xIGFuZCBub3Qgc2VsZWN0aW9uMgogIHNlbGVjdGlvbjE6CiAgICB1c2VyfGNvbnRhaW5zOiAiJCIKICAgIEV2ZW50Q29kZTogNDY4OAogIHNlbGVjdGlvbjI6CiAgICBzcmNfdXNlcnxjb250YWluczogIiQiCmZhbHNlcG9zaXRpdmVzOgogIC0gTG93CmlkOiB1c2VydG9zeXN0ZW1wcm9jcHJpdmVzYwpsZXZlbDogaGlnaApsb2dzb3VyY2U6CiAgY2F0ZWdvcnk6IHByb2Nlc3NfZXZlbnQKICBpbmRleDogbWFpbgogIHByb2R1Y3Q6IHdpbmRvd3MKc3RhdHVzOiBleHBlcmltZW50YWwKdGFnczoKICAtIGF0dGFjay5wcml2aWxlZ2UtZXNjYWxhdGlvbgogIC0gYXR0YWNrLlQxMTM0LjAwMQp0aXRsZTogdXNlciB0byBzeXN0ZW0gcHJvY2VzcyBwcml2aWxlZ2UgZXNjYWxhdGlvbg=="
@@ -547,12 +531,6 @@
       "created": "2022-03-31T13:00:00.000Z",
       "modified": "2022-03-31T13:00:00.000Z",
       "name": "DC Sync Detection",
-      "data_sources": [
-        {
-          "data_type": "notice-too_small",
-          "LogName": "/nsm/zeek/logs/current/notice.log"
-        }
-      ],
       "analytic": {
         "type": "Sigma Rule",
         "rule": "LS0tCnRpdGxlOiBEQ1N5bmMKaWQ6IGRjc3luYwpzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogRGV0ZWN0cyBuZXR3b3JrIGFjdGl2aXR5IHVzaW5nIERSU0dldE5DQ2hhbmdlcy4KdGFnczoKICAtIGF0dGFjay5jcmVkZW50aWFsX2FjY2VzcwogIC0gYXR0YWNrLlQxMDAzLjAwNgphdXRob3I6IGRlbW8KZGF0ZTogMjAyMS8wNi8wNwpsb2dzb3VyY2U6CiAgcHJvZHVjdDogemVlawogIGluZGV4OiBtYWluCiAgY2F0ZWdvcnk6IG5ldHdvcmtfZXZlbnQKZGV0ZWN0aW9uOgogIHNlbGVjdGlvbjoKICAgIG1zZzogJ2Ryc3VhcGk6OkRSU0dldE5DQ2hhbmdlcycKICBjb25kaXRpb246IHNlbGVjdGlvbgpmYWxzZXBvc2l0aXZlczoKICAtIERvbWFpbiBDb250cm9sbGVyCmxldmVsOiBoaWdo"
@@ -645,12 +623,6 @@
       "created": "2022-03-31T13:00:00.000Z",
       "modified": "2022-03-31T13:00:00.000Z",
       "name": "Lateral Movement Detection",
-      "data_sources": [
-        {
-          "data_type": "WinEventLog",
-          "LogName": "WinEventLog:Security"
-        }
-      ],
       "analytic": {
         "type": "Sigma Rule",
         "rule": "YXV0aG9yOiBkZW1vCmRhdGU6IDIwMjIvMDMvMDQKZGVzY3JpcHRpb246IERldGVjdHMgcHJlLWNvcnJlbGF0ZWQgZXZlbnRzIHRhZ2dlZCBhcyBwb3RlbnRpYWwgR29sZGVuIFRpY2tldCBhdHRlbXBzCmlkOiA5MmEyMWJlZi00MTM4LTQwYjYtYTk1NS00OTdiMGNlMDUxNTEKc3RhdHVzOiBleHBlcmltZW50YWwKdGFnczoKICAtIGF0dGFjay5jcmVkZW50aWFsX2FjY2VzcwogIC0gYXR0YWNrLnQxNTU4LjAwMQpsb2dzb3VyY2U6IAogIHByb2R1Y3Q6IHdpbmRvd3MKICBpbmRleDogbWFpbgogIGNhdGVnb3J5OiBrZXJiZXJvcwpkZXRlY3Rpb246CiAgc2VsZWN0aW9uOiAKICAgIHNvdXJjZXR5cGU6IGludGVybmFsX2FsZXJ0cwogICAgYWxlcnRfdHlwZXxjb250YWluczogIkdvbGRlblRpY2tldCIKICBjb25kaXRpb246IHNlbGVjdGlvbgpmYWxzZXBvc2l0aXZlczoKICAtIERvbWFpbiBDb250cm9sbGVycwogIC0gRXhjaGFuZ2UKbGV2ZWw6IGhpZ2g="
@@ -745,15 +717,6 @@
       "created": "2022-03-31T13:00:00.000Z",
       "modified": "2022-03-31T13:00:00.000Z",
       "name": "Data Exfiltration Detection",
-      "data_sources": [
-        {
-          "data_type": "zeek",
-          "LogName": [
-            "/nsm/zeek/logs/current/files.log",
-            "SMB"
-          ]
-        }
-      ],
       "analytic": {
         "type": "Sigma Rule",
         "rule": "YXV0aG9yOiBkZW1vCmRhdGU6IDIwMjIvMDMvMDQKZGVzY3JpcHRpb246IERldGVjdHMgYSBkb3dubG9hZCBmcm9tIGEgc2Vuc2l0aXZlIG1vbml0b3JlZCBkaXJlY3RvcnkKaWQ6IDkyYTIxYmVmLTQxMzgtNDBiNi1hOTU1LTQ5N2IwY2UwNTE1MApzdGF0dXM6IGV4cGVyaW1lbnRhbAp0YWdzOgogIC0gYXR0YWNrLmV4ZmlsdHJhdGlvbgogIC0gYXR0YWNrLnQxMDQxCmxvZ3NvdXJjZTogCiAgcHJvZHVjdDogemVlawogIGluZGV4OiBtYWluCiAgY2F0ZWdvcnk6IGZpbGVzCmRldGVjdGlvbjoKICBzZWxlY3Rpb246IAogICAgc291cmNldHlwZTogemVlawogICAgc291cmNlOiAvbnNtL3plZWsvbG9ncy9jdXJyZW50L2ZpbGVzLmxvZwogICAgZmlsZW5hbWV8Y29udGFpbnM6ICJTZW5zaXRpdmUgRGF0YSIKICBjb25kaXRpb246IHNlbGVjdGlvbgpmYWxzZXBvc2l0aXZlczoKICAtIEFwcHJvdmVkIEFjY2Vzc29ycwpsZXZlbDogaGlnaA=="
@@ -1093,24 +1056,6 @@
       "created": "2022-03-31T13:00:00.000Z",
       "modified": "2022-03-31T13:00:00.000Z",
       "name": "Process 1 - SpearPhish",
-      "data_sources": [
-        {
-          "EventCode": "4688",
-          "LogName": "Security",
-          "TaskCategory": "Process Creation",
-          "data_type": "WinEventLog:Security",
-          "Creator_Process_Name": [
-            "*outlook*",
-            "*thunderbird*",
-            "*mail*"
-          ],
-          "New_Process_Name": [
-            "*edge*",
-            "*chrome*",
-            "*firefox*"
-          ]
-        }
-      ],
       "analytic": {
         "rule": "LS0tCnRpdGxlOiBTcGVhcnBoaXNoaW5nIHdpdGggTGluawppZDogc3BlYXJwaGlzaGluZwpzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogRGV0ZWN0cyBPZmZpY2UgbWFjcm8gb3BlbmluZyBmcm9tIGJyb3dzZXIuCnRhZ3M6Ci0gYXR0YWNrLmluaXRpYWxfYWNjZXNzCi0gYXR0YWNrLnQxNTY2LjAwMgphdXRob3I6IGRlbW8KZGF0ZTogMjAyMS8wNi8wNwpsb2dzb3VyY2U6CiAgcHJvZHVjdDogd2luZG93cwogIGluZGV4OiBtYWluCiAgY2F0ZWdvcnk6IHByb2Nlc3NfZXZlbnQKZGV0ZWN0aW9uOgogIHNlbGVjdGlvbjoKICAgIEV2ZW50Q29kZTogJzQ2ODgnCiAgICBDcmVhdG9yX1Byb2Nlc3NfTmFtZXxjb250YWluczoKICAgIC0gb3V0bG9vawogICAgLSB0aHVuZGVyYmlyZAogICAgLSBtYWlsCiAgICBOZXdfUHJvY2Vzc19OYW1lfGNvbnRhaW5zOgogICAgLSBlZGdlCiAgICAtIGNocm9tZQogICAgLSBmaXJlZm94CiAgY29uZGl0aW9uOiBzZWxlY3Rpb24KZmFsc2Vwb3NpdGl2ZXM6Ci0gTG93CmxldmVsOiBoaWdo",
         "type": "Sigma Rule - base64 encoded YAML file"
@@ -1129,29 +1074,6 @@
       "created": "2022-03-31T13:00:00.000Z",
       "modified": "2022-03-31T13:00:00.000Z",
       "name": "Process 2 - SpearPhish",
-      "data_sources": [
-        {
-          "EventCode": "4688",
-          "LogName": "Security",
-          "TaskCategory": "Process Creation",
-          "data_type": "WinEventLog:Security",
-          "Creator_Process_Name": [
-            "*edge*",
-            "*chrome*",
-            "*firefox*"
-          ],
-          "Creator_Command_Line": [
-            "*docm*",
-            "*pptm*",
-            "*xlsm*"
-          ],
-          "New_Process_Name": [
-            "*word*",
-            "*powerpoint*",
-            "*excel*"
-          ]
-        }
-      ],
       "analytic": {
         "rule": "LS0tCnRpdGxlOiBTcGVhcnBoaXNoaW5nIHdpdGggTGluawppZDogc3BlYXJwaGlzaGluZwpzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogRGV0ZWN0cyBPZmZpY2UgbWFjcm8gb3BlbmluZyBmcm9tIGJyb3dzZXIuCnRhZ3M6Ci0gYXR0YWNrLmluaXRpYWxfYWNjZXNzCi0gYXR0YWNrLnQxNTY2LjAwMgphdXRob3I6IGRlbW8KZGF0ZTogMjAyMS8wNi8wNwpsb2dzb3VyY2U6CiAgcHJvZHVjdDogd2luZG93cwogIGluZGV4OiBtYWluCiAgY2F0ZWdvcnk6IHByb2Nlc3NfZXZlbnQKZGV0ZWN0aW9uOgogIHNlbGVjdGlvbjoKICAgIEV2ZW50Q29kZTogJzQ2ODgnCiAgICBOZXdfUHJvY2Vzc19OYW1lfGNvbnRhaW5zOgogICAgLSB3aW53b3JkCiAgICAtIGV4Y2VsCiAgICAtIHBvd2VycG9pbnQKICAgIFByb2Nlc3NfQ29tbWFuZF9MaW5lfGNvbnRhaW5zOgogICAgLSBkb2NtCiAgICAtIHhsc20KICAgIC0gcHB0bQogICAgQ3JlYXRvcl9Qcm9jZXNzX05hbWV8Y29udGFpbnM6CiAgICAtIGVkZ2UKICAgIC0gY2hyb21lCiAgICAtIGZpcmVmb3gKICBjb25kaXRpb246IHNlbGVjdGlvbgpmYWxzZXBvc2l0aXZlczoKLSBMb3cKbGV2ZWw6IGhpZ2g=",
         "type": "Sigma Rule - base64 encoded YAML file"
@@ -1170,23 +1092,6 @@
       "created": "2022-03-31T13:00:00.000Z",
       "modified": "2022-03-31T13:00:00.000Z",
       "name": "Process - Execution",
-      "data_sources": [
-        {
-          "EventCode": "4688",
-          "LogName": "Security",
-          "TaskCategory": "Process Creation",
-          "data_type": "WinEventLog:Security",
-          "Creator_Process_Name": [
-            "*word*",
-            "*powerpoint*",
-            "*excel*"
-          ],
-          "New_Process_Name": [
-            "*.exe",
-            "*.dll"
-          ]
-        }
-      ],
       "analytic": {
         "rule": "LS0tCnRpdGxlOiBFeGVjdXRpb24KaWQ6IGV4ZWN1dGlvbgpzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogRGV0ZWN0cyBPZmZpY2UgbWFjcm8gZXhlY3V0aW9uCnRhZ3M6Ci0gYXR0YWNrLmV4ZWN1dGlvbgotIGF0dGFjay50MTA1OQphdXRob3I6IGRlbW8KZGF0ZTogMjAyMS8wNi8wNwpsb2dzb3VyY2U6CiAgcHJvZHVjdDogd2luZG93cwogIGluZGV4OiBtYWluCiAgY2F0ZWdvcnk6IHByb2Nlc3NfZXZlbnQKZGV0ZWN0aW9uOgogIGNvbmRpdGlvbjogcnVuX21hY3JvIGFuZCAobm90IGZhbHNlX3Bvc2l0aXZlKQogIHJ1bl9tYWNybzoKICAgIENyZWF0b3JfUHJvY2Vzc19OYW1lfGNvbnRhaW5zOgogICAgLSB3b3JkCiAgICAtIHBvd2VycG9pbnQKICAgIC0gZXhjZWwKICAgIE5ld19Qcm9jZXNzX05hbWV8ZW5kc3dpdGg6CiAgICAtICIuZXhlIgogICAgLSAiLmRsbCIKICAgIEV2ZW50Q29kZTogJzQ2ODgnCiAgZmFsc2VfcG9zaXRpdmU6CiAgICBOZXdfUHJvY2Vzc19OYW1lfGNvbnRhaW5zOgogICAgLSBzcGx3b3c2NApmYWxzZXBvc2l0aXZlczoKLSBMb3cKbGV2ZWw6IGhpZ2g=",
         "type": "Sigma Rule - base64 encoded YAML file"
@@ -1205,15 +1110,6 @@
       "created": "2022-03-31T13:00:00.000Z",
       "modified": "2022-03-31T13:00:00.000Z",
       "name": "Registry - Persistence",
-      "data_sources": [
-        {
-          "EventCode": "4657",
-          "LogName": "Security",
-          "Message": "A registry value was modified.\n\nSubject:\n\tSecurity ID:\t\tS-1-5-21-1102256457-2379380313-1247321256-500\n\tAccount Name:\t\tAdministrator\n\tAccount Domain:\t\tSP17\n\tLogon ID:\t\t0x1A1ADFE8\n\nObject:\n\tObject Name:\t\t\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\n\tObject Value Name:\tpersist\n\tHandle ID:\t\t0x918\n\tOperation Type:\t\tNew registry value created\n\nProcess Information:\n\tProcess ID:\t\t0x18f0\n\tProcess Name:\t\tC:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\n\nChange Information:\n\tOld Value Type:\t\t-\n\tOld Value:\t\t-\n\tNew Value Type:\t\tREG_SZ\n\tNew Value:\t\tTrue",
-          "TaskCategory": "Registry",
-          "data_type": "WinEventLog:Security"
-        }
-      ],
       "analytic": {
         "rule": "LS0tCnRpdGxlOiBSZWdpc3RyeSBSdW4gS2V5cwppZDogcmVnaXN0cnkgcGVyc2lzdGVuY2UKc3RhdHVzOiBleHBlcmltZW50YWwKZGVzY3JpcHRpb246IERldGVjdHMgbmV3IHJlZ2lzdHJ5IHJ1biBrZXkgY3JlYXRlZCBldmVudC4KdGFnczoKLSBhdHRhY2sucGVyc2lzdGVuY2UKLSBhdHRhY2sudDE1NDcKYXV0aG9yOiBkZW1vCmRhdGU6IDIwMjEvMDYvMDcKbG9nc291cmNlOgogIHByb2R1Y3Q6IHdpbmRvd3MKICBpbmRleDogbWFpbgogIGNhdGVnb3J5OiByZWdpc3RyeV9ldmVudApkZXRlY3Rpb246CiAgc2VsZWN0aW9uOgogICAgRXZlbnRDb2RlOiAnNDY1NycKICAgIE9iamVjdF9OYW1lfGNvbnRhaW5zOgogICAgLSBSdW4KICAgIC0gU2hlbGwgRm9sZGVycwogIGNvbmRpdGlvbjogc2VsZWN0aW9uCmZhbHNlcG9zaXRpdmVzOgotIEhpZ2gKbGV2ZWw6IGhpZ2g=",
         "type": "Sigma Rule - base64 encoded YAML file"

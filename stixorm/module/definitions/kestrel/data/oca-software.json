@@ -1,0 +1,10 @@
+{
+  "x_product": "x-product",
+  "x_description": "x-description",
+  "name": "name",
+  "cpe": "cpe",
+  "swid": "swid",
+  "languages": "language",
+  "vendor": "vendor",
+  "version": "version"
+}

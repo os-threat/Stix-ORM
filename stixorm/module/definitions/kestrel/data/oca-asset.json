@@ -1,0 +1,13 @@
+{
+  "device_id": "device-id",
+  "hostname": "hostname",
+  "ip_refs": "",
+  "mac_refs": "",
+  "os_ref": "",
+  "architecture": "architecture",
+  "uptime": "uptime",
+  "host_type": "host-type",
+  "ingress": "",
+  "egress": "",
+  "geo_ref": ""
+}

@@ -1,0 +1,18 @@
+{
+  "playbook_id": "playbook-id",
+  "name": "name",
+  "description": "description",
+  "playbook_creator": "",
+  "playbook_creation_time": "playbook-creation-time",
+  "playbook_modification_time": "playbook-modification-time",
+  "organization_type": "organization-type",
+  "playbook_format": "playbook-format",
+  "is_playbook_template": "is-playbook-template ",
+  "playbook_type": "playbook-type",
+  "playbook_impact": "playbook-impact",
+  "playbook_severity": "playbook-severity",
+  "playbook_priority": "playbook-priority",
+  "playbook_bin": "playbook-bin",
+  "playbook_url": "playbook-url",
+  "playbook_hashes": ""
+}

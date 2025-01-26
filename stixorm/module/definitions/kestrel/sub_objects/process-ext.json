@@ -1,0 +1,8 @@
+{
+  "extension_type": "extension-type",
+  "operation_type": "operation-type",
+  "computer": "computer",
+  "name": "name",
+  "win_event_code": "win-event-code",
+  "creator_user": "creator-user"
+}

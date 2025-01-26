@@ -1,0 +1,19 @@
+{
+  "x_window_title": "x-window-title",
+  "x_thread_id": "x-thread-id",
+  "x_exit_code": "x-exit-code",
+  "x_uptime": "x-uptime",
+  "x_unique_id": "x-unique-id",
+  "x_tags": "x-tags",
+  "is_hidden": "is-hidden",
+  "pid": "pid",
+  "created_time": "created-time",
+  "cwd": "cwd",
+  "command_line": "command-line",
+  "environment_variables": "",
+  "opened_connection_refs": "",
+  "creator_user_ref": "",
+  "image_ref": "",
+  "parent_ref": "",
+  "child_refs": ""
+}

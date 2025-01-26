@@ -1,0 +1,11 @@
+{
+  "city_name": "city-name",
+  "continent_name": "continent-name",
+  "country_iso_code": "country-iso-code",
+  "country_name": "country-name",
+  "location": "",
+  "name": "name",
+  "region_iso_code": "region-iso-code",
+  "region_name": "region-name",
+  "time_zone": "time-zone"
+}
