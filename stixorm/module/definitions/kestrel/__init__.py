@@ -13,12 +13,61 @@ __maintainer__ = "Paolo Di Prodi"
 __email__ = "paolo@priam.ai"
 __status__ = "Production"
 
+from stixorm.module.definitions.kestrel.classes import (
+    Behavior, CoAPlaybookExt, PlaybookExt, Playbook, OCAAnalyticSubObject,
+    DetectionExt, Detection, DetectorExt, Detector, HighValueToolExt,
+    UnixFileSubObject, CodeSignatureSubObject, OCAFileExt, OCAFile,
+    OCANetworkTrafficRITAExt, NameRefSubObject, DNSExt, NetworkTrafficVLanSubObject,
+    OCANetworkTraffic, OCAProcess, OCAProcessExt, OCASoftware, UserGroupSubObject,
+    OCAUserAccount, OCAWindowsRegistryKeyExt, OCAFinding, IBMTaggingExt,
+    IBMTagging, OCAIntefaceSubObject, OCATrafficSubObject, OCAPodExt,
+    OCAContainerExt, OCAAsset, OCAIAMExt, OCACoordinatesSubObject, OCAGeo
+)
 
 name = "kestrel"
 class_model = {}
-class_model["sdo"] = {}
-class_model["sco"] = {}
+class_model["sdo"] = {
+    "Behavior": Behavior,
+    "Detection": Detection,
+    "Detector": Detector,
+    "Playbook": Playbook
+}
+class_model["sco"] = {
+    "OCAFile": OCAFile,
+    "OCANetworkTraffic": OCANetworkTraffic,
+    "OCAProcess": OCAProcess,
+    "OCASoftware": OCASoftware,
+    "OCAUserAccount": OCAUserAccount,
+    "OCAFinding": OCAFinding,
+    "IBMTagging": IBMTagging,
+    "OCAAsset": OCAAsset,
+    "OCAGeo": OCAGeo
+}
 class_model["sro"] = {}
-class_model["sub"] = {}
+class_model["sub"] = {
+    "CoAPlaybookExt": CoAPlaybookExt,
+    "PlaybookExt": PlaybookExt,
+    "OCAAnalyticSubObject": OCAAnalyticSubObject,
+    "DetectionExt": DetectionExt,
+    "DetectorExt": DetectorExt,
+    "HighValueToolExt": HighValueToolExt,
+    "UnixFileSubObject": UnixFileSubObject,
+    "CodeSignatureSubObject": CodeSignatureSubObject,
+    "OCAFileExt": OCAFileExt,
+    "OCANetworkTrafficRITAExt": OCANetworkTrafficRITAExt,
+    "NameRefSubObject": NameRefSubObject,
+    "DNSExt": DNSExt,
+    "NetworkTrafficVLanSubObject": NetworkTrafficVLanSubObject,
+    "OCAProcessExt": OCAProcessExt,
+    "UserGroupSubObject": UserGroupSubObject,
+    "OCAWindowsRegistryKeyExt": OCAWindowsRegistryKeyExt,
+    "IBMTaggingExt": IBMTaggingExt,
+    "OCAIntefaceSubObject": OCAIntefaceSubObject,
+    "OCATrafficSubObject": OCATrafficSubObject,
+    "OCAPodExt": OCAPodExt,
+    "OCAContainerExt": OCAContainerExt,
+    "OCAIAMExt": OCAIAMExt,
+    "OCACoordinatesSubObject": OCACoordinatesSubObject
+}
 class_model["meta"] = {}
 
