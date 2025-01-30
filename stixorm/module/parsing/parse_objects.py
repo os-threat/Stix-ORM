@@ -4,7 +4,7 @@ import copy
 from stixorm.module.authorise import authorised_mappings, import_type_factory
 from stix2.exceptions import ParseError
 from stix2.parsing import dict_to_stix2
-from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql
+from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco_type_to_tql
 import logging
 
 from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
@@ -13,8 +13,55 @@ from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
 logger = logging.getLogger(__name__)
 default_import_type = import_type_factory.get_default_import()
 
-
-
+oca_types = [
+    "x-oca-behavior",
+    "x-oca-detection",
+    "x-oca-detector",
+    "x-oca-playbook",
+    "x-ibm-finding",
+    "x-ibm-ttp-tagging",
+    "x-ibm-ttp-tagging",
+    "x-oca-asset",
+    "x-oca-event",
+    "x-oca-geo"
+]
+oca_file = [
+    "x_attributes",
+    "x_extension",
+    "x_path",
+    "x_target_path",
+    "x_type",
+    "x_unix",
+    "x_owner_ref",
+    "x_win_drive_letter",
+    "x_software_ref",
+    "x_code_signature"
+]
+oca_network_traffic = [
+    "x_name",
+    "x_application",
+    "x_direction",
+    "x_forwarded_ip",
+    "x_community_id",
+    "x_vlan"
+]
+oca_process = [
+    'x_window_title',
+    "x_thread_id",
+    "x_exit_code",
+    "x_uptime",
+    "x_unique_id",
+    "x_tags"
+]
+oca_software = [
+    "x_product",
+    "x_description"
+]
+oca_user_account = [
+    "x_domain",
+    "x_hash",
+    "x_group"
+]
 def parse(data: dict, allow_custom=False, import_type: ImportType=default_import_type):
     """Convert a string, dict or file-like object into a STIX object.
     Args:
@@ -76,6 +123,34 @@ def is_attack_object(stix_dict):
         return False
 
 
+def is_oca_object(stix_dict):
+    local_type = stix_dict["type"]
+    list_of_keys = [*stix_dict]
+    if local_type in oca_types:
+        return True
+    elif local_type == "file":
+        for key in list_of_keys:
+            if key in oca_file:
+                return True
+    elif local_type == "network-traffic":
+        for key in list_of_keys:
+            if key in oca_network_traffic:
+                return True
+    elif local_type == "process":
+        for key in list_of_keys:
+            if key in oca_process:
+                return True
+    elif local_type == "software":
+        for key in list_of_keys:
+            if key in oca_user_account:
+                return True
+    elif local_type == "user-account":
+        for key in list_of_keys:
+            if key in oca_user_account:
+                return True
+    else:
+        return False
+
 def dict_to_stix(stix_dict: dict,
                  allow_custom=False,
                  import_type: ImportType=default_import_type):
@@ -113,6 +188,7 @@ def dict_to_stix(stix_dict: dict,
     logger.debug(f'\n auth-sdo -->{auth["tql_types"]["sdo"]}\n')
     logger.debug(f'\n\n auth-sro -->{auth["tql_types"]["sro"]}\n')
     attack_object = is_attack_object(stix_dict)
+    oca_object = is_oca_object(stix_dict)
     logger.debug(f'attack object {attack_object}')
     #logger.info(f'auth is {auth["tql_types"]["meta"]}')
     if obj_type in auth["types"]["sdo"]:
@@ -124,13 +200,14 @@ def dict_to_stix(stix_dict: dict,
         if attack_object:
             sub_technique = stix_dict.get("x_mitre_is_subtechnique", False)
         logger.debug(f'subtechnique {sub_technique}, attack {attack_object}')
-        obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(obj_type, import_type, attack_object, sub_technique, step_type)
+        obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(obj_type, import_type, attack_object, sub_technique, step_type, oca_object)
         logger.debug(f"tql name {sdo_tql_name}, obj tql {obj_tql}")
         obj_class = class_for_type(sdo_tql_name, import_type, "sdo")
         logger.debug(f'output  object class is {obj_class}')
     elif obj_type in auth["types"]["sco"]:
         logger.debug("I'm in sco")
-        obj_class = class_for_type(obj_type, import_type, "sco")
+        obj_tql, sdo_tql_name, is_list, protocol = sco_type_to_tql(obj_type, import_type, oca_object)
+        obj_class = class_for_type(sdo_tql_name, import_type, "sco")
     elif obj_type in auth["types"]["sro"]:
         logger.debug("I'm in sro")
         uses_relation = False

@@ -6,6 +6,7 @@ import copy
 
 from stixorm.module.authorise import authorised_mappings
 from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco_type_to_tql, meta_type_to_tql
+from stixorm.module.parsing.parse_objects import is_oca_object
 from stixorm.module.orm.export_utilities import convert_ans_to_res
 import logging
 
@@ -121,6 +122,7 @@ def make_sdo(res, import_type: ImportType):
         attack_object = False
         sub_technique = False
         step_type = ""
+        oca_object = is_oca_object(stix_dict)
         for prop in props:
             if prop["typeql"] == "x-mitre-version":
                 attack_object = True
@@ -129,7 +131,7 @@ def make_sdo(res, import_type: ImportType):
             if prop["typeql"] == "step-type":
                 step_type = prop["value"]
 
-        obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(sdo_type, import_type, attack_object, sub_technique, step_type)
+        obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(sdo_type, import_type, attack_object, sub_technique, step_type, oca_object)
 
         #logger.debug(f"obj tql -> {obj_tql}\n sdo tql name -> {sdo_tql_name}")
         # 2.B) get the is_list list, the list of properties that are lists for that object
@@ -285,8 +287,9 @@ def make_sco(res: dict, import_type: ImportType):
     # - get the object-specific typeql names, sighting or relationship
     # - work out the type of object
     sco_tql_name = obj_type
+    oca_object = is_oca_object(stix_dict)
     # - get the object-specific typeql names, sighting or relationship
-    obj_tql, sco_tql_name, is_list, protocol = sco_type_to_tql(sco_tql_name, import_type)
+    obj_tql, sco_tql_name, is_list, protocol = sco_type_to_tql(sco_tql_name, import_type, oca_object)
 
     # 2.A) get the typeql properties and relations
     props = res["has"]

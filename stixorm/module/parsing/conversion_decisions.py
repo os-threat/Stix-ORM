@@ -18,11 +18,12 @@ default_import_type = import_type_factory.get_default_import()
 attack_model = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
 stix_model = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
 os_threat_model = get_definition_factory_instance().lookup_definition(DefinitionName.OS_THREAT)
+kestrel_model = get_definition_factory_instance().lookup_definition(DefinitionName.KESTREL)
 
 
 def sdo_type_to_tql(sdo_type: str,
                     import_type:ImportType=default_import_type,
-                    attack_object=False, subtechnique=False, step_type="") -> [dict, str, dict, str]:
+                    attack_object=False, subtechnique=False, step_type="", oca_object=False) -> [dict, str, dict, str]:
     """ convert Stix object into a data model for processing
 
     Args:
@@ -43,8 +44,8 @@ def sdo_type_to_tql(sdo_type: str,
     tql_name = sdo_type
     logger.debug("in sdo decisions")
     logger.debug(f'obj tql {obj_tql}')
-    logger.debug(f"variables, stix {auth['STIX21']}, attack is {auth['ATT&CK']}")
-    # If import_type is deaful None, then assign to default)
+    logger.debug(f"variables, stix {auth['STIX21']}, attack is {auth['ATT&CK']}, kestrel is {auth['kestrel']}")
+    # If import_type is default None, then assign to default)
 
     # 1. get the specific typeql names for an object into a dictionary
     #logger.debug(f'through to decisions, attack is {attack_object}, sub technqiue {subtechnique}')
@@ -52,7 +53,19 @@ def sdo_type_to_tql(sdo_type: str,
 
 
     if auth['STIX21'] and not auth["ATT&CK"]:
-        if stix_model.contains_data(sdo_type):
+        if oca_object:
+            protocol = "kestrel"
+            # Convert from stix-type to OCA-tql-entity
+            for model in kestrel_model.get_mapping("object_conversion"):
+                logger.debug(f'chacking models, type is {model["type"]}')
+                if model["type"] == sdo_type:
+                    oca_typeql = model["typeql"]
+                    logger.debug(f'oca_type  is {oca_typeql}')
+                    obj_tql = copy.deepcopy(kestrel_model.get_data(sdo_type))
+                    is_list.extend(auth["is_lists"]["sdo"][oca_typeql])
+                    tql_name = oca_typeql
+                    break
+        elif stix_model.contains_data(sdo_type):
             # dispatch specific stix properties plus later on, generic sdo properties
             protocol = "stix21"
             obj_tql = copy.deepcopy(stix_model.get_data(sdo_type))
@@ -69,7 +82,19 @@ def sdo_type_to_tql(sdo_type: str,
             return {}, "", {}, ""
     # - mitre attack_setting import
     elif auth['STIX21'] and auth["ATT&CK"]:
-        if attack_object:
+        if oca_object:
+            protocol = "kestrel"
+            # Convert from stix-type to OCA-tql-entity
+            for model in kestrel_model.get_mapping("object_conversion"):
+                logger.debug(f'chacking models, type is {model["type"]}')
+                if model["type"] == sdo_type:
+                    oca_typeql = model["typeql"]
+                    logger.debug(f'oca_type  is {oca_typeql}')
+                    obj_tql = copy.deepcopy(kestrel_model.get_data(sdo_type))
+                    is_list.extend(auth["is_lists"]["sdo"][oca_typeql])
+                    tql_name = oca_typeql
+                    break
+        elif attack_object:
             logger.debug("I'm processing an attack decision")
             is_list.extend(auth["is_lists"]["sdo"]["attack"])
             protocol = "attack"
@@ -221,7 +246,7 @@ def sro_type_to_tql(sro_type: str,
     return obj_tql, sro_tql_name, is_list, protocol
 
 
-def sco_type_to_tql(sco_type: str, import_type=default_import_type) -> [Dict[str, str], str, List[str], str]:
+def sco_type_to_tql(sco_type: str, import_type=default_import_type, oca_object=False) -> [Dict[str, str], str, List[str], str]:
     """ convert Stix object into a data model for processing
 
         Args:
@@ -237,17 +262,34 @@ def sco_type_to_tql(sco_type: str, import_type=default_import_type) -> [Dict[str
     # Based on import type setup observables
     auth_factory = get_auth_factory_instance()
     auth = auth_factory.get_auth_for_import(import_type)
+    obj_tql = {}
+    is_list =[]
     protocol = ""
-    is_list = copy.deepcopy(auth["is_lists"]["sco"]["sco"])
-    is_list.extend(auth["is_lists"]["sco"][sco_type])
+    tql_name = sco_type
+    sco_tql_name = ""
+    if oca_object:
+        protocol = "kestrel"
+        # Convert from stix-type to OCA-tql-entity
+        for model in kestrel_model.get_mapping("object_conversion"):
+            logger.debug(f'chacking models, type is {model["type"]}')
+            if model["type"] == sco_type:
+                oca_typeql = model["typeql"]
+                logger.debug(f'oca_type  is {oca_typeql}')
+                obj_tql = copy.deepcopy(kestrel_model.get_data(sco_type))
+                is_list.extend(auth["is_lists"]["sdo"][oca_typeql])
+                sco_tql_name = oca_typeql
+                break
+    else:
+        is_list = copy.deepcopy(auth["is_lists"]["sco"]["sco"])
 
-    # - get the object-specific typeql names, sighting or relationship
-    sco_tql_name = sco_type
-    protocol = "stix21"
-    obj_tql = copy.deepcopy(auth["objects"][sco_type])
+        # - get the object-specific typeql names, sighting or relationship
+        sco_tql_name = sco_type
+        protocol = "stix21"
+        obj_tql = copy.deepcopy(auth["objects"][sco_type])
+
     # - add on the generic sro properties
     obj_tql.update(stix_model.get_base("base_sco"))
-
+    is_list.extend(auth["is_lists"]["sco"]["sco"])
     return obj_tql, sco_tql_name, is_list, protocol
 
 
