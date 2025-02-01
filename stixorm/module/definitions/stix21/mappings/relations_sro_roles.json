@@ -48,6 +48,12 @@
     "target": "mitigated"
   },
   {
+    "stix": "remediates",
+    "typeql": "remediates",
+    "source": "remedy",
+    "target": "issue"
+  },
+  {
     "stix": "located-at",
     "typeql": "located-at",
     "source": "locating",

@@ -887,6 +887,60 @@ define
 	    owns start,
 	    plays oca-location:the-location;
 
+	#***************************************************************
+	# OCA New Roles and New SRO's
+	#******************************************************************
+	# New SRO's
+    occurs-before sub stix-core-relationship,
+		relates before as source,
+		relates after as target;
+
+    triggers sub stix-core-relationship,
+		relates initiator as source,
+		relates outcome as target;
+
+	# New source-target copnnections, New SRO's
+	behavior
+	    plays occurs-before:before,
+	    plays occurs-before:after;
+
+	course-of-action
+	    plays triggers:initiator,
+	    plays triggers:outcome;
+
+	#  New source-target connections, existing SRO's
+	attack-pattern
+	    plays uses:used;
+
+    behavior
+        plays detects:detected,
+        plays uses:used-by;
+
+    course-of-action
+        plays detects:sensor,
+        plays uses:used-by;
+
+    data-component
+        plays uses:used;
+
+    data-source
+        plays uses:used;
+
+    detection
+        plays detects:sensor,
+        plays uses:used,
+        plays uses:used-by;
+
+    detector
+        plays uses:used-by,
+        plays uses:used;
+
+	grouping
+	    plays remediates:issue,
+	    plays mitigates:mitigated,
+	    plays detects:detected;
+
+
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     # OCA Attributes
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

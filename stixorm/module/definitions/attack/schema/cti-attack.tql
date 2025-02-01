@@ -258,7 +258,7 @@ define
         owns x-mitre-platforms,
         plays obj-ref:content,
 		relates sensor as source,
-		relates ttp as target,
+		relates detected as target,
         plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content,
         plays revoked-by:revoked,

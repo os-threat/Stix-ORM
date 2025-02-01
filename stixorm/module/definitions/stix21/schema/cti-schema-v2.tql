@@ -201,7 +201,7 @@ course-of-action sub stix-domain-object,
 	# Common Relations
 	plays investigates:investigating,
 	plays mitigates:mitigator,
-	plays remediation:remediating,
+	plays remediates:remedy,
 	plays uses:used-by;
 
 	# Reverse Relations
@@ -429,7 +429,7 @@ malware sub stix-domain-object,
    	plays variant:variant-target,
    	plays delivers:delivered,
    	plays mitigates:mitigated,
-	plays remediation:remediated,
+	plays remediates:issue,
 	plays uses:used,
 	plays drop:dropped,
 	plays control:controlled,
@@ -631,7 +631,7 @@ vulnerability sub stix-domain-object,
  	plays targets:targetted,
  	plays exploit:exploited,
  	plays mitigates:mitigated,
- 	plays remediation:remediated,
+ 	plays remediates:issue,
  	plays have:had;
 
  	#Embedded Relations
@@ -722,6 +722,10 @@ stix-core-relationship sub relation,
 	mitigates sub stix-core-relationship,
 		relates mitigated as target,
 		relates mitigator as source;
+
+	remediates sub stix-core-relationship,
+		relates issue as target,
+		relates remedy as source;
 	
 	located-at sub stix-core-relationship,
 		relates located as target,
@@ -808,10 +812,6 @@ stix-core-relationship sub relation,
 		static-analysis sub analysis;
 		dynamic-analysis sub analysis;
 		analysis-of sub analysis;
-
-	remediation sub stix-core-relationship,
-		relates remediating as source,
-		relates remediated as target;
 
 
 # 5.2 Sighting

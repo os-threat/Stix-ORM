@@ -184,7 +184,7 @@ class TypeDBSink(DataSink):
         self.cti_schema_os_threat = pathlib.Path(self.schema_path).joinpath("definitions/os_threat/schema/cti-os-threat.tql")
         assert os.path.isfile(self.cti_schema_os_threat)
         self.cti_schema_os_hunt = pathlib.Path(self.schema_path).joinpath(
-            "definitions/kestrel/schema/cti-oca stix extensions .tql")
+            "definitions/kestrel/schema/cti-oca .tql")
         assert os.path.isfile(self.cti_schema_os_hunt)
         self.cti_schema_attack = pathlib.Path(self.schema_path).joinpath("definitions/attack/schema/cti-attack.tql")
         assert os.path.isfile(self.cti_schema_attack)

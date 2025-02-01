@@ -113,7 +113,7 @@ define
         owns start-time-fidelity,
         plays blocks:stops,
         plays causes:caused,
-        plays detects:found,
+        plays detects:detected,
         plays performed:outcome,
 	    plays based-on:basis,
         plays located-at:locating, # SRO
@@ -268,7 +268,7 @@ define
         plays causes:effort,
         plays creates:effort,
         plays uses:used,
-        plays detects:effort,
+        plays detects:sensor,
         plays impacts:issue,
         plays located-at:locating,
         plays errored-to:started,
@@ -608,10 +608,6 @@ define
     causes sub stix-core-relationship,
 		relates effort as source,
 		relates caused as target;
-
-    detects sub stix-core-relationship,
-		relates effort as source,
-		relates found as target;
 
     creates sub stix-core-relationship,
 		relates effort as source,

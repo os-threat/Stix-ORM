@@ -9,7 +9,7 @@
     "stix": "detects",
     "typeql": "detects",
     "source": "sensor",
-    "target": "ttp"
+    "target": "detected"
   },
   {
     "stix": "revoked-by",
