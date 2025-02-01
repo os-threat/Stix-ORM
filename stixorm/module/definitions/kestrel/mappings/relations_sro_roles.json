@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "stix": "occurs-before",
+    "typeql": "occurs-before",
+    "source": "before",
+    "target": "after"
+  },
+  {
+    "stix": "triggers",
+    "typeql": "triggers",
+    "source": "initiator",
+    "target": "outcome"
+  }
+]
