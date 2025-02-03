@@ -126,6 +126,9 @@ class TypeDBSink(DataSink):
         # D. Load the OS-Threat Schema
         os_threat_result = self.__load_os_threat_schema()
         handle_result(os_threat_result, "history os threat result", self.strict_failure)
+        # D. Load the OS-Threat Schema
+        oca_result = self.__load_os_threat_schema()
+        handle_result(oca_result, "history oca result", self.strict_failure)
 
         # 3. Load the Objects
         # Still to do
@@ -142,7 +145,16 @@ class TypeDBSink(DataSink):
             load_schema(self._stix_connection, str(self.cti_schema_attack), "ATT&CK Schema")
             logger.info("we have loaded ATT&CK schema")
         else:
-            logger.debug("ignoring history ATT&CK schema")
+            logger.debug("import type does not load ATT&CK schema")
+
+
+    def __load_oca_schema(self):
+        if self.clear and self.import_type.kestrel:
+            logger.debug("OCA")
+            load_schema(self._stix_connection, str(self.cti_schema_oca), "OCA Schema")
+            logger.info("we have loaded OCA schema")
+        else:
+            logger.debug("import type does not load OCA schema")
 
 
     def __load_os_threat_schema(self):
@@ -151,7 +163,7 @@ class TypeDBSink(DataSink):
             load_schema(self._stix_connection, str(self.cti_schema_os_threat), "os-threat Schema ")
             logger.info("we have loaded os-threat schema")
         else:
-            logger.debug("ignoring history  os hunt")
+            logger.debug("import type does not load  os threat schema")
 
 
     def __load_stix_rules(self):
@@ -160,7 +172,7 @@ class TypeDBSink(DataSink):
             load_schema(self._stix_connection, str(self.cti_schema_stix_rules), "Stix 2.1 Rules")
             logger.info("we have loaded Stix rules")
         else:
-            logger.debug("ignoring check of stix rules")
+            logger.debug("ignoring  stix rules")
 
 
     def __load_stix_schema(self):
@@ -183,9 +195,8 @@ class TypeDBSink(DataSink):
         assert os.path.isfile(self.cti_schema_stix_rules)
         self.cti_schema_os_threat = pathlib.Path(self.schema_path).joinpath("definitions/os_threat/schema/cti-os-threat.tql")
         assert os.path.isfile(self.cti_schema_os_threat)
-        self.cti_schema_os_hunt = pathlib.Path(self.schema_path).joinpath(
-            "definitions/kestrel/schema/cti-oca .tql")
-        assert os.path.isfile(self.cti_schema_os_hunt)
+        self.cti_schema_oca = pathlib.Path(self.schema_path).joinpath("definitions/kestrel/schema/cti-oca.tql")
+        assert os.path.isfile(self.cti_schema_oca)
         self.cti_schema_attack = pathlib.Path(self.schema_path).joinpath("definitions/attack/schema/cti-attack.tql")
         assert os.path.isfile(self.cti_schema_attack)
         # if self.schema_path is None:
