@@ -2097,7 +2097,7 @@ if __name__ == '__main__':
     stid3 = "sighting--300cd92e-d184-4c60-a97b-1759dc6780ed"
     oca_path = "test/data/oca/iob/"
     oca = "BehaviorBundle.json"
-    #test_initialise()
+    test_initialise()
     #load_file_list(path1, [f30, f21])
     #load_file(incident + "/human_trigger.json")
     #load_file(mitre + "attack_objects.json")
@@ -2138,4 +2138,4 @@ if __name__ == '__main__':
     #try_nodes_and_edges(incident_test + "/evidence.json")
     #test_get_objects()
     #test_time()
-    extract_sro_iob(oca_path, oca)
+    #extract_sro_iob(oca_path, oca)
