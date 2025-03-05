@@ -1,0 +1,22 @@
+[
+  {
+    "type": "windows-registry-key",
+    "spec_version": "2.1",
+    "id": "windows-registry-key--c5a4244e-22d5-5797-8f78-c5fc3d1c0bde",
+    "key": "\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
+    "values": [
+      {
+        "name": "persist"
+      }
+    ],
+    "extensions": {
+      "extension-definition--2cf8c8c2-69f5-40f7-aa34-efcef2b912b1": {
+        "operation_type": "modify",
+        "new_value": "true",
+        "process_id": "0x0",
+        "process_name": "C:\\Windows\\regedit.exe",
+        "extension_type": "property-extension"
+      }
+    }
+  }
+]

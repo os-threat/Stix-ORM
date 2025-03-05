@@ -1,0 +1,26 @@
+[
+  {
+    "type": "x-ibm-ttp-tagging",
+    "id": "x-ibm-ttp-tagging",
+    "spec_version": "2.1",
+    "name": "Active Scanning",
+    "url": "https://attack.mitre.org/versions/v8/techniques/T1595/",
+    "confidence": 0.8,
+    "kill_chain_phases": [
+      {
+        "kill_chain_name": "mitre-attack",
+        "phase_name": "reconnaissance"
+      }
+    ],
+    "extensions": {
+      "mitre-attack-ext": {
+        "tactic_id": "TA0043",
+        "tactic_url": "https://attack.mitre.org/versions/v8/tactics/TA0043/",
+        "tactic_name": "Reconnaissance",
+        "technique_id": "T1595",
+        "technique_url": "https://attack.mitre.org/versions/v8/techniques/T1595/",
+        "technique_name": "Active Scanning"
+      }
+    }
+  }
+]

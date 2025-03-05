@@ -1,0 +1,27 @@
+[
+  {
+  "type": "x-oca-behavior",
+  "spec_version": "2.1",
+  "id": "x-oca-behavior--edc99806-f8e9-4ee3-b2d4-1234567890ab",
+  "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
+  "created": "2022-03-31T13:00:00.000Z",
+  "modified": "2022-03-31T13:00:00.000Z",
+  "name": "Spearphish: Mail Client Opens Browser",
+  "description": "An email client has opened a web browser. Although most instances of this behavior are benign, it may indicate a victim clicking on a phishing link.",
+  "behavior_class": "anomalous",
+  "tactic": "INITIAL ACCESS",
+  "technique": "T1566.002 Spearphishing Link",
+  "first_seen": "2022-03-31T13:00:00.000Z",
+  "platforms": [
+    {
+      "operating_system": "Microsoft Windows",
+      "version": "10"
+    }
+  ],
+  "extensions": {
+    "extension-definition--9c59fd79-4215-4ba2-920d-3e4f320e1e62": {
+      "extension_type": "new-sdo"
+    }
+  }
+}
+]

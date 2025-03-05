@@ -1,0 +1,104 @@
+[
+  {
+    "type": "ipv4-addr",
+    "spec_version": "2.1",
+    "id": "ipv4-addr--38609426-bc06-5cbc-9763-e77e99c9d9e4",
+    "value": "9.9.9.9"
+  },
+  {
+    "type": "x-oca-asset",
+    "spec_version": "2.1",
+    "id": "x-oca-asset--fec3de6d-bfc4-4ef3-9f4b-c21aa2d57e7a",
+    "ip_refs": [
+      "ipv4-addr--38609426-bc06-5cbc-9763-e77e99c9d9e4",
+      "ipv6-addr--dc0ef52f-b6cf-52a0-a6a1-977b32a57063"
+    ],
+    "hostname": "example host",
+    "host_id": "123A",
+    "geo_ref": "x-oca-geo--419f0ac4-2836-46f0-9985-820f7a4b7abc",
+    "mac_refs": [
+      "mac-addr--b5dbdbbb-5470-58c8-9b86-81b7d83a770b"
+    ],
+    "host_type": "APM Server",
+    "egress": {
+      "zone": "internal",
+      "interfaces": [
+        {
+          "alias": "inside",
+          "interface_id": "10",
+          "name": "eth0"
+        }
+      ]
+    },
+    "extensions": {
+      "x-oca-container-ext": {
+        "name": "example container",
+        "container_id": "bf032feb4117",
+        "image_id": "92b1b5d66457...",
+        "image_name": "us.icr.io/...",
+        "container_type": "crio"
+      },
+      "x-oca-pod-ext": {
+        "name": "example pod",
+        "ip_refs": [
+          "ipv4-addr--f1958dd5-5175-5702-beef-742d2cf3c0ec"
+        ]
+      }
+    }
+  },
+  {
+    "type": "ipv6-addr",
+    "spec_version": "2.1",
+    "id": "ipv6-addr--dc0ef52f-b6cf-52a0-a6a1-977b32a57063",
+    "value": "ffff:1111:ffff:1111:ffff:1111:ffff:1111",
+    "resolves_to_refs": [
+      "mac-addr--b5dbdbbb-5470-58c8-9b86-81b7d83a770b"
+    ]
+  },
+  {
+    "type": "mac-addr",
+    "spec_version": "2.1",
+    "id": "mac-addr--b5dbdbbb-5470-58c8-9b86-81b7d83a770b",
+    "value": "00-00-11-00-22-00"
+  },
+  {
+    "type": "ipv4-addr",
+    "spec_version": "2.1",
+    "id": "ipv4-addr--f1958dd5-5175-5702-beef-742d2cf3c0ec",
+    "value": "192.168.xxx.yyy"
+  },
+  {
+    "type": "x-oca-geo",
+    "spec_version": "2.1",
+    "id": "x-oca-geo--419f0ac4-2836-46f0-9985-820f7a4b7abc",
+    "created": "2024-09-01T06:55:32.781Z",
+    "modified": "2024-09-01T06:55:32.781Z",
+    "name": "Dallas-1",
+    "time_zone": "America/Chicago",
+    "country_iso_code": "US",
+    "country_name": "United States of America",
+    "location": {
+      "lon": "-96.800496798",
+      "lat": "32.785663524"
+    }
+  },
+  {
+    "type": "observed-data",
+    "spec_version": "2.1",
+    "id": "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",
+    "created_by_ref": "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65",
+    "created": "2016-04-06T19:58:16.000Z",
+    "modified": "2016-04-06T19:58:16.000Z",
+    "first_observed": "2015-12-21T19:00:00Z",
+    "last_observed": "2015-12-21T19:00:00Z",
+    "number_observed": 50,
+    "object_refs": [
+      "ipv4-addr--38609426-bc06-5cbc-9763-e77e99c9d9e4",
+      "ipv6-addr--dc0ef52f-b6cf-52a0-a6a1-977b32a57063",
+      "mac-addr--b5dbdbbb-5470-58c8-9b86-81b7d83a770b",
+      "ipv4-addr--f1958dd5-5175-5702-beef-742d2cf3c0ec",
+      "x-oca-geo--419f0ac4-2836-46f0-9985-820f7a4b7abc",
+      "x-oca-asset--fec3de6d-bfc4-4ef3-9f4b-c21aa2d57e7a",
+    ]
+  }
+]

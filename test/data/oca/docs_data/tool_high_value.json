@@ -1,0 +1,18 @@
+[
+      {
+      "type": "tool",
+      "spec_version": "2.1",
+      "id": "tool--d22c9169-f725-4760-a801-4dfc4d1c2676",
+      "created": "2022-03-31T13:00:00.000Z",
+      "modified": "2022-03-31T13:00:00.000Z",
+      "name": "ACME database",
+      "description": "Database used to store enterprise logs and metrics.",
+      "tool_types": ["business-data-repository"],
+      "extensions": {
+        "extension-definition--fb58a27d-32d2-4b8d-9705-e3cfd2d3dcdf": {
+          "extension_type": "property-extension",
+          "high_value_target_attributes": ["stores-data"]
+        }
+      }
+    }
+]

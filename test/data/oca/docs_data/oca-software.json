@@ -1,0 +1,12 @@
+[
+  {
+    "type": "software",
+    "spec_version": "2.1",
+    "id": "software--0c2fe928-11e8-5d42-9183-104e60e3f9a6",
+    "version": "10.0.17763.1 (WinBuild.160101.0800)",
+    "x_product": "Microsoft\u00ae Windows\u00ae Operating System",
+    "x_description": "Host Process for Windows Services",
+    "vendor": "Microsoft Corporation",
+    "name": "svchost.exe"
+  }
+]

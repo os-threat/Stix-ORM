@@ -1,0 +1,128 @@
+[
+  {
+    "id": "observed-data--7805aca6-b29d-4e1a-86b2-ba4eb1110046",
+    "type": "observed-data",
+    "created": "2022-07-15T18:43:10.813Z",
+    "modified": "2022-07-15T18:43:10.813Z",
+    "first_observed": "2022-07-15T18:43:10.813Z",
+    "last_observed": "2022-07-15T18:43:10.813Z",
+    "number_observed": 1,
+    "object_refs": [
+      "mac-addr--c531c16b-cb43-51c7-89f4-6d01507dd6e5",
+      "ipv4-addr--d1f1b1e2-d0a9-5fca-bc1b-adae31c22ad3",
+      "artifact--ca17bcf8-9846-5ab4-8662-75c1bf6e63ee",
+      "user-account--1a9c7df9-1266-5a73-8d67-ceeb4f9d8fd8",
+      "file--7fe91bca-bbdc-5d55-aa55-7fd2204cb2f6",
+      "directory--325be77f-a8bf-5259-8a1d-dbf5984f0134",
+      "process--5f4bbeb7-a991-4057-89cf-ea8f012f5e94",
+      "process--e55d62e7-a6a2-4410-af1d-670807f2f223",
+      "file--1bd39816-c38f-5d1c-a768-0420c397b79d",
+      "x-oca-event--9d1ceecb-a3f4-4005-8cc9-6a6b76a35c9e",
+      "x-oca-asset--430f5edd-6c7e-4f59-a361-a1979887fde3",
+      "directory--cde02145-c164-53f0-ab5a-681e313342e2"
+    ]
+  },
+  {
+    "type": "x-oca-event",
+    "id": "x-oca-event--9d1ceecb-a3f4-4005-8cc9-6a6b76a35c9e",
+    "spec_version": "2.1",
+    "action": "FileCreated",
+    "created": "2022-07-15T18:43:10.813Z",
+    "modified": "2022-07-15T18:43:10.813Z",
+    "file_ref": "10",
+    "host_ref": "x-oca-asset--430f5edd-6c7e-4f59-a361-a1979887fde3",
+    "provider": "EDR",
+    "original_ref": "user-account--1a9c7df9-1266-5a73-8d67-ceeb4f9d8fd8",
+    "user_ref": "user-account--1a9c7df9-1266-5a73-8d67-ceeb4f9d8fd8",
+    "process_ref": "process--5f4bbeb7-a991-4057-89cf-ea8f012f5e94"
+  },
+  {
+    "type": "x-oca-asset",
+    "id": "x-oca-asset--430f5edd-6c7e-4f59-a361-a1979887fde3",
+    "spec_version": "2.1",
+    "created": "2022-07-15T18:43:10.813Z",
+    "modified": "2022-07-15T18:43:10.813Z",
+    "ip_refs": [
+      "ipv4-addr--d1f1b1e2-d0a9-5fca-bc1b-adae31c22ad3"
+    ],
+    "hostname": "host1.example.com",
+    "mac_refs": [
+      "mac-addr--c531c16b-cb43-51c7-89f4-6d01507dd6e5"
+    ]
+  },
+  {
+    "type": "mac-addr",
+    "spec_version": "2.1",
+    "id": "mac-addr--c531c16b-cb43-51c7-89f4-6d01507dd6e5",
+    "value": "12:34:56:78:9a:bc"
+  },
+  {
+    "type": "ipv4-addr",
+    "spec_version": "2.1",
+    "id": "ipv4-addr--d1f1b1e2-d0a9-5fca-bc1b-adae31c22ad3",
+    "value": "192.0.2.0"
+  },
+  {
+    "type": "artifact",
+    "spec_version": "2.1",
+    "id": "artifact--ca17bcf8-9846-5ab4-8662-75c1bf6e63ee",
+    "mime_type": "image/jpeg",
+    "payload_bin": "VBORw0KGgoAAAANSUhEUgAAADI== ..."
+  },
+  {
+    "type": "user-account",
+    "spec_version": "2.1",
+    "id": "user-account--1a9c7df9-1266-5a73-8d67-ceeb4f9d8fd8",
+    "user_id": "S-1-2-3-4",
+    "account_login": "joe@example.com"
+  },
+  {
+    "type": "file",
+    "spec_version": "2.1",
+    "id": "file--7fe91bca-bbdc-5d55-aa55-7fd2204cb2f6",
+    "hashes": {
+      "SHA-1": "114c52257780067e3f8bfab4d2706be6debc0ace"
+    },
+    "name": "chrome.exe",
+    "parent_directory_ref": "directory--325be77f-a8bf-5259-8a1d-dbf5984f0134"
+  },
+  {
+    "type": "directory",
+    "spec_version": "2.1",
+    "id": "directory--325be77f-a8bf-5259-8a1d-dbf5984f0134",
+    "path": "C:\\Program Files\\Google\\Chrome\\Application"
+  },
+  {
+    "type": "process",
+    "spec_version": "2.1",
+    "id": "process--5f4bbeb7-a991-4057-89cf-ea8f012f5e94",
+    "pid": 14068,
+    "command_line": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe --disable-features --enable-features",
+    "creator_user_ref": "user-account--1a9c7df9-1266-5a73-8d67-ceeb4f9d8fd8",
+    "image_ref": "file--7fe91bca-bbdc-5d55-aa55-7fd2204cb2f6",
+    "parent_ref": "process--e55d62e7-a6a2-4410-af1d-670807f2f223"
+  },
+  {
+    "type": "process",
+    "spec_version": "2.1",
+    "id": "process--e55d62e7-a6a2-4410-af1d-670807f2f223",
+    "pid": 7116,
+    "creator_user_ref": "user-account--1a9c7df9-1266-5a73-8d67-ceeb4f9d8fd8"
+  },
+  {
+    "type": "file",
+    "spec_version": "2.1",
+    "id": "file--1bd39816-c38f-5d1c-a768-0420c397b79d",
+    "hashes": {
+      "SHA-1": "223c52257780067e3f8bfab4d2706be6debc0aca"
+    },
+    "name": "example.exe",
+    "parent_directory_ref": "directory--cde02145-c164-53f0-ab5a-681e313342e2"
+  },
+  {
+    "type": "directory",
+    "spec_version": "2.1",
+    "id": "directory--cde02145-c164-53f0-ab5a-681e313342e2",
+    "path": "C:\\Users\\joe\\Downloads"
+  }
+]
