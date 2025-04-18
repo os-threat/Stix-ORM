@@ -14,7 +14,7 @@ from stixorm.module.authorise import authorised_mappings, import_type_factory
 from stixorm.module.parsing.parse_objects import parse
 from stixorm.module.parsing.conversion_decisions import get_embedded_match
 #from stixorm.module.generate_docs import configure_overview_table_docs, object_tables
-from stixorm.module.initialise import sort_layers, load_typeql_data
+from stixorm.module.initialise import sort_layers, load_typeql_data, setup_database, load_schema, load_markings
 from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
 from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
 from stixorm.module.orm.import_utilities import val_tql
@@ -55,6 +55,10 @@ marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
 
 get_ids = 'match $stix-id isa stix-id; get $stix-id;'
 
+schemas = ["definitions/stix21/schema/cti-schema-v2.tql", 
+           "definitions/attack/schema/cti-attack.tql",
+           "definitions/os_threat/schema/cti-os-threat.tql",
+           "definitions/kestrel/schema/cti-oca.tql"]
 
 test_id = "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff"
 marking_id = "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
@@ -91,6 +95,7 @@ def test_generate_docs():
     print("================================================================================")
     print("------------------------ Test Doc Generation ---------------------------------------------")
     #configure_overview_table_docs(object_tables)
+
 
 
 def backdoor_get(stix_id, _composite_filters=None):
@@ -2095,9 +2100,10 @@ if __name__ == '__main__':
     stid1 = "task--7c5751c2-3c18-41bc-900c-685764c960f3"
     stid2 = "file--ec3415cc-5f4f-5ec8-bdb1-6f86996ae66d"
     stid3 = "sighting--300cd92e-d184-4c60-a97b-1759dc6780ed"
+    schema_root = "stixorm/module/"
     oca_path = "test/data/oca/iob/"
     oca = "BehaviorBundle.json"
-    test_initialise()
+    #test_initialise()
     #load_file_list(path1, [f30, f21])
     #load_file(incident + "/human_trigger.json")
     #load_file(mitre + "attack_objects.json")
@@ -2139,3 +2145,4 @@ if __name__ == '__main__':
     #test_get_objects()
     #test_time()
     #extract_sro_iob(oca_path, oca)
+    try_oca_schema(schema_root)
