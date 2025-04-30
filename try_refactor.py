@@ -2145,4 +2145,4 @@ if __name__ == '__main__':
     #test_get_objects()
     #test_time()
     #extract_sro_iob(oca_path, oca)
-    try_oca_schema(schema_root)
+    #try_oca_schema(schema_root)

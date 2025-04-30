@@ -1,0 +1,623 @@
+#
+# OS-Threat Stix Attribute Defiitions, v2.x
+
+define
+###################################
+#
+# STIX Attributes
+#
+##### ################ #####
+
+stix-attribute-string sub attribute, value string, abstract,
+	plays data-marking:marked;
+
+    dict-key sub stix-attribute-string;
+	stix-type sub stix-attribute-string;
+	stix-id sub stix-attribute-string;
+	stix-value sub stix-attribute-string;
+	object-marking-refs sub stix-attribute-string;
+	labels sub stix-attribute-string;
+	langs sub stix-attribute-string;
+	source-name sub stix-attribute-string;
+	description sub stix-attribute-string;
+	url-link sub stix-attribute-string;
+	external-id sub stix-attribute-string;
+	hash-value sub stix-attribute-string;
+	kill-chain-name sub stix-attribute-string;
+	phase-name sub stix-attribute-string;
+	name sub stix-attribute-string;
+	sector sub stix-attribute-string;
+	contact-information sub stix-attribute-string;
+	indicator-type sub stix-attribute-string;
+	pattern sub stix-attribute-string;
+	pattern-type sub stix-attribute-string;
+	pattern-version sub stix-attribute-string;
+	malware-types sub stix-attribute-string;
+	architecture-execution-envs sub stix-attribute-string;
+	implementation-languages sub stix-attribute-string;
+	capabilities sub stix-attribute-string;
+	sample-refs sub stix-attribute-string;
+	object sub stix-attribute-string;
+	threat-actor-type sub stix-attribute-string;
+	aliases sub stix-attribute-string;
+	stix-role sub stix-attribute-string;
+	goals sub stix-attribute-string;
+	sophistication sub stix-attribute-string;
+	resource-level sub stix-attribute-string;
+	primary-motivation sub stix-attribute-string;
+	secondary-motivations sub stix-attribute-string;
+	personal-motivations sub stix-attribute-string;
+	identity-class sub stix-attribute-string;
+	summary sub stix-attribute-string;
+	spec-version sub stix-attribute-string;
+	attribute-key sub stix-attribute-string;
+#	value sub stix-attribute-string;
+	number-subkeys sub stix-attribute-string;
+	objective sub stix-attribute-string;
+	statement sub stix-attribute-string;
+	action sub stix-attribute-string;
+	tool-type sub stix-attribute-string; # OPEN VOCAB?
+	tool-version sub stix-attribute-string;
+	region sub stix-attribute-string; # open vocab
+	country sub stix-attribute-string;
+	administrative-area sub stix-attribute-string;
+	city sub stix-attribute-string;
+	street-address sub stix-attribute-string;
+	postal-code sub stix-attribute-string;
+	infrastructure-types sub stix-attribute-string;
+	context sub stix-attribute-string;
+	product sub stix-attribute-string;
+	version sub stix-attribute-string;
+	configuration-version sub stix-attribute-string;
+	module sub stix-attribute-string;
+	analysis-engine-version sub stix-attribute-string;
+	analysis-definition-version sub stix-attribute-string;
+	result-name sub stix-attribute-string;
+	result sub stix-attribute-string;
+	note-abstract sub stix-attribute-string;
+	content sub stix-attribute-string;
+	report-type sub stix-attribute-string;
+	explanation sub stix-attribute-string;
+	authors sub stix-attribute-string;
+	opinion-enum sub stix-attribute-string;
+	imphash sub stix-attribute-string;
+	magic-number-hex sub stix-attribute-string;
+	pe-type sub stix-attribute-string;
+	name-enc sub stix-attribute-string;
+	mime-type sub stix-attribute-string;
+	payload-bin sub stix-attribute-string;
+	encryption-algorithm sub stix-attribute-string;
+	decryption-key sub stix-attribute-string;
+	rir sub stix-attribute-string;
+	path sub stix-attribute-string;
+	path-enc sub stix-attribute-string;
+	display-name sub stix-attribute-string;
+	content-type sub stix-attribute-string;
+	message-id sub stix-attribute-string;
+	subject sub stix-attribute-string;
+	received-lines sub stix-attribute-string;
+	body sub stix-attribute-string;
+	socket-value sub stix-attribute-string;
+	socket-key sub stix-attribute-string;
+	HTTP-value sub stix-attribute-string;
+	HTTP-key sub stix-attribute-string;
+	IPFIX-value sub stix-attribute-string;
+	IPFIX-key sub stix-attribute-string;
+	relationship-type sub stix-attribute-string;
+	content-disposition sub stix-attribute-string;
+	sid sub stix-attribute-string;
+	pdfid0 sub stix-attribute-string;
+	pdfid1 sub stix-attribute-string;
+	exif-tags sub stix-attribute-string;
+	machine-hex sub stix-attribute-string;
+	pointer-to-symbol-table-hex sub stix-attribute-string;
+	characteristics-hex sub stix-attribute-string;
+	loader-flags-hex sub stix-attribute-string;
+	dll-characteristics-hex sub stix-attribute-string;
+	win32-version-value-hex sub stix-attribute-string;
+	magic-hex sub stix-attribute-string;
+	protocols sub stix-attribute-string;
+	ipfix sub stix-attribute-string;
+	icmp-type-hex sub stix-attribute-string;
+	icmp-code-hex sub stix-attribute-string;
+	request-method sub stix-attribute-string;
+	request-value sub stix-attribute-string;
+	request-version sub stix-attribute-string;
+	request-header sub stix-attribute-string;
+	address-family sub stix-attribute-string;
+	options sub stix-attribute-string;
+	socket-type sub stix-attribute-string;
+	src-flags-hex sub stix-attribute-string;
+	dst-flags-hex sub stix-attribute-string;
+	checksum-hex sub stix-attribute-string;
+	subsystem-hex sub stix-attribute-string;
+	cwd sub stix-attribute-string;
+	command-line sub stix-attribute-string;
+	priority sub stix-attribute-string;
+	owner-sid sub stix-attribute-string;
+	window-title sub stix-attribute-string;
+	integrity-level sub stix-attribute-string;
+	service-name sub stix-attribute-string;
+	display-name sub stix-attribute-string;
+	group-name sub stix-attribute-string;
+	start-type sub stix-attribute-string;
+	service-type sub stix-attribute-string;
+	service-status sub stix-attribute-string;
+	cpe sub stix-attribute-string;
+	swid sub stix-attribute-string;
+	language sub stix-attribute-string;
+	vendor sub stix-attribute-string;
+	user-id sub stix-attribute-string;
+	credential sub stix-attribute-string;
+	account-login sub stix-attribute-string;
+	account-type sub stix-attribute-string;
+	display-name sub stix-attribute-string;
+	unix-group sub stix-attribute-string;
+	home-dir sub stix-attribute-string;
+	shell sub stix-attribute-string;
+	data-type sub stix-attribute-string;
+	serial-number sub stix-attribute-string;
+	signature-algorithm sub stix-attribute-string;
+	issuer sub stix-attribute-string;
+	subject-public-key-algorithm sub stix-attribute-string;
+	subject-public-key-modulus sub stix-attribute-string;
+	basic-constraints sub stix-attribute-string;
+	name-constraints sub stix-attribute-string;
+	policy-constraints sub stix-attribute-string;
+	key-usage sub stix-attribute-string;
+	extended-key-usage sub stix-attribute-string;
+	subject-key-identifier sub stix-attribute-string;
+	authority-key-identifier sub stix-attribute-string;
+	subject-alternative-name sub stix-attribute-string;
+	issuer-alternative-name sub stix-attribute-string;
+	subject-directory-attributes sub stix-attribute-string;
+	crl-distribution-points sub stix-attribute-string;
+	inhibit-any-policy sub stix-attribute-string;
+	certificate-policies sub stix-attribute-string;
+	policy-mappings sub stix-attribute-string;
+	data sub stix-attribute-string;
+	comment sub stix-attribute-string;
+
+stix-attribute-integer sub attribute, value long, abstract,
+	plays data-marking:marked;
+
+	gid sub stix-attribute-integer;
+	image-height sub stix-attribute-integer;
+	image-width sub stix-attribute-integer;
+	bits-per-pixel sub stix-attribute-integer;
+	confidence sub stix-attribute-integer;
+	number-of-sections sub stix-attribute-integer;
+	number-of-symbols sub stix-attribute-integer;
+	size-of-optional-header sub stix-attribute-integer;
+	major-linker-version sub stix-attribute-integer;
+	minor-linker-version sub stix-attribute-integer;
+	size-of-code sub stix-attribute-integer;
+	size-of-initialized-data sub stix-attribute-integer;
+	size-of-uninitialized-data sub stix-attribute-integer;
+	address-of-entry-point sub stix-attribute-integer;
+	base-of-code sub stix-attribute-integer;
+	base-of-data sub stix-attribute-integer;
+	image-base sub stix-attribute-integer;
+	section-alignment sub stix-attribute-integer;
+	file-alignment sub stix-attribute-integer;
+	major-os-version sub stix-attribute-integer;
+	minor-os-version sub stix-attribute-integer;
+	major-image-version sub stix-attribute-integer;
+	minor-image-version sub stix-attribute-integer;
+	major-subsystem-version sub stix-attribute-integer;
+	minor-subsystem-version sub stix-attribute-integer;
+	size-of-image sub stix-attribute-integer;
+	size-of-headers sub stix-attribute-integer;
+	size-of-stack-reserve sub stix-attribute-integer;
+	size-of-stack-commit sub stix-attribute-integer;
+	size-of-heap-reserve sub stix-attribute-integer;
+	size-of-heap-commit sub stix-attribute-integer;
+	number-of-rva-and-sizes sub stix-attribute-integer;
+	number-observed sub stix-attribute-integer;
+	size sub stix-attribute-integer;
+	src-port sub stix-attribute-integer;
+	dst-port sub stix-attribute-integer;
+	src-byte-count sub stix-attribute-integer;
+	dst-byte-count sub stix-attribute-integer;
+	src-packets sub stix-attribute-integer;
+	dst-packets sub stix-attribute-integer;
+
+
+
+stix-attribute-double sub attribute, value double, abstract,
+	plays data-marking:marked;
+
+	latitude sub stix-attribute-double;
+	longitude sub stix-attribute-double;
+	precision sub stix-attribute-double;
+	sighting-count sub stix-attribute-double;
+	number sub stix-attribute-double;
+	entropy sub stix-attribute-double;
+	message-body-length sub stix-attribute-double;
+	socket-descriptor sub stix-attribute-double;
+	socket-handle sub stix-attribute-double;
+	pid sub stix-attribute-double;
+	subject-public-key-exponent sub stix-attribute-double;
+
+stix-attribute-boolean sub attribute, value boolean, abstract,
+	plays data-marking:marked;
+
+	revoked sub stix-attribute-boolean;
+	is-family sub stix-attribute-boolean;
+	is-multipart sub stix-attribute-boolean;
+	is-active sub stix-attribute-boolean;
+	is-blocking sub stix-attribute-boolean;
+	is-listening sub stix-attribute-boolean;
+	is-hidden sub stix-attribute-boolean;
+	aslr-enabled sub stix-attribute-boolean;
+	dep-enabled sub stix-attribute-boolean;
+	is-service-account sub stix-attribute-boolean;
+	is-privileged sub stix-attribute-boolean;
+	can-escalate-privs sub stix-attribute-boolean;
+	is-disabled sub stix-attribute-boolean;
+	is-self-signed sub stix-attribute-boolean;
+	defanged sub stix-attribute-boolean;
+	is-optimized sub stix-attribute-boolean;
+
+
+stix-attribute-timestamp sub attribute, value datetime, abstract,
+	plays data-marking:marked;
+
+	date sub stix-attribute-timestamp;
+	submitted sub stix-attribute-timestamp;
+	analysis-started sub stix-attribute-timestamp;
+	analysis-ended sub stix-attribute-timestamp;
+	published sub stix-attribute-timestamp;
+	ctime sub stix-attribute-timestamp;
+	mtime sub stix-attribute-timestamp;
+	atime sub stix-attribute-timestamp;
+	time-date-stamp sub stix-attribute-timestamp;
+	start sub stix-attribute-timestamp;
+	end sub stix-attribute-timestamp;
+	created-time sub stix-attribute-timestamp;
+	account-created sub stix-attribute-timestamp;
+	account-expires sub stix-attribute-timestamp;
+	credential-last-changed sub stix-attribute-timestamp;
+	account-first-login sub stix-attribute-timestamp;
+	account-last-login sub stix-attribute-timestamp;
+	validity-not-before sub stix-attribute-timestamp;
+	validity-not-after sub stix-attribute-timestamp;
+	private-key-usage-period-not-before sub stix-attribute-timestamp;
+	private-key-usage-period-not-after sub stix-attribute-timestamp;
+	start-time sub stix-attribute-timestamp;
+	stop-time sub stix-attribute-timestamp;
+	created sub stix-attribute-timestamp;
+	modified sub stix-attribute-timestamp;
+	valid-from sub stix-attribute-timestamp;
+	valid-until sub stix-attribute-timestamp;
+	modified-time sub stix-attribute-timestamp;
+	first-seen sub stix-attribute-timestamp;
+	last-seen sub stix-attribute-timestamp;
+	first-observed sub stix-attribute-timestamp;
+	last-observed sub stix-attribute-timestamp;
+
+
+custom-attribute sub attribute, value string,
+	plays data-marking:marked,
+	owns attribute-type;
+
+attribute-type sub attribute, value string;
+
+#################################################
+#
+# ATTACK Attributes
+#
+####################################################
+    # Attribute Definitions
+    mitre-attribute-string sub stix-attribute-string, abstract;
+        x-mitre-version sub mitre-attribute-string;
+        x-mitre-domains sub mitre-attribute-string;
+        x-mitre-contributors sub mitre-attribute-string;
+        x-mitre-attack-spec-version sub mitre-attribute-string;
+        tactic-refs sub mitre-attribute-string;
+        x-mitre-shortname sub mitre-attribute-string;
+        x-mitre-detection sub mitre-attribute-string;
+        x-mitre-platforms sub mitre-attribute-string;
+        x-mitre-data-sources sub mitre-attribute-string;
+        x-mitre-system-requirements sub mitre-attribute-string;
+        x-mitre-tactic-type sub mitre-attribute-string;
+        x-mitre-permissions-required sub mitre-attribute-string;
+        x-mitre-effective-permissions sub mitre-attribute-string;
+        x-mitre-defense-bypassed sub mitre-attribute-string;
+        x-mitre-impact-type sub mitre-attribute-string;
+        x-mitre-aliases sub mitre-attribute-string;
+        x-mitre-collection-layers sub mitre-attribute-string;
+        x-mitre-first-seen-citation sub mitre-attribute-string;
+        x-mitre-last-seen-citation sub mitre-attribute-string;
+
+    mitre-attribute-boolean sub stix-attribute-boolean, abstract;
+        x-mitre-is-subtechnique sub mitre-attribute-boolean;
+        x-mitre-deprecated sub mitre-attribute-boolean;
+        x-mitre-remote-support sub mitre-attribute-boolean;
+        x-mitre-network-requirements sub mitre-attribute-boolean;
+
+    mitre-attribute-timestamp sub stix-attribute-timestamp, abstract;
+        object-modified sub mitre-attribute-timestamp;
+
+ ############################################################
+ #
+ # OCA Attributes
+ #
+ ###########################################################
+
+
+    # String
+	    result sub  stix-attribute-string;
+	    name sub  stix-attribute-string;
+	    sub-category sub  stix-attribute-string;
+	    realm sub  stix-attribute-string;
+	    application-id sub  stix-attribute-string;
+	    user-id sub  stix-attribute-string;
+	    application-type sub  stix-attribute-string;
+	    browser-agent sub  stix-attribute-string;
+	    application-name sub  stix-attribute-string;
+	    cause sub  stix-attribute-string;
+	    messageid sub  stix-attribute-string;
+	    target sub  stix-attribute-string;
+	    targetid sub  stix-attribute-string;
+	    targetid-realm sub  stix-attribute-string;
+	    targetid-username sub  stix-attribute-string;
+	    performedby-clientname sub  stix-attribute-string;
+	    performedby-realm sub  stix-attribute-string;
+	    performedby-username sub  stix-attribute-string;
+	    continent-name sub  stix-attribute-string;
+	    country-iso-code sub  stix-attribute-string;
+	    country-name sub  stix-attribute-string;
+	    city-name sub  stix-attribute-string;
+	    policy-action sub  stix-attribute-string;
+	    policy-name sub  stix-attribute-string;
+	    rule-name sub  stix-attribute-string;
+	    decision-reason sub  stix-attribute-string;
+	    location-lat sub  stix-attribute-string;
+	    location-lon sub  stix-attribute-string;
+	    rick-level sub  stix-attribute-string;
+	    risk-score sub  stix-attribute-string;
+	    deviceid sub  stix-attribute-string;
+	    is-device-compliant sub  stix-attribute-string;
+	    is-device-managed sub  stix-attribute-string;
+	    category sub  stix-attribute-string;
+	    code sub  stix-attribute-string;
+	    module sub  stix-attribute-string;
+	    provider sub  stix-attribute-string;
+	    agent sub  stix-attribute-string;
+	    timezone sub  stix-attribute-string;
+	    dataset sub  stix-attribute-string;
+	    pipe_name sub  stix-attribute-string;
+        device-id sub  stix-attribute-string;
+        hostname sub  stix-attribute-string;
+        architecture sub  stix-attribute-string;
+        uptime sub  stix-attribute-string;
+        host-type sub  stix-attribute-string;
+	    tactic-id sub  stix-attribute-string;
+	    container-id sub  stix-attribute-string;
+	    image-name sub  stix-attribute-string;
+	    image-id sub  stix-attribute-string;
+	    container-type sub  stix-attribute-string;
+	    pod-type sub  stix-attribute-string;
+        zone sub  stix-attribute-string;
+        alias sub  stix-attribute-string;
+        interface-id sub  stix-attribute-string;
+	    tactic-id sub  stix-attribute-string;
+	    tactic-url sub  stix-attribute-string;
+	    tactic-name sub  stix-attribute-string;
+	    technique-id sub  stix-attribute-string;
+	    technique-url sub  stix-attribute-string;
+	    technique-name sub  stix-attribute-string;
+	    url-string sub  stix-attribute-string;
+	    finding-type sub  stix-attribute-string;
+	    x-window-title sub  stix-attribute-string;
+	    alert-id sub  stix-attribute-string;
+	    source-device sub  stix-attribute-string;
+	    dst-device sub  stix-attribute-string;
+	    severity sub  stix-attribute-string;
+	    confidence-string sub  stix-attribute-string;
+	    rule-trigger-count sub  stix-attribute-string;
+	    rule-names sub  stix-attribute-string;
+	    event-count sub  stix-attribute-string;
+	    time-observed sub  stix-attribute-string;
+        x-domain sub  stix-attribute-string;
+        x-hash sub  stix-attribute-string;
+        x-product sub  stix-attribute-string;
+        x-descriptio sub  stix-attribute-string;
+        x-window-title sub  stix-attribute-string;
+        x-thread-id sub  stix-attribute-string;
+        x-exit-code sub  stix-attribute-string;
+        x-uptime sub  stix-attribute-string;
+        x-unique-id sub  stix-attribute-string;
+        x-tags sub  stix-attribute-string;
+        x-name sub  stix-attribute-string;
+        x-application sub  stix-attribute-string;
+        x-direction sub  stix-attribute-string;
+        x-community-id sub  stix-attribute-string;
+        x-atributes sub  stix-attribute-string;
+        x-extension sub  stix-attribute-string;
+        x-path sub  stix-attribute-string;
+        x-target-path sub  stix-attribute-string;
+        x-type sub  stix-attribute-string;
+        x-win-drive-letter sub  stix-attribute-string;
+        high-value-target-attributes sub  stix-attribute-string;
+        detection-types sub  stix-attribute-string;
+        detector-data-categories sub  stix-attribute-string;
+        detector-data-sources sub  stix-attribute-string;
+        analytic-type sub  stix-attribute-string;
+        analytic-rule sub  stix-attribute-string;
+        data-source-value sub  stix-attribute-string;
+        playbook_id sub  stix-attribute-string;
+        playbook_creation_time sub  stix-attribute-string;
+        playbook_modification_time sub  stix-attribute-string;
+        is-playbook-template sub  stix-attribute-string;
+        playbook-format sub  stix-attribute-string;
+        playbook-type sub  stix-attribute-string;
+        playbook-impact sub  stix-attribute-string;
+        playbook-severity sub  stix-attribute-string;
+        playbook-priority sub  stix-attribute-string;
+        playbook-bin sub  stix-attribute-string;
+        playbook-url sub  stix-attribute-string;
+        playbook-value sub  stix-attribute-string;
+        platform-value sub  stix-attribute-string;
+        file-group sub  stix-attribute-string;
+	    city-name sub  stix-attribute-string;
+	    continent-name sub  stix-attribute-string;
+	    country-iso-code sub  stix-attribute-string;
+	    operation-type sub stix-attribute-string;
+	    computer sub stix-attribute-string;
+	    new-value sub stix-attribute-string;
+	    win-event-code sub stix-attribute-string;
+	    process-id sub stix-attribute-string;
+	    process-name sub stix-attribute-string;
+        file-device sub stix-attribute-string;
+        inode sub stix-attribute-string;
+        mode sub stix-attribute-string;
+        domain sub stix-attribute-string;
+	    win-event-code sub stix-attribute-string;
+	    creator-user sub stix-attribute-string;
+	    connections sub stix-attribute-string;
+	    rita-score sub stix-attribute-string;
+	    computer sub stix-attribute-string;
+        status sub stix-attribute-string;
+        subject_name sub stix-attribute-string;
+        cpe sub stix-attribute-string;
+        valid-until sub stix-attribute-string;
+        vendor sub stix-attribute-string;
+        vendor-url sub stix-attribute-string;
+        product sub stix-attribute-string;
+        product-url sub stix-attribute-string;
+        behavior-class sub stix-attribute-string;
+        tactic-type sub stix-attribute-string;
+        technique-type sub stix-attribute-string;
+        first-seen sub stix-attribute-string;
+
+# Integer
+	    duration sub stix-attribute-integer;
+	    severity sub stix-attribute-integer;
+	    start-integer  sub stix-attribute-integer;
+	    end-integer sub  stix-attribute-integer;
+	    magnitude  sub stix-attribute-integer;
+
+# Double
+	    privileged sub stix-attribute-double;
+	    float-confidence sub stix-attribute-double;
+	    lon sub stix-attribute-double;
+	    lat sub stix-attribute-double;
+
+# Boolean
+        trusted sub stix-attribute-double;
+        valid sub stix-attribute-double;
+        exists sub stix-attribute-double;
+
+
+
+##############################################
+#
+# OS-Threat Attributes
+#  Definitions
+############################################
+    paid sub stix-attribute-boolean;
+    free sub stix-attribute-boolean;
+    malicious sub stix-attribute-boolean;
+    blocked sub stix-attribute-boolean;
+
+    status sub stix-attribute-string;
+    end-time-fidelity sub stix-attribute-string;
+    start-time-fidelity sub stix-attribute-string;
+    event-types sub stix-attribute-string;
+    goal sub stix-attribute-string;
+    detection-methods sub stix-attribute-string;
+    detection-system sub stix-attribute-string;
+    detection-rule sub stix-attribute-string;
+    state-change-type sub stix-attribute-string;
+    impact-category sub stix-attribute-string;
+    recoverability sub stix-attribute-string;
+    information-type sub stix-attribute-string;
+    loss-type sub stix-attribute-string;
+    impact-type sub stix-attribute-string;
+    alteration sub stix-attribute-string;
+    variety sub stix-attribute-string;
+    currrency sub stix-attribute-string;
+    currency-actual sub stix-attribute-string;
+    asset-type sub stix-attribute-string;
+    traceability-type sub stix-attribute-string;
+    evidence-type sub stix-attribute-string;
+    source sub stix-attribute-string;
+    outcome sub stix-attribute-string;
+    task-types sub stix-attribute-string;
+    step-type sub stix-attribute-string;
+    error sub stix-attribute-string;
+    determination sub stix-attribute-string;
+    extension-type sub stix-attribute-string;
+    investigation-status sub stix-attribute-string;
+    incident-types sub stix-attribute-string;
+    log sub stix-attribute-string;
+    system-id sub stix-attribute-string;
+    format sub stix-attribute-string;
+    context-value sub stix-attribute-string;
+    channel sub stix-attribute-string;
+    link-url sub stix-attribute-string;
+    enrichment-value sub stix-attribute-string;
+    playbook-id sub stix-attribute-string;
+    hunt-rule sub stix-attribute-string;
+    framework sub stix-attribute-string;
+    domain sub stix-attribute-string;
+    comparison sub stix-attribute-string;
+    comparison-approach sub stix-attribute-string;
+    payload sub stix-attribute-string;
+    person-name sub stix-attribute-string;
+    person-context sub stix-attribute-string;
+    report-submission sub stix-attribute-string;
+    sequence-type sub stix-attribute-string;
+    anecdote-value sub stix-attribute-string;
+    contact-number sub stix-attribute-string;
+    contact-number-type sub stix-attribute-string;
+    digital-contact-type sub stix-attribute-string;
+    first-name sub stix-attribute-string;
+    last-name sub stix-attribute-string;
+    middle-name sub stix-attribute-string;
+    prefix sub stix-attribute-string;
+    suffix sub stix-attribute-string;
+    team sub stix-attribute-string;
+
+    event-seq sub stix-attribute-integer;
+    criticality sub stix-attribute-integer;
+    record-count sub stix-attribute-integer;
+    record-size sub stix-attribute-integer;
+    impacted-availability sub stix-attribute-integer;
+    score-value sub stix-attribute-integer;
+    int-priority sub stix-attribute-integer;
+    computers-mobile-count sub stix-attribute-integer;
+    computers-personal-count sub stix-attribute-integer;
+    computers-server-count sub stix-attribute-integer;
+    customer-count sub stix-attribute-integer;
+    customer-individual-count sub stix-attribute-integer;
+    customer-organization-count sub stix-attribute-integer;
+    domain-controller-count sub stix-attribute-integer;
+    employee-count sub stix-attribute-integer;
+    group-count sub stix-attribute-integer;
+    ics-actuator-count sub stix-attribute-integer;
+    ics-engineering-workstation-count sub stix-attribute-integer;
+    ics-historian-count sub stix-attribute-integer;
+    ics-hmi-count sub stix-attribute-integer;
+    ics-other-count sub stix-attribute-integer;
+    ics-plc-count sub stix-attribute-integer;
+    ics-safety-system-count sub stix-attribute-integer;
+    ics-sensor-count sub stix-attribute-integer;
+    individual-count sub stix-attribute-integer;
+    network-device-count sub stix-attribute-integer;
+    organization-count sub stix-attribute-integer;
+    system-count sub stix-attribute-integer;
+    vehicles-count sub stix-attribute-integer;
+
+
+    conversion-rate sub stix-attribute-double;
+    max-amount sub stix-attribute-double;
+    min-amount sub stix-attribute-double;
+
+    end-time sub stix-attribute-timestamp;
+    conversion-time sub stix-attribute-timestamp;
+    last-update sub stix-attribute-timestamp;
+    report-date sub stix-attribute-timestamp;
+
