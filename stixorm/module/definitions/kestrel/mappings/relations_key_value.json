@@ -3,7 +3,7 @@
         "name": "platforms",
         "typeql": "platforms",
         "owner": "behavior-head",
-        "pointed-to": "platform",
+        "pointed_to": "platform",
         "key": "platform-key",
         "value": "platform-value"
     },
@@ -11,7 +11,7 @@
         "name": "playbooks",
         "typeql": "playbooks",
         "owner": "coa-ext",
-        "pointed-to": "playbook-detail",
+        "pointed_to": "playbook-detail",
         "key": "playbook-key",
         "value": "playbook-value"
     }
