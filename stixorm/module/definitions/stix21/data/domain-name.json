@@ -1,1 +1,4 @@
-{"value": "stix-value", "resolves_to_refs": ""}
+{
+  "value": "stix-value",
+  "resolves_to_refs": ""
+}

@@ -1,1 +1,8 @@
-{"path": "path", "path_enc": "path-enc", "ctime": "ctime", "mtime": "mtime", "atime": "atime", "contains_refs": ""}
+{
+  "path": "path",
+  "path_enc": "path-enc",
+  "ctime": "ctime",
+  "mtime": "mtime",
+  "atime": "atime",
+  "contains_refs": ""
+}
