@@ -77,8 +77,8 @@
     "pointed-to": "pebinary"
   },
   {
-    "stix": "windows-pe-section-type",
-    "object": "windows-pe-section",
+    "stix": "sections",
+    "object": "windows-pe-section-type",
     "relation": "sections",
     "owner": "pebinary",
     "pointed-to": "pe-section"
