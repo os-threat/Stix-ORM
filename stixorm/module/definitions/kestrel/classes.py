@@ -320,7 +320,6 @@ class OCAFile(_Observable):
         ('x_win_drive_letter', StringProperty()),
         ('x_software_ref', ReferenceProperty(valid_types='software', spec_version='2.1')),
         ('x_code_signature', EmbeddedObjectProperty(type=CodeSignatureSubObject)),
-        ('parent_directory_ref', ReferenceProperty(valid_types='directory', spec_version='2.1')),
         ('hashes', HashesProperty(HASHING_ALGORITHM, spec_version="2.1")),
         ('size', IntegerProperty(min=0)),
         ('name', StringProperty()),
