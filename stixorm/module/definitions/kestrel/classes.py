@@ -902,7 +902,7 @@ class OCAEvent(_Observable):
         ('registry_ref',  ReferenceProperty(valid_types='windows-registry-key', spec_version='2.1')),
         ('network_ref',  ReferenceProperty(valid_types='network-traffic', spec_version='2.1')),
         ('ip_refs', ListProperty(ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr'], spec_version='2.1'))),
-        ('user_ref', ReferenceProperty(valid_types='tagging', spec_version='2.1')),
+        ('user_ref', ReferenceProperty(valid_types='user-account', spec_version='2.1')),
         ('severity', IntegerProperty()),
         ('timezone', StringProperty()),
         ('dataset', StringProperty()),
