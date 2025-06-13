@@ -301,7 +301,7 @@
   {
     "type":  "x-ibm-ttp-tagging",
     "typeql": "oca-tagging",
-    "class": "IBMTagging",
+    "class": "OCATagging",
     "object": "sco",
     "url": "",
     "doc_url": "",

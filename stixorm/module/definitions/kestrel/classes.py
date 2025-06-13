@@ -715,7 +715,7 @@ class IBMTaggingExt(_Extension):
     ])
 
 
-class IBMTagging(_Observable):
+class OCATagging(_Observable):
     """For more detailed information on this object's properties, see
     `the xxxxxxxxx`__.
     """
