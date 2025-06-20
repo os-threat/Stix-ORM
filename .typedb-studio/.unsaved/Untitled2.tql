@@ -1,0 +1,7 @@
+match $file isa file,
+        has stix-id "file--a1e4a735-583e-5490-8c3b-ce8f2048fb59",
+        has $b;
+      $embedded_object isa stix-core-object,
+        has stix-id $stix_id2;
+      $emb (owner:$file, pointed-to:$embedded_object) isa embedded;
+        get;

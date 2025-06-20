@@ -23,6 +23,7 @@ from stixorm.module.typedb_lib.model.definitions import DefinitionName
 stix_models = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
 attack_models = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
 os_threat_models = get_definition_factory_instance().lookup_definition(DefinitionName.OS_THREAT)
+oca_models = get_definition_factory_instance().lookup_definition(DefinitionName.KESTREL)
 import copy
 
 import logging

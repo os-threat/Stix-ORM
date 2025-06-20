@@ -699,7 +699,7 @@ class OCAFinding(_Observable):
 
 
 
-class IBMTaggingExt(_Extension):
+class OCATaggingExt(_Extension):
     """For more detailed information on this object's properties, see
     `https://github.com/os-threat/oca-stix-extensions/blob/main/2.x/SCO/x-ibm-ttp-tagging.md
     """

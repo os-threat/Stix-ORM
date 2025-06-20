@@ -1,0 +1,10 @@
+match 
+   $seq isa sequence,
+      has stix-id "sequence--19ee798d-0bdf-4ff1-baad-978f224a5b63",
+      has $p;
+    $ext isa stix-sub-object, has $q;
+    $emb (owner:$seq, pointed-to:$ext) isa embedded;
+    $obj isa stix-domain-object,
+      has $o;
+    $emb2 (owner:$seq, pointed-to:$obj) isa embedded;
+get;

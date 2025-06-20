@@ -325,7 +325,7 @@ define
 
 
     ##############################
-    # OCA Extended Network Traffic Object
+    # OCA Custom Network Traffic Object
     ################################
     # OCA Network Traffic VLan
     vlan sub stix-sub-object,
@@ -372,7 +372,8 @@ define
         owns x-exit-code,
         owns x-uptime,
         owns x-unique-id,
-        owns x-tags;
+        owns x-tags,
+        plays process-extension:process-base;
 
 
     ##############################

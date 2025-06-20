@@ -312,7 +312,7 @@
   {
     "type":  "mitre-attack-ext",
     "typeql": "tagging-ext",
-    "class": "IBMTaggingExt",
+    "class": "OCATaggingExt",
     "object": "sub",
     "url": "",
     "doc_url": "",

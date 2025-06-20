@@ -19,8 +19,8 @@ from stixorm.module.definitions.kestrel.classes import (
     UnixFileSubObject, CodeSignatureSubObject, OCAFileExt, OCAFile,
     OCANetworkTrafficRITAExt, NameRefSubObject, DNSExt, NetworkTrafficVLanSubObject,
     OCANetworkTraffic, OCAProcess, OCAProcessExt, OCASoftware, UserGroupSubObject,
-    OCAUserAccount, OCAWindowsRegistryKeyExt, OCAFinding, IBMTaggingExt,
-    IBMTagging, OCAIntefaceSubObject, OCATrafficSubObject, OCAPodExt,
+    OCAUserAccount, OCAWindowsRegistryKeyExt, OCAFinding, OCATaggingExt,
+    OCATagging, OCAIntefaceSubObject, OCATrafficSubObject, OCAPodExt,
     OCAContainerExt, OCAAsset, OCAIAMExt, OCACoordinatesSubObject, OCAGeo
 )
 
@@ -39,7 +39,7 @@ class_model["sco"] = {
     "OCASoftware": OCASoftware,
     "OCAUserAccount": OCAUserAccount,
     "OCAFinding": OCAFinding,
-    "IBMTagging": IBMTagging,
+    "OCATagging": OCATagging,
     "OCAAsset": OCAAsset,
     "OCAGeo": OCAGeo
 }
@@ -61,7 +61,7 @@ class_model["sub"] = {
     "OCAProcessExt": OCAProcessExt,
     "UserGroupSubObject": UserGroupSubObject,
     "OCAWindowsRegistryKeyExt": OCAWindowsRegistryKeyExt,
-    "IBMTaggingExt": IBMTaggingExt,
+    "OCATaggingExt": OCATaggingExt,
     "OCAIntefaceSubObject": OCAIntefaceSubObject,
     "OCATrafficSubObject": OCATrafficSubObject,
     "OCAPodExt": OCAPodExt,

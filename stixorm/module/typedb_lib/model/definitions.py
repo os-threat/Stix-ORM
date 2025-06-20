@@ -20,8 +20,8 @@ class ImportTypeToDefinitionMapper():
         lookup = {
             "ATTACK": DefinitionName.ATTACK,
             "CACAO": DefinitionName.CACAO,
-            "kestrel": DefinitionName.KESTREL,
-            "os_threat": DefinitionName.OS_THREAT,
+            "KESTREL": DefinitionName.KESTREL,
+            "OS_THREAT": DefinitionName.OS_THREAT,
             "STIX21": DefinitionName.STIX_21
         }
         return lookup.get(import_type, None)
