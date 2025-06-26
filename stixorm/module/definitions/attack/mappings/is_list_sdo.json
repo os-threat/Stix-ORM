@@ -61,6 +61,10 @@
     "x_mitre_collection_layers"
   ],
   "data-component": [],
+  "attack-asset": [
+    "x_mitre_sectors",
+    "x_mitre_related_assets"
+  ],
   "collection": [
     "object_marking_refs",
     "x_mitre_contents"

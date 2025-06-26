@@ -2,16 +2,17 @@
 # -*- coding: utf-8 -*-
 
 """
-Loader module for all STIX data model
+Loader module for all stix data model
 """
 
-__author__ = "Paolo Di Prodi"
-__credits__ = ["Brett Forbes"]
-__license__ = "GPL"
+__author__ = "Brett Forbes"
+__credits__ = ["Paolo Di Prodi"]
+__license__ = "Apache-2.0"
 __version__ = "0.1.0"
 __maintainer__ = "Paolo Di Prodi"
-__email__ = "paolo@priam.ai"
+__email__ = "paolo@osthreat.com"
 __status__ = "Production"
+
 
 import json
 from glob import glob
@@ -22,7 +23,7 @@ import os
 from pathlib import Path
 from stixorm.module.definitions.stix21.classes import (
     Note, ObservedData, Incident, Report, Relationship, Sighting, Identity, CourseOfAction, Tool,
-    File, NetworkTraffic
+    File, NetworkTraffic, ExtensionDefinition
 )
 from stix2.v21.sdo import (
     AttackPattern, Campaign, CustomObject, Grouping,
@@ -70,7 +71,8 @@ class_model["sdo"] = {
     "ThreatActor":ThreatActor,
     "Tool":Tool,
     "Vulnerability":Vulnerability,
-    "Bundle": Bundle
+    "Bundle": Bundle,
+	"ExtensionDefinition": ExtensionDefinition
 }
 class_model["sub"] = {
     "AlternateDataStream":AlternateDataStream,

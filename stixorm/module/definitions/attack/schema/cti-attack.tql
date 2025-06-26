@@ -19,6 +19,10 @@
 # under the License.
 #
 define
+    # Matrix embedded Relation
+    tactic-refs sub embedded,
+		relates a-tactic as pointed-to,
+		relates a-matrix as owner;
 
     # Matrices - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#matrices 
     matrix sub stix-domain-object,
@@ -29,11 +33,11 @@ define
         owns x-mitre-domains,
         owns x-mitre-attack-spec-version,
         owns x-mitre-deprecated,
-        owns tactic-refs,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
-        plays obj-ref:content;
+        plays obj-ref:content
+        plays tactic-refs:a-matrix;
 
     # Tactics - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#tactics
     tactic sub stix-domain-object,
@@ -48,7 +52,8 @@ define
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
-        plays obj-ref:content;
+        plays obj-ref:content,
+        plays tactic-refs:a-tactic;
 
     # Techniques - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#techniques
     technique sub attack-pattern,
@@ -167,6 +172,30 @@ define
         plays x-mitre-data-source-ref:component,
         plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content;
+
+    # Attack Asset - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#assets
+    # Related Asset Sub Object    
+    related-asset sub stix-sub-object,
+        owns name,
+        owns description,
+        owns related-asset-sectors,
+        plays x-mitre-related-assets:related;
+    # related assets relation
+    x-mitre-related-assets sub embedded,
+        relates related as pointed-to,
+        relates asset as owner;
+    # Attack Asset - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#assets
+    attack-asset sub stix-domain-object,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        owns x-mitre-sectors,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version,
+        plays x-mitre-modified-by-ref:modified,
+        plays x-mitre-related-assets:asset;
 
     # Campaigns - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#campaigns
     attack-campaign sub campaign,
@@ -351,6 +380,8 @@ define
         x-mitre-collection-layers sub mitre-attribute-string;
         x-mitre-first-seen-citation sub mitre-attribute-string;
         x-mitre-last-seen-citation sub mitre-attribute-string;
+        x-mitre-sectors sub mitre-attribute-string;
+        related-asset-sectors sub mitre-attribute-string;
 
     mitre-attribute-boolean sub stix-attribute-boolean, abstract;
         x-mitre-is-subtechnique sub mitre-attribute-boolean;

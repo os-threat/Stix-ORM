@@ -2,16 +2,17 @@
 # -*- coding: utf-8 -*-
 
 """
-Loader module for all ATT&CK data model
+Loader module for all attack data model
 """
 
 __author__ = "Brett Forbes"
 __credits__ = ["Paolo Di Prodi"]
-__license__ = "GPL"
+__license__ = "Apache-2.0"
 __version__ = "0.1.0"
 __maintainer__ = "Paolo Di Prodi"
-__email__ = "paolo@priam.ai"
+__email__ = "paolo@osthreat.com"
 __status__ = "Production"
+
 
 
 
@@ -19,7 +20,7 @@ __status__ = "Production"
 from stixorm.module.definitions.attack.classes import (
     Matrix, Tactic, Technique, SubTechnique, Mitigation, Group, SoftwareMalware,
     SoftwareTool, DataSource, DataComponent, AttackCampaign, Collection,
-    ObjectVersion, AttackRelation, AttackMarking, AttackIdentity
+    ObjectVersion, AttackRelation, AttackMarking, AttackIdentity, AttackAsset
 )
 name = "attack"
 class_model={}
@@ -36,7 +37,8 @@ class_model["sdo"] = {
     "DataComponent": DataComponent,
     "AttackCampaign": AttackCampaign,
     "Collection": Collection,
-    "AttackIdentity": AttackIdentity
+    "AttackIdentity": AttackIdentity,
+    "AttackAsset": AttackAsset
 }
 class_model["sub"] = {
     "ObjectVersion": ObjectVersion

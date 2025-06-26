@@ -22,5 +22,13 @@
     "typeql": "obj-ref",
     "label": "parent-of",
     "owner-is-source": false
+  },
+  {
+    "rel": "tactic_refs",
+    "typeql": "tactic-refs",
+    "owner": "a-matrix",
+    "pointed_to": "a-tactic",
+    "label": "tactic-refs",
+    "owner-is-source": true
   }
 ]

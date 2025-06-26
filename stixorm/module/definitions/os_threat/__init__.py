@@ -7,10 +7,10 @@ Loader module for all os_threat data model
 
 __author__ = "Brett Forbes"
 __credits__ = ["Paolo Di Prodi"]
-__license__ = "GPL"
+__license__ = "Apache-2.0"
 __version__ = "0.1.0"
 __maintainer__ = "Paolo Di Prodi"
-__email__ = "paolo@priam.ai"
+__email__ = "paolo@osthreat.com"
 __status__ = "Production"
 
 import json

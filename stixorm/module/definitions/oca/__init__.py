@@ -13,7 +13,7 @@ __maintainer__ = "Paolo Di Prodi"
 __email__ = "paolo@priam.ai"
 __status__ = "Production"
 
-from stixorm.module.definitions.kestrel.classes import (
+from stixorm.module.definitions.oca.classes import (
     Behavior, CoAPlaybookExt, PlaybookExt, Playbook, OCAAnalyticSubObject,
     DetectionExt, Detection, DetectorExt, Detector, HighValueToolExt,
     UnixFileSubObject, CodeSignatureSubObject, OCAFileExt, OCAFile,

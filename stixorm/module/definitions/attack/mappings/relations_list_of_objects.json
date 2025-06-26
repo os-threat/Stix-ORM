@@ -5,5 +5,12 @@
     "owner": "collector",
     "pointed_to": "collected",
     "object": "object-version"
+  },
+  {
+    "name": "x_mitre_related_assets",
+    "typeql": "x-mitre-related-assets",
+    "owner": "asset",
+    "pointed_to": "related",
+    "object": "related-asset"
   }
 ]

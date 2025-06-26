@@ -1,0 +1,74 @@
+[
+    {
+        "rel": "start_refs",
+        "owner": "the-flow",
+        "pointed-to": "start-object",
+        "typeql": "start-refs",
+        "label": "starting objects",
+        "owner-is-source": true
+    },
+    {
+        "rel": "tactic_ref",
+        "owner": "the-action",
+        "pointed-to": "the-tactic",
+        "typeql": "tactic-ref",
+        "label": "tactic reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "technique_ref",
+        "owner": "the-action",
+        "pointed-to": "the-technique",
+        "typeql": "technique-ref",
+        "label": "technique reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "command_ref",
+        "owner": "the-action",
+        "pointed-to": "the-command",
+        "typeql": "command-ref",
+        "label": "command reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "asset_refs",
+        "owner": "the-action",
+        "pointed-to": "the-asset",
+        "typeql": "asset-refs",
+        "label": "asset references",
+        "owner-is-source": true
+    },
+    {
+        "rel": "effect_refs",
+        "owner": "the-impulse",
+        "pointed-to": "the-effect",
+        "typeql": "effect-refs",
+        "label": "effect references",
+        "owner-is-source": true
+    },
+    {
+        "rel": "object_ref",
+        "owner": "the-asset",
+        "pointed-to": "the-object",
+        "typeql": "object-ref",
+        "label": "object references",
+        "owner-is-source": true
+    },
+    {
+        "rel": "on_true_refs",
+        "owner": "condition",
+        "pointed-to": "on-true",
+        "typeql": "on-true-refs",
+        "label": "on true reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "on_false_refs",
+        "owner": "condition",
+        "pointed-to": "on-false",
+        "typeql": "on-false-refs",
+        "label": "on false reference",
+        "owner-is-source": true
+    }
+]

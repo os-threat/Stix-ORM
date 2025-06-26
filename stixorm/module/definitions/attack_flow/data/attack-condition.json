@@ -1,0 +1,8 @@
+{
+  "description": "description",
+  "pattern": "pattern",
+  "pattern_type": "pattern-type",
+  "pattern_version": "pattern-version",
+  "on_true_refs": "",
+  "on_false_refs": ""
+}

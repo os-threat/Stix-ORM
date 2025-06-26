@@ -1,0 +1,9 @@
+[
+    {
+        "stix": "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
+        "object": "attack-flow-extension",
+        "relation": "attack-flow-ext",
+        "owner": "attack-flow",
+        "pointed-to": "extension"
+    }
+]

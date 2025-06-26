@@ -1,0 +1,70 @@
+[
+  {
+    "type":  "attack-flow",
+    "typeql": "attack-flow",
+    "class": "AttackFlow",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "attack-flow",
+    "icon":""
+  },
+
+  {
+    "type":  "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
+    "typeql": "attack-flow-extension",
+    "class": "AttackFlowExt",
+    "object": "sub",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "attack-flow",
+    "icon":""
+  },
+  {
+    "type":  "attack-action",
+    "typeql": "attack-action",
+    "class": "AttackAction",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "attack-flow",
+    "icon":""
+  },
+
+  {
+    "type":  "flow-asset",
+    "typeql": "flow-asset",
+    "class": "FlowAsset",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "attack-flow",
+    "icon":""
+  },
+  {
+    "type":  "attack-condition",
+    "typeql": "attack-condition",
+    "class": "AttackCondition",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "attack-flow",
+    "icon":""
+  },
+  {
+    "type":  "attack-operator",
+    "typeql": "attack-operator",
+    "class": "AttackOperator",
+    "object": "sdo",
+    "url": "",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "attack-flow",
+    "icon":""
+  }
+]

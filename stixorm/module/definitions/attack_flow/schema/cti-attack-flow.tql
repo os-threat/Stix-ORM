@@ -1,0 +1,172 @@
+#
+# Copyright (C) 2025 OS-Threat
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+define
+    #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    # Generic Attack-Flow Extension Object/Relation
+    #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    attack-flow-extension sub incident-extension;
+    attack-flow-ext sub oca-extensions,
+        relates attack-flow as oca,
+        relates extension as extensions;
+
+
+    ##############################
+    # Attack-Flow  Object
+    ################################
+    attack-flow sub stix-domain-object,
+        owns name,
+        owns description,
+        owns scope,
+        plays start-refs:the-flow,
+	    plays attack-flow-ext:extension;
+
+    # Start Refs Foreign Key Relation
+	start-refs sub embedded,
+		relates the-flow as owner,
+		relates start-object as pointed-to;
+
+
+    ##############################
+    # Attack-Action Object
+    ################################
+	# Attack Action SDO
+    attack-action sub stix-domain-object,
+        owns name,
+        owns tactic-id,
+        owns technique-id,
+        owns description,
+        owns executiong-start,
+        owns execution-end,
+        plays on-true-refs:on-true,
+        plays on-false-refs:on-false,
+        plays tactic-ref:the-action,
+        plays technique-ref:the-action,
+        plays command-ref:the-action,
+        plays asset-refs:the-action,
+        plays effect-refs:the-impulse,
+        plays effect-refs:the-effect,
+        plays start-refs:start-flow,
+	    plays attack-flow-ext:extension;
+
+    # Tactic Ref Foreign Key Relation
+	tactic-ref sub embedded,
+		relates the-action as owner,
+		relates the-tactic as pointed-to;
+    tactic
+        plays tactic-ref:the-tactic;
+    # Technique Ref Foreign Key Relation
+	technique-ref sub embedded,
+		relates the-action as owner,
+		relates the-technique as pointed-to;
+    technique
+        plays technique-ref:the-technique;
+    sub-technique
+        plays technique-ref:the-technique;
+    # Command Ref Foreign Key Relation
+    command-ref sub embedded,
+        relates the-action as owner,
+        relates the-command as pointed-to;
+    process
+        plays command-ref:the-command;
+    # Asset Refs Foreign Key Relation
+    asset-refs sub embedded,
+        relates the-action as owner,
+        relates the-asset as pointed-to;
+    # Effect Refs Foreign Key Relation
+    effect-refs sub embedded,
+        relates the-impulse as owner,
+        relates the-effect as pointed-to;
+
+    ##############################
+    # Flow Asset Object
+    ################################
+    flow-asset sub stix-domain-object,
+        owns name,
+        owns description,
+        plays object-ref:the-asset,
+        plays asset-refs:the-asset,
+	    plays attack-flow-ext:extension;
+    
+    # object ref Foreign key relation
+    object-ref sub embedded,
+        relates the-asset as owner,
+        relates the-object as pointed-to;
+    stix-domain-object
+        plays object-ref:the-object;
+    stix-cyber-observable-object
+        plays object-ref:the-object;
+
+
+    ##############################
+    # Attack Condition Object
+    ################################
+    attack-condition sub stix-domain-object,
+        owns description,
+        owns pattern,
+        owns pattern-type,
+        owns pattern-version,
+        plays effect-refs:the-effect,
+        plays start-refs:start-object,
+        plays on-true-refs:on-true,
+        plays on-false-refs:on-false,
+        plays on-true-refs:condition,
+        plays on-false-refs:condition,
+	    plays attack-flow-ext:extension;
+
+	# on true refs Foreign Key Relation
+    on-true-refs sub embedded,
+        relates condition as owner,
+        relates on-true as pointed-to;
+
+    on-false-refs sub embedded,
+        relates condition as owner,
+        relates on-false as pointed-to;
+        
+
+    ##############################
+    # Attack Operator Object
+    ################################
+
+    attack-operator sub file,
+        owns operator,
+        plays effect-refs:the-impulse,
+        plays effect-refs:the-effect,
+        plays on-true-refs:on-true,
+        plays on-false-refs:on-false,
+	    plays attack-flow-ext:extension;
+
+
+    #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    # OCA Attributes
+    #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    # String
+	    name sub  stix-attribute-string;
+	    description sub  stix-attribute-string;
+	    scope sub  stix-attribute-string;
+	    tactic-id sub  stix-attribute-string;
+	    technique-id sub  stix-attribute-string;
+	    pattern sub  stix-attribute-string;
+	    pattern-type sub  stix-attribute-string;
+	    pattern-version sub  stix-attribute-string;
+	    operator sub  stix-attribute-string;
+    # DateTime
+        execution-start sub stix-attribute-timestamp;
+        execution-end sub stix-attribute-timestamp;

@@ -11,7 +11,7 @@ from stix2.exceptions import (
     PropertyPresenceError, STIXDeprecationWarning, )
 from stix2.properties import (
     BooleanProperty, ExtensionsProperty, IDProperty, IntegerProperty, ListProperty,
-    OpenVocabProperty, ReferenceProperty, StringProperty, DictionaryProperty,
+    OpenVocabProperty, ReferenceProperty, StringProperty, DictionaryProperty, EnumProperty,
     TimestampProperty, TypeProperty, EmbeddedObjectProperty, ObservableProperty, HexProperty, HashesProperty
 )
 from stix2.utils import NOW, _get_dict
@@ -24,7 +24,8 @@ from stix2.v21.common import (
 )
 from stix2.v21.vocab import (
     ATTACK_MOTIVATION, ATTACK_RESOURCE_LEVEL, IMPLEMENTATION_LANGUAGE, MALWARE_CAPABILITIES, MALWARE_TYPE,
-    PROCESSOR_ARCHITECTURE, TOOL_TYPE, IDENTITY_CLASS, INDUSTRY_SECTOR, REPORT_TYPE,HASHING_ALGORITHM
+    PROCESSOR_ARCHITECTURE, TOOL_TYPE, IDENTITY_CLASS, INDUSTRY_SECTOR, REPORT_TYPE,HASHING_ALGORITHM,
+    EXTENSION_TYPE
 )
 
 import logging
@@ -477,3 +478,33 @@ class Sighting(_RelationshipObject):
         if first_seen and last_seen and last_seen < first_seen:
             msg = "{0.id} 'last_seen' must be greater than or equal to 'first_seen'"
             raise ValueError(msg.format(self))
+
+
+
+
+
+class ExtensionDefinition(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_32j232tfvtly>`__.
+    """
+
+    _type = 'extension-definition'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1', required=True)),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty(required=True)),
+        ('description', StringProperty()),
+        ('schema', StringProperty(required=True)),
+        ('version', StringProperty(required=True)),
+        ('extension_types', ListProperty(EnumProperty(allowed=EXTENSION_TYPE), required=True)),
+        ('extension_properties', ListProperty(StringProperty)),
+        ('revoked', BooleanProperty(default=lambda: False)),
+        ('labels', ListProperty(StringProperty)),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+    ])

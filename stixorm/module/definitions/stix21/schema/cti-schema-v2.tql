@@ -638,6 +638,25 @@ vulnerability sub stix-domain-object,
  	# created-by
  	# Object Marking
 
+# extension definition
+extension-definition sub stix-domain-object,
+	owns name, 
+	owns description, 
+	owns schema,
+	owns version,
+	owns extension-types,
+	owns extension-properties;
+
+	# Common Relations
+	# NA
+
+	# Reverse Relations
+	# NA
+
+	# Embedded relations
+	# created-by
+	# Object Marking
+
 ##### 5 STIX™ Relationship Objects #####
 
 # 5.1 Specification-Defined Relatinoships Summary
@@ -1665,6 +1684,9 @@ stix-attribute-string sub attribute, value string, abstract,
 	pattern sub stix-attribute-string; 
 	pattern-type sub stix-attribute-string; 
 	pattern-version sub stix-attribute-string; 
+	schema sub stix-attribute-string;
+	extension-types sub stix-attribute-string;
+	extension-properties sub stix-attribute-string;
 	
 
 	malware-types sub stix-attribute-string; 

@@ -185,5 +185,27 @@
     "summary": "Referenced in the object_marking_refs of all objects to express the MITRE Corporation copyright",
     "protocol": "attack",
     "icon":""
+  },
+  {
+    "type":  "x-mitre-asset",
+    "typeql": "attack-asset",
+    "class": "AttackAsset",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#assets",
+    "doc_url": "",
+    "summary": "An Asset in ATT&CK is defined as an x-mitre-asset object.",
+    "protocol": "attack",
+    "icon":""
+  },
+  {
+    "type":  "related-asset",
+    "typeql": "related-asset",
+    "class": "RelatedAsset",
+    "object": "sub",
+    "url": "https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#assets",
+    "doc_url": "",
+    "summary": "Related assets describe sector specific device names or alias that may be commonly associated with the primary asset page name or functional description. Related asset objects include a description of how the related asset is associated with the page definition.",
+    "protocol": "attack",
+    "icon":""
   }
 ]

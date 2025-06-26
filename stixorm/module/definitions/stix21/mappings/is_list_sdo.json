@@ -80,5 +80,9 @@
     "kill_chain_phases",
     "aliases"
   ],
-  "vulnerability": []
+  "vulnerability": [],
+  "extension-definition": [
+    "extension_types",
+    "extension_properties"
+  ]
 }

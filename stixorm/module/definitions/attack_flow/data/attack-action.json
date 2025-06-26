@@ -1,0 +1,13 @@
+{
+  "name": "name",
+  "tactic_id": "tactic-id",
+  "tactic_ref": "",
+  "technique_id": "technique-id",
+  "technique_ref": "",
+  "description": "description",
+  "execution_start": "execution-start",
+  "execution_end": "execution-end",
+  "command_ref": "",
+  "asset_refs": "",
+  "effect_refs": ""
+}
