@@ -1,7 +1,7 @@
 {
 	"attack-flow" : ["start_refs"],
-	"attack-action" : ["asset_refs", "effect_refs"],
+	"flow-action" : ["asset_refs", "effect_refs"],
 	"flow-asset" : [],
-	"attack-condition" : ["on_true_refs", "on_false_refs"],
-	"attack-operator" : ["effect_refs"]
+	"flow-condition" : ["on_true_refs", "on_false_refs"],
+	"flow-operator" : ["effect_refs"]
 }
