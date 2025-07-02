@@ -24,8 +24,8 @@
   },
   {
     "type":  "attack-action",
-    "typeql": "attack-action",
-    "class": "AttackAction",
+    "typeql": "flow-action",
+    "class": "FlowAction",
     "object": "sdo",
     "url": "",
     "doc_url": "",
@@ -35,7 +35,7 @@
   },
 
   {
-    "type":  "flow-asset",
+    "type":  "attack-asset",
     "typeql": "flow-asset",
     "class": "FlowAsset",
     "object": "sdo",
@@ -47,8 +47,8 @@
   },
   {
     "type":  "attack-condition",
-    "typeql": "attack-condition",
-    "class": "AttackCondition",
+    "typeql": "flow-condition",
+    "class": "FlowCondition",
     "object": "sdo",
     "url": "",
     "doc_url": "",
@@ -58,8 +58,8 @@
   },
   {
     "type":  "attack-operator",
-    "typeql": "attack-operator",
-    "class": "AttackOperator",
+    "typeql": "flow-operator",
+    "class": "FlowOperator",
     "object": "sdo",
     "url": "",
     "doc_url": "",

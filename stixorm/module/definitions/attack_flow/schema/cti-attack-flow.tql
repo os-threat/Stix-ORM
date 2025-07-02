@@ -45,10 +45,10 @@ define
 
 
     ##############################
-    # Attack-Action Object
+    # Flow Action Object
     ################################
-	# Attack Action SDO
-    attack-action sub stix-domain-object,
+	# Flow Action SDO
+    flow-action sub stix-domain-object,
         owns name,
         owns tactic-id,
         owns technique-id,
@@ -116,9 +116,9 @@ define
 
 
     ##############################
-    # Attack Condition Object
+    # Flow Condition Object
     ################################
-    attack-condition sub stix-domain-object,
+    flow-condition sub stix-domain-object,
         owns description,
         owns pattern,
         owns pattern-type,
@@ -145,7 +145,7 @@ define
     # Attack Operator Object
     ################################
 
-    attack-operator sub file,
+    flow-operator sub file,
         owns operator,
         plays effect-refs:the-impulse,
         plays effect-refs:the-effect,

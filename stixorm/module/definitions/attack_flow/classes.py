@@ -71,7 +71,7 @@ class AttackFlow(_DomainObject):
 
 
 
-class AttackAction(_DomainObject):
+class FlowAction(_DomainObject):
     """For more detailed information on this object's properties, see
     `the Attack Flow specification <https://center-for-threat-informed-defense.github.io/attack-flow/language/#attack-actions>`__.
     """
@@ -138,7 +138,7 @@ class FlowAsset(_DomainObject):
 
 
 
-class AttackCondition(_DomainObject):
+class FlowCondition(_DomainObject):
     """For more detailed information on this object's properties, seehttps://center-for-threat-informed-defense.github.io/attack-flow/language/#attack-condition
     `the Attack Flow specification <https://center-for-threat-informed-defense.github.io/attack-flow/language/#attack-flow-sdos>`__.
     """
@@ -171,7 +171,7 @@ class AttackCondition(_DomainObject):
 
 
 
-class AttackOperator(_DomainObject):
+class FlowOperator(_DomainObject):
     """For more detailed information on this object's properties, see
     `the Attack Flow specification <https://center-for-threat-informed-defense.github.io/attack-flow/language/#attack-operator>`__.
     """
