@@ -326,6 +326,7 @@ class Mitigation(_DomainObject):
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('name', StringProperty(required=True)),
         ('description', StringProperty()),
+        ('action', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
         ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
@@ -554,7 +555,7 @@ class DataComponent(_DomainObject):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('extensions', ExtensionsProperty(spec_version='2.1')),
-        ('x_mitre_data_source_ref', StringProperty())
+        ('x_mitre_data_source_ref', ThreatReference(valid_types='x-mitre-data-source', spec_version='2.1')),
     ])
 
 class AttackCampaign(_DomainObject):
