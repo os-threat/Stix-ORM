@@ -1,7 +1,7 @@
 import copy
 from typing import Dict
 
-from stixorm.module.authorise import authorised_mappings, default_import_type
+from stixorm.module.authorise import default_import_type
 from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco_type_to_tql, \
     meta_type_to_tql, get_embedded_match
 from stixorm.module.parsing.parse_objects import is_oca_object

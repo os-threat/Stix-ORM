@@ -3,5 +3,5 @@
   "gid": "gid",
   "group": "unix-group",
   "inode": "inode",
-  "mode": "mode",
+  "mode": "mode"
 }

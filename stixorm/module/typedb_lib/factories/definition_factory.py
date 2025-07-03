@@ -24,7 +24,10 @@ class DomainDefinition:
 
         base = self.__get_base()
         mappings = self.__get_mappings()
-        sub_objects = self.__get_sub_objects()
+        try:
+            sub_objects = self.__get_sub_objects()
+        except Exception as e:
+            print(1)
         data = self.__get_data()
         # schema = self.__get_schema()
         # rules = self.__getrules()
@@ -51,12 +54,16 @@ class DomainDefinition:
 
         # Iterate over every file in the directory
         for filename in os.listdir(directory_path):
-            filepath = os.path.join(directory_path, filename)
-            if os.path.isfile(filepath) and self.is_json_file(filepath):
-                # Do something with the file, for example, print its contents
-                file_name, file_ext = os.path.splitext(filename)
-                with open(filepath, 'r') as file:
-                    definitions[file_name] = json.load(file)
+            try:
+                filepath = os.path.join(directory_path, filename)
+                if os.path.isfile(filepath) and self.is_json_file(filepath):
+                    # Do something with the file, for example, print its contents
+                    file_name, file_ext = os.path.splitext(filename)
+                    with open(filepath, 'r') as file:
+                        definitions[file_name] = json.load(file)
+            except Exception as e:
+                logging.exception(e)
+                raise e
         return definitions
     def __get_data(self) -> dict:
         # Define the directory path

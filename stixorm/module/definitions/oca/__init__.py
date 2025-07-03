@@ -24,7 +24,7 @@ from stixorm.module.definitions.oca.classes import (
     OCAContainerExt, OCAAsset, OCAIAMExt, OCACoordinatesSubObject, OCAGeo
 )
 
-name = "kestrel"
+name = "oca"
 class_model = {}
 class_model["sdo"] = {
     "Behavior": Behavior,
