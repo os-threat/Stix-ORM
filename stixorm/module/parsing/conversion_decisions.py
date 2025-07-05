@@ -18,7 +18,7 @@ default_import_type = import_type_factory.get_default_import()
 attack_model = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
 stix_model = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
 os_threat_model = get_definition_factory_instance().lookup_definition(DefinitionName.OS_THREAT)
-kestrel_model = get_definition_factory_instance().lookup_definition(DefinitionName.KESTREL)
+kestrel_model = get_definition_factory_instance().lookup_definition(DefinitionName.OCA)
 
 
 def sdo_type_to_tql(sdo_type: str,

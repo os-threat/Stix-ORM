@@ -23,8 +23,7 @@ import os
 from pathlib import Path
 
 from stixorm.module.definitions.attack_flow.classes import (
-	AttackFlow, FlowAsset, AttackAction, AttackFlowExt, 
-	AttackOperator, AttackCondition
+	AttackFlow, FlowAsset, AttackFlowExt
 )
 
 
@@ -35,9 +34,6 @@ class_model = {}
 class_model["sdo"] = {
     "AttackFlow": AttackFlow,
     "FlowAsset": FlowAsset,
-    "AttackAction": AttackAction,
-    "AttackOperator": AttackOperator,
-    "AttackCondition": AttackCondition
 }
 class_model["sco"] = {}
 class_model["sro"] = {}

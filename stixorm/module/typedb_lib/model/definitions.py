@@ -8,7 +8,7 @@ from pydantic import BaseModel
 class DefinitionName(str, Enum):
     ATTACK = "attack"
     CACAO = "cacao"
-    KESTREL = "kestrel"
+    OCA = "oca"
     OS_THREAT = "os_threat"
     STIX_21 = "stix21"
 
@@ -20,7 +20,7 @@ class ImportTypeToDefinitionMapper():
         lookup = {
             "ATTACK": DefinitionName.ATTACK,
             "CACAO": DefinitionName.CACAO,
-            "KESTREL": DefinitionName.KESTREL,
+            "OCA": DefinitionName.OCA,
             "OS_THREAT": DefinitionName.OS_THREAT,
             "STIX21": DefinitionName.STIX_21
         }

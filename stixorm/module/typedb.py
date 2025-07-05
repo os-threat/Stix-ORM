@@ -2,9 +2,7 @@
 import os.path
 import pathlib
 import traceback
-from typing import Dict
 from dataclasses import dataclass
-from typedb.driver import *
 from typing import List, Optional, Dict
 from typedb.api.connection.driver import TypeDBDriver
 from typedb.api.connection.session import TypeDBSession
@@ -14,7 +12,7 @@ from stixorm.module.orm.import_objects import raw_stix2_to_typeql
 from stixorm.module.orm.delete_object import delete_stix_object, add_delete_layers
 from stixorm.module.orm.export_object import convert_ans_to_stix
 from stixorm.module.parsing.parse_objects import parse
-from .authorise import authorised_mappings, import_type_factory
+from .authorise import import_type_factory
 from .initialise import setup_database, load_schema, load_markings
 import networkx as nx
 from stix2 import v21
@@ -26,14 +24,12 @@ from stix2.datastore.filters import FilterSet
 import logging
 
 from stixorm.module.typedb_lib.handlers import handle_result
-from stixorm.module.typedb_lib.logging import log_delete_instruction, log_delete_instruction_update_layer, log_delete_layers
+from stixorm.module.typedb_lib.logging import log_delete_instruction
 from stixorm.module.typedb_lib.queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query,\
     build_insert_query, query_id, add_instructions_to_typedb
-from stixorm.module.typedb_lib.file import write_to_file
 from stixorm.module.typedb_lib.instructions import Instructions, Status, AddInstruction, TypeQLObject, Result
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType, ImportTypeFactory
-from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
-from stixorm.module.parsing.conversion_decisions import get_embedded_match, get_source_from_id
+from stixorm.module.parsing.conversion_decisions import get_embedded_match
 
 # logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 
@@ -195,7 +191,7 @@ class TypeDBSink(DataSink):
         assert os.path.isfile(self.cti_schema_stix_rules)
         self.cti_schema_os_threat = pathlib.Path(self.schema_path).joinpath("definitions/os_threat/schema/cti-os-threat.tql")
         assert os.path.isfile(self.cti_schema_os_threat)
-        self.cti_schema_oca = pathlib.Path(self.schema_path).joinpath("definitions/kestrel/schema/cti-oca.tql")
+        self.cti_schema_oca = pathlib.Path(self.schema_path).joinpath("definitions/oca/schema/cti-oca.tql")
         assert os.path.isfile(self.cti_schema_oca)
         self.cti_schema_attack = pathlib.Path(self.schema_path).joinpath("definitions/attack/schema/cti-attack.tql")
         assert os.path.isfile(self.cti_schema_attack)

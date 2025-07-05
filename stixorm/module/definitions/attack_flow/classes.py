@@ -9,6 +9,7 @@ from stix2.properties import (
     TimestampProperty, TypeProperty,
 )
 from stix2.utils import NOW
+from stix2.v21 import _Extension
 from stix2.v21.base import _DomainObject, _STIXBase21
 from stix2.v21.common import (
     ExternalReference, GranularMarking, KillChainPhase,
