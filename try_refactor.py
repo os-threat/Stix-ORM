@@ -1999,6 +1999,54 @@ def extract_sro_iob(path, iob):
 
 
 
+def check_dir_CRUD(dirpath):
+    """ Open a directory and check CRUD on all the files, on a per-file basis
+
+    Args:
+        dirpath ():
+    """
+    id_list = []
+    dirFiles = os.listdir(dirpath)
+    list_of_objects = []
+    sorted_files = sorted(dirFiles)
+    print(sorted_files)
+    typedb_sink = TypeDBSink(connection, True, import_type)
+    typedb_source = TypeDBSource(connection, import_type)
+    for s_file in sorted_files:
+        if os.path.isdir(os.path.join(dirpath, s_file)):
+            continue
+        else:
+            print('\n\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            print(f'==================== {s_file} ===================================')
+            print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
+                testtime = datetime.now()
+                print(f"I am opening the file {testtime}")
+                json_list = json.load(f)
+                #json_list = json_list["objects"]
+                for element in json_list:
+                    #print(f'element is {element}')
+                    temp_id = element.get('id', False)
+                    if temp_id:
+                        id_list.append(temp_id)
+                list_of_objects = list_of_objects + json_list
+                print(f'9999999999999999999999999 Add {len(list_of_objects)} 99999999999999999999999999999999999999999999')
+                typedb_sink.add(list_of_objects)
+                print(f'==================== List is added  ===================================')
+                id_set = set(id_list)
+                id_typedb = set(get_stix_ids())
+                len_files = len(id_set)
+                len_typedb = len(id_typedb)
+                id_diff = id_set - id_typedb
+                print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+                sorted_diff = sorted(list(id_diff))
+                print(f'difference -> ')
+                for id_d in sorted_diff:
+                    print(id_d)
+
+
+
+
 
 ##############################################################################
 
@@ -2146,4 +2194,4 @@ if __name__ == '__main__':
     #test_get_objects()
     #test_time()
     #extract_sro_iob(oca_path, oca)
-    #try_oca_schema(schema_root)
+    check_dir_CRUD(oca_path + "docs_data/")
