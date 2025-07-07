@@ -3,8 +3,6 @@ import os
 import datetime
 import csv
 from typing import Dict
-#import dateutil.parser
-#from dateutil.parser import *
 from stixorm.module.typedb import TypeDBSink, TypeDBSource
 from typedb.driver import *
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
@@ -13,8 +11,7 @@ from stixorm.module.orm.export_object import convert_ans_to_stix
 from stixorm.module.authorise import authorised_mappings, import_type_factory
 from stixorm.module.parsing.parse_objects import parse
 from stixorm.module.parsing.conversion_decisions import get_embedded_match
-#from stixorm.module.generate_docs import configure_overview_table_docs, object_tables
-from stixorm.module.initialise import sort_layers, load_typeql_data, setup_database, load_schema, load_markings
+from stixorm.module.initialise import sort_layers, load_typeql_data
 from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
 from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
 from stixorm.module.orm.import_utilities import val_tql
@@ -23,7 +20,7 @@ from stixorm.module.typedb_lib.model.definitions import DefinitionName
 stix_models = get_definition_factory_instance().lookup_definition(DefinitionName.STIX_21)
 attack_models = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
 os_threat_models = get_definition_factory_instance().lookup_definition(DefinitionName.OS_THREAT)
-oca_models = get_definition_factory_instance().lookup_definition(DefinitionName.KESTREL)
+oca_models = get_definition_factory_instance().lookup_definition(DefinitionName.OCA)
 import copy
 
 import logging
