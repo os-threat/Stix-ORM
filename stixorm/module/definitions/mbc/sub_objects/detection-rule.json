@@ -1,0 +1,9 @@
+{
+	"rule_type": "rule-type",
+	"rule_name": "rule-name",
+	"rule": "rule",
+	"url": "url",
+	"detect_ref": "",
+	"description": "description",
+	"api_fncs": "api-fncs"
+}

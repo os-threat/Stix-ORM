@@ -443,7 +443,13 @@ malware sub stix-domain-object,
     # created-by
     # Obejct marking
     # Sample ref
-	plays malware-env:object;
+	plays malware-env:object,
+	plays delivers:delivered,
+
+	# Inferred role player
+	plays led-to:initial,
+	plays led-to:subsequent,
+	plays delivers:delivering;
 
 
 # 4.12 Malware Analysis

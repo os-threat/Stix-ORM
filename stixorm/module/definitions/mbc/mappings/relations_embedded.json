@@ -1,0 +1,58 @@
+[
+    {
+        "rel": "detect_ref",
+        "owner": "rule",
+        "pointed-to": "method",
+        "typeql": "detect-ref",
+        "label": "detected by method",
+        "owner-is-source": true
+    },
+    {
+        "rel": "author_ref",
+        "owner": "snippet",
+        "pointed-to": "author",
+        "typeql": "author-ref",
+        "label": "author reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "exemplify_ref",
+        "owner": "example",
+        "pointed-to": "method",
+        "typeql": "exemplify-ref",
+        "label": "example of",
+        "owner-is-source": false
+    },
+    {
+        "rel": "contributor-refs",
+        "owner": "object",
+        "pointed-to": "contributor",
+        "typeql": "contributor-refs",
+        "label": "contributor reference",
+        "owner-is-source": true
+    },
+    {
+        "rel": "objective_refs",
+        "owner": "behaviour",
+        "pointed-to": "objective",
+        "typeql": "objective-refs",
+        "label": "objective references",
+        "owner-is-source": true
+    },
+    {
+        "rel": "related_object_refs",
+        "owner": "behaviour",
+        "pointed-to": "related-object",
+        "typeql": "related-object-refs",
+        "label": "related ATT&CK objects",
+        "owner-is-source": true
+    },
+    {
+        "rel": "behaviour_ref",
+        "owner": "method",
+        "pointed-to": "behaviour",
+        "typeql": "behaviour-ref",
+        "label": "behaviour references",
+        "owner-is-source": true
+    }
+]

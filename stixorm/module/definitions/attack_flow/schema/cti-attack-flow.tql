@@ -22,10 +22,11 @@ define
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     # Generic Attack-Flow Extension Object/Relation
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    attack-flow-extension sub incident-extension;
     attack-flow-ext sub oca-extensions,
         relates attack-flow as oca,
         relates extension as extensions;
+    attack-flow-extension sub incident-extension,
+	    plays attack-flow-ext:extension;
 
 
     ##############################
@@ -36,7 +37,7 @@ define
         owns description,
         owns scope,
         plays start-refs:the-flow,
-	    plays attack-flow-ext:extension;
+	    plays attack-flow-ext:attack-flow;
 
     # Start Refs Foreign Key Relation
 	start-refs sub embedded,
@@ -53,7 +54,7 @@ define
         owns tactic-id,
         owns technique-id,
         owns description,
-        owns executiong-start,
+        owns execution-start,
         owns execution-end,
         plays on-true-refs:on-true,
         plays on-false-refs:on-false,

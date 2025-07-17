@@ -23,11 +23,11 @@ import os
 from pathlib import Path
 from stixorm.module.definitions.stix21.classes import (
     Note, ObservedData, Incident, Report, Relationship, Sighting, Identity, CourseOfAction, Tool,
-    File, NetworkTraffic, ExtensionDefinition
+    File, NetworkTraffic, ExtensionDefinition, Malware
 )
 from stix2.v21.sdo import (
     AttackPattern, Campaign, CustomObject, Grouping,
-    Indicator, Infrastructure, IntrusionSet, Location, Malware,
+    Indicator, Infrastructure, IntrusionSet, Location,
     MalwareAnalysis, Opinion, ThreatActor,
     Vulnerability,
 )

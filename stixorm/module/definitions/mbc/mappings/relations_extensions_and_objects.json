@@ -1,0 +1,23 @@
+[
+    {
+        "stix": "extension-definition--8e9e338f-c9ee-4d4f-8cac-85b4dcfdf3c1",
+        "object": "malware-extension",
+        "relation": "malware-ext",
+        "owner": "malware",
+        "pointed-to": "extension"
+    },
+    {
+        "stix": "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0",
+        "object": "mbc-extension",
+        "relation": "mbc-ext",
+        "owner": "mbc",
+        "pointed-to": "extension"
+    },
+    {
+        "stix": "obj_defn",
+        "object": "external-reference",
+        "relation": "obj-defn",
+        "owner": "object",
+        "pointed-to": "definition"
+    }
+]

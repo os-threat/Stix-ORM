@@ -1,0 +1,10 @@
+[
+  {
+    "name": "tags",
+    "typeql": "tags",
+    "owner": "behaviour",
+    "pointed_to": "tag",
+    "key": "tag-key",
+    "value": "tag-value"
+  }
+]

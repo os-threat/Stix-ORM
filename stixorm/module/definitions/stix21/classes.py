@@ -128,6 +128,58 @@ class Identity(_DomainObject):
     ])
 
 
+class Malware(_DomainObject):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_s5l7katgbp09>`__.
+    """
+
+    _type = 'malware'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty()),
+        ('description', StringProperty()),
+        ('malware_types', ListProperty(OpenVocabProperty(MALWARE_TYPE))),
+        ('is_family', BooleanProperty(required=True)),
+        ('aliases', ListProperty(StringProperty)),
+        ('kill_chain_phases', ListProperty(KillChainPhase)),
+        ('first_seen', TimestampProperty()),
+        ('last_seen', TimestampProperty()),
+        ('operating_system_refs', ListProperty(ReferenceProperty(valid_types='software', spec_version='2.1'))),
+        ('architecture_execution_envs', ListProperty(OpenVocabProperty(PROCESSOR_ARCHITECTURE))),
+        ('implementation_languages', ListProperty(OpenVocabProperty(IMPLEMENTATION_LANGUAGE))),
+        ('capabilities', ListProperty(OpenVocabProperty(MALWARE_CAPABILITIES))),
+        ('sample_refs', ListProperty(ReferenceProperty(valid_types=['artifact', 'file'], spec_version='2.1'))),
+        ('revoked', BooleanProperty(default=lambda: False)),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+    ])
+
+    def _check_object_constraints(self):
+        super(Malware, self)._check_object_constraints()
+
+        first_seen = self.get('first_seen')
+        last_seen = self.get('last_seen')
+
+        if first_seen and last_seen and last_seen < first_seen:
+            msg = "{0.id} 'last_seen' must be greater than or equal to 'first_seen'"
+            raise ValueError(msg.format(self))
+
+        if self.is_family and "name" not in self:
+            raise PropertyPresenceError(
+                "'name' is a required property for malware families",
+                Malware,
+            )
+
 
 
 class Note(_DomainObject):
@@ -271,7 +323,7 @@ class Tool(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 

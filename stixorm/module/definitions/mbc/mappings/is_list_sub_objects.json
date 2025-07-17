@@ -1,0 +1,5 @@
+{
+	"snippet": ["references"], 
+	"detection-rule": ["detection-rule"],
+	"mbc-extension" : []
+}

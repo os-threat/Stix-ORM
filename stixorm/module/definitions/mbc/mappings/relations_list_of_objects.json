@@ -1,0 +1,23 @@
+[
+  {
+    "name": "detection_rules",
+    "typeql": "detection-rules",
+    "owner": "code",
+    "pointed_to": "rule",
+    "object": "detection-rule"
+  },
+  {
+    "name": "references",
+    "typeql": "references",
+    "owner": "snippet",
+    "pointed_to": "reference",
+    "object": "external-reference"
+  },
+  {
+    "name": "snippets",
+    "typeql": "snippets",
+    "owner": "behaviour",
+    "pointed_to": "code",
+    "object": "snippet"
+  }
+]

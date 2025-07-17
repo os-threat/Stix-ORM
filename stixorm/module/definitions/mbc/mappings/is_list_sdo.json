@@ -1,0 +1,5 @@
+{
+	"malware-behaviour" : ["related_object_refs", "objective_refs", "snippets", "detection_rules", "contributor_refs"],
+	"malware-method" : ["contributor_refs"],
+	"malware-objective" : []
+}

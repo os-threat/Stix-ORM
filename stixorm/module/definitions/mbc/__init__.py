@@ -22,25 +22,27 @@ from loguru import logger
 import os
 from pathlib import Path
 
-from stixorm.module.definitions.attack_flow.classes import (
-	AttackFlow, FlowAsset, AttackFlowExt, FlowAction, FlowCondition, FlowOperator
+from stixorm.module.definitions.mbc.classes import (
+	Snippet, DetectionRule, MBCExtension, MalwareBehavior,
+	MalwareMethod, MalwareObjective, MalwareExt
 )
 
 
 
 
-name = "attack_flow"
+name = "mbc"
 class_model = {}
 class_model["sdo"] = {
-    "AttackFlow": AttackFlow,
-    "FlowAsset": FlowAsset,
-	"FlowAction": FlowAction,
-    "FlowCondition": FlowCondition,
-    "FlowOperator": FlowOperator
+    "MalwareBehavior": MalwareBehavior,
+    "MalwareMethod": MalwareMethod,
+	"MalwareObjective": MalwareObjective
 }
 class_model["sco"] = {}
 class_model["sro"] = {}
 class_model["sub"] = {
-    "AttackFlowExt": AttackFlowExt
+    "Snippet": Snippet,
+	"DetectionRule": DetectionRule,
+    "MBCExtension": MBCExtension,
+	"MalwareExt": MalwareExt
 }
 class_model["meta"] = {}
