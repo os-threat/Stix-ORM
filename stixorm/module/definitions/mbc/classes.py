@@ -51,7 +51,7 @@ class Snippet(_STIXBase21):
     _type = 'snippet'
     _properties = OrderedDict([
         ('snippet', StringProperty(required=True)),
-        ('exemplify_ref', ReferenceProperty(valid_types='malware-method', spec_version='2.1')),
+        ('exemplify_ref', ThreatReference(valid_types='malware-method', spec_version='2.1')),
         ('language', OpenVocabProperty(IMPLEMENTATION_LANGUAGE)),
         ('description', StringProperty()),
         ('references', ListProperty(ExternalReference)),
@@ -70,7 +70,7 @@ class DetectionRule(_STIXBase21):
         ('rule_name', StringProperty()),
         ('rule', StringProperty()),
         ('url', StringProperty()),
-        ('detect_ref', ReferenceProperty(valid_types='malware-method', spec_version='2.1')),
+        ('detect_ref', ThreatReference(valid_types='malware-method', spec_version='2.1')),
         ('description', StringProperty()),
         ('detection-rule', ListProperty(StringProperty)),
     ])
@@ -107,7 +107,7 @@ class MalwareBehavior(_DomainObject):
         ('obj_version', StringProperty()),
         ('related_object_refs', ListProperty(ReferenceProperty(valid_types='attack-pattern', spec_version='2.1'))),
         ('tags', DictionaryProperty(spec_version='2.1')),
-        ('objective_refs', ListProperty(ReferenceProperty(valid_types='malware-objective', spec_version='2.1'))),
+        ('objective_refs', ListProperty(ThreatReference(valid_types='malware-objective', spec_version='2.1'))),
         ('snippets', ListProperty(EmbeddedObjectProperty(type=Snippet))),
         ('detection_rules', ListProperty(EmbeddedObjectProperty(type=DetectionRule))),
         ('contributor_refs', ListProperty(ReferenceProperty(valid_types='identity', spec_version='2.1'))),
@@ -141,7 +141,7 @@ class MalwareMethod(_DomainObject):
         ('name', StringProperty(required=True)),
         ('micro', BooleanProperty(default=lambda: False)),
         ('obj_defn', ExternalReference()),
-        ('behavior_ref', ReferenceProperty(valid_types='malware-behavior', spec_version='2.1')),
+        ('behavior_ref', ThreatReference(valid_types='malware-behavior', spec_version='2.1')),
         ('contributor_refs', ListProperty(ReferenceProperty(valid_types='identity', spec_version='2.1'))),
         ('revoked', BooleanProperty(default=lambda: False)),
         ('labels', ListProperty(StringProperty)),

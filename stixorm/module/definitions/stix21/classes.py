@@ -25,7 +25,7 @@ from stix2.v21.common import (
 from stix2.v21.vocab import (
     ATTACK_MOTIVATION, ATTACK_RESOURCE_LEVEL, IMPLEMENTATION_LANGUAGE, MALWARE_CAPABILITIES, MALWARE_TYPE,
     PROCESSOR_ARCHITECTURE, TOOL_TYPE, IDENTITY_CLASS, INDUSTRY_SECTOR, REPORT_TYPE,HASHING_ALGORITHM,
-    EXTENSION_TYPE
+    EXTENSION_TYPE, WINDOWS_INTEGRITY_LEVEL, WINDOWS_SERVICE_START_TYPE, WINDOWS_SERVICE_TYPE, WINDOWS_SERVICE_STATUS
 )
 
 import logging
@@ -397,7 +397,7 @@ class NetworkTraffic(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["start", "end", "src_ref", "dst_ref", "src_port", "dst_port", "protocols", "extensions"]
 
@@ -420,6 +420,88 @@ class NetworkTraffic(_Observable):
         if start and end and end < start:
             msg = "{0.id} 'end' must be greater than or equal to 'start'"
             raise ValueError(msg.format(self))
+        
+
+
+
+class WindowsProcessExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_oyegq07gjf5t>`__.
+    """
+
+    _type = 'windows-process-ext'
+    _properties = OrderedDict([
+        ('aslr_enabled', BooleanProperty()),
+        ('dep_enabled', BooleanProperty()),
+        ('priority', StringProperty()),
+        ('owner_sid', StringProperty()),
+        ('window_title', StringProperty()),
+        ('startup_info', DictionaryProperty(spec_version='2.1')),
+        ('integrity_level', EnumProperty(WINDOWS_INTEGRITY_LEVEL)),
+    ])
+
+
+class WindowsServiceExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_lbcvc2ahx1s0>`__.
+    """
+
+    _type = 'windows-service-ext'
+    _properties = OrderedDict([
+        ('service_name', StringProperty()),
+        ('descriptions', ListProperty(StringProperty)),
+        ('display_name', StringProperty()),
+        ('group_name', StringProperty()),
+        ('start_type', EnumProperty(WINDOWS_SERVICE_START_TYPE)),
+        ('service_dll_refs', ListProperty(ReferenceProperty(valid_types='file', spec_version='2.1'))),
+        ('service_type', EnumProperty(WINDOWS_SERVICE_TYPE)),
+        ('service_status', EnumProperty(WINDOWS_SERVICE_STATUS)),
+    ])
+
+
+class Process(_Observable):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_hpppnm86a1jm>`__.
+    """
+
+    _type = 'process'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('is_hidden', BooleanProperty()),
+        ('pid', IntegerProperty()),
+        # this is not the created timestamps of the object itself
+        ('created_time', TimestampProperty()),
+        ('cwd', StringProperty()),
+        ('command_line', StringProperty()),
+        ('environment_variables', DictionaryProperty(spec_version='2.1')),
+        ('opened_connection_refs', ListProperty(ReferenceProperty(valid_types='network-traffic', spec_version='2.1'))),
+        ('creator_user_ref', ReferenceProperty(valid_types='user-account', spec_version='2.1')),
+        ('image_ref', ReferenceProperty(valid_types='file', spec_version='2.1')),
+        ('parent_ref', ReferenceProperty(valid_types='process', spec_version='2.1')),
+        ('child_refs', ListProperty(ReferenceProperty(valid_types='process', spec_version='2.1'))),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('defanged', BooleanProperty(default=lambda: False)),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+    ])
+    _id_contributing_properties = []
+
+    def _check_object_constraints(self):
+        # no need to check windows-service-ext, since it has a required property
+        super(Process, self)._check_object_constraints()
+        try:
+            self._check_at_least_one_property()
+            if 'windows-process-ext' in self.get('extensions', {}):
+                self.extensions['windows-process-ext']._check_at_least_one_property()
+        except AtLeastOnePropertyError as enclosing_exc:
+            if 'extensions' not in self:
+                raise enclosing_exc
+            else:
+                if 'windows-process-ext' in self.get('extensions', {}):
+                    self.extensions['windows-process-ext']._check_at_least_one_property()
+
 
 
 #############################################################################################################

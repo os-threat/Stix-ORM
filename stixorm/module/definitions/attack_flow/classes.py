@@ -186,7 +186,7 @@ class FlowOperator(_DomainObject):
         ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('operator', StringProperty(required=True)),
-        ('effect_refs', ListProperty(ReferenceProperty(valid_types=['attack-action', 'attack-condition',"attack-operator"], spec_version='2.1'))),
+        ('effect_refs', ListProperty(ThreatReference(valid_types=['attack-action', 'attack-condition',"attack-operator"], spec_version='2.1'))),
         ('revoked', BooleanProperty(default=lambda: False)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
