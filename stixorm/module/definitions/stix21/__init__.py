@@ -23,7 +23,8 @@ import os
 from pathlib import Path
 from stixorm.module.definitions.stix21.classes import (
     Note, ObservedData, Incident, Report, Relationship, Sighting, Identity, CourseOfAction, Tool,
-    File, NetworkTraffic, ExtensionDefinition, Malware, Process, WindowsProcessExt, WindowsServiceExt
+    File, NetworkTraffic, ExtensionDefinition, Malware, Process, WindowsProcessExt, WindowsServiceExt,
+	WindowsRegistryKey
 )
 from stix2.v21.sdo import (
     AttackPattern, Campaign, CustomObject, Grouping,
@@ -38,7 +39,7 @@ from stix2.v21.observables import (
     IPv6Address, MACAddress, Mutex, NTFSExt, PDFExt, Process,
     RasterImageExt, SocketExt, Software, TCPExt, UNIXAccountExt, UserAccount,
     WindowsPEBinaryExt, WindowsPEOptionalHeaderType, WindowsPESection,
-    WindowsRegistryKey, WindowsRegistryValueType,
+    WindowsRegistryValueType,
     X509Certificate, X509V3ExtensionsType,
 )
 from stix2.v21.bundle import Bundle

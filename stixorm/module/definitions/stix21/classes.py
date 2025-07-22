@@ -504,6 +504,32 @@ class Process(_Observable):
 
 
 
+
+class WindowsRegistryKey(_Observable):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_luvw8wjlfo3y>`__.
+    """
+
+    _type = 'windows-registry-key'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('key', StringProperty()),
+        ('values', ListProperty(EmbeddedObjectProperty(type=WindowsRegistryValueType))),
+        # this is not the modified timestamps of the object itself
+        ('modified_time', TimestampProperty()),
+        ('creator_user_ref', ReferenceProperty(valid_types='user-account', spec_version='2.1')),
+        ('number_of_subkeys', IntegerProperty()),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('defanged', BooleanProperty(default=lambda: False)),
+        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+    ])
+    _id_contributing_properties = ["key", "values"]
+
+
+
 #############################################################################################################
 #   SRO Objects
 #############################################################################################################
