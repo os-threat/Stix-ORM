@@ -103,7 +103,7 @@ class MalwareBehavior(_DomainObject):
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('name', StringProperty(required=True)),
         ('micro', BooleanProperty(default=lambda: False)),
-        ('obj_defn', ExternalReference()),
+        ('obj_defn', ExternalReference(source_name="example", description="example")), # TODO: fix this
         ('obj_version', StringProperty()),
         ('related_object_refs', ListProperty(ReferenceProperty(valid_types='attack-pattern', spec_version='2.1'))),
         ('tags', DictionaryProperty(spec_version='2.1')),
@@ -140,7 +140,7 @@ class MalwareMethod(_DomainObject):
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('name', StringProperty(required=True)),
         ('micro', BooleanProperty(default=lambda: False)),
-        ('obj_defn', ExternalReference()),
+        ('obj_defn', ExternalReference(source_name="example",  description="example")), # TODO: fix this
         ('behavior_ref', ThreatReference(valid_types='malware-behavior', spec_version='2.1')),
         ('contributor_refs', ListProperty(ReferenceProperty(valid_types='identity', spec_version='2.1'))),
         ('revoked', BooleanProperty(default=lambda: False)),
@@ -172,7 +172,7 @@ class MalwareObjective(_DomainObject):
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('name', StringProperty(required=True)),
         ('micro', BooleanProperty(default=lambda: False)),
-        ('obj_defn', ExternalReference()),
+        ('obj_defn', ExternalReference(source_name="example",  description="example")), # TODO: fix this
         ('revoked', BooleanProperty(default=lambda: False)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
@@ -194,7 +194,7 @@ class MalwareExt(_Extension):
     _type = 'extension-definition--8e9e338f-c9ee-4d4f-8cac-85b4dcfdf3c1'
     _properties = OrderedDict([
         ('extension_type', StringProperty(fixed='property-extension')),
-        ('obj_defn', ExternalReference()),
+        ('obj_defn', ExternalReference(source_name="example", description="example")), # TODO: fix this
         ('year', StringProperty()),
         ('platforms', ListProperty(StringProperty)),
     ])

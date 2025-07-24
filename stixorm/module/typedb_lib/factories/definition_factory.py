@@ -5,6 +5,7 @@ import logging
 import os
 import pathlib
 import pkgutil
+import traceback
 from typing import List, Dict
 from stixorm.module import definitions
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
@@ -160,11 +161,13 @@ class DefinitionFactory:
         for importer, subpackage_name, is_pkg in pkgutil.walk_packages(package_name.__path__, package + '.'):
             if is_pkg:
                 try:
-                    subpackage = importer.find_module(subpackage_name).load_module(subpackage_name)
+                    module = importer.find_module(subpackage_name)
+                    subpackage = module.load_module(subpackage_name)
                     name = subpackage.name
                     model_class = ModelClassDefinition(**subpackage.class_model)
                     self.definitions[name] = DomainDefinition(name, self.definition_dir.joinpath(name), model_class)
                 except Exception as e:
+                    traceback.print_exc()
                     logging.exception(e)
 
 

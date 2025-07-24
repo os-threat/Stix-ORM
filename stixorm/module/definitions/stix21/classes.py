@@ -1,4 +1,6 @@
 """Python Mitre ATT&CK Stix Class Definitions """
+from stix2.v20 import WindowsRegistryValueType
+
 from stixorm.module.typedb_lib.factories.mappings_factory import get_mapping_factory_instance
 
 """Python Mitre ATT&CK Stix Class Definitions """
@@ -8,7 +10,7 @@ import warnings
 from collections import OrderedDict
 
 from stix2.exceptions import (
-    PropertyPresenceError, STIXDeprecationWarning, )
+    PropertyPresenceError, STIXDeprecationWarning, AtLeastOnePropertyError, )
 from stix2.properties import (
     BooleanProperty, ExtensionsProperty, IDProperty, IntegerProperty, ListProperty,
     OpenVocabProperty, ReferenceProperty, StringProperty, DictionaryProperty, EnumProperty,
