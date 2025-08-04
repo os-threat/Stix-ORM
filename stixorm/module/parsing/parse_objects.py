@@ -4,12 +4,10 @@ import copy
 from stixorm.module.authorise import authorised_mappings, import_type_factory
 from stix2.exceptions import ParseError
 from stix2.parsing import dict_to_stix2
-from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco_type_to_tql
 import logging
 
 from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
-from stixorm.module.parsing.get_content import determine_content_object_from_list_by_tests
 from stixorm.module.parsing.content.parse import ParseContent
 
 logger = logging.getLogger(__name__)
