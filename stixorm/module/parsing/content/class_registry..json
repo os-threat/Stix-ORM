@@ -1,9 +1,10 @@
 [
   {
-    "type": "anecdote",
+    "stix_type": "anecdote",
     "protocol": "os-threat",
     "group": "sco",
-    "class": "Anecdote",
+    "python_class": "Anecdote",
+    "typeql": "anecdote",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -12,10 +13,11 @@
     "value2": ""
   },
   {
-    "type": "artifact",
-    "protocol": "stix",
+    "stix_type": "artifact",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "Artifact",
+    "python_class": "Artifact",
+    "typeql": "artifact",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -24,10 +26,11 @@
     "value2": ""
   },
   {
-    "type": "attack-action",
+    "stix_type": "attack-action",
     "protocol": "flow",
     "group": "sdo",
-    "class": "FlowAction",
+    "python_class": "FlowAction",
+    "typeql": "flow-action",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -36,10 +39,11 @@
     "value2": ""
   },
   {
-    "type": "attack-asset",
+    "stix_type": "attack-asset",
     "protocol": "flow",
     "group": "sdo",
-    "class": "FlowAsset",
+    "python_class": "FlowAsset",
+    "typeql": "flow-asset",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -48,10 +52,11 @@
     "value2": ""
   },
   {
-    "type": "attack-condition",
+    "stix_type": "attack-condition",
     "protocol": "flow",
     "group": "sdo",
-    "class": "FlowCondition",
+    "python_class": "FlowCondition",
+    "typeql": "flow-condition",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -60,10 +65,11 @@
     "value2": ""
   },
   {
-    "type": "attack-flow",
+    "stix_type": "attack-flow",
     "protocol": "flow",
     "group": "sdo",
-    "class": "AttackFlow",
+    "python_class": "AttackFlow",
+    "typeql": "attack-flow",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -72,10 +78,11 @@
     "value2": ""
   },
   {
-    "type": "attack-operator",
+    "stix_type": "attack-operator",
     "protocol": "flow",
     "group": "sdo",
-    "class": "FlowOperator",
+    "python_class": "FlowOperator",
+    "typeql": "flow-operator",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -84,10 +91,11 @@
     "value2": ""
   },
   {
-    "type": "attack-pattern",
-    "protocol": "stix",
+    "stix_type": "attack-pattern",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "AttackPattern",
+    "python_class": "AttackPattern",
+    "typeql": "attack-pattern",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -96,10 +104,11 @@
     "value2": ""
   },
   {
-    "type": "attack-pattern",
+    "stix_type": "attack-pattern",
     "protocol": "attack",
     "group": "sdo",
-    "class": "Technique",
+    "python_class": "Technique",
+    "typeql": "technique",
     "condition1": "EXISTS",
     "field1": "x_mitre_attack_spec_version",
     "value1": "",
@@ -108,10 +117,11 @@
     "value2": "FALSE"
   },
   {
-    "type": "attack-pattern",
+    "stix_type": "attack-pattern",
     "protocol": "attack",
     "group": "sdo",
-    "class": "SubTechnique",
+    "python_class": "SubTechnique",
+    "typeql": "sub-technique",
     "condition1": "EXISTS",
     "field1": "x_mitre_attack_spec_version",
     "value1": "",
@@ -120,10 +130,11 @@
     "value2": "TRUE"
   },
   {
-    "type": "autonomous-system",
-    "protocol": "stix",
+    "stix_type": "autonomous-system",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "AutonomousSystem",
+    "python_class": "AutonomousSystem",
+    "typeql": "autonomous-system",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -132,10 +143,11 @@
     "value2": ""
   },
   {
-    "type": "campaign",
-    "protocol": "stix",
+    "stix_type": "campaign",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "Campaign",
+    "python_class": "Campaign",
+    "typeql": "campaign",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -144,10 +156,11 @@
     "value2": ""
   },
   {
-    "type": "campaign",
+    "stix_type": "campaign",
     "protocol": "attack",
     "group": "sdo",
-    "class": "AttackCampaign",
+    "python_class": "AttackCampaign",
+    "typeql": "attack-campaign",
     "condition1": "EXISTS",
     "field1": "x_mitre_attack_spec_version",
     "value1": "",
@@ -156,10 +169,11 @@
     "value2": ""
   },
   {
-    "type": "course-of-action",
-    "protocol": "stix",
+    "stix_type": "course-of-action",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "CourseOfAction",
+    "python_class": "CourseOfAction",
+    "typeql": "course-of-action",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -168,10 +182,11 @@
     "value2": ""
   },
   {
-    "type": "course-of-action",
+    "stix_type": "course-of-action",
     "protocol": "attack",
     "group": "sdo",
-    "class": "Mitigation",
+    "python_class": "Mitigation",
+    "typeql": "mitigation",
     "condition1": "EXISTS",
     "field1": "x_mitre_attack_spec_version",
     "value1": "",
@@ -180,22 +195,11 @@
     "value2": ""
   },
   {
-    "type": "course-of-action",
-    "protocol": "oca",
-    "group": "sdo",
-    "class": "CourseOfAction",
-    "condition1": "EXISTS",
-    "field1": "extensions.extension-definition--bbc1d5c8-7ddc-4e89-be9c-f33ad02d71dd",
-    "value1": "",
-    "condition2": "",
-    "field2": "",
-    "value2": ""
-  },
-  {
-    "type": "directory",
-    "protocol": "stix",
+    "stix_type": "directory",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "Directory",
+    "python_class": "Directory",
+    "typeql": "directory",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -204,10 +208,11 @@
     "value2": ""
   },
   {
-    "type": "domain-name",
-    "protocol": "stix",
+    "stix_type": "domain-name",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "DomainName",
+    "python_class": "DomainName",
+    "typeql": "domain-name",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -216,10 +221,11 @@
     "value2": ""
   },
   {
-    "type": "email-addr",
-    "protocol": "stix",
+    "stix_type": "email-addr",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "EmailAddress",
+    "python_class": "EmailAddress",
+    "typeql": "email-addr",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -228,10 +234,11 @@
     "value2": ""
   },
   {
-    "type": "email-message",
-    "protocol": "stix",
+    "stix_type": "email-message",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "EmailMessage",
+    "python_class": "EmailMessage",
+    "typeql": "email-message",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -240,10 +247,11 @@
     "value2": ""
   },
   {
-    "type": "event",
+    "stix_type": "event",
     "protocol": "os-threat",
     "group": "sdo",
-    "class": "Event",
+    "python_class": "Event",
+    "typeql": "event",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -252,10 +260,11 @@
     "value2": ""
   },
   {
-    "type": "file",
-    "protocol": "stix",
+    "stix_type": "file",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "File",
+    "python_class": "File",
+    "typeql": "file",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -264,22 +273,24 @@
     "value2": ""
   },
   {
-    "type": "file",
+    "stix_type": "file",
     "protocol": "oca",
     "group": "sco",
-    "class": "OCAFile",
+    "python_class": "OCAFile",
+    "typeql": "oca-file",
     "condition1": "STARTS_WITH",
-    "field1": "x_",
-    "value1": "",
+    "field1": "",
+    "value1": "x_",
     "condition2": "",
     "field2": "",
     "value2": ""
   },
   {
-    "type": "identity",
-    "protocol": "stix",
+    "stix_type": "identity",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "Identity",
+    "python_class": "Identity",
+    "typeql": "identity",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -288,10 +299,11 @@
     "value2": ""
   },
   {
-    "type": "identity",
+    "stix_type": "identity",
     "protocol": "attack",
     "group": "sdo",
-    "class": "AttackIdentity",
+    "python_class": "AttackIdentity",
+    "typeql": "attack-identity",
     "condition1": "EXISTS",
     "field1": "x_mitre_attack_spec_version",
     "value1": "",
@@ -300,10 +312,11 @@
     "value2": ""
   },
   {
-    "type": "impact",
+    "stix_type": "impact",
     "protocol": "os-threat",
     "group": "sdo",
-    "class": "Impact",
+    "python_class": "Impact",
+    "typeql": "impact",
     "condition1": "EXISTS",
     "field1": "extensions.confidentiality",
     "value1": "",
@@ -312,10 +325,11 @@
     "value2": ""
   },
   {
-    "type": "incident",
-    "protocol": "stix",
+    "stix_type": "incident",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "Incident",
+    "python_class": "Incident",
+    "typeql": "incident",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -324,10 +338,11 @@
     "value2": ""
   },
   {
-    "type": "indicator",
-    "protocol": "stix",
+    "stix_type": "indicator",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "Indicator",
+    "python_class": "Indicator",
+    "typeql": "indicator",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -336,10 +351,11 @@
     "value2": ""
   },
   {
-    "type": "infrastructure",
-    "protocol": "stix",
+    "stix_type": "infrastructure",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "Infrastructure",
+    "python_class": "Infrastructure",
+    "typeql": "infrastructure",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -348,10 +364,11 @@
     "value2": ""
   },
   {
-    "type": "grouping",
-    "protocol": "stix",
+    "stix_type": "grouping",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "Group",
+    "python_class": "Group",
+    "typeql": "grouping",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -360,10 +377,11 @@
     "value2": ""
   },
   {
-    "type": "intrusion-set",
-    "protocol": "stix",
+    "stix_type": "intrusion-set",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "IntrusionSet",
+    "python_class": "IntrusionSet",
+    "typeql": "intrusion-set",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -372,10 +390,11 @@
     "value2": ""
   },
   {
-    "type": "intrusion-set",
+    "stix_type": "intrusion-set",
     "protocol": "attack",
     "group": "sdo",
-    "class": "Group",
+    "python_class": "Group",
+    "typeql": "attack-group",
     "condition1": "EXISTS",
     "field1": "x_mitre_attack_spec_version",
     "value1": "",
@@ -384,10 +403,11 @@
     "value2": ""
   },
   {
-    "type": "ipv4-addr",
-    "protocol": "stix",
+    "stix_type": "ipv4-addr",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "IPv4Address",
+    "python_class": "IPv4Address",
+    "typeql": "ipv4-addr",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -396,10 +416,11 @@
     "value2": ""
   },
   {
-    "type": "ipv6-addr",
-    "protocol": "stix",
+    "stix_type": "ipv6-addr",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "IPv6Address",
+    "python_class": "IPv6Address",
+    "typeql": "ipv6-addr",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -408,10 +429,11 @@
     "value2": ""
   },
   {
-    "type": "location",
-    "protocol": "stix",
+    "stix_type": "location",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "Location",
+    "python_class": "Location",
+    "typeql": "location",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -420,10 +442,11 @@
     "value2": ""
   },
   {
-    "type": "mac-addr",
-    "protocol": "stix",
+    "stix_type": "mac-addr",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "MACAddress",
+    "python_class": "MACAddress",
+    "typeql": "mac-addr",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -432,10 +455,11 @@
     "value2": ""
   },
   {
-    "type": "malware",
-    "protocol": "stix",
+    "stix_type": "malware",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "Malware",
+    "python_class": "Malware",
+    "typeql": "malware",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -444,10 +468,11 @@
     "value2": ""
   },
   {
-    "type": "malware",
+    "stix_type": "malware",
     "protocol": "attack",
     "group": "sdo",
-    "class": "SoftwareMalware",
+    "python_class": "SoftwareMalware",
+    "typeql": "software-malware",
     "condition1": "EXISTS",
     "field1": "x_mitre_attack_spec_version",
     "value1": "",
@@ -456,10 +481,11 @@
     "value2": ""
   },
   {
-    "type": "malware-analysis",
-    "protocol": "stix",
+    "stix_type": "malware-analysis",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "MalwareAnalysis",
+    "python_class": "MalwareAnalysis",
+    "typeql": "malware-analysis",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -468,10 +494,11 @@
     "value2": ""
   },
   {
-    "type": "malware-behavior",
+    "stix_type": "malware-behavior",
     "protocol": "mbc",
     "group": "sdo",
-    "class": "MalwareBehaviour",
+    "python_class": "MalwareBehaviour",
+    "typeql": "malware-behavior",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -480,10 +507,11 @@
     "value2": ""
   },
   {
-    "type": "malware-method",
+    "stix_type": "malware-method",
     "protocol": "mbc",
     "group": "sdo",
-    "class": "MalwareMethod",
+    "python_class": "MalwareMethod",
+    "typeql": "malware-method",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -492,10 +520,11 @@
     "value2": ""
   },
   {
-    "type": "malware-objective",
+    "stix_type": "malware-objective",
     "protocol": "mbc",
     "group": "sdo",
-    "class": "MalwareObjective",
+    "python_class": "MalwareObjective",
+    "typeql": "malware-objective",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -504,10 +533,11 @@
     "value2": ""
   },
   {
-    "type": "marking",
-    "protocol": "stix",
+    "stix_type": "marking",
+    "protocol": "stix21",
     "group": "meta",
-    "class": "MarkingDefinition",
+    "python_class": "MarkingDefinition",
+    "typeql": "marking",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -516,10 +546,11 @@
     "value2": ""
   },
   {
-    "type": "mutex",
-    "protocol": "stix",
+    "stix_type": "mutex",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "Mutex",
+    "python_class": "Mutex",
+    "typeql": "mutex",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -528,10 +559,11 @@
     "value2": ""
   },
   {
-    "type": "network-traffic",
-    "protocol": "stix",
+    "stix_type": "network-traffic",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "NetworkTraffic",
+    "python_class": "NetworkTraffic",
+    "typeql": "network-traffic",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -540,22 +572,24 @@
     "value2": ""
   },
   {
-    "type": "network-traffic",
+    "stix_type": "network-traffic",
     "protocol": "oca",
     "group": "sco",
-    "class": "OCANetworkTraffic",
+    "python_class": "OCANetworkTraffic",
+    "typeql": "oca-network-traffic",
     "condition1": "STARTS_WITH",
-    "field1": "x_",
-    "value1": "",
+    "field1": "",
+    "value1": "x_",
     "condition2": "",
     "field2": "",
     "value2": ""
   },
   {
-    "type": "note",
-    "protocol": "stix",
+    "stix_type": "note",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "Note",
+    "python_class": "Note",
+    "typeql": "note",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -564,10 +598,11 @@
     "value2": ""
   },
   {
-    "type": "observed-data",
-    "protocol": "stix",
+    "stix_type": "observed-data",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "ObservedData",
+    "python_class": "ObservedData",
+    "typeql": "observed-data",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -576,10 +611,11 @@
     "value2": ""
   },
   {
-    "type": "opinion",
-    "protocol": "stix",
+    "stix_type": "opinion",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "Opinion",
+    "python_class": "Opinion",
+    "typeql": "opinion",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -588,10 +624,11 @@
     "value2": ""
   },
   {
-    "type": "process",
-    "protocol": "stix",
+    "stix_type": "process",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "Process",
+    "python_class": "Process",
+    "typeql": "process",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -600,22 +637,24 @@
     "value2": ""
   },
   {
-    "type": "process",
+    "stix_type": "process",
     "protocol": "oca",
     "group": "sco",
-    "class": "OCAProcess",
+    "python_class": "OCAProcess",
+    "typeql": "oca-process",
     "condition1": "STARTS_WITH",
-    "field1": "x_",
-    "value1": "",
+    "field1": "",
+    "value1": "x_",
     "condition2": "",
     "field2": "",
     "value2": ""
   },
   {
-    "type": "relationship",
-    "protocol": "stix",
+    "stix_type": "relationship",
+    "protocol": "stix21",
     "group": "sro",
-    "class": "Relationship",
+    "python_class": "Relationship",
+    "typeql": "relationship",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -624,10 +663,11 @@
     "value2": ""
   },
   {
-    "type": "relationship",
+    "stix_type": "relationship",
     "protocol": "attack",
     "group": "sro",
-    "class": "AttackRelation",
+    "python_class": "AttackRelation",
+    "typeql": "attack-relation",
     "condition1": "EXISTS",
     "field1": "x_mitre_attack_spec_version",
     "value1": "",
@@ -636,10 +676,11 @@
     "value2": ""
   },
   {
-    "type": "report",
-    "protocol": "stix",
+    "stix_type": "report",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "Report",
+    "python_class": "Report",
+    "typeql": "report",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -648,10 +689,11 @@
     "value2": ""
   },
   {
-    "type": "sequence",
+    "stix_type": "sequence",
     "protocol": "os-threat",
     "group": "sdo",
-    "class": "Sequence",
+    "python_class": "Sequence",
+    "typeql": "sequence",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -660,10 +702,11 @@
     "value2": ""
   },
   {
-    "type": "sighting",
-    "protocol": "stix",
+    "stix_type": "sighting",
+    "protocol": "stix21",
     "group": "sro",
-    "class": "Sighting",
+    "python_class": "Sighting",
+    "typeql": "sighting",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -672,10 +715,11 @@
     "value2": ""
   },
   {
-    "type": "software",
-    "protocol": "stix",
+    "stix_type": "software",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "Software",
+    "python_class": "Software",
+    "typeql": "software",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -684,22 +728,24 @@
     "value2": ""
   },
   {
-    "type": "software",
+    "stix_type": "software",
     "protocol": "oca",
     "group": "sco",
-    "class": "OCASoftware",
+    "python_class": "OCASoftware",
+    "typeql": "oca-software",
     "condition1": "STARTS_WITH",
-    "field1": "x_",
-    "value1": "",
+    "field1": "",
+    "value1": "x_",
     "condition2": "",
     "field2": "",
     "value2": ""
   },
   {
-    "type": "task",
+    "stix_type": "task",
     "protocol": "os-threat",
     "group": "sdo",
-    "class": "Task",
+    "python_class": "Task",
+    "typeql": "task",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -708,10 +754,11 @@
     "value2": ""
   },
   {
-    "type": "threat-actor",
-    "protocol": "stix",
+    "stix_type": "threat-actor",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "ThreatActor",
+    "python_class": "ThreatActor",
+    "typeql": "threat-actor",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -720,10 +767,11 @@
     "value2": ""
   },
   {
-    "type": "tool",
-    "protocol": "stix",
+    "stix_type": "tool",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "Tool",
+    "python_class": "Tool",
+    "typeql": "tool",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -732,10 +780,11 @@
     "value2": ""
   },
   {
-    "type": "tool",
+    "stix_type": "tool",
     "protocol": "attack",
     "group": "sdo",
-    "class": "SoftwareTool",
+    "python_class": "SoftwareTool",
+    "typeql": "software-tool",
     "condition1": "EXISTS",
     "field1": "x_mitre_attack_spec_version",
     "value1": "",
@@ -744,10 +793,11 @@
     "value2": ""
   },
   {
-    "type": "url",
-    "protocol": "stix",
+    "stix_type": "url",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "URL",
+    "python_class": "URL",
+    "typeql": "url",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -756,10 +806,11 @@
     "value2": ""
   },
   {
-    "type": "user-account",
-    "protocol": "stix",
+    "stix_type": "user-account",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "UserAccount",
+    "python_class": "UserAccount",
+    "typeql": "user-account",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -768,22 +819,24 @@
     "value2": ""
   },
   {
-    "type": "user-account",
+    "stix_type": "user-account",
     "protocol": "oca",
     "group": "sco",
-    "class": "OCAUserAccount",
+    "python_class": "OCAUserAccount",
+    "typeql": "oca-user-account",
     "condition1": "STARTS_WITH",
-    "field1": "x_",
-    "value1": "",
+    "field1": "",
+    "value1": "x_",
     "condition2": "",
     "field2": "",
     "value2": ""
   },
   {
-    "type": "vulnerability",
-    "protocol": "stix",
+    "stix_type": "vulnerability",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "Vulnerability",
+    "python_class": "Vulnerability",
+    "typeql": "vulnerability",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -792,10 +845,11 @@
     "value2": ""
   },
   {
-    "type": "windows-registry-key",
-    "protocol": "stix",
+    "stix_type": "windows-registry-key",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "WindowsRegistryKey",
+    "python_class": "WindowsRegistryKey",
+    "typeql": "windows-registry-key",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -804,10 +858,11 @@
     "value2": ""
   },
   {
-    "type": "x509-certificate",
-    "protocol": "stix",
+    "stix_type": "x509-certificate",
+    "protocol": "stix21",
     "group": "sco",
-    "class": "X509Certificate",
+    "python_class": "X509Certificate",
+    "typeql": "x509-certificate",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -816,10 +871,11 @@
     "value2": ""
   },
   {
-    "type": "x-ibm-finding",
+    "stix_type": "x-ibm-finding",
     "protocol": "oca",
     "group": "sco",
-    "class": "OCAFinding",
+    "python_class": "OCAFinding",
+    "typeql": "oca-finding",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -828,10 +884,11 @@
     "value2": ""
   },
   {
-    "type": "x-ibm-ttp-tagging",
+    "stix_type": "x-ibm-ttp-tagging",
     "protocol": "oca",
     "group": "sco",
-    "class": "OCATagging",
+    "python_class": "OCATagging",
+    "typeql": "oca-tagging",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -840,10 +897,11 @@
     "value2": ""
   },
   {
-    "type": "x-mitre-asset",
+    "stix_type": "x-mitre-asset",
     "protocol": "attack",
     "group": "sdo",
-    "class": "AttackAsset",
+    "python_class": "AttackAsset",
+    "typeql": "oca-asset",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -852,10 +910,11 @@
     "value2": ""
   },
   {
-    "type": "x-mitre-collection",
+    "stix_type": "x-mitre-collection",
     "protocol": "attack",
     "group": "sdo",
-    "class": "Collection",
+    "python_class": "Collection",
+    "typeql": "collection",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -864,10 +923,11 @@
     "value2": ""
   },
   {
-    "type": "x-mitre-data-component",
+    "stix_type": "x-mitre-data-component",
     "protocol": "attack",
     "group": "sdo",
-    "class": "DataComponent",
+    "python_class": "DataComponent",
+    "typeql": "data-component",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -876,10 +936,11 @@
     "value2": ""
   },
   {
-    "type": "x-mitre-data-source",
+    "stix_type": "x-mitre-data-source",
     "protocol": "attack",
     "group": "sdo",
-    "class": "DataSource",
+    "python_class": "DataSource",
+    "typeql": "data-source",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -888,10 +949,11 @@
     "value2": ""
   },
   {
-    "type": "x-mitre-matrix",
+    "stix_type": "x-mitre-matrix",
     "protocol": "attack",
     "group": "sdo",
-    "class": "Matrix",
+    "python_class": "Matrix",
+    "typeql": "matrix",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -900,10 +962,11 @@
     "value2": ""
   },
   {
-    "type": "x-mitre-tactic",
+    "stix_type": "x-mitre-tactic",
     "protocol": "attack",
     "group": "sdo",
-    "class": "Tactic",
+    "python_class": "Tactic",
+    "typeql": "tactic",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -912,10 +975,11 @@
     "value2": ""
   },
   {
-    "type": "x-oca-asset",
+    "stix_type": "x-oca-asset",
     "protocol": "oca",
     "group": "sco",
-    "class": "OCAAsset",
+    "python_class": "OCAAsset",
+    "typeql": "oca-asset",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -924,10 +988,11 @@
     "value2": ""
   },
   {
-    "type": "x-oca-behavior",
+    "stix_type": "x-oca-behavior",
     "protocol": "oca",
     "group": "sdo",
-    "class": "Behavior",
+    "python_class": "Behavior",
+    "typeql": "behavior",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -936,10 +1001,11 @@
     "value2": ""
   },
   {
-    "type": "x-oca-detection",
+    "stix_type": "x-oca-detection",
     "protocol": "oca",
     "group": "sdo",
-    "class": "Detection",
+    "python_class": "Detection",
+    "typeql": "detection",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -948,10 +1014,11 @@
     "value2": ""
   },
   {
-    "type": "x-oca-detector",
+    "stix_type": "x-oca-detector",
     "protocol": "oca",
     "group": "sdo",
-    "class": "Detector",
+    "python_class": "Detector",
+    "typeql": "detector",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -960,10 +1027,11 @@
     "value2": ""
   },
   {
-    "type": "x-oca-event",
+    "stix_type": "x-oca-event",
     "protocol": "oca",
     "group": "sco",
-    "class": "OCAEvent",
+    "python_class": "OCAEvent",
+    "typeql": "oca-event",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -972,10 +1040,11 @@
     "value2": ""
   },
   {
-    "type": "x-oca-geo",
+    "stix_type": "x-oca-geo",
     "protocol": "oca",
     "group": "sco",
-    "class": "OCAGeo",
+    "python_class": "OCAGeo",
+    "typeql": "oca-geo",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -984,10 +1053,11 @@
     "value2": ""
   },
   {
-    "type": "x-oca-playbook",
+    "stix_type": "x-oca-playbook",
     "protocol": "oca",
     "group": "sdo",
-    "class": "Playbook",
+    "python_class": "Playbook",
+    "typeql": "playbook",
     "condition1": "",
     "field1": "",
     "value1": "",
@@ -996,10 +1066,11 @@
     "value2": ""
   },
   {
-    "type": "extension-definition",
-    "protocol": "stix",
+    "stix_type": "extension-definition",
+    "protocol": "stix21",
     "group": "sdo",
-    "class": "ExtensionDefinition",
+    "python_class": "ExtensionDefinition",
+    "typeql": "extension-definition",
     "condition1": "",
     "field1": "",
     "value1": "",

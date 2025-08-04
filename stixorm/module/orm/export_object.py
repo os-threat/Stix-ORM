@@ -5,8 +5,7 @@ from typing import List
 import copy
 
 from stixorm.module.authorise import authorised_mappings
-from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco_type_to_tql, meta_type_to_tql
-from stixorm.module.parsing.parse_objects import is_oca_object
+from stixorm.module.parsing.conversion_decisions import stix_dict_to_tql
 from stixorm.module.orm.export_utilities import convert_ans_to_res
 import logging
 
@@ -119,19 +118,12 @@ def make_sdo(res, import_type: ImportType):
                 sdo_type = model["type"]
         props = res["has"]
         relns = res["relns"]
-        attack_object = False
-        sub_technique = False
-        step_type = ""
-        oca_object = is_oca_object(stix_dict)
+        stix_props = {}
+        stix_props["type"] = sdo_type
         for prop in props:
-            if prop["typeql"] == "x-mitre-version":
-                attack_object = True
-            if prop["typeql"] == "x-mitre-is-subtechnique" and prop["value"] is True:
-                sub_technique = True
-            if prop["typeql"] == "step-type":
-                step_type = prop["value"]
+            stix_props[prop["typeql"]] = prop["value"]
 
-        obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(sdo_type, import_type, attack_object, sub_technique, step_type, oca_object)
+        obj_tql, sdo_tql_name, is_list, protocol = stix_dict_to_tql(stix_props)
 
         #logger.debug(f"obj tql -> {obj_tql}\n sdo tql name -> {sdo_tql_name}")
         # 2.B) get the is_list list, the list of properties that are lists for that object
@@ -189,18 +181,12 @@ def make_sro(res, import_type: ImportType):
     #
     # Note, Issue, cannot yet tell what to do with a procedure
     #
-    attack_object = False
-    uses_relation = False
-    if sro_tql_name == "procedure":
-        sro_sub_rel = sro_tql_name
-        is_procedure = True
-    else:
-        is_procedure = False
+    stix_props = {}
+    stix_props["type"] = sro_type
     for prop in props:
-        if prop["typeql"] == "x-mitre-version":
-            attack_object = True
+        stix_props[prop["typeql"]] = prop["value"]
 
-    obj_tql, sro_tql_name, is_list, protocol = sro_type_to_tql(sro_type, sro_sub_rel, import_type, attack_object, uses_relation, is_procedure)
+    obj_tql, sro_tql_name, is_list, protocol = stix_dict_to_tql(stix_props)
 
     logger.debug(f'make sro obj_tql ->{obj_tql}\n sro tql name ->{sro_tql_name}')
     # 2.A) get the typeql properties and relations
@@ -285,17 +271,18 @@ def make_sco(res: dict, import_type: ImportType):
     stix_dict = {}
     obj_type = res["T_name"]
     # - get the object-specific typeql names, sighting or relationship
-    # - work out the type of object
-    sco_tql_name = obj_type
-    oca_object = is_oca_object(stix_dict)
-    # - get the object-specific typeql names, sighting or relationship
-    obj_tql, sco_tql_name, is_list, protocol = sco_type_to_tql(sco_tql_name, import_type, oca_object)
-
     # 2.A) get the typeql properties and relations
     props = res["has"]
     relns = res["relns"]
+    # - work out the type of object
+    sco_tql_name = obj_type
+    stix_props = {}
+    stix_props["type"] = sco_tql_name
+    for prop in props:
+        stix_props[prop["typeql"]] = prop["value"]
 
-    is_list = copy.deepcopy(auth["is_lists"]["sco"]["sco"]) + copy.deepcopy(auth["is_lists"]["sco"][obj_type])
+    obj_tql, sco_tql_name, is_list, protocol = stix_dict_to_tql(stix_props)
+
     # 3.A) add the properties onto the the object
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
     # 3.B) add the relations onto the object
@@ -338,7 +325,6 @@ def make_meta(res, import_type: ImportType):
     obj_type = res["T_name"]
     props = res["has"]
     relns = res["relns"]
-    attack_object = False
     if obj_type == "tlp-white" or obj_type == "tlp-green" or obj_type == "tlp-amber" or obj_type == "tlp-red":
         return colours_dict[obj_type]
     j=0
@@ -353,7 +339,7 @@ def make_meta(res, import_type: ImportType):
     if tmp_val != "":
         del props[j]
 
-    obj_tql, sdo_tql_name, is_list, protocol = meta_type_to_tql(obj_type, import_type, attack_object)
+    obj_tql, sdo_tql_name, is_list, protocol = stix_dict_to_tql(sdo.serialize())
 
     # Add the properties onto the the object
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)

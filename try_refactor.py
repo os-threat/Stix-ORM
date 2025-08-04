@@ -2149,7 +2149,7 @@ if __name__ == '__main__':
     schema_root = "stixorm/module/"
     oca_path = "test/data/oca/iob/"
     oca = "BehaviorBundle.json"
-    #test_initialise()
+    test_initialise()
     #load_file_list(path1, [f30, f21])
     #load_file(incident + "/human_trigger.json")
     #load_file(mitre + "attack_objects.json")
@@ -2191,4 +2191,4 @@ if __name__ == '__main__':
     #test_get_objects()
     #test_time()
     #extract_sro_iob(oca_path, oca)
-    check_dir_CRUD(oca_path + "docs_data/")
+    # check_dir_CRUD(oca_path + "docs_data/")

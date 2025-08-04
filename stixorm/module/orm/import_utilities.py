@@ -4,7 +4,7 @@ import copy
 
 import logging
 
-from stixorm.module.parsing.conversion_decisions import get_source_from_id
+from stixorm.module.parsing.conversion_decisions import get_tqlname_from_content_by_ID
 from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
 from stixorm.module.typedb_lib.factories.definition_factory import get_definition_factory_instance
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
@@ -538,7 +538,7 @@ def embedded_relation(prop,
         dep_list = prop_value
         logger.debug(f'deplist {dep_list}')
         for i, prop_v in enumerate(prop_value):
-            prop_type = get_source_from_id(prop_v, import_type, protocol)
+            prop_type = get_tqlname_from_content_by_ID(prop_v, protocol)
             if prop_type == 'relationship':
                 prop_type = 'stix-core-relationship'
             prop_var = '$' + prop_type + str(i) + inc_add
@@ -547,7 +547,7 @@ def embedded_relation(prop,
     # else, match in the single prop_value
     else:
         dep_list.append(prop_value)
-        prop_type = get_source_from_id(prop_value, import_type, protocol)
+        prop_type = get_tqlname_from_content_by_ID(prop_value, protocol)
         logger.debug(f'deplist {dep_list}')
         if prop_type == 'relationship':
             prop_type = 'stix-core-relationship'

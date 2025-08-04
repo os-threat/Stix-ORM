@@ -2,9 +2,7 @@ import copy
 from typing import Dict
 
 from stixorm.module.authorise import default_import_type
-from stixorm.module.parsing.conversion_decisions import sdo_type_to_tql, sro_type_to_tql, sco_type_to_tql, \
-    meta_type_to_tql, get_embedded_match
-from stixorm.module.parsing.parse_objects import is_oca_object
+from stixorm.module.parsing.conversion_decisions import get_embedded_match, stix_dict_to_tql
 from stixorm.module.orm.import_utilities import clean_props, split_on_activity_type, \
     add_property_to_typeql, add_relation_to_typeql, val_tql
 
@@ -134,17 +132,8 @@ def sdo_to_data(sdo, import_type=default_import_type) -> [dict, Dict[str, str], 
     total_props = sdo._inner
     total_props = clean_props(total_props)
     # 1.B) get the specific typeql names for an object into a dictionary
-    # b. Instance details
-    attack_object = False if not sdo.get("x_mitre_version", False) else True
-    step_type = ""
-    if sdo.type == "sequence":
-        step_type = sdo.get("step_type", "sequence")
-    sub_technique = False
-    oca_object = is_oca_object(sdo)
-    if attack_object:
-        sub_technique = False if not sdo.get("x_mitre_is_subtechnique", False) else True
 
-    obj_tql, sdo_tql_name, is_list, protocol = sdo_type_to_tql(sdo_tql_name, import_type, attack_object, sub_technique, step_type, oca_object)
+    obj_tql, sdo_tql_name, is_list, protocol = stix_dict_to_tql(sdo.serialize())
     logger.debug(f'\nobject tql {obj_tql}, \nsdo tql name {sdo_tql_name},\n is_list {is_list}')
 
     return total_props, obj_tql, sdo_tql_name, protocol
@@ -232,19 +221,8 @@ def sro_to_data(sro, import_type=default_import_type) -> [dict, Dict[str, str], 
 
     logger.debug(f'into sro -> {sro}')
     # - work out the type of object
-    uses_relation = False
-    is_procedure = False
-    attack_object = False if not sro.get("x_mitre_version", False) else True
-    if attack_object:
-        uses_relation = False if not sro.get("relationship_type", False) == "uses" else True
-        if sro.get("target_ref", False):
-            target = sro.get("target_ref", False)
-            is_procedure = False if not target.split('--')[0] == "attack-pattern" else True
-    obj_tql = {}
-    sro_tql_name = sro.type
-    sro_sub_rel = "" if not sro.get("relationship_type", False) else sro["relationship_type"]
 
-    obj_tql, sro_tql_name, is_list, protocol = sro_type_to_tql(sro_tql_name, sro_sub_rel, import_type, attack_object, uses_relation, is_procedure)
+    obj_tql, sro_tql_name, is_list, protocol = stix_dict_to_tql(sro.serialize())
     logger.debug(f'object tql {obj_tql}, sro tql name {sro_tql_name}')
 
     return total_props, obj_tql, sro_tql_name, protocol
@@ -385,11 +363,8 @@ def sco_to_data(sco, import_type=default_import_type) -> [dict, dict, str]:
     total_props = sco._inner
     total_props = clean_props(total_props)
     # logger.debug(properties)
-    # - work out the type of object
-    sco_tql_name = sco.type
-    oca_object = is_oca_object(sco)
     # - get the object-specific typeql names, sighting or relationship
-    obj_tql, sco_tql_name, is_list, protocol = sco_type_to_tql(sco_tql_name, import_type, oca_object)
+    obj_tql, sco_tql_name, is_list, protocol = stix_dict_to_tql(sco.serialize())
 
     return total_props, obj_tql, sco_tql_name, protocol
 
@@ -479,12 +454,8 @@ def marking_definition_to_typeql(meta, import_type=default_import_type):
     if meta.id in marking:
         return dep_match, dep_insert, indep_ql, core_ql, {}
     # 1.B) Test for attack object and handle statement if a statement marking
-    attack_object = False if not meta.get("x_mitre_attack_spec_version", False) else True
-    if total_props.get("definition", False):
-        statement = total_props["definition"]
-        total_props.update(statement)
 
-    obj_tql, meta_tql_name, is_list, protocol = meta_type_to_tql(meta.type, import_type, attack_object)
+    obj_tql, meta_tql_name, is_list, protocol = stix_dict_to_tql(meta.serialize())
 
     properties, relations = split_on_activity_type(total_props, obj_tql)
 
