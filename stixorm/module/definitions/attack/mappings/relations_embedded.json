@@ -27,7 +27,7 @@
     "rel": "tactic_refs",
     "typeql": "tactic-refs",
     "owner": "a-matrix",
-    "pointed_to": "a-tactic",
+    "pointed-to": "a-tactic",
     "label": "tactic-refs",
     "owner-is-source": true
   }
