@@ -181,9 +181,12 @@ class DefinitionFactory:
                                    import_type: ImportType) -> List[DomainDefinition]:
         definitions = []
         for field_name, field_value in import_type.__dict__.items():
-            definition_key = ImportTypeToDefinitionMapper().corresponding_definition_name(field_name)
-            if field_value and definition_key is not None:
-                definitions.append(self.definitions[definition_key.value])
+            try:
+                definition_key = ImportTypeToDefinitionMapper().corresponding_definition_name(field_name)
+                if field_value and definition_key is not None:
+                    definitions.append(self.definitions[definition_key.value])
+            except Exception as e:
+                logging.exception(e)
         return definitions
 
 

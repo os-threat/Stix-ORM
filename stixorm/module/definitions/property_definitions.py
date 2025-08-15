@@ -22,9 +22,8 @@ ERROR_INVALID_ID = (
 )
 
 
-# TODO: Kestrel was missing from original definition, does this need to be fixed?
 def get_libraries():
-    return ["stix", "attack", "attack-flow", "mbc", "os-threat", "cacao", "kestrel"]
+    return ["stix", "attack", "attack-flow", "mbc", "os-threat", "oca"]
 
 
 def get_type_from_id(stix_id):
