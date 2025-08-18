@@ -314,7 +314,6 @@ attribute-type sub attribute, value string;
         x-mitre-domains sub mitre-attribute-string;
         x-mitre-contributors sub mitre-attribute-string;
         x-mitre-attack-spec-version sub mitre-attribute-string;
-        tactic-refs sub mitre-attribute-string;
         x-mitre-shortname sub mitre-attribute-string;
         x-mitre-detection sub mitre-attribute-string;
         x-mitre-platforms sub mitre-attribute-string;
