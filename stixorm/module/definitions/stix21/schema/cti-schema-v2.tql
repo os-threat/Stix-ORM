@@ -447,8 +447,6 @@ malware sub stix-domain-object,
 	plays delivers:delivered,
 
 	# Inferred role player
-	plays led-to:initial,
-	plays led-to:subsequent,
 	plays delivers:delivering;
 
 
