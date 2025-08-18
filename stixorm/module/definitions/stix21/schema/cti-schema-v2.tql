@@ -914,7 +914,6 @@ email-message sub stix-cyber-observable-object,
 
 	plays body-multipart:email,
 	plays email-connection:email,
-	plays EXIF-tagsEXIF-tags:email,
 	plays raw-email-references:email;
 
 
