@@ -447,8 +447,6 @@ malware sub stix-domain-object,
 	plays delivers:delivered,
 
 	# Inferred role player
-	plays led-to:initial,
-	plays led-to:subsequent,
 	plays delivers:delivering;
 
 
@@ -916,7 +914,6 @@ email-message sub stix-cyber-observable-object,
 
 	plays body-multipart:email,
 	plays email-connection:email,
-	plays EXIF-tagsEXIF-tags:email,
 	plays raw-email-references:email;
 
 
@@ -1770,11 +1767,8 @@ stix-attribute-string sub attribute, value string, abstract,
 	body sub stix-attribute-string;
 
 	socket-value sub stix-attribute-string;
-	socket-key sub stix-attribute-string;
 	HTTP-value sub stix-attribute-string;
-	HTTP-key sub stix-attribute-string;
 	IPFIX-value sub stix-attribute-string;
-	IPFIX-key sub stix-attribute-string;
 	relationship-type sub stix-attribute-string;
 	
 

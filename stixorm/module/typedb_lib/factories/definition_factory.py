@@ -25,10 +25,7 @@ class DomainDefinition:
 
         base = self.__get_base()
         mappings = self.__get_mappings()
-        try:
-            sub_objects = self.__get_sub_objects()
-        except Exception as e:
-            print(1)
+        sub_objects = self.__get_sub_objects()
         data = self.__get_data()
         # schema = self.__get_schema()
         # rules = self.__getrules()
@@ -181,9 +178,12 @@ class DefinitionFactory:
                                    import_type: ImportType) -> List[DomainDefinition]:
         definitions = []
         for field_name, field_value in import_type.__dict__.items():
-            definition_key = ImportTypeToDefinitionMapper().corresponding_definition_name(field_name)
-            if field_value and definition_key is not None:
-                definitions.append(self.definitions[definition_key.value])
+            try:
+                definition_key = ImportTypeToDefinitionMapper().corresponding_definition_name(field_name)
+                if field_value and definition_key is not None:
+                    definitions.append(self.definitions[definition_key.value])
+            except Exception as e:
+                logging.exception(e)
         return definitions
 
 

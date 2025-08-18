@@ -36,7 +36,7 @@ define
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
-        plays obj-ref:content
+        plays obj-ref:content,
         plays tactic-refs:a-matrix;
 
     # Tactics - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#tactics
@@ -77,7 +77,7 @@ define
         plays subtechnique-of:parent,
         owns x-mitre-network-requirements,
         #plays subtechnique-of:child,
-        plays detects:ttp,
+        plays detects:detected,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
@@ -365,7 +365,7 @@ define
         x-mitre-domains sub mitre-attribute-string;
         x-mitre-contributors sub mitre-attribute-string;
         x-mitre-attack-spec-version sub mitre-attribute-string;
-        tactic-refs sub mitre-attribute-string;
+        # tactic-refs is an embedded relation; do not redeclare as an attribute
         x-mitre-shortname sub mitre-attribute-string;
         x-mitre-detection sub mitre-attribute-string;
         x-mitre-platforms sub mitre-attribute-string;

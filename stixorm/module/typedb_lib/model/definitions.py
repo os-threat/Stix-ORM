@@ -22,7 +22,6 @@ class ImportTypeToDefinitionMapper():
         lookup = {
             "ATTACK": DefinitionName.ATTACK,
             "ATTACK_FLOW": DefinitionName.ATTACK_FLOW,
-            "CACAO": DefinitionName.CACAO,
             "MBC": DefinitionName.MBC,
             "OCA": DefinitionName.OCA,
             "OS_THREAT": DefinitionName.OS_THREAT,
