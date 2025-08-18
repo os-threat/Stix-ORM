@@ -25,10 +25,7 @@ class DomainDefinition:
 
         base = self.__get_base()
         mappings = self.__get_mappings()
-        try:
-            sub_objects = self.__get_sub_objects()
-        except Exception as e:
-            print(1)
+        sub_objects = self.__get_sub_objects()
         data = self.__get_data()
         # schema = self.__get_schema()
         # rules = self.__getrules()
