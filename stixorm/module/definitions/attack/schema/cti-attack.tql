@@ -36,7 +36,7 @@ define
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
-        plays obj-ref:content
+        plays obj-ref:content,
         plays tactic-refs:a-matrix;
 
     # Tactics - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#tactics
