@@ -1770,11 +1770,8 @@ stix-attribute-string sub attribute, value string, abstract,
 	body sub stix-attribute-string;
 
 	socket-value sub stix-attribute-string;
-	socket-key sub stix-attribute-string;
 	HTTP-value sub stix-attribute-string;
-	HTTP-key sub stix-attribute-string;
 	IPFIX-value sub stix-attribute-string;
-	IPFIX-key sub stix-attribute-string;
 	relationship-type sub stix-attribute-string;
 	
 
