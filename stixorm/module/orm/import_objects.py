@@ -127,7 +127,6 @@ def sdo_to_data(sdo, import_type=default_import_type) -> [dict, Dict[str, str], 
         obj_tql : the dict of the tql properties
 
     """
-    sdo_tql_name = sdo.type
     # - list of property names that have values
     total_props = sdo._inner
     total_props = clean_props(total_props)

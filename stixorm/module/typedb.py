@@ -195,6 +195,10 @@ class TypeDBSink(DataSink):
         assert os.path.isfile(self.cti_schema_oca)
         self.cti_schema_attack = pathlib.Path(self.schema_path).joinpath("definitions/attack/schema/cti-attack.tql")
         assert os.path.isfile(self.cti_schema_attack)
+        self.cti_schema_mbc = pathlib.Path(self.schema_path).joinpath("definitions/mbc/schema/cti-mbc.tql")
+        assert os.path.isfile(self.cti_schema_mbc)
+        self.cti_schema_attack_flow = pathlib.Path(self.schema_path).joinpath("definitions/attack_flow/schema/cti-attack-flow.tql")
+        assert os.path.isfile(self.cti_schema_attack_flow)
         # if self.schema_path is None:
         #     self.schema_path = str(pathlib.Path.parent)
         #

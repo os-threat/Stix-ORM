@@ -8,7 +8,6 @@ from pydantic import BaseModel
 class DefinitionName(str, Enum):
     ATTACK = "attack"
     ATTACK_FLOW = "attack_flow"
-    CACAO = "cacao"
     MBC = "mbc"
     OCA = "oca"
     OS_THREAT = "os_threat"

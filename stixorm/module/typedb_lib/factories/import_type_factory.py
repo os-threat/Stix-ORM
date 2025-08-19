@@ -4,7 +4,7 @@ from typing import List
 from pydantic import BaseModel
 
 class AttackVersions(Enum):
-    V12_1 = "12.1"
+    V17 = "17"
 
 class AttackDomains(Enum):
     ENTERPRISE_ATTACK = "enterprise-attack"
@@ -13,17 +13,14 @@ class AttackDomains(Enum):
 
 class ImportType(BaseModel):
     STIX21: bool
-    CVE: bool
-    identity: bool
-    location: bool
-    os_threat: bool
-    kestrel: bool
+    OS_THREAT: bool
+    OCA: bool
+    MBC: bool
+    ATTACK_FLOW: bool
     rules: bool
     ATTACK: bool
     ATTACK_Versions: List[AttackVersions]
     ATTACK_Domains: List[AttackDomains]
-    CACAO: bool
-    US_DoD: bool
 
 
 
@@ -34,85 +31,70 @@ class ImportTypeFactory:
         return ImportTypeFactory()
 
     @staticmethod
-    def create_import(stix_21=False,
-                      attack=False,
-                      cve=False,
-                      identity=False,
-                      location=False,
-                      os_threat=False,
-                      kestrel=False,
-                      rules=False,
-                      us_dod=False,
-                      attack_versions=[],
-                      attack_domains=[],
-                      cacao=False):
+    def create_import(stix_21=True,
+                      attack=True,
+                      attack_flow=True,
+                      oca=True,
+                      mbc=True,
+                      os_threat=True,
+                      rules=True,
+                      attack_versions=[AttackVersions.V17],
+                      attack_domains=[AttackDomains.ENTERPRISE_ATTACK]):
         if os_threat and (not stix_21 or not attack):
             raise ValueError("os_threat requires stix_21 and attack")
 
         return ImportType(
             STIX21=stix_21,
-            CVE=cve,
-            identity=identity,
-            location=location,
-            os_threat=os_threat,
-            kestrel=kestrel,
+            OS_THREAT=os_threat,
+            OCA=oca,
+            MBC=mbc,
+            ATTACK_FLOW=attack_flow,
             rules=rules,
             ATTACK=attack,
             ATTACK_Versions=attack_versions,
-            ATTACK_Domains=attack_domains,
-            CACAO=cacao,
-            US_DoD=us_dod,
+            ATTACK_Domains=attack_domains
         )
 
     @staticmethod
     def get_attack_import():
         return ImportType(
-            STIX21=True,
-            CVE=False,
-            identity=False,
-            location=False,
-            os_threat=False,
-            kestrel=False,
-            rules=False,
-            ATTACK=True,
-            ATTACK_Versions=[AttackVersions.V12_1],
-            ATTACK_Domains=[AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
-            CACAO=False,
-            US_DoD=False
+            stix_21=True,
+            attack=True,
+            attack_flow=True,
+            oca=True,
+            mbc=True,
+            os_threat=True,
+            rules=True,
+            attack_versions=[AttackVersions.V17],
+            attack_domains=[AttackDomains.ENTERPRISE_ATTACK]
         )
 
     @staticmethod
     def get_all_imports():
         return ImportType(
-            STIX21=True,
-            CVE=True,
-            identity=True,
-            location=True,
+            stix_21=True,
+            attack=True,
+            attack_flow=True,
+            oca=True,
+            mbc=True,
             os_threat=True,
-            kestrel=True,
             rules=True,
-            ATTACK=True,
-            ATTACK_Versions=[AttackVersions.V12_1],
-            ATTACK_Domains=[AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
-            CACAO=True,
-            US_DoD=True
+            attack_versions=[AttackVersions.V17],
+            attack_domains=[AttackDomains.ENTERPRISE_ATTACK]
         )
 
     @staticmethod
     def get_default_import():
         return ImportType(
-            STIX21 = True,
-            CVE = False,
-            identity = False,
-            location = False,
-            os_threat = True,
-            kestrel = True,
-            rules = False,
-            ATTACK = True,
-            ATTACK_Versions = [AttackVersions.V12_1],
-            ATTACK_Domains = [AttackDomains.ENTERPRISE_ATTACK, AttackDomains.ICS_ATTACK, AttackDomains.MOBILE_ATTACK],
-            CACAO= False,
-            US_DoD= False
+            stix_21=True,
+            attack=True,
+            attack_flow=True,
+            oca=True,
+            mbc=True,
+            os_threat=True,
+            rules=True,
+            attack_versions=[AttackVersions.V17],
+            attack_domains=[AttackDomains.ENTERPRISE_ATTACK]
         )
 
     @staticmethod
@@ -129,17 +111,14 @@ class ImportTypeFactory:
 
         return {
             "STIX21": import_type.STIX21,
-            "ATT&CK": import_type.ATTACK,
-            "os-threat": import_type.os_threat,
-            "kestrel": import_type.kestrel,
-            "CACAO": import_type.CACAO,
-            "US_DoD": import_type.US_DoD,
-            "CVE": import_type.CVE,
-            "identity": import_type.identity,
-            "location": import_type.location,
+            "ATTACK": import_type.ATTACK,
+            "OS_THREAT": import_type.OS_THREAT,
+            "OCA": import_type.OCA,
+            "MBC": import_type.MBC,
+            "ATTACK_FLOW": import_type.ATTACK_FLOW,
             "rules": import_type.rules,
-            "ATT&CK_Versions": versions,
-            "ATT&CK_Domains": domains
+            "ATTACK_Versions": versions,
+            "ATTACK_Domains": domains
         }
 
 
