@@ -128,7 +128,7 @@ def add_relation_to_typeql(rel,
 
     # hashes type
     elif (rel == "hashes"
-          or rel == "file_header_hashes"):
+          or rel == "file_header_hashes" or rel == "playbook_hashes"):
         logger.debug("in hashes")
         match, insert = hashes(rel, obj[rel], obj_var)
 

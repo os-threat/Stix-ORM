@@ -22,14 +22,14 @@ define
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     # Generic MBC Extension Object/Relation
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    mbc-ext sub oca-extensions,
-        relates mbc as oca,
-        relates extension as extensions;
+    mbc-ext sub embedded,
+        relates mbc as owner,
+        relates extension as pointed-to;
     mbc-extension sub incident-extension,
 	    plays mbc-ext:extension;
     
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    # Obj_defn Subobject
+    # obj-defn Subobject
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     obj-defn sub embedded,
         relates object as owner,
@@ -56,7 +56,7 @@ define
         relates method as pointed-to;
 
     detection-rules sub embedded,
-        relates code as owner,
+        relates behaviour as owner,
         relates rule as pointed-to;
 
     detection-rule sub stix-sub-object,
@@ -90,11 +90,11 @@ define
         owns actual-snippet,
         owns language,
         owns description,
-        owns hash,
+        owns actual-hash,
         plays references:snippet,
-        plays author-ref:code,
+        plays author-ref:snippet,
         plays exemplify-ref:example,
-        plays snippets:snippet;
+        plays snippets:code;
 
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     # Tags Dictionary Definition
@@ -132,15 +132,13 @@ define
 
     technique
         plays related-object-refs:related-object;
-    sub-technique
-        plays related-object-refs:related-object;
 
     # malware behaviour SDO
     malware-behaviour sub stix-domain-object,
         owns name,
         owns micro,
         owns obj-version,
-        plays obj_defn:object,
+        plays obj-defn:object,
         plays related-object-refs:behaviour,
         plays tags:behaviour,
         plays objective-refs:behaviour,
@@ -167,7 +165,7 @@ define
     malware-method sub stix-domain-object,
         owns name,
         owns micro,
-        plays obj_defn:object,
+        plays obj-defn:object,
         plays behaviour-ref:method,
         plays contributor-refs:object,
         plays exemplify-ref:method,
@@ -183,7 +181,7 @@ define
     malware-objective sub stix-domain-object,
         owns name,
         owns micro,
-        plays obj_defn:object,
+        plays obj-defn:object,
         plays uses:used,
         plays led-to:initial,
         plays led-to:subsequent,
@@ -196,8 +194,8 @@ define
     ################################
     malware-extension sub incident-extension,
         owns year,
-        owns platforms,
-        plays obj_defn:object,
+        owns malware-platforms,
+        plays obj-defn:object,
 	    plays malware-ext:extension;
         
     malware-ext sub embedded,
@@ -213,15 +211,14 @@ define
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     # String
 	    year sub  stix-attribute-string;
-	    platforms sub  stix-attribute-string;
-	    obj-vesion sub  stix-attribute-string;
+	    malware-platforms sub  stix-attribute-string;
+	    obj-version sub  stix-attribute-string;
 	    rule-type sub  stix-attribute-string;
 	    rule-name sub  stix-attribute-string;
 	    rule sub  stix-attribute-string;
-	    url sub  stix-attribute-string;
 	    api-fncs sub  stix-attribute-string;
-	    snippet sub  stix-attribute-string;
+	    actual-snippet sub  stix-attribute-string;
         language sub stix-attribute-string;
-        hash sub stix-attribute-string;
+        actual-hash sub stix-attribute-string;
     # Boolean
         micro sub stix-attribute-boolean;

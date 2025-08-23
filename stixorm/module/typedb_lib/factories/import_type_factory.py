@@ -17,10 +17,10 @@ class ImportType(BaseModel):
     OCA: bool
     MBC: bool
     ATTACK_FLOW: bool
-    rules: bool
     ATTACK: bool
     ATTACK_Versions: List[AttackVersions]
     ATTACK_Domains: List[AttackDomains]
+    RULES: bool
 
 
 
@@ -37,9 +37,9 @@ class ImportTypeFactory:
                       oca=True,
                       mbc=True,
                       os_threat=True,
-                      rules=True,
                       attack_versions=[AttackVersions.V17],
-                      attack_domains=[AttackDomains.ENTERPRISE_ATTACK]):
+                      attack_domains=[AttackDomains.ENTERPRISE_ATTACK],
+                      rules=True):
         if os_threat and (not stix_21 or not attack):
             raise ValueError("os_threat requires stix_21 and attack")
 
@@ -49,7 +49,7 @@ class ImportTypeFactory:
             OCA=oca,
             MBC=mbc,
             ATTACK_FLOW=attack_flow,
-            rules=rules,
+            RULES=rules,
             ATTACK=attack,
             ATTACK_Versions=attack_versions,
             ATTACK_Domains=attack_domains
@@ -58,43 +58,43 @@ class ImportTypeFactory:
     @staticmethod
     def get_attack_import():
         return ImportType(
-            stix_21=True,
-            attack=True,
-            attack_flow=True,
-            oca=True,
-            mbc=True,
-            os_threat=True,
-            rules=True,
-            attack_versions=[AttackVersions.V17],
-            attack_domains=[AttackDomains.ENTERPRISE_ATTACK]
+            STIX21=True,
+            ATTACK=True,
+            ATTACK_FLOW=True,
+            OCA=True,
+            MBC=True,
+            OS_THREAT=True,
+            RULES=True,
+            ATTACK_Versions=[AttackVersions.V17],
+            ATTACK_Domains=[AttackDomains.ENTERPRISE_ATTACK]
         )
 
     @staticmethod
     def get_all_imports():
         return ImportType(
-            stix_21=True,
-            attack=True,
-            attack_flow=True,
-            oca=True,
-            mbc=True,
-            os_threat=True,
-            rules=True,
-            attack_versions=[AttackVersions.V17],
-            attack_domains=[AttackDomains.ENTERPRISE_ATTACK]
+            STIX21=True,
+            ATTACK=True,
+            ATTACK_FLOW=True,
+            OCA=True,
+            MBC=True,
+            OS_THREAT=True,
+            RULES=True,
+            ATTACK_Versions=[AttackVersions.V17],
+            ATTACK_Domains=[AttackDomains.ENTERPRISE_ATTACK]
         )
 
     @staticmethod
     def get_default_import():
         return ImportType(
-            stix_21=True,
-            attack=True,
-            attack_flow=True,
-            oca=True,
-            mbc=True,
-            os_threat=True,
-            rules=True,
-            attack_versions=[AttackVersions.V17],
-            attack_domains=[AttackDomains.ENTERPRISE_ATTACK]
+            STIX21=True,
+            ATTACK=True,
+            ATTACK_FLOW=True,
+            OCA=True,
+            MBC=True,
+            OS_THREAT=True,
+            RULES=True,
+            ATTACK_Versions=[AttackVersions.V17],
+            ATTACK_Domains=[AttackDomains.ENTERPRISE_ATTACK]
         )
 
     @staticmethod
@@ -116,9 +116,9 @@ class ImportTypeFactory:
             "OCA": import_type.OCA,
             "MBC": import_type.MBC,
             "ATTACK_FLOW": import_type.ATTACK_FLOW,
-            "rules": import_type.rules,
-            "ATTACK_Versions": versions,
-            "ATTACK_Domains": domains
+            "ATTACK_Versions": import_type.ATTACK_Versions,
+            "ATTACK_Domains": import_type.ATTACK_Domains,
+            "RULES": import_type.RULES
         }
 
 

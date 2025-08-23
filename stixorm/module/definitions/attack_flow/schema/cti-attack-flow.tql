@@ -22,9 +22,9 @@ define
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     # Generic Attack-Flow Extension Object/Relation
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    attack-flow-ext sub oca-extensions,
-        relates attack-flow as oca,
-        relates extension as extensions;
+    attack-flow-ext sub embedded,
+        relates attack-flow as owner,
+        relates extension as pointed-to;
     attack-flow-extension sub incident-extension,
 	    plays attack-flow-ext:extension;
 
@@ -64,7 +64,7 @@ define
         plays asset-refs:the-action,
         plays effect-refs:the-impulse,
         plays effect-refs:the-effect,
-        plays start-refs:start-flow,
+        plays start-refs:start-object,
 	    plays attack-flow-ext:extension;
 
     # Tactic Ref Foreign Key Relation

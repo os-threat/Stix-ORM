@@ -255,7 +255,7 @@ def get_relation_details(r, r_tx, import_type: ImportType):
     elif reln_name == "granular-marking":
         reln['roles'] = get_granular_marking(r, r_tx)
 
-    elif reln_name == "hashes" or reln_name == "file-header-hashes":
+    elif reln_name == "hashes" or reln_name == "file-header-hashes" or reln_name == "playbook-hashes":
         reln['roles'] = get_hashes(r, r_tx)
 
     else:

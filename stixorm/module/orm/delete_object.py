@@ -143,7 +143,7 @@ def delete_sub_reln(rel, obj, obj_var, i, import_type):
 
     # hashes type
     elif (rel == "hashes"
-          or rel == "file_header_hashes"):
+          or rel == "file_header_hashes" or rel == "playbook_hashes"):
         match, delete = del_hashes(rel, obj[rel], obj_var, i)
 
     # insert key value store

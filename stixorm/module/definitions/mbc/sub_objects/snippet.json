@@ -1,9 +1,9 @@
 {
-	"snippet": "snippet",
+	"snippet": "actual-snippet",
 	"exemplify_ref": "",
 	"language": "language",
 	"description": "description",
 	"references": "",
-	"hash": "hash",
+	"hash": "actual-hash",
 	"author_ref": ""
 }

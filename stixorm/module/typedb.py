@@ -122,9 +122,15 @@ class TypeDBSink(DataSink):
         # D. Load the OS-Threat Schema
         os_threat_result = self.__load_os_threat_schema()
         handle_result(os_threat_result, "history os threat result", self.strict_failure)
-        # D. Load the OS-Threat Schema
-        oca_result = self.__load_os_threat_schema()
+        # E. Load the OCA Schema
+        oca_result = self.__load_oca_schema()
         handle_result(oca_result, "history oca result", self.strict_failure)
+        # F. Load the MBC Schema
+        mbc_result = self.__load_mbc_schema()
+        handle_result(mbc_result, "history mbc result", self.strict_failure)
+        # G. Load the Attack-Flow Schema
+        attack_flow_result = self.__load_attack_flow_schema()
+        handle_result(attack_flow_result, "history attack flow result", self.strict_failure)
 
         # 3. Load the Objects
         # Still to do
@@ -145,7 +151,7 @@ class TypeDBSink(DataSink):
 
 
     def __load_oca_schema(self):
-        if self.clear and self.import_type.kestrel:
+        if self.clear and self.import_type.OCA:
             logger.debug("OCA")
             load_schema(self._stix_connection, str(self.cti_schema_oca), "OCA Schema")
             logger.info("we have loaded OCA schema")
@@ -153,17 +159,37 @@ class TypeDBSink(DataSink):
             logger.debug("import type does not load OCA schema")
 
 
-    def __load_os_threat_schema(self):
-        if self.clear and self.import_type.os_threat:
-            logger.debug("os-threat")
-            load_schema(self._stix_connection, str(self.cti_schema_os_threat), "os-threat Schema ")
-            logger.info("we have loaded os-threat schema")
+
+    def __load_mbc_schema(self):
+        if self.clear and self.import_type.MBC:
+            logger.debug("MBC")
+            load_schema(self._stix_connection, str(self.cti_schema_mbc), "MBC Schema")
+            logger.info("we have loaded MBC schema")
         else:
-            logger.debug("import type does not load  os threat schema")
+            logger.debug("import type does not load MBC schema")
+
+
+
+    def __load_attack_flow_schema(self):
+        if self.clear and self.import_type.ATTACK_FLOW:
+            logger.debug("ATTACK_FLOW")
+            load_schema(self._stix_connection, str(self.cti_schema_attack_flow), "ATTACK_FLOW Schema")
+            logger.info("we have loaded ATTACK_FLOW schema")
+        else:
+            logger.debug("import type does not load ATTACK_FLOW schema")
+
+
+    def __load_os_threat_schema(self):
+        if self.clear and self.import_type.OS_THREAT:
+            logger.debug("OS_THREAT")
+            load_schema(self._stix_connection, str(self.cti_schema_os_threat), "OS_THREAT Schema ")
+            logger.info("we have loaded OS_THREAT schema")
+        else:
+            logger.debug("import type does not load OS_THREAT schema")
 
 
     def __load_stix_rules(self):
-        if self.clear and self.import_type.rules:
+        if self.clear and self.import_type.RULES:
             logger.debug("rules")
             load_schema(self._stix_connection, str(self.cti_schema_stix_rules), "Stix 2.1 Rules")
             logger.info("we have loaded Stix rules")

@@ -1,8 +1,8 @@
 [
     {
         "rel": "playbook_creator",
-        "owner": "creator",
-        "pointed-to": "created",
+        "owner": "author",
+        "pointed-to": "playbook",
         "typeql": "playbook-creator",
         "label": "playbook creator",
         "owner-is-source": true

@@ -98,12 +98,12 @@ define
     ##############################
     # OCA Playbook Object
     ################################
-    # Playbook Hashes
-    playbook-hashes sub hashes;
     # Playbook created by
-	playbook-creator sub created-by;
+	playbook-creator sub created-by,
+        relates author as creator,
+        relates playbook as created;
 	identity
-	    plays playbook-creator:creator;
+	    plays playbook-creator:author;
 	# Playbook SDO
     playbook sub stix-domain-object,
         owns name,
@@ -119,8 +119,8 @@ define
         owns playbook-priority,
         owns playbook-bin,
         owns playbook-url,
-        plays playbook_creator:created,
-        plays playbook-hashes:hash-owner;
+        plays playbook-creator:playbook, 
+	    plays hashes:hash-owner;
 
 	# Playbook Extension
 	playbook-ext sub oca-extensions,
@@ -372,8 +372,7 @@ define
         owns x-exit-code,
         owns x-uptime,
         owns x-unique-id,
-        owns x-tags,
-        plays process-extension:process-base;
+        owns x-tags;
 
 
     ##############################
@@ -525,8 +524,8 @@ define
 	    relates app-actual as pointed-to;
     #connect to Software
     software
-        plays src-or-ref:os-actual,
-        plays dst-od-ref:os-actual,
+        plays src-os-ref:os-actual,
+        plays dst-os-ref:os-actual,
         plays src-app-ref:app-actual,
         plays dst-app-ref:app-actual;
     ############################
@@ -534,10 +533,10 @@ define
 	src-geo-ref sub embedded,
 	    relates geo-base as owner,
 	    relates geo-actual as pointed-to;
-	dst-geo-ref sub enbedded,
+	dst-geo-ref sub embedded,
 	    relates geo-base as owner,
 	    relates geo-actual as pointed-to;
-    x-oca-geo
+    oca-geo
         plays src-geo-ref:geo-actual;
     ##################################
     #  OCA Source Application User Relation
@@ -579,7 +578,7 @@ define
 	    relates ttp-tag-actual as pointed-to;
     attack-pattern
         plays ttp-tag-ref:ttp-tag-actual;
-    x-mitre-tactic
+    tactic
         plays ttp-tag-ref:ttp-tag-actual;
     stix-core-relationship
         plays ttp-tag-ref:ttp-tag-actual;
@@ -790,7 +789,7 @@ define
     host-ref sub embedded,
         relates the-event as owner,
         relates the-asset as pointed-to;
-    asset
+    oca-asset
         plays host-ref:the-asset;
     # OCA Event Object
 	oca-event sub stix-cyber-observable-object,
@@ -1081,7 +1080,6 @@ define
         status sub stix-attribute-string;
         subject_name sub stix-attribute-string;
         cpe sub stix-attribute-string;
-        valid-until sub stix-attribute-string;
         vendor sub stix-attribute-string;
         vendor-url sub stix-attribute-string;
         product sub stix-attribute-string;
@@ -1089,11 +1087,11 @@ define
         behavior-class sub stix-attribute-string;
         tactic-type sub stix-attribute-string;
         technique-type sub stix-attribute-string;
-        first-seen sub stix-attribute-string;
+        vlan-id sub stix-attribute-string;
+        x-description sub stix-attribute-string;
 
 # Integer
 	    duration sub stix-attribute-integer;
-	    severity sub stix-attribute-integer;
 	    start-integer  sub stix-attribute-integer;
 	    end-integer sub  stix-attribute-integer;
 	    magnitude  sub stix-attribute-integer;

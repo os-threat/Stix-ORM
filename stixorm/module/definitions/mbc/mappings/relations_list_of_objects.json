@@ -2,7 +2,7 @@
   {
     "name": "detection_rules",
     "typeql": "detection-rules",
-    "owner": "code",
+    "owner": "behaviour",
     "pointed_to": "rule",
     "object": "detection-rule"
   },

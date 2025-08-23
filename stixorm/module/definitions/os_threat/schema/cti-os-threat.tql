@@ -804,7 +804,6 @@ define
     goal sub stix-attribute-string;
     detection-methods sub stix-attribute-string;
     detection-system sub stix-attribute-string;
-    detection-rule sub stix-attribute-string;
     state-change-type sub stix-attribute-string;
     impact-category sub stix-attribute-string;
     recoverability sub stix-attribute-string;
