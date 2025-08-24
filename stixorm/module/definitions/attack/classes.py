@@ -37,7 +37,7 @@ valid_obj =  get_mapping_factory_instance().get_all_types()
 
 class AttackRelation(_RelationshipObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
 
     _type = 'relationship'
@@ -100,7 +100,7 @@ class AttackRelation(_RelationshipObject):
 
 class Tactic(_DomainObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
 
     _type = 'x-mitre-tactic'
@@ -132,7 +132,7 @@ class Tactic(_DomainObject):
 
 class Matrix(_DomainObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
 
     _type = 'x-mitre-matrix'
@@ -167,7 +167,7 @@ class Matrix(_DomainObject):
 
 class Technique(_DomainObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
 
     _type = 'attack-pattern'
@@ -214,7 +214,7 @@ class Technique(_DomainObject):
 
 class SubTechnique(_DomainObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
 
     _type = 'attack-pattern'
@@ -259,7 +259,7 @@ class SubTechnique(_DomainObject):
 
 class RelatedAsset(_STIXBase21):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
     _properties = OrderedDict([
         ('name', StringProperty()),
@@ -269,9 +269,8 @@ class RelatedAsset(_STIXBase21):
 
 class AttackAsset(_DomainObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
-
     _type = 'x-mitre-asset'
     _properties = OrderedDict([
         ('type', TypeProperty(_type, spec_version='2.1')),
@@ -303,7 +302,7 @@ class AttackAsset(_DomainObject):
 
 class Mitigation(_DomainObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
 
     _type = 'course-of-action'
@@ -335,7 +334,7 @@ class Mitigation(_DomainObject):
 
 class Group(_DomainObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
 
     _type = 'intrusion-set'
@@ -384,7 +383,7 @@ class Group(_DomainObject):
 
 class SoftwareMalware(_DomainObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
 
     _type = 'malware'
@@ -445,7 +444,7 @@ class SoftwareMalware(_DomainObject):
 
 class SoftwareTool(_DomainObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
 
     _type = 'tool'
@@ -482,9 +481,144 @@ class SoftwareTool(_DomainObject):
 
 
 
+class DetectionStrategy(_DomainObject):
+    """For more detailed information on this object's properties, see
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
+    """
+
+    _type = 'x-mitre-detection-strategy'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty(required=True)),
+        ('description', StringProperty()),
+        ('x_mitre_version', StringProperty()),
+        ('x_mitre_contributors', ListProperty(StringProperty)),
+        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_domains', ListProperty(StringProperty)),
+        ('x_mitre_attack_spec_version', StringProperty()),
+        ('revoked', BooleanProperty(default=lambda: False)),
+        ('x_mitre_deprecated', BooleanProperty(default=lambda: False)),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('x_mitre_analytics', ListProperty(ReferenceProperty(valid_types='x-mitre-analytic', spec_version='2.1'))),
+    ])
+
+
+
+class MutableElement(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
+    """
+    _properties = OrderedDict([
+        ('field', StringProperty()),
+        ('description', StringProperty()),
+    ])
+
+
+class LogSourceReference(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
+    """
+    _properties = OrderedDict([
+        ('ref', ReferenceProperty(valid_types='x-mitre-log-source', spec_version='2.1')),
+        ('keys', ListProperty(EmbeddedObjectProperty(type=MutableElement))),
+    ])
+
+class Analytic(_DomainObject):
+    """For more detailed information on this object's properties, see
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
+    """
+
+    _type = 'x-mitre-analytic'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty(required=True)),
+        ('description', StringProperty()),
+        ('x_mitre_version', StringProperty()),
+        ('x_mitre_contributors', ListProperty(StringProperty)),
+        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_domains', ListProperty(StringProperty)),
+        ('x_mitre_attack_spec_version', StringProperty()),
+        ('revoked', BooleanProperty(default=lambda: False)),
+        ('x_mitre_deprecated', BooleanProperty(default=lambda: False)),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('x_mitre_platforms', ListProperty(StringProperty)),
+        ('x_mitre_detects', StringProperty()),
+        ('x_mitre_log_sources', ListProperty(EmbeddedObjectProperty(type=MutableElement))),
+        ('x_mitre_mutable_elements', ListProperty(EmbeddedObjectProperty(type=MutableElement))),
+    ])
+
+
+class LogSourcePermutation(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
+    """
+    _properties = OrderedDict([
+        ('name', StringProperty()),
+        ('channel', StringProperty()),
+    ])
+
+
+
+
+class LogSource(_DomainObject):
+    """For more detailed information on this object's properties, see
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
+    """
+
+    _type = 'x-mitre-log-source'
+    _properties = OrderedDict([
+        ('type', TypeProperty(_type, spec_version='2.1')),
+        ('spec_version', StringProperty(fixed='2.1')),
+        ('id', IDProperty(_type, spec_version='2.1')),
+        ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('name', StringProperty(required=True)),
+        ('description', StringProperty()),
+        ('x_mitre_version', StringProperty()),
+        ('x_mitre_contributors', ListProperty(StringProperty)),
+        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_domains', ListProperty(StringProperty)),
+        ('x_mitre_attack_spec_version', StringProperty()),
+        ('revoked', BooleanProperty(default=lambda: False)),
+        ('x_mitre_deprecated', BooleanProperty(default=lambda: False)),
+        ('labels', ListProperty(StringProperty)),
+        ('confidence', IntegerProperty()),
+        ('lang', StringProperty()),
+        ('external_references', ListProperty(ExternalReference)),
+        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+        ('granular_markings', ListProperty(GranularMarking)),
+        ('extensions', ExtensionsProperty(spec_version='2.1')),
+        ('x_mitre_log_source_permutations', ListProperty(EmbeddedObjectProperty(type=LogSourcePermutation))),
+    ])
+
+
+
 class DataSource(_DomainObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
 
     _type = 'x-mitre-data-source'
@@ -518,7 +652,7 @@ class DataSource(_DomainObject):
 
 class DataComponent(_DomainObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
 
     _type = 'x-mitre-data-component'
@@ -550,7 +684,7 @@ class DataComponent(_DomainObject):
 
 class AttackCampaign(_DomainObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
 
     _type = 'campaign'
@@ -600,7 +734,7 @@ class AttackCampaign(_DomainObject):
 
 class ObjectVersion(_STIXBase21):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
     _properties = OrderedDict([
         ('object_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1')),
@@ -610,7 +744,7 @@ class ObjectVersion(_STIXBase21):
 
 class Collection(_DomainObject):
     """For more detailed information on this object's properties, see
-    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
+    `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
 
     _type = 'x-mitre-collection'

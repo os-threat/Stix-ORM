@@ -21,6 +21,8 @@ stix_models = get_definition_factory_instance().lookup_definition(DefinitionName
 attack_models = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK)
 os_threat_models = get_definition_factory_instance().lookup_definition(DefinitionName.OS_THREAT)
 oca_models = get_definition_factory_instance().lookup_definition(DefinitionName.OCA)
+mbc_models = get_definition_factory_instance().lookup_definition(DefinitionName.MBC)
+attack_flow_models = get_definition_factory_instance().lookup_definition(DefinitionName.ATTACK_FLOW)
 import copy
 
 import logging
