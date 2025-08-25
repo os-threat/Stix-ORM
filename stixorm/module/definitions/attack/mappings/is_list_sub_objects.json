@@ -2,5 +2,10 @@
   "object-version": [],
   "related-asset": [
     "related-asset-sectors"
-  ]
+  ],
+  "mutable-element": [],
+  "log-source-reference": [
+    "keys"
+  ],
+  "log-permutation": []
 }

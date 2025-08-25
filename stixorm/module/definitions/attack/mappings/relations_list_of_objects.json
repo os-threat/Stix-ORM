@@ -12,5 +12,26 @@
     "owner": "asset",
     "pointed_to": "related",
     "object": "related-asset"
+  },
+  {
+    "name": "x_mitre_log_sources",
+    "typeql": "log-sources",
+    "owner": "analytic",
+    "pointed_to": "source",
+    "object": "log-source-reference"
+  },
+  {
+    "name": "x_mitre_mutable_elements",
+    "typeql": "mutatable-elements",
+    "owner": "analytic",
+    "pointed_to": "element",
+    "object": "mutable-element"
+  },
+  {
+    "name": "x_mitre_log_source_permutations",
+    "typeql": "log-source-permutations",
+    "owner": "log-source",
+    "pointed_to": "permutation",
+    "object": "log-permutation"
   }
 ]

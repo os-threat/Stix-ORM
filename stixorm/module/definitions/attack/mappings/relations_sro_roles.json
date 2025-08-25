@@ -22,5 +22,11 @@
     "typeql": "procedure",
     "source": "user",
     "target": "technique"
+  },
+  {
+    "stix": "found-in",
+    "typeql": "found-in",
+    "source": "data",
+    "target": "log"
   }
 ]

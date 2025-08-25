@@ -3,6 +3,17 @@
     "x_mitre_contributors",
     "x_mitre_domains"
   ],
+  "analytic": [
+    "x_mitre_platforms",
+    "x_mitre_log_sources",
+    "x_mitre_mutable_elements"
+  ],
+  "detection-strategy": [
+    "x_mitre_analytics"
+  ],
+  "log-source": [
+    "x_mitre_log_source_permutations"
+  ],
   "matrix": [
     "tactic_refs"
   ],

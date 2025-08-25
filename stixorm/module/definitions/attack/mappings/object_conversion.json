@@ -207,5 +207,70 @@
     "summary": "Related assets describe sector specific device names or alias that may be commonly associated with the primary asset page name or functional description. Related asset objects include a description of how the related asset is associated with the page definition.",
     "protocol": "attack",
     "icon":""
+  },
+  {
+    "type":  "x-mitre-detection-strategy",
+    "typeql": "detection strategy",
+    "class": "DetectionStrategy",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md#detection-strategy",
+    "doc_url": "",
+    "summary": "A Detection Strategy in ATT&CK is defined as a detection strategy object.",
+    "protocol": "attack",
+    "icon":""
+  },
+  {
+    "type":  "x-mitre-analytic",
+    "typeql": "analytic",
+    "class": "Analytic",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md",
+    "doc_url": "",
+    "summary": "A Analytic in ATT&CK is defined as a analytic object.",
+    "protocol": "attack",
+    "icon":""
+  },
+  {
+    "type":  "x-mitre-log-source",
+    "typeql": "log-source",
+    "class": "LogSource",
+    "object": "sdo",
+    "url": "https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md",
+    "doc_url": "",
+    "summary": "A Log Source in ATT&CK is defined as a log source object.",
+    "protocol": "attack",
+    "icon":""
+  },
+  {
+    "type":  "mutable-element",
+    "typeql": "mutable-element",
+    "class": "MutableElement",
+    "object": "sub",
+    "url": "https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md",
+    "doc_url": "",
+    "summary": "",
+    "icon":""
+  },
+  {
+    "type":  "log-source-reference",
+    "typeql": "log-source-reference",
+    "class": "LogSourceReference",
+    "object": "sub",
+    "url": "https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "attack",
+    "icon":""
+  },
+  {
+    "type":  "log-permutation",
+    "typeql": "log-permutation",
+    "class": "LogSourcePermutation",
+    "object": "sub",
+    "url": "https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "attack",
+    "icon":""
   }
 ]

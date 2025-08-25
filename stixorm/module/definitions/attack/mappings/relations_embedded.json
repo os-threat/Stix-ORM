@@ -30,5 +30,21 @@
     "pointed-to": "a-tactic",
     "label": "tactic-refs",
     "owner-is-source": true
+  },
+  {
+    "rel": "x_mitre_analytics",
+    "owner": "detection-strategy",
+    "pointed-to": "analytics",
+    "typeql": "x-mitre-analytics",
+    "label": "analytic-for",
+    "owner-is-source": false
+  },
+  {
+    "rel": "ref",
+    "owner": "analytic",
+    "pointed-to": "log",
+    "typeql": "actual-log",
+    "label": "log-for",
+    "owner-is-source": false
   }
 ]
