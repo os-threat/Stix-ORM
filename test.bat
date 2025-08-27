@@ -1,1 +1,1 @@
-python try_refactor.py
+poetry shell python try_exercise_all.py

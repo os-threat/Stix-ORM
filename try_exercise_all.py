@@ -50,41 +50,92 @@ connection = {
 
 import_type =  import_type_factory.get_all_imports()
 all_imports = import_type_factory.get_all_imports()
-based_dir = "test/data/"
+base_dir = "test/data/"
 directories = {
     "stix": "standard",
     "os_threat": "os_threat/exercise",
     "oca": "oca/docs_data",
-    "kestrel": "definitions/kestrel/schema/cti-oca.tql"
+    "attack": "mitre/test",
+    "mbc": "mbc/examples",
+    "attack_flow": "attack_flow/examples"
 }
 
-def try_oca_schema(schema_path):
-    """ Test the OCA schema loading
-        1. Clean the database
-        2. Load all of the schemas
-        3. Load the markings
+frameworks = {
+    "attack_enterprise": "mitre/latest/enterprise-attack-17.1.json",
+    "attack_ics": "mitre/latest/ics-attack-17.1.json",
+    "mbc": "mbc/framework/mbc.json"
+}
+
+def convert_json_to_list(json_data: Union[dict, list]) -> List[dict]:
+    """Convert JSON data to a list of objects.
+    Inputs:
+        json_data: The JSON data to convert
+    Returns:
+        A list of stix objects
+    """
+    if isinstance(json_data, dict):
+        dict_type = json_data.get("type", None)
+        if dict_type == "bundle":
+            return json_data.get("objects", [])
+        else:
+            return []
+    elif isinstance(json_data, list):
+        return json_data
+    return []
+
+
+def exercise_each_file_directory(name: str, path: str):
+    """Exercise each file in the directory
+    Inputs:
+        name: The name of the component
+        path: The path to the data files
+    """
+    dirFiles = os.listdir(path)
+    sorted_files = sorted(dirFiles)
+    print(sorted_files)
+    for s_file in sorted_files:
+        if os.path.isdir(os.path.join(path, s_file)):
+            continue
+        else:
+            id_list = []
+            print('\n\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            print(f'==================== {s_file} ===================================')
+            print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            with open(os.path.join(path, s_file), mode="r", encoding="utf-8") as f:
+                json_data = json.load(f)
+                list_of_objects = convert_json_to_list(json_data)
+                typedb_sink = TypeDBSink(connection, True, import_type)
+                for element in list_of_objects:
+                    #print(f'element is {element}')
+                    temp_id = element.get('id', False)
+                    if temp_id:
+                        id_list.append(temp_id)
+                # list_of_objects = list_of_objects + json_list
+                print(f'9999999999999999999999999 Add {len(list_of_objects)} 99999999999999999999999999999999999999999999')
+                typedb_sink.add(list_of_objects)
+
+def exercise_all():
+    """Exercise all data directories and frameworks.
 
     """
-    setup_database(connection, True)
-    for schema in schemas:
-        schema_path = os.path.join(schema_path, schema)
-        print(f'loading schema {schema_path}')
-        load_schema(connection, schema_path)
-    load_markings(connection)
+    # typedb_sink = TypeDBSink(connection, True, import_type)
+    # typedb_source = TypeDBSource(connection, import_type)
+    for name, path in directories.items():
+        print("\n===================================================")
+        print(f'Exercising {name} components with data from {path}')
+        # Here you would call the function to process the data
+        # For example: process_data(name, path)
+        exercise_each_file_directory(name, os.path.join(base_dir, path))
 
-def try_oca_stix(schema_path, data_path):
-    """ Test the OCA STIX object creation
-        1. Clean the database
-        2. Load all of the schemas
-        3. Load the markings
-        4. Load the STIX objects
+    for name, path in frameworks.items():
+        print("\n===================================================")
+        print(f'Loading {name} framework with data from {path}')
+        # Here you would call the function to process the data
+        # For example: process_data(name, path)
 
-    """
-    try_oca_schema(schema_path)
-    stix_obj = parse(test_ident, False, import_type)
-    print(f'object is {stix_obj}')
-    dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
-    print(f'dep_match -> {dep_match}')
-    print(f'dep_insert -> {dep_insert}')
-    print(f'indep_ql -> {indep_ql}')
-    print(f'core_ql -> {core_ql}')
+
+##############################################################################
+
+# if this file is run directly, then start here
+if __name__ == '__main__':
+    exercise_all()

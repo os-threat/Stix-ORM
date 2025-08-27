@@ -1,0 +1,516 @@
+{
+  "type": "bundle",
+  "id": "bundle--53f66e17-a6c4-4f26-ba49-0c8d6734b31d",
+  "spec_version": "2.1",
+  "created": "2025-07-30T19:47:12.639Z",
+  "modified": "2025-07-30T19:47:12.639Z",
+  "objects": [
+    {
+      "type": "extension-definition",
+      "id": "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "Attack Flow",
+      "description": "Extends STIX 2.1 with features to create Attack Flows.",
+      "created_by_ref": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "schema": "https://center-for-threat-informed-defense.github.io/attack-flow/stix/attack-flow-schema-2.0.0.json",
+      "version": "2.0.0",
+      "extension_types": [
+        "new-sdo"
+      ],
+      "external_references": [
+        {
+          "source_name": "Documentation",
+          "description": "Documentation for Attack Flow",
+          "url": "https://center-for-threat-informed-defense.github.io/attack-flow"
+        },
+        {
+          "source_name": "GitHub",
+          "description": "Source code repository for Attack Flow",
+          "url": "https://github.com/center-for-threat-informed-defense/attack-flow"
+        }
+      ]
+    },
+    {
+      "type": "identity",
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "created_by_ref": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "type": "attack-flow",
+      "id": "attack-flow--5924382f-e14f-4f29-b0df-08999f51b922",
+      "spec_version": "2.1",
+      "created": "2023-02-20T16:07:26.305Z",
+      "modified": "2025-07-30T19:47:12.639Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--cc6040e4-859d-4e46-8676-44d97425f84f",
+      "start_refs": [
+        "attack-action--87cf2efa-5784-4ccd-a75e-ec4d964d58a5"
+      ],
+      "name": "CISA AA22-138B VMWare Workspace (TA1)",
+      "description": "Threat Actor 1 exploited VMWare Workspace ONE Access through various methods",
+      "scope": "incident",
+      "external_references": [
+        {
+          "source_name": "CISA",
+          "description": "Alert",
+          "url": "https://www.cisa.gov/uscert/ncas/alerts/aa22-138b"
+        }
+      ]
+    },
+    {
+      "type": "identity",
+      "id": "identity--cc6040e4-859d-4e46-8676-44d97425f84f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.639Z",
+      "modified": "2025-07-30T19:47:12.639Z",
+      "name": "Lauren Parker",
+      "contact_information": "lparker@mitre.org"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--427f3a5b-4890-4305-951b-b76da8b9651b",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Ingress Tool Transfer",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1105",
+      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
+      "description": "server downloads a malicious shell script to VMWare Workspace ONE Access",
+      "effect_refs": [
+        "attack-operator--1e41f6c5-95dc-483b-b6eb-9e315991f509"
+      ]
+    },
+    {
+      "type": "vulnerability",
+      "id": "vulnerability--bebccad3-14d6-43c4-b9e4-5dea60ceef76",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "name": "CVE 2022-22954"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--87cf2efa-5784-4ccd-a75e-ec4d964d58a5",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Web Protocols",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1071.001",
+      "technique_ref": "attack-pattern--df8b2a25-8bdf-4856-953c-a04372b1c161",
+      "description": "Freemarker targeted by attackers to send  a customized GET request URI to a vulnerable server",
+      "effect_refs": [
+        "attack-action--780d1e10-6642-41d2-b1a7-de801a6b972a"
+      ],
+      "asset_refs": [
+        "attack-asset--14c7eab3-bee7-4350-bf52-cbfebb34921a"
+      ]
+    },
+    {
+      "type": "software",
+      "id": "software--32cf10a0-552b-41b0-a80c-111f89903c8f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "name": "Freemarker"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--780d1e10-6642-41d2-b1a7-de801a6b972a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Exploitation for Client Execution",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1203",
+      "technique_ref": "attack-pattern--be2dcee9-a7a7-4e38-afd6-21b31ecc3d63",
+      "description": "attackers exploited software vulnerabilities",
+      "effect_refs": [
+        "attack-action--427f3a5b-4890-4305-951b-b76da8b9651b",
+        "attack-action--7d09b87c-e2c6-4760-9050-92f36a24e9ff"
+      ]
+    },
+    {
+      "type": "attack-asset",
+      "id": "attack-asset--14c7eab3-bee7-4350-bf52-cbfebb34921a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "VMWare Workspace ONE Access",
+      "description": "vulnerable, public-facing server"
+    },
+    {
+      "type": "malware",
+      "id": "malware--e2710797-ff3a-4465-b4ed-923e15f59b2d",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "name": "80b6ae2cea.sh",
+      "description": "malicious shell script; contains VMWare Workspace ONE Access directory paths and file locations",
+      "malware_types": [
+        "unknown"
+      ],
+      "is_family": false,
+      "capabilities": [
+        "exfiltrates-data",
+        "cleans-traces-of-infection"
+      ]
+    },
+    {
+      "type": "directory",
+      "id": "directory--2f184fcc-a09b-4b6d-8cf2-d0029e360d1f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "path": "/usr/local/horizon/scripts/"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--847def26-4d0a-4562-865d-d9c23e3820cf",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Exploitation for Privilege Escalation",
+      "tactic_id": "TA0004",
+      "tactic_ref": "x-mitre-tactic--5e29b093-294e-49e9-a803-dab3d73b77dd",
+      "technique_id": "T1068",
+      "technique_ref": "attack-pattern--b21c3b2d-02e6-45b1-980b-e69051040839",
+      "description": "Malicious script run with root privileges (run with SUDO)",
+      "effect_refs": [
+        "attack-action--4c353a44-3987-401a-b578-d4a1e9280bbd"
+      ]
+    },
+    {
+      "type": "vulnerability",
+      "id": "vulnerability--7c91bf6f-749b-41a8-80b0-cbce51bcbb7b",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "name": "CVE 2022-22960",
+      "description": "allows root privileges"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--4c353a44-3987-401a-b578-d4a1e9280bbd",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Automated Collection",
+      "tactic_id": "TA0009",
+      "tactic_ref": "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
+      "technique_id": "T1119",
+      "technique_ref": "attack-pattern--30208d3e-0d6b-43c8-883e-44462a514619",
+      "description": "script collects sensitive files, including user names, passwords, master keys, and firewall rules and stored them in a tar ball",
+      "effect_refs": [
+        "attack-action--af956aab-7dd4-440d-8af4-adb9ae32a63b"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--af956aab-7dd4-440d-8af4-adb9ae32a63b",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Archive via Utility",
+      "tactic_id": "TA0009",
+      "tactic_ref": "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
+      "technique_id": "T1560.001",
+      "technique_ref": "attack-pattern--00f90846-cbd1-4fc5-9233-df5c2bf2a662",
+      "description": "collected information stored in a tar ball file on the server",
+      "effect_refs": [
+        "attack-action--a9ddb932-cc96-49fc-acd8-f5675b7368ea"
+      ]
+    },
+    {
+      "type": "directory",
+      "id": "directory--726756ce-5a1c-4ccc-a32e-92975c07f959",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "path": "/opt/vmware/horizon/workspace/webapps/SAAS/horizon/images/"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--a9ddb932-cc96-49fc-acd8-f5675b7368ea",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Indicator Removal",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1070",
+      "technique_ref": "attack-pattern--799ace7f-e227-4411-baa0-8868704f2a69",
+      "description": "deleted files and logs, including fd86ald0.pem, localhost_access logs, logs associated with the VMWare Horizon application, and greenbox logs for the date of activity",
+      "effect_refs": [
+        "attack-action--4edb3b2d-7bc8-4fe2-85d7-66c04ceba3c7"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--7d09b87c-e2c6-4760-9050-92f36a24e9ff",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Ingress Tool Transfer",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1105",
+      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
+      "description": "attackers downloaded jtest.jsp to the server's web directory from the IP address",
+      "effect_refs": [
+        "attack-operator--1e41f6c5-95dc-483b-b6eb-9e315991f509"
+      ]
+    },
+    {
+      "type": "malware",
+      "id": "malware--ecffdaac-3bc0-4552-bb1b-1da439cc5dbb",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "name": "jtest.jsp",
+      "description": "webshell",
+      "malware_types": [
+        "webshell"
+      ],
+      "is_family": false,
+      "capabilities": [
+        "communicates-with-c2"
+      ]
+    },
+    {
+      "type": "directory",
+      "id": "directory--10e001e1-c3ce-4cc1-a6a7-5eef5b206c88",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "path": "/SAAS/Horizon/js-lib/"
+    },
+    {
+      "type": "ipv4-addr",
+      "id": "ipv4-addr--1fd1c853-b8df-4db5-bfd2-92d445bdf3b3",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "value": "186.233.187.245"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--4edb3b2d-7bc8-4fe2-85d7-66c04ceba3c7",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Web Protocols",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1071.001",
+      "technique_ref": "attack-pattern--df8b2a25-8bdf-4856-953c-a04372b1c161",
+      "description": "GET requests are used to exfiltrate data",
+      "effect_refs": [
+        "attack-action--49b28f56-71c6-4a42-9a01-9e95c2974454"
+      ]
+    },
+    {
+      "type": "note",
+      "id": "note--1b79a858-23da-40da-a86a-31ffccb21579",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "content": "an application that allows for customized notifications by creating templates",
+      "authors": [
+        "CISA"
+      ],
+      "object_refs": [
+        "software--32cf10a0-552b-41b0-a80c-111f89903c8f"
+      ]
+    },
+    {
+      "type": "attack-operator",
+      "id": "attack-operator--1e41f6c5-95dc-483b-b6eb-9e315991f509",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND",
+      "effect_refs": [
+        "attack-action--847def26-4d0a-4562-865d-d9c23e3820cf"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--49b28f56-71c6-4a42-9a01-9e95c2974454",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Exfiltration Over C2 Channel",
+      "tactic_id": "TA0010",
+      "tactic_ref": "x-mitre-tactic--9a4e74ab-5008-408c-84bf-a10dfbc53462",
+      "technique_id": "T1041",
+      "technique_ref": "attack-pattern--92d7da27-2d91-488e-a00c-059dc162766d",
+      "description": "sensitive data stored in tar ball is exfiltrated by GET request"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--cb6ca00e-bfec-4176-9f98-f60eda19bad9",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--427f3a5b-4890-4305-951b-b76da8b9651b",
+      "target_ref": "malware--e2710797-ff3a-4465-b4ed-923e15f59b2d"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--4a761fcc-4d6d-44ec-bf07-972ec3b16198",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--87cf2efa-5784-4ccd-a75e-ec4d964d58a5",
+      "target_ref": "software--32cf10a0-552b-41b0-a80c-111f89903c8f"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--b71f41ef-8605-492e-ae83-64aaab661aa1",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--780d1e10-6642-41d2-b1a7-de801a6b972a",
+      "target_ref": "vulnerability--bebccad3-14d6-43c4-b9e4-5dea60ceef76"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--12883d89-2b2c-4e49-b0df-665294bf91c4",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "relationship_type": "related-to",
+      "source_ref": "directory--2f184fcc-a09b-4b6d-8cf2-d0029e360d1f",
+      "target_ref": "malware--e2710797-ff3a-4465-b4ed-923e15f59b2d"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--724f957b-49cd-4f16-ba59-bc13dcf338ed",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--847def26-4d0a-4562-865d-d9c23e3820cf",
+      "target_ref": "vulnerability--7c91bf6f-749b-41a8-80b0-cbce51bcbb7b"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--e7a02e5e-ac6c-4dd6-93e8-5afe41f48992",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--af956aab-7dd4-440d-8af4-adb9ae32a63b",
+      "target_ref": "directory--726756ce-5a1c-4ccc-a32e-92975c07f959"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--162404e4-34ae-4853-b57a-0d7f1918f4b8",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--7d09b87c-e2c6-4760-9050-92f36a24e9ff",
+      "target_ref": "malware--ecffdaac-3bc0-4552-bb1b-1da439cc5dbb"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--72c62841-a17c-4ac2-89b3-dc1709c09ea8",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--7d09b87c-e2c6-4760-9050-92f36a24e9ff",
+      "target_ref": "directory--10e001e1-c3ce-4cc1-a6a7-5eef5b206c88"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--bc2df331-c8a7-47a6-94a0-e587bca98b8d",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.640Z",
+      "modified": "2025-07-30T19:47:12.640Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--7d09b87c-e2c6-4760-9050-92f36a24e9ff",
+      "target_ref": "ipv4-addr--1fd1c853-b8df-4db5-bfd2-92d445bdf3b3"
+    }
+  ]
+}

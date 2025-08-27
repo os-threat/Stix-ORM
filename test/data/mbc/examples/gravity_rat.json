@@ -1,0 +1,54 @@
+[
+    {
+        "type": "malware",
+        "spec_version": "2.1",
+        "id": "malware--ccdec6fb-3f9e-4bb6-922b-e16d37ee1ebf",
+        "created": "2019-08-01T00:00:00.000Z",
+        "modified": "2023-03-01T00:00:00.000Z",
+        "name": "GravityRAT",
+        "is_family": true,
+        "external_references": [
+            {
+                "source_name": "capa analysis",
+                "url": "https://github.com/mandiant/capa-rules",
+                "description": "Analysis output, capa 4.0, analyzed at MITRE on Oct. 12, 2022."
+            }
+        ],
+        "extensions": {
+            "extension-definition--8e9e338f-c9ee-4d4f-8cac-85b4dcfdf3c": {
+                "extension_type": "property-extension",
+                "obj_defn": {
+                    "source_name": "mbc",
+                    "description": "GravityRAT evades detection by <snip>",
+                    "url": "https://github.com/MBCProject/<snip>/xample-malware/gravity-rat.md",
+                    "external_id": "X0016"
+                },
+                "year": "2018",
+                "platforms": [
+                    "windows"
+                ]
+            }
+        }
+    },
+    {
+        "type": "relationship",
+        "spec_version": "2.1",
+        "id": "relationship--1ca370e5-6fd3-4f7a-bd04-7bb3ab37b3db",
+        "created": "2023-05-03T00:00:00.000Z",
+        "modified": "2023-05-03T00:00:00.000Z",
+        "relationship_type": "uses",
+        "source_ref": "malware--ccdec6fb-3f9e-4bb6-922b-e16d37ee1ebf",
+        "target_ref": "attack-pattern--72b74d71-8169-42aa-92e0-e7b04b9f5a08",
+        "description": "Discovery::Account Discovery (T1087) -- GravityRAT gets session username (Citation: capa analysis)."
+    },
+    {
+        "type": "relationship",
+        "spec_version": "2.1",
+        "id": "relationship--39c88be9-803c-46fe-9ba2-5a465a2b3218",
+        "created": "2023-05-03T00:00:00.000Z",
+        "modified": "2023-05-03T00:00:00.000Z",
+        "relationship_type": "related-to",
+        "source_ref": "malware--ccdec6fb-3f9e-4bb6-922b-e16d37ee1ebf",
+        "target_ref": "malware--1d1fce2f-0db5-402b-9843-4278a0694637"
+    }
+]

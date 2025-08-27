@@ -153,7 +153,7 @@ define
         relates detection-strategy as owner,
         relates analytics as pointed-to;
     # SDO
-    detection strategy  sub stix-domain-object,
+    detection-strategy  sub stix-domain-object,
         owns name,
         owns description,
         owns x-mitre-version,
@@ -201,7 +201,6 @@ define
         owns x-mitre-collection-layers,
         owns x-mitre-deprecated,
         owns x-mitre-detects,
-        owns x-mitre-platforms,
         owns x-mitre-old-attack-id,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
@@ -512,6 +511,10 @@ define
         x-mitre-sectors sub mitre-attribute-string;
         related-asset-sectors sub mitre-attribute-string;
         x-mitre-old-attack-id sub mitre-attribute-string;
+        x-mitre-detects sub mitre-attribute-string;
+        field sub mitre-attribute-string;
+        keys sub mitre-attribute-string;
+        channel sub mitre-attribute-string;
 
     mitre-attribute-boolean sub stix-attribute-boolean, abstract;
         x-mitre-is-subtechnique sub mitre-attribute-boolean;
