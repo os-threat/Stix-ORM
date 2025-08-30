@@ -8,5 +8,6 @@
   "sighting": [
     "observed_data_refs",
     "where_sighted_refs"
-  ]
+  ],
+  "relationship": []
 }

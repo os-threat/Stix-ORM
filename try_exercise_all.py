@@ -1,6 +1,6 @@
 
 from stixorm.module.initialise import sort_layers, load_typeql_data, setup_database, load_schema, load_markings
-
+from try_refactor import dict_to_typeql, backdoor_add_dir
 import json
 import os
 import datetime
@@ -34,7 +34,7 @@ from timeit import default_timer as timer
 
 #from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 #logger.addHandler(logging.StreamHandler())
 
@@ -125,7 +125,8 @@ def exercise_all():
         print(f'Exercising {name} components with data from {path}')
         # Here you would call the function to process the data
         # For example: process_data(name, path)
-        exercise_each_file_directory(name, os.path.join(base_dir, path))
+        # exercise_each_file_directory(name, os.path.join(base_dir, path))
+        backdoor_add_dir(os.path.join(base_dir, path))
 
     for name, path in frameworks.items():
         print("\n===================================================")

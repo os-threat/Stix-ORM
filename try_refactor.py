@@ -31,7 +31,7 @@ from timeit import default_timer as timer
 
 #from stix.module.typedb_lib.import_type_factory import AttackDomains, AttackVersions
 
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s')
 logger = logging.getLogger(__name__)
 #logger.addHandler(logging.StreamHandler())
 
@@ -91,6 +91,23 @@ test_ident = {
           }
         }
 
+def convert_json_to_list(json_data: Union[dict, list]) -> List[dict]:
+    """Convert JSON data to a list of objects.
+    Inputs:
+        json_data: The JSON data to convert
+    Returns:
+        A list of stix objects
+    """
+    if isinstance(json_data, dict):
+        dict_type = json_data.get("type", None)
+        if dict_type == "bundle":
+            return json_data.get("objects", [])
+        else:
+            return []
+    elif isinstance(json_data, list):
+        return json_data
+    return []
+
 def test_generate_docs():
     print("================================================================================")
     print("------------------------ Test Doc Generation ---------------------------------------------")
@@ -147,6 +164,7 @@ def dict_to_typeql(stix_dict, import_type):
     dep_obj["dep_insert"] = dep_insert
     dep_obj["indep_ql"] = indep_ql
     dep_obj["core_ql"] = core_ql
+    logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
     return dep_obj
 
 
@@ -198,7 +216,7 @@ def backdoor_add_dir(dirpath):
         else:
             with open(os.path.join(dirpath, s_file), mode="r", encoding="utf-8") as f:
                 json_text = json.load(f)
-                json_text = json_text["objects"]
+                json_text = convert_json_to_list(json_text)
                 length = len(json_text)
                 i=0
                 for element in json_text:

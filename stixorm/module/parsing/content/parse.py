@@ -3,6 +3,8 @@ from pydantic import BaseModel
 from typing import List, Dict, Union, Optional
 import logging
 import copy
+import json
+import os
 
 
 logger = logging.getLogger(__name__)
@@ -28,11 +30,35 @@ class ParseContent(BaseModel):
 		return f"ParseContent(stix_type={self.stix_type}, protocol={self.protocol}, group={self.group}, python_class={self.python_class}, typeql={self.typeql}, condition1={self.condition1}, field1={self.field1}, value1={self.value1}, condition2={self.condition2}, field2={self.field2}, value2={self.value2})"
 	
 
+def read_class_registry() -> List[Dict]:
+    """
+    Read the class_registry.json file from the same directory as this module.
+    
+    Returns:
+        List[Dict]: The data from the class_registry.json file, or empty list if file not found.
+    """
+    try:
+        # Get the directory of the current file
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        # Construct the path to the class_registry.json file
+        file_path = os.path.join(current_dir, "class_registry.json")
+        
+        with open(file_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+            logger.debug(f"Successfully loaded {len(data)} entries from class_registry.json")
+            return data
+    except FileNotFoundError:
+        logger.error(f"class_registry.json file not found in {current_dir}")
+        return []
+    except json.JSONDecodeError as e:
+        logger.error(f"Error parsing JSON from class_registry.json: {e}")
+        return []
+    except Exception as e:
+        logger.error(f"Error reading class_registry.json file: {e}")
+        return []
 
 
 
-# Define the path to the content file
-content = "./content/class_registry.json"
 
 ###################################################################################
 #
@@ -40,23 +66,43 @@ content = "./content/class_registry.json"
 #
 ###################################################################################
 
-def get_content_list_for_type(type: str, content_type:str) -> List[ParseContent]:
+def get_content_list_for_type(type: str, content_type: str) -> List[ParseContent]:
     """
-    Open the content file and return the list of ParseContent models.
+    Get the list of ParseContent models for a specific type from the class registry.
+    
+    Args:
+        type (str): The STIX type to filter by.
+        content_type (str): The type of content to retrieve ("class" is currently supported).
+    
+    Returns:
+        List[ParseContent]: List of ParseContent models matching the type, or empty list if none found.
     """
-    local_content = ""
-    if content_type == "class":
-        local_content = content
+    if content_type != "class":
+        logger.warning(f"Content type '{content_type}' is not supported. Only 'class' is currently supported.")
+        return []
+    
     try:
-        with open(local_content, 'r') as file:
-            list_data = file.read()
-            return [ParseContent(**item) for item in list_data if item.get ("stix_type") == type]
-    except FileNotFoundError:
-        logger.error(f"Content file {local_content} not found.")
-        return None
+        # Read the class registry data
+        registry_data = read_class_registry()
+        
+        # Filter by the specified type and convert to ParseContent models
+        filtered_data = [item for item in registry_data if item.get("stix_type") == type]
+        
+        # Convert dictionaries to ParseContent models
+        parse_content_list = []
+        for item in filtered_data:
+            try:
+                parse_content_list.append(ParseContent(**item))
+            except Exception as e:
+                logger.error(f"Error creating ParseContent from item {item}: {e}")
+                continue
+        
+        logger.debug(f"Found {len(parse_content_list)} ParseContent entries for type '{type}'")
+        return parse_content_list
+        
     except Exception as e:
-        logger.error(f"Error reading content file: {e}")
-        return None
+        logger.error(f"Error getting content list for type '{type}': {e}")
+        return []
 
 def process_exists_condition(stix_dict, field_list):
     """
@@ -178,7 +224,7 @@ def determine_content_object_from_list_by_tests(stix_dict: Dict[str, str], conte
     if not content_list:
         return None
     elif len(content_list) == 1:
-        return ParseContent(content_list[0])
+        return content_list[0]
     else:
         correct = False
         # Split the list
@@ -186,12 +232,12 @@ def determine_content_object_from_list_by_tests(stix_dict: Dict[str, str], conte
         specialisation = [item for item in content_list if item.condition1 != ""]
         # First check the specialisation list for test matches
         for item in specialisation:
-            correct = test_object_by_condition(ParseContent(**item), stix_dict)
+            correct = test_object_by_condition(item, stix_dict)
             if correct:
-                return ParseContent(**item)
+                return item
 
         # Else return the default, or worst case the first in the specialisation list
-        return ParseContent(**default[0]) if default else ParseContent(**specialisation[0])
+        return default[0] if default else specialisation[0]
     
 
 ###################################################################################################
@@ -211,7 +257,7 @@ def get_tqlname_from_type_and_protocol(stix_type, protocol) -> Union[str, None]:
     Returns:
         tql_name (str): The TypeQL name of the object.
     """
-    content_list: List[ParseContent] = get_content_list_for_type(type, "class")
+    content_list: List[ParseContent] = get_content_list_for_type(stix_type, "class")
     if not content_list:
         return None
     elif len(content_list) == 1:

@@ -52,33 +52,45 @@ def stix_dict_to_tql(stix_dict) -> Union[dict, str, List[str], str]:
     # 4. get protocol from content
     protocol = content_record.protocol
     # 5. Get stix type
-    sdo_type = content_record.stix_type
+    stix_type = content_record.stix_type
+    # Get group from content
+    group = content_record.group
+    # IF group equals meta then grp = sdo
+    grp = group
+    base = "base_sdo"
+    if group == "meta":
+        grp = "sdo"
+    elif group == "sro":
+        base = "base_sro"
+    elif group == "sco":
+        base = "base_sco"
+
     # 6. Based on protocol type, choose is list and obj tql
     match protocol:
         case "stix21":
-            obj_tql = copy.deepcopy(stix_model.get_data(sdo_type))
-            is_list.extend(auth["is_lists"]["sdo"][tql_name])
+            obj_tql = copy.deepcopy(stix_model.get_data(stix_type))
+            is_list.extend(auth["is_lists"][group][tql_name])
         case "attack":
-            obj_tql.update(copy.deepcopy(attack_model.get_data(sdo_type)))
+            obj_tql.update(copy.deepcopy(attack_model.get_data(stix_type)))
             obj_tql.update(copy.deepcopy(attack_model.get_base("attack_base")))
-            is_list.extend(auth["is_lists"]["sdo"][tql_name])
-            is_list.extend(auth["is_lists"]["sdo"]["attack"])
+            is_list.extend(auth["is_lists"][group][tql_name])
+            is_list.extend(auth["is_lists"][group]["attack"])
         case "os-threat":
-            obj_tql = copy.deepcopy(os_threat_model.get_data(sdo_type))
-            is_list.extend(auth["is_lists"]["sdo"][tql_name])
+            obj_tql = copy.deepcopy(os_threat_model.get_data(stix_type))
+            is_list.extend(auth["is_lists"][group][tql_name])
         case "oca":
-            obj_tql = copy.deepcopy(oca_model.get_data(sdo_type))
-            is_list.extend(auth["is_lists"]["sdo"][tql_name])
+            obj_tql = copy.deepcopy(oca_model.get_data(stix_type))
+            is_list.extend(auth["is_lists"][group][tql_name])
         case "mbc":
-            obj_tql = copy.deepcopy(mbc_model.get_data(sdo_type))
-            is_list.extend(auth["is_lists"]["sdo"][tql_name])
+            obj_tql = copy.deepcopy(mbc_model.get_data(stix_type))
+            is_list.extend(auth["is_lists"][group][tql_name])
         case "attack_flow":
-            obj_tql = copy.deepcopy(flow_model.get_data(sdo_type))
-            is_list.extend(auth["is_lists"]["sdo"][tql_name])
+            obj_tql = copy.deepcopy(flow_model.get_data(stix_type))
+            is_list.extend(auth["is_lists"][group][tql_name])
 
     # 7. Add on the underlying base SDO properties
-    obj_tql.update(stix_model.get_base("base_sdo"))
-    is_list.extend(auth["is_lists"]["sdo"]["sdo"])
+    obj_tql.update(stix_model.get_base(base))
+    is_list.extend(auth["is_lists"][grp][grp])
     logger.debug("in sdo decisions")
     logger.debug(f'obj tql {obj_tql}')
 

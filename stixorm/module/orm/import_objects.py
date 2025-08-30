@@ -1,4 +1,5 @@
 import copy
+import json
 from typing import Dict
 
 from stixorm.module.authorise import default_import_type
@@ -131,8 +132,8 @@ def sdo_to_data(sdo, import_type=default_import_type) -> [dict, Dict[str, str], 
     total_props = sdo._inner
     total_props = clean_props(total_props)
     # 1.B) get the specific typeql names for an object into a dictionary
-
-    obj_tql, sdo_tql_name, is_list, protocol = stix_dict_to_tql(sdo.serialize())
+    sdo_dict = json.loads(sdo.serialize())
+    obj_tql, sdo_tql_name, is_list, protocol = stix_dict_to_tql(sdo_dict)
     logger.debug(f'\nobject tql {obj_tql}, \nsdo tql name {sdo_tql_name},\n is_list {is_list}')
 
     return total_props, obj_tql, sdo_tql_name, protocol
@@ -220,8 +221,8 @@ def sro_to_data(sro, import_type=default_import_type) -> [dict, Dict[str, str], 
 
     logger.debug(f'into sro -> {sro}')
     # - work out the type of object
-
-    obj_tql, sro_tql_name, is_list, protocol = stix_dict_to_tql(sro.serialize())
+    sro_dict = json.loads(sro.serialize())
+    obj_tql, sro_tql_name, is_list, protocol = stix_dict_to_tql(sro_dict)
     logger.debug(f'object tql {obj_tql}, sro tql name {sro_tql_name}')
 
     return total_props, obj_tql, sro_tql_name, protocol
@@ -363,7 +364,8 @@ def sco_to_data(sco, import_type=default_import_type) -> [dict, dict, str]:
     total_props = clean_props(total_props)
     # logger.debug(properties)
     # - get the object-specific typeql names, sighting or relationship
-    obj_tql, sco_tql_name, is_list, protocol = stix_dict_to_tql(sco.serialize())
+    sco_dict = json.loads(sco.serialize())
+    obj_tql, sco_tql_name, is_list, protocol = stix_dict_to_tql(sco_dict)
 
     return total_props, obj_tql, sco_tql_name, protocol
 
@@ -453,8 +455,8 @@ def marking_definition_to_typeql(meta, import_type=default_import_type):
     if meta.id in marking:
         return dep_match, dep_insert, indep_ql, core_ql, {}
     # 1.B) Test for attack object and handle statement if a statement marking
-
-    obj_tql, meta_tql_name, is_list, protocol = stix_dict_to_tql(meta.serialize())
+    meta_dict = json.loads(meta.serialize())
+    obj_tql, meta_tql_name, is_list, protocol = stix_dict_to_tql(meta_dict)
 
     properties, relations = split_on_activity_type(total_props, obj_tql)
 

@@ -1,17 +1,80 @@
 
 import json
 import copy
+import importlib.util
 from stixorm.module.authorise import authorised_mappings, import_type_factory
 from stix2.exceptions import ParseError
 from stix2.parsing import dict_to_stix2
 import logging
 
+from stixorm.module.parsing.content.parse import determine_content_object_from_list_by_tests, ParseContent
+
 from stixorm.module.typedb_lib.factories.auth_factory import get_auth_factory_instance
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType
-from stixorm.module.parsing.content.parse import ParseContent
 
 logger = logging.getLogger(__name__)
 default_import_type = import_type_factory.get_default_import()
+
+
+def resolve_class_from_name(class_name: str, content_record: ParseContent):
+    """
+    Resolve a class name string to the actual class object.
+    
+    Args:
+        class_name (str): The name of the class to resolve
+        content_record (ParseContent): The content record containing protocol information
+        
+    Returns:
+        class: The resolved class object
+        
+    Raises:
+        ParseError: If the class cannot be resolved
+    """
+    try:
+        # Determine which module to import from based on the protocol
+        protocol = content_record.protocol
+        
+        if protocol == "stix21":
+            # Try importing from stix2 first
+            try:
+                import stix2
+                return getattr(stix2, class_name)
+            except AttributeError:
+                pass
+                
+        elif protocol == "os-threat":
+            # Import from os-threat classes
+            from stixorm.module.definitions.os_threat import classes
+            return getattr(classes, class_name)
+            
+        elif protocol == "attack":
+            # Import from attack classes
+            from stixorm.module.definitions.attack import classes
+            return getattr(classes, class_name)
+            
+        elif protocol == "oca":
+            # Import from oca classes  
+            from stixorm.module.definitions.oca import classes
+            return getattr(classes, class_name)
+            
+        elif protocol == "mbc":
+            # Import from mbc classes
+            from stixorm.module.definitions.mbc import classes
+            return getattr(classes, class_name)
+            
+        # If not found in protocol-specific module, try stix2 as fallback
+        try:
+            import stix2
+            return getattr(stix2, class_name)
+        except AttributeError:
+            pass
+            
+        raise ParseError(f"Could not resolve class '{class_name}' for protocol '{protocol}'")
+        
+    except ImportError as e:
+        raise ParseError(f"Could not import module for protocol '{protocol}': {e}")
+    except AttributeError as e:
+        raise ParseError(f"Class '{class_name}' not found in protocol '{protocol}' module: {e}")
 
 
 def parse(data: dict, allow_custom=False, import_type: ImportType=default_import_type):
@@ -101,8 +164,16 @@ def dict_to_stix(stix_dict: dict,
     logger.debug(f"I'm in dict to stix, {stix_dict}")
     # 2. get content record
     content_record: ParseContent = determine_content_object_from_list_by_tests(stix_dict=stix_dict, content_type="class")
+    
+    # Check if content_record was found
+    if content_record is None:
+        raise ParseError(f"No matching content record found for type: {stix_dict.get('type', 'unknown')}")
+    
     # Get the class name from the content record
-    obj_class = content_record.python_class
-
+    logger.debug(f'content_record is {content_record}')
+    class_name = content_record.python_class
+    
+    # Resolve the class name to the actual class object
+    obj_class = resolve_class_from_name(class_name, content_record)
     
     return obj_class(**stix_dict)
