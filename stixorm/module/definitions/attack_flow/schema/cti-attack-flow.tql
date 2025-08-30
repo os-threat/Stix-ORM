@@ -79,8 +79,6 @@ define
 		relates the-technique as pointed-to;
     technique
         plays technique-ref:the-technique;
-    sub-technique
-        plays technique-ref:the-technique;
     # Command Ref Foreign Key Relation
     command-ref sub embedded,
         relates the-action as owner,

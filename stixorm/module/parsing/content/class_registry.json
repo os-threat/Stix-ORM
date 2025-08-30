@@ -367,7 +367,7 @@
     "stix_type": "grouping",
     "protocol": "stix21",
     "group": "sdo",
-    "python_class": "Group",
+    "python_class": "Grouping",
     "typeql": "grouping",
     "condition1": "",
     "field1": "",

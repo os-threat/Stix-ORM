@@ -69,7 +69,7 @@ def resolve_class_from_name(class_name: str, content_record: ParseContent):
         except AttributeError:
             pass
             
-        raise ParseError(f"Could not resolve class '{class_name}' for protocol '{protocol}'")
+        raise ParseError(f"Could not resolve class '{class_name}' for protocol '{protocol}, and content {content_record}'")
         
     except ImportError as e:
         raise ParseError(f"Could not import module for protocol '{protocol}': {e}")

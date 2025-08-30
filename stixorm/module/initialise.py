@@ -119,12 +119,12 @@ def load_typeql_data(data_list, stix_connection: Dict[str, str]):
         # Stage 1: Create the schema
         with driver.session(stix_connection["database"], SessionType.DATA) as session:
             with session.transaction(TransactionType.WRITE) as write_transaction:
-                logger.debug(f'Loading TLP markings')
+                logger.info(f'Loading TQL objects')
                 for data in data_list:
-                    logger.debug(f'\n\n{data}\n\n')
+                    logger.info(f'\n\n{data}\n\n')
                     insert_iterator = write_transaction.query.insert(data)
 
-                    logger.debug(f'insert_iterator response ->\n{insert_iterator}')
+                    logger.info(f'insert_iterator response ->\n{insert_iterator}')
                     for result in insert_iterator:
                         logger.info(f'typedb response ->\n{result}')
 
