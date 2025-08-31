@@ -223,6 +223,9 @@ def sro_to_data(sro, import_type=default_import_type) -> [dict, Dict[str, str], 
     # - work out the type of object
     sro_dict = json.loads(sro.serialize())
     obj_tql, sro_tql_name, is_list, protocol = stix_dict_to_tql(sro_dict)
+    # If sro tql name == "relationship", then sro tql name = sro_dict["relationship_type"]
+    if sro_tql_name == "relationship":
+        sro_tql_name = sro_dict["relationship_type"]
     logger.debug(f'object tql {obj_tql}, sro tql name {sro_tql_name}')
 
     return total_props, obj_tql, sro_tql_name, protocol

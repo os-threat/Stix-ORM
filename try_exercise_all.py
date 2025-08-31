@@ -53,7 +53,7 @@ all_imports = import_type_factory.get_all_imports()
 base_dir = "test/data/"
 directories = {
     "stix": "standard",
-    "os_threat": "os_threat/exercise",
+    "os_threat": "os-threat/exercise",
     "oca": "oca/docs_data",
     "attack": "mitre/test",
     "mbc": "mbc/examples",

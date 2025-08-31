@@ -78,13 +78,7 @@ stix-object sub stix-entity,
 				plays consist:consisted;
 
 	stix-sub-object sub stix-entity,
-		abstract, 
-		owns created, 
-		owns modified,
-        plays stix-core-relationship:source,
-        plays stix-core-relationship:target,
-        plays obj-refs:referred,
-        plays granular-marking:object;
+		abstract;
 
 
 ##### 2 Common Data Types #####
@@ -914,7 +908,8 @@ email-message sub stix-cyber-observable-object,
 
 	plays body-multipart:email,
 	plays email-connection:email,
-	plays raw-email-references:email;
+	plays raw-email-references:email,
+	plays additional-header:email;
 
 
 header-value sub stix-attribute-string;
