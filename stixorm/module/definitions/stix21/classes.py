@@ -14,7 +14,8 @@ from stix2.exceptions import (
 from stix2.properties import (
     BooleanProperty, ExtensionsProperty, IDProperty, IntegerProperty, ListProperty,
     OpenVocabProperty, ReferenceProperty, StringProperty, DictionaryProperty, EnumProperty,
-    TimestampProperty, TypeProperty, EmbeddedObjectProperty, ObservableProperty, HexProperty, HashesProperty
+    TimestampProperty, TypeProperty, EmbeddedObjectProperty, ObservableProperty, HexProperty, HashesProperty,
+    FloatProperty
 )
 from stix2.utils import NOW, _get_dict
 from stix2.markings import _MarkingsMixin
@@ -27,7 +28,8 @@ from stix2.v21.common import (
 from stix2.v21.vocab import (
     ATTACK_MOTIVATION, ATTACK_RESOURCE_LEVEL, IMPLEMENTATION_LANGUAGE, MALWARE_CAPABILITIES, MALWARE_TYPE,
     PROCESSOR_ARCHITECTURE, TOOL_TYPE, IDENTITY_CLASS, INDUSTRY_SECTOR, REPORT_TYPE,HASHING_ALGORITHM,
-    EXTENSION_TYPE, WINDOWS_INTEGRITY_LEVEL, WINDOWS_SERVICE_START_TYPE, WINDOWS_SERVICE_TYPE, WINDOWS_SERVICE_STATUS
+    EXTENSION_TYPE, WINDOWS_INTEGRITY_LEVEL, WINDOWS_SERVICE_START_TYPE, WINDOWS_SERVICE_TYPE, WINDOWS_SERVICE_STATUS,
+    WINDOWS_PEBINARY_TYPE, NETWORK_SOCKET_ADDRESS_FAMILY, NETWORK_SOCKET_TYPE
 )
 
 import logging
@@ -334,6 +336,152 @@ class Tool(_DomainObject):
 #############################################################################################################
 
 
+
+class ArchiveExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_xi3g7dwaigs6>`__.
+    """
+
+    _type = 'archive-ext'
+    _properties = OrderedDict([
+        ('contains_refs', ListProperty(ReferenceProperty(valid_types=['file', 'directory'], spec_version='2.1'), required=True)),
+        ('comment', StringProperty()),
+    ])
+
+
+class AlternateDataStream(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_8i2ts0xicqea>`__.
+    """
+
+    _properties = OrderedDict([
+        ('name', StringProperty(required=True)),
+        ('hashes', HashesProperty(HASHING_ALGORITHM, spec_version="2.1")),
+        ('size', IntegerProperty()),
+    ])
+
+
+class NTFSExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_o6cweepfrsci>`__.
+    """
+
+    _type = 'ntfs-ext'
+    _properties = OrderedDict([
+        ('sid', StringProperty()),
+        ('alternate_data_streams', ListProperty(EmbeddedObjectProperty(type=AlternateDataStream))),
+    ])
+
+
+class PDFExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_8xmpb2ghp9km>`__.
+    """
+
+    _type = 'pdf-ext'
+    _properties = OrderedDict([
+        ('version', StringProperty()),
+        ('is_optimized', BooleanProperty()),
+        ('document_info_dict', DictionaryProperty(spec_version='2.1')),
+        ('pdfid0', StringProperty()),
+        ('pdfid1', StringProperty()),
+    ])
+
+
+class RasterImageExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_u5z7i2ox8w4x>`__.
+    """
+
+    _type = 'raster-image-ext'
+    _properties = OrderedDict([
+        ('image_height', IntegerProperty()),
+        ('image_width', IntegerProperty()),
+        ('bits_per_pixel', IntegerProperty()),
+        ('exif_tags', DictionaryProperty(spec_version='2.1')),
+    ])
+
+
+class WindowsPEOptionalHeaderType(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_29l09w731pzc>`__.
+    """
+
+    _properties = OrderedDict([
+        ('magic_hex', HexProperty()),
+        ('major_linker_version', IntegerProperty()),
+        ('minor_linker_version', IntegerProperty()),
+        ('size_of_code', IntegerProperty(min=0)),
+        ('size_of_initialized_data', IntegerProperty(min=0)),
+        ('size_of_uninitialized_data', IntegerProperty(min=0)),
+        ('address_of_entry_point', IntegerProperty()),
+        ('base_of_code', IntegerProperty()),
+        ('base_of_data', IntegerProperty()),
+        ('image_base', IntegerProperty()),
+        ('section_alignment', IntegerProperty()),
+        ('file_alignment', IntegerProperty()),
+        ('major_os_version', IntegerProperty()),
+        ('minor_os_version', IntegerProperty()),
+        ('major_image_version', IntegerProperty()),
+        ('minor_image_version', IntegerProperty()),
+        ('major_subsystem_version', IntegerProperty()),
+        ('minor_subsystem_version', IntegerProperty()),
+        ('win32_version_value_hex', HexProperty()),
+        ('size_of_image', IntegerProperty(min=0)),
+        ('size_of_headers', IntegerProperty(min=0)),
+        ('checksum_hex', HexProperty()),
+        ('subsystem_hex', HexProperty()),
+        ('dll_characteristics_hex', HexProperty()),
+        ('size_of_stack_reserve', IntegerProperty(min=0)),
+        ('size_of_stack_commit', IntegerProperty(min=0)),
+        ('size_of_heap_reserve', IntegerProperty()),
+        ('size_of_heap_commit', IntegerProperty()),
+        ('loader_flags_hex', HexProperty()),
+        ('number_of_rva_and_sizes', IntegerProperty()),
+        ('hashes', HashesProperty(HASHING_ALGORITHM, spec_version="2.1")),
+    ])
+
+    def _check_object_constraints(self):
+        super(WindowsPEOptionalHeaderType, self)._check_object_constraints()
+        self._check_at_least_one_property()
+
+
+class WindowsPESection(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_ioapwyd8oimw>`__.
+    """
+
+    _properties = OrderedDict([
+        ('name', StringProperty(required=True)),
+        ('size', IntegerProperty(min=0)),
+        ('entropy', FloatProperty()),
+        ('hashes', HashesProperty(HASHING_ALGORITHM, spec_version="2.1")),
+    ])
+
+
+class WindowsPEBinaryExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_gg5zibddf9bs>`__.
+    """
+
+    _type = 'windows-pebinary-ext'
+    _properties = OrderedDict([
+        ('pe_type', OpenVocabProperty(WINDOWS_PEBINARY_TYPE, required=True)),
+        ('imphash', StringProperty()),
+        ('machine_hex', HexProperty()),
+        ('number_of_sections', IntegerProperty(min=0)),
+        ('time_date_stamp', TimestampProperty(precision='second')),
+        ('pointer_to_symbol_table_hex', HexProperty()),
+        ('number_of_symbols', IntegerProperty(min=0)),
+        ('size_of_optional_header', IntegerProperty(min=0)),
+        ('characteristics_hex', HexProperty()),
+        ('file_header_hashes', HashesProperty(HASHING_ALGORITHM, spec_version="2.1")),
+        ('optional_header', EmbeddedObjectProperty(type=WindowsPEOptionalHeaderType)),
+        ('sections', ListProperty(EmbeddedObjectProperty(type=WindowsPESection))),
+    ])
+
+
+
 class File(_Observable):
     """For more detailed information on this object's properties, see
     `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_99bl2dibcztv>`__.
@@ -366,6 +514,78 @@ class File(_Observable):
     def _check_object_constraints(self):
         super(File, self)._check_object_constraints()
         self._check_at_least_one_property(['hashes', 'name'])
+
+
+
+class HTTPRequestExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_b0e376hgtml8>`__.
+    """
+
+    _type = 'http-request-ext'
+    _properties = OrderedDict([
+        ('request_method', StringProperty(required=True)),
+        ('request_value', StringProperty(required=True)),
+        ('request_version', StringProperty()),
+        ('request_header', DictionaryProperty(spec_version='2.1')),
+        ('message_body_length', IntegerProperty()),
+        ('message_body_data_ref', ReferenceProperty(valid_types='artifact', spec_version='2.1')),
+    ])
+
+
+class ICMPExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_ozypx0lmkebv>`__.
+    """
+
+    _type = 'icmp-ext'
+    _properties = OrderedDict([
+        ('icmp_type_hex', HexProperty(required=True)),
+        ('icmp_code_hex', HexProperty(required=True)),
+    ])
+
+
+class SocketExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_8jamupj9ubdv>`__.
+    """
+
+    _type = 'socket-ext'
+    _properties = OrderedDict([
+        ('address_family', EnumProperty(NETWORK_SOCKET_ADDRESS_FAMILY, required=True)),
+        ('is_blocking', BooleanProperty()),
+        ('is_listening', BooleanProperty()),
+        ('options', DictionaryProperty(spec_version='2.1')),
+        ('socket_type', EnumProperty(NETWORK_SOCKET_TYPE)),
+        ('socket_descriptor', IntegerProperty(min=0)),
+        ('socket_handle', IntegerProperty()),
+    ])
+
+    def _check_object_constraints(self):
+        super(SocketExt, self)._check_object_constraints()
+
+        options = self.get('options')
+
+        if options is not None:
+            acceptable_prefixes = ["SO_", "ICMP_", "ICMP6_", "IP_", "IPV6_", "MCAST_", "TCP_", "IRLMP_"]
+            for key, val in options.items():
+                if key[:key.find('_') + 1] not in acceptable_prefixes:
+                    raise ValueError("Incorrect options key")
+                if not isinstance(val, int):
+                    raise ValueError("Options value must be an integer")
+
+
+class TCPExt(_Extension):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_k2njqio7f142>`__.
+    """
+
+    _type = 'tcp-ext'
+    _properties = OrderedDict([
+        ('src_flags_hex', HexProperty()),
+        ('dst_flags_hex', HexProperty()),
+    ])
+
 
 
 

@@ -1,4 +1,4 @@
-
+import importlib
 import json
 import copy
 import importlib.util
@@ -37,8 +37,12 @@ def resolve_class_from_name(class_name: str, content_record: ParseContent):
         if protocol == "stix21":
             # Try importing from stix2 first
             try:
-                import stix2
-                return getattr(stix2, class_name)
+                custom_module = importlib.import_module("stixorm.module.definitions.stix21.classes")
+                if getattr(custom_module, class_name, None):
+                    return getattr(custom_module, class_name)
+                else:
+                    import stix2
+                    return getattr(stix2, class_name)
             except AttributeError:
                 pass
                 

@@ -51,6 +51,9 @@ connection = {
 import_type =  import_type_factory.get_all_imports()
 all_imports = import_type_factory.get_all_imports()
 base_dir = "test/data/"
+proven = {    
+    "stix": "standard"
+}
 directories = {
     "stix": "standard",
     "os_threat": "os-threat/exercise",
@@ -118,6 +121,7 @@ def exercise_all():
     """Exercise all data directories and frameworks.
 
     """
+    backdoor_add_dir(os.path.join(base_dir, "test_data"))
     # typedb_sink = TypeDBSink(connection, True, import_type)
     # typedb_source = TypeDBSource(connection, import_type)
     for name, path in directories.items():
@@ -125,8 +129,8 @@ def exercise_all():
         print(f'Exercising {name} components with data from {path}')
         # Here you would call the function to process the data
         # For example: process_data(name, path)
-        # exercise_each_file_directory(name, os.path.join(base_dir, path))
-        backdoor_add_dir(os.path.join(base_dir, path))
+        # # exercise_each_file_directory(name, os.path.join(base_dir, path))
+        # backdoor_add_dir(os.path.join(base_dir, path))
 
     for name, path in frameworks.items():
         print("\n===================================================")
