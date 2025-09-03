@@ -589,59 +589,59 @@ class TCPExt(_Extension):
 
 
 
-class NetworkTraffic(_Observable):
-    """For more detailed information on this object's properties, see
-    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_rgnc3w40xy>`__.
-    """
+# class NetworkTraffic(_Observable):
+#     """For more detailed information on this object's properties, see
+#     `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_rgnc3w40xy>`__.
+#     """
 
-    _type = 'network-traffic'
-    _properties = OrderedDict([
-        ('type', TypeProperty(_type, spec_version='2.1')),
-        ('spec_version', StringProperty(fixed='2.1')),
-        ('id', IDProperty(_type, spec_version='2.1')),
-        ('start', TimestampProperty()),
-        ('end', TimestampProperty()),
-        ('is_active', BooleanProperty()),
-        ('src_ref', ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr', 'mac-addr', 'domain-name'], spec_version='2.1')),
-        ('dst_ref', ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr', 'mac-addr', 'domain-name'], spec_version='2.1')),
-        ('src_port', IntegerProperty(min=0, max=65535)),
-        ('dst_port', IntegerProperty(min=0, max=65535)),
-        ('protocols', ListProperty(StringProperty, required=True)),
-        ('src_byte_count', IntegerProperty(min=0)),
-        ('dst_byte_count', IntegerProperty(min=0)),
-        ('src_packets', IntegerProperty(min=0)),
-        ('dst_packets', IntegerProperty(min=0)),
-        ('ipfix', DictionaryProperty(spec_version='2.1')),
-        ('src_payload_ref', ReferenceProperty(valid_types='artifact', spec_version='2.1')),
-        ('dst_payload_ref', ReferenceProperty(valid_types='artifact', spec_version='2.1')),
-        ('encapsulates_refs', ListProperty(ReferenceProperty(valid_types='network-traffic', spec_version='2.1'))),
-        ('encapsulated_by_ref', ReferenceProperty(valid_types='network-traffic', spec_version='2.1')),
-        ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
-        ('granular_markings', ListProperty(GranularMarking)),
-        ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
-    ])
-    _id_contributing_properties = ["start", "end", "src_ref", "dst_ref", "src_port", "dst_port", "protocols", "extensions"]
+#     _type = 'network-traffic'
+#     _properties = OrderedDict([
+#         ('type', TypeProperty(_type, spec_version='2.1')),
+#         ('spec_version', StringProperty(fixed='2.1')),
+#         ('id', IDProperty(_type, spec_version='2.1')),
+#         ('start', TimestampProperty()),
+#         ('end', TimestampProperty()),
+#         ('is_active', BooleanProperty()),
+#         ('src_ref', ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr', 'mac-addr', 'domain-name'], spec_version='2.1')),
+#         ('dst_ref', ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr', 'mac-addr', 'domain-name'], spec_version='2.1')),
+#         ('src_port', IntegerProperty(min=0, max=65535)),
+#         ('dst_port', IntegerProperty(min=0, max=65535)),
+#         ('protocols', ListProperty(StringProperty, required=True)),
+#         ('src_byte_count', IntegerProperty(min=0)),
+#         ('dst_byte_count', IntegerProperty(min=0)),
+#         ('src_packets', IntegerProperty(min=0)),
+#         ('dst_packets', IntegerProperty(min=0)),
+#         ('ipfix', DictionaryProperty(spec_version='2.1')),
+#         ('src_payload_ref', ReferenceProperty(valid_types='artifact', spec_version='2.1')),
+#         ('dst_payload_ref', ReferenceProperty(valid_types='artifact', spec_version='2.1')),
+#         ('encapsulates_refs', ListProperty(ReferenceProperty(valid_types='network-traffic', spec_version='2.1'))),
+#         ('encapsulated_by_ref', ReferenceProperty(valid_types='network-traffic', spec_version='2.1')),
+#         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
+#         ('granular_markings', ListProperty(GranularMarking)),
+#         ('defanged', BooleanProperty(default=lambda: False)),
+#         ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+#     ])
+#     _id_contributing_properties = ["start", "end", "src_ref", "dst_ref", "src_port", "dst_port", "protocols", "extensions"]
 
-    def _check_object_constraints(self):
-        super(NetworkTraffic, self)._check_object_constraints()
-        self._check_at_least_one_property(['src_ref', 'dst_ref'])
+#     def _check_object_constraints(self):
+#         super(NetworkTraffic, self)._check_object_constraints()
+#         self._check_at_least_one_property(['src_ref', 'dst_ref'])
 
-        start = self.get('start')
-        end = self.get('end')
-        is_active = self.get('is_active')
+#         start = self.get('start')
+#         end = self.get('end')
+#         is_active = self.get('is_active')
 
-        if end and is_active is not False:
-            msg = "{0.id} 'is_active' must be False if 'end' is present"
-            raise ValueError(msg.format(self))
+#         if end and is_active is not False:
+#             msg = "{0.id} 'is_active' must be False if 'end' is present"
+#             raise ValueError(msg.format(self))
 
-        if end and is_active is True:
-            msg = "{0.id} if 'is_active' is True, 'end' must not be included"
-            raise ValueError(msg.format(self))
+#         if end and is_active is True:
+#             msg = "{0.id} if 'is_active' is True, 'end' must not be included"
+#             raise ValueError(msg.format(self))
 
-        if start and end and end < start:
-            msg = "{0.id} 'end' must be greater than or equal to 'start'"
-            raise ValueError(msg.format(self))
+#         if start and end and end < start:
+#             msg = "{0.id} 'end' must be greater than or equal to 'start'"
+#             raise ValueError(msg.format(self))
         
 
 
