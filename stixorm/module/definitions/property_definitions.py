@@ -184,7 +184,15 @@ class ThreatExtensionsProperty(DictionaryProperty):
 
         has_custom = False
         for key, subvalue in dictified.items():
-            cls = get_mapping_factory_instance().get_ext_class(key, 'os_threat')
+            # Try to resolve extension class across all domains, not just os_threat
+            factory = get_mapping_factory_instance()
+            cls = None
+            for domain in factory.sub_objects_by_name.keys():
+                try:
+                    cls = factory.get_ext_class(key, domain)
+                    break
+                except Exception:
+                    continue
             if cls:
                 if isinstance(subvalue, dict):
                     ext = cls(allow_custom=False, **subvalue)

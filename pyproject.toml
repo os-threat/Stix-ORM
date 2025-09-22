@@ -20,7 +20,7 @@ classifiers = [
 "Bug Tracker" = "https://github.com/os-threat/Stix-ORM/issues"
 
 [tool.poetry.dependencies]
-python = "^3.8.1"
+python = ">=3.11,<4.0.0"
 stix2 = "^3.0.1"
 networkx = "^3.5"
 pydantic = "^2.11.5"
