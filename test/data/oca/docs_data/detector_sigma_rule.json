@@ -23,5 +23,14 @@
       "extension_type": "new-sdo"
     }
   }
-}
+},
+    {
+        "type": "identity",
+        "spec_version": "2.1",
+        "id": "identity--b085a68a-bf48-4316-9667-37af78cba894",
+        "created": "2016-04-06T20:03:00.000Z",
+        "modified": "2016-04-06T20:03:00.000Z",
+        "name": "ACME Widget, Inc.",
+        "identity_class": "organization"
+    }
 ]

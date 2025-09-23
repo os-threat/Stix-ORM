@@ -1,39 +1,47 @@
 [
-      {
-      "type": "x-oca-detection",
-      "spec_version": "2.1",
-      "id": "x-oca-detection--58834c29-4ceb-42a1-a218-336103021111",
-      "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
-      "created": "2022-03-31T13:00:00.000Z",
-      "modified": "2022-03-31T13:00:00.000Z",
-      "name": "Process 1 - SpearPhish",
-      "data_sources": [
-        {
-          "EventCode": "4688",
-          "LogName": "Security",
-          "TaskCategory": "Process Creation",
-          "data_type": "WinEventLog:Security",
-          "Creator_Process_Name": [
-            "*outlook*",
-            "*thunderbird*",
-            "*mail*"
-          ],
-          "New_Process_Name": [
-            "*edge*",
-            "*chrome*",
-            "*firefox*"
-          ]
+    {
+        "type": "x-oca-detection",
+        "spec_version": "2.1",
+        "id": "x-oca-detection--58834c29-4ceb-42a1-a218-336103021111",
+        "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
+        "created": "2022-03-31T13:00:00.000Z",
+        "modified": "2022-03-31T13:00:00.000Z",
+        "name": "Process 1 - SpearPhish",
+        "data_sources": [
+            {
+                "EventCode": "4688",
+                "LogName": "Security",
+                "TaskCategory": "Process Creation",
+                "data_type": "WinEventLog:Security",
+                "Creator_Process_Name": [
+                    "*outlook*",
+                    "*thunderbird*",
+                    "*mail*"
+                ],
+                "New_Process_Name": [
+                    "*edge*",
+                    "*chrome*",
+                    "*firefox*"
+                ]
+            }
+        ],
+        "analytic": {
+            "rule": "LS0tCnRpdGxlOiBTcGVhcnBoaXNoaW5nIHdpdGggTGluawppZDogc3BlYXJwaGlzaGluZwpzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogRGV0ZWN0cyBPZmZpY2UgbWFjcm8gb3BlbmluZyBmcm9tIGJyb3dzZXIuCnRhZ3M6Ci0gYXR0YWNrLmluaXRpYWxfYWNjZXNzCi0gYXR0YWNrLnQxNTY2LjAwMgphdXRob3I6IGRlbW8KZGF0ZTogMjAyMS8wNi8wNwpsb2dzb3VyY2U6CiAgcHJvZHVjdDogd2luZG93cwogIGluZGV4OiBtYWluCiAgY2F0ZWdvcnk6IHByb2Nlc3NfZXZlbnQKZGV0ZWN0aW9uOgogIHNlbGVjdGlvbjoKICAgIEV2ZW50Q29kZTogJzQ2ODgnCiAgICBDcmVhdG9yX1Byb2Nlc3NfTmFtZXxjb250YWluczoKICAgIC0gb3V0bG9vawogICAgLSB0aHVuZGVyYmlyZAogICAgLSBtYWlsCiAgICBOZXdfUHJvY2Vzc19OYW1lfGNvbnRhaW5zOgogICAgLSBlZGdlCiAgICAtIGNocm9tZQogICAgLSBmaXJlZm94CiAgY29uZGl0aW9uOiBzZWxlY3Rpb24KZmFsc2Vwb3NpdGl2ZXM6Ci0gTG93CmxldmVsOiBoaWdo",
+            "type": "Sigma Rule - base64 encoded YAML file"
+        },
+        "extensions": {
+            "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89": {
+                "extension_type": "new-sdo"
+            }
         }
-      ],
-      "analytic": {
-        "rule":
-"LS0tCnRpdGxlOiBTcGVhcnBoaXNoaW5nIHdpdGggTGluawppZDogc3BlYXJwaGlzaGluZwpzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogRGV0ZWN0cyBPZmZpY2UgbWFjcm8gb3BlbmluZyBmcm9tIGJyb3dzZXIuCnRhZ3M6Ci0gYXR0YWNrLmluaXRpYWxfYWNjZXNzCi0gYXR0YWNrLnQxNTY2LjAwMgphdXRob3I6IGRlbW8KZGF0ZTogMjAyMS8wNi8wNwpsb2dzb3VyY2U6CiAgcHJvZHVjdDogd2luZG93cwogIGluZGV4OiBtYWluCiAgY2F0ZWdvcnk6IHByb2Nlc3NfZXZlbnQKZGV0ZWN0aW9uOgogIHNlbGVjdGlvbjoKICAgIEV2ZW50Q29kZTogJzQ2ODgnCiAgICBDcmVhdG9yX1Byb2Nlc3NfTmFtZXxjb250YWluczoKICAgIC0gb3V0bG9vawogICAgLSB0aHVuZGVyYmlyZAogICAgLSBtYWlsCiAgICBOZXdfUHJvY2Vzc19OYW1lfGNvbnRhaW5zOgogICAgLSBlZGdlCiAgICAtIGNocm9tZQogICAgLSBmaXJlZm94CiAgY29uZGl0aW9uOiBzZWxlY3Rpb24KZmFsc2Vwb3NpdGl2ZXM6Ci0gTG93CmxldmVsOiBoaWdo",
-        "type": "Sigma Rule - base64 encoded YAML file"
-      },
-      "extensions": {
-        "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89": {
-          "extension_type": "new-sdo"
-        }
-      }
+    },
+    {
+        "type": "identity",
+        "spec_version": "2.1",
+        "id": "identity--b085a68a-bf48-4316-9667-37af78cba894",
+        "created": "2016-04-06T20:03:00.000Z",
+        "modified": "2016-04-06T20:03:00.000Z",
+        "name": "ACME Widget, Inc.",
+        "identity_class": "organization"
     }
 ]

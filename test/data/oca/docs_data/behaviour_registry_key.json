@@ -1,27 +1,36 @@
 [
-  {
-  "type": "x-oca-behavior",
-  "spec_version": "2.1",
-  "id": "x-oca-behavior--edc99806-f8e9-4ee3-b2d4-1234567890cc",
-  "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
-  "created": "2022-03-31T13:00:00.000Z",
-  "modified": "2022-03-31T13:00:00.000Z",
-  "name": "Registry modification for Persistence",
-  "description": "Modification of the Windows Registry may indicate an adversary attempting to establish persistence.",
-  "behavior_class": "anomalous",
-  "tactic": "Persistence",
-  "technique": "T1547.001 - Autostart Execution - Registry Run Keys / Startup Folder",
-  "first_seen": "2022-03-31T13:00:00.000Z",
-  "platforms": [
     {
-      "operating_system": "Microsoft Windows",
-      "version": "10"
+        "type": "x-oca-behavior",
+        "spec_version": "2.1",
+        "id": "x-oca-behavior--edc99806-f8e9-4ee3-b2d4-1234567890cc",
+        "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
+        "created": "2022-03-31T13:00:00.000Z",
+        "modified": "2022-03-31T13:00:00.000Z",
+        "name": "Registry modification for Persistence",
+        "description": "Modification of the Windows Registry may indicate an adversary attempting to establish persistence.",
+        "behavior_class": "anomalous",
+        "tactic": "Persistence",
+        "technique": "T1547.001 - Autostart Execution - Registry Run Keys / Startup Folder",
+        "first_seen": "2022-03-31T13:00:00.000Z",
+        "platforms": [
+            {
+                "operating_system": "Microsoft Windows",
+                "version": "10"
+            }
+        ],
+        "extensions": {
+            "extension-definition--9c59fd79-4215-4ba2-920d-3e4f320e1e62": {
+                "extension_type": "new-sdo"
+            }
+        }
+    },
+    {
+        "type": "identity",
+        "spec_version": "2.1",
+        "id": "identity--b085a68a-bf48-4316-9667-37af78cba894",
+        "created": "2016-04-06T20:03:00.000Z",
+        "modified": "2016-04-06T20:03:00.000Z",
+        "name": "ACME Widget, Inc.",
+        "identity_class": "organization"
     }
-  ],
-  "extensions": {
-    "extension-definition--9c59fd79-4215-4ba2-920d-3e4f320e1e62": {
-      "extension_type": "new-sdo"
-    }
-  }
-}
 ]

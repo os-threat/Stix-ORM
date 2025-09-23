@@ -1,27 +1,42 @@
 [
-  {
-  "type": "x-oca-detector",
-  "spec_version": "2.1",
-  "id": "x-oca-detector--67330653-ac02-46c8-b9c2-25b837a2ed6d",
-  "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
-  "created": "2023-05-01T12:00:00.000Z",
-  "modified": "2023-05-01T12:00:00.000Z",
-  "name": "Zeek",
-  "description": "A network security monitoring tool.",
-  "cpe": "cpe:2.3:a:zeek:zeek:5.0.9:*:*:*:*:*:*:*",
-  "vendor": "Zeek",
-  "vendor_url": "https://zeek.org",
-  "product": "Zeek",
-  "product_url": "https://zeek.org/get-zeek/",
-  "product_version": "5.0.9",
-  "detection_types": ["dcsync"],
-  "detector_data_categories": ["network"],
-  "detector_data_sources": ["network tap"],
-  "valid_until": "2027-05-01T12:00:00.000Z",
-  "extensions": {
-    "extension-definition--5cccba5c-0be4-450c-8672-b66e98515754": {
-      "extension_type": "new-sdo"
+    {
+        "type": "x-oca-detector",
+        "spec_version": "2.1",
+        "id": "x-oca-detector--67330653-ac02-46c8-b9c2-25b837a2ed6d",
+        "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
+        "created": "2023-05-01T12:00:00.000Z",
+        "modified": "2023-05-01T12:00:00.000Z",
+        "name": "Zeek",
+        "description": "A network security monitoring tool.",
+        "cpe": "cpe:2.3:a:zeek:zeek:5.0.9:*:*:*:*:*:*:*",
+        "vendor": "Zeek",
+        "vendor_url": "https://zeek.org",
+        "product": "Zeek",
+        "product_url": "https://zeek.org/get-zeek/",
+        "product_version": "5.0.9",
+        "detection_types": [
+            "dcsync"
+        ],
+        "detector_data_categories": [
+            "network"
+        ],
+        "detector_data_sources": [
+            "network tap"
+        ],
+        "valid_until": "2027-05-01T12:00:00.000Z",
+        "extensions": {
+            "extension-definition--5cccba5c-0be4-450c-8672-b66e98515754": {
+                "extension_type": "new-sdo"
+            }
+        }
+    },
+    {
+        "type": "identity",
+        "spec_version": "2.1",
+        "id": "identity--b085a68a-bf48-4316-9667-37af78cba894",
+        "created": "2016-04-06T20:03:00.000Z",
+        "modified": "2016-04-06T20:03:00.000Z",
+        "name": "ACME Widget, Inc.",
+        "identity_class": "organization"
     }
-  }
-}
 ]

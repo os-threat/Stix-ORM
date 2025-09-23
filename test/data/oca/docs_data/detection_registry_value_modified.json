@@ -1,38 +1,38 @@
 [
-      {
-      "type": "x-oca-detection",
-      "spec_version": "2.1",
-      "id": "x-oca-detection--458c02c9-3635-42e4-8873-6785e00517e7",
-      "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
-      "created": "2022-03-31T13:00:00.000Z",
-      "modified": "2022-03-31T13:00:00.000Z",
-      "name": "Registry - Persistence",
-      "data_sources": [
-        {
-          "EventCode": "4657",
-          "LogName": "Security",
-          "Message": "A registry value was modified.\n\nSubject:\n\tSecurity
-ID:\t\tS-1-5-21-1102256457-2379380313-1247321256-500\n\tAccount Name:\t\tAdministrator\n\tAccount
-Domain:\t\tSP17\n\tLogon ID:\t\t0x1A1ADFE8\n\nObject:\n\tObject
-Name:\t\t\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\n\tObject Value
-Name:\tpersist\n\tHandle ID:\t\t0x918\n\tOperation Type:\t\tNew registry value created\n\nProcess
-Information:\n\tProcess ID:\t\t0x18f0\n\tProcess
-Name:\t\tC:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\n\nChange
-Information:\n\tOld Value Type:\t\t-\n\tOld Value:\t\t-\n\tNew Value Type:\t\tREG_SZ\n\tNew
-Value:\t\tTrue",
-          "TaskCategory": "Registry",
-          "data_type": "WinEventLog:Security"
+    {
+        "type": "x-oca-detection",
+        "spec_version": "2.1",
+        "id": "x-oca-detection--458c02c9-3635-42e4-8873-6785e00517e7",
+        "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
+        "created": "2022-03-31T13:00:00.000Z",
+        "modified": "2022-03-31T13:00:00.000Z",
+        "name": "Registry - Persistence",
+        "data_sources": [
+            {
+                "EventCode": "4657",
+                "LogName": "Security",
+                "Message": "A registry value was modified.\n\nSubject:\n\tSecurityID:\t\tS-1-5-21-1102256457-2379380313-1247321256-500\n\tAccount Name:\t\tAdministrator\n\tAccountDomain:\t\tSP17\n\tLogon ID:\t\t0x1A1ADFE8\n\nObject:\n\tObjectName:\t\t\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\n\tObject Value Name:\tpersist\n\tHandle ID:\t\t0x918\n\tOperation Type:\t\tNew registry value created\n\nProcess Information:\n\tProcess ID:\t\t0x18f0\n\tProcess Name:\t\tC:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\n\nChange Information:\n\tOld Value Type:\t\t-\n\tOld Value:\t\t-\n\tNew Value Type:\t\tREG_SZ\n\tNewValue:\t\tTrue",
+                "TaskCategory": "Registry",
+                "data_type": "WinEventLog:Security"
+            }
+        ],
+        "analytic": {
+            "rule": "LS0tCnRpdGxlOiBSZWdpc3RyeSBSdW4gS2V5cwppZDogcmVnaXN0cnkgcGVyc2lzdGVuY2UKc3RhdHVzOiBleHBlcmltZW50YWwKZGVzY3JpcHRpb246IERldGVjdHMgbmV3IHJlZ2lzdHJ5IHJ1biBrZXkgY3JlYXRlZCBldmVudC4KdGFnczoKLSBhdHRhY2sucGVyc2lzdGVuY2UKLSBhdHRhY2sudDE1NDcKYXV0aG9yOiBkZW1vCmRhdGU6IDIwMjEvMDYvMDcKbG9nc291cmNlOgogIHByb2R1Y3Q6IHdpbmRvd3MKICBpbmRleDogbWFpbgogIGNhdGVnb3J5OiByZWdpc3RyeV9ldmVudApkZXRlY3Rpb246CiAgc2VsZWN0aW9uOgogICAgRXZlbnRDb2RlOiAnNDY1NycKICAgIE9iamVjdF9OYW1lfGNvbnRhaW5zOgogICAgLSBSdW4KICAgIC0gU2hlbGwgRm9sZGVycwogIGNvbmRpdGlvbjogc2VsZWN0aW9uCmZhbHNlcG9zaXRpdmVzOgotIEhpZ2gKbGV2ZWw6IGhpZ2g=",
+            "type": "Sigma Rule - base64 encoded YAML file"
+        },
+        "extensions": {
+            "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89": {
+                "extension_type": "new-sdo"
+            }
         }
-      ],
-      "analytic": {
-        "rule":
-"LS0tCnRpdGxlOiBSZWdpc3RyeSBSdW4gS2V5cwppZDogcmVnaXN0cnkgcGVyc2lzdGVuY2UKc3RhdHVzOiBleHBlcmltZW50YWwKZGVzY3JpcHRpb246IERldGVjdHMgbmV3IHJlZ2lzdHJ5IHJ1biBrZXkgY3JlYXRlZCBldmVudC4KdGFnczoKLSBhdHRhY2sucGVyc2lzdGVuY2UKLSBhdHRhY2sudDE1NDcKYXV0aG9yOiBkZW1vCmRhdGU6IDIwMjEvMDYvMDcKbG9nc291cmNlOgogIHByb2R1Y3Q6IHdpbmRvd3MKICBpbmRleDogbWFpbgogIGNhdGVnb3J5OiByZWdpc3RyeV9ldmVudApkZXRlY3Rpb246CiAgc2VsZWN0aW9uOgogICAgRXZlbnRDb2RlOiAnNDY1NycKICAgIE9iamVjdF9OYW1lfGNvbnRhaW5zOgogICAgLSBSdW4KICAgIC0gU2hlbGwgRm9sZGVycwogIGNvbmRpdGlvbjogc2VsZWN0aW9uCmZhbHNlcG9zaXRpdmVzOgotIEhpZ2gKbGV2ZWw6IGhpZ2g=",
-        "type": "Sigma Rule - base64 encoded YAML file"
-      },
-      "extensions": {
-        "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89": {
-          "extension_type": "new-sdo"
-        }
-      }
+    },
+    {
+        "type": "identity",
+        "spec_version": "2.1",
+        "id": "identity--b085a68a-bf48-4316-9667-37af78cba894",
+        "created": "2016-04-06T20:03:00.000Z",
+        "modified": "2016-04-06T20:03:00.000Z",
+        "name": "ACME Widget, Inc.",
+        "identity_class": "organization"
     }
 ]
