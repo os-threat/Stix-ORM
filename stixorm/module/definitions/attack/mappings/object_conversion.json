@@ -263,9 +263,9 @@
     "icon":""
   },
   {
-    "type":  "log-permutation",
-    "typeql": "log-permutation",
-    "class": "LogSourcePermutation",
+    "type":  "x-mitre-log-sources",
+    "typeql": "x-mitre-log-sources",
+    "class": "XMitreLogSource",
     "object": "sub",
     "url": "https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md",
     "doc_url": "",

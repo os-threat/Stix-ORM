@@ -47,7 +47,7 @@ define
     ##############################
     # Sequence Object for Tasks/Events
     ################################
-    sequence sub stix-domain-object, abstract,
+    sequence sub stix-domain-object, 
         owns step-type,
         owns sequence-type,
         plays sequenced-object:sequence,

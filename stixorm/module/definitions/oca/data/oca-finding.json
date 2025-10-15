@@ -20,14 +20,14 @@
   "src_os_user_ref": "",
   "dst_os_user_ref": "",
   "severity": "severity",
-  "confidence": "confidence",
+  "confidence": "confidence-string",
   "magnitude": "magnitude",
   "rule_trigger_count": "rule-trigger-count",
   "rule_names": "rule-names",
   "event_count": "event-count",
   "time_observed": "time-observed",
-  "start": "start-integer",
-  "end": "end-integer",
+  "start": "start-time",
+  "end": "end-time",
   "ttp_tagging_refs": "",
   "ioc_refs": ""
 }

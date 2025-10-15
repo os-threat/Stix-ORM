@@ -1,5 +1,7 @@
 {
   "device_id": "device-id",
+  "created": "created",
+  "modified": "modified",
   "hostname": "hostname",
   "ip_refs": "",
   "mac_refs": "",
@@ -7,6 +9,7 @@
   "architecture": "architecture",
   "uptime": "uptime",
   "host_type": "host-type",
+  "host_id": "host-id",
   "ingress": "",
   "egress": "",
   "geo_ref": ""

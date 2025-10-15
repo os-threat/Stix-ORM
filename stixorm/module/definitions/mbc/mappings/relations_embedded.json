@@ -33,7 +33,7 @@
     },
     {
         "rel": "objective_refs",
-        "owner": "behaviour",
+        "owner": "behavior",
         "pointed-to": "objective",
         "typeql": "objective-refs",
         "label": "objective references",
@@ -41,18 +41,18 @@
     },
     {
         "rel": "related_object_refs",
-        "owner": "behaviour",
+        "owner": "behavior",
         "pointed-to": "related-object",
         "typeql": "related-object-refs",
         "label": "related ATT&CK objects",
         "owner-is-source": true
     },
     {
-        "rel": "behaviour_ref",
+        "rel": "behavior_ref",
         "owner": "method",
-        "pointed-to": "behaviour",
-        "typeql": "behaviour-ref",
-        "label": "behaviour references",
+        "pointed-to": "behavior",
+        "typeql": "behavior-ref",
+        "label": "behavior references",
         "owner-is-source": true
     }
 ]

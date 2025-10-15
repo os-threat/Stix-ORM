@@ -108,9 +108,9 @@ define
     playbook sub stix-domain-object,
         owns name,
         owns description,
-        owns playbook_id,
-        owns playbook_creation_time,
-        owns playbook_modification_time,
+        owns playbook-id,
+        owns playbook-creation-time,
+        owns playbook-modification-time,
         owns is-playbook-template,
         owns playbook-format,
         owns playbook-type,
@@ -120,6 +120,7 @@ define
         owns playbook-bin,
         owns playbook-url,
         plays playbook-creator:playbook, 
+        plays playbook-ext:playbook-base,
 	    plays hashes:hash-owner;
 
 	# Playbook Extension
@@ -172,6 +173,7 @@ define
         owns vendor-url,
         owns product,
         owns product-url,
+        owns product-version,
         owns detection-types,
         owns detector-data-categories,
         owns detector-data-sources,
@@ -212,6 +214,7 @@ define
     ################################
 
     oca-file sub file,
+        owns created,
         owns x-atributes,
         owns x-extension,
         owns x-path,
@@ -321,7 +324,7 @@ define
     # Finally, connect the extensions to the object
     network-traffic
 	    plays dns-extension:dns-base,
-	    plays rita-extension:rita-spec;
+        plays rita-extension:rita-base;
 
 
     ##############################
@@ -367,6 +370,7 @@ define
     ################################
 
     oca-process sub process,
+        owns name,
         owns x-window-title,
         owns x-thread-id,
         owns x-exit-code,
@@ -469,8 +473,8 @@ define
 	    owns rule-names,
 	    owns event-count,
 	    owns time-observed,
-	    owns start-integer,
-	    owns end-integer,
+	    owns start-time,
+	    owns end-time,
 	    plays src-ip-ref:ip-base,
 	    plays dst-ip-ref:ip-base,
 	    plays src-os-ref:os-base,
@@ -604,7 +608,8 @@ define
 	    owns url-string,
 	    owns float-confidence,
 	    plays kill-chain-usage:kill-chain-used,
-	    plays tagging-extension:tagging-base;
+	    plays tagging-extension:tagging-base,
+        plays ttp-tag-ref:ttp-tag-actual;
 
     #  OCA TTP Tagging Extension Relation
 	tagging-extension sub oca-extensions,
@@ -655,7 +660,7 @@ define
     # OCA Pod Extension Object
 	pod-ext sub oca-extension,
 	    owns pod-type,
-	    owns name,
+	    owns pod-name,
 	    plays pod-extension:pod-spec,
 	    plays ip-refs:the-owner;
 
@@ -667,6 +672,7 @@ define
     # OCA Container Extension Object
 	container-ext sub oca-extension,
 	    owns container-id,
+        owns container-name,
 	    owns image-name,
 	    owns image-id,
 	    owns container-type,
@@ -675,13 +681,16 @@ define
 
     # OCA Asset SCO
     oca-asset sub stix-cyber-observable-object,
+        owns created,
+        owns modified,
         owns device-id,
         owns hostname,
         owns architecture,
         owns uptime,
         owns host-type,
+        owns host-id,
 	    plays container-extension:container-base,
-	    plays pod-extension:pod-spec,
+	    plays pod-extension:pod-base,
         plays ingress:the-asset,
         plays egress:the-asset,
 	    plays ip-refs:the-owner,
@@ -793,13 +802,15 @@ define
         plays host-ref:the-asset;
     # OCA Event Object
 	oca-event sub stix-cyber-observable-object,
+        owns created,
+        owns modified,
 	    owns action,
 	    owns category,
 	    owns code,
 	    owns description,
 	    owns created,
-	    owns start-integer,
-	    owns end-integer,
+	    owns start-time,
+	    owns end-time,
 	    owns duration,
 	    owns module,
 	    owns provider,
@@ -879,7 +890,12 @@ define
         plays oca-location:its-coordinates;
     # OCA Geo Object
 	oca-geo sub stix-cyber-observable-object,
+        owns created,
+        owns modified,
+        owns name,
+        owns time-zone,
 	    owns city-name,
+        owns country-name,
 	    owns continent-name,
 	    owns country-iso-code,
 	    owns description,
@@ -1023,9 +1039,6 @@ define
         x-product sub  stix-attribute-string;
         x-descriptio sub  stix-attribute-string;
         x-window-title sub  stix-attribute-string;
-        x-thread-id sub  stix-attribute-string;
-        x-exit-code sub  stix-attribute-string;
-        x-uptime sub  stix-attribute-string;
         x-unique-id sub  stix-attribute-string;
         x-tags sub  stix-attribute-string;
         x-name sub  stix-attribute-string;
@@ -1045,10 +1058,7 @@ define
         analytic-type sub  stix-attribute-string;
         analytic-rule sub  stix-attribute-string;
         data-source-value sub  stix-attribute-string;
-        playbook_id sub  stix-attribute-string;
-        playbook_creation_time sub  stix-attribute-string;
-        playbook_modification_time sub  stix-attribute-string;
-        is-playbook-template sub  stix-attribute-string;
+        playbook-id sub  stix-attribute-string;
         playbook-format sub  stix-attribute-string;
         playbook-type sub  stix-attribute-string;
         playbook-impact sub  stix-attribute-string;
@@ -1074,8 +1084,6 @@ define
         domain sub stix-attribute-string;
 	    win-event-code sub stix-attribute-string;
 	    creator-user sub stix-attribute-string;
-	    connections sub stix-attribute-string;
-	    rita-score sub stix-attribute-string;
 	    computer sub stix-attribute-string;
         status sub stix-attribute-string;
         subject_name sub stix-attribute-string;
@@ -1084,25 +1092,40 @@ define
         vendor-url sub stix-attribute-string;
         product sub stix-attribute-string;
         product-url sub stix-attribute-string;
+        product-version sub stix-attribute-string;
         behavior-class sub stix-attribute-string;
         tactic-type sub stix-attribute-string;
         technique-type sub stix-attribute-string;
         vlan-id sub stix-attribute-string;
         x-description sub stix-attribute-string;
+        host-id sub stix-attribute-string;
+        time-zone sub stix-attribute-string;
+        pod-name sub stix-attribute-string;
+        container-name sub stix-attribute-string;
 
 # Integer
 	    duration sub stix-attribute-integer;
-	    start-integer  sub stix-attribute-integer;
-	    end-integer sub  stix-attribute-integer;
 	    magnitude  sub stix-attribute-integer;
+	    connections sub stix-attribute-integer;
+        x-thread-id sub  stix-attribute-integer;
+        x-exit-code sub  stix-attribute-integer;
+        x-uptime sub  stix-attribute-integer;
 
 # Double
-	    privileged sub stix-attribute-double;
 	    float-confidence sub stix-attribute-double;
 	    lon sub stix-attribute-double;
 	    lat sub stix-attribute-double;
+	    rita-score sub stix-attribute-double;
 
 # Boolean
-        trusted sub stix-attribute-double;
-        valid sub stix-attribute-double;
-        exists sub stix-attribute-double;
+        trusted sub stix-attribute-boolean;
+        valid sub stix-attribute-boolean;
+        exists sub stix-attribute-boolean;
+        is-playbook-template sub  stix-attribute-boolean;
+	    privileged sub stix-attribute-boolean;
+
+# Timestamp
+        playbook-creation-time sub  stix-attribute-timestamp;
+        playbook-modification-time sub  stix-attribute-timestamp;
+	    start-time  sub stix-attribute-timestamp;
+	    end-time sub  stix-attribute-timestamp;

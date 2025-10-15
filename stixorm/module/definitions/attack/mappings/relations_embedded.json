@@ -32,7 +32,7 @@
     "owner-is-source": true
   },
   {
-    "rel": "x_mitre_analytics",
+    "rel": "x_mitre_analytic_refs",
     "owner": "detection-strategy",
     "pointed-to": "analytics",
     "typeql": "x-mitre-analytics",
@@ -40,11 +40,11 @@
     "owner-is-source": false
   },
   {
-    "rel": "ref",
+    "rel": "x_mitre_data_component_ref",
     "owner": "analytic",
-    "pointed-to": "log",
-    "typeql": "actual-log",
-    "label": "log-for",
-    "owner-is-source": false
+    "pointed-to": "component",
+    "typeql": "actual-component",
+    "label": "component-for",
+    "owner-is-source": true
   }
 ]

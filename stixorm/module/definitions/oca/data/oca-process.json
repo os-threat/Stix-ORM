@@ -1,4 +1,5 @@
 {
+  "name": "name",
   "x_window_title": "x-window-title",
   "x_thread_id": "x-thread-id",
   "x_exit_code": "x-exit-code",

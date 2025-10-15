@@ -34,6 +34,17 @@
     "icon":""
   },
   {
+    "type":  "external-reference",
+    "typeql": "external-reference",
+    "class": "ObjDefinition",
+    "object": "sub",
+    "url": "https://github.com/oasis-open/cti-stix-common-objects/tree/main/extension-definition-specifications/malware-behavior-8e9",
+    "doc_url": "",
+    "summary": "",
+    "protocol": "mbc",
+    "icon":""
+  },
+  {
     "type":  "detection-rule",
     "typeql": "detection-rule",
     "class": "DetectionRule",

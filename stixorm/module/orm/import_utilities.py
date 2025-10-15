@@ -316,7 +316,7 @@ def list_of_object(prop_name: str,
     if typeql_obj in auth["sub_objects"]:
         obj_props_tql = copy.deepcopy(auth["sub_objects"][typeql_obj])
     else:
-        raise ValueError("no sub-object available")
+        raise ValueError(f"no sub-object available for {typeql_obj}, propname {prop_name}")
 
     lod_list = []
     dep_list = []
@@ -333,7 +333,11 @@ def list_of_object(prop_name: str,
                 rel_match += rel_match2
                 dep_list = dep_list + dep_list2
             else:
-                insert += ',\n has ' + typeql_prop + ' ' + val_tql(dict_instance[key])
+                if isinstance(dict_instance[key], list):
+                    for j, instance in enumerate(dict_instance[key]):
+                        insert += ',\n has ' + typeql_prop + ' ' + val_tql(instance)
+                else:
+                    insert += ',\n has ' + typeql_prop + ' ' + val_tql(dict_instance[key])
         insert += ';\n'
 
     insert += '\n $' + rel_typeql + ' (' + role_owner + ':' + parent_var

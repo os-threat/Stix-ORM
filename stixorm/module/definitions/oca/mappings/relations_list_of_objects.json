@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "name": "interfaces",
+    "typeql": "interfaces",
+    "owner": "traffic-type",
+    "pointed_to": "mime-part",
+    "object": "its-interface"
+  }
+]

@@ -1,5 +1,5 @@
 {
-  "name": "name",
+  "name": "container-name",
   "container_id": "container-id",
   "image_name": "image-name",
   "image_id": "image-id",

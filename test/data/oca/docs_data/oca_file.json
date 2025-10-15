@@ -1,5 +1,26 @@
 [
   {
+    "type": "directory",
+    "spec_version": "2.1",
+    "id": "directory--93c0a9b0-520d-545d-9094-1a08ddf46b05",
+    "path": "C:\\Windows\\System32"
+  },
+  {
+    "type": "software",
+    "spec_version": "2.1",
+    "id": "software--a1827f6d-ca53-5605-9e93-4316cd22a00a",
+    "vendor": "Microsoft Corporation",
+    "version": "10.0.17763.1 (WinBuild.160101.0800)",
+    "name": "svchost.exe"
+  },
+  {
+    "type": "user-account",
+    "spec_version": "2.1",
+    "id": "user-account--0d5b424b-93b8-5cd8-ac36-306e1789d63c",
+    "user_id": "SYSTEM",
+    "account_login": "SYSTEM"
+  },
+  {
     "type": "file",
     "spec_version": "2.1",
     "id": "file--90bd400b-89a5-51a5-b17d-55bc7719723b",
@@ -20,27 +41,6 @@
         "SHA-256": "aaaa1111bbbb2222aaaa1111bbbb2222aaaa1111bbbb2222aaaa1111bbbb2222",
         "MD5": "00001111aaaa00001111aaaa00001111"
     }
-  },
-  {
-    "type": "directory",
-    "spec_version": "2.1",
-    "id": "directory--93c0a9b0-520d-545d-9094-1a08ddf46b05",
-    "path": "C:\\Windows\\System32"
-  },
-  {
-    "type": "software",
-    "spec_version": "2.1",
-    "id": "software--a1827f6d-ca53-5605-9e93-4316cd22a00a",
-    "vendor": "Microsoft Corporation",
-    "version": "10.0.17763.1 (WinBuild.160101.0800)",
-    "name": "svchost.exe"
-  },
-  {
-    "type": "user-account",
-    "spec_version": "2.1",
-    "id": "user-account--0d5b424b-93b8-5cd8-ac36-306e1789d63c",
-    "user_id": "SYSTEM",
-    "account_login": "SYSTEM"
   }
 
 ]

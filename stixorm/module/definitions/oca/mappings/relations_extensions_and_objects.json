@@ -133,13 +133,6 @@
         "pointed-to": "tagging-spec"
     },
     {
-        "stix": "interfaces",
-        "object": "interface",
-        "relation": "interfaces",
-        "owner": "traffic-type",
-        "pointed-to": "its-interface"
-    },
-    {
         "stix": "ingress",
         "object": "traffic",
         "relation": "ingress",

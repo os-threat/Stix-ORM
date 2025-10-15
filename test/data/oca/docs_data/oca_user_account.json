@@ -6,8 +6,10 @@
     "x_domain": "NT AUTHORITY",
     "user_id": "SYSTEM",
     "account_login": "SYSTEM",
-    "x_group.gid": "515",
-    "x_group.name": "Domain local group",
-    "x_group.domain": "internal.company.com"
+    "x_group": { 
+      "gid": "515",
+      "name": "Domain local group",
+      "domain": "internal.company.com"
+    }
   }
 ]

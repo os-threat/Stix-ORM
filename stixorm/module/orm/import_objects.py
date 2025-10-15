@@ -226,6 +226,12 @@ def sro_to_data(sro, import_type=default_import_type) -> [dict, Dict[str, str], 
     # If sro tql name == "relationship", then sro tql name = sro_dict["relationship_type"]
     if sro_tql_name == "relationship":
         sro_tql_name = sro_dict["relationship_type"]
+    elif sro_tql_name == "attack-relation":
+        sro_tql_name = sro_dict["relationship_type"]
+        source_type = sro_dict["source_ref"].split('--')[0]
+        target_type = sro_dict["target_ref"].split('--')[0]
+        if target_type == "attack-pattern" and (source_type == "intrusion-set" or source_type == "malware" or source_type == "tool"):
+            sro_tql_name = "procedure"
     logger.debug(f'object tql {obj_tql}, sro tql name {sro_tql_name}')
 
     return total_props, obj_tql, sro_tql_name, protocol
@@ -389,8 +395,6 @@ def sco_to_typeql(sco, import_type=default_import_type):
 
     """
     # 1.) get configuration parameters
-    # - variable for use in typeql statements
-    sco_var = '$' + sco.type
     dep_list = []
     # initialise the typeql insert statement
     dep_match = dep_insert = indep_ql = core_ql = dep_insert_props = ''
@@ -399,9 +403,11 @@ def sco_to_typeql(sco, import_type=default_import_type):
     total_props, obj_tql, sco_tql_name, protocol = sco_to_data(sco, import_type)
     properties, relations = split_on_activity_type(total_props, obj_tql)
 
+    # - variable for use in typeql statements
+    sco_var = '$' + sco_tql_name
     # 2.) setup the typeql statement for the sco entity
-    dep_insert = sco_var + ' isa ' + sco.type
-    core_ql = sco_var + ' isa ' + sco.type + ', has stix-id $stix-id;\n$stix-id ' + val_tql(sco.id) + ';\n'
+    dep_insert = sco_var + ' isa ' + sco_tql_name
+    core_ql = sco_var + ' isa ' + sco_tql_name + ', has stix-id $stix-id;\n$stix-id ' + val_tql(sco.id) + ';\n'
 
     # 3.) add each of the properties and values of the properties to the typeql statement
     # 5.) add each of the properties and values of the properties to the typeql statement

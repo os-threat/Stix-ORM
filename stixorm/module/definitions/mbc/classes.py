@@ -43,6 +43,40 @@ valid_obj =  get_mapping_factory_instance().get_all_types()
 #       SDO
 ##################################################################################
 
+class ObjDefinition(_STIXBase21):
+    """For more detailed information on this object's properties, see
+    `the STIX 2.1 specification <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_72bcfr3t79jx>`__.
+    """
+
+    _properties = OrderedDict([
+        ('source_name', StringProperty(required=True)),
+        ('description', StringProperty()),
+        ('url', StringProperty()),
+        ('hashes', HashesProperty(HASHING_ALGORITHM, spec_version="2.1")),
+        ('external_id', StringProperty()),
+    ])
+
+    # This is hash-algorithm-ov
+    _LEGAL_HASHES = {
+        "MD5", "SHA-1", "SHA-256", "SHA-512", "SHA3-256", "SHA3-512", "SSDEEP",
+        "TLSH",
+    }
+
+    def _check_object_constraints(self):
+        super(ObjDefinition, self)._check_object_constraints()
+        self._check_at_least_one_property(['description', 'external_id', 'url'])
+
+        if "hashes" in self:
+            if any(
+                hash_ not in self._LEGAL_HASHES
+                for hash_ in self["hashes"]
+            ):
+                raise InvalidValueError(
+                    ExternalReference, "hashes",
+                    "Hash algorithm names must be members of hash-algorithm-ov",
+                )
+
+
 
 class Snippet(_STIXBase21):
     """For more detailed information on this object's properties, see
@@ -73,6 +107,7 @@ class DetectionRule(_STIXBase21):
         ('detect_ref', ThreatReference(valid_types='malware-method', spec_version='2.1')),
         ('description', StringProperty()),
         ('detection-rule', ListProperty(StringProperty)),
+        ('api_fncs', ListProperty(StringProperty)),
     ])
 
 
@@ -103,7 +138,7 @@ class MalwareBehavior(_DomainObject):
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('name', StringProperty(required=True)),
         ('micro', BooleanProperty(default=lambda: False)),
-        ('obj_defn', ExternalReference), 
+        ('obj_defn', EmbeddedObjectProperty(type=ObjDefinition)), 
         ('obj_version', StringProperty()),
         ('related_object_refs', ListProperty(ReferenceProperty(valid_types='attack-pattern', spec_version='2.1'))),
         ('tags', DictionaryProperty(spec_version='2.1')),
@@ -140,7 +175,7 @@ class MalwareMethod(_DomainObject):
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('name', StringProperty(required=True)),
         ('micro', BooleanProperty(default=lambda: False)),
-        ('obj_defn', ExternalReference), 
+        ('obj_defn', EmbeddedObjectProperty(type=ObjDefinition)), 
         ('behavior_ref', ThreatReference(valid_types='malware-behavior', spec_version='2.1')),
         ('contributor_refs', ListProperty(ReferenceProperty(valid_types='identity', spec_version='2.1'))),
         ('revoked', BooleanProperty(default=lambda: False)),
@@ -172,7 +207,7 @@ class MalwareObjective(_DomainObject):
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('name', StringProperty(required=True)),
         ('micro', BooleanProperty(default=lambda: False)),
-        ('obj_defn', ExternalReference), 
+        ('obj_defn', EmbeddedObjectProperty(type=ObjDefinition)),
         ('revoked', BooleanProperty(default=lambda: False)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
@@ -194,7 +229,7 @@ class MalwareExt(_Extension):
     _type = 'extension-definition--8e9e338f-c9ee-4d4f-8cac-85b4dcfdf3c1'
     _properties = OrderedDict([
         ('extension_type', StringProperty(fixed='property-extension')),
-        ('obj_defn', ExternalReference), # TODO: fix this
+        ('obj_defn', EmbeddedObjectProperty(type=ObjDefinition)),
         ('year', StringProperty()),
         ('platforms', ListProperty(StringProperty)),
     ])

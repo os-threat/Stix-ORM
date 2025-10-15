@@ -1,5 +1,5 @@
 {
 	"snippet": ["references"], 
-	"detection-rule": ["detection-rule"],
+	"detection-rule": ["detection-rule", "api_fncs"],
 	"mbc-extension" : []
 }

@@ -49,11 +49,11 @@
     },
     {
         "rel": "object_ref",
-        "owner": "the-asset",
-        "pointed-to": "the-object",
-        "typeql": "object-ref",
-        "label": "object references",
-        "owner-is-source": true
+        "owner": "container",
+        "pointed-to": "content",
+        "typeql": "obj-ref",
+        "label": "parent-of",
+        "owner-is-source": false
     },
     {
         "rel": "on_true_refs",

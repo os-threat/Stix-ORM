@@ -156,10 +156,10 @@ def dict_to_typeql(stix_dict, import_type):
     """
     #logger.debug(f"im about to parse \n")
     stix_obj = parse(stix_dict, False, import_type)
-    logger.debug(f' i have parsed {stix_dict}\n')
-    logger.debug(f"\n object type -> {type(stix_obj)} -> {stix_obj}")
+    logger.info(f' i have parsed {stix_dict}\n')
+    logger.info(f"\n object type -> {type(stix_obj)} -> {stix_obj}")
     dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, import_type)
-    logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+    logger.info(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
     dep_obj["dep_match"] = dep_match
     dep_obj["dep_insert"] = dep_insert
     dep_obj["indep_ql"] = indep_ql

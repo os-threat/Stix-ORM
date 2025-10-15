@@ -2,7 +2,7 @@
   {
     "name": "detection_rules",
     "typeql": "detection-rules",
-    "owner": "behaviour",
+    "owner": "behavior",
     "pointed_to": "rule",
     "object": "detection-rule"
   },
@@ -16,7 +16,7 @@
   {
     "name": "snippets",
     "typeql": "snippets",
-    "owner": "behaviour",
+    "owner": "behavior",
     "pointed_to": "code",
     "object": "snippet"
   }

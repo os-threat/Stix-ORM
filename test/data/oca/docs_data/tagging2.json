@@ -1,7 +1,7 @@
 [
   {
     "type": "x-ibm-ttp-tagging",
-    "id": "x-ibm-ttp-tagging",
+    "id": "x-ibm-ttp-tagging--a91e776b-c662-46b8-840d-22e4300c139f",
     "spec_version": "2.1",
     "name": "Active Scanning",
     "url": "https://attack.mitre.org/versions/v8/techniques/T1595/",

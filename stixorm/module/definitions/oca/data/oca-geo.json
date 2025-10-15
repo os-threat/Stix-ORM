@@ -1,4 +1,6 @@
 {
+  "created": "created",
+  "modified": "modified",
   "city_name": "city-name",
   "continent_name": "continent-name",
   "country_iso_code": "country-iso-code",

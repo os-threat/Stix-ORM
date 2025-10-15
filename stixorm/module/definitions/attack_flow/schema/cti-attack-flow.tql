@@ -100,18 +100,18 @@ define
     flow-asset sub stix-domain-object,
         owns name,
         owns description,
-        plays object-ref:the-asset,
+        plays obj-ref:container,
         plays asset-refs:the-asset,
 	    plays attack-flow-ext:extension;
     
     # object ref Foreign key relation
-    object-ref sub embedded,
+    obj-ref sub embedded,
         relates the-asset as owner,
-        relates the-object as pointed-to;
+        relates content as pointed-to;
     stix-domain-object
-        plays object-ref:the-object;
+        plays obj-ref:content;
     stix-cyber-observable-object
-        plays object-ref:the-object;
+        plays obj-ref:content;
 
 
     ##############################

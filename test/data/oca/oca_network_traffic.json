@@ -8,7 +8,7 @@
   {
     "type": "network-traffic",
     "spec_version": "2.1",
-    "id": "network-traffic--15a157a8-26e3-56e0-820b-0c2a8e553a2c",
+    "id": "network-traffic--e7a939ca-78c6-5f27-8ae0-4ad112454626",
     "dst_ref": "domain-name--3c10e93f-798e-5a26-a0c1-08156efab7f5",
     "protocols": [
         "ipv4",

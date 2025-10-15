@@ -1,5 +1,5 @@
 {
   "type": "pod-type",
-  "name": "name",
+  "name": "pod-name",
   "ip_refs": ""
 }

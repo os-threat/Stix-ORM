@@ -1,36 +1,45 @@
 [
-  {
-  "type": "x-oca-detector",
-  "spec_version": "2.1",
-  "id": "x-oca-detector--f9ccdd3d-2217-45fd-8e65-055da8e66c3e",
-  "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
-  "created": "2023-05-01T12:00:00.000Z",
-  "modified": "2023-05-01T12:00:00.000Z",
-  "name": "Sigma",
-  "description": "A generic signature format for log files.",
-  "cpe": "cpe:2.3:a:sigmahq:sigma:0.21:*:*:*:*:*:*:*",
-  "vendor": "SigmaHQ",
-  "vendor_url": "https://github.com/SigmaHQ",
-  "product": "Sigma",
-  "product_url": "https://github.com/SigmaHQ/sigma",
-  "product_version": "0.21",
-  "detection_types": ["log"],
-  "detector_data_categories": ["log"],
-  "detector_data_sources": ["windows event log", "sysmon", "zeek", "rita"],
-  "valid_until": "2027-05-01T12:00:00.000Z",
-  "extensions": {
-    "extension-definition--5cccba5c-0be4-450c-8672-b66e98515754": {
-      "extension_type": "new-sdo"
-    }
-  }
-},
     {
         "type": "identity",
         "spec_version": "2.1",
-        "id": "identity--b085a68a-bf48-4316-9667-37af78cba894",
+        "id": "identity--c7810c42-9ef9-4c13-9c3e-4fdfae70ec0b",
         "created": "2016-04-06T20:03:00.000Z",
         "modified": "2016-04-06T20:03:00.000Z",
         "name": "ACME Widget, Inc.",
         "identity_class": "organization"
+    },
+    {
+        "type": "x-oca-detector",
+        "spec_version": "2.1",
+        "id": "x-oca-detector--f9ccdd3d-2217-45fd-8e65-055da8e66c3e",
+        "created_by_ref": "identity--c7810c42-9ef9-4c13-9c3e-4fdfae70ec0b",
+        "created": "2023-05-01T12:00:00.000Z",
+        "modified": "2023-05-01T12:00:00.000Z",
+        "name": "Sigma",
+        "description": "A generic signature format for log files.",
+        "cpe": "cpe:2.3:a:sigmahq:sigma:0.21:*:*:*:*:*:*:*",
+        "vendor": "SigmaHQ",
+        "vendor_url": "https://github.com/SigmaHQ",
+        "product": "Sigma",
+        "product_url": "https://github.com/SigmaHQ/sigma",
+        "product_version": "0.21",
+        "detection_types": [
+            "log"
+        ],
+        "detector_data_categories": [
+            "log"
+        ],
+        "detector_data_sources": [
+            "windows event log",
+            "sysmon",
+            "zeek",
+            "rita"
+        ],
+        "valid_until": "2027-05-01T12:00:00.000Z",
+        "extensions": {
+            "extension-definition--5cccba5c-0be4-450c-8672-b66e98515754": {
+                "extension_type": "new-sdo"
+            }
+        }
     }
 ]

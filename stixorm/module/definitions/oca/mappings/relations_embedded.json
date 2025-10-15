@@ -1,8 +1,8 @@
 [
     {
         "rel": "playbook_creator",
-        "owner": "author",
-        "pointed-to": "playbook",
+        "owner": "playbook",
+        "pointed-to": "author",
         "typeql": "playbook-creator",
         "label": "playbook creator",
         "owner-is-source": true
@@ -170,7 +170,7 @@
     {
         "rel": "mac_refs",
         "owner": "the-owner",
-        "pointed-to": "the-max",
+        "pointed-to": "the-mac",
         "typeql": "mac-refs",
         "label": "max reference",
         "owner-is-source": true

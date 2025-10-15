@@ -2,7 +2,7 @@
   {
     "name": "tags",
     "typeql": "tags",
-    "owner": "behaviour",
+    "owner": "behavior",
     "pointed_to": "tag",
     "key": "tag-key",
     "value": "tag-value"

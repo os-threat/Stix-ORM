@@ -48,6 +48,13 @@ connection = {
     "password": None
 }
 
+marking =["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
+          "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
+          "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
+          "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
+
+get_ids = 'match $stix-id isa stix-id; get $stix-id;'
+
 import_type =  import_type_factory.get_all_imports()
 all_imports = import_type_factory.get_all_imports()
 base_dir = "test/data/"
@@ -62,12 +69,42 @@ directories = {
     "mbc": "mbc/examples",
     "attack_flow": "attack_flow/examples"
 }
+test1 = "test_data"
+test2 = "os-threat/exercise"
+test3 = "mbc/examples"
+test4 = "attack_flow/examples"
+test_dir = {
+    "test": test2
+}
 
 frameworks = {
     "attack_enterprise": "mitre/latest/enterprise-attack-17.1.json",
     "attack_ics": "mitre/latest/ics-attack-17.1.json",
     "mbc": "mbc/framework/mbc.json"
 }
+
+def get_stix_ids(get_id_query = get_ids):
+    """ Get all the stix-ids in a database, should be moved to typedb_lib file
+
+    Returns:
+        id_list : list of the stix-ids in the database
+    """
+    query = get_id_query
+    g_uri = connection["uri"] + ':' + connection["port"]
+    id_list = []
+    with TypeDB. core_driver(g_uri) as client:
+        with client.session(connection["database"], SessionType.DATA) as session:
+            with session.transaction(TransactionType.READ) as read_transaction:
+                logger.debug(f"\n\n query is -> {query}")
+                answer_iterator = read_transaction.query.get(query)
+                ids = [ans.get("stix-id") for ans in answer_iterator]
+                for sid_obj in ids:
+                    sid = sid_obj.as_attribute().as_attribute().get_value()
+                    if sid in marking:
+                        continue
+                    else:
+                        id_list.append(sid)
+    return id_list
 
 def convert_json_to_list(json_data: Union[dict, list]) -> List[dict]:
     """Convert JSON data to a list of objects.
@@ -93,38 +130,65 @@ def exercise_each_file_directory(name: str, path: str):
         name: The name of the component
         path: The path to the data files
     """
+    typedb_sink = TypeDBSink(connection, True, import_type)
+    id_list = []
+    list_of_objects = []
     dirFiles = os.listdir(path)
     sorted_files = sorted(dirFiles)
-    print(sorted_files)
+    logger.info(sorted_files)
     for s_file in sorted_files:
         if os.path.isdir(os.path.join(path, s_file)):
             continue
         else:
-            id_list = []
+            logger.info('\n\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+            logger.info(f'==================== {s_file} ===================================')
+            logger.info('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
             print('\n\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
             print(f'==================== {s_file} ===================================')
             print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
             with open(os.path.join(path, s_file), mode="r", encoding="utf-8") as f:
                 json_data = json.load(f)
-                list_of_objects = convert_json_to_list(json_data)
-                typedb_sink = TypeDBSink(connection, True, import_type)
-                for element in list_of_objects:
-                    #print(f'element is {element}')
+                list_of_objects_in_file = convert_json_to_list(json_data)
+                for element in list_of_objects_in_file:
+                    #logger.info(f'element is {element}')
                     temp_id = element.get('id', False)
                     if temp_id:
                         id_list.append(temp_id)
+                        list_of_objects.append(element)
                 # list_of_objects = list_of_objects + json_list
-                print(f'9999999999999999999999999 Add {len(list_of_objects)} 99999999999999999999999999999999999999999999')
-                typedb_sink.add(list_of_objects)
+                logger.info(f'9999999999999999999999999 Add {len(list_of_objects_in_file)} 99999999999999999999999999999999999999999999')
+                print(f'9999999999999999999999999 Add {len(list_of_objects_in_file)} 99999999999999999999999999999999999999999999')
+    logger.info(f'\n\n\n===========================\nready to import -> {len(set(id_list))}')
+    print(f'\n\n\n===========================\nready to import -> {len(set(id_list))}')
+    typedb_sink.add(list_of_objects)
+
+    # check how many got loaded
+    id_set = set(id_list)
+    id_typedb = set(get_stix_ids())
+    len_files = len(id_set)
+    len_typedb = len(id_typedb)
+    id_diff = id_set - id_typedb
+    sorted_diff = sorted(list(id_diff))
+    logger.info(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    logger.info(f'difference -> ')
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'difference -> ')
+    for id_d in sorted_diff:
+        logger.info(id_d)
+        print(id_d)
+    logger.info('===================================================\n\n')
+    print('===================================================\n\n')
 
 def exercise_all():
     """Exercise all data directories and frameworks.
 
     """
-    backdoor_add_dir(os.path.join(base_dir, "test_data"))
+    # backdoor_add_dir(os.path.join(base_dir, test2))
     # typedb_sink = TypeDBSink(connection, True, import_type)
     # typedb_source = TypeDBSource(connection, import_type)
     for name, path in directories.items():
+        logger.info("\n===================================================")
+        logger.info(f'Exercising {name} components with data from {path}')
         print("\n===================================================")
         print(f'Exercising {name} components with data from {path}')
         # Here you would call the function to process the data
@@ -133,10 +197,11 @@ def exercise_all():
         # backdoor_add_dir(os.path.join(base_dir, path))
 
     for name, path in frameworks.items():
-        print("\n===================================================")
-        print(f'Loading {name} framework with data from {path}')
+        # logger.info("\n===================================================")
+        # logger.info(f'Loading {name} framework with data from {path}')
         # Here you would call the function to process the data
         # For example: process_data(name, path)
+        pass
 
 
 ##############################################################################

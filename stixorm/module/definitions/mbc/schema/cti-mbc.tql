@@ -56,7 +56,7 @@ define
         relates method as pointed-to;
 
     detection-rules sub embedded,
-        relates behaviour as owner,
+        relates behavior as owner,
         relates rule as pointed-to;
 
     detection-rule sub stix-sub-object,
@@ -65,6 +65,7 @@ define
         owns rule,
         owns description,
         owns api-fncs,
+        owns url-string,
         plays detect-ref:rule,
         plays detection-rules:rule;
 
@@ -83,7 +84,7 @@ define
         relates method as pointed-to;
 
     snippets sub embedded,
-        relates behaviour as owner,
+        relates behavior as owner,
         relates code as pointed-to;
 
     snippet sub stix-sub-object,
@@ -100,7 +101,7 @@ define
     # Tags Dictionary Definition
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     tags sub embedded,
-        relates behaviour as owner,
+        relates behavior as owner,
         relates tag as pointed-to;
 
     tag-value sub stix-attribute-string;
@@ -110,7 +111,7 @@ define
         plays tags:tag;
 
     ##############################
-    # Malware Behaviour Object
+    # Malware Behavior Object
     ################################
     # contributor refs Foreign Key Relation
     contributor-refs sub embedded,
@@ -122,30 +123,30 @@ define
 
     # objective refs Foreign Key Relation
     objective-refs sub embedded,
-        relates behaviour as owner,
+        relates behavior as owner,
         relates objective as pointed-to;
 
     # related object refs Foreign Key Relation
     related-object-refs sub embedded,
-        relates behaviour as owner,
+        relates behavior as owner,
         relates related-object as pointed-to;
 
     technique
         plays related-object-refs:related-object;
 
-    # malware behaviour SDO
-    malware-behaviour sub stix-domain-object,
+    # malware behavior SDO
+    malware-behavior sub stix-domain-object,
         owns name,
         owns micro,
         owns obj-version,
         plays obj-defn:object,
-        plays related-object-refs:behaviour,
-        plays tags:behaviour,
-        plays objective-refs:behaviour,
-        plays snippets:behaviour,
-        plays detection-rules:behaviour,
+        plays related-object-refs:behavior,
+        plays tags:behavior,
+        plays objective-refs:behavior,
+        plays snippets:behavior,
+        plays detection-rules:behavior,
         plays contributor-refs:object,
-        plays behaviour-ref:behaviour,
+        plays behavior-ref:behavior,
         plays uses:used,
         plays led-to:initial,
         plays led-to:subsequent,
@@ -156,17 +157,17 @@ define
     ##############################
     # Malware Method Object
     ################################
-    # Behaviour Ref Foreign Key Relation
-	behaviour-ref sub embedded,
+    # behavior Ref Foreign Key Relation
+	behavior-ref sub embedded,
 		relates method as owner,
-		relates behaviour as pointed-to;
+		relates behavior as pointed-to;
 
 	# Malware Method SDO
     malware-method sub stix-domain-object,
         owns name,
         owns micro,
         plays obj-defn:object,
-        plays behaviour-ref:method,
+        plays behavior-ref:method,
         plays contributor-refs:object,
         plays exemplify-ref:method,
         plays detect-ref:method,
@@ -185,7 +186,7 @@ define
         plays uses:used,
         plays led-to:initial,
         plays led-to:subsequent,
-        plays objective-refs:behaviour,
+        plays objective-refs:behavior,
 	    plays mbc-ext:mbc;
 
 
@@ -220,5 +221,7 @@ define
 	    actual-snippet sub  stix-attribute-string;
         language sub stix-attribute-string;
         actual-hash sub stix-attribute-string;
+        url-string sub stix-attribute-string;
+        dict-key sub stix-attribute-string;
     # Boolean
         micro sub stix-attribute-boolean;

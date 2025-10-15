@@ -3,6 +3,37 @@
     "id": "bundle--7d9ba979-6e72-47e8-9a48-a28c42206307",
     "objects": [
         {
+            "type": "email-addr",
+            "spec_version": "2.1",
+            "id": "email-addr--06029cc1-105d-5495-9fc5-3d252dd7af76",
+            "value": "paolo@priam.ai"
+        },
+        {
+            "type": "email-addr",
+            "spec_version": "2.1",
+            "id": "email-addr--78b946aa-91ab-5ce8-829b-4d078a8ecc00",
+            "value": "paolo@nomadenergy.co.uk"
+        },
+        {
+            "type": "user-account",
+            "spec_version": "2.1",
+            "id": "user-account--7aa68be3-1d4d-5b0f-8c26-8410085e5741",
+            "account_login": "paolo di prodi",
+            "account_type": "LinkedIn"
+        },
+        {
+            "type": "email-addr",
+            "spec_version": "2.1",
+            "id": "email-addr--a04693c3-b040-44c5-833a-75cbe45386b5",
+            "value": "brett@cloudaccelerator.co"
+        },
+        {
+            "type": "email-addr",
+            "spec_version": "2.1",
+            "id": "email-addr--25769d7c-b38f-496b-9ca5-5359537d9ff9",
+            "value": "brett@innovolve.ai"
+        },
+        {
             "type": "identity",
             "id": "identity--4e0dd272-7d68-4c8d-b6bc-0cb9d4b8e924",
             "created": "2022-05-06T01:01:01.000Z",
@@ -49,25 +80,6 @@
             }
         },
         {
-            "type": "email-addr",
-            "spec_version": "2.1",
-            "id": "email-addr--06029cc1-105d-5495-9fc5-3d252dd7af76",
-            "value": "paolo@priam.ai"
-        },
-        {
-            "type": "email-addr",
-            "spec_version": "2.1",
-            "id": "email-addr--78b946aa-91ab-5ce8-829b-4d078a8ecc00",
-            "value": "paolo@nomadenergy.co.uk"
-        },
-        {
-            "type": "user-account",
-            "spec_version": "2.1",
-            "id": "user-account--7aa68be3-1d4d-5b0f-8c26-8410085e5741",
-            "account_login": "paolo di prodi",
-            "account_type": "LinkedIn"
-        },
-        {
             "type": "identity",
             "id": "identity--48405e34-669b-41fa-9ad3-a292b4e6b3b7",
             "created": "2022-05-06T01:01:01.000Z",
@@ -106,18 +118,6 @@
                     "social_media_accounts": []
                 }
             }
-        },
-        {
-            "type": "email-addr",
-            "spec_version": "2.1",
-            "id": "email-addr--a04693c3-b040-44c5-833a-75cbe45386b5",
-            "value": "brett@cloudaccelerator.co"
-        },
-        {
-            "type": "email-addr",
-            "spec_version": "2.1",
-            "id": "email-addr--25769d7c-b38f-496b-9ca5-5359537d9ff9",
-            "value": "brett@innovolve.ai"
         }
     ]
 }

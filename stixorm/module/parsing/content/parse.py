@@ -149,8 +149,8 @@ def process_starts_with_condition(stix_dict, value):
     local_dict = copy.deepcopy(stix_dict)
     if "x_mitre_attack_spec_version" in local_dict:
         return correct
-    for field in local_dict.values():
-        if isinstance(field, str) and field.startswith(value):
+    for field_name, field_value in local_dict.items():
+        if isinstance(field_name, str) and field_name.startswith(value):
             correct = True
             return correct
     return correct
@@ -264,7 +264,8 @@ def get_tqlname_from_type_and_protocol(stix_type, protocol) -> Union[str, None]:
         content = content_list[0]
         return content.typeql
     else:
+        # find the default option, with the empty condition
         for item in content_list:
-            if item.protocol == protocol and item.stix_type == stix_type:
+            if item.condition1 == "":
                 return item.typeql
     return content_list[0].typeql

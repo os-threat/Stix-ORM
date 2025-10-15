@@ -1,5 +1,6 @@
 {
   "name": "name",
+  "created": "created",
   "description": "description",
   "cpe": "cpe",
   "valid_until": "valid-until",
@@ -7,6 +8,7 @@
   "vendor_url": "vendor-url",
   "product": "product",
   "product_url": "product-url",
+  "product_version": "product-version",
   "detection_types": "detection-types",
   "detector_data_categories": "detector-data-categories",
   "detector_data_sources": "detector-data-sources"

@@ -15,23 +15,23 @@
   },
   {
     "name": "x_mitre_log_sources",
-    "typeql": "log-sources",
-    "owner": "analytic",
+    "typeql": "x-mitre-log-sources",
+    "owner": "component",
     "pointed_to": "source",
-    "object": "log-source-reference"
+    "object": "x-mitre-log-source"
   },
   {
     "name": "x_mitre_mutable_elements",
-    "typeql": "mutatable-elements",
+    "typeql": "mutable-elements",
     "owner": "analytic",
     "pointed_to": "element",
     "object": "mutable-element"
   },
   {
-    "name": "x_mitre_log_source_permutations",
-    "typeql": "log-source-permutations",
-    "owner": "log-source",
-    "pointed_to": "permutation",
-    "object": "log-permutation"
+    "name": "x_mitre_log_source_references",
+    "typeql": "log-sources",
+    "owner": "analytic",
+    "pointed_to": "source",
+    "object": "log-source-reference"
   }
 ]

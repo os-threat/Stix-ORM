@@ -1,5 +1,5 @@
 """Python CACAO Stix Class Definitions """
-
+from typing import Self
 import json
 import pathlib
 from collections import OrderedDict
@@ -74,6 +74,7 @@ class Behavior(_DomainObject):
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('name', StringProperty(required=True)),
         ('description', StringProperty()),
+        ('behavior_class', StringProperty()),
         ('tactic', StringProperty()),
         ('technique', StringProperty()),
         ('first_seen', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
@@ -84,6 +85,7 @@ class Behavior(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
+        ('revoked', BooleanProperty(default=lambda: False)),
         ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
 
@@ -145,6 +147,7 @@ class Playbook(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
+        ('revoked', BooleanProperty(default=lambda: False)),
         ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
 
@@ -193,6 +196,7 @@ class Detection(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
+        ('revoked', BooleanProperty(default=lambda: False)),
         ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
 
@@ -228,6 +232,7 @@ class Detector(_DomainObject):
         ('vendor_url', StringProperty()),
         ('product', StringProperty()),
         ('product_url', StringProperty()),
+        ('product_version', StringProperty()),
         ('detection_types', ListProperty(StringProperty)),
         ('detector_data_categories', ListProperty(StringProperty)),
         ('detector_data_sources', ListProperty(StringProperty)),
@@ -237,6 +242,7 @@ class Detector(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
+        ('revoked', BooleanProperty(default=lambda: False)),
         ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
     ])
 
@@ -310,6 +316,7 @@ class OCAFile(_Observable):
         ('type', TypeProperty(_type, spec_version='2.1')),
         ('spec_version', StringProperty(fixed='2.1')),
         ('id', IDProperty(_type, spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('x_attributes', ListProperty(StringProperty)),
         ('x_extension', StringProperty()),
         ('x_path', StringProperty()),
@@ -377,7 +384,7 @@ class DNSExt(_Extension):
     _type = 'dns-ext'
     _properties = OrderedDict([
         ('question', EmbeddedObjectProperty(type=NameRefSubObject)),
-        ('resolved_ip_refs', ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr'], spec_version='2.1')),
+        ('resolved_ip_refs', ListProperty(ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr'], spec_version='2.1'))),
     ])
 
 
@@ -389,7 +396,7 @@ class NetworkTrafficVLanSubObject(_STIXBase21):
     _properties = OrderedDict([
         ('id', StringProperty()),
         ('name', StringProperty()),
-        ('inner',  EmbeddedObjectProperty(type=_STIXBase21)),
+        ('inner',  EmbeddedObjectProperty(type=Self)),
     ])
 
 
@@ -470,9 +477,10 @@ class OCAProcess(_Observable):
         ('id', IDProperty(_type, spec_version='2.1')),
         ('x_window_title', StringProperty()),
         ('x_thread_id', IntegerProperty()),
+        ('x_unique_id', StringProperty()),
         ('x_exit_code', IntegerProperty()),
         ('x_uptime', IntegerProperty()),
-        ('x_unique_id', StringProperty()),
+        ('name', StringProperty()),
         ('x_tags', ListProperty(StringProperty)),
         ('is_hidden', BooleanProperty()),
         ('pid', IntegerProperty()),
@@ -684,7 +692,7 @@ class OCAFinding(_Observable):
         ('time_observed', StringProperty()),
         ('start', IntegerProperty()),
         ('end', IntegerProperty()),
-        ('ttp_tagging_refs', ListProperty(ThreatReference(valid_types=['attack-pattern', 'x-mitre-tactic', 'relationship'], spec_version='2.1'))),
+        ('ttp_tagging_refs', ListProperty(ThreatReference(valid_types=['x-ibm-ttp-tagging'], spec_version='2.1'))),
         ('ioc_refs', ListProperty(ReferenceProperty(valid_types=['file', 'ipv4-addr', 'ipv6-addr', 'domain', 'url'], spec_version='2.1'))),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
@@ -803,6 +811,8 @@ class OCAAsset(_Observable):
         ('type', TypeProperty(_type, spec_version='2.1')),
         ('spec_version', StringProperty(fixed='2.1')),
         ('id', IDProperty(_type, spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('device_id', StringProperty()),
         ('hostname', StringProperty()),
         ('ip_refs',  ListProperty(ReferenceProperty(valid_types=['ipv4-addr', 'ipv6-addr'], spec_version='2.1'))),
@@ -811,6 +821,7 @@ class OCAAsset(_Observable):
         ('architecture', StringProperty()),
         ('uptime', StringProperty()),
         ('host_type', StringProperty()),
+        ('host_id', StringProperty()),
         ('ingress', EmbeddedObjectProperty(type=OCATrafficSubObject)),
         ('egress', EmbeddedObjectProperty(type=OCATrafficSubObject)),
         ('geo_ref', ThreatReference(valid_types='x-oca-geo', spec_version='2.1')),
@@ -880,6 +891,8 @@ class OCAEvent(_Observable):
         ('type', TypeProperty(_type, spec_version='2.1')),
         ('spec_version', StringProperty(fixed='2.1')),
         ('id', IDProperty(_type, spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('action', StringProperty()),
         ('category', ListProperty(StringProperty)),
         ('code', StringProperty()),
@@ -943,6 +956,8 @@ class OCAGeo(_Observable):
         ('type', TypeProperty(_type, spec_version='2.1')),
         ('spec_version', StringProperty(fixed='2.1')),
         ('id', IDProperty(_type, spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('city_name', StringProperty()),
         ('continent_name', StringProperty()),
         ('country_iso_code', StringProperty()),

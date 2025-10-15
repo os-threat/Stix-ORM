@@ -1,9 +1,18 @@
 [
     {
+        "type": "identity",
+        "spec_version": "2.1",
+        "id": "identity--9ee1596a-cf12-4eb6-9379-1f14aef763f7",
+        "created": "2016-04-06T20:03:00.000Z",
+        "modified": "2016-04-06T20:03:00.000Z",
+        "name": "ACME Widget, Inc.",
+        "identity_class": "organization"
+    },
+    {
         "type": "x-oca-detector",
         "spec_version": "2.1",
         "id": "x-oca-detector--67330653-ac02-46c8-b9c2-25b837a2ed6d",
-        "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
+        "created_by_ref": "identity--9ee1596a-cf12-4eb6-9379-1f14aef763f7",
         "created": "2023-05-01T12:00:00.000Z",
         "modified": "2023-05-01T12:00:00.000Z",
         "name": "Zeek",
@@ -29,14 +38,5 @@
                 "extension_type": "new-sdo"
             }
         }
-    },
-    {
-        "type": "identity",
-        "spec_version": "2.1",
-        "id": "identity--b085a68a-bf48-4316-9667-37af78cba894",
-        "created": "2016-04-06T20:03:00.000Z",
-        "modified": "2016-04-06T20:03:00.000Z",
-        "name": "ACME Widget, Inc.",
-        "identity_class": "organization"
     }
 ]

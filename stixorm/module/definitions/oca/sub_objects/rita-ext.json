@@ -1,6 +1,6 @@
 {
   "extension_type": "extension-type",
   "connections": "connections",
-  "score": "score",
+  "score": "rita-score",
   "computer": "computer"
 }

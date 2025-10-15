@@ -183,13 +183,15 @@ define
     log-sources sub embedded,
         relates analytic as owner,
         relates source as pointed-to;
-    actual-log sub embedded,
+    actual-component sub embedded,
         relates analytic as owner,
-        relates log as pointed-to;
+        relates component as pointed-to;
     log-source-reference sub stix-sub-object,
-        owns keys,
+        owns name,
+        owns channel,
         plays log-sources:source,
-        plays actual-log:analytic;
+        plays actual-component:analytic;
+
     analytic sub stix-domain-object,
         owns name,
         owns description,
@@ -204,40 +206,10 @@ define
         owns x-mitre-old-attack-id,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
-        plays x-mitre-data-source-ref:data-source,
         plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content,
         plays mutable-elements:analytic,
         plays log-sources:analytic;
-
-
-    # Log Source -  https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md
-    log-source-permutations sub embedded,
-        relates log-source as owner,
-        relates permutation as pointed-to;
-
-    log-permutation sub stix-sub-object,
-        owns name,
-        owns channel,
-        plays log-source-permutations:permutation;
-    log-source  sub stix-domain-object,
-        owns name,
-        owns description,
-        owns x-mitre-version,
-        owns x-mitre-contributors,
-        owns x-mitre-domains,
-        owns x-mitre-attack-spec-version,
-        owns x-mitre-platforms,
-        owns x-mitre-collection-layers,
-        owns x-mitre-deprecated,
-        owns x-mitre-old-attack-id,
-        plays found-in:log,
-        plays revoked-by:revoked,
-        plays revoked-by:new-version,
-        plays actual-log:log,
-        plays log-source-permutations:log-source,
-        plays x-mitre-modified-by-ref:modified,
-        plays obj-ref:content;
 
 
     # Data Sources and Components - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#data-sources-and-data-components
@@ -272,9 +244,19 @@ define
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-data-source-ref:component,
+        plays x-mitre-log-sources:component,
         plays x-mitre-modified-by-ref:modified,
-        plays found-in:data,
+        plays actual-component:component,
         plays obj-ref:content;
+
+    x-mitre-log-source sub stix-sub-object,
+        owns name,
+        owns channel,
+        plays x-mitre-log-sources:source;
+
+    x-mitre-log-sources sub embedded,
+        relates component as owner,
+        relates source as pointed-to;
 
     # Attack Asset - https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#assets
     # Related Asset Sub Object    
@@ -371,6 +353,23 @@ define
 
     #=================================
     # Custom ATT&CK Relations -https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md#relationships
+	attack-relation sub stix-core-relationship,
+        owns x-mitre-version,
+        owns x-mitre-contributors,
+        owns x-mitre-domains,
+        owns x-mitre-attack-spec-version,
+        owns x-mitre-deprecated,
+        owns x-mitre-platforms,
+        owns x-mitre-old-attack-id,
+        plays obj-ref:content,
+		relates child as source,
+		relates parent as target,
+        plays x-mitre-modified-by-ref:modified,
+        plays obj-ref:content,
+        plays revoked-by:revoked,
+        plays revoked-by:new-version;
+
+
 	subtechnique-of sub stix-core-relationship,
         owns x-mitre-version,
         owns x-mitre-contributors,
@@ -387,7 +386,7 @@ define
         plays revoked-by:revoked,
         plays revoked-by:new-version;
 
-	found-in sub  stix-core-relationship,
+	targets sub  stix-core-relationship,
         owns x-mitre-version,
         owns x-mitre-contributors,
         owns x-mitre-domains,
@@ -450,8 +449,7 @@ define
     # Built-in Embedded Relations for Mitre Attack objects
 	x-mitre-data-source-ref sub embedded,
 		relates data-source as pointed-to,
-		relates component as owner,
-        plays obj-ref:content;
+		relates component as owner;
 
     # ATT&CK Collection Object
     collection   sub stix-domain-object,
