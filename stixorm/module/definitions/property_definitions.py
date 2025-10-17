@@ -15,6 +15,7 @@ from stix2.properties import (
 )
 
 from stixorm.module.typedb_lib.factories.mappings_factory import get_mapping_factory_instance
+from stixorm.module.parsing.content.parse import get_group_from_type
 
 DEFAULT_VERSION = '2.1'
 ERROR_INVALID_ID = (
@@ -48,6 +49,34 @@ def _check_uuid(uuid_str, spec_version):
 
     return ok
 
+def process_category(obj_type, constraint):
+    # 1. StixORM stuff
+    group = get_group_from_type(obj_type)
+    # 2. Step through the constraints
+    if constraint == "_any":
+        return True
+    elif constraint == "_sdo":
+        if group == "sdo":
+            return True
+    elif constraint == "_sco":
+        if group == "sco":
+            return True
+    else:
+        return False
+
+
+def process_valid_types(obj_type, valid_types):
+    valid = False
+    if isinstance(valid_types, list):
+        for valid_type in valid_types:
+            if valid_type.startswith("_"):
+                valid = process_category(obj_type, valid_type)
+                if valid:
+                    return True
+    else:
+        valid = process_category(obj_type, valid_type)
+    return valid
+    
 
 def _validate_id(id_, spec_version, required_prefix):
     """
@@ -84,7 +113,7 @@ def is_stix_type(obj_type, spec_version, valid_types):
     if obj_type in valid_types:
         return True
     else:
-        return False
+        return process_valid_types(obj_type, valid_types)
 
 
 class ThreatReference(Property):

@@ -1175,6 +1175,8 @@ network-traffic sub stix-cyber-observable-object,
 
 # 6.13 Process 
 process sub stix-cyber-observable-object,
+	owns created,
+	owns modified, 
 	owns is-hidden, 
 	owns pid,
 	owns created-time,

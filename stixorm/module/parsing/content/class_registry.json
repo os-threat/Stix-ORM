@@ -29,7 +29,7 @@
     "stix_type": "x-mitre-analytic",
     "protocol": "attack",
     "group": "sdo",
-    "typeql": "analytic",
+    "typeql": "attack-analytic",
     "python_class": "Analytic",
     "condition1": "",
     "field1": "",

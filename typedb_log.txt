@@ -1,0 +1,99 @@
+12:45:08,846 stixorm.module.initialise INFO ========================== Database initialisation ============================
+12:45:08,875 stixorm.module.initialise INFO Loading TQL objects
+12:45:08,876 stixorm.module.initialise INFO 
+
+ insert $mark isa tlp-white, has stix-type "marking-definition", has stix-id "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9", has spec-version "2.1", has created 2017-01-20T00:00:00.000;
+
+
+12:45:08,876 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x000001B7E41643D0>
+12:45:08,898 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"mark": Entity(Entity { iid: ID[0x826e80017fffffffffffffff], type_: EntityType { label: "tlp-white", is_root: false, is_abstract: false }, is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f80a9280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "_0": Attribute(Attribute { iid: ID[0x836f80322800126d61726b696e672d646566696e6974696f6e], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition"), is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f80cf3280000159b92c3800], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2017-01-20T00:00:00), is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f801b2800386d61726b696e672d646566696e6974696f6e2d2d36313366326532362d343037642d343863372d396563612d623865393164663939646339], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+12:45:08,898 stixorm.module.initialise INFO 
+
+ insert $mark isa tlp-green, has stix-type "marking-definition", has stix-id "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da", has spec-version "2.1", has created 2017-01-20T00:00:00.000;
+
+
+12:45:08,898 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x000001B7E4165C00>
+12:45:08,929 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"_0": Attribute(Attribute { iid: ID[0x836f80322800126d61726b696e672d646566696e6974696f6e], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition"), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f80a9280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f801b2800386d61726b696e672d646566696e6974696f6e2d2d33343039386663652d383630662d343861652d386535302d656264336363356534316461], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"), is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f80cf3280000159b92c3800], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2017-01-20T00:00:00), is_inferred: false }), "mark": Entity(Entity { iid: ID[0x826e80387fffffffffffffff], type_: EntityType { label: "tlp-green", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+12:45:08,930 stixorm.module.initialise INFO 
+
+ insert $mark isa tlp-amber, has stix-type "marking-definition", has stix-id "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82", has spec-version "2.1", has created 2017-01-20T00:00:00.000;
+
+
+12:45:08,930 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x000001B7E4165BA0>
+12:45:08,961 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"_1": Attribute(Attribute { iid: ID[0x836f801b2800386d61726b696e672d646566696e6974696f6e2d2d66383864333166362d343836662d343464612d623331372d303133333362646530623832], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f80a9280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "_0": Attribute(Attribute { iid: ID[0x836f80322800126d61726b696e672d646566696e6974696f6e], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition"), is_inferred: false }), "mark": Entity(Entity { iid: ID[0x826e801c7fffffffffffffff], type_: EntityType { label: "tlp-amber", is_root: false, is_abstract: false }, is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f80cf3280000159b92c3800], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2017-01-20T00:00:00), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+12:45:08,961 stixorm.module.initialise INFO 
+
+ insert $mark isa tlp-red, has stix-type "marking-definition", has stix-id "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed", has spec-version "2.1", has created 2017-01-20T00:00:00.000;
+
+
+12:45:08,961 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x000001B7E4164820>
+12:45:08,992 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"_0": Attribute(Attribute { iid: ID[0x836f80322800126d61726b696e672d646566696e6974696f6e], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition"), is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f801b2800386d61726b696e672d646566696e6974696f6e2d2d35653537633733392d333931612d346562332d623662652d376431356361393264356564], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f80a9280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "mark": Entity(Entity { iid: ID[0x826e800e7fffffffffffffff], type_: EntityType { label: "tlp-red", is_root: false, is_abstract: false }, is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f80cf3280000159b92c3800], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2017-01-20T00:00:00), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+12:45:09,24 stixorm.module.initialise INFO ===============================================================================
+
+
+12:45:09,24 stixorm.module.typedb INFO we have loaded Stix schema
+12:45:11,59 stixorm.module.typedb INFO we have loaded Stix rules
+12:45:12,790 stixorm.module.typedb INFO we have loaded ATT&CK schema
+12:45:14,352 stixorm.module.typedb INFO we have loaded OS_THREAT schema
+12:45:16,335 stixorm.module.typedb INFO we have loaded OCA schema
+12:45:18,36 stixorm.module.typedb INFO we have loaded MBC schema
+12:45:19,658 stixorm.module.typedb INFO we have loaded ATTACK_FLOW schema
+12:45:21,465 __main__ INFO 
+===================================================
+12:45:21,465 __main__ INFO Exercising test components with data from test_data
+12:47:05,340 stixorm.module.initialise INFO ========================== Database initialisation ============================
+12:47:05,350 stixorm.module.initialise INFO Loading TQL objects
+12:47:05,350 stixorm.module.initialise INFO 
+
+ insert $mark isa tlp-white, has stix-type "marking-definition", has stix-id "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9", has spec-version "2.1", has created 2017-01-20T00:00:00.000;
+
+
+12:47:05,351 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000012EABC88F40>
+12:47:05,385 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"_0": Attribute(Attribute { iid: ID[0x836f80322800126d61726b696e672d646566696e6974696f6e], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition"), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f80a9280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f80cf3280000159b92c3800], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2017-01-20T00:00:00), is_inferred: false }), "mark": Entity(Entity { iid: ID[0x826e80017fffffffffffffff], type_: EntityType { label: "tlp-white", is_root: false, is_abstract: false }, is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f801b2800386d61726b696e672d646566696e6974696f6e2d2d36313366326532362d343037642d343863372d396563612d623865393164663939646339], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+12:47:05,386 stixorm.module.initialise INFO 
+
+ insert $mark isa tlp-green, has stix-type "marking-definition", has stix-id "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da", has spec-version "2.1", has created 2017-01-20T00:00:00.000;
+
+
+12:47:05,386 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000012EABC89270>
+12:47:05,415 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"_0": Attribute(Attribute { iid: ID[0x836f80322800126d61726b696e672d646566696e6974696f6e], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition"), is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f801b2800386d61726b696e672d646566696e6974696f6e2d2d33343039386663652d383630662d343861652d386535302d656264336363356534316461], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"), is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f80cf3280000159b92c3800], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2017-01-20T00:00:00), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f80a9280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "mark": Entity(Entity { iid: ID[0x826e80387fffffffffffffff], type_: EntityType { label: "tlp-green", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+12:47:05,416 stixorm.module.initialise INFO 
+
+ insert $mark isa tlp-amber, has stix-type "marking-definition", has stix-id "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82", has spec-version "2.1", has created 2017-01-20T00:00:00.000;
+
+
+12:47:05,416 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000012EABC89120>
+12:47:05,446 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"_0": Attribute(Attribute { iid: ID[0x836f80322800126d61726b696e672d646566696e6974696f6e], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition"), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f80a9280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "mark": Entity(Entity { iid: ID[0x826e801c7fffffffffffffff], type_: EntityType { label: "tlp-amber", is_root: false, is_abstract: false }, is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f801b2800386d61726b696e672d646566696e6974696f6e2d2d66383864333166362d343836662d343464612d623331372d303133333362646530623832], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"), is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f80cf3280000159b92c3800], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2017-01-20T00:00:00), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+12:47:05,447 stixorm.module.initialise INFO 
+
+ insert $mark isa tlp-red, has stix-type "marking-definition", has stix-id "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed", has spec-version "2.1", has created 2017-01-20T00:00:00.000;
+
+
+12:47:05,447 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000012EABC891B0>
+12:47:05,478 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"_3": Attribute(Attribute { iid: ID[0x836f80cf3280000159b92c3800], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2017-01-20T00:00:00), is_inferred: false }), "mark": Entity(Entity { iid: ID[0x826e800e7fffffffffffffff], type_: EntityType { label: "tlp-red", is_root: false, is_abstract: false }, is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f80a9280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "_0": Attribute(Attribute { iid: ID[0x836f80322800126d61726b696e672d646566696e6974696f6e], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition"), is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f801b2800386d61726b696e672d646566696e6974696f6e2d2d35653537633733392d333931612d346562332d623662652d376431356361393264356564], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+12:47:05,495 stixorm.module.initialise INFO ===============================================================================
+
+
+12:47:05,495 stixorm.module.typedb INFO we have loaded Stix schema
+12:47:07,735 stixorm.module.typedb INFO we have loaded Stix rules
+12:47:09,362 stixorm.module.typedb INFO we have loaded ATT&CK schema
+12:47:11,77 stixorm.module.typedb INFO we have loaded OS_THREAT schema
+12:47:13,67 stixorm.module.typedb INFO we have loaded OCA schema
+12:47:14,651 stixorm.module.typedb INFO we have loaded MBC schema
+12:47:16,224 stixorm.module.typedb INFO we have loaded ATTACK_FLOW schema

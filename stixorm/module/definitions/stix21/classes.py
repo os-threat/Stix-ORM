@@ -690,6 +690,8 @@ class Process(_Observable):
         ('type', TypeProperty(_type, spec_version='2.1')),
         ('spec_version', StringProperty(fixed='2.1')),
         ('id', IDProperty(_type, spec_version='2.1')),
+        ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
+        ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('is_hidden', BooleanProperty()),
         ('pid', IntegerProperty()),
         # this is not the created timestamps of the object itself

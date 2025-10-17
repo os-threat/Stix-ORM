@@ -23,7 +23,7 @@ define
     # Generic Attack-Flow Extension Object/Relation
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     attack-flow-ext sub embedded,
-        relates attack-flow as owner,
+        relates flow-object as owner,
         relates extension as pointed-to;
     attack-flow-extension sub incident-extension,
 	    plays attack-flow-ext:extension;
@@ -37,7 +37,7 @@ define
         owns description,
         owns scope,
         plays start-refs:the-flow,
-	    plays attack-flow-ext:attack-flow;
+	    plays attack-flow-ext:flow-object;
 
     # Start Refs Foreign Key Relation
 	start-refs sub embedded,
@@ -65,7 +65,7 @@ define
         plays effect-refs:the-impulse,
         plays effect-refs:the-effect,
         plays start-refs:start-object,
-	    plays attack-flow-ext:extension;
+	    plays attack-flow-ext:flow-object;
 
     # Tactic Ref Foreign Key Relation
 	tactic-ref sub embedded,
@@ -102,7 +102,7 @@ define
         owns description,
         plays obj-ref:container,
         plays asset-refs:the-asset,
-	    plays attack-flow-ext:extension;
+	    plays attack-flow-ext:flow-object;
     
     # object ref Foreign key relation
     obj-ref sub embedded,
@@ -128,7 +128,7 @@ define
         plays on-false-refs:on-false,
         plays on-true-refs:condition,
         plays on-false-refs:condition,
-	    plays attack-flow-ext:extension;
+	    plays attack-flow-ext:flow-object;
 
 	# on true refs Foreign Key Relation
     on-true-refs sub embedded,
@@ -150,7 +150,7 @@ define
         plays effect-refs:the-effect,
         plays on-true-refs:on-true,
         plays on-false-refs:on-false,
-	    plays attack-flow-ext:extension;
+	    plays attack-flow-ext:flow-object;
 
 
     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -73,6 +73,7 @@ test1 = "test_data"
 test2 = "os-threat/exercise"
 test3 = "mbc/examples"
 test4 = "attack_flow/examples"
+test5 = "mitre/test"
 test_dir = {
     "test": test2
 }
@@ -183,10 +184,10 @@ def exercise_all():
     """Exercise all data directories and frameworks.
 
     """
-    # backdoor_add_dir(os.path.join(base_dir, test2))
+    # backdoor_add_dir(os.path.join(base_dir, test1))
     # typedb_sink = TypeDBSink(connection, True, import_type)
     # typedb_source = TypeDBSource(connection, import_type)
-    for name, path in directories.items():
+    for name, path in test_dir.items():
         logger.info("\n===================================================")
         logger.info(f'Exercising {name} components with data from {path}')
         print("\n===================================================")

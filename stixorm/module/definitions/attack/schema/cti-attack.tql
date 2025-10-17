@@ -192,7 +192,7 @@ define
         plays log-sources:source,
         plays actual-component:analytic;
 
-    analytic sub stix-domain-object,
+    attack-analytic sub stix-domain-object,
         owns name,
         owns description,
         owns x-mitre-version,
@@ -202,13 +202,13 @@ define
         owns x-mitre-platforms,
         owns x-mitre-collection-layers,
         owns x-mitre-deprecated,
-        owns x-mitre-detects,
         owns x-mitre-old-attack-id,
         plays revoked-by:revoked,
         plays revoked-by:new-version,
         plays x-mitre-modified-by-ref:modified,
         plays obj-ref:content,
         plays mutable-elements:analytic,
+        plays x-mitre-analytics:analytics,
         plays log-sources:analytic;
 
 
@@ -509,7 +509,6 @@ define
         x-mitre-sectors sub mitre-attribute-string;
         related-asset-sectors sub mitre-attribute-string;
         x-mitre-old-attack-id sub mitre-attribute-string;
-        x-mitre-detects sub mitre-attribute-string;
         field sub mitre-attribute-string;
         keys sub mitre-attribute-string;
         channel sub mitre-attribute-string;

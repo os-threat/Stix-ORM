@@ -4,7 +4,7 @@
     "x_mitre_domains",
     "x_mitre_platforms"
   ],
-  "analytic": [
+  "attack-analytic": [
     "x_mitre_platforms",
     "x_mitre_log_sources",
     "x_mitre_mutable_elements"

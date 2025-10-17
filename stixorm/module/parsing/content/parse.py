@@ -246,7 +246,7 @@ def determine_content_object_from_list_by_tests(stix_dict: Dict[str, str], conte
 #
 ####################################################################################################
 
-def get_tqlname_from_type_and_protocol(stix_type, protocol) -> Union[str, None]:
+def get_tqlname_from_type_and_protocol(stix_type, protocol=None) -> Union[str, None]:
     """
     Get the TypeQL name from the type and protocol.
 
@@ -269,3 +269,26 @@ def get_tqlname_from_type_and_protocol(stix_type, protocol) -> Union[str, None]:
             if item.condition1 == "":
                 return item.typeql
     return content_list[0].typeql
+
+def get_group_from_type(stix_type) -> Union[str, None]:
+    """
+    Get the group from the type.
+
+    Args:
+        stix_type (str): The type of the object.
+
+    Returns:
+        group (str): The Stix group of the object.
+    """
+    content_list: List[ParseContent] = get_content_list_for_type(stix_type, "class")
+    if not content_list:
+        return None
+    elif len(content_list) == 1:
+        content = content_list[0]
+        return content.group
+    else:
+        # find the default option, with the empty condition
+        for item in content_list:
+            if item.condition1 == "":
+                return item.group
+    return content_list[0].group

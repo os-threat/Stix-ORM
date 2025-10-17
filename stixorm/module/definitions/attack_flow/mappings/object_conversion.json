@@ -7,7 +7,7 @@
     "url": "",
     "doc_url": "",
     "summary": "",
-    "protocol": "attack-flow",
+    "protocol": "flow",
     "icon":""
   },
 
@@ -19,7 +19,7 @@
     "url": "",
     "doc_url": "",
     "summary": "",
-    "protocol": "attack-flow",
+    "protocol": "flow",
     "icon":""
   },
   {
@@ -30,7 +30,7 @@
     "url": "",
     "doc_url": "",
     "summary": "",
-    "protocol": "attack-flow",
+    "protocol": "flow",
     "icon":""
   },
 
@@ -42,7 +42,7 @@
     "url": "",
     "doc_url": "",
     "summary": "",
-    "protocol": "attack-flow",
+    "protocol": "flow",
     "icon":""
   },
   {
@@ -53,7 +53,7 @@
     "url": "",
     "doc_url": "",
     "summary": "",
-    "protocol": "attack-flow",
+    "protocol": "flow",
     "icon":""
   },
   {
@@ -64,7 +64,7 @@
     "url": "",
     "doc_url": "",
     "summary": "",
-    "protocol": "attack-flow",
+    "protocol": "flow",
     "icon":""
   }
 ]

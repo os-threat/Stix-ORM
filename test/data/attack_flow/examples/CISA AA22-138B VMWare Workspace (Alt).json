@@ -215,14 +215,6 @@
       ]
     },
     {
-      "type": "file",
-      "id": "file--23625c13-d92b-4e65-8f82-91a4820319ee",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.626Z",
-      "modified": "2025-07-30T19:47:12.626Z",
-      "name": "fd86ald0.pem"
-    },
-    {
       "type": "attack-action",
       "id": "attack-action--7fa1a34d-5d0c-4655-8e23-ef9d23771bba",
       "spec_version": "2.1",
@@ -242,14 +234,6 @@
       "effect_refs": [
         "attack-action--35c17809-784f-4aa9-a827-aa7e376de16e"
       ]
-    },
-    {
-      "type": "directory",
-      "id": "directory--07354f90-6d57-4de7-b9af-7f6130ba9dc3",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.626Z",
-      "modified": "2025-07-30T19:47:12.626Z",
-      "path": "/opt/vmware/horizon/workspace/webapps/SAAS/horizon/images/"
     },
     {
       "type": "attack-action",
@@ -336,14 +320,6 @@
       ]
     },
     {
-      "type": "ipv4-addr",
-      "id": "ipv4-addr--545cfd59-0603-4476-93fc-c7c91c22e0bd",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.626Z",
-      "modified": "2025-07-30T19:47:12.626Z",
-      "value": "194.31.98.141"
-    },
-    {
       "type": "attack-action",
       "id": "attack-action--747d2282-1bf8-4848-89f0-0ee82ca3b6a5",
       "spec_version": "2.1",
@@ -365,22 +341,6 @@
       ]
     },
     {
-      "type": "ipv4-addr",
-      "id": "ipv4-addr--e01fce30-934b-4d5c-ab81-ca635e99b406",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.626Z",
-      "modified": "2025-07-30T19:47:12.626Z",
-      "value": "8.45.41.114"
-    },
-    {
-      "type": "directory",
-      "id": "directory--d277228f-6835-488e-8145-4e43af09f875",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.626Z",
-      "modified": "2025-07-30T19:47:12.626Z",
-      "path": "/usr/local/horizon/conf"
-    },
-    {
       "type": "attack-action",
       "id": "attack-action--6dbde84b-f026-46b8-bde6-f963be602a4c",
       "spec_version": "2.1",
@@ -400,14 +360,6 @@
       "effect_refs": [
         "attack-action--298530ff-51b1-43f6-8c1f-59f432625094"
       ]
-    },
-    {
-      "type": "url",
-      "id": "url--e1c165a0-165b-4760-8da0-dcd112475096",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.626Z",
-      "modified": "2025-07-30T19:47:12.626Z",
-      "value": "http://84.38.133[.]149/img/icon.gif"
     },
     {
       "type": "tool",
@@ -517,6 +469,711 @@
       "relationship_type": "related-to",
       "source_ref": "attack-action--6dbde84b-f026-46b8-bde6-f963be602a4c",
       "target_ref": "url--e1c165a0-165b-4760-8da0-dcd112475096"
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--00f90846-cbd1-4fc5-9233-df5c2bf2a662",
+      "created": "2020-02-20T21:01:25.428Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1560/001",
+          "external_id": "T1560.001"
+        },
+        {
+          "source_name": "WinRAR Homepage",
+          "description": "A. Roshal. (2020). RARLAB. Retrieved February 20, 2020.",
+          "url": "https://www.rarlab.com/"
+        },
+        {
+          "source_name": "WinZip Homepage",
+          "description": "Corel Corporation. (2020). WinZip. Retrieved February 20, 2020.",
+          "url": "https://www.winzip.com/win/en/"
+        },
+        {
+          "source_name": "7zip Homepage",
+          "description": "I. Pavlov. (2019). 7-Zip. Retrieved February 20, 2020.",
+          "url": "https://www.7-zip.org/"
+        },
+        {
+          "source_name": "diantz.exe_lolbas",
+          "description": "Living Off The Land Binaries, Scripts and Libraries (LOLBAS). (n.d.). Diantz.exe. Retrieved October 25, 2021.",
+          "url": "https://lolbas-project.github.io/lolbas/Binaries/Diantz/"
+        },
+        {
+          "source_name": "Wikipedia File Header Signatures",
+          "description": "Wikipedia. (2016, March 31). List of file signatures. Retrieved April 22, 2016.",
+          "url": "https://en.wikipedia.org/wiki/List_of_file_signatures"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T21:51:23.078Z",
+      "name": "Archive via Utility",
+      "description": "Adversaries may use utilities to compress and/or encrypt collected data prior to exfiltration. Many utilities include functionalities to compress, encrypt, or otherwise package data into a format that is easier/more secure to transport.\n\nAdversaries may abuse various utilities to compress or encrypt data before exfiltration. Some third party utilities may be preinstalled, such as <code>tar</code> on Linux and macOS or <code>zip</code> on Windows systems. \n\nOn Windows, <code>diantz</code> or <code> makecab</code> may be used to package collected files into a cabinet (.cab) file. <code>diantz</code> may also be used to download and compress files from remote locations (i.e. [Remote Data Staging](https://attack.mitre.org/techniques/T1074/002)).(Citation: diantz.exe_lolbas) <code>xcopy</code> on Windows can copy files and directories with a variety of options. Additionally, adversaries may use [certutil](https://attack.mitre.org/software/S0160) to Base64 encode collected data before exfiltration. \n\nAdversaries may use also third party utilities, such as 7-Zip, WinRAR, and WinZip, to perform similar activities.(Citation: 7zip Homepage)(Citation: WinRAR Homepage)(Citation: WinZip Homepage)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "collection"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Mayan Arora aka Mayan Mohan",
+        "Mark Wee"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Common utilities that may be present on the system or brought in by an adversary may be detectable through process monitoring and monitoring for command-line arguments for known archival utilities. This may yield a significant number of benign events, depending on how systems in the environment are typically used.\n\nConsider detecting writing of files with extensions and/or headers associated with compressed or encrypted file types. Detection efforts may focus on follow-on exfiltration activity, where compressed or encrypted files can be detected in transit with a network intrusion detection or data loss prevention system analyzing file headers.(Citation: Wikipedia File Header Signatures)",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "x_mitre_version": "1.3",
+      "x_mitre_data_sources": [
+        "Process: Process Creation",
+        "Command: Command Execution",
+        "File: File Creation"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--7385dfaf-6886-4229-9ecd-6fd678040830",
+      "created": "2017-05-31T21:30:49.546Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1059",
+          "external_id": "T1059"
+        },
+        {
+          "source_name": "Remote Shell Execution in Python",
+          "description": "Abdou Rockikz. (2020, July). How to Execute Shell Commands in a Remote Machine in Python. Retrieved July 26, 2021.",
+          "url": "https://www.thepythoncode.com/article/executing-bash-commands-remotely-in-python"
+        },
+        {
+          "source_name": "Cisco IOS Software Integrity Assurance - Command History",
+          "description": "Cisco. (n.d.). Cisco IOS Software Integrity Assurance - Command History. Retrieved October 21, 2020.",
+          "url": "https://tools.cisco.com/security/center/resources/integrity_assurance.html#23"
+        },
+        {
+          "source_name": "Powershell Remote Commands",
+          "description": "Microsoft. (2020, August 21). Running Remote Commands. Retrieved July 26, 2021.",
+          "url": "https://docs.microsoft.com/en-us/powershell/scripting/learn/remoting/running-remote-commands?view=powershell-7.1"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:41.855Z",
+      "name": "Command and Scripting Interpreter",
+      "description": "Adversaries may abuse command and script interpreters to execute commands, scripts, or binaries. These interfaces and languages provide ways of interacting with computer systems and are a common feature across many different platforms. Most systems come with some built-in command-line interface and scripting capabilities, for example, macOS and Linux distributions include some flavor of [Unix Shell](https://attack.mitre.org/techniques/T1059/004) while Windows installations include the [Windows Command Shell](https://attack.mitre.org/techniques/T1059/003) and [PowerShell](https://attack.mitre.org/techniques/T1059/001).\n\nThere are also cross-platform interpreters such as [Python](https://attack.mitre.org/techniques/T1059/006), as well as those commonly associated with client applications such as [JavaScript](https://attack.mitre.org/techniques/T1059/007) and [Visual Basic](https://attack.mitre.org/techniques/T1059/005).\n\nAdversaries may abuse these technologies in various ways as a means of executing arbitrary commands. Commands and scripts can be embedded in [Initial Access](https://attack.mitre.org/tactics/TA0001) payloads delivered to victims as lure documents or as secondary payloads downloaded from an existing C2. Adversaries may also execute commands through interactive terminals/shells, as well as utilize various [Remote Services](https://attack.mitre.org/techniques/T1021) in order to achieve remote Execution.(Citation: Powershell Remote Commands)(Citation: Cisco IOS Software Integrity Assurance - Command History)(Citation: Remote Shell Execution in Python)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "execution"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Command-line and scripting activities can be captured through proper logging of process execution with command-line arguments. This information can be useful in gaining additional insight to adversaries' actions through how they use native processes or custom tools. Also monitor for loading of modules associated with specific languages.\n\nIf scripting is restricted for normal users, then any attempt to enable scripts running on a system would be considered suspicious. If scripts are not commonly used on a system, but enabled, scripts running out of cycle from patching or other administrator functions are suspicious. Scripts should be captured from the file system when possible to determine their actions and intent.\n\nScripts are likely to perform actions with various effects on a system that may generate events, depending on the types of monitoring used. Monitor processes and command-line arguments for script execution and subsequent behavior. Actions may be related to network and system information discovery, collection, or other scriptable post-compromise behaviors and could be used as indicators of detection leading back to the source script.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "IaaS",
+        "Identity Provider",
+        "Linux",
+        "Network Devices",
+        "Office Suite",
+        "Windows",
+        "macOS",
+        "ESXi"
+      ],
+      "x_mitre_version": "2.6",
+      "x_mitre_data_sources": [
+        "Script: Script Execution",
+        "Process: Process Creation",
+        "Process: Process Metadata",
+        "Module: Module Load",
+        "Command: Command Execution"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--799ace7f-e227-4411-baa0-8868704f2a69",
+      "created": "2017-05-31T21:30:55.892Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1070",
+          "external_id": "T1070"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:43.436Z",
+      "name": "Indicator Removal",
+      "description": "Adversaries may delete or modify artifacts generated within systems to remove evidence of their presence or hinder defenses. Various artifacts may be created by an adversary or something that can be attributed to an adversary’s actions. Typically these artifacts are used as defensive indicators related to monitored events, such as strings from downloaded files, logs that are generated from user actions, and other data analyzed by defenders. Location, format, and type of artifact (such as command or login history) are often specific to each platform.\n\nRemoval of these indicators may interfere with event collection, reporting, or other processes used to detect intrusion activity. This may compromise the integrity of security solutions by causing notable events to go unreported. This activity may also impede forensic analysis and incident response, due to lack of sufficient data to determine what occurred.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "defense-evasion"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Brad Geesaman, @bradgeesaman",
+        "Ed Williams, Trustwave, SpiderLabs",
+        "Blake Strom, Microsoft 365 Defender"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "File system monitoring may be used to detect improper deletion or modification of indicator files.  Events not stored on the file system may require different detection mechanisms.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Containers",
+        "Network Devices",
+        "Office Suite",
+        "ESXi"
+      ],
+      "x_mitre_version": "2.3",
+      "x_mitre_data_sources": [
+        "Scheduled Job: Scheduled Job Modification",
+        "File: File Modification",
+        "Firewall: Firewall Rule Modification",
+        "User Account: User Account Authentication",
+        "File: File Metadata",
+        "User Account: User Account Deletion",
+        "Process: OS API Execution",
+        "Application Log: Application Log Content",
+        "Command: Command Execution",
+        "File: File Deletion",
+        "Process: Process Creation",
+        "Windows Registry: Windows Registry Key Modification",
+        "Network Traffic: Network Traffic Content",
+        "Windows Registry: Windows Registry Key Deletion"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--7bc57495-ea59-4380-be31-a64af124ef18",
+      "created": "2017-05-31T21:31:04.710Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1083",
+          "external_id": "T1083"
+        },
+        {
+          "source_name": "Windows Commands JPCERT",
+          "description": "Tomonaga, S. (2016, January 26). Windows Commands Abused by Attackers. Retrieved February 2, 2016.",
+          "url": "https://blogs.jpcert.or.jp/en/2016/01/windows-commands-abused-by-attackers.html"
+        },
+        {
+          "source_name": "US-CERT-TA18-106A",
+          "description": "US-CERT. (2018, April 20). Alert (TA18-106A) Russian State-Sponsored Cyber Actors Targeting Network Infrastructure Devices. Retrieved October 19, 2020.",
+          "url": "https://www.us-cert.gov/ncas/alerts/TA18-106A"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:44.118Z",
+      "name": "File and Directory Discovery",
+      "description": "Adversaries may enumerate files and directories or may search in specific locations of a host or network share for certain information within a file system. Adversaries may use the information from [File and Directory Discovery](https://attack.mitre.org/techniques/T1083) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.\n\nMany command shell utilities can be used to obtain this information. Examples include <code>dir</code>, <code>tree</code>, <code>ls</code>, <code>find</code>, and <code>locate</code>.(Citation: Windows Commands JPCERT) Custom tools may also be used to gather file and directory information and interact with the [Native API](https://attack.mitre.org/techniques/T1106). Adversaries may also leverage a [Network Device CLI](https://attack.mitre.org/techniques/T1059/008) on network devices to gather file and directory information (e.g. <code>dir</code>, <code>show flash</code>, and/or <code>nvram</code>).(Citation: US-CERT-TA18-106A)\n\nSome files and directories may require elevated or specific user permissions to access.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "discovery"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Austin Clark, @c2defense"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "System and network discovery techniques normally occur throughout an operation as an adversary learns the environment. Data and events should not be viewed in isolation, but as part of a chain of behavior that could lead to other activities, such as Collection and Exfiltration, based on the information obtained.\n\nMonitor processes and command-line arguments for actions that could be taken to gather system and network information. Remote access tools with built-in features may interact directly with the Windows API to gather information. Information may also be acquired through Windows system management tools such as [Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047) and [PowerShell](https://attack.mitre.org/techniques/T1059/001). Further, [Network Device CLI](https://attack.mitre.org/techniques/T1059/008) commands may also be used to gather file and directory information with built-in features native to the network device platform.  Monitor CLI activity for unexpected or unauthorized use of commands being run by non-standard users from non-standard locations.  ",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Network Devices",
+        "ESXi"
+      ],
+      "x_mitre_version": "1.7",
+      "x_mitre_data_sources": [
+        "Command: Command Execution",
+        "Process: Process Creation",
+        "Process: OS API Execution"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--b21c3b2d-02e6-45b1-980b-e69051040839",
+      "created": "2017-05-31T21:30:55.066Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1068",
+          "external_id": "T1068"
+        },
+        {
+          "source_name": "ESET InvisiMole June 2020",
+          "description": "Hromcova, Z. and Cherpanov, A. (2020, June). INVISIMOLE: THE HIDDEN PART OF THE STORY. Retrieved July 16, 2020.",
+          "url": "https://www.welivesecurity.com/wp-content/uploads/2020/06/ESET_InvisiMole.pdf"
+        },
+        {
+          "source_name": "Microsoft Driver Block Rules",
+          "description": "Microsoft. (2020, October 15). Microsoft recommended driver block rules. Retrieved March 16, 2021.",
+          "url": "https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/microsoft-recommended-driver-block-rules"
+        },
+        {
+          "source_name": "Unit42 AcidBox June 2020",
+          "description": "Reichel, D. and Idrizovic, E. (2020, June 17). AcidBox: Rare Malware Repurposing Turla Group Exploit Targeted Russian Organizations. Retrieved March 16, 2021.",
+          "url": "https://unit42.paloaltonetworks.com/acidbox-rare-malware/"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:58.811Z",
+      "name": "Exploitation for Privilege Escalation",
+      "description": "Adversaries may exploit software vulnerabilities in an attempt to elevate privileges. Exploitation of a software vulnerability occurs when an adversary takes advantage of a programming error in a program, service, or within the operating system software or kernel itself to execute adversary-controlled code. Security constructs such as permission levels will often hinder access to information and use of certain techniques, so adversaries will likely need to perform privilege escalation to include use of software exploitation to circumvent those restrictions.\n\nWhen initially gaining access to a system, an adversary may be operating within a lower privileged process which will prevent them from accessing certain resources on the system. Vulnerabilities may exist, usually in operating system components and software commonly running at higher permissions, that can be exploited to gain higher levels of access on the system. This could enable someone to move from unprivileged or user level permissions to SYSTEM or root permissions depending on the component that is vulnerable. This could also enable an adversary to move from a virtualized environment, such as within a virtual machine or container, onto the underlying host. This may be a necessary step for an adversary compromising an endpoint system that has been properly configured and limits other privilege escalation methods.\n\nAdversaries may bring a signed vulnerable driver onto a compromised machine so that they can exploit the vulnerability to execute code in kernel mode. This process is sometimes referred to as Bring Your Own Vulnerable Driver (BYOVD).(Citation: ESET InvisiMole June 2020)(Citation: Unit42 AcidBox June 2020) Adversaries may include the vulnerable driver with files delivered during Initial Access or download it to a compromised system via [Ingress Tool Transfer](https://attack.mitre.org/techniques/T1105) or [Lateral Tool Transfer](https://attack.mitre.org/techniques/T1570).",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "privilege-escalation"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Joas Antonio dos Santos, @C0d3Cr4zy, Inmetrics",
+        "Yaniv Agman, @AgmanYaniv, Team Nautilus Aqua Security",
+        "Idan Revivo, @idanr86, Team Nautilus Aqua Security",
+        "David Tayouri"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Detecting software exploitation may be difficult depending on the tools available. Software exploits may not always succeed or may cause the exploited process to become unstable or crash. Also look for behavior on the endpoint system that might indicate successful compromise, such as abnormal behavior of the processes. This could include suspicious files written to disk, evidence of [Process Injection](https://attack.mitre.org/techniques/T1055) for attempts to hide execution or evidence of Discovery. Consider monitoring for the presence or loading (ex: Sysmon Event ID 6) of known vulnerable drivers that adversaries may drop and exploit to execute code in kernel mode.(Citation: Microsoft Driver Block Rules)\n\nHigher privileges are often necessary to perform additional actions such as some methods of [OS Credential Dumping](https://attack.mitre.org/techniques/T1003). Look for additional activity that may indicate an adversary has gained higher privileges.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Containers",
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "x_mitre_version": "1.6",
+      "x_mitre_data_sources": [
+        "Driver: Driver Load",
+        "Process: Process Creation"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--be2dcee9-a7a7-4e38-afd6-21b31ecc3d63",
+      "created": "2018-04-18T17:59:24.739Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1203",
+          "external_id": "T1203"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:59:03.090Z",
+      "name": "Exploitation for Client Execution",
+      "description": "Adversaries may exploit software vulnerabilities in client applications to execute code. Vulnerabilities can exist in software due to unsecure coding practices that can lead to unanticipated behavior. Adversaries can take advantage of certain vulnerabilities through targeted exploitation for the purpose of arbitrary code execution. Oftentimes the most valuable exploits to an offensive toolkit are those that can be used to obtain code execution on a remote system because they can be used to gain access to that system. Users will expect to see files related to the applications they commonly used to do work, so they are a useful target for exploit research and development because of their high utility.\n\nSeveral types exist:\n\n### Browser-based Exploitation\n\nWeb browsers are a common target through [Drive-by Compromise](https://attack.mitre.org/techniques/T1189) and [Spearphishing Link](https://attack.mitre.org/techniques/T1566/002). Endpoint systems may be compromised through normal web browsing or from certain users being targeted by links in spearphishing emails to adversary controlled sites used to exploit the web browser. These often do not require an action by the user for the exploit to be executed.\n\n### Office Applications\n\nCommon office and productivity applications such as Microsoft Office are also targeted through [Phishing](https://attack.mitre.org/techniques/T1566). Malicious files will be transmitted directly as attachments or through links to download them. These require the user to open the document or file for the exploit to run.\n\n### Common Third-party Applications\n\nOther applications that are commonly seen or are part of the software deployed in a target network may also be used for exploitation. Applications such as Adobe Reader and Flash, which are common in enterprise environments, have been routinely targeted by adversaries attempting to gain access to systems. Depending on the software and nature of the vulnerability, some may be exploited in the browser or require the user to open a file. For instance, some Flash exploits have been delivered as objects within Microsoft Office documents.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "execution"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Detecting software exploitation may be difficult depending on the tools available. Also look for behavior on the endpoint system that might indicate successful compromise, such as abnormal behavior of the browser or Office processes. This could include suspicious files written to disk, evidence of [Process Injection](https://attack.mitre.org/techniques/T1055) for attempts to hide execution, evidence of Discovery, or other unusual network traffic that may indicate additional tools transferred to the system.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "x_mitre_version": "1.5",
+      "x_mitre_data_sources": [
+        "Process: Process Creation",
+        "File: File Modification",
+        "Application Log: Application Log Content",
+        "Network Traffic: Network Traffic Flow"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
+      "created": "2017-05-31T21:31:16.408Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1105",
+          "external_id": "T1105"
+        },
+        {
+          "source_name": "T1105: Trellix_search-ms",
+          "description": " Mathanraj Thangaraju, Sijo Jacob. (2023, July 26). Beyond File Search: A Novel Method for Exploiting the \"search-ms\" URI Protocol Handler. Retrieved March 15, 2024.",
+          "url": "https://www.trellix.com/blogs/research/beyond-file-search-a-novel-method/"
+        },
+        {
+          "source_name": "Google Cloud Threat Intelligence COSCMICENERGY 2023",
+          "description": "COSMICENERGY: New OT Malware Possibly Related To Russian Emergency Response Exercises. (2023, May 25). Ken Proska, Daniel Kapellmann Zafra, Keith Lunden, Corey Hildebrandt, Rushikesh Nandedkar, Nathan Brubaker. Retrieved March 18, 2025.",
+          "url": "https://cloud.google.com/blog/topics/threat-intelligence/cosmicenergy-ot-malware-russian-response/"
+        },
+        {
+          "source_name": "Dropbox Malware Sync",
+          "description": "David Talbot. (2013, August 21). Dropbox and Similar Services Can Sync Malware. Retrieved May 31, 2023.",
+          "url": "https://www.technologyreview.com/2013/08/21/83143/dropbox-and-similar-services-can-sync-malware/"
+        },
+        {
+          "source_name": "University of Birmingham C2",
+          "description": "Gardiner, J.,  Cova, M., Nagaraja, S. (2014, February). Command & Control Understanding, Denying and Detecting. Retrieved April 20, 2016.",
+          "url": "https://arxiv.org/ftp/arxiv/papers/1408/1408.1136.pdf"
+        },
+        {
+          "source_name": "t1105_lolbas",
+          "description": "LOLBAS. (n.d.). LOLBAS Mapped to T1105. Retrieved March 11, 2022.",
+          "url": "https://lolbas-project.github.io/#t1105"
+        },
+        {
+          "source_name": "PTSecurity Cobalt Dec 2016",
+          "description": "Positive Technologies. (2016, December 16). Cobalt Snatch. Retrieved October 9, 2018.",
+          "url": "https://www.ptsecurity.com/upload/corporate/ww-en/analytics/Cobalt-Snatch-eng.pdf"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:59:17.217Z",
+      "name": "Ingress Tool Transfer",
+      "description": "Adversaries may transfer tools or other files from an external system into a compromised environment. Tools or files may be copied from an external adversary-controlled system to the victim network through the command and control channel or through alternate protocols such as [ftp](https://attack.mitre.org/software/S0095). Once present, adversaries may also transfer/spread tools between victim devices within a compromised environment (i.e. [Lateral Tool Transfer](https://attack.mitre.org/techniques/T1570)). \n\nOn Windows, adversaries may use various utilities to download tools, such as `copy`, `finger`, [certutil](https://attack.mitre.org/software/S0160), and [PowerShell](https://attack.mitre.org/techniques/T1059/001) commands such as <code>IEX(New-Object Net.WebClient).downloadString()</code> and <code>Invoke-WebRequest</code>. On Linux and macOS systems, a variety of utilities also exist, such as `curl`, `scp`, `sftp`, `tftp`, `rsync`, `finger`, and `wget`.(Citation: t1105_lolbas)  A number of these tools, such as `wget`, `curl`, and `scp`, also exist on ESXi. After downloading a file, a threat actor may attempt to verify its integrity by checking its hash value (e.g., via `certutil -hashfile`).(Citation: Google Cloud Threat Intelligence COSCMICENERGY 2023)\n\nAdversaries may also abuse installers and package managers, such as `yum` or `winget`, to download tools to victim hosts. Adversaries have also abused file application features, such as the Windows `search-ms` protocol handler, to deliver malicious files to victims through remote file searches invoked by [User Execution](https://attack.mitre.org/techniques/T1204) (typically after interacting with [Phishing](https://attack.mitre.org/techniques/T1566) lures).(Citation: T1105: Trellix_search-ms)\n\nFiles can also be transferred using various [Web Service](https://attack.mitre.org/techniques/T1102)s as well as native or otherwise present tools on the victim system.(Citation: PTSecurity Cobalt Dec 2016) In some cases, adversaries may be able to leverage services that sync between a web-based and an on-premises client, such as Dropbox or OneDrive, to transfer files onto victim systems. For example, by compromising a cloud account and logging into the service's web portal, an adversary may be able to trigger an automatic syncing process that transfers the file onto the victim's machine.(Citation: Dropbox Malware Sync)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "command-and-control"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "John Page (aka hyp3rlinx), ApparitionSec",
+        "Mark Wee",
+        "Shailesh Tiwary (Indian Army)",
+        "The DFIR Report",
+        "Alain Homewood",
+        "Joe Wise",
+        "Jeremy Hedges",
+        "Selena Larson, @selenalarson",
+        "Peter Oakes"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Monitor for file creation and files transferred into the network. Unusual processes with external network connections creating files on-system may be suspicious. Use of utilities, such as [ftp](https://attack.mitre.org/software/S0095), that does not normally occur may also be suspicious.\n\nAnalyze network data for uncommon data flows (e.g., a client sending significantly more data than it receives from a server). Processes utilizing the network that do not normally have network communication or have never been seen before are suspicious. Specifically, for the finger utility on Windows and Linux systems, monitor command line or terminal execution for the finger command. Monitor network activity for TCP port 79, which is used by the finger utility, and Windows <code>netsh interface portproxy</code> modifications to well-known ports such as 80 and 443. Furthermore, monitor file system for the download/creation and execution of suspicious files, which may indicate adversary-downloaded payloads. Analyze packet contents to detect communications that do not follow the expected protocol behavior for the port that is being used.(Citation: University of Birmingham C2)",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Network Devices",
+        "ESXi"
+      ],
+      "x_mitre_version": "2.5",
+      "x_mitre_data_sources": [
+        "File: File Creation",
+        "Network Traffic: Network Traffic Content",
+        "Network Traffic: Network Traffic Flow",
+        "Command: Command Execution",
+        "Network Traffic: Network Connection Creation"
+      ]
+    },
+    {
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0002",
+          "external_id": "TA0002"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:32.769Z",
+      "name": "Execution",
+      "description": "The adversary is trying to run malicious code.\n\nExecution consists of techniques that result in adversary-controlled code running on a local or remote system. Techniques that run malicious code are often paired with techniques from all other tactics to achieve broader goals, like exploring a network or stealing data. For example, an adversary might use a remote access tool to run a PowerShell script that does Remote System Discovery. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "execution"
+    },
+    {
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--5e29b093-294e-49e9-a803-dab3d73b77dd",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0004",
+          "external_id": "TA0004"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:33.853Z",
+      "name": "Privilege Escalation",
+      "description": "The adversary is trying to gain higher-level permissions.\n\nPrivilege Escalation consists of techniques that adversaries use to gain higher-level permissions on a system or network. Adversaries can often enter and explore a network with unprivileged access but require elevated permissions to follow through on their objectives. Common approaches are to take advantage of system weaknesses, misconfigurations, and vulnerabilities. Examples of elevated access include: \n\n* SYSTEM/root level\n* local administrator\n* user account with admin-like access \n* user accounts with access to specific system or perform specific function\n\nThese techniques often overlap with Persistence techniques, as OS features that let an adversary persist can execute in an elevated context.  ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "privilege-escalation"
+    },
+    {
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0005",
+          "external_id": "TA0005"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:34.581Z",
+      "name": "Defense Evasion",
+      "description": "The adversary is trying to avoid being detected.\n\nDefense Evasion consists of techniques that adversaries use to avoid detection throughout their compromise. Techniques used for defense evasion include uninstalling/disabling security software or obfuscating/encrypting data and scripts. Adversaries also leverage and abuse trusted processes to hide and masquerade their malware. Other tactics’ techniques are cross-listed here when those techniques include the added benefit of subverting defenses. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "defense-evasion"
+    },
+    {
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0007",
+          "external_id": "TA0007"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:35.302Z",
+      "name": "Discovery",
+      "description": "The adversary is trying to figure out your environment.\n\nDiscovery consists of techniques an adversary may use to gain knowledge about the system and internal network. These techniques help adversaries observe the environment and orient themselves before deciding how to act. They also allow adversaries to explore what they can control and what’s around their entry point in order to discover how it could benefit their current objective. Native operating system tools are often used toward this post-compromise information-gathering objective. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "discovery"
+    },
+    {
+      "modified": "2024-09-05T18:27:09.070Z",
+      "name": "Collection",
+      "description": "The adversary is trying to gather data of interest to their goal.\n\nCollection consists of techniques adversaries may use to gather information and the sources information is collected from that are relevant to following through on the adversary's objectives. Frequently, the next goal after collecting data is to either steal (exfiltrate) the data or to use the data to gain more information about the target environment. Common target sources include various drive types, browsers, audio, video, and email. Common collection methods include capturing screenshots and keyboard input.",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.1",
+      "x_mitre_shortname": "collection",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0009",
+          "external_id": "TA0009"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+    },
+    {
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0011",
+          "external_id": "TA0011"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:36.561Z",
+      "name": "Command and Control",
+      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "command-and-control"
+    },
+    {
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
+      "type": "identity",
+      "spec_version": "2.1",
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "created": "2017-06-01T00:00:00.000Z",
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "x_mitre_attack_spec_version": "3.2.0"
+    },
+    {
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      },
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "definition_type": "statement"
+    },
+    {
+      "type": "file",
+      "id": "file--23625c13-d92b-4e65-8f82-91a4820319ee",
+      "spec_version": "2.1",
+      "name": "fd86ald0.pem"
+    },
+    {
+      "type": "directory",
+      "id": "directory--07354f90-6d57-4de7-b9af-7f6130ba9dc3",
+      "spec_version": "2.1",
+      "path": "/opt/vmware/horizon/workspace/webapps/SAAS/horizon/images/"
+    },
+    {
+      "type": "ipv4-addr",
+      "id": "ipv4-addr--545cfd59-0603-4476-93fc-c7c91c22e0bd",
+      "spec_version": "2.1",
+      "value": "194.31.98.141"
+    },
+    {
+      "type": "ipv4-addr",
+      "id": "ipv4-addr--e01fce30-934b-4d5c-ab81-ca635e99b406",
+      "spec_version": "2.1",
+      "value": "8.45.41.114"
+    },
+    {
+      "type": "directory",
+      "id": "directory--d277228f-6835-488e-8145-4e43af09f875",
+      "spec_version": "2.1",
+      "path": "/usr/local/horizon/conf"
+    },
+    {
+      "type": "url",
+      "id": "url--e1c165a0-165b-4760-8da0-dcd112475096",
+      "spec_version": "2.1",
+      "value": "http://84.38.133[.]149/img/icon.gif"
     }
   ]
 }

@@ -84,7 +84,7 @@ def stix_dict_to_tql(stix_dict) -> Union[dict, str, List[str], str]:
         case "mbc":
             obj_tql = copy.deepcopy(mbc_model.get_data(tql_name))
             is_list.extend(auth["is_lists"][group][tql_name])
-        case "attack_flow":
+        case "flow":
             obj_tql = copy.deepcopy(flow_model.get_data(tql_name))
             is_list.extend(auth["is_lists"][group][tql_name])
 

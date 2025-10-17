@@ -61,6 +61,11 @@ def resolve_class_from_name(class_name: str, content_record: ParseContent):
             from stixorm.module.definitions.oca import classes
             return getattr(classes, class_name)
             
+        elif protocol == "flow":
+            # Import from attack-flow classes
+            from stixorm.module.definitions.attack_flow import classes
+            return getattr(classes, class_name)
+            
         elif protocol == "mbc":
             # Import from mbc classes
             from stixorm.module.definitions.mbc import classes

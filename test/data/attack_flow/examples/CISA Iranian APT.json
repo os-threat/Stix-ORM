@@ -205,14 +205,6 @@
       "name": "Active Directory"
     },
     {
-      "type": "directory",
-      "id": "directory--02b1765f-0d2e-4991-8ba8-1053ef09de2c",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.700Z",
-      "modified": "2025-07-30T19:47:12.700Z",
-      "path": "c:\\drive"
-    },
-    {
       "type": "attack-action",
       "id": "attack-action--cfae690b-64c4-405f-84f1-5e8b65da3f83",
       "spec_version": "2.1",
@@ -436,14 +428,6 @@
       ]
     },
     {
-      "type": "process",
-      "id": "process--3f5b9295-9d49-410e-b542-54f258b52434",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "command_line": "powershell try{Add-MpPreference -ExclusionPath 'C:\\'; Write-Host 'added-exclusion'} catch {Write-Host 'adding-exclusion-failed' }; powershell -enc \"$BASE64 encoded payload to download next stage and execute it\""
-    },
-    {
       "type": "malware",
       "id": "malware--ad11d63f-b48d-4c18-b7ff-0baf8edca7e3",
       "spec_version": "2.1",
@@ -500,39 +484,6 @@
       "effect_refs": [
         "attack-action--c55d72d0-4b7b-4e86-93cf-a65a79ee24ce"
       ]
-    },
-    {
-      "type": "user-account",
-      "id": "user-account--039865eb-337f-4941-92c5-14de002c7753",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "account_type": "windows-local",
-      "display_name": "DefaultAccount"
-    },
-    {
-      "type": "ipv4-addr",
-      "id": "ipv4-addr--903efce3-4a7d-4272-9c33-7868fc767876",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "value": "182.54.217.2"
-    },
-    {
-      "type": "ipv4-addr",
-      "id": "ipv4-addr--c51c9009-568d-46c6-8fac-09b4ce1e848c",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "value": "182.54.217.2"
-    },
-    {
-      "type": "user-account",
-      "id": "user-account--8b025fd8-d5a5-408a-8b29-c6795ba84c37",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "display_name": "SYSTEM"
     },
     {
       "type": "attack-action",
@@ -752,22 +703,6 @@
       ]
     },
     {
-      "type": "url",
-      "id": "url--5cb4ac20-de90-4aba-8467-fe57ba5af2a8",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "value": "tunnel.us.ngrok[.]com"
-    },
-    {
-      "type": "url",
-      "id": "url--3e9fd4ff-625f-42e3-8285-762835bd6b50",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "value": "korgn.su.lennut[.]com"
-    },
-    {
       "type": "note",
       "id": "note--31244bf1-3b1c-4ba6-bb41-063352cdcfa4",
       "spec_version": "2.1",
@@ -857,14 +792,6 @@
       "effect_refs": [
         "attack-action--45e8b0a1-83a5-41dc-8186-7d6d4c8a7c0a"
       ]
-    },
-    {
-      "type": "process",
-      "id": "process--6a0cd876-3fd3-4557-9dfc-7d004cf217ae",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "command_line": "Powershell.exe get-adcomputer -filter * -properties * | select name,operatingsystem,ipv4address &gt;"
     },
     {
       "type": "attack-action",
@@ -1115,6 +1042,1604 @@
       "relationship_type": "related-to",
       "source_ref": "attack-action--4beb5555-7460-4636-a2e4-096a01b54186",
       "target_ref": "url--3e9fd4ff-625f-42e3-8285-762835bd6b50"
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9",
+      "created": "2019-11-27T14:58:00.429Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1053/005",
+          "external_id": "T1053.005"
+        },
+        {
+          "source_name": "ProofPoint Serpent",
+          "description": "Campbell, B. et al. (2022, March 21). Serpent, No Swiping! New Backdoor Targets French Entities with Unique Attack Chain. Retrieved April 11, 2022.",
+          "url": "https://www.proofpoint.com/us/blog/threat-insight/serpent-no-swiping-new-backdoor-targets-french-entities-unique-attack-chain"
+        },
+        {
+          "source_name": "Defending Against Scheduled Task Attacks in Windows Environments",
+          "description": "Harshal Tupsamudre. (2022, June 20). Defending Against Scheduled Tasks. Retrieved July 5, 2022.",
+          "url": "https://blog.qualys.com/vulnerabilities-threat-research/2022/06/20/defending-against-scheduled-task-attacks-in-windows-environments"
+        },
+        {
+          "source_name": "Twitter Leoloobeek Scheduled Task",
+          "description": "Loobeek, L. (2017, December 8). leoloobeek Status. Retrieved September 12, 2024.",
+          "url": "https://x.com/leoloobeek/status/939248813465853953"
+        },
+        {
+          "source_name": "Tarrask scheduled task",
+          "description": "Microsoft Threat Intelligence Team & Detection and Response Team . (2022, April 12). Tarrask malware uses scheduled tasks for defense evasion. Retrieved June 1, 2022.",
+          "url": "https://www.microsoft.com/security/blog/2022/04/12/tarrask-malware-uses-scheduled-tasks-for-defense-evasion/"
+        },
+        {
+          "source_name": "Microsoft Scheduled Task Events Win10",
+          "description": "Microsoft. (2017, May 28). Audit Other Object Access Events. Retrieved June 27, 2019.",
+          "url": "https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/audit-other-object-access-events"
+        },
+        {
+          "source_name": "TechNet Scheduled Task Events",
+          "description": "Microsoft. (n.d.). General Task Registration. Retrieved December 12, 2017.",
+          "url": "https://technet.microsoft.com/library/dd315590.aspx"
+        },
+        {
+          "source_name": "Red Canary - Atomic Red Team",
+          "description": "Red Canary - Atomic Red Team. (n.d.). T1053.005 - Scheduled Task/Job: Scheduled Task. Retrieved June 19, 2024.",
+          "url": "https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1053.005/T1053.005.md"
+        },
+        {
+          "source_name": "TechNet Autoruns",
+          "description": "Russinovich, M. (2016, January 4). Autoruns for Windows v13.51. Retrieved June 6, 2016.",
+          "url": "https://technet.microsoft.com/en-us/sysinternals/bb963902"
+        },
+        {
+          "source_name": "TechNet Forum Scheduled Task Operational Setting",
+          "description": "Satyajit321. (2015, November 3). Scheduled Tasks History Retention settings. Retrieved December 12, 2017.",
+          "url": "https://social.technet.microsoft.com/Forums/en-US/e5bca729-52e7-4fcb-ba12-3225c564674c/scheduled-tasks-history-retention-settings?forum=winserver8gen"
+        },
+        {
+          "source_name": "SigmaHQ",
+          "description": "Sittikorn S. (2022, April 15). Removal Of SD Value to Hide Schedule Task - Registry. Retrieved June 1, 2022.",
+          "url": "https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_delete/registry_delete_schtasks_hide_task_via_sd_value_removal.yml"
+        },
+        {
+          "source_name": "Stack Overflow",
+          "description": "Stack Overflow. (n.d.). How to find the location of the Scheduled Tasks folder. Retrieved June 19, 2024.",
+          "url": "https://stackoverflow.com/questions/2913816/how-to-find-the-location-of-the-scheduled-tasks-folder"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:01.010Z",
+      "name": "Scheduled Task",
+      "description": "Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious code. There are multiple ways to access the Task Scheduler in Windows. The [schtasks](https://attack.mitre.org/software/S0111) utility can be run directly on the command line, or the Task Scheduler can be opened through the GUI within the Administrator Tools section of the Control Panel.(Citation: Stack Overflow) In some cases, adversaries have used a .NET wrapper for the Windows Task Scheduler, and alternatively, adversaries have used the Windows netapi32 library and [Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047) (WMI) to create a scheduled task. Adversaries may also utilize the Powershell Cmdlet `Invoke-CimMethod`, which leverages WMI class `PS_ScheduledTask` to create a scheduled task via an XML path.(Citation: Red Canary - Atomic Red Team)\n\nAn adversary may use Windows Task Scheduler to execute programs at system startup or on a scheduled basis for persistence. The Windows Task Scheduler can also be abused to conduct remote Execution as part of Lateral Movement and/or to run a process under the context of a specified account (such as SYSTEM). Similar to [System Binary Proxy Execution](https://attack.mitre.org/techniques/T1218), adversaries have also abused the Windows Task Scheduler to potentially mask one-time execution under signed/trusted system processes.(Citation: ProofPoint Serpent)\n\nAdversaries may also create \"hidden\" scheduled tasks (i.e. [Hide Artifacts](https://attack.mitre.org/techniques/T1564)) that may not be visible to defender tools and manual queries used to enumerate tasks. Specifically, an adversary may hide a task from `schtasks /query` and the Task Scheduler by deleting the associated Security Descriptor (SD) registry value (where deletion of this value must be completed using SYSTEM permissions).(Citation: SigmaHQ)(Citation: Tarrask scheduled task) Adversaries may also employ alternate methods to hide tasks, such as altering the metadata (e.g., `Index` value) within associated registry keys.(Citation: Defending Against Scheduled Task Attacks in Windows Environments) ",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "execution"
+        },
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "persistence"
+        },
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "privilege-escalation"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Andrew Northern, @ex_raritas",
+        "Bryan Campbell, @bry_campbell",
+        "Zachary Abzug, @ZackDoesML",
+        "Selena Larson, @selenalarson",
+        "Sittikorn Sangrattanapitak"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Monitor process execution from the <code>svchost.exe</code> in Windows 10 and the Windows Task Scheduler <code>taskeng.exe</code> for older versions of Windows. (Citation: Twitter Leoloobeek Scheduled Task) If scheduled tasks are not used for persistence, then the adversary is likely to remove the task when the action is complete. Monitor Windows Task Scheduler stores in %systemroot%\\System32\\Tasks for change entries related to scheduled tasks that do not correlate with known software, patch cycles, etc.\n\nConfigure event logging for scheduled task creation and changes by enabling the \"Microsoft-Windows-TaskScheduler/Operational\" setting within the event logging service. (Citation: TechNet Forum Scheduled Task Operational Setting) Several events will then be logged on scheduled task activity, including: (Citation: TechNet Scheduled Task Events)(Citation: Microsoft Scheduled Task Events Win10)\n\n* Event ID 106 on Windows 7, Server 2008 R2 - Scheduled task registered\n* Event ID 140 on Windows 7, Server 2008 R2 / 4702 on Windows 10, Server 2016 - Scheduled task updated\n* Event ID 141 on Windows 7, Server 2008 R2 / 4699 on Windows 10, Server 2016 - Scheduled task deleted\n* Event ID 4698 on Windows 10, Server 2016 - Scheduled task created\n* Event ID 4700 on Windows 10, Server 2016 - Scheduled task enabled\n* Event ID 4701 on Windows 10, Server 2016 - Scheduled task disabled\n\nTools such as Sysinternals Autoruns may also be used to detect system changes that could be attempts at persistence, including listing current scheduled tasks. (Citation: TechNet Autoruns)\n\nRemote access tools with built-in features may interact directly with the Windows API to perform these functions outside of typical system utilities. Tasks may also be created through Windows system management tools such as Windows Management Instrumentation and PowerShell, so additional logging may need to be configured to gather the appropriate data.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows"
+      ],
+      "x_mitre_version": "1.7",
+      "x_mitre_data_sources": [
+        "Windows Registry: Windows Registry Key Creation",
+        "File: File Modification",
+        "File: File Creation",
+        "Process: Process Creation",
+        "Command: Command Execution",
+        "Network Traffic: Network Traffic Flow",
+        "Scheduled Job: Scheduled Job Creation"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--132d5b37-aac5-4378-a8dc-3127b18a73dc",
+      "created": "2021-03-17T15:28:10.689Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1016/001",
+          "external_id": "T1016.001"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:52.631Z",
+      "name": "Internet Connection Discovery",
+      "description": "Adversaries may check for Internet connectivity on compromised systems. This may be performed during automated discovery and can be accomplished in numerous ways such as using [Ping](https://attack.mitre.org/software/S0097), <code>tracert</code>, and GET requests to websites.\n\nAdversaries may use the results and responses from these requests to determine if the system is capable of communicating with their C2 servers before attempting to connect to them. The results may also be used to identify routes, redirectors, and proxy servers.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "discovery"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "System and network discovery techniques normally occur throughout an operation as an adversary learns the environment. Data and events should not be viewed in isolation, but as part of a chain of behavior that could lead to other activities, such as Command and Control, based on the information obtained.\n\nMonitor processes and command-line arguments for actions that could be taken to check Internet connectivity.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows",
+        "Linux",
+        "macOS",
+        "ESXi"
+      ],
+      "x_mitre_version": "1.1",
+      "x_mitre_data_sources": [
+        "Process: Process Creation",
+        "Command: Command Execution"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--3f886f2a-874f-4333-b794-aa6075009b1c",
+      "created": "2018-04-18T17:59:24.739Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1190",
+          "external_id": "T1190"
+        },
+        {
+          "source_name": "CWE top 25",
+          "description": "Christey, S., Brown, M., Kirby, D., Martin, B., Paller, A.. (2011, September 13). 2011 CWE/SANS Top 25 Most Dangerous Software Errors. Retrieved April 10, 2019.",
+          "url": "https://cwe.mitre.org/top25/index.html"
+        },
+        {
+          "source_name": "CIS Multiple SMB Vulnerabilities",
+          "description": "CIS. (2017, May 15). Multiple Vulnerabilities in Microsoft Windows SMB Server Could Allow for Remote Code Execution. Retrieved April 3, 2018.",
+          "url": "https://www.cisecurity.org/advisory/multiple-vulnerabilities-in-microsoft-windows-smb-server-could-allow-for-remote-code-execution/"
+        },
+        {
+          "source_name": "Ars Technica VMWare Code Execution Vulnerability 2021",
+          "description": "Dan Goodin . (2021, February 25). Code-execution flaw in VMware has a severity rating of 9.8 out of 10. Retrieved April 8, 2025.",
+          "url": "https://arstechnica.com/information-technology/2021/02/armed-with-exploits-hackers-on-the-prowl-for-a-critical-vmware-vulnerability/"
+        },
+        {
+          "source_name": "Recorded Future ESXiArgs Ransomware 2023",
+          "description": "German Hoeffner, Aaron Soehnen and Gianni Perez. (2023, February 7). ESXiArgs Ransomware Targets Publicly-Exposed ESXi OpenSLP Servers. Retrieved March 26, 2025.",
+          "url": "https://www.recordedfuture.com/blog/esxiargs-ransomware-targets-vmware-esxi-openslp-servers"
+        },
+        {
+          "source_name": "Wired Russia Cyberwar",
+          "description": "Greenberg, A. (2022, November 10). Russia’s New Cyberwarfare in Ukraine Is Fast, Dirty, and Relentless. Retrieved March 22, 2023.",
+          "url": "https://www.wired.com/story/russia-ukraine-cyberattacks-mandiant/"
+        },
+        {
+          "source_name": "Mandiant Fortinet Zero Day",
+          "description": "Marvi, A. et al.. (2023, March 16). Fortinet Zero-Day and Custom Malware Used by Suspected Chinese Actor in Espionage Operation. Retrieved March 22, 2023.",
+          "url": "https://www.mandiant.com/resources/blog/fortinet-malware-ecosystem"
+        },
+        {
+          "source_name": "NVD CVE-2016-6662",
+          "description": "National Vulnerability Database. (2017, February 2). CVE-2016-6662 Detail. Retrieved April 3, 2018.",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2016-6662"
+        },
+        {
+          "source_name": "NVD CVE-2014-7169",
+          "description": "National Vulnerability Database. (2017, September 24). CVE-2014-7169 Detail. Retrieved April 3, 2018.",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2014-7169"
+        },
+        {
+          "source_name": "Cisco Blog Legacy Device Attacks",
+          "description": "Omar Santos. (2020, October 19). Attackers Continue to Target Legacy Devices. Retrieved October 20, 2020.",
+          "url": "https://community.cisco.com/t5/security-blogs/attackers-continue-to-target-legacy-devices/ba-p/4169954"
+        },
+        {
+          "source_name": "OWASP Top 10",
+          "description": "OWASP. (2018, February 23). OWASP Top Ten Project. Retrieved April 3, 2018.",
+          "url": "https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project"
+        },
+        {
+          "source_name": "US-CERT TA18-106A Network Infrastructure Devices 2018",
+          "description": "US-CERT. (2018, April 20). Russian State-Sponsored Cyber Actors Targeting Network Infrastructure Devices. Retrieved October 19, 2020.",
+          "url": "https://us-cert.cisa.gov/ncas/alerts/TA18-106A"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:25.266Z",
+      "name": "Exploit Public-Facing Application",
+      "description": "Adversaries may attempt to exploit a weakness in an Internet-facing host or system to initially access a network. The weakness in the system can be a software bug, a temporary glitch, or a misconfiguration.\n\nExploited applications are often websites/web servers, but can also include databases (like SQL), standard services (like SMB or SSH), network device administration and management protocols (like SNMP and Smart Install), and any other system with Internet-accessible open sockets.(Citation: NVD CVE-2016-6662)(Citation: CIS Multiple SMB Vulnerabilities)(Citation: US-CERT TA18-106A Network Infrastructure Devices 2018)(Citation: Cisco Blog Legacy Device Attacks)(Citation: NVD CVE-2014-7169) On ESXi infrastructure, adversaries may exploit exposed OpenSLP services; they may alternatively exploit exposed VMware vCenter servers.(Citation: Recorded Future ESXiArgs Ransomware 2023)(Citation: Ars Technica VMWare Code Execution Vulnerability 2021) Depending on the flaw being exploited, this may also involve [Exploitation for Defense Evasion](https://attack.mitre.org/techniques/T1211) or [Exploitation for Client Execution](https://attack.mitre.org/techniques/T1203).\n\nIf an application is hosted on cloud-based infrastructure and/or is containerized, then exploiting it may lead to compromise of the underlying instance or container. This can allow an adversary a path to access the cloud or container APIs (e.g., via the [Cloud Instance Metadata API](https://attack.mitre.org/techniques/T1552/005)), exploit container host access via [Escape to Host](https://attack.mitre.org/techniques/T1611), or take advantage of weak identity and access management policies.\n\nAdversaries may also exploit edge network infrastructure and related appliances, specifically targeting devices that do not support robust host-based defenses.(Citation: Mandiant Fortinet Zero Day)(Citation: Wired Russia Cyberwar)\n\nFor websites and databases, the OWASP top 10 and CWE top 25 highlight the most common web-based vulnerabilities.(Citation: OWASP Top 10)(Citation: CWE top 25)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "initial-access"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Yossi Weizman, Azure Defender Research Team",
+        "Praetorian"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Monitor application logs for abnormal behavior that may indicate attempted or successful exploitation. Use deep packet inspection to look for artifacts of common exploit traffic, such as SQL injection. Web Application Firewalls may detect improper inputs attempting exploitation.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Containers",
+        "IaaS",
+        "Linux",
+        "Network Devices",
+        "Windows",
+        "macOS",
+        "ESXi"
+      ],
+      "x_mitre_version": "2.7",
+      "x_mitre_data_sources": [
+        "Network Traffic: Network Traffic Content",
+        "Application Log: Application Log Content"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--6151cbea-819b-455a-9fa6-99a1cc58797d",
+      "created": "2020-03-13T20:15:31.974Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1078/001",
+          "external_id": "T1078.001"
+        },
+        {
+          "source_name": "Google Cloud Threat Intelligence VMWare ESXi Zero-Day 2023",
+          "description": "Alexander Marvi, Brad Slaybaugh, Ron Craft, and Rufus Brown. (2023, June 13). VMware ESXi Zero-Day Used by Chinese Espionage Actor to Perform Privileged Guest Operations on Compromised Hypervisors. Retrieved March 26, 2025.",
+          "url": "https://cloud.google.com/blog/topics/threat-intelligence/vmware-esxi-zero-day-bypass/"
+        },
+        {
+          "source_name": "AWS Root User",
+          "description": "Amazon. (n.d.). AWS Account Root User. Retrieved April 5, 2021.",
+          "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html"
+        },
+        {
+          "source_name": "Microsoft Local Accounts Feb 2019",
+          "description": "Microsoft. (2018, December 9). Local Accounts. Retrieved February 11, 2019.",
+          "url": "https://docs.microsoft.com/en-us/windows/security/identity-protection/access-control/local-accounts"
+        },
+        {
+          "source_name": "Metasploit SSH Module",
+          "description": "undefined. (n.d.). Retrieved April 12, 2019.",
+          "url": "https://github.com/rapid7/metasploit-framework/tree/master/modules/exploits/linux/ssh"
+        },
+        {
+          "source_name": "Threat Matrix for Kubernetes",
+          "description": "Weizman, Y. (2020, April 2). Threat Matrix for Kubernetes. Retrieved March 30, 2021.",
+          "url": "https://www.microsoft.com/security/blog/2020/04/02/attack-matrix-kubernetes/"
+        },
+        {
+          "source_name": "Pentera vCenter Information Disclosure",
+          "description": "Yuval Lazar. (2022, March 29). Mitigating VMware vCenter Information Disclosure. Retrieved March 26, 2025.",
+          "url": "https://pentera.io/blog/information-disclosure-in-vmware-vcenter/"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:35.610Z",
+      "name": "Default Accounts",
+      "description": "Adversaries may obtain and abuse credentials of a default account as a means of gaining Initial Access, Persistence, Privilege Escalation, or Defense Evasion. Default accounts are those that are built-into an OS, such as the Guest or Administrator accounts on Windows systems. Default accounts also include default factory/provider set accounts on other types of systems, software, or devices, including the root user account in AWS, the root user account in ESXi, and the default service account in Kubernetes.(Citation: Microsoft Local Accounts Feb 2019)(Citation: AWS Root User)(Citation: Threat Matrix for Kubernetes)\n\nDefault accounts are not limited to client machines; rather, they also include accounts that are preset for equipment such as network devices and computer applications, whether they are internal, open source, or commercial. Appliances that come preset with a username and password combination pose a serious threat to organizations that do not change it post installation, as they are easy targets for an adversary. Similarly, adversaries may also utilize publicly disclosed or stolen [Private Keys](https://attack.mitre.org/techniques/T1552/004) or credential materials to legitimately connect to remote environments via [Remote Services](https://attack.mitre.org/techniques/T1021).(Citation: Metasploit SSH Module)\n\nDefault accounts may be created on a system after initial setup by connecting or integrating it with another application. For example, when an ESXi server is connected to a vCenter server, a default privileged account called `vpxuser` is created on the ESXi server. If a threat actor is able to compromise this account’s credentials (for example, via [Exploitation for Credential Access](https://attack.mitre.org/techniques/T1212) on the vCenter host), they will then have access to the ESXi server.(Citation: Google Cloud Threat Intelligence VMWare ESXi Zero-Day 2023)(Citation: Pentera vCenter Information Disclosure)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "defense-evasion"
+        },
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "persistence"
+        },
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "privilege-escalation"
+        },
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "initial-access"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Janantha Marasinghe"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Monitor whether default accounts have been activated or logged into. These audits should also include checks on any appliances and applications for default credentials or SSH keys, and if any are discovered, they should be updated immediately.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows",
+        "SaaS",
+        "IaaS",
+        "Linux",
+        "macOS",
+        "Containers",
+        "Network Devices",
+        "Office Suite",
+        "Identity Provider",
+        "ESXi"
+      ],
+      "x_mitre_version": "1.5",
+      "x_mitre_data_sources": [
+        "Logon Session: Logon Session Creation",
+        "User Account: User Account Authentication"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--635cbe30-392d-4e27-978e-66774357c762",
+      "created": "2020-01-28T13:50:22.506Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1136/001",
+          "external_id": "T1136.001"
+        },
+        {
+          "source_name": "cisco_username_cmd",
+          "description": "Cisco. (2023, March 6). username - Cisco IOS Security Command Reference: Commands S to Z. Retrieved July 13, 2022.",
+          "url": "https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/security/s1/sec-s1-cr-book/sec-cr-t2.html#wp1047035630"
+        },
+        {
+          "source_name": "Kubernetes Service Accounts Security",
+          "description": "Kubernetes. (n.d.). Service Accounts. Retrieved July 14, 2023.",
+          "url": "https://kubernetes.io/docs/concepts/security/service-accounts/"
+        },
+        {
+          "source_name": "Microsoft User Creation Event",
+          "description": "Lich, B., Miroshnikov, A. (2017, April 5). 4720(S): A user account was created. Retrieved June 30, 2017.",
+          "url": "https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4720"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:36.237Z",
+      "name": "Local Account",
+      "description": "Adversaries may create a local account to maintain access to victim systems. Local accounts are those configured by an organization for use by users, remote support, services, or for administration on a single system or service. \n\nFor example, with a sufficient level of access, the Windows <code>net user /add</code> command can be used to create a local account.  In Linux, the `useradd` command can be used, while on macOS systems, the <code>dscl -create</code> command can be used. Local accounts may also be added to network devices, often via common [Network Device CLI](https://attack.mitre.org/techniques/T1059/008) commands such as <code>username</code>, to ESXi servers via `esxcli system account add`, or to Kubernetes clusters using the `kubectl` utility.(Citation: cisco_username_cmd)(Citation: Kubernetes Service Accounts Security)\n\nSuch accounts may be used to establish secondary credentialed access that do not require persistent remote access tools to be deployed on the system.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "persistence"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Austin Clark, @c2defense"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Monitor for processes and command-line parameters associated with local account creation, such as <code>net user /add</code> , <code>useradd</code> , and <code>dscl -create</code> . Collect data on account creation within a network. Event ID 4720 is generated when a user account is created on a Windows system. (Citation: Microsoft User Creation Event) Perform regular audits of local system accounts to detect suspicious accounts that may have been created by an adversary. For network infrastructure devices, collect AAA logging to monitor for account creations.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Network Devices",
+        "Containers",
+        "ESXi"
+      ],
+      "x_mitre_version": "1.4",
+      "x_mitre_data_sources": [
+        "User Account: User Account Creation",
+        "Process: Process Creation",
+        "Command: Command Execution"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--65f2d882-3f41-4d48-8a06-29af77ec9f90",
+      "created": "2020-02-11T18:41:44.783Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1003/001",
+          "external_id": "T1003.001"
+        },
+        {
+          "source_name": "Medium Detecting Attempts to Steal Passwords from Memory",
+          "description": "French, D. (2018, October 2). Detecting Attempts to Steal Passwords from Memory. Retrieved October 11, 2019.",
+          "url": "https://medium.com/threatpunter/detecting-attempts-to-steal-passwords-from-memory-558f16dce4ea"
+        },
+        {
+          "source_name": "Deep Instinct LSASS",
+          "description": "Gilboa, A. (2021, February 16). LSASS Memory Dumps are Stealthier than Ever Before - Part 2. Retrieved December 27, 2023.",
+          "url": "https://www.deepinstinct.com/blog/lsass-memory-dumps-are-stealthier-than-ever-before-part-2"
+        },
+        {
+          "source_name": "Graeber 2014",
+          "description": "Graeber, M. (2014, October). Analysis of Malicious Security Support Provider DLLs. Retrieved March 1, 2017.",
+          "url": "http://docplayer.net/20839173-Analysis-of-malicious-security-support-provider-dlls.html"
+        },
+        {
+          "source_name": "Volexity Exchange Marauder March 2021",
+          "description": "Gruzweig, J. et al. (2021, March 2). Operation Exchange Marauder: Active Exploitation of Multiple Zero-Day Microsoft Exchange Vulnerabilities. Retrieved March 3, 2021.",
+          "url": "https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/"
+        },
+        {
+          "source_name": "Powersploit",
+          "description": "PowerSploit. (n.d.). Retrieved December 4, 2014.",
+          "url": "https://github.com/mattifestation/PowerSploit"
+        },
+        {
+          "source_name": "Symantec Attacks Against Government Sector",
+          "description": "Symantec. (2021, June 10). Attacks Against the Government Sector. Retrieved September 28, 2021.",
+          "url": "https://symantec.broadcom.com/hubfs/Attacks-Against-Government-Sector.pdf"
+        },
+        {
+          "source_name": "TechNet Blogs Credential Protection",
+          "description": "Wilson, B. (2016, April 18). The Importance of KB2871997 and KB2928120 for Credential Protection. Retrieved April 11, 2018.",
+          "url": "https://blogs.technet.microsoft.com/askpfeplat/2016/04/18/the-importance-of-kb2871997-and-kb2928120-for-credential-protection/"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T22:45:12.834Z",
+      "name": "LSASS Memory",
+      "description": "Adversaries may attempt to access credential material stored in the process memory of the Local Security Authority Subsystem Service (LSASS). After a user logs on, the system generates and stores a variety of credential materials in LSASS process memory. These credential materials can be harvested by an administrative user or SYSTEM and used to conduct [Lateral Movement](https://attack.mitre.org/tactics/TA0008) using [Use Alternate Authentication Material](https://attack.mitre.org/techniques/T1550).\n\nAs well as in-memory techniques, the LSASS process memory can be dumped from the target host and analyzed on a local system.\n\nFor example, on the target host use procdump:\n\n* <code>procdump -ma lsass.exe lsass_dump</code>\n\nLocally, mimikatz can be run using:\n\n* <code>sekurlsa::Minidump lsassdump.dmp</code>\n* <code>sekurlsa::logonPasswords</code>\n\nBuilt-in Windows tools such as `comsvcs.dll` can also be used:\n\n* <code>rundll32.exe C:\\Windows\\System32\\comsvcs.dll MiniDump PID  lsass.dmp full</code>(Citation: Volexity Exchange Marauder March 2021)(Citation: Symantec Attacks Against Government Sector)\n\nSimilar to [Image File Execution Options Injection](https://attack.mitre.org/techniques/T1546/012), the silent process exit mechanism can be abused to create a memory dump of `lsass.exe` through Windows Error Reporting (`WerFault.exe`).(Citation: Deep Instinct LSASS)\n\nWindows Security Support Provider (SSP) DLLs are loaded into LSASS process at system start. Once loaded into the LSA, SSP DLLs have access to encrypted and plaintext passwords that are stored in Windows, such as any logged-on user's Domain password or smart card PINs. The SSP configuration is stored in two Registry keys: <code>HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\Security Packages</code> and <code>HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\OSConfig\\Security Packages</code>. An adversary may modify these Registry keys to add new SSPs, which will be loaded the next time the system boots, or when the AddSecurityPackage Windows API function is called.(Citation: Graeber 2014)\n\nThe following SSPs can be used to access credentials:\n\n* Msv: Interactive logons, batch logons, and service logons are done through the MSV authentication package.\n* Wdigest: The Digest Authentication protocol is designed for use with Hypertext Transfer Protocol (HTTP) and Simple Authentication Security Layer (SASL) exchanges.(Citation: TechNet Blogs Credential Protection)\n* Kerberos: Preferred for mutual client-server domain authentication in Windows 2000 and later.\n* CredSSP:  Provides SSO and Network Level Authentication for Remote Desktop Services.(Citation: TechNet Blogs Credential Protection)\n",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "credential-access"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Edward Millington",
+        "Ed Williams, Trustwave, SpiderLabs",
+        "Olaf Hartong, Falcon Force",
+        "Michael Forret, Quorum Cyber"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Monitor for unexpected processes interacting with LSASS.exe.(Citation: Medium Detecting Attempts to Steal Passwords from Memory) Common credential dumpers such as Mimikatz access LSASS.exe by opening the process, locating the LSA secrets key, and decrypting the sections in memory where credential details are stored. Credential dumpers may also use methods for reflective [Process Injection](https://attack.mitre.org/techniques/T1055) to reduce potential indicators of malicious activity.\n\nOn Windows 8.1 and Windows Server 2012 R2, monitor Windows Logs for LSASS.exe creation to verify that LSASS started as a protected process.\n\nMonitor processes and command-line arguments for program execution that may be indicative of credential dumping. Remote access tools may contain built-in features or incorporate existing tools like Mimikatz. PowerShell scripts also exist that contain credential dumping functionality, such as PowerSploit's Invoke-Mimikatz module,(Citation: Powersploit) which may require additional logging features to be configured in the operating system to collect necessary information for analysis.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows"
+      ],
+      "x_mitre_version": "1.5",
+      "x_mitre_data_sources": [
+        "Process: Process Access",
+        "Windows Registry: Windows Registry Key Modification",
+        "Process: Process Creation",
+        "Process: OS API Execution",
+        "Logon Session: Logon Session Creation",
+        "Command: Command Execution",
+        "File: File Creation"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--731f4f55-b6d0-41d1-a7a9-072a66389aea",
+      "created": "2017-05-31T21:31:08.479Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1090",
+          "external_id": "T1090"
+        },
+        {
+          "source_name": "Trend Micro APT Attack Tools",
+          "description": "Wilhoit, K. (2013, March 4). In-Depth Look: APT Attack Tools of the Trade. Retrieved December 2, 2015.",
+          "url": "http://blog.trendmicro.com/trendlabs-security-intelligence/in-depth-look-apt-attack-tools-of-the-trade/"
+        },
+        {
+          "source_name": "University of Birmingham C2",
+          "description": "Gardiner, J.,  Cova, M., Nagaraja, S. (2014, February). Command & Control Understanding, Denying and Detecting. Retrieved April 20, 2016.",
+          "url": "https://arxiv.org/ftp/arxiv/papers/1408/1408.1136.pdf"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T15:15:44.084Z",
+      "name": "Proxy",
+      "description": "Adversaries may use a connection proxy to direct network traffic between systems or act as an intermediary for network communications to a command and control server to avoid direct connections to their infrastructure. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap. (Citation: Trend Micro APT Attack Tools) Adversaries use these types of proxies to manage command and control communications, reduce the number of simultaneous outbound network connections, provide resiliency in the face of connection loss, or to ride over existing trusted communications paths between victims to avoid suspicion. Adversaries may chain together multiple proxies to further disguise the source of malicious traffic.\n\nAdversaries can also take advantage of routing schemes in Content Delivery Networks (CDNs) to proxy command and control traffic.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "command-and-control"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Jon Sheedy",
+        "Heather Linn",
+        "Walker Johnson"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Analyze network data for uncommon data flows (e.g., a client sending significantly more data than it receives from a server or between clients that should not or often do not communicate with one another). Processes utilizing the network that do not normally have network communication or have never been seen before are suspicious. Analyze packet contents to detect communications that do not follow the expected protocol behavior for the port that is being used. (Citation: University of Birmingham C2)\n\nConsider monitoring for traffic to known anonymity networks (such as [Tor](https://attack.mitre.org/software/S0183)).",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Network Devices",
+        "ESXi"
+      ],
+      "x_mitre_version": "3.2",
+      "x_mitre_data_sources": [
+        "Network Traffic: Network Traffic Flow",
+        "Network Traffic: Network Traffic Content",
+        "Network Traffic: Network Connection Creation"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--7610cada-1499-41a4-b3dd-46467b68d177",
+      "created": "2020-01-28T14:05:17.825Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1136/002",
+          "external_id": "T1136.002"
+        },
+        {
+          "source_name": "Microsoft User Creation Event",
+          "description": "Lich, B., Miroshnikov, A. (2017, April 5). 4720(S): A user account was created. Retrieved June 30, 2017.",
+          "url": "https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4720"
+        },
+        {
+          "source_name": "Savill 1999",
+          "description": "Savill, J. (1999, March 4). Net.exe reference. Retrieved September 22, 2015.",
+          "url": "https://web.archive.org/web/20150511162820/http://windowsitpro.com/windows/netexe-reference"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T22:21:24.212Z",
+      "name": "Domain Account",
+      "description": "Adversaries may create a domain account to maintain access to victim systems. Domain accounts are those managed by Active Directory Domain Services where access and permissions are configured across systems and services that are part of that domain. Domain accounts can cover user, administrator, and service accounts. With a sufficient level of access, the <code>net user /add /domain</code> command can be used to create a domain account.(Citation: Savill 1999)\n\nSuch accounts may be used to establish secondary credentialed access that do not require persistent remote access tools to be deployed on the system.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "persistence"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Monitor for processes and command-line parameters associated with domain account creation, such as <code>net user /add /domain</code>. Collect data on account creation within a network. Event ID 4720 is generated when a user account is created on a Windows domain controller. (Citation: Microsoft User Creation Event) Perform regular audits of domain accounts to detect suspicious accounts that may have been created by an adversary.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows",
+        "macOS",
+        "Linux"
+      ],
+      "x_mitre_version": "1.1",
+      "x_mitre_data_sources": [
+        "Process: Process Creation",
+        "Command: Command Execution",
+        "User Account: User Account Creation"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736",
+      "created": "2020-03-09T13:48:55.078Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1059/001",
+          "external_id": "T1059.001"
+        },
+        {
+          "source_name": "Microsoft PSfromCsharp APR 2014",
+          "description": "Babinec, K. (2014, April 28). Executing PowerShell scripts from C#. Retrieved April 22, 2019.",
+          "url": "https://blogs.msdn.microsoft.com/kebab/2014/04/28/executing-powershell-scripts-from-c/"
+        },
+        {
+          "source_name": "SilentBreak Offensive PS Dec 2015",
+          "description": "Christensen, L.. (2015, December 28). The Evolution of Offensive PowerShell Invocation. Retrieved December 8, 2018.",
+          "url": "https://web.archive.org/web/20190508170150/https://silentbreaksecurity.com/powershell-jobs-without-powershell-exe/"
+        },
+        {
+          "source_name": "FireEye PowerShell Logging 2016",
+          "description": "Dunwoody, M. (2016, February 11). GREATER VISIBILITY THROUGH POWERSHELL LOGGING. Retrieved February 16, 2016.",
+          "url": "https://www.fireeye.com/blog/threat-research/2016/02/greater_visibilityt.html"
+        },
+        {
+          "source_name": "Github PSAttack",
+          "description": "Haight, J. (2016, April 21). PS>Attack. Retrieved September 27, 2024.",
+          "url": "https://github.com/Exploit-install/PSAttack-1"
+        },
+        {
+          "source_name": "inv_ps_attacks",
+          "description": "Hastings, M. (2014, July 16). Investigating PowerShell Attacks. Retrieved December 1, 2021.",
+          "url": "https://powershellmagazine.com/2014/07/16/investigating-powershell-attacks/"
+        },
+        {
+          "source_name": "Malware Archaeology PowerShell Cheat Sheet",
+          "description": "Malware Archaeology. (2016, June). WINDOWS POWERSHELL LOGGING CHEAT SHEET - Win 7/Win 2008 or later. Retrieved June 24, 2016.",
+          "url": "http://www.malwarearchaeology.com/s/Windows-PowerShell-Logging-Cheat-Sheet-ver-June-2016-v2.pdf"
+        },
+        {
+          "source_name": "TechNet PowerShell",
+          "description": "Microsoft. (n.d.). Windows PowerShell Scripting. Retrieved April 28, 2016.",
+          "url": "https://technet.microsoft.com/en-us/scriptcenter/dd742419.aspx"
+        },
+        {
+          "source_name": "Sixdub PowerPick Jan 2016",
+          "description": "Warner, J.. (2015, January 6). Inexorable PowerShell – A Red Teamer’s Tale of Overcoming Simple AppLocker Policies. Retrieved December 8, 2018.",
+          "url": "https://web.archive.org/web/20160327101330/http://www.sixdub.net/?p=367"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:52.378Z",
+      "name": "PowerShell",
+      "description": "Adversaries may abuse PowerShell commands and scripts for execution. PowerShell is a powerful interactive command-line interface and scripting environment included in the Windows operating system.(Citation: TechNet PowerShell) Adversaries can use PowerShell to perform a number of actions, including discovery of information and execution of code. Examples include the <code>Start-Process</code> cmdlet which can be used to run an executable and the <code>Invoke-Command</code> cmdlet which runs a command locally or on a remote computer (though administrator permissions are required to use PowerShell to connect to remote systems).\n\nPowerShell may also be used to download and run executables from the Internet, which can be executed from disk or in memory without touching disk.\n\nA number of PowerShell-based offensive testing tools are available, including [Empire](https://attack.mitre.org/software/S0363),  [PowerSploit](https://attack.mitre.org/software/S0194), [PoshC2](https://attack.mitre.org/software/S0378), and PSAttack.(Citation: Github PSAttack)\n\nPowerShell commands/scripts can also be executed without directly invoking the <code>powershell.exe</code> binary through interfaces to PowerShell's underlying <code>System.Management.Automation</code> assembly DLL exposed through the .NET framework and Windows Common Language Interface (CLI).(Citation: Sixdub PowerPick Jan 2016)(Citation: SilentBreak Offensive PS Dec 2015)(Citation: Microsoft PSfromCsharp APR 2014)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "execution"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Mayuresh Dani, Qualys",
+        "Praetorian",
+        "Ross Brittain"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "If proper execution policy is set, adversaries will likely be able to define their own execution policy if they obtain administrator or system access, either through the Registry or at the command line. This change in policy on a system may be a way to detect malicious use of PowerShell. If PowerShell is not used in an environment, then simply looking for PowerShell execution may detect malicious activity.\n\nMonitor for loading and/or execution of artifacts associated with PowerShell specific assemblies, such as System.Management.Automation.dll (especially to unusual process names/locations).(Citation: Sixdub PowerPick Jan 2016)(Citation: SilentBreak Offensive PS Dec 2015)\n\nIt is also beneficial to turn on PowerShell logging to gain increased fidelity in what occurs during execution (which is applied to .NET invocations). (Citation: Malware Archaeology PowerShell Cheat Sheet) PowerShell 5.0 introduced enhanced logging capabilities, and some of those features have since been added to PowerShell 4.0. Earlier versions of PowerShell do not have many logging features.(Citation: FireEye PowerShell Logging 2016) An organization can gather PowerShell execution details in a data analytic platform to supplement it with other data.\n\nConsider monitoring for Windows event ID (EID) 400, which shows the version of PowerShell executing in the <code>EngineVersion</code> field (which may also be relevant to detecting a potential [Downgrade Attack](https://attack.mitre.org/techniques/T1562/010)) as well as if PowerShell is running locally or remotely in the <code>HostName</code> field. Furthermore, EID 400 may indicate the start time and EID 403 indicates the end time of a PowerShell session.(Citation: inv_ps_attacks)",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows"
+      ],
+      "x_mitre_version": "1.5",
+      "x_mitre_data_sources": [
+        "Script: Script Execution",
+        "Process: Process Creation",
+        "Process: Process Metadata",
+        "Command: Command Execution",
+        "Module: Module Load"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--a10641f4-87b4-45a3-a906-92a149cb2c27",
+      "created": "2017-05-31T21:31:12.196Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1098",
+          "external_id": "T1098"
+        },
+        {
+          "source_name": "FireEye SMOKEDHAM June 2021",
+          "description": "FireEye. (2021, June 16). Smoking Out a DARKSIDE Affiliate’s Supply Chain Software Compromise. Retrieved September 22, 2021.",
+          "url": "https://www.fireeye.com/blog/threat-research/2021/06/darkside-affiliate-supply-chain-software-compromise.html"
+        },
+        {
+          "source_name": "Microsoft Security Event 4670",
+          "description": "Franklin Smith, R. (n.d.). Windows Security Log Event ID 4670. Retrieved November 4, 2019.",
+          "url": "https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4670"
+        },
+        {
+          "source_name": "Microsoft User Modified Event",
+          "description": "Lich, B., Miroshnikov, A. (2017, April 5). 4738(S): A user account was changed. Retrieved June 30, 2017.",
+          "url": "https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4738"
+        },
+        {
+          "source_name": "InsiderThreat ChangeNTLM July 2017",
+          "description": "Warren, J. (2017, July 11). Manipulating User Passwords with Mimikatz. Retrieved December 4, 2017.",
+          "url": "https://blog.stealthbits.com/manipulating-user-passwords-with-mimikatz-SetNTLM-ChangeNTLM"
+        },
+        {
+          "source_name": "GitHub Mimikatz Issue 92 June 2017",
+          "description": "Warren, J. (2017, June 22). lsadump::changentlm and lsadump::setntlm work, but generate Windows events #92. Retrieved December 4, 2017.",
+          "url": "https://github.com/gentilkiwi/mimikatz/issues/92"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:54.718Z",
+      "name": "Account Manipulation",
+      "description": "Adversaries may manipulate accounts to maintain and/or elevate access to victim systems. Account manipulation may consist of any action that preserves or modifies adversary access to a compromised account, such as modifying credentials or permission groups.(Citation: FireEye SMOKEDHAM June 2021) These actions could also include account activity designed to subvert security policies, such as performing iterative password updates to bypass password duration policies and preserve the life of compromised credentials. \n\nIn order to create or manipulate accounts, the adversary must already have sufficient permissions on systems or the domain. However, account manipulation may also lead to privilege escalation where modifications grant access to additional roles, permissions, or higher-privileged [Valid Accounts](https://attack.mitre.org/techniques/T1078).",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "persistence"
+        },
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "privilege-escalation"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Jannie Li, Microsoft Threat Intelligence Center (MSTIC)",
+        "Praetorian",
+        "Tim MalcomVetter",
+        "Wojciech Lesicki",
+        "Arad Inbar, Fidelis Security"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Collect events that correlate with changes to account objects and/or permissions on systems and the domain, such as event IDs 4738, 4728 and 4670.(Citation: Microsoft User Modified Event)(Citation: Microsoft Security Event 4670)(Citation: Microsoft Security Event 4670) Monitor for modification of accounts in correlation with other suspicious activity. Changes may occur at unusual times or from unusual systems. Especially flag events where the subject and target accounts differ(Citation: InsiderThreat ChangeNTLM July 2017) or that include additional flags such as changing a password without knowledge of the old password.(Citation: GitHub Mimikatz Issue 92 June 2017)\n\nMonitor for use of credentials at unusual times or to unusual systems or services. This may also correlate with other suspicious activity.\n\nMonitor for unusual permissions changes that may indicate excessively broad permissions being granted to compromised accounts. However, account manipulation may also lead to privilege escalation where modifications grant access to additional roles, permissions, or higher-privileged [Valid Accounts](https://attack.mitre.org/techniques/T1078)",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows",
+        "IaaS",
+        "Linux",
+        "macOS",
+        "SaaS",
+        "Network Devices",
+        "Containers",
+        "Office Suite",
+        "Identity Provider",
+        "ESXi"
+      ],
+      "x_mitre_version": "2.8",
+      "x_mitre_data_sources": [
+        "Command: Command Execution",
+        "Process: Process Creation",
+        "Active Directory: Active Directory Object Modification",
+        "File: File Modification",
+        "Group: Group Modification",
+        "User Account: User Account Modification"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--ac08589e-ee59-4935-8667-d845e38fe579",
+      "created": "2020-02-21T20:32:20.810Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1562/001",
+          "external_id": "T1562.001"
+        },
+        {
+          "source_name": "Analysis of FG-IR-22-369",
+          "description": " Guillaume Lovet and Alex Kong. (2023, March 9). Analysis of FG-IR-22-369. Retrieved May 15, 2023.",
+          "url": "https://www.fortinet.com/blog/psirt-blogs/fg-ir-22-369-psirt-analysis"
+        },
+        {
+          "source_name": "Fortinet Zero-Day and Custom Malware Used by Suspected Chinese Actor in Espionage Operation",
+          "description": "ALEXANDER MARVI, BRAD SLAYBAUGH, DAN EBREO, TUFAIL AHMED, MUHAMMAD UMAIR, TINA JOHNSON. (2023, March 16). Fortinet Zero-Day and Custom Malware Used by Suspected Chinese Actor in Espionage Operation. Retrieved May 15, 2023.",
+          "url": "https://www.mandiant.com/resources/blog/fortinet-malware-ecosystem"
+        },
+        {
+          "source_name": "BlackBerry WhisperGate 2022",
+          "description": "BlackBerry Research and Intelligence Team. (2022, February 3). Threat Spotlight: WhisperGate Wiper Wreaks Havoc in Ukraine. Retrieved March 18, 2025.",
+          "url": "https://blogs.blackberry.com/en/2022/02/threat-spotlight-whispergate-wiper-wreaks-havoc-in-ukraine"
+        },
+        {
+          "source_name": "OutFlank System Calls",
+          "description": "de Plaa, C. (2019, June 19). Red Team Tactics: Combining Direct System Calls and sRDI to bypass AV/EDR. Retrieved September 29, 2021.",
+          "url": "https://outflank.nl/blog/2019/06/19/red-team-tactics-combining-direct-system-calls-and-srdi-to-bypass-av-edr/"
+        },
+        {
+          "source_name": "disable_win_evt_logging",
+          "description": "Heiligenstein, L. (n.d.). REP-25: Disable Windows Event Logging. Retrieved April 7, 2022.",
+          "url": "https://ptylu.github.io/content/report/report.html?report=25"
+        },
+        {
+          "source_name": "chasing_avaddon_ransomware",
+          "description": "Hernandez, A. S. Tarter, P. Ocamp, E. J. (2022, January 19). One Source to Rule Them All: Chasing AVADDON Ransomware. Retrieved January 26, 2022.",
+          "url": "https://www.mandiant.com/resources/chasing-avaddon-ransomware"
+        },
+        {
+          "source_name": "doppelpaymer_crowdstrike",
+          "description": "Hurley, S. (2021, December 7). Critical Hit: How DoppelPaymer Hunts and Kills Windows Processes. Retrieved January 26, 2022.",
+          "url": "https://www.crowdstrike.com/blog/how-doppelpaymer-hunts-and-kills-windows-processes/"
+        },
+        {
+          "source_name": "avoslocker_ransomware",
+          "description": "Lakshmanan, R. (2022, May 2). AvosLocker Ransomware Variant Using New Trick to Disable Antivirus Protection. Retrieved May 17, 2022.",
+          "url": "https://thehackernews.com/2022/05/avoslocker-ransomware-variant-using-new.html"
+        },
+        {
+          "source_name": "dharma_ransomware",
+          "description": "Loui, E. Scheuerman, K. et al. (2020, April 16). Targeted Dharma Ransomware Intrusions Exhibit Consistent Techniques. Retrieved January 26, 2022.",
+          "url": "https://www.crowdstrike.com/blog/targeted-dharma-ransomware-intrusions-exhibit-consistent-techniques/"
+        },
+        {
+          "source_name": "MDSec System Calls",
+          "description": "MDSec Research. (2020, December). Bypassing User-Mode Hooks and Direct Invocation of System Calls for Red Teams. Retrieved September 29, 2021.",
+          "url": "https://www.mdsec.co.uk/2020/12/bypassing-user-mode-hooks-and-direct-invocation-of-system-calls-for-red-teams/"
+        },
+        {
+          "source_name": "SCADAfence_ransomware",
+          "description": "Shaked, O. (2020, January 20). Anatomy of a Targeted Ransomware Attack. Retrieved June 18, 2022.",
+          "url": "https://cdn.logic-control.com/docs/scadafence/Anatomy-Of-A-Targeted-Ransomware-Attack-WP.pdf"
+        },
+        {
+          "source_name": "demystifying_ryuk",
+          "description": "Tran, T. (2020, November 24). Demystifying Ransomware Attacks Against Microsoft Defender Solution. Retrieved January 26, 2022.",
+          "url": "https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/demystifying-ransomware-attacks-against-microsoft-defender/ba-p/1928947"
+        },
+        {
+          "source_name": "Google Cloud Threat Intelligence FIN13 2021",
+          "description": "Van Ta, Jake Nicastro, Rufus Brown, and Nick Richard. (2021, December 7). FIN13: A Cybercriminal Threat Actor Focused on Mexico. Retrieved March 18, 2025.",
+          "url": "https://cloud.google.com/blog/topics/threat-intelligence/fin13-cybercriminal-mexico/"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:57.147Z",
+      "name": "Disable or Modify Tools",
+      "description": "Adversaries may modify and/or disable security tools to avoid possible detection of their malware/tools and activities. This may take many forms, such as killing security software processes or services, modifying / deleting Registry keys or configuration files so that tools do not operate properly, or other methods to interfere with security tools scanning or reporting information. Adversaries may also disable updates to prevent the latest security patches from reaching tools on victim systems.(Citation: SCADAfence_ransomware)\n\nAdversaries may also tamper with artifacts deployed and utilized by security tools. Security tools may make dynamic changes to system components in order to maintain visibility into specific events. For example, security products may load their own modules and/or modify those loaded by processes to facilitate data collection. Similar to [Indicator Blocking](https://attack.mitre.org/techniques/T1562/006), adversaries may unhook or otherwise modify these features added by tools (especially those that exist in userland or are otherwise potentially accessible to adversaries) to avoid detection.(Citation: OutFlank System Calls)(Citation: MDSec System Calls) Alternatively, they may add new directories to an endpoint detection and response (EDR) tool’s exclusion list, enabling them to hide malicious files via [File/Path Exclusions](https://attack.mitre.org/techniques/T1564/012).(Citation: BlackBerry WhisperGate 2022)(Citation: Google Cloud Threat Intelligence FIN13 2021)\n\nAdversaries may also focus on specific applications such as Sysmon. For example, the “Start” and “Enable” values in <code>HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\WMI\\Autologger\\EventLog-Microsoft-Windows-Sysmon-Operational</code> may be modified to tamper with and potentially disable Sysmon logging.(Citation: disable_win_evt_logging) \n\nOn network devices, adversaries may attempt to skip digital signature verification checks by altering startup configuration files and effectively disabling firmware verification that typically occurs at boot.(Citation: Fortinet Zero-Day and Custom Malware Used by Suspected Chinese Actor in Espionage Operation)(Citation: Analysis of FG-IR-22-369)\n\nIn cloud environments, tools disabled by adversaries may include cloud monitoring agents that report back to services such as AWS CloudWatch or Google Cloud Monitor.\n\nFurthermore, although defensive tools may have anti-tampering mechanisms, adversaries may abuse tools such as legitimate rootkit removal kits to impair and/or disable these tools.(Citation: chasing_avaddon_ransomware)(Citation: dharma_ransomware)(Citation: demystifying_ryuk)(Citation: doppelpaymer_crowdstrike) For example, adversaries have used tools such as GMER to find and shut down hidden processes and antivirus software on infected systems.(Citation: demystifying_ryuk)\n\nAdditionally, adversaries may exploit legitimate drivers from anti-virus software to gain access to kernel space (i.e. [Exploitation for Privilege Escalation](https://attack.mitre.org/techniques/T1068)), which may lead to bypassing anti-tampering features.(Citation: avoslocker_ransomware)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "defense-evasion"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Gordon Long, Box, Inc., @ethicalhax",
+        "Ziv Karliner, @ziv_kr, Team Nautilus Aqua Security",
+        "Nathaniel Quist, Palo Alto Networks",
+        "Gal Singer, @galsinger29, Team Nautilus Aqua Security",
+        "Daniel Feichter, @VirtualAllocEx, Infosec Tirol",
+        "Cian Heasley",
+        "Alex Soler, AttackIQ",
+        "Sarathkumar Rajendran, Microsoft Defender365",
+        "Lucas Heiligenstein",
+        "Menachem Goldstein"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Monitor processes and command-line arguments to see if security tools/services are killed or stop running. Monitor Registry edits for modifications to services and startup programs that correspond to security tools. Monitoring for changes to other known features used by deployed security tools may also expose malicious activity.\n\nLack of expected log events may be suspicious.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows",
+        "macOS",
+        "Linux",
+        "Containers",
+        "IaaS",
+        "Network Devices"
+      ],
+      "x_mitre_version": "1.6",
+      "x_mitre_data_sources": [
+        "Sensor Health: Host Status",
+        "Process: Process Termination",
+        "Process: Process Creation",
+        "Service: Service Metadata",
+        "Windows Registry: Windows Registry Key Modification",
+        "Command: Command Execution",
+        "Windows Registry: Windows Registry Key Deletion",
+        "Driver: Driver Load"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--bf90d72c-c00b-45e3-b3aa-68560560d4c5",
+      "created": "2020-03-11T21:01:00.959Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1570",
+          "external_id": "T1570"
+        },
+        {
+          "source_name": "Dropbox Malware Sync",
+          "description": "David Talbot. (2013, August 21). Dropbox and Similar Services Can Sync Malware. Retrieved May 31, 2023.",
+          "url": "https://www.technologyreview.com/2013/08/21/83143/dropbox-and-similar-services-can-sync-malware/"
+        },
+        {
+          "source_name": "Unit42 LockerGoga 2019",
+          "description": "Harbison, M. (2019, March 26). Born This Way? Origins of LockerGoga. Retrieved April 16, 2019.",
+          "url": "https://unit42.paloaltonetworks.com/born-this-way-origins-of-lockergoga/"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:59:03.832Z",
+      "name": "Lateral Tool Transfer",
+      "description": "Adversaries may transfer tools or other files between systems in a compromised environment. Once brought into the victim environment (i.e., [Ingress Tool Transfer](https://attack.mitre.org/techniques/T1105)) files may then be copied from one system to another to stage adversary tools or other files over the course of an operation.\n\nAdversaries may copy files between internal victim systems to support lateral movement using inherent file sharing protocols such as file sharing over [SMB/Windows Admin Shares](https://attack.mitre.org/techniques/T1021/002) to connected network shares or with authenticated connections via [Remote Desktop Protocol](https://attack.mitre.org/techniques/T1021/001).(Citation: Unit42 LockerGoga 2019)\n\nFiles can also be transferred using native or otherwise present tools on the victim system, such as scp, rsync, curl, sftp, and [ftp](https://attack.mitre.org/software/S0095). In some cases, adversaries may be able to leverage [Web Service](https://attack.mitre.org/techniques/T1102)s such as Dropbox or OneDrive to copy files from one machine to another via shared, automatically synced folders.(Citation: Dropbox Malware Sync)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "lateral-movement"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Shailesh Tiwary (Indian Army)"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Monitor for file creation and files transferred within a network using protocols such as SMB or FTP. Unusual processes with internal network connections creating files on-system may be suspicious. Consider monitoring for abnormal usage of utilities and command-line arguments that may be used in support of remote transfer of files. Considering monitoring for alike file hashes or characteristics (ex: filename) that are created on multiple hosts.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "ESXi"
+      ],
+      "x_mitre_version": "1.4",
+      "x_mitre_data_sources": [
+        "Named Pipe: Named Pipe Metadata",
+        "Network Share: Network Share Access",
+        "Network Traffic: Network Traffic Flow",
+        "Command: Command Execution",
+        "Process: Process Creation",
+        "File: File Creation",
+        "Network Traffic: Network Traffic Content",
+        "File: File Metadata"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--d63a3fb8-9452-4e9d-a60a-54be68d5998c",
+      "created": "2020-01-31T12:35:36.479Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1070/004",
+          "external_id": "T1070.004"
+        },
+        {
+          "source_name": "Microsoft SDelete July 2016",
+          "description": "Russinovich, M. (2016, July 4). SDelete v2.0. Retrieved February 8, 2018.",
+          "url": "https://docs.microsoft.com/en-us/sysinternals/downloads/sdelete"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:59:12.733Z",
+      "name": "File Deletion",
+      "description": "Adversaries may delete files left behind by the actions of their intrusion activity. Malware, tools, or other non-native files dropped or created on a system by an adversary (ex: [Ingress Tool Transfer](https://attack.mitre.org/techniques/T1105)) may leave traces to indicate to what was done within a network and how. Removal of these files can occur during an intrusion, or as part of a post-intrusion process to minimize the adversary's footprint.\n\nThere are tools available from the host operating system to perform cleanup, but adversaries may use other tools as well.(Citation: Microsoft SDelete July 2016) Examples of built-in [Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059) functions include <code>del</code> on Windows, <code>rm</code> or <code>unlink</code> on Linux and macOS, and `rm` on ESXi.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "defense-evasion"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Walker Johnson"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "It may be uncommon for events related to benign command-line functions such as DEL or third-party utilities or tools to be found in an environment, depending on the user base and how systems are typically used. Monitoring for command-line deletion functions to correlate with binaries or other files that an adversary may drop and remove may lead to detection of malicious activity. Another good practice is monitoring for known deletion and secure deletion tools that are not already on systems within an enterprise network that an adversary could introduce. Some monitoring tools may collect command-line arguments, but may not capture DEL commands since DEL is a native function within cmd.exe.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "ESXi"
+      ],
+      "x_mitre_version": "1.2",
+      "x_mitre_data_sources": [
+        "Command: Command Execution",
+        "File: File Deletion"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--e358d692-23c0-4a31-9eb6-ecc13a8d7735",
+      "created": "2017-05-31T21:30:28.187Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1018",
+          "external_id": "T1018"
+        },
+        {
+          "source_name": "CISA AR21-126A FIVEHANDS May 2021",
+          "description": "CISA. (2021, May 6). Analysis Report (AR21-126A) FiveHands Ransomware. Retrieved June 7, 2021.",
+          "url": "https://us-cert.cisa.gov/ncas/analysis-reports/ar21-126a"
+        },
+        {
+          "source_name": "Elastic - Koadiac Detection with EQL",
+          "description": "Stepanic, D.. (2020, January 13). Embracing offensive tooling: Building detections against Koadic using EQL. Retrieved November 17, 2024.",
+          "url": "https://www.elastic.co/security-labs/embracing-offensive-tooling-building-detections-against-koadic-using-eql"
+        },
+        {
+          "source_name": "US-CERT-TA18-106A",
+          "description": "US-CERT. (2018, April 20). Alert (TA18-106A) Russian State-Sponsored Cyber Actors Targeting Network Infrastructure Devices. Retrieved October 19, 2020.",
+          "url": "https://www.us-cert.gov/ncas/alerts/TA18-106A"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:59:15.859Z",
+      "name": "Remote System Discovery",
+      "description": "Adversaries may attempt to get a listing of other systems by IP address, hostname, or other logical identifier on a network that may be used for Lateral Movement from the current system. Functionality could exist within remote access tools to enable this, but utilities available on the operating system could also be used such as  [Ping](https://attack.mitre.org/software/S0097), <code>net view</code> using [Net](https://attack.mitre.org/software/S0039), or, on ESXi servers, `esxcli network diag ping`.\n\nAdversaries may also analyze data from local host files (ex: <code>C:\\Windows\\System32\\Drivers\\etc\\hosts</code> or <code>/etc/hosts</code>) or other passive means (such as local [Arp](https://attack.mitre.org/software/S0099) cache entries) in order to discover the presence of remote systems in an environment.\n\nAdversaries may also target discovery of network infrastructure as well as leverage [Network Device CLI](https://attack.mitre.org/techniques/T1059/008) commands on network devices to gather detailed information about systems within a network (e.g. <code>show cdp neighbors</code>, <code>show arp</code>).(Citation: US-CERT-TA18-106A)(Citation: CISA AR21-126A FIVEHANDS May 2021)  \n",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "discovery"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Daniel Stepanic, Elastic",
+        "RedHuntLabs, @redhuntlabs",
+        "Austin Clark, @c2defense"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "System and network discovery techniques normally occur throughout an operation as an adversary learns the environment. Data and events should not be viewed in isolation, but as part of a chain of behavior that could lead to other activities, such as Lateral Movement, based on the information obtained.\n\nNormal, benign system and network events related to legitimate remote system discovery may be uncommon, depending on the environment and how they are used. Monitor processes and command-line arguments for actions that could be taken to gather system and network information. Remote access tools with built-in features may interact directly with the Windows API to gather information. Information may also be acquired through Windows system management tools such as [Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047) and [PowerShell](https://attack.mitre.org/techniques/T1059/001).\n\nMonitor for processes that can be used to discover remote systems, such as <code>ping.exe</code> and <code>tracert.exe</code>, especially when executed in quick succession.(Citation: Elastic - Koadiac Detection with EQL)",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Network Devices",
+        "ESXi"
+      ],
+      "x_mitre_version": "3.6",
+      "x_mitre_data_sources": [
+        "Command: Command Execution",
+        "File: File Access",
+        "Network Traffic: Network Connection Creation",
+        "Process: Process Creation"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
+      "created": "2017-05-31T21:31:16.408Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1105",
+          "external_id": "T1105"
+        },
+        {
+          "source_name": "T1105: Trellix_search-ms",
+          "description": " Mathanraj Thangaraju, Sijo Jacob. (2023, July 26). Beyond File Search: A Novel Method for Exploiting the \"search-ms\" URI Protocol Handler. Retrieved March 15, 2024.",
+          "url": "https://www.trellix.com/blogs/research/beyond-file-search-a-novel-method/"
+        },
+        {
+          "source_name": "Google Cloud Threat Intelligence COSCMICENERGY 2023",
+          "description": "COSMICENERGY: New OT Malware Possibly Related To Russian Emergency Response Exercises. (2023, May 25). Ken Proska, Daniel Kapellmann Zafra, Keith Lunden, Corey Hildebrandt, Rushikesh Nandedkar, Nathan Brubaker. Retrieved March 18, 2025.",
+          "url": "https://cloud.google.com/blog/topics/threat-intelligence/cosmicenergy-ot-malware-russian-response/"
+        },
+        {
+          "source_name": "Dropbox Malware Sync",
+          "description": "David Talbot. (2013, August 21). Dropbox and Similar Services Can Sync Malware. Retrieved May 31, 2023.",
+          "url": "https://www.technologyreview.com/2013/08/21/83143/dropbox-and-similar-services-can-sync-malware/"
+        },
+        {
+          "source_name": "University of Birmingham C2",
+          "description": "Gardiner, J.,  Cova, M., Nagaraja, S. (2014, February). Command & Control Understanding, Denying and Detecting. Retrieved April 20, 2016.",
+          "url": "https://arxiv.org/ftp/arxiv/papers/1408/1408.1136.pdf"
+        },
+        {
+          "source_name": "t1105_lolbas",
+          "description": "LOLBAS. (n.d.). LOLBAS Mapped to T1105. Retrieved March 11, 2022.",
+          "url": "https://lolbas-project.github.io/#t1105"
+        },
+        {
+          "source_name": "PTSecurity Cobalt Dec 2016",
+          "description": "Positive Technologies. (2016, December 16). Cobalt Snatch. Retrieved October 9, 2018.",
+          "url": "https://www.ptsecurity.com/upload/corporate/ww-en/analytics/Cobalt-Snatch-eng.pdf"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:59:17.217Z",
+      "name": "Ingress Tool Transfer",
+      "description": "Adversaries may transfer tools or other files from an external system into a compromised environment. Tools or files may be copied from an external adversary-controlled system to the victim network through the command and control channel or through alternate protocols such as [ftp](https://attack.mitre.org/software/S0095). Once present, adversaries may also transfer/spread tools between victim devices within a compromised environment (i.e. [Lateral Tool Transfer](https://attack.mitre.org/techniques/T1570)). \n\nOn Windows, adversaries may use various utilities to download tools, such as `copy`, `finger`, [certutil](https://attack.mitre.org/software/S0160), and [PowerShell](https://attack.mitre.org/techniques/T1059/001) commands such as <code>IEX(New-Object Net.WebClient).downloadString()</code> and <code>Invoke-WebRequest</code>. On Linux and macOS systems, a variety of utilities also exist, such as `curl`, `scp`, `sftp`, `tftp`, `rsync`, `finger`, and `wget`.(Citation: t1105_lolbas)  A number of these tools, such as `wget`, `curl`, and `scp`, also exist on ESXi. After downloading a file, a threat actor may attempt to verify its integrity by checking its hash value (e.g., via `certutil -hashfile`).(Citation: Google Cloud Threat Intelligence COSCMICENERGY 2023)\n\nAdversaries may also abuse installers and package managers, such as `yum` or `winget`, to download tools to victim hosts. Adversaries have also abused file application features, such as the Windows `search-ms` protocol handler, to deliver malicious files to victims through remote file searches invoked by [User Execution](https://attack.mitre.org/techniques/T1204) (typically after interacting with [Phishing](https://attack.mitre.org/techniques/T1566) lures).(Citation: T1105: Trellix_search-ms)\n\nFiles can also be transferred using various [Web Service](https://attack.mitre.org/techniques/T1102)s as well as native or otherwise present tools on the victim system.(Citation: PTSecurity Cobalt Dec 2016) In some cases, adversaries may be able to leverage services that sync between a web-based and an on-premises client, such as Dropbox or OneDrive, to transfer files onto victim systems. For example, by compromising a cloud account and logging into the service's web portal, an adversary may be able to trigger an automatic syncing process that transfers the file onto the victim's machine.(Citation: Dropbox Malware Sync)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "command-and-control"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "John Page (aka hyp3rlinx), ApparitionSec",
+        "Mark Wee",
+        "Shailesh Tiwary (Indian Army)",
+        "The DFIR Report",
+        "Alain Homewood",
+        "Joe Wise",
+        "Jeremy Hedges",
+        "Selena Larson, @selenalarson",
+        "Peter Oakes"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Monitor for file creation and files transferred into the network. Unusual processes with external network connections creating files on-system may be suspicious. Use of utilities, such as [ftp](https://attack.mitre.org/software/S0095), that does not normally occur may also be suspicious.\n\nAnalyze network data for uncommon data flows (e.g., a client sending significantly more data than it receives from a server). Processes utilizing the network that do not normally have network communication or have never been seen before are suspicious. Specifically, for the finger utility on Windows and Linux systems, monitor command line or terminal execution for the finger command. Monitor network activity for TCP port 79, which is used by the finger utility, and Windows <code>netsh interface portproxy</code> modifications to well-known ports such as 80 and 443. Furthermore, monitor file system for the download/creation and execution of suspicious files, which may indicate adversary-downloaded payloads. Analyze packet contents to detect communications that do not follow the expected protocol behavior for the port that is being used.(Citation: University of Birmingham C2)",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Network Devices",
+        "ESXi"
+      ],
+      "x_mitre_version": "2.5",
+      "x_mitre_data_sources": [
+        "File: File Creation",
+        "Network Traffic: Network Traffic Content",
+        "Network Traffic: Network Traffic Flow",
+        "Command: Command Execution",
+        "Network Traffic: Network Connection Creation"
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--eb062747-2193-45de-8fa2-e62549c37ddf",
+      "created": "2020-02-11T18:23:26.059Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1021/001",
+          "external_id": "T1021.001"
+        },
+        {
+          "source_name": "Alperovitch Malware",
+          "description": "Alperovitch, D. (2014, October 31). Malware-Free Intrusions. Retrieved November 17, 2024.",
+          "url": "https://web.archive.org/web/20191115195333/https://www.crowdstrike.com/blog/adversary-tricks-crowdstrike-treats/"
+        },
+        {
+          "source_name": "TechNet Remote Desktop Services",
+          "description": "Microsoft. (n.d.). Remote Desktop Services. Retrieved June 1, 2016.",
+          "url": "https://technet.microsoft.com/en-us/windowsserver/ee236407.aspx"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:59:18.689Z",
+      "name": "Remote Desktop Protocol",
+      "description": "Adversaries may use [Valid Accounts](https://attack.mitre.org/techniques/T1078) to log into a computer using the Remote Desktop Protocol (RDP). The adversary may then perform actions as the logged-on user.\n\nRemote desktop is a common feature in operating systems. It allows a user to log into an interactive session with a system desktop graphical user interface on a remote system. Microsoft refers to its implementation of the Remote Desktop Protocol (RDP) as Remote Desktop Services (RDS).(Citation: TechNet Remote Desktop Services) \n\nAdversaries may connect to a remote system over RDP/RDS to expand access if the service is enabled and allows access to accounts with known credentials. Adversaries will likely use Credential Access techniques to acquire credentials to use with RDP. Adversaries may also use RDP in conjunction with the [Accessibility Features](https://attack.mitre.org/techniques/T1546/008) or [Terminal Services DLL](https://attack.mitre.org/techniques/T1505/005) for Persistence.(Citation: Alperovitch Malware)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "lateral-movement"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Matthew Demaske, Adaptforward"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Use of RDP may be legitimate, depending on the network environment and how it is used. Other factors, such as access patterns and activity that occurs after a remote login, may indicate suspicious or malicious behavior with RDP. Monitor for user accounts logged into systems they would not normally access or access patterns to multiple systems over a relatively short period of time.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows"
+      ],
+      "x_mitre_version": "1.3",
+      "x_mitre_data_sources": [
+        "Network Traffic: Network Traffic Flow",
+        "Logon Session: Logon Session Creation",
+        "Network Traffic: Network Connection Creation",
+        "Process: Process Creation",
+        "Logon Session: Logon Session Metadata"
+      ]
+    },
+    {
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0006",
+          "external_id": "TA0006"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:32.408Z",
+      "name": "Credential Access",
+      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "credential-access"
+    },
+    {
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0002",
+          "external_id": "TA0002"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:32.769Z",
+      "name": "Execution",
+      "description": "The adversary is trying to run malicious code.\n\nExecution consists of techniques that result in adversary-controlled code running on a local or remote system. Techniques that run malicious code are often paired with techniques from all other tactics to achieve broader goals, like exploring a network or stealing data. For example, an adversary might use a remote access tool to run a PowerShell script that does Remote System Discovery. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "execution"
+    },
+    {
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0003",
+          "external_id": "TA0003"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:33.492Z",
+      "name": "Persistence",
+      "description": "The adversary is trying to maintain their foothold.\n\nPersistence consists of techniques that adversaries use to keep access to systems across restarts, changed credentials, and other interruptions that could cut off their access. Techniques used for persistence include any access, action, or configuration changes that let them maintain their foothold on systems, such as replacing or hijacking legitimate code or adding startup code. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "persistence"
+    },
+    {
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0008",
+          "external_id": "TA0008"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:34.223Z",
+      "name": "Lateral Movement",
+      "description": "The adversary is trying to move through your environment.\n\nLateral Movement consists of techniques that adversaries use to enter and control remote systems on a network. Following through on their primary objective often requires exploring the network to find their target and subsequently gaining access to it. Reaching their objective often involves pivoting through multiple systems and accounts to gain. Adversaries might install their own remote access tools to accomplish Lateral Movement or use legitimate credentials with native network and operating system tools, which may be stealthier. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "lateral-movement"
+    },
+    {
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0005",
+          "external_id": "TA0005"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:34.581Z",
+      "name": "Defense Evasion",
+      "description": "The adversary is trying to avoid being detected.\n\nDefense Evasion consists of techniques that adversaries use to avoid detection throughout their compromise. Techniques used for defense evasion include uninstalling/disabling security software or obfuscating/encrypting data and scripts. Adversaries also leverage and abuse trusted processes to hide and masquerade their malware. Other tactics’ techniques are cross-listed here when those techniques include the added benefit of subverting defenses. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "defense-evasion"
+    },
+    {
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0007",
+          "external_id": "TA0007"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:35.302Z",
+      "name": "Discovery",
+      "description": "The adversary is trying to figure out your environment.\n\nDiscovery consists of techniques an adversary may use to gain knowledge about the system and internal network. These techniques help adversaries observe the environment and orient themselves before deciding how to act. They also allow adversaries to explore what they can control and what’s around their entry point in order to discover how it could benefit their current objective. Native operating system tools are often used toward this post-compromise information-gathering objective. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "discovery"
+    },
+    {
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0011",
+          "external_id": "TA0011"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:36.561Z",
+      "name": "Command and Control",
+      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "command-and-control"
+    },
+    {
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "id": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0001",
+          "external_id": "TA0001"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:36.917Z",
+      "name": "Initial Access",
+      "description": "The adversary is trying to get into your network.\n\nInitial Access consists of techniques that use various entry vectors to gain their initial foothold within a network. Techniques used to gain a foothold include targeted spearphishing and exploiting weaknesses on public-facing web servers. Footholds gained through initial access may allow for continued access, like valid accounts and use of external remote services, or may be limited-use due to changing passwords.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "initial-access"
+    },
+    {
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
+      "type": "identity",
+      "spec_version": "2.1",
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "created": "2017-06-01T00:00:00.000Z",
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "x_mitre_attack_spec_version": "3.2.0"
+    },
+    {
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      },
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "definition_type": "statement"
+    },
+    {
+      "type": "directory",
+      "id": "directory--02b1765f-0d2e-4991-8ba8-1053ef09de2c",
+      "spec_version": "2.1",
+      "path": "c:\\drive"
+    },
+    {
+      "type": "process",
+      "id": "process--3f5b9295-9d49-410e-b542-54f258b52434",
+      "spec_version": "2.1",
+      "command_line": "powershell try{Add-MpPreference -ExclusionPath 'C:\\'; Write-Host 'added-exclusion'} catch {Write-Host 'adding-exclusion-failed' }; powershell -enc \"$BASE64 encoded payload to download next stage and execute it\""
+    },
+    {
+      "type": "user-account",
+      "id": "user-account--039865eb-337f-4941-92c5-14de002c7753",
+      "spec_version": "2.1",
+      "account_type": "windows-local",
+      "display_name": "DefaultAccount"
+    },
+    {
+      "type": "ipv4-addr",
+      "id": "ipv4-addr--903efce3-4a7d-4272-9c33-7868fc767876",
+      "spec_version": "2.1",
+      "value": "182.54.217.2"
+    },
+    {
+      "type": "ipv4-addr",
+      "id": "ipv4-addr--c51c9009-568d-46c6-8fac-09b4ce1e848c",
+      "spec_version": "2.1",
+      "value": "182.54.217.2"
+    },
+    {
+      "type": "user-account",
+      "id": "user-account--8b025fd8-d5a5-408a-8b29-c6795ba84c37",
+      "spec_version": "2.1",
+      "display_name": "SYSTEM"
+    },
+    {
+      "type": "url",
+      "id": "url--5cb4ac20-de90-4aba-8467-fe57ba5af2a8",
+      "spec_version": "2.1",
+      "value": "tunnel.us.ngrok[.]com"
+    },
+    {
+      "type": "url",
+      "id": "url--3e9fd4ff-625f-42e3-8285-762835bd6b50",
+      "spec_version": "2.1",
+      "value": "korgn.su.lennut[.]com"
+    },
+    {
+      "type": "process",
+      "id": "process--6a0cd876-3fd3-4557-9dfc-7d004cf217ae",
+      "spec_version": "2.1",
+      "command_line": "Powershell.exe get-adcomputer -filter * -properties * | select name,operatingsystem,ipv4address &gt;"
     }
   ]
 }

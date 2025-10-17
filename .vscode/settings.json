@@ -1,0 +1,8 @@
+{
+	"terminal.integrated.scrollback": 6000,
+	"workbench.preferredHighContrastColorTheme": "Visual Studio Dark",
+	"workbench.preferredHighContrastLightColorTheme": "Visual Studio Light",
+	"workbench.preferredLightColorTheme": "Visual Studio Light",
+	"workbench.colorTheme": "Visual Studio Dark",
+	"workbench.preferredDarkColorTheme": "Visual Studio Dark"
+}
