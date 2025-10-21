@@ -144,7 +144,7 @@ define
     # Attack Operator Object
     ################################
 
-    flow-operator sub file,
+    flow-operator sub stix-domain-object,
         owns operator,
         plays effect-refs:the-impulse,
         plays effect-refs:the-effect,

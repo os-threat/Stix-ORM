@@ -1,0 +1,621 @@
+{
+  "type": "bundle",
+  "id": "bundle--d898bd9a-e398-4262-9487-da62ffd45428",
+  "spec_version": "2.1",
+  "created": "2025-07-30T19:47:12.796Z",
+  "modified": "2025-07-30T19:47:12.796Z",
+  "objects": [
+    {
+      "type": "extension-definition",
+      "id": "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "Attack Flow",
+      "description": "Extends STIX 2.1 with features to create Attack Flows.",
+      "created_by_ref": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "schema": "https://center-for-threat-informed-defense.github.io/attack-flow/stix/attack-flow-schema-2.0.0.json",
+      "version": "2.0.0",
+      "extension_types": [
+        "new-sdo"
+      ],
+      "external_references": [
+        {
+          "source_name": "Documentation",
+          "description": "Documentation for Attack Flow",
+          "url": "https://center-for-threat-informed-defense.github.io/attack-flow"
+        },
+        {
+          "source_name": "GitHub",
+          "description": "Source code repository for Attack Flow",
+          "url": "https://github.com/center-for-threat-informed-defense/attack-flow"
+        }
+      ]
+    },
+    {
+      "type": "identity",
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "created_by_ref": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "type": "attack-flow",
+      "id": "attack-flow--59ae4df4-40f2-478d-923a-88b3274cc210",
+      "spec_version": "2.1",
+      "created": "2022-10-27T17:08:29.791Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--9373e79d-2704-462a-9feb-8b55e1474d75",
+      "start_refs": [
+        "attack-action--5bde19de-dfc9-4a67-b7f0-58d63b146fee"
+      ],
+      "name": "DFIR - BumbleBee Round 2",
+      "description": "A documented BumbleBee Malware intrusion by the DFIR Report occurring in May 2022 ",
+      "scope": "incident",
+      "external_references": [
+        {
+          "source_name": "BumbleBee: Round Two\n\n",
+          "description": "\"In this intrusion from May 2022, the threat actors used BumbleBee as the initial access vector. BumbleBee has been identified as an initial access vector utilized by several ransomware affiliates.\"",
+          "url": "https://thedfirreport.com/2022/09/26/bumblebee-round-two/"
+        }
+      ]
+    },
+    {
+      "type": "identity",
+      "id": "identity--9373e79d-2704-462a-9feb-8b55e1474d75",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "name": "Kevin Lo",
+      "contact_information": "klo@anvilogic.com"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--5bde19de-dfc9-4a67-b7f0-58d63b146fee",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Shortcut Modification",
+      "tactic_id": "TA0003",
+      "tactic_ref": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "technique_id": "T1547.009",
+      "technique_ref": "attack-pattern--4ab929c6-ee2d-4fb5-aab4-b14be2ed7179",
+      "description": "Bumblebee Initial Execution. (All dates in this flow are relative. The breach start time is not known.)",
+      "execution_start": "1970-01-01T12:05:00.000Z",
+      "effect_refs": [
+        "attack-action--52551dbb-9709-4a90-b7e2-ad92c735d5cc",
+        "attack-action--1d4f33a8-1ae5-498a-a169-ff39bdced02f"
+      ],
+      "asset_refs": [
+        "attack-asset--d168bbc0-3cba-422e-aaa1-ed45831a7ce9"
+      ],
+      "command_ref": "process--50cab0ab-6a3d-41ed-a928-e860d0f921a5"
+    },
+    {
+      "type": "attack-asset",
+      "id": "attack-asset--d168bbc0-3cba-422e-aaa1-ed45831a7ce9",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Beach Head"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--1d4f33a8-1ae5-498a-a169-ff39bdced02f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Ingress Tool Transfer",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1105",
+      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
+      "description": "Dropping the Bumblebee DLL",
+      "asset_refs": [
+        "attack-asset--d168bbc0-3cba-422e-aaa1-ed45831a7ce9"
+      ],
+      "effect_refs": [
+        "attack-action--3d2e236c-8c72-4882-acca-ada71a3836e6"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--3d2e236c-8c72-4882-acca-ada71a3836e6",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Rundll32",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1218.011",
+      "technique_ref": "attack-pattern--045d0922-2310-4e60-b5e4-3302302cb3c5",
+      "description": "Rundll32 executes DLL",
+      "asset_refs": [
+        "attack-asset--d168bbc0-3cba-422e-aaa1-ed45831a7ce9"
+      ],
+      "effect_refs": [
+        "attack-action--a4a665d0-8a5e-4135-8d9b-e57c996cd4a2"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--a4a665d0-8a5e-4135-8d9b-e57c996cd4a2",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Windows Management Instrumentation",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1047",
+      "technique_ref": "attack-pattern--01a5a209-b94c-450b-b7f9-946497d91055",
+      "description": "WMI Call for Process Injection",
+      "asset_refs": [
+        "attack-asset--d168bbc0-3cba-422e-aaa1-ed45831a7ce9"
+      ],
+      "effect_refs": [
+        "attack-action--055084d8-e6ee-440a-a3d5-895ba5fdecdf"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--055084d8-e6ee-440a-a3d5-895ba5fdecdf",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Process Injection",
+      "technique_id": "T1055",
+      "technique_ref": "attack-pattern--43e7dc91-05b2-474c-b9ac-2ed4fe101f4d",
+      "asset_refs": [
+        "attack-asset--d168bbc0-3cba-422e-aaa1-ed45831a7ce9"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--52551dbb-9709-4a90-b7e2-ad92c735d5cc",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Command and Scripting Interpreter",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1059",
+      "technique_ref": "attack-pattern--7385dfaf-6886-4229-9ecd-6fd678040830",
+      "description": "12:19 UTC to 12:27 UTC: Meterpreter shell for command execution",
+      "execution_start": "1970-01-01T12:19:00.000Z",
+      "execution_end": "1970-01-01T12:27:00.000Z",
+      "asset_refs": [
+        "attack-asset--d168bbc0-3cba-422e-aaa1-ed45831a7ce9"
+      ],
+      "effect_refs": [
+        "attack-action--4f144a9a-bf93-4119-b55b-4d21ef5a10cd",
+        "attack-action--f636129f-0281-487f-b497-d235e2dab480",
+        "attack-action--1da9c661-90f5-4bca-b5f1-2798deb4acbe"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--1da9c661-90f5-4bca-b5f1-2798deb4acbe",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Network Share Discovery",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1135",
+      "technique_ref": "attack-pattern--3489cfc5-640f-4bb3-a103-9137b97de79f",
+      "description": "12:28 to 12:57 UTC Discovery from Meterpreter Sessions",
+      "asset_refs": [
+        "attack-asset--d168bbc0-3cba-422e-aaa1-ed45831a7ce9"
+      ],
+      "effect_refs": [
+        "attack-operator--f33a8aa0-fe02-4337-9203-ead996055b96"
+      ]
+    },
+    {
+      "type": "attack-operator",
+      "id": "attack-operator--f33a8aa0-fe02-4337-9203-ead996055b96",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND",
+      "effect_refs": [
+        "attack-action--a69439a7-6d16-421a-9ff7-776302391be0"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--4f144a9a-bf93-4119-b55b-4d21ef5a10cd",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Domain Account",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1087.002",
+      "technique_ref": "attack-pattern--21875073-b0ee-49e3-9077-1e2a885359af",
+      "description": "12:28 to 12:57 UTC Discovery from Meterpreter Sessions",
+      "execution_start": "1970-01-01T12:28:00.000Z",
+      "execution_end": "1970-01-01T12:57:00.000Z",
+      "effect_refs": [
+        "attack-operator--f33a8aa0-fe02-4337-9203-ead996055b96"
+      ],
+      "asset_refs": [
+        "attack-asset--d168bbc0-3cba-422e-aaa1-ed45831a7ce9"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--f636129f-0281-487f-b497-d235e2dab480",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Domain Trust Discovery",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1482",
+      "technique_ref": "attack-pattern--767dbf9e-df3f-45cb-8998-4903ab5f80c0",
+      "description": "12:28 to 12:57 UTC Discovery from Meterpreter Sessions",
+      "execution_start": "1970-01-01T12:28:00.000Z",
+      "execution_end": "1970-01-01T12:57:00.000Z",
+      "effect_refs": [
+        "attack-operator--f33a8aa0-fe02-4337-9203-ead996055b96"
+      ],
+      "asset_refs": [
+        "attack-asset--d168bbc0-3cba-422e-aaa1-ed45831a7ce9"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--a69439a7-6d16-421a-9ff7-776302391be0",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Application Layer Protocol",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1071",
+      "technique_ref": "attack-pattern--355be19c-ffc9-46d5-8d50-d6a036c675b6",
+      "description": "18:26 UTC - 18:27 UTC  Cobalt Strike executed and initiates reconnaissance",
+      "execution_start": "1970-01-01T18:26:00.000Z",
+      "execution_end": "1970-01-01T18:27:00.000Z",
+      "effect_refs": [
+        "attack-action--d31e9ed3-3eb9-44d1-9a53-2e2e4c3dcac2"
+      ],
+      "asset_refs": [
+        "attack-asset--d168bbc0-3cba-422e-aaa1-ed45831a7ce9"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--d31e9ed3-3eb9-44d1-9a53-2e2e4c3dcac2",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Account Discovery",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1087",
+      "technique_ref": "attack-pattern--72b74d71-8169-42aa-92e0-e7b04b9f5a08",
+      "description": "18:26 UTC - 18:27 UTC  Cobalt Strike executed and initiates reconnaissance",
+      "execution_start": "1970-01-01T18:26:00.000Z",
+      "execution_end": "1970-01-01T18:27:00.000Z",
+      "effect_refs": [
+        "attack-action--40029c58-c769-4dbd-a901-87ce0857e074"
+      ],
+      "asset_refs": [
+        "attack-asset--d168bbc0-3cba-422e-aaa1-ed45831a7ce9"
+      ]
+    },
+    {
+      "type": "campaign",
+      "id": "campaign--95f13a09-db1d-4af9-86ff-d3f063286513",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "name": "DFIR Report - BumbleBee: Round Two"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--40029c58-c769-4dbd-a901-87ce0857e074",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "LSASS Memory",
+      "tactic_id": "TA0006",
+      "tactic_ref": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
+      "technique_id": "T1003.001",
+      "technique_ref": "attack-pattern--65f2d882-3f41-4d48-8a06-29af77ec9f90",
+      "description": "18:31 UTC Credential dump with procdump and collection",
+      "execution_start": "1970-01-01T18:31:00.000Z",
+      "effect_refs": [
+        "attack-action--dc4fb9cd-da86-48d8-b062-7a78f4fcccad"
+      ],
+      "asset_refs": [
+        "attack-asset--d168bbc0-3cba-422e-aaa1-ed45831a7ce9"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--dc4fb9cd-da86-48d8-b062-7a78f4fcccad",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Remote Desktop Protocol",
+      "tactic_id": "TA0008",
+      "tactic_ref": "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
+      "technique_id": "T1021.001",
+      "technique_ref": "attack-pattern--eb062747-2193-45de-8fa2-e62549c37ddf",
+      "description": "18:53 UTC Lateral Movement to Server via RDP and Anydesk install",
+      "execution_start": "1970-01-01T18:53:00.000Z",
+      "effect_refs": [
+        "attack-action--3cd623e4-d522-4a49-9274-80daab9d548d"
+      ],
+      "asset_refs": [
+        "attack-asset--02d51e4b-f881-47c4-999c-15faa02583cf"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--3cd623e4-d522-4a49-9274-80daab9d548d",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Remote Access Software",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1219",
+      "technique_ref": "attack-pattern--4061e78c-1284-44b4-9116-73e4ac3912f7",
+      "description": "Remote access with AnyDesk",
+      "effect_refs": [
+        "attack-action--f988de9b-8b10-45bc-9f97-151ff552a196"
+      ],
+      "asset_refs": [
+        "attack-asset--02d51e4b-f881-47c4-999c-15faa02583cf"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--f988de9b-8b10-45bc-9f97-151ff552a196",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Domain Account",
+      "tactic_id": "TA0003",
+      "tactic_ref": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "technique_id": "T1136.002",
+      "technique_ref": "attack-pattern--7610cada-1499-41a4-b3dd-46467b68d177",
+      "description": "19:00 UTC User Added for Persistence on Server",
+      "execution_start": "1970-01-01T19:00:00.000Z",
+      "effect_refs": [
+        "attack-action--a39cb9ff-6740-4503-8a22-7549753a892c"
+      ],
+      "asset_refs": [
+        "attack-asset--02d51e4b-f881-47c4-999c-15faa02583cf"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--a39cb9ff-6740-4503-8a22-7549753a892c",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "System Network Configuration Discovery",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1016",
+      "technique_ref": "attack-pattern--707399d6-ab3e-4963-9315-d9d3818cd6a0",
+      "description": "19:09 UTC AdFind executed for system reconnaissance",
+      "execution_start": "1970-01-01T19:09:00.000Z",
+      "effect_refs": [
+        "attack-action--26ba213f-b338-42a5-a791-c666668db1e3"
+      ],
+      "asset_refs": [
+        "attack-asset--02d51e4b-f881-47c4-999c-15faa02583cf"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--26ba213f-b338-42a5-a791-c666668db1e3",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Remote Access Software",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1219",
+      "technique_ref": "attack-pattern--4061e78c-1284-44b4-9116-73e4ac3912f7",
+      "description": "19:13 UTC AnyDesk used to browse files",
+      "execution_start": "1970-01-01T19:13:00.000Z",
+      "effect_refs": [
+        "attack-action--e40758a2-cd01-4706-9edb-849dc3664091"
+      ],
+      "asset_refs": [
+        "attack-asset--02d51e4b-f881-47c4-999c-15faa02583cf"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--e40758a2-cd01-4706-9edb-849dc3664091",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Remote Services: Remote Desktop Protocol",
+      "tactic_id": "TA0008",
+      "tactic_ref": "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
+      "technique_id": "T1021.001",
+      "technique_ref": "attack-pattern--eb062747-2193-45de-8fa2-e62549c37ddf",
+      "description": "19:17 UTC Lateral Movement to Backup Server via RDP",
+      "execution_start": "1970-01-01T19:17:00.000Z",
+      "effect_refs": [
+        "attack-action--f3466114-62e4-472e-9204-1523cf78352a"
+      ],
+      "asset_refs": [
+        "attack-asset--73d53409-2a4d-48af-9a8c-c15a934ff825"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--f3466114-62e4-472e-9204-1523cf78352a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Windows Command Shell",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1059.003",
+      "technique_ref": "attack-pattern--d1fcf083-a721-4223-aedf-bf8960798d62",
+      "description": "00:14 UTC Batch Script executed for system reconnaissance",
+      "execution_start": "1970-01-02T00:14:00.000Z",
+      "asset_refs": [
+        "attack-asset--73d53409-2a4d-48af-9a8c-c15a934ff825"
+      ]
+    },
+    {
+      "type": "attack-asset",
+      "id": "attack-asset--02d51e4b-f881-47c4-999c-15faa02583cf",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Server"
+    },
+    {
+      "type": "attack-asset",
+      "id": "attack-asset--73d53409-2a4d-48af-9a8c-c15a934ff825",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Backup Server"
+    },
+    {
+      "type": "process",
+      "id": "process--50cab0ab-6a3d-41ed-a928-e860d0f921a5",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.796Z",
+      "modified": "2025-07-30T19:47:12.796Z",
+      "command_line": "rundll32.exe tamirlan.dll,EdHVntqdWt"
+    }
+  ]
+}

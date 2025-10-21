@@ -11,7 +11,8 @@ from stixorm.module.orm.export_object import convert_ans_to_stix
 from stixorm.module.authorise import authorised_mappings, import_type_factory
 from stixorm.module.parsing.parse_objects import parse
 from stixorm.module.parsing.conversion_decisions import get_embedded_match
-from stixorm.module.initialise import sort_layers, load_typeql_data
+from stixorm.module.initialise import load_typeql_data
+from stixorm.module.parsing.clean_list_or_bundle import clean_stix_list
 from stixorm.module.definitions.stix21 import ObservedData, IPv4Address
 from stixorm.module.definitions.os_threat import Feed, ThreatSubObject
 from stixorm.module.orm.import_utilities import val_tql
@@ -228,59 +229,48 @@ def backdoor_add_dir(dirpath):
                     if temp_id:
                         id_list.append(temp_id)
 
-                    dep_obj = dict_to_typeql(element, import_type)
+                    # 
                     # logger.debug('----------------------------------------------------------------------------------------------------')
                     # myobj1 = parse(element, False, import_type)
                     # logger.debug(myobj1.serialize(pretty=True))
                     # logger.debug(f'\n================\n{dep_obj["dep_list"]}')
                     # logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
                     # logger.debug('----------------------------------------------------------------------------------------------------')
-                    layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
+                    # layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
 
-    logger.debug(f'missing {missing}, cyclical {cyclical}')
+    
+    cleaned_objects, report = clean_stix_list(obj_list)
     newlist = []
-    duplist = []
-    missing2 = []
-    if missing != []:
-        missing2 = [x for x in missing if x not in id_list]
-        print(f'\n\n-----------------')
-        print(f'missing ->{missing}')
-        print(f'missing2 -> {missing2}')
+    for obj in cleaned_objects:
+        stixid = obj.get("id", None)
+        logger.debug(f'cleaned obj -> {obj}')
+        dep_obj = dict_to_typeql(obj, import_type)
+        logger.debug(f'\ndep_match {dep_obj["dep_match"]} \ndep_insert {dep_obj["dep_insert"]} \nindep_ql {dep_obj["indep_ql"]} \ncore_ql {dep_obj["core_ql"]}')
+        newlist.append(stixid)
+        dep_match = dep_obj["dep_match"]
+        dep_insert = dep_obj["dep_insert"]
+        indep_ql = dep_obj["indep_ql"]
+        core_ql = dep_obj["core_ql"]
+        print("\n&&&&&&&&&&&&&&&&&&&&&&&&&")
 
-    if missing2 == [] and cyclical == []:
-        # add the layers into a list of strings
-        for layer in layers:
-            stid = layer["id"]
-            if stid not in newlist:
-                newlist.append(stid)
-                dep_match = layer["dep_match"]
-                dep_insert = layer["dep_insert"]
-                indep_ql = layer["indep_ql"]
-                core_ql = layer["core_ql"]
-                print("\n&&&&&&&&&&&&&&&&&&&&&&&&&")
-                print(f'{layer["id"]}      -> {layer["dep_list"]}')
+        #print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+        prestring = ""
+        if dep_match != "":
+            prestring = "match " + dep_match
+        upload_string = prestring + " insert " + indep_ql + dep_insert
+        print(" ")
+        print(upload_string)
+        type_ql_list.append(upload_string)
 
-                #print(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
-                prestring = ""
-                if dep_match != "":
-                    prestring = "match " + dep_match
-                upload_string = prestring + " insert " + indep_ql + dep_insert
-                print(" ")
-                print(upload_string)
-                type_ql_list.append(upload_string)
-            else:
-                duplist.append(stid)
-
-        # add list of strings to typedb
-        load_typeql_data(type_ql_list, connection)
+    # add list of strings to typedb
+    load_typeql_data(type_ql_list, connection)
     id_set = set(id_list)
     id_typedb = set(get_stix_ids())
     len_files = len(id_set)
     len_typedb = len(id_typedb)
     id_diff = id_set - id_typedb
     sorted_diff = sorted(list(id_diff))
-    print(f'\n\n\n===========================\nduplist -> {duplist}')
-    print(f'\n\n\n===========================\ninput len -> {len_files}, typedn len ->{len_typedb}')
+    print(f'\n\n\n===========================\ninput len -> {len_files}, typedb len ->{len_typedb}')
     print(f'difference -> ')
     for id_d in sorted_diff:
         print(id_d)

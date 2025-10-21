@@ -75,7 +75,7 @@ test3 = "mbc/examples"
 test4 = "attack_flow/examples"
 test5 = "mitre/test"
 test_dir = {
-    "test": test2
+    "test": test4
 }
 
 frameworks = {

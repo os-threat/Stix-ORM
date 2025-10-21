@@ -1,0 +1,35 @@
+{
+  "report_date_time": "2025-10-21 21:03:12",
+  "total_number_of_objects_processed": 2,
+  "clean_operation_outcome": true,
+  "return_message": "Successfully processed 2 STIX objects (started with 2)",
+  "detailed_operation_reports": {
+    "expansion_report": {
+      "number_of_objects_defined": 2,
+      "number_of_objects_referenced": 1,
+      "missing_ids_list": [],
+      "sources_of_expansion": []
+    },
+    "cleaning_sco_report": {
+      "number_of_scos_cleaned": 0,
+      "list_of_stix_ids_where_created_field_was_removed": [],
+      "list_of_stix_ids_where_modified_field_was_removed": [],
+      "list_of_stix_ids_where_other_fields_were_removed": []
+    },
+    "circular_reference_report": {
+      "number_of_circular_references_found": 0,
+      "list_of_circular_reference_paths": [],
+      "deleted_fields_and_values": []
+    },
+    "sorting_report": {
+      "sorting_successful": true,
+      "sorted_list_of_stix_ids": [
+        "malware-objective--a624a7a-ef64-46ce-b582-b963b7d6113f",
+        "malware-behavior--b4ab6e5e-82b2-4699-938a-778f840a80fa"
+      ],
+      "diagram_of_sorted_dependencies": "Dependency Diagram:\n==================================================\nmalware-objective--a624a7a-ef64-46ce-b582-b963b7d6113f (malware-objective) [leaf]\nmalware-behavior--b4ab6e5e-82b2-4699-938a-778f840a80fa (malware-behavior) -> 1 refs",
+      "unresolved_references": []
+    },
+    "file_report": null
+  }
+}

@@ -1,0 +1,218 @@
+[
+    {
+        "type": "malware",
+        "spec_version": "2.1",
+        "id": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
+        "created": "2019-08-01T00:00:00.000Z",
+        "modified": "2023-03-01T00:00:00.000Z",
+        "name": "Gamut",
+        "aliases": [
+            "bobax"
+        ],
+        "is_family": true,
+        "external_references": [
+            {
+                "source_name": "trustwave",
+                "url": "https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/gamut- spambot-analysis/",
+                "description": "R. Mendrez, \"Gamut Spambot Analysis,\" Trustwave, blog, Mar. 4, 2014 [Online]."
+            },
+            {
+                "source_name": "capa analysis",
+                "description": "Analysis output, capa 4.0, analyzed at MITRE on Oct. 12, 2022.",
+                "url": "https://github.com/mandiant/capa-rules"
+            }
+        ],
+        "extensions": {
+            "extension-definition--8e9e338f-c9ee-4d4f-8cac-85b4dcfdf3c1": {
+                "extension_type": "property-extension",
+                "obj_defn": {
+                    "source_name": "mbc",
+                    "description": "Gamut is a spamming botnet.",
+                    "url": "https://github.com/MBCProject/mbc-markdown <snip> /xamples",
+                    "external_id": "X0013"
+                },
+                "year": "2014",
+                "platforms": [
+                    "windows"
+                ]
+            }
+        }
+    },
+    {
+        "type": "relationship",
+        "spec_version": "2.1",
+        "id": "relationship--3b3a781f-23a1-4fa9-b6b4-1bb327b2929a",
+        "created": "2023-03-20T00:00:00.000Z",
+        "modified": "2023-03-20T00:00:00.000Z",
+        "relationship_type": "uses",
+        "source_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
+        "target_ref": "attack-pattern--0a5231ec-41af-4a35-83d0-6bdf11f28c65",
+        "description": "Execution::Shared Modules (T1129) -- Gamut links functions <snip> (Citation: trustwave gamut analysis) <snip>"
+    },
+    {
+            "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "name": "The MITRE Corporation",
+            "identity_class": "organization",
+            "type": "identity",
+            "modified": "2017-06-01T00:00:00.000Z",
+            "created": "2017-06-01T00:00:00.000Z"
+        },
+    {
+            "type": "attack-pattern",
+            "id": "attack-pattern--20138b9d-1aac-4a26-8654-a36b6bbf2bba",
+            "created": "2018-04-18T17:59:24.739Z",
+            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "revoked": true,
+            "external_references": [
+                {
+                    "source_name": "mitre-attack",
+                    "url": "https://attack.mitre.org/techniques/T1192",
+                    "external_id": "T1192"
+                },
+                {
+                    "source_name": "capec",
+                    "url": "https://capec.mitre.org/data/definitions/163.html",
+                    "external_id": "CAPEC-163"
+                },
+                {
+                    "source_name": "Trend Micro Pawn Storm OAuth 2017",
+                    "description": "Hacquebord, F.. (2017, April 25). Pawn Storm Abuses Open Authentication in Advanced Social Engineering Attacks. Retrieved October 4, 2019.",
+                    "url": "https://blog.trendmicro.com/trendlabs-security-intelligence/pawn-storm-abuses-open-authentication-advanced-social-engineering-attacks"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+            ],
+            "modified": "2025-04-25T15:15:15.281Z",
+            "name": "Spearphishing Link",
+            "description": "Spearphishing with a link is a specific variant of spearphishing. It is different from other forms of spearphishing in that it employs the use of links to download malware contained in email, instead of attaching malicious files to the email itself, to avoid defenses that may inspect email attachments. \n\nAll forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this case, the malicious emails contain links. Generally, the links will be accompanied by social engineering text and require the user to actively click or copy and paste a URL into a browser, leveraging [User Execution](https://attack.mitre.org/techniques/T1204). The visited website may compromise the web browser using an exploit, or the user will be prompted to download applications, documents, zip files, or even executables depending on the pretext for the email in the first place. Adversaries may also include links that are intended to interact directly with an email reader, including embedded images intended to exploit the end system directly or verify the receipt of an email (i.e. web bugs/web beacons). Links may also direct users to malicious applications  designed to [Steal Application Access Token](https://attack.mitre.org/techniques/T1528)s, like OAuth tokens, in order to gain access to protected applications and information.(Citation: Trend Micro Pawn Storm OAuth 2017)",
+            "kill_chain_phases": [
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "initial-access"
+                }
+            ],
+            "x_mitre_attack_spec_version": "3.2.0",
+            "x_mitre_contributors": [
+                "Shailesh Tiwary (Indian Army)",
+                "Mark Wee",
+                "Jeff Sakowicz, Microsoft Identity Developer Platform Services (IDPM Services)",
+                "Saisha Agrawal, Microsoft Threat Intelligent Center (MSTIC)"
+            ],
+            "x_mitre_deprecated": false,
+            "x_mitre_detection": "URL inspection within email (including expanding shortened links) can help detect links leading to known malicious sites. Detonation chambers can be used to detect these links and either automatically go to these sites to determine if they're potentially malicious, or wait and capture the content if a user visits the link.\n\nBecause this technique usually involves user interaction on the endpoint, many of the possible detections for Spearphishing Link take place once [User Execution](https://attack.mitre.org/techniques/T1204) occurs.",
+            "x_mitre_domains": [
+                "enterprise-attack"
+            ],
+            "x_mitre_is_subtechnique": false,
+            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "x_mitre_platforms": [
+                "Windows",
+                "macOS",
+                "Linux",
+                "Office 365",
+                "SaaS"
+            ],
+            "x_mitre_version": "1.2"
+        },
+        {
+            "definition": {
+                "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+            },
+            "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+            "type": "marking-definition",
+            "created": "2017-06-01T00:00:00.000Z",
+            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "definition_type": "statement"
+        },
+    {
+        "type": "relationship",
+        "spec_version": "2.1",
+        "id": "relationship--96cd8697-4467-4df0-a41f-1c53b05b2431",
+        "created": "2023-03-20T00:00:00.000Z",
+        "modified": "2023-03-20T00:00:00.000Z",
+        "relationship_type": "uses",
+        "source_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
+        "target_ref": "malware-method--b9c9fb8c-71d5-4e9f-9b06-88ba43873c86",
+        "description": "Command and Control::C2 Communication::Receive Data (B0030.002) -- The malware sends data to the C2. (Citation: trustwave gamut analysis)"
+    },
+        {
+            "created": "2020-08-14T00:00:00.000Z",
+            "behavior_ref": "malware-behavior--a28f7a00-c512-4a1e-88a9-9eeeca8a162a",
+            "spec_version": "2.1",
+            "extensions": {
+                "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
+                    "extension_type": "new-sdo"
+                }
+            },
+            "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+            "id": "malware-method--b9c9fb8c-71d5-4e9f-9b06-88ba43873c86",
+            "modified": "2024-04-29T00:00:00.000Z",
+            "name": "Resolve Free Hosting Domain",
+            "obj_defn": {
+                "description": "Resolves a free hosting domain (e.g., freeiz.com).",
+                "external_id": "C0011.005",
+                "source_name": "mitre-mbc"
+            },
+            "object_marking_refs": [
+                "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3"
+            ],
+            "type": "malware-method"
+        },
+        {
+            "type": "marking-definition",
+            "spec_version": "2.1",
+            "id": "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3",
+            "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+            "created": "2020-01-01T00:00:00.000Z",
+            "definition_type": "statement",
+            "definition": {
+                "statement": "Copyright (c) 2020-2023, The MITRE Corporation. All rights reserved."
+            }
+        },
+        {
+            "type": "identity",
+            "spec_version": "2.1",
+            "id": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+            "created": "2020-01-01T00:00:00.000Z",
+            "modified": "2020-01-01T00:00:00.000Z",
+            "name": "The MITRE Corporation",
+            "identity_class": "organization"
+        },
+    {
+        "type": "relationship",
+        "spec_version": "2.1",
+        "id": "relationship--c8194de8-c2ba-4c74-896a-fd746232e7d0",
+        "created": "2023-03-20T00:00:00.000Z",
+        "modified": "2023-03-20T00:00:00.000Z",
+        "relationship_type": "uses",
+        "source_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
+        "target_ref": "malware-behavior--a446fac9-4d4e-439e-9b06-a3a7665c2281",
+        "description": "File System::Delete File (C0047)-- Gamut deletes files. (Citation: capa analysis output)"
+    },
+    {
+        "type": "indicator",
+        "spec_version": "2.1",
+        "id": "indicator--25ad5feb-3716-44b6-9867-8643f5b2aac8",
+        "created": "2023-03-01T00:00:00.000Z",
+        "modified": "2023-03-01T00:00:00.000Z",
+        "indicator_types": [
+            "malicious-activity"
+        ],
+        "name": "Gamut hash",
+        "description": "This is an IoC for Gamut",
+        "pattern": "[ file:hashes.'SHA-256' = 'a56162bc623841102301df...1c838fcf256654932' ]",
+        "pattern_type": "stix",
+        "valid_from": "2023-03-01T00:00:00.000Z"
+    },
+    {
+        "type": "relationship",
+        "spec_version": "2.1",
+        "id": "relationship--1cffe80b-7cf8-416e-b2fe-a89c3fba7d9b",
+        "created": "2023-03-01T00:00:00.000Z",
+        "modified": "2023-03-01T00:00:00.000Z",
+        "relationship_type": "indicates",
+        "source_ref": "indicator--25ad5feb-3716-44b6-9867-8643f5b2aac8",
+        "target_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455"
+    }
+]

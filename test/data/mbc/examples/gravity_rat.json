@@ -1,0 +1,195 @@
+{
+  "type": "bundle",
+  "id": "bundle--479d60a9-c2f8-4769-9d60-46d94b751396",
+  "objects": [
+    {
+      "id": "malware--ccdec6fb-3f9e-4bb6-922b-e16d37ee1ebf",
+      "type": "malware",
+      "spec_version": "2.1",
+      "created": "2019-08-01T00:00:00.000Z",
+      "modified": "2023-03-01T00:00:00.000Z",
+      "name": "GravityRAT",
+      "is_family": true,
+      "external_references": [
+        {
+          "source_name": "capa analysis",
+          "url": "https://github.com/mandiant/capa-rules",
+          "description": "Analysis output, capa 4.0, analyzed at MITRE on Oct. 12, 2022."
+        }
+      ],
+      "extensions": {
+        "extension-definition--8e9e338f-c9ee-4d4f-8cac-85b4dcfdf3c": {
+          "extension_type": "property-extension",
+          "obj_defn": {
+            "source_name": "mbc",
+            "description": "GravityRAT evades detection by <snip>",
+            "url": "https://github.com/MBCProject/<snip>/xample-malware/gravity-rat.md",
+            "external_id": "X0016"
+          },
+          "year": "2018",
+          "platforms": [
+            "windows"
+          ]
+        }
+      }
+    },
+    {
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "type": "identity",
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "x_mitre_attack_spec_version": "3.2.0"
+    },
+    {
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      },
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "definition_type": "statement"
+    },
+    {
+      "id": "attack-pattern--72b74d71-8169-42aa-92e0-e7b04b9f5a08",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "created": "2017-05-31T21:31:06.988Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1087",
+          "external_id": "T1087"
+        },
+        {
+          "source_name": "AWS List Users",
+          "description": "Amazon. (n.d.). List Users. Retrieved August 11, 2020.",
+          "url": "https://docs.aws.amazon.com/cli/latest/reference/iam/list-users.html"
+        },
+        {
+          "source_name": "Google Cloud - IAM Servie Accounts List API",
+          "description": "Google. (2020, June 23). gcloud iam service-accounts list. Retrieved August 4, 2020.",
+          "url": "https://cloud.google.com/sdk/gcloud/reference/iam/service-accounts/list"
+        },
+        {
+          "source_name": "Elastic - Koadiac Detection with EQL",
+          "description": "Stepanic, D.. (2020, January 13). Embracing offensive tooling: Building detections against Koadic using EQL. Retrieved November 17, 2024.",
+          "url": "https://www.elastic.co/security-labs/embracing-offensive-tooling-building-detections-against-koadic-using-eql"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:41.600Z",
+      "name": "Account Discovery",
+      "description": "Adversaries may attempt to get a listing of valid accounts, usernames, or email addresses on a system or within a compromised environment. This information can help adversaries determine which accounts exist, which can aid in follow-on behavior such as brute-forcing, spear-phishing attacks, or account takeovers (e.g., [Valid Accounts](https://attack.mitre.org/techniques/T1078)).\n\nAdversaries may use several methods to enumerate accounts, including abuse of existing tools, built-in commands, and potential misconfigurations that leak account names and roles or permissions in the targeted environment.\n\nFor examples, cloud environments typically provide easily accessible interfaces to obtain user lists.(Citation: AWS List Users)(Citation: Google Cloud - IAM Servie Accounts List API) On hosts, adversaries can use default [PowerShell](https://attack.mitre.org/techniques/T1059/001) and other command line functionality to identify accounts. Information about email addresses and accounts may also be extracted by searching an infected system’s files.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "discovery"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Daniel Stepanic, Elastic",
+        "Microsoft Threat Intelligence Center (MSTIC)",
+        "Travis Smith, Tripwire"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "System and network discovery techniques normally occur throughout an operation as an adversary learns the environment. Data and events should not be viewed in isolation, but as part of a chain of behavior that could lead to other activities, such as Lateral Movement, based on the information obtained.\n\nMonitor processes and command-line arguments for actions that could be taken to gather system and network information. Remote access tools with built-in features may interact directly with the Windows API to gather information. Information may also be acquired through Windows system management tools such as [Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047) and [PowerShell](https://attack.mitre.org/techniques/T1059/001).\n\nMonitor for processes that can be used to enumerate user accounts, such as <code>net.exe</code> and <code>net1.exe</code>, especially when executed in quick succession.(Citation: Elastic - Koadiac Detection with EQL)",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows",
+        "SaaS",
+        "IaaS",
+        "Linux",
+        "macOS",
+        "Office Suite",
+        "Identity Provider",
+        "ESXi"
+      ],
+      "x_mitre_version": "2.6",
+      "x_mitre_data_sources": [
+        "Process: Process Creation",
+        "Command: Command Execution",
+        "File: File Access"
+      ]
+    },
+    {
+      "id": "malware--1d1fce2f-0db5-402b-9843-4278a0694637",
+      "type": "malware",
+      "modified": "2024-04-11T02:25:20.119Z",
+      "name": "GravityRAT",
+      "description": "[GravityRAT](https://attack.mitre.org/software/S0237) is a remote access tool (RAT) and has been in ongoing development since 2016. The actor behind the tool remains unknown, but two usernames have been recovered that link to the author, which are \"TheMartian\" and \"The Invincible.\" According to the National Computer Emergency Response Team (CERT) of India, the malware has been identified in attacks against organization and entities in India. (Citation: Talos GravityRAT)",
+      "is_family": true,
+      "x_mitre_platforms": [
+        "Windows"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.3",
+      "x_mitre_aliases": [
+        "GravityRAT"
+      ],
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/software/S0237",
+          "external_id": "S0237"
+        },
+        {
+          "source_name": "GravityRAT",
+          "description": "(Citation: Talos GravityRAT)"
+        },
+        {
+          "source_name": "Talos GravityRAT",
+          "description": "Mercer, W., Rascagneres, P. (2018, April 26). GravityRAT - The Two-Year Evolution Of An APT Targeting India. Retrieved May 16, 2018.",
+          "url": "https://blog.talosintelligence.com/2018/04/gravityrat-two-year-evolution-of-apt.html"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+    },
+    {
+      "id": "relationship--1ca370e5-6fd3-4f7a-bd04-7bb3ab37b3db",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2023-05-03T00:00:00.000Z",
+      "modified": "2023-05-03T00:00:00.000Z",
+      "relationship_type": "uses",
+      "source_ref": "malware--ccdec6fb-3f9e-4bb6-922b-e16d37ee1ebf",
+      "target_ref": "attack-pattern--72b74d71-8169-42aa-92e0-e7b04b9f5a08",
+      "description": "Discovery::Account Discovery (T1087) -- GravityRAT gets session username (Citation: capa analysis)."
+    },
+    {
+      "id": "relationship--39c88be9-803c-46fe-9ba2-5a465a2b3218",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2023-05-03T00:00:00.000Z",
+      "modified": "2023-05-03T00:00:00.000Z",
+      "relationship_type": "related-to",
+      "source_ref": "malware--ccdec6fb-3f9e-4bb6-922b-e16d37ee1ebf",
+      "target_ref": "malware--1d1fce2f-0db5-402b-9843-4278a0694637"
+    }
+  ]
+}

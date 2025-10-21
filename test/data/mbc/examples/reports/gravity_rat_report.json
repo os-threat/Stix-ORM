@@ -1,0 +1,67 @@
+{
+  "report_date_time": "2025-10-21 21:02:20",
+  "total_number_of_objects_processed": 7,
+  "clean_operation_outcome": true,
+  "return_message": "Successfully processed 7 STIX objects (started with 3)",
+  "detailed_operation_reports": {
+    "expansion_report": {
+      "number_of_objects_defined": 7,
+      "number_of_objects_referenced": 5,
+      "missing_ids_list": [],
+      "sources_of_expansion": [
+        {
+          "source_name": "MITRE ATT&CK Enterprise",
+          "found_list": [
+            "malware--1d1fce2f-0db5-402b-9843-4278a0694637",
+            "attack-pattern--72b74d71-8169-42aa-92e0-e7b04b9f5a08",
+            "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+          ]
+        }
+      ]
+    },
+    "cleaning_sco_report": {
+      "number_of_scos_cleaned": 0,
+      "list_of_stix_ids_where_created_field_was_removed": [],
+      "list_of_stix_ids_where_modified_field_was_removed": [],
+      "list_of_stix_ids_where_other_fields_were_removed": []
+    },
+    "circular_reference_report": {
+      "number_of_circular_references_found": 1,
+      "list_of_circular_reference_paths": [
+        [
+          "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+          "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+        ]
+      ],
+      "deleted_fields_and_values": [
+        {
+          "stix_id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+          "deleted_fields": [
+            {
+              "field_name": "object_marking_refs",
+              "deleted_value": [
+                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "sorting_report": {
+      "sorting_successful": true,
+      "sorted_list_of_stix_ids": [
+        "malware--ccdec6fb-3f9e-4bb6-922b-e16d37ee1ebf",
+        "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+        "attack-pattern--72b74d71-8169-42aa-92e0-e7b04b9f5a08",
+        "malware--1d1fce2f-0db5-402b-9843-4278a0694637",
+        "relationship--1ca370e5-6fd3-4f7a-bd04-7bb3ab37b3db",
+        "relationship--39c88be9-803c-46fe-9ba2-5a465a2b3218"
+      ],
+      "diagram_of_sorted_dependencies": "Dependency Diagram:\n==================================================\nmalware--ccdec6fb-3f9e-4bb6-922b-e16d37ee1ebf (malware) [leaf]\nidentity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5 (identity) [leaf]\nmarking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168 (marking-definition) -> 1 refs\nattack-pattern--72b74d71-8169-42aa-92e0-e7b04b9f5a08 (attack-pattern) -> 2 refs\nmalware--1d1fce2f-0db5-402b-9843-4278a0694637 (malware) -> 2 refs\n  relationship--1ca370e5-6fd3-4f7a-bd04-7bb3ab37b3db (relationship) -> 2 refs\n  relationship--39c88be9-803c-46fe-9ba2-5a465a2b3218 (relationship) -> 2 refs",
+      "unresolved_references": []
+    },
+    "file_report": null
+  }
+}

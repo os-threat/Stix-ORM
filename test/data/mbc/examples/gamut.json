@@ -1,0 +1,482 @@
+{
+  "type": "bundle",
+  "id": "bundle--79f395f4-ab45-4f06-bb0a-31b61be3a55b",
+  "objects": [
+    {
+      "id": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
+      "type": "malware",
+      "spec_version": "2.1",
+      "created": "2019-08-01T00:00:00.000Z",
+      "modified": "2023-03-01T00:00:00.000Z",
+      "name": "Gamut",
+      "aliases": [
+        "bobax"
+      ],
+      "is_family": true,
+      "external_references": [
+        {
+          "source_name": "trustwave",
+          "url": "https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/gamut- spambot-analysis/",
+          "description": "R. Mendrez, \"Gamut Spambot Analysis,\" Trustwave, blog, Mar. 4, 2014 [Online]."
+        },
+        {
+          "source_name": "capa analysis",
+          "description": "Analysis output, capa 4.0, analyzed at MITRE on Oct. 12, 2022.",
+          "url": "https://github.com/mandiant/capa-rules"
+        }
+      ],
+      "extensions": {
+        "extension-definition--8e9e338f-c9ee-4d4f-8cac-85b4dcfdf3c1": {
+          "extension_type": "property-extension",
+          "obj_defn": {
+            "source_name": "mbc",
+            "description": "Gamut is a spamming botnet.",
+            "url": "https://github.com/MBCProject/mbc-markdown <snip> /xamples",
+            "external_id": "X0013"
+          },
+          "year": "2014",
+          "platforms": [
+            "windows"
+          ]
+        }
+      }
+    },
+    {
+      "id": "relationship--3b3a781f-23a1-4fa9-b6b4-1bb327b2929a",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2023-03-20T00:00:00.000Z",
+      "modified": "2023-03-20T00:00:00.000Z",
+      "relationship_type": "uses",
+      "source_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
+      "target_ref": "attack-pattern--0a5231ec-41af-4a35-83d0-6bdf11f28c65",
+      "description": "Execution::Shared Modules (T1129) -- Gamut links functions <snip> (Citation: trustwave gamut analysis) <snip>"
+    },
+    {
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "type": "identity",
+      "name": "The MITRE Corporation",
+      "identity_class": "organization",
+      "modified": "2017-06-01T00:00:00.000Z",
+      "created": "2017-06-01T00:00:00.000Z"
+    },
+    {
+      "id": "attack-pattern--20138b9d-1aac-4a26-8654-a36b6bbf2bba",
+      "type": "attack-pattern",
+      "created": "2018-04-18T17:59:24.739Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": true,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1192",
+          "external_id": "T1192"
+        },
+        {
+          "source_name": "capec",
+          "url": "https://capec.mitre.org/data/definitions/163.html",
+          "external_id": "CAPEC-163"
+        },
+        {
+          "source_name": "Trend Micro Pawn Storm OAuth 2017",
+          "description": "Hacquebord, F.. (2017, April 25). Pawn Storm Abuses Open Authentication in Advanced Social Engineering Attacks. Retrieved October 4, 2019.",
+          "url": "https://blog.trendmicro.com/trendlabs-security-intelligence/pawn-storm-abuses-open-authentication-advanced-social-engineering-attacks"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T15:15:15.281Z",
+      "name": "Spearphishing Link",
+      "description": "Spearphishing with a link is a specific variant of spearphishing. It is different from other forms of spearphishing in that it employs the use of links to download malware contained in email, instead of attaching malicious files to the email itself, to avoid defenses that may inspect email attachments. \n\nAll forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this case, the malicious emails contain links. Generally, the links will be accompanied by social engineering text and require the user to actively click or copy and paste a URL into a browser, leveraging [User Execution](https://attack.mitre.org/techniques/T1204). The visited website may compromise the web browser using an exploit, or the user will be prompted to download applications, documents, zip files, or even executables depending on the pretext for the email in the first place. Adversaries may also include links that are intended to interact directly with an email reader, including embedded images intended to exploit the end system directly or verify the receipt of an email (i.e. web bugs/web beacons). Links may also direct users to malicious applications  designed to [Steal Application Access Token](https://attack.mitre.org/techniques/T1528)s, like OAuth tokens, in order to gain access to protected applications and information.(Citation: Trend Micro Pawn Storm OAuth 2017)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "initial-access"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Shailesh Tiwary (Indian Army)",
+        "Mark Wee",
+        "Jeff Sakowicz, Microsoft Identity Developer Platform Services (IDPM Services)",
+        "Saisha Agrawal, Microsoft Threat Intelligent Center (MSTIC)"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "URL inspection within email (including expanding shortened links) can help detect links leading to known malicious sites. Detonation chambers can be used to detect these links and either automatically go to these sites to determine if they're potentially malicious, or wait and capture the content if a user visits the link.\n\nBecause this technique usually involves user interaction on the endpoint, many of the possible detections for Spearphishing Link take place once [User Execution](https://attack.mitre.org/techniques/T1204) occurs.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows",
+        "macOS",
+        "Linux",
+        "Office 365",
+        "SaaS"
+      ],
+      "x_mitre_version": "1.2"
+    },
+    {
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      },
+      "created": "2017-06-01T00:00:00.000Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "definition_type": "statement"
+    },
+    {
+      "id": "relationship--96cd8697-4467-4df0-a41f-1c53b05b2431",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2023-03-20T00:00:00.000Z",
+      "modified": "2023-03-20T00:00:00.000Z",
+      "relationship_type": "uses",
+      "source_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
+      "target_ref": "malware-method--b9c9fb8c-71d5-4e9f-9b06-88ba43873c86",
+      "description": "Command and Control::C2 Communication::Receive Data (B0030.002) -- The malware sends data to the C2. (Citation: trustwave gamut analysis)"
+    },
+    {
+      "id": "malware-method--b9c9fb8c-71d5-4e9f-9b06-88ba43873c86",
+      "type": "malware-method",
+      "created": "2020-08-14T00:00:00.000Z",
+      "behavior_ref": "malware-behavior--a28f7a00-c512-4a1e-88a9-9eeeca8a162a",
+      "spec_version": "2.1",
+      "extensions": {
+        "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+      "modified": "2024-04-29T00:00:00.000Z",
+      "name": "Resolve Free Hosting Domain",
+      "obj_defn": {
+        "description": "Resolves a free hosting domain (e.g., freeiz.com).",
+        "external_id": "C0011.005",
+        "source_name": "mitre-mbc"
+      },
+      "object_marking_refs": [
+        "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3"
+      ]
+    },
+    {
+      "id": "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3",
+      "type": "marking-definition",
+      "spec_version": "2.1",
+      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+      "created": "2020-01-01T00:00:00.000Z",
+      "definition_type": "statement",
+      "definition": {
+        "statement": "Copyright (c) 2020-2023, The MITRE Corporation. All rights reserved."
+      }
+    },
+    {
+      "id": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2020-01-01T00:00:00.000Z",
+      "modified": "2020-01-01T00:00:00.000Z",
+      "name": "The MITRE Corporation",
+      "identity_class": "organization"
+    },
+    {
+      "id": "relationship--c8194de8-c2ba-4c74-896a-fd746232e7d0",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2023-03-20T00:00:00.000Z",
+      "modified": "2023-03-20T00:00:00.000Z",
+      "relationship_type": "uses",
+      "source_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
+      "target_ref": "malware-behavior--a446fac9-4d4e-439e-9b06-a3a7665c2281",
+      "description": "File System::Delete File (C0047)-- Gamut deletes files. (Citation: capa analysis output)"
+    },
+    {
+      "id": "indicator--25ad5feb-3716-44b6-9867-8643f5b2aac8",
+      "type": "indicator",
+      "spec_version": "2.1",
+      "created": "2023-03-01T00:00:00.000Z",
+      "modified": "2023-03-01T00:00:00.000Z",
+      "indicator_types": [
+        "malicious-activity"
+      ],
+      "name": "Gamut hash",
+      "description": "This is an IoC for Gamut",
+      "pattern": "[ file:hashes.'SHA-256' = 'a56162bc623841102301df...1c838fcf256654932' ]",
+      "pattern_type": "stix",
+      "valid_from": "2023-03-01T00:00:00.000Z"
+    },
+    {
+      "id": "relationship--1cffe80b-7cf8-416e-b2fe-a89c3fba7d9b",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2023-03-01T00:00:00.000Z",
+      "modified": "2023-03-01T00:00:00.000Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--25ad5feb-3716-44b6-9867-8643f5b2aac8",
+      "target_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455"
+    },
+    {
+      "id": "attack-pattern--0a5231ec-41af-4a35-83d0-6bdf11f28c65",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "created": "2017-05-31T21:31:40.542Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1129",
+          "external_id": "T1129"
+        },
+        {
+          "source_name": "RotaJakiro 2021 netlab360 analysis",
+          "description": " Alex Turing, Hui Wang. (2021, April 28). RotaJakiro: A long live secret backdoor with 0 VT detection. Retrieved June 14, 2023.",
+          "url": "https://blog.netlab.360.com/stealth_rotajakiro_backdoor_en/"
+        },
+        {
+          "source_name": "Apple Dev Dynamic Libraries",
+          "description": "Apple. (2012, July 23). Overview of Dynamic Libraries. Retrieved September 7, 2023.",
+          "url": "https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/DynamicLibraries/100-Articles/OverviewOfDynamicLibraries.html"
+        },
+        {
+          "source_name": "Unit42 OceanLotus 2017",
+          "description": "Erye Hernandez and Danny Tsechansky. (2017, June 22). The New and Improved macOS Backdoor from OceanLotus. Retrieved September 8, 2023.",
+          "url": "https://unit42.paloaltonetworks.com/unit42-new-improved-macos-backdoor-oceanlotus/"
+        },
+        {
+          "source_name": "Microsoft DLL",
+          "description": "Microsoft. (2023, April 28). What is a DLL. Retrieved September 7, 2023.",
+          "url": "https://learn.microsoft.com/troubleshoot/windows-client/deployment/dynamic-link-library"
+        },
+        {
+          "source_name": "Linux Shared Libraries",
+          "description": "Wheeler, D. (2003, April 11). Shared Libraries. Retrieved September 7, 2023.",
+          "url": "https://tldp.org/HOWTO/Program-Library-HOWTO/shared-libraries.html"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:04.668Z",
+      "name": "Shared Modules",
+      "description": "Adversaries may execute malicious payloads via loading shared modules. Shared modules are executable files that are loaded into processes to provide access to reusable code, such as specific custom functions or invoking OS API functions (i.e., [Native API](https://attack.mitre.org/techniques/T1106)).\n\nAdversaries may use this functionality as a way to execute arbitrary payloads on a victim system. For example, adversaries can modularize functionality of their malware into shared objects that perform various functions such as managing C2 network communications or execution of specific actions on objective.\n\nThe Linux & macOS module loader can load and execute shared objects from arbitrary local paths. This functionality resides in `dlfcn.h` in functions such as `dlopen` and `dlsym`. Although macOS can execute `.so` files, common practice uses `.dylib` files.(Citation: Apple Dev Dynamic Libraries)(Citation: Linux Shared Libraries)(Citation: RotaJakiro 2021 netlab360 analysis)(Citation: Unit42 OceanLotus 2017)\n\nThe Windows module loader can be instructed to load DLLs from arbitrary local paths and arbitrary Universal Naming Convention (UNC) network paths. This functionality resides in `NTDLL.dll` and is part of the Windows [Native API](https://attack.mitre.org/techniques/T1106) which is called from functions like `LoadLibrary` at run time.(Citation: Microsoft DLL)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "execution"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Stefan Kanthak"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Monitoring DLL module loads may generate a significant amount of data and may not be directly useful for defense unless collected under specific circumstances, since benign use of Windows modules load functions are common and may be difficult to distinguish from malicious behavior. Legitimate software will likely only need to load routine, bundled DLL modules or Windows system DLLs such that deviation from known module loads may be suspicious. Limiting DLL module loads to `%SystemRoot%` and `%ProgramFiles%` directories will protect against module loads from unsafe paths. \n\nCorrelation of other events with behavior surrounding module loads using API monitoring and suspicious DLLs written to disk will provide additional context to an event that may assist in determining if it is due to malicious behavior.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows",
+        "macOS",
+        "Linux"
+      ],
+      "x_mitre_version": "2.3",
+      "x_mitre_data_sources": [
+        "Process: OS API Execution",
+        "Module: Module Load"
+      ]
+    },
+    {
+      "id": "malware-behavior--a28f7a00-c512-4a1e-88a9-9eeeca8a162a",
+      "type": "malware-behavior",
+      "created": "2020-08-14T00:00:00.000Z",
+      "spec_version": "2.1",
+      "detection_rules": [
+        {
+          "detect_ref": "malware-method--8d2f6d63-16d3-4b1e-9a5c-2ea3cede8a96",
+          "rule_type": "capa",
+          "rule_name": "reference DNS over HTTPS endpoints",
+          "url": "https://github.com/mandiant/capa-rules/blob/master/communication/dns/reference-dns-over-https-endpoints.yml"
+        },
+        {
+          "api_fncs": [
+            "ws2_32.gethostbyname",
+            "DnsQuery_A",
+            "DnsQuery_W",
+            "DnsQuery_UTF8",
+            "DnsQueryEx",
+            "GetAddrInfo",
+            "GetAddrInfoW",
+            "GetAddrInfoEx",
+            "gethostbyname",
+            "getaddrinfo",
+            "getnameinfo",
+            "gethostent",
+            "System.Net.Dns::GetHostAddresses"
+          ],
+          "rule_type": "capa",
+          "detect_ref": "malware-method--40cb93ee-9bab-4239-a0de-0556ad4cd999",
+          "rule_name": "resolve DNS",
+          "url": "https://github.com/mandiant/capa-rules/blob/master/communication/dns/resolve-dns.yml"
+        },
+        {
+          "class": "NetworkDNSBlockChain",
+          "rule_name": "network_dns_blockchain",
+          "rule_type": "cape",
+          "url": "https://github.com/CAPESandbox/community/tree/master/modules/signatures/windows/network_dns_suspicious.py"
+        },
+        {
+          "api_fncs": [
+            "DnsQueryA"
+          ],
+          "rule_name": "network_dns_idn",
+          "rule_type": "cape",
+          "url": "https://github.com/CAPESandbox/community/tree/master/modules/signatures/windows/network_dns_suspicious.py"
+        },
+        {
+          "rule_name": "network_dns_opennic",
+          "rule_type": "cape",
+          "url": "https://github.com/CAPESandbox/community/tree/master/modules/signatures/windows/network_dns_suspicious.py"
+        },
+        {
+          "rule_name": "network_dns_reverse_proxy",
+          "rule_type": "cape",
+          "url": "https://github.com/CAPESandbox/community/tree/master/modules/signatures/windows/network_dns_suspicious.py"
+        },
+        {
+          "api_fncs": [
+            "DnsQueryA"
+          ],
+          "rule_name": "network_dns_suspicious_querytype",
+          "rule_type": "cape",
+          "url": "https://github.com/CAPESandbox/community/tree/master/modules/signatures/windows/network_dns_suspicious.py"
+        },
+        {
+          "api_fncs": [
+            "DnsQuery_A",
+            "DnsQuery_W"
+          ],
+          "rule_name": "network_dns_tunneling_request",
+          "rule_type": "cape",
+          "url": "https://github.com/CAPESandbox/community/tree/master/modules/signatures/windows/network_dns_suspicious.py"
+        },
+        {
+          "rule_name": "network_dns_doh_tls",
+          "rule_type": "cape",
+          "url": "https://github.com/CAPESandbox/community/tree/master/modules/signatures/windows/network_dns_suspicious.py"
+        },
+        {
+          "rule_name": "network_dga",
+          "api_fncs": [
+            " --"
+          ],
+          "url": "https://github.com/CAPESandbox/community/tree/master/modules/signatures/all/network_dga.py",
+          "rule_type": "cape"
+        }
+      ],
+      "extensions": {
+        "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+      "external_references": [
+        {
+          "source_name": "capa analysis",
+          "description": "Analysis output, capa 4.0, analyzed at MITRE on Oct. 12, 2022.",
+          "url": "https://github.com/mandiant/capa-rules"
+        }
+      ],
+      "modified": "2024-04-29T00:00:00.000Z",
+      "name": "DNS Communication",
+      "obj_defn": {
+        "description": "The DNS Communication micro-behavior focuses on DNS communication.",
+        "external_id": "C0011",
+        "source_name": "mitre-mbc",
+        "url": "https://github.com/MBCProject/mbc-markdown/blob/main/micro-behaviors/communication/dns-communication.md"
+      },
+      "object_marking_refs": [
+        "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3"
+      ],
+      "obj_version": "2.2",
+      "objective_refs": [
+        "malware-objective--5823a1fb-61cd-4484-abfc-adfa88cca816"
+      ]
+    },
+    {
+      "id": "malware-objective--5823a1fb-61cd-4484-abfc-adfa88cca816",
+      "type": "malware-objective",
+      "created": "2020-08-14T00:00:00.000Z",
+      "spec_version": "2.1",
+      "extensions": {
+        "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+      "micro": true,
+      "modified": "2023-05-08T00:00:00.000Z",
+      "name": "Communication",
+      "obj_defn": {
+        "description": "Micro-behaviors that enable malware to communicate.",
+        "external_id": "OC0006",
+        "source_name": "mitre-mbc",
+        "url": "https://github.com/MBCProject/mbc-markdown/blob/main/micro-behaviors/communication/README.md"
+      },
+      "object_marking_refs": [
+        "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3"
+      ]
+    },
+    {
+      "id": "malware-method--8d2f6d63-16d3-4b1e-9a5c-2ea3cede8a96",
+      "type": "malware-method",
+      "created": "2020-08-14T00:00:00.000Z",
+      "behavior_ref": "malware-behavior--a28f7a00-c512-4a1e-88a9-9eeeca8a162a",
+      "spec_version": "2.1",
+      "extensions": {
+        "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+      "modified": "2023-09-13T00:00:00.000Z",
+      "name": "Server Connect",
+      "obj_defn": {
+        "description": "Connects to DNS server.",
+        "external_id": "C0011.002",
+        "source_name": "mitre-mbc"
+      },
+      "object_marking_refs": [
+        "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3"
+      ]
+    },
+    {
+      "id": "malware-method--40cb93ee-9bab-4239-a0de-0556ad4cd999",
+      "type": "malware-method",
+      "created": "2020-08-14T00:00:00.000Z",
+      "behavior_ref": "malware-behavior--a28f7a00-c512-4a1e-88a9-9eeeca8a162a",
+      "spec_version": "2.1",
+      "extensions": {
+        "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+      "modified": "2024-04-29T00:00:00.000Z",
+      "name": "Resolve",
+      "obj_defn": {
+        "description": "Resolves a domain.",
+        "external_id": "C0011.001",
+        "source_name": "mitre-mbc"
+      },
+      "object_marking_refs": [
+        "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3"
+      ]
+    }
+  ]
+}

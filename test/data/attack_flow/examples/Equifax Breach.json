@@ -1,13 +1,243 @@
 {
   "type": "bundle",
-  "id": "bundle--e4abcdbc-331e-4d58-a5c4-79ba23e72280",
-  "spec_version": "2.1",
-  "created": "2025-07-30T19:47:12.812Z",
-  "modified": "2025-07-30T19:47:12.812Z",
+  "id": "bundle--15f18317-5530-4f85-a1de-10bdfe2b5ffe",
   "objects": [
     {
-      "type": "extension-definition",
+      "id": "attack-condition--085ff46c-3c7d-43f0-8e8f-0b265e209f4d",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Attackers sold foothold into Equifax's network to more experience attackers"
+    },
+    {
+      "id": "infrastructure--66dbb482-b762-4299-a995-6e0ae0c48d42",
+      "type": "infrastructure",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "name": "Proxies",
+      "description": "Adversary used multi-hop proxies",
+      "infrastructure_types": [
+        "Anonymization"
+      ]
+    },
+    {
+      "id": "vulnerability--236a6a2c-e12c-4ed9-983b-602b7af3bc2a",
+      "type": "vulnerability",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "name": "CVE-2017-5638",
+      "description": "The Jakarta Multipart parser in Apache Struts 2 2.3.x before 2.3.32 and 2.5.x before 2.5.10.1 has incorrect exception handling and error-message generation during file-upload attempts, which allows remote attackers to execute arbitrary commands via a crafted Content-Type, Content-Disposition, or Content-Length HTTP header, as exploited in the wild in March 2017 with a Content-Type header containing a #cmd= string."
+    },
+    {
+      "id": "attack-condition--a0f50bb1-aacd-4678-8160-c2062fef2b10",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Attackers discovered and compromised databases storing PII"
+    },
+    {
+      "id": "attack-asset--c8ab9a0b-16c8-472d-8eca-a52c2e512019",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Online Dispute Portal"
+    },
+    {
+      "id": "identity--08a5760c-2807-4087-bd48-9a591840609a",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.812Z",
+      "modified": "2025-07-30T19:47:12.812Z",
+      "name": "Lauren Parker",
+      "contact_information": "lparker@mitre.org"
+    },
+    {
+      "id": "infrastructure--82e17e5c-bd8a-493a-a209-8d6b2ab86e50",
+      "type": "infrastructure",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "name": "Servers",
+      "description": "Adversary used 34 servers located in nearly 20 countries to host multi-hop proxies for obfuscation",
+      "infrastructure_types": [
+        "anonymization"
+      ]
+    },
+    {
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "type": "identity",
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "x_mitre_attack_spec_version": "3.2.0"
+    },
+    {
+      "id": "threat-actor--ed3f9e1b-1c65-4d72-9bb3-01e0ec01b094",
+      "type": "threat-actor",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "name": "Wang Qian",
+      "description": "Member of the PLA who was indicted by DoJ for computer fraud, economic espionage, and wire fraud for hacking into credit reporting agency Equifax",
+      "threat_actor_types": [
+        "Nation-state"
+      ],
+      "first_seen": "2017-05-13T04:00:00.000Z",
+      "last_seen": "2017-07-30T04:00:00.000Z",
+      "roles": [
+        "Agent"
+      ],
+      "goals": [
+        "access protected computers for economic espionage; transmit information from a protected computer to cause harm; steal, convey, and sell trade secrets from Equifax to benefit a foreign government, namely China"
+      ],
+      "sophistication": "Expert",
+      "resource_level": "Government",
+      "primary_motivation": "organizational-gain"
+    },
+    {
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "id": "threat-actor--60ee3b8c-c6f9-4ac5-ab95-7d7e5a592638",
+      "type": "threat-actor",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "name": "Liu Lei",
+      "description": "Member of the PLA who was indicted by DoJ for computer fraud, economic espionage, and wire fraud for hacking into credit reporting agency Equifax",
+      "threat_actor_types": [
+        "Nation-state"
+      ],
+      "first_seen": "2017-05-13T04:00:00.000Z",
+      "last_seen": "2017-07-30T04:00:00.000Z",
+      "roles": [
+        "Agent"
+      ],
+      "goals": [
+        "access protected computers for economic espionage; transmit information from a protected computer to cause harm; steal, convey, and sell trade secrets from Equifax to benefit a foreign government, namely China"
+      ],
+      "sophistication": "Expert",
+      "resource_level": "Government",
+      "primary_motivation": "organizational-gain"
+    },
+    {
+      "id": "attack-condition--6a38d6e6-107c-4941-9848-a7a91b9560f8",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Attackers discovered vulnerable Apache Struts Web Framework on Equifax's dispute portal"
+    },
+    {
+      "id": "threat-actor--52e873ba-3b38-46d4-ac6f-fa5d4875d049",
+      "type": "threat-actor",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "name": "Xu Ke",
+      "description": "Member of the PLA who was indicted by DoJ for computer fraud, economic espionage, and wire fraud for hacking into credit reporting agency Equifax",
+      "threat_actor_types": [
+        "Nation-state"
+      ],
+      "first_seen": "2017-05-13T04:00:00.000Z",
+      "last_seen": "2017-07-30T04:00:00.000Z",
+      "roles": [
+        "Agent"
+      ],
+      "goals": [
+        "access protected computers for economic espionage; transmit information from a protected computer to cause harm; steal, convey, and sell trade secrets from Equifax to benefit a foreign government, namely China"
+      ],
+      "sophistication": "Expert",
+      "resource_level": "Government",
+      "primary_motivation": "organizational-gain"
+    },
+    {
+      "id": "threat-actor--d3193187-95c8-428c-9de5-0e2049a778e8",
+      "type": "threat-actor",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "name": "Wu Zhiyong",
+      "description": "Member of the PLA who was indicted by DoJ for computer fraud, economic espionage, and wire fraud for hacking into credit reporting agency Equifax",
+      "threat_actor_types": [
+        "Nation-state"
+      ],
+      "first_seen": "2017-05-13T04:00:00.000Z",
+      "last_seen": "2017-07-30T04:00:00.000Z",
+      "roles": [
+        "Agent"
+      ],
+      "goals": [
+        "access protected computers for economic espionage; transmit information from a protected computer to cause harm; steal, convey, and sell trade secrets from Equifax to benefit a foreign government, namely China"
+      ],
+      "sophistication": "Expert",
+      "resource_level": "Government",
+      "primary_motivation": "organizational-gain"
+    },
+    {
+      "id": "malware--49e4d378-bc15-4ab9-bb3f-b05e3b896bb0",
+      "type": "malware",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "name": "Web Shell",
+      "malware_types": [
+        "webshell"
+      ],
+      "is_family": false,
+      "capabilities": [
+        "communicates-with-c2",
+        "exfiltrates-data"
+      ]
+    },
+    {
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      },
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "definition_type": "statement"
+    },
+    {
       "id": "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "type": "extension-definition",
       "spec_version": "2.1",
       "created": "2022-08-02T19:34:35.143Z",
       "modified": "2022-08-02T19:34:35.143Z",
@@ -33,707 +263,113 @@
       ]
     },
     {
-      "type": "identity",
-      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "id": "x-mitre-tactic--daa4cbb1-b4f4-4723-a824-7f1efd6e0592",
+      "type": "x-mitre-tactic",
       "spec_version": "2.1",
-      "created": "2022-08-02T19:34:35.143Z",
-      "modified": "2022-08-02T19:34:35.143Z",
-      "created_by_ref": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
-      "name": "MITRE Center for Threat-Informed Defense",
-      "identity_class": "organization"
-    },
-    {
-      "type": "attack-flow",
-      "id": "attack-flow--5d6dbe20-6e8a-4a91-b927-49995af62ca5",
-      "spec_version": "2.1",
-      "created": "2022-10-27T02:44:54.520Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "created_by_ref": "identity--08a5760c-2807-4087-bd48-9a591840609a",
-      "start_refs": [
-        "attack-action--6f347c34-9d8a-48f1-889e-23752c87197b"
-      ],
-      "name": "Equifax Breach",
-      "description": "Attack flow on the 2017 Equifax breach.",
-      "scope": "incident",
-      "external_references": [
-        {
-          "source_name": "CNET",
-          "description": "Article",
-          "url": "https://www.cnet.com/news/privacy/equifaxs-hack-one-year-later-a-look-back-at-how-it-happened-and-whats-changed/"
-        },
-        {
-          "source_name": "CSO",
-          "description": "Article",
-          "url": "https://www.csoonline.com/article/3444488/equifax-data-breach-faq-what-happened-who-was-affected-what-was-the-impact.html"
-        },
-        {
-          "source_name": "Department of Justice",
-          "description": "Press Release",
-          "url": "https://www.justice.gov/opa/press-release/file/1246891/download"
-        },
-        {
-          "source_name": "Government Accountability Office",
-          "description": "Congressional Request",
-          "url": "https://www.warren.senate.gov/imo/media/doc/2018.09.06%20GAO%20Equifax%20report.pdf"
-        }
-      ]
-    },
-    {
-      "type": "identity",
-      "id": "identity--08a5760c-2807-4087-bd48-9a591840609a",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.812Z",
-      "modified": "2025-07-30T19:47:12.812Z",
-      "name": "Lauren Parker",
-      "contact_information": "lparker@mitre.org"
-    },
-    {
-      "type": "threat-actor",
-      "id": "threat-actor--d3193187-95c8-428c-9de5-0e2049a778e8",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "name": "Wu Zhiyong",
-      "description": "Member of the PLA who was indicted by DoJ for computer fraud, economic espionage, and wire fraud for hacking into credit reporting agency Equifax",
-      "threat_actor_types": [
-        "Nation-state"
-      ],
-      "first_seen": "2017-05-13T04:00:00.000Z",
-      "last_seen": "2017-07-30T04:00:00.000Z",
-      "roles": [
-        "Agent"
-      ],
-      "goals": [
-        "access protected computers for economic espionage; transmit information from a protected computer to cause harm; steal, convey, and sell trade secrets from Equifax to benefit a foreign government, namely China"
-      ],
-      "sophistication": "Expert",
-      "resource_level": "Government",
-      "primary_motivation": "organizational-gain"
-    },
-    {
-      "type": "threat-actor",
-      "id": "threat-actor--ed3f9e1b-1c65-4d72-9bb3-01e0ec01b094",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "name": "Wang Qian",
-      "description": "Member of the PLA who was indicted by DoJ for computer fraud, economic espionage, and wire fraud for hacking into credit reporting agency Equifax",
-      "threat_actor_types": [
-        "Nation-state"
-      ],
-      "first_seen": "2017-05-13T04:00:00.000Z",
-      "last_seen": "2017-07-30T04:00:00.000Z",
-      "roles": [
-        "Agent"
-      ],
-      "goals": [
-        "access protected computers for economic espionage; transmit information from a protected computer to cause harm; steal, convey, and sell trade secrets from Equifax to benefit a foreign government, namely China"
-      ],
-      "sophistication": "Expert",
-      "resource_level": "Government",
-      "primary_motivation": "organizational-gain"
-    },
-    {
-      "type": "threat-actor",
-      "id": "threat-actor--52e873ba-3b38-46d4-ac6f-fa5d4875d049",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "name": "Xu Ke",
-      "description": "Member of the PLA who was indicted by DoJ for computer fraud, economic espionage, and wire fraud for hacking into credit reporting agency Equifax",
-      "threat_actor_types": [
-        "Nation-state"
-      ],
-      "first_seen": "2017-05-13T04:00:00.000Z",
-      "last_seen": "2017-07-30T04:00:00.000Z",
-      "roles": [
-        "Agent"
-      ],
-      "goals": [
-        "access protected computers for economic espionage; transmit information from a protected computer to cause harm; steal, convey, and sell trade secrets from Equifax to benefit a foreign government, namely China"
-      ],
-      "sophistication": "Expert",
-      "resource_level": "Government",
-      "primary_motivation": "organizational-gain"
-    },
-    {
-      "type": "threat-actor",
-      "id": "threat-actor--60ee3b8c-c6f9-4ac5-ab95-7d7e5a592638",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "name": "Liu Lei",
-      "description": "Member of the PLA who was indicted by DoJ for computer fraud, economic espionage, and wire fraud for hacking into credit reporting agency Equifax",
-      "threat_actor_types": [
-        "Nation-state"
-      ],
-      "first_seen": "2017-05-13T04:00:00.000Z",
-      "last_seen": "2017-07-30T04:00:00.000Z",
-      "roles": [
-        "Agent"
-      ],
-      "goals": [
-        "access protected computers for economic espionage; transmit information from a protected computer to cause harm; steal, convey, and sell trade secrets from Equifax to benefit a foreign government, namely China"
-      ],
-      "sophistication": "Expert",
-      "resource_level": "Government",
-      "primary_motivation": "organizational-gain"
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--6f347c34-9d8a-48f1-889e-23752c87197b",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Vulnerability Scanning",
-      "tactic_id": "TA0043",
-      "tactic_ref": "x-mitre-tactic--daa4cbb1-b4f4-4723-a824-7f1efd6e0592",
-      "technique_id": "T1595.002",
-      "technique_ref": "attack-pattern--5502c4e9-24ef-4d5f-8ee9-9e906c2f82c4",
-      "description": "US-CERT warned about a vulnerability within Apache Struts. Attackers searched the web for systems with this vulnerability",
-      "effect_refs": [
-        "attack-condition--6a38d6e6-107c-4941-9848-a7a91b9560f8"
-      ]
-    },
-    {
-      "type": "attack-condition",
-      "id": "attack-condition--6a38d6e6-107c-4941-9848-a7a91b9560f8",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Attackers discovered vulnerable Apache Struts Web Framework on Equifax's dispute portal"
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--ed1d3b65-7d96-4fb0-88c4-c2cd30623b03",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Exploit Public-Facing Application",
-      "tactic_id": "TA0001",
-      "tactic_ref": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
-      "technique_id": "T1190",
-      "technique_ref": "attack-pattern--3f886f2a-874f-4333-b794-aa6075009b1c",
-      "description": "Attackers used software designed to exploit the Apache Struts Web Framework vulnerability to gain access to Equifax's online dispute portal",
-      "effect_refs": [
-        "attack-condition--085ff46c-3c7d-43f0-8e8f-0b265e209f4d"
-      ]
-    },
-    {
-      "type": "attack-condition",
-      "id": "attack-condition--085ff46c-3c7d-43f0-8e8f-0b265e209f4d",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Attackers sold foothold into Equifax's network to more experience attackers"
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--21be9f13-3c4b-4c97-b532-326568e19550",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Web Shell",
-      "tactic_id": "TA0003",
-      "tactic_ref": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
-      "technique_id": "T1505.003",
-      "technique_ref": "attack-pattern--5d0d3609-d06d-49e1-b9c9-b544e0c618cb",
-      "description": "New attackers exploited foothold and installed web shell onto the Online Dispute Portal",
-      "asset_refs": [
-        "attack-asset--c8ab9a0b-16c8-472d-8eca-a52c2e512019"
-      ],
-      "effect_refs": [
-        "attack-action--d9d6e1e2-dc1e-404f-a4fd-a1fac90c0a86",
-        "attack-action--98563102-bd12-43d2-829c-e6591931f1fb"
-      ]
-    },
-    {
-      "type": "attack-asset",
-      "id": "attack-asset--c8ab9a0b-16c8-472d-8eca-a52c2e512019",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Online Dispute Portal"
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--d9d6e1e2-dc1e-404f-a4fd-a1fac90c0a86",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Credentials",
-      "tactic_id": "TA0043",
-      "tactic_ref": "x-mitre-tactic--daa4cbb1-b4f4-4723-a824-7f1efd6e0592",
-      "technique_id": "T1589.001",
-      "technique_ref": "attack-pattern--bc76d0a4-db11-4551-9ac4-01a469cfb161",
-      "description": "Attackers conducted recon on the online dispute portal to obtain valid credentials for database servers",
-      "effect_refs": [
-        "attack-operator--6dd662da-1e03-4873-943c-d9a8d25b306d"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--98563102-bd12-43d2-829c-e6591931f1fb",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Gather Victim Network Information",
-      "tactic_id": "TA0043",
-      "tactic_ref": "x-mitre-tactic--daa4cbb1-b4f4-4723-a824-7f1efd6e0592",
-      "technique_id": "T1590",
-      "technique_ref": "attack-pattern--9d48cab2-7929-4812-ad22-f536665f0109",
-      "description": "Attackers conducted recon to identify databases with PII",
-      "effect_refs": [
-        "attack-operator--6dd662da-1e03-4873-943c-d9a8d25b306d"
-      ]
-    },
-    {
-      "type": "attack-operator",
-      "id": "attack-operator--6dd662da-1e03-4873-943c-d9a8d25b306d",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "operator": "AND",
-      "effect_refs": [
-        "attack-action--6641e2c7-8ea1-443f-a29d-89e544be5eb9"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--6641e2c7-8ea1-443f-a29d-89e544be5eb9",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Encrypted Channel",
-      "tactic_id": "TA0011",
-      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "technique_id": "T1573",
-      "technique_ref": "attack-pattern--b8902400-e6c5-4ba2-95aa-2d35b442b118",
-      "description": "Queried databases for PII using existing encrypted channels",
-      "effect_refs": [
-        "attack-condition--a0f50bb1-aacd-4678-8160-c2062fef2b10"
-      ]
-    },
-    {
-      "type": "attack-condition",
-      "id": "attack-condition--a0f50bb1-aacd-4678-8160-c2062fef2b10",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Attackers discovered and compromised databases storing PII"
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--bd230072-e0f0-4478-a209-7d7aded898f2",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Archive Collected Data",
-      "tactic_id": "TA0009",
-      "tactic_ref": "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
-      "technique_id": "T1560",
-      "technique_ref": "attack-pattern--53ac20cd-aca3-406e-9aa0-9fc7fdc60a5a",
-      "description": "Split and compress output files with information",
-      "effect_refs": [
-        "attack-operator--c1e2a2c3-c2d0-4551-9969-2d39cb6f3053"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--20aa5b9f-3477-4e0a-a5d0-93b6c199be69",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Deobfuscate/Decode Files or Information",
-      "tactic_id": "TA0005",
-      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
-      "technique_id": "T1140",
-      "technique_ref": "attack-pattern--3ccef7ae-cb5e-48f6-8302-897105fbf55c",
-      "description": "Obfuscate PII information to evade DLP systems",
-      "effect_refs": [
-        "attack-operator--c1e2a2c3-c2d0-4551-9969-2d39cb6f3053"
-      ]
-    },
-    {
-      "type": "attack-operator",
-      "id": "attack-operator--c1e2a2c3-c2d0-4551-9969-2d39cb6f3053",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "operator": "AND",
-      "effect_refs": [
-        "attack-action--23fade7d-fc7b-42d6-b962-fd13f8d67e88"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--23fade7d-fc7b-42d6-b962-fd13f8d67e88",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
-      "tactic_id": "TA0010",
-      "tactic_ref": "x-mitre-tactic--9a4e74ab-5008-408c-84bf-a10dfbc53462",
-      "technique_id": "T1048.002",
-      "technique_ref": "attack-pattern--8e350c1d-ac79-4b5c-bd4e-7476d7e84ec5",
-      "description": "Exfiltration over standard encrypted web protocols to disguise the exchanges as normal network traffic",
-      "effect_refs": [
-        "attack-action--e0206671-984d-49d1-bd1a-12e10966395f"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--e0206671-984d-49d1-bd1a-12e10966395f",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Multi-hop Proxy",
-      "tactic_id": "TA0011",
-      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "technique_id": "T1090.003",
-      "technique_ref": "attack-pattern--a782ebe2-daba-42c7-bc82-e8e9d923162d",
-      "description": "Attackers used multi-hop proxies in approximately thirty-four servers located in nearly twenty countries",
-      "effect_refs": [
-        "attack-action--61cfb4a1-6468-4095-bd42-c9e0476a9e00",
-        "attack-action--f4e8ee77-2e14-450d-92d4-d7a1b6595c16"
-      ]
-    },
-    {
-      "type": "infrastructure",
-      "id": "infrastructure--66dbb482-b762-4299-a995-6e0ae0c48d42",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "name": "Proxies",
-      "description": "Adversary used multi-hop proxies",
-      "infrastructure_types": [
-        "Anonymization"
-      ]
-    },
-    {
-      "type": "infrastructure",
-      "id": "infrastructure--82e17e5c-bd8a-493a-a209-8d6b2ab86e50",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "name": "Servers",
-      "description": "Adversary used 34 servers located in nearly 20 countries to host multi-hop proxies for obfuscation",
-      "infrastructure_types": [
-        "anonymization"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--f4e8ee77-2e14-450d-92d4-d7a1b6595c16",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "File Deletion",
-      "tactic_id": "TA0005",
-      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
-      "technique_id": "T1070.004",
-      "technique_ref": "attack-pattern--d63a3fb8-9452-4e9d-a60a-54be68d5998c",
-      "description": "Deleted the compressed files after exfiltrating the sensitive data"
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--61cfb4a1-6468-4095-bd42-c9e0476a9e00",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Clear Windows Event Logs",
-      "tactic_id": "TA0005",
-      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
-      "technique_id": "T1070.001",
-      "technique_ref": "attack-pattern--6495ae23-3ab4-43c5-a94f-5638a2c31fd2",
-      "description": "Wiped log files on a daily basis in an effort to eliminate records of activity"
-    },
-    {
-      "type": "vulnerability",
-      "id": "vulnerability--236a6a2c-e12c-4ed9-983b-602b7af3bc2a",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "name": "CVE-2017-5638",
-      "description": "The Jakarta Multipart parser in Apache Struts 2 2.3.x before 2.3.32 and 2.5.x before 2.5.10.1 has incorrect exception handling and error-message generation during file-upload attempts, which allows remote attackers to execute arbitrary commands via a crafted Content-Type, Content-Disposition, or Content-Length HTTP header, as exploited in the wild in March 2017 with a Content-Type header containing a #cmd= string."
-    },
-    {
-      "type": "malware",
-      "id": "malware--49e4d378-bc15-4ab9-bb3f-b05e3b896bb0",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "name": "Web Shell",
-      "malware_types": [
-        "webshell"
-      ],
-      "is_family": false,
-      "capabilities": [
-        "communicates-with-c2",
-        "exfiltrates-data"
-      ]
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--1dd29ce9-260d-4d3b-b2b0-9f19b4330c8a",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--6f347c34-9d8a-48f1-889e-23752c87197b",
-      "target_ref": "vulnerability--236a6a2c-e12c-4ed9-983b-602b7af3bc2a"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--5825ddd2-02df-49a2-9173-4961a41cc072",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-condition--6a38d6e6-107c-4941-9848-a7a91b9560f8",
-      "target_ref": "attack-action--ed1d3b65-7d96-4fb0-88c4-c2cd30623b03"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--bc5c6d79-15fb-4b83-96e6-8e1b51ede535",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--ed1d3b65-7d96-4fb0-88c4-c2cd30623b03",
-      "target_ref": "vulnerability--236a6a2c-e12c-4ed9-983b-602b7af3bc2a"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--1dc7004b-a706-4a2a-96bb-2ebd92dd8538",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-condition--085ff46c-3c7d-43f0-8e8f-0b265e209f4d",
-      "target_ref": "attack-action--21be9f13-3c4b-4c97-b532-326568e19550"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--4370e267-47ad-4a2d-9176-a23ced7b4536",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--21be9f13-3c4b-4c97-b532-326568e19550",
-      "target_ref": "malware--49e4d378-bc15-4ab9-bb3f-b05e3b896bb0"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--d4372233-9d4a-4397-8c8b-bca41c7d16d3",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-condition--a0f50bb1-aacd-4678-8160-c2062fef2b10",
-      "target_ref": "attack-action--20aa5b9f-3477-4e0a-a5d0-93b6c199be69"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--8bccd7d3-62ea-4b23-82f0-3d1a6d3a4401",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-condition--a0f50bb1-aacd-4678-8160-c2062fef2b10",
-      "target_ref": "attack-action--bd230072-e0f0-4478-a209-7d7aded898f2"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--3785e7fc-8ee7-4a5f-8e2a-22ea3b9f3a58",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--e0206671-984d-49d1-bd1a-12e10966395f",
-      "target_ref": "infrastructure--82e17e5c-bd8a-493a-a209-8d6b2ab86e50"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--77abf72a-7fc7-4027-a52f-477fd93028bb",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--e0206671-984d-49d1-bd1a-12e10966395f",
-      "target_ref": "infrastructure--66dbb482-b762-4299-a995-6e0ae0c48d42"
-    },
-    {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
-      "id": "attack-pattern--3ccef7ae-cb5e-48f6-8302-897105fbf55c",
-      "created": "2017-12-14T16:46:06.044Z",
+      "created": "2020-10-02T14:48:41.809Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "revoked": false,
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1140",
-          "external_id": "T1140"
-        },
-        {
-          "source_name": "Volexity PowerDuke November 2016",
-          "description": "Adair, S.. (2016, November 9). PowerDuke: Widespread Post-Election Spear Phishing Campaigns Targeting Think Tanks and NGOs. Retrieved January 11, 2017.",
-          "url": "https://www.volexity.com/blog/2016/11/09/powerduke-post-election-spear-phishing-campaigns-targeting-think-tanks-and-ngos/"
-        },
-        {
-          "source_name": "Sentinel One Tainted Love 2023",
-          "description": "Aleksandar Milenkoski, Juan Andres Guerrero-Saade, and Joey Chen. (2023, March 23). Operation Tainted Love | Chinese APTs Target Telcos in New Attacks. Retrieved March 18, 2025.",
-          "url": "https://www.sentinelone.com/labs/operation-tainted-love-chinese-apts-target-telcos-in-new-attacks/"
-        },
-        {
-          "source_name": "Malwarebytes Targeted Attack against Saudi Arabia",
-          "description": "Malwarebytes Labs. (2017, March 27). New targeted attack against Saudi Arabia Government. Retrieved July 3, 2017.",
-          "url": "https://blog.malwarebytes.com/cybercrime/social-engineering-cybercrime/2017/03/new-targeted-attack-saudi-arabia-government/"
-        },
-        {
-          "source_name": "Carbon Black Obfuscation Sept 2016",
-          "description": "Tedesco, B. (2016, September 23). Security Alert Summary. Retrieved February 12, 2018.",
-          "url": "https://www.carbonblack.com/2016/09/23/security-advisory-variants-well-known-adware-families-discovered-include-sophisticated-obfuscation-techniques-previously-associated-nation-state-attacks/"
+          "url": "https://attack.mitre.org/tactics/TA0043",
+          "external_id": "TA0043"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
-      "modified": "2025-04-15T19:58:24.400Z",
-      "name": "Deobfuscate/Decode Files or Information",
-      "description": "Adversaries may use [Obfuscated Files or Information](https://attack.mitre.org/techniques/T1027) to hide artifacts of an intrusion from analysis. They may require separate mechanisms to decode or deobfuscate that information depending on how they intend to use it. Methods for doing that include built-in functionality of malware or by using utilities present on the system.\n\nOne such example is the use of [certutil](https://attack.mitre.org/software/S0160) to decode a remote access tool portable executable file that has been hidden inside a certificate file.(Citation: Malwarebytes Targeted Attack against Saudi Arabia) Another example is using the Windows <code>copy /b</code> or <code>type</code> command to reassemble binary fragments into a malicious payload.(Citation: Carbon Black Obfuscation Sept 2016)(Citation: Sentinel One Tainted Love 2023)\n\nSometimes a user's action may be required to open it for deobfuscation or decryption as part of [User Execution](https://attack.mitre.org/techniques/T1204). The user may also be required to input a password to open a password protected compressed/encrypted file that was provided by the adversary.(Citation: Volexity PowerDuke November 2016)",
-      "kill_chain_phases": [
-        {
-          "kill_chain_name": "mitre-attack",
-          "phase_name": "defense-evasion"
-        }
-      ],
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_contributors": [
-        "Matthew Demaske, Adaptforward",
-        "Red Canary",
-        "Cristóbal Martínez Martín"
-      ],
+      "modified": "2025-04-25T14:45:36.201Z",
+      "name": "Reconnaissance",
+      "description": "The adversary is trying to gather information they can use to plan future operations.\n\nReconnaissance consists of techniques that involve adversaries actively or passively gathering information that can be used to support targeting. Such information may include details of the victim organization, infrastructure, or staff/personnel. This information can be leveraged by the adversary to aid in other phases of the adversary lifecycle, such as using gathered information to plan and execute Initial Access, to scope and prioritize post-compromise objectives, or to drive and lead further Reconnaissance efforts.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "x_mitre_deprecated": false,
-      "x_mitre_detection": "Detecting the action of deobfuscating or decoding files or information may be difficult depending on the implementation. If the functionality is contained within malware and uses the Windows API, then attempting to detect malicious behavior before or after the action may yield better results than attempting to perform analysis on loaded libraries or API calls. If scripts are used, then collecting the scripts for analysis may be necessary. Perform process and command-line monitoring to detect potentially malicious behavior related to scripts and system utilities such as [certutil](https://attack.mitre.org/software/S0160).\n\nMonitor the execution file paths and command-line arguments for common archive file applications and extensions, such as those for Zip and RAR archive tools, and correlate with other suspicious behavior to reduce false positives from normal user and administrator behavior.",
       "x_mitre_domains": [
         "enterprise-attack"
       ],
-      "x_mitre_is_subtechnique": false,
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "reconnaissance"
+    },
+    {
+      "id": "attack-pattern--5502c4e9-24ef-4d5f-8ee9-9e906c2f82c4",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "created": "2020-10-02T16:55:16.047Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1595/002",
+          "external_id": "T1595.002"
+        },
+        {
+          "source_name": "OWASP Vuln Scanning",
+          "description": "OWASP. (n.d.). OAT-014 Vulnerability Scanning. Retrieved October 20, 2020.",
+          "url": "https://owasp.org/www-project-automated-threats-to-web-applications/assets/oats/EN/OAT-014_Vulnerability_Scanning"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T23:19:33.981Z",
+      "name": "Vulnerability Scanning",
+      "description": "Adversaries may scan victims for vulnerabilities that can be used during targeting. Vulnerability scans typically check if the configuration of a target host/application (ex: software and version) potentially aligns with the target of a specific exploit the adversary may seek to use.\n\nThese scans may also include more broad attempts to [Gather Victim Host Information](https://attack.mitre.org/techniques/T1592) that can be used to identify more commonly known, exploitable vulnerabilities. Vulnerability scans typically harvest running software and version numbers via server banners, listening ports, or other network artifacts.(Citation: OWASP Vuln Scanning) Information from these scans may reveal opportunities for other forms of reconnaissance (ex: [Search Open Websites/Domains](https://attack.mitre.org/techniques/T1593) or [Search Open Technical Databases](https://attack.mitre.org/techniques/T1596)), establishing operational resources (ex: [Develop Capabilities](https://attack.mitre.org/techniques/T1587) or [Obtain Capabilities](https://attack.mitre.org/techniques/T1588)), and/or initial access (ex: [Exploit Public-Facing Application](https://attack.mitre.org/techniques/T1190)).",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "reconnaissance"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Monitor for suspicious network traffic that could be indicative of scanning, such as large quantities originating from a single source (especially if the source is known to be associated with an adversary/botnet). Analyzing web metadata may also reveal artifacts that can be attributed to potentially malicious activity, such as referer or user-agent string HTTP/S fields.\n\nMuch of this activity may have a very high occurrence and associated false positive rate, as well as potentially taking place outside the visibility of the target organization, making detection difficult for defenders.\n\nDetection efforts may be focused on related stages of the adversary lifecycle, such as during Initial Access.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
       "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "x_mitre_platforms": [
-        "ESXi",
-        "Linux",
-        "Windows",
-        "macOS"
+        "PRE"
       ],
-      "x_mitre_version": "1.4",
+      "x_mitre_version": "1.0",
       "x_mitre_data_sources": [
-        "Process: Process Creation",
-        "Script: Script Execution",
-        "File: File Modification"
+        "Network Traffic: Network Traffic Content",
+        "Network Traffic: Network Traffic Flow"
       ]
     },
     {
+      "id": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0001",
+          "external_id": "TA0001"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:36.917Z",
+      "name": "Initial Access",
+      "description": "The adversary is trying to get into your network.\n\nInitial Access consists of techniques that use various entry vectors to gain their initial foothold within a network. Techniques used to gain a foothold include targeted spearphishing and exploiting weaknesses on public-facing web servers. Footholds gained through initial access may allow for continued access, like valid accounts and use of external remote services, or may be limited-use due to changing passwords.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "initial-access"
+    },
+    {
+      "id": "attack-pattern--3f886f2a-874f-4333-b794-aa6075009b1c",
       "type": "attack-pattern",
       "spec_version": "2.1",
-      "id": "attack-pattern--3f886f2a-874f-4333-b794-aa6075009b1c",
       "created": "2018-04-18T17:59:24.739Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "revoked": false,
@@ -839,114 +475,37 @@
       ]
     },
     {
-      "type": "attack-pattern",
+      "id": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "type": "x-mitre-tactic",
       "spec_version": "2.1",
-      "id": "attack-pattern--53ac20cd-aca3-406e-9aa0-9fc7fdc60a5a",
-      "created": "2020-02-20T20:53:45.725Z",
+      "created": "2018-10-17T00:14:20.652Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "revoked": false,
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1560",
-          "external_id": "T1560"
-        },
-        {
-          "source_name": "DOJ GRU Indictment Jul 2018",
-          "description": "Mueller, R. (2018, July 13). Indictment - United States of America vs. VIKTOR BORISOVICH NETYKSHO, et al. Retrieved November 17, 2024.",
-          "url": "https://cdn.cnn.com/cnn/2018/images/07/13/gru.indictment.pdf"
-        },
-        {
-          "source_name": "Wikipedia File Header Signatures",
-          "description": "Wikipedia. (2016, March 31). List of file signatures. Retrieved April 22, 2016.",
-          "url": "https://en.wikipedia.org/wiki/List_of_file_signatures"
+          "url": "https://attack.mitre.org/tactics/TA0003",
+          "external_id": "TA0003"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
-      "modified": "2025-04-15T21:50:30.319Z",
-      "name": "Archive Collected Data",
-      "description": "An adversary may compress and/or encrypt data that is collected prior to exfiltration. Compressing the data can help to obfuscate the collected data and minimize the amount of data sent over the network.(Citation: DOJ GRU Indictment Jul 2018) Encryption can be used to hide information that is being exfiltrated from detection or make exfiltration less conspicuous upon inspection by a defender.\n\nBoth compression and encryption are done prior to exfiltration, and can be performed using a utility, 3rd party library, or custom method.",
-      "kill_chain_phases": [
-        {
-          "kill_chain_name": "mitre-attack",
-          "phase_name": "collection"
-        }
-      ],
-      "x_mitre_attack_spec_version": "3.2.0",
+      "modified": "2025-04-25T14:45:33.492Z",
+      "name": "Persistence",
+      "description": "The adversary is trying to maintain their foothold.\n\nPersistence consists of techniques that adversaries use to keep access to systems across restarts, changed credentials, and other interruptions that could cut off their access. Techniques used for persistence include any access, action, or configuration changes that let them maintain their foothold on systems, such as replacing or hijacking legitimate code or adding startup code. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "x_mitre_deprecated": false,
-      "x_mitre_detection": "Archival software and archived files can be detected in many ways. Common utilities that may be present on the system or brought in by an adversary may be detectable through process monitoring and monitoring for command-line arguments for known archival utilities. This may yield a significant number of benign events, depending on how systems in the environment are typically used.\n\nA process that loads the Windows DLL crypt32.dll may be used to perform encryption, decryption, or verification of file signatures.\n\nConsider detecting writing of files with extensions and/or headers associated with compressed or encrypted file types. Detection efforts may focus on follow-on exfiltration activity, where compressed or encrypted files can be detected in transit with a network intrusion detection or data loss prevention system analyzing file headers.(Citation: Wikipedia File Header Signatures)",
       "x_mitre_domains": [
         "enterprise-attack"
       ],
-      "x_mitre_is_subtechnique": false,
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_platforms": [
-        "Linux",
-        "macOS",
-        "Windows"
-      ],
       "x_mitre_version": "1.0",
-      "x_mitre_data_sources": [
-        "Command: Command Execution",
-        "Script: Script Execution",
-        "Process: Process Creation",
-        "File: File Creation"
-      ]
-    },
-    {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
-      "id": "attack-pattern--5502c4e9-24ef-4d5f-8ee9-9e906c2f82c4",
-      "created": "2020-10-02T16:55:16.047Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "revoked": false,
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1595/002",
-          "external_id": "T1595.002"
-        },
-        {
-          "source_name": "OWASP Vuln Scanning",
-          "description": "OWASP. (n.d.). OAT-014 Vulnerability Scanning. Retrieved October 20, 2020.",
-          "url": "https://owasp.org/www-project-automated-threats-to-web-applications/assets/oats/EN/OAT-014_Vulnerability_Scanning"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-15T23:19:33.981Z",
-      "name": "Vulnerability Scanning",
-      "description": "Adversaries may scan victims for vulnerabilities that can be used during targeting. Vulnerability scans typically check if the configuration of a target host/application (ex: software and version) potentially aligns with the target of a specific exploit the adversary may seek to use.\n\nThese scans may also include more broad attempts to [Gather Victim Host Information](https://attack.mitre.org/techniques/T1592) that can be used to identify more commonly known, exploitable vulnerabilities. Vulnerability scans typically harvest running software and version numbers via server banners, listening ports, or other network artifacts.(Citation: OWASP Vuln Scanning) Information from these scans may reveal opportunities for other forms of reconnaissance (ex: [Search Open Websites/Domains](https://attack.mitre.org/techniques/T1593) or [Search Open Technical Databases](https://attack.mitre.org/techniques/T1596)), establishing operational resources (ex: [Develop Capabilities](https://attack.mitre.org/techniques/T1587) or [Obtain Capabilities](https://attack.mitre.org/techniques/T1588)), and/or initial access (ex: [Exploit Public-Facing Application](https://attack.mitre.org/techniques/T1190)).",
-      "kill_chain_phases": [
-        {
-          "kill_chain_name": "mitre-attack",
-          "phase_name": "reconnaissance"
-        }
-      ],
       "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_deprecated": false,
-      "x_mitre_detection": "Monitor for suspicious network traffic that could be indicative of scanning, such as large quantities originating from a single source (especially if the source is known to be associated with an adversary/botnet). Analyzing web metadata may also reveal artifacts that can be attributed to potentially malicious activity, such as referer or user-agent string HTTP/S fields.\n\nMuch of this activity may have a very high occurrence and associated false positive rate, as well as potentially taking place outside the visibility of the target organization, making detection difficult for defenders.\n\nDetection efforts may be focused on related stages of the adversary lifecycle, such as during Initial Access.",
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_is_subtechnique": true,
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_platforms": [
-        "PRE"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_data_sources": [
-        "Network Traffic: Network Traffic Content",
-        "Network Traffic: Network Traffic Flow"
-      ]
+      "x_mitre_shortname": "persistence"
     },
     {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
       "id": "attack-pattern--5d0d3609-d06d-49e1-b9c9-b544e0c618cb",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
       "created": "2019-12-13T16:46:18.927Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "revoked": false,
@@ -1017,315 +576,9 @@
       ]
     },
     {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
-      "id": "attack-pattern--6495ae23-3ab4-43c5-a94f-5638a2c31fd2",
-      "created": "2020-01-28T17:05:14.707Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "revoked": false,
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1070/001",
-          "external_id": "T1070.001"
-        },
-        {
-          "source_name": "disable_win_evt_logging",
-          "description": "Heiligenstein, L. (n.d.). REP-25: Disable Windows Event Logging. Retrieved April 7, 2022.",
-          "url": "https://ptylu.github.io/content/report/report.html?report=25"
-        },
-        {
-          "source_name": "Microsoft Clear-EventLog",
-          "description": "Microsoft. (n.d.). Clear-EventLog. Retrieved July 2, 2018.",
-          "url": "https://docs.microsoft.com/powershell/module/microsoft.powershell.management/clear-eventlog"
-        },
-        {
-          "source_name": "Microsoft EventLog.Clear",
-          "description": "Microsoft. (n.d.). EventLog.Clear Method (). Retrieved July 2, 2018.",
-          "url": "https://msdn.microsoft.com/library/system.diagnostics.eventlog.clear.aspx"
-        },
-        {
-          "source_name": "Microsoft wevtutil Oct 2017",
-          "description": "Plett, C. et al.. (2017, October 16). wevtutil. Retrieved July 2, 2018.",
-          "url": "https://docs.microsoft.com/windows-server/administration/windows-commands/wevtutil"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-15T19:58:36.700Z",
-      "name": "Clear Windows Event Logs",
-      "description": "Adversaries may clear Windows Event Logs to hide the activity of an intrusion. Windows Event Logs are a record of a computer's alerts and notifications. There are three system-defined sources of events: System, Application, and Security, with five event types: Error, Warning, Information, Success Audit, and Failure Audit.\n\n\nWith administrator privileges, the event logs can be cleared with the following utility commands:\n\n* <code>wevtutil cl system</code>\n* <code>wevtutil cl application</code>\n* <code>wevtutil cl security</code>\n\nThese logs may also be cleared through other mechanisms, such as the event viewer GUI or [PowerShell](https://attack.mitre.org/techniques/T1059/001). For example, adversaries may use the PowerShell command <code>Remove-EventLog -LogName Security</code> to delete the Security EventLog and after reboot, disable future logging.  Note: events may still be generated and logged in the .evtx file between the time the command is run and the reboot.(Citation: disable_win_evt_logging)\n\nAdversaries may also attempt to clear logs by directly deleting the stored log files within `C:\\Windows\\System32\\winevt\\logs\\`.",
-      "kill_chain_phases": [
-        {
-          "kill_chain_name": "mitre-attack",
-          "phase_name": "defense-evasion"
-        }
-      ],
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_contributors": [
-        "Lucas Heiligenstein"
-      ],
-      "x_mitre_deprecated": false,
-      "x_mitre_detection": "Deleting Windows event logs (via native binaries (Citation: Microsoft wevtutil Oct 2017), API functions (Citation: Microsoft EventLog.Clear), or [PowerShell](https://attack.mitre.org/techniques/T1059/001) (Citation: Microsoft Clear-EventLog)) may also generate an alterable event (Event ID 1102: \"The audit log was cleared\").",
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_is_subtechnique": true,
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_platforms": [
-        "Windows"
-      ],
-      "x_mitre_version": "1.5",
-      "x_mitre_data_sources": [
-        "Command: Command Execution",
-        "File: File Deletion",
-        "Process: OS API Execution",
-        "Process: Process Creation"
-      ]
-    },
-    {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
-      "id": "attack-pattern--8e350c1d-ac79-4b5c-bd4e-7476d7e84ec5",
-      "created": "2020-03-15T15:34:30.767Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "revoked": false,
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1048/002",
-          "external_id": "T1048.002"
-        },
-        {
-          "source_name": "University of Birmingham C2",
-          "description": "Gardiner, J.,  Cova, M., Nagaraja, S. (2014, February). Command & Control Understanding, Denying and Detecting. Retrieved April 20, 2016.",
-          "url": "https://arxiv.org/ftp/arxiv/papers/1408/1408.1136.pdf"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-15T19:58:50.294Z",
-      "name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
-      "description": "Adversaries may steal data by exfiltrating it over an asymmetrically encrypted network protocol other than that of the existing command and control channel. The data may also be sent to an alternate network location from the main command and control server. \n\nAsymmetric encryption algorithms are those that use different keys on each end of the channel. Also known as public-key cryptography, this requires pairs of cryptographic keys that can encrypt/decrypt data from the corresponding key. Each end of the communication channels requires a private key (only in the procession of that entity) and the public key of the other entity. The public keys of each entity are exchanged before encrypted communications begin. \n\nNetwork protocols that use asymmetric encryption (such as HTTPS/TLS/SSL) often utilize symmetric encryption once keys are exchanged. Adversaries may opt to use these encrypted mechanisms that are baked into a protocol. ",
-      "kill_chain_phases": [
-        {
-          "kill_chain_name": "mitre-attack",
-          "phase_name": "exfiltration"
-        }
-      ],
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_contributors": [
-        "William Cain"
-      ],
-      "x_mitre_deprecated": false,
-      "x_mitre_detection": "Analyze network data for uncommon data flows (e.g., a client sending significantly more data than it receives from a server). Processes utilizing the network that do not normally have network communication or have never been seen before are suspicious.(Citation: University of Birmingham C2) ",
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_is_subtechnique": true,
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_platforms": [
-        "Linux",
-        "macOS",
-        "Windows",
-        "ESXi"
-      ],
-      "x_mitre_version": "1.2",
-      "x_mitre_data_sources": [
-        "Network Traffic: Network Traffic Flow",
-        "Command: Command Execution",
-        "File: File Access",
-        "Network Traffic: Network Connection Creation",
-        "Network Traffic: Network Traffic Content"
-      ]
-    },
-    {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
-      "id": "attack-pattern--9d48cab2-7929-4812-ad22-f536665f0109",
-      "created": "2020-10-02T15:45:17.628Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "revoked": false,
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1590",
-          "external_id": "T1590"
-        },
-        {
-          "source_name": "Circl Passive DNS",
-          "description": "CIRCL Computer Incident Response Center. (n.d.). Passive DNS. Retrieved October 20, 2020.",
-          "url": "https://www.circl.lu/services/passive-dns/"
-        },
-        {
-          "source_name": "DNS Dumpster",
-          "description": "Hacker Target. (n.d.). DNS Dumpster. Retrieved October 20, 2020.",
-          "url": "https://dnsdumpster.com/"
-        },
-        {
-          "source_name": "WHOIS",
-          "description": "NTT America. (n.d.). Whois Lookup. Retrieved November 17, 2024.",
-          "url": "https://who.is/"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-15T22:38:13.461Z",
-      "name": "Gather Victim Network Information",
-      "description": "Adversaries may gather information about the victim's networks that can be used during targeting. Information about networks may include a variety of details, including administrative data (ex: IP ranges, domain names, etc.) as well as specifics regarding its topology and operations.\n\nAdversaries may gather this information in various ways, such as direct collection actions via [Active Scanning](https://attack.mitre.org/techniques/T1595) or [Phishing for Information](https://attack.mitre.org/techniques/T1598). Information about networks may also be exposed to adversaries via online or other accessible data sets (ex: [Search Open Technical Databases](https://attack.mitre.org/techniques/T1596)).(Citation: WHOIS)(Citation: DNS Dumpster)(Citation: Circl Passive DNS) Gathering this information may reveal opportunities for other forms of reconnaissance (ex: [Active Scanning](https://attack.mitre.org/techniques/T1595) or [Search Open Websites/Domains](https://attack.mitre.org/techniques/T1593)), establishing operational resources (ex: [Acquire Infrastructure](https://attack.mitre.org/techniques/T1583) or [Compromise Infrastructure](https://attack.mitre.org/techniques/T1584)), and/or initial access (ex: [Trusted Relationship](https://attack.mitre.org/techniques/T1199)).",
-      "kill_chain_phases": [
-        {
-          "kill_chain_name": "mitre-attack",
-          "phase_name": "reconnaissance"
-        }
-      ],
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_deprecated": false,
-      "x_mitre_detection": "Much of this activity may have a very high occurrence and associated false positive rate, as well as potentially taking place outside the visibility of the target organization, making detection difficult for defenders.\n\nDetection efforts may be focused on related stages of the adversary lifecycle, such as during Initial Access.",
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_is_subtechnique": false,
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_platforms": [
-        "PRE"
-      ],
-      "x_mitre_version": "1.0"
-    },
-    {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
-      "id": "attack-pattern--a782ebe2-daba-42c7-bc82-e8e9d923162d",
-      "created": "2020-03-14T23:23:41.770Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "revoked": false,
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1090/003",
-          "external_id": "T1090.003"
-        },
-        {
-          "source_name": "ORB Mandiant",
-          "description": "Raggi, Michael. (2024, May 22). IOC Extinction? China-Nexus Cyber Espionage Actors Use ORB Networks to Raise Cost on Defenders. Retrieved July 8, 2024.",
-          "url": "https://cloud.google.com/blog/topics/threat-intelligence/china-nexus-espionage-orb-networks"
-        },
-        {
-          "source_name": "NGLite Trojan",
-          "description": "Robert Falcone, Jeff White, and Peter Renals. (2021, November 7). Targeted Attack Campaign Against ManageEngine ADSelfService Plus Delivers Godzilla Webshells, NGLite Trojan and KdcSponge Stealer. Retrieved February 8, 2024.",
-          "url": "https://unit42.paloaltonetworks.com/manageengine-godzilla-nglite-kdcsponge/"
-        },
-        {
-          "source_name": "Onion Routing",
-          "description": "Wikipedia. (n.d.). Onion Routing. Retrieved October 20, 2020.",
-          "url": "https://en.wikipedia.org/wiki/Onion_routing"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-15T19:58:56.270Z",
-      "name": "Multi-hop Proxy",
-      "description": "Adversaries may chain together multiple proxies to disguise the source of malicious traffic. Typically, a defender will be able to identify the last proxy traffic traversed before it enters their network; the defender may or may not be able to identify any previous proxies before the last-hop proxy. This technique makes identifying the original source of the malicious traffic even more difficult by requiring the defender to trace malicious traffic through several proxies to identify its source.\n\nFor example, adversaries may construct or use onion routing networks – such as the publicly available [Tor](https://attack.mitre.org/software/S0183) network – to transport encrypted C2 traffic through a compromised population, allowing communication with any device within the network.(Citation: Onion Routing) Adversaries may also use operational relay box (ORB) networks composed of virtual private servers (VPS), Internet of Things (IoT) devices, smart devices, and end-of-life routers to obfuscate their operations.(Citation: ORB Mandiant) \n\nIn the case of network infrastructure, it is possible for an adversary to leverage multiple compromised devices to create a multi-hop proxy chain (i.e., [Network Devices](https://attack.mitre.org/techniques/T1584/008)). By leveraging [Patch System Image](https://attack.mitre.org/techniques/T1601/001) on routers, adversaries can add custom code to the affected network devices that will implement onion routing between those nodes. This method is dependent upon the [Network Boundary Bridging](https://attack.mitre.org/techniques/T1599) method allowing the adversaries to cross the protected network boundary of the Internet perimeter and into the organization’s Wide-Area Network (WAN).  Protocols such as ICMP may be used as a transport.  \n\nSimilarly, adversaries may abuse peer-to-peer (P2P) and blockchain-oriented infrastructure to implement routing between a decentralized network of peers.(Citation: NGLite Trojan)",
-      "kill_chain_phases": [
-        {
-          "kill_chain_name": "mitre-attack",
-          "phase_name": "command-and-control"
-        }
-      ],
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_contributors": [
-        "Eduardo Chavarro Ovalle"
-      ],
-      "x_mitre_deprecated": false,
-      "x_mitre_detection": "When observing use of Multi-hop proxies, network data from the actual command and control servers could allow correlating incoming and outgoing flows to trace malicious traffic back to its source. Multi-hop proxies can also be detected by alerting on traffic to known anonymity networks (such as [Tor](https://attack.mitre.org/software/S0183)) or known adversary infrastructure that uses this technique.\n\nIn context of network devices, monitor traffic for encrypted communications from the Internet that is addressed to border routers.  Compare this traffic with the configuration to determine whether it matches with any configured site-to-site Virtual Private Network (VPN) connections the device was intended to have. Monitor traffic for encrypted communications originating from potentially breached routers that is addressed to other routers within the organization.  Compare the source and destination with the configuration of the device to determine if these channels are an authorized Virtual Private Network (VPN) connections or other encrypted modes of communication. Monitor ICMP traffic from the Internet that is addressed to border routers and is encrypted.  Few if any legitimate use cases exist for sending encrypted data to a network device via ICMP.",
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_is_subtechnique": true,
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_platforms": [
-        "Linux",
-        "Network Devices",
-        "Windows",
-        "macOS",
-        "ESXi"
-      ],
-      "x_mitre_version": "2.3",
-      "x_mitre_data_sources": [
-        "Network Traffic: Network Traffic Flow",
-        "Network Traffic: Network Traffic Content",
-        "Network Traffic: Network Connection Creation"
-      ]
-    },
-    {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
-      "id": "attack-pattern--b8902400-e6c5-4ba2-95aa-2d35b442b118",
-      "created": "2020-03-16T15:33:01.739Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "revoked": false,
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1573",
-          "external_id": "T1573"
-        },
-        {
-          "source_name": "SANS Decrypting SSL",
-          "description": "Butler, M. (2013, November). Finding Hidden Threats by Decrypting SSL. Retrieved April 5, 2016.",
-          "url": "http://www.sans.org/reading-room/whitepapers/analyst/finding-hidden-threats-decrypting-ssl-34840"
-        },
-        {
-          "source_name": "SEI SSL Inspection Risks",
-          "description": "Dormann, W. (2015, March 13). The Risks of SSL Inspection. Retrieved April 5, 2016.",
-          "url": "https://insights.sei.cmu.edu/cert/2015/03/the-risks-of-ssl-inspection.html"
-        },
-        {
-          "source_name": "University of Birmingham C2",
-          "description": "Gardiner, J.,  Cova, M., Nagaraja, S. (2014, February). Command & Control Understanding, Denying and Detecting. Retrieved April 20, 2016.",
-          "url": "https://arxiv.org/ftp/arxiv/papers/1408/1408.1136.pdf"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-15T19:59:01.172Z",
-      "name": "Encrypted Channel",
-      "description": "Adversaries may employ an encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Despite the use of a secure algorithm, these implementations may be vulnerable to reverse engineering if secret keys are encoded and/or generated within malware samples/configuration files.",
-      "kill_chain_phases": [
-        {
-          "kill_chain_name": "mitre-attack",
-          "phase_name": "command-and-control"
-        }
-      ],
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_deprecated": false,
-      "x_mitre_detection": "SSL/TLS inspection is one way of detecting command and control traffic within some encrypted communication channels.(Citation: SANS Decrypting SSL) SSL/TLS inspection does come with certain risks that should be considered before implementing to avoid potential security issues such as incomplete certificate validation.(Citation: SEI SSL Inspection Risks)\n\nIn general, analyze network data for uncommon data flows (e.g., a client sending significantly more data than it receives from a server). Processes utilizing the network that do not normally have network communication or have never been seen before are suspicious. Analyze packet contents to detect communications that do not follow the expected protocol behavior for the port that is being used.(Citation: University of Birmingham C2)",
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_is_subtechnique": false,
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_platforms": [
-        "Linux",
-        "macOS",
-        "Windows",
-        "Network Devices",
-        "ESXi"
-      ],
-      "x_mitre_version": "1.2",
-      "x_mitre_data_sources": [
-        "Network Traffic: Network Traffic Content"
-      ]
-    },
-    {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
       "id": "attack-pattern--bc76d0a4-db11-4551-9ac4-01a469cfb161",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
       "created": "2020-10-02T14:55:43.815Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "revoked": false,
@@ -1428,9 +681,489 @@
       "x_mitre_version": "1.2"
     },
     {
+      "id": "attack-pattern--9d48cab2-7929-4812-ad22-f536665f0109",
       "type": "attack-pattern",
       "spec_version": "2.1",
+      "created": "2020-10-02T15:45:17.628Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1590",
+          "external_id": "T1590"
+        },
+        {
+          "source_name": "Circl Passive DNS",
+          "description": "CIRCL Computer Incident Response Center. (n.d.). Passive DNS. Retrieved October 20, 2020.",
+          "url": "https://www.circl.lu/services/passive-dns/"
+        },
+        {
+          "source_name": "DNS Dumpster",
+          "description": "Hacker Target. (n.d.). DNS Dumpster. Retrieved October 20, 2020.",
+          "url": "https://dnsdumpster.com/"
+        },
+        {
+          "source_name": "WHOIS",
+          "description": "NTT America. (n.d.). Whois Lookup. Retrieved November 17, 2024.",
+          "url": "https://who.is/"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T22:38:13.461Z",
+      "name": "Gather Victim Network Information",
+      "description": "Adversaries may gather information about the victim's networks that can be used during targeting. Information about networks may include a variety of details, including administrative data (ex: IP ranges, domain names, etc.) as well as specifics regarding its topology and operations.\n\nAdversaries may gather this information in various ways, such as direct collection actions via [Active Scanning](https://attack.mitre.org/techniques/T1595) or [Phishing for Information](https://attack.mitre.org/techniques/T1598). Information about networks may also be exposed to adversaries via online or other accessible data sets (ex: [Search Open Technical Databases](https://attack.mitre.org/techniques/T1596)).(Citation: WHOIS)(Citation: DNS Dumpster)(Citation: Circl Passive DNS) Gathering this information may reveal opportunities for other forms of reconnaissance (ex: [Active Scanning](https://attack.mitre.org/techniques/T1595) or [Search Open Websites/Domains](https://attack.mitre.org/techniques/T1593)), establishing operational resources (ex: [Acquire Infrastructure](https://attack.mitre.org/techniques/T1583) or [Compromise Infrastructure](https://attack.mitre.org/techniques/T1584)), and/or initial access (ex: [Trusted Relationship](https://attack.mitre.org/techniques/T1199)).",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "reconnaissance"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Much of this activity may have a very high occurrence and associated false positive rate, as well as potentially taking place outside the visibility of the target organization, making detection difficult for defenders.\n\nDetection efforts may be focused on related stages of the adversary lifecycle, such as during Initial Access.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "PRE"
+      ],
+      "x_mitre_version": "1.0"
+    },
+    {
+      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0011",
+          "external_id": "TA0011"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:36.561Z",
+      "name": "Command and Control",
+      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "command-and-control"
+    },
+    {
+      "id": "attack-pattern--b8902400-e6c5-4ba2-95aa-2d35b442b118",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "created": "2020-03-16T15:33:01.739Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1573",
+          "external_id": "T1573"
+        },
+        {
+          "source_name": "SANS Decrypting SSL",
+          "description": "Butler, M. (2013, November). Finding Hidden Threats by Decrypting SSL. Retrieved April 5, 2016.",
+          "url": "http://www.sans.org/reading-room/whitepapers/analyst/finding-hidden-threats-decrypting-ssl-34840"
+        },
+        {
+          "source_name": "SEI SSL Inspection Risks",
+          "description": "Dormann, W. (2015, March 13). The Risks of SSL Inspection. Retrieved April 5, 2016.",
+          "url": "https://insights.sei.cmu.edu/cert/2015/03/the-risks-of-ssl-inspection.html"
+        },
+        {
+          "source_name": "University of Birmingham C2",
+          "description": "Gardiner, J.,  Cova, M., Nagaraja, S. (2014, February). Command & Control Understanding, Denying and Detecting. Retrieved April 20, 2016.",
+          "url": "https://arxiv.org/ftp/arxiv/papers/1408/1408.1136.pdf"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:59:01.172Z",
+      "name": "Encrypted Channel",
+      "description": "Adversaries may employ an encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Despite the use of a secure algorithm, these implementations may be vulnerable to reverse engineering if secret keys are encoded and/or generated within malware samples/configuration files.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "command-and-control"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "SSL/TLS inspection is one way of detecting command and control traffic within some encrypted communication channels.(Citation: SANS Decrypting SSL) SSL/TLS inspection does come with certain risks that should be considered before implementing to avoid potential security issues such as incomplete certificate validation.(Citation: SEI SSL Inspection Risks)\n\nIn general, analyze network data for uncommon data flows (e.g., a client sending significantly more data than it receives from a server). Processes utilizing the network that do not normally have network communication or have never been seen before are suspicious. Analyze packet contents to detect communications that do not follow the expected protocol behavior for the port that is being used.(Citation: University of Birmingham C2)",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Network Devices",
+        "ESXi"
+      ],
+      "x_mitre_version": "1.2",
+      "x_mitre_data_sources": [
+        "Network Traffic: Network Traffic Content"
+      ]
+    },
+    {
+      "id": "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
+      "type": "x-mitre-tactic",
+      "modified": "2024-09-05T18:27:09.070Z",
+      "name": "Collection",
+      "description": "The adversary is trying to gather data of interest to their goal.\n\nCollection consists of techniques adversaries may use to gather information and the sources information is collected from that are relevant to following through on the adversary's objectives. Frequently, the next goal after collecting data is to either steal (exfiltrate) the data or to use the data to gain more information about the target environment. Common target sources include various drive types, browsers, audio, video, and email. Common collection methods include capturing screenshots and keyboard input.",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.1",
+      "x_mitre_shortname": "collection",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0009",
+          "external_id": "TA0009"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+    },
+    {
+      "id": "attack-pattern--53ac20cd-aca3-406e-9aa0-9fc7fdc60a5a",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "created": "2020-02-20T20:53:45.725Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1560",
+          "external_id": "T1560"
+        },
+        {
+          "source_name": "DOJ GRU Indictment Jul 2018",
+          "description": "Mueller, R. (2018, July 13). Indictment - United States of America vs. VIKTOR BORISOVICH NETYKSHO, et al. Retrieved November 17, 2024.",
+          "url": "https://cdn.cnn.com/cnn/2018/images/07/13/gru.indictment.pdf"
+        },
+        {
+          "source_name": "Wikipedia File Header Signatures",
+          "description": "Wikipedia. (2016, March 31). List of file signatures. Retrieved April 22, 2016.",
+          "url": "https://en.wikipedia.org/wiki/List_of_file_signatures"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T21:50:30.319Z",
+      "name": "Archive Collected Data",
+      "description": "An adversary may compress and/or encrypt data that is collected prior to exfiltration. Compressing the data can help to obfuscate the collected data and minimize the amount of data sent over the network.(Citation: DOJ GRU Indictment Jul 2018) Encryption can be used to hide information that is being exfiltrated from detection or make exfiltration less conspicuous upon inspection by a defender.\n\nBoth compression and encryption are done prior to exfiltration, and can be performed using a utility, 3rd party library, or custom method.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "collection"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Archival software and archived files can be detected in many ways. Common utilities that may be present on the system or brought in by an adversary may be detectable through process monitoring and monitoring for command-line arguments for known archival utilities. This may yield a significant number of benign events, depending on how systems in the environment are typically used.\n\nA process that loads the Windows DLL crypt32.dll may be used to perform encryption, decryption, or verification of file signatures.\n\nConsider detecting writing of files with extensions and/or headers associated with compressed or encrypted file types. Detection efforts may focus on follow-on exfiltration activity, where compressed or encrypted files can be detected in transit with a network intrusion detection or data loss prevention system analyzing file headers.(Citation: Wikipedia File Header Signatures)",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_data_sources": [
+        "Command: Command Execution",
+        "Script: Script Execution",
+        "Process: Process Creation",
+        "File: File Creation"
+      ]
+    },
+    {
+      "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0005",
+          "external_id": "TA0005"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:34.581Z",
+      "name": "Defense Evasion",
+      "description": "The adversary is trying to avoid being detected.\n\nDefense Evasion consists of techniques that adversaries use to avoid detection throughout their compromise. Techniques used for defense evasion include uninstalling/disabling security software or obfuscating/encrypting data and scripts. Adversaries also leverage and abuse trusted processes to hide and masquerade their malware. Other tactics’ techniques are cross-listed here when those techniques include the added benefit of subverting defenses. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "defense-evasion"
+    },
+    {
+      "id": "attack-pattern--3ccef7ae-cb5e-48f6-8302-897105fbf55c",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "created": "2017-12-14T16:46:06.044Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1140",
+          "external_id": "T1140"
+        },
+        {
+          "source_name": "Volexity PowerDuke November 2016",
+          "description": "Adair, S.. (2016, November 9). PowerDuke: Widespread Post-Election Spear Phishing Campaigns Targeting Think Tanks and NGOs. Retrieved January 11, 2017.",
+          "url": "https://www.volexity.com/blog/2016/11/09/powerduke-post-election-spear-phishing-campaigns-targeting-think-tanks-and-ngos/"
+        },
+        {
+          "source_name": "Sentinel One Tainted Love 2023",
+          "description": "Aleksandar Milenkoski, Juan Andres Guerrero-Saade, and Joey Chen. (2023, March 23). Operation Tainted Love | Chinese APTs Target Telcos in New Attacks. Retrieved March 18, 2025.",
+          "url": "https://www.sentinelone.com/labs/operation-tainted-love-chinese-apts-target-telcos-in-new-attacks/"
+        },
+        {
+          "source_name": "Malwarebytes Targeted Attack against Saudi Arabia",
+          "description": "Malwarebytes Labs. (2017, March 27). New targeted attack against Saudi Arabia Government. Retrieved July 3, 2017.",
+          "url": "https://blog.malwarebytes.com/cybercrime/social-engineering-cybercrime/2017/03/new-targeted-attack-saudi-arabia-government/"
+        },
+        {
+          "source_name": "Carbon Black Obfuscation Sept 2016",
+          "description": "Tedesco, B. (2016, September 23). Security Alert Summary. Retrieved February 12, 2018.",
+          "url": "https://www.carbonblack.com/2016/09/23/security-advisory-variants-well-known-adware-families-discovered-include-sophisticated-obfuscation-techniques-previously-associated-nation-state-attacks/"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:24.400Z",
+      "name": "Deobfuscate/Decode Files or Information",
+      "description": "Adversaries may use [Obfuscated Files or Information](https://attack.mitre.org/techniques/T1027) to hide artifacts of an intrusion from analysis. They may require separate mechanisms to decode or deobfuscate that information depending on how they intend to use it. Methods for doing that include built-in functionality of malware or by using utilities present on the system.\n\nOne such example is the use of [certutil](https://attack.mitre.org/software/S0160) to decode a remote access tool portable executable file that has been hidden inside a certificate file.(Citation: Malwarebytes Targeted Attack against Saudi Arabia) Another example is using the Windows <code>copy /b</code> or <code>type</code> command to reassemble binary fragments into a malicious payload.(Citation: Carbon Black Obfuscation Sept 2016)(Citation: Sentinel One Tainted Love 2023)\n\nSometimes a user's action may be required to open it for deobfuscation or decryption as part of [User Execution](https://attack.mitre.org/techniques/T1204). The user may also be required to input a password to open a password protected compressed/encrypted file that was provided by the adversary.(Citation: Volexity PowerDuke November 2016)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "defense-evasion"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Matthew Demaske, Adaptforward",
+        "Red Canary",
+        "Cristóbal Martínez Martín"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Detecting the action of deobfuscating or decoding files or information may be difficult depending on the implementation. If the functionality is contained within malware and uses the Windows API, then attempting to detect malicious behavior before or after the action may yield better results than attempting to perform analysis on loaded libraries or API calls. If scripts are used, then collecting the scripts for analysis may be necessary. Perform process and command-line monitoring to detect potentially malicious behavior related to scripts and system utilities such as [certutil](https://attack.mitre.org/software/S0160).\n\nMonitor the execution file paths and command-line arguments for common archive file applications and extensions, such as those for Zip and RAR archive tools, and correlate with other suspicious behavior to reduce false positives from normal user and administrator behavior.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "ESXi",
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "x_mitre_version": "1.4",
+      "x_mitre_data_sources": [
+        "Process: Process Creation",
+        "Script: Script Execution",
+        "File: File Modification"
+      ]
+    },
+    {
+      "id": "attack-pattern--8e350c1d-ac79-4b5c-bd4e-7476d7e84ec5",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "created": "2020-03-15T15:34:30.767Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1048/002",
+          "external_id": "T1048.002"
+        },
+        {
+          "source_name": "University of Birmingham C2",
+          "description": "Gardiner, J.,  Cova, M., Nagaraja, S. (2014, February). Command & Control Understanding, Denying and Detecting. Retrieved April 20, 2016.",
+          "url": "https://arxiv.org/ftp/arxiv/papers/1408/1408.1136.pdf"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:50.294Z",
+      "name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
+      "description": "Adversaries may steal data by exfiltrating it over an asymmetrically encrypted network protocol other than that of the existing command and control channel. The data may also be sent to an alternate network location from the main command and control server. \n\nAsymmetric encryption algorithms are those that use different keys on each end of the channel. Also known as public-key cryptography, this requires pairs of cryptographic keys that can encrypt/decrypt data from the corresponding key. Each end of the communication channels requires a private key (only in the procession of that entity) and the public key of the other entity. The public keys of each entity are exchanged before encrypted communications begin. \n\nNetwork protocols that use asymmetric encryption (such as HTTPS/TLS/SSL) often utilize symmetric encryption once keys are exchanged. Adversaries may opt to use these encrypted mechanisms that are baked into a protocol. ",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "exfiltration"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "William Cain"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Analyze network data for uncommon data flows (e.g., a client sending significantly more data than it receives from a server). Processes utilizing the network that do not normally have network communication or have never been seen before are suspicious.(Citation: University of Birmingham C2) ",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "ESXi"
+      ],
+      "x_mitre_version": "1.2",
+      "x_mitre_data_sources": [
+        "Network Traffic: Network Traffic Flow",
+        "Command: Command Execution",
+        "File: File Access",
+        "Network Traffic: Network Connection Creation",
+        "Network Traffic: Network Traffic Content"
+      ]
+    },
+    {
+      "id": "x-mitre-tactic--9a4e74ab-5008-408c-84bf-a10dfbc53462",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0010",
+          "external_id": "TA0010"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:34.933Z",
+      "name": "Exfiltration",
+      "description": "The adversary is trying to steal data.\n\nExfiltration consists of techniques that adversaries may use to steal data from your network. Once they’ve collected data, adversaries often package it to avoid detection while removing it. This can include compression and encryption. Techniques for getting data out of a target network typically include transferring it over their command and control channel or an alternate channel and may also include putting size limits on the transmission.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "exfiltration"
+    },
+    {
+      "id": "attack-pattern--a782ebe2-daba-42c7-bc82-e8e9d923162d",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "created": "2020-03-14T23:23:41.770Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1090/003",
+          "external_id": "T1090.003"
+        },
+        {
+          "source_name": "ORB Mandiant",
+          "description": "Raggi, Michael. (2024, May 22). IOC Extinction? China-Nexus Cyber Espionage Actors Use ORB Networks to Raise Cost on Defenders. Retrieved July 8, 2024.",
+          "url": "https://cloud.google.com/blog/topics/threat-intelligence/china-nexus-espionage-orb-networks"
+        },
+        {
+          "source_name": "NGLite Trojan",
+          "description": "Robert Falcone, Jeff White, and Peter Renals. (2021, November 7). Targeted Attack Campaign Against ManageEngine ADSelfService Plus Delivers Godzilla Webshells, NGLite Trojan and KdcSponge Stealer. Retrieved February 8, 2024.",
+          "url": "https://unit42.paloaltonetworks.com/manageengine-godzilla-nglite-kdcsponge/"
+        },
+        {
+          "source_name": "Onion Routing",
+          "description": "Wikipedia. (n.d.). Onion Routing. Retrieved October 20, 2020.",
+          "url": "https://en.wikipedia.org/wiki/Onion_routing"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:56.270Z",
+      "name": "Multi-hop Proxy",
+      "description": "Adversaries may chain together multiple proxies to disguise the source of malicious traffic. Typically, a defender will be able to identify the last proxy traffic traversed before it enters their network; the defender may or may not be able to identify any previous proxies before the last-hop proxy. This technique makes identifying the original source of the malicious traffic even more difficult by requiring the defender to trace malicious traffic through several proxies to identify its source.\n\nFor example, adversaries may construct or use onion routing networks – such as the publicly available [Tor](https://attack.mitre.org/software/S0183) network – to transport encrypted C2 traffic through a compromised population, allowing communication with any device within the network.(Citation: Onion Routing) Adversaries may also use operational relay box (ORB) networks composed of virtual private servers (VPS), Internet of Things (IoT) devices, smart devices, and end-of-life routers to obfuscate their operations.(Citation: ORB Mandiant) \n\nIn the case of network infrastructure, it is possible for an adversary to leverage multiple compromised devices to create a multi-hop proxy chain (i.e., [Network Devices](https://attack.mitre.org/techniques/T1584/008)). By leveraging [Patch System Image](https://attack.mitre.org/techniques/T1601/001) on routers, adversaries can add custom code to the affected network devices that will implement onion routing between those nodes. This method is dependent upon the [Network Boundary Bridging](https://attack.mitre.org/techniques/T1599) method allowing the adversaries to cross the protected network boundary of the Internet perimeter and into the organization’s Wide-Area Network (WAN).  Protocols such as ICMP may be used as a transport.  \n\nSimilarly, adversaries may abuse peer-to-peer (P2P) and blockchain-oriented infrastructure to implement routing between a decentralized network of peers.(Citation: NGLite Trojan)",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "command-and-control"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Eduardo Chavarro Ovalle"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "When observing use of Multi-hop proxies, network data from the actual command and control servers could allow correlating incoming and outgoing flows to trace malicious traffic back to its source. Multi-hop proxies can also be detected by alerting on traffic to known anonymity networks (such as [Tor](https://attack.mitre.org/software/S0183)) or known adversary infrastructure that uses this technique.\n\nIn context of network devices, monitor traffic for encrypted communications from the Internet that is addressed to border routers.  Compare this traffic with the configuration to determine whether it matches with any configured site-to-site Virtual Private Network (VPN) connections the device was intended to have. Monitor traffic for encrypted communications originating from potentially breached routers that is addressed to other routers within the organization.  Compare the source and destination with the configuration of the device to determine if these channels are an authorized Virtual Private Network (VPN) connections or other encrypted modes of communication. Monitor ICMP traffic from the Internet that is addressed to border routers and is encrypted.  Few if any legitimate use cases exist for sending encrypted data to a network device via ICMP.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "Network Devices",
+        "Windows",
+        "macOS",
+        "ESXi"
+      ],
+      "x_mitre_version": "2.3",
+      "x_mitre_data_sources": [
+        "Network Traffic: Network Traffic Flow",
+        "Network Traffic: Network Traffic Content",
+        "Network Traffic: Network Connection Creation"
+      ]
+    },
+    {
       "id": "attack-pattern--d63a3fb8-9452-4e9d-a60a-54be68d5998c",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
       "created": "2020-01-31T12:35:36.479Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "revoked": false,
@@ -1482,226 +1215,486 @@
       ]
     },
     {
-      "type": "x-mitre-tactic",
+      "id": "attack-pattern--6495ae23-3ab4-43c5-a94f-5638a2c31fd2",
+      "type": "attack-pattern",
       "spec_version": "2.1",
-      "id": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0003",
-          "external_id": "TA0003"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:33.492Z",
-      "name": "Persistence",
-      "description": "The adversary is trying to maintain their foothold.\n\nPersistence consists of techniques that adversaries use to keep access to systems across restarts, changed credentials, and other interruptions that could cut off their access. Techniques used for persistence include any access, action, or configuration changes that let them maintain their foothold on systems, such as replacing or hijacking legitimate code or adding startup code. ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "persistence"
-    },
-    {
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0005",
-          "external_id": "TA0005"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:34.581Z",
-      "name": "Defense Evasion",
-      "description": "The adversary is trying to avoid being detected.\n\nDefense Evasion consists of techniques that adversaries use to avoid detection throughout their compromise. Techniques used for defense evasion include uninstalling/disabling security software or obfuscating/encrypting data and scripts. Adversaries also leverage and abuse trusted processes to hide and masquerade their malware. Other tactics’ techniques are cross-listed here when those techniques include the added benefit of subverting defenses. ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "defense-evasion"
-    },
-    {
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "id": "x-mitre-tactic--9a4e74ab-5008-408c-84bf-a10dfbc53462",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0010",
-          "external_id": "TA0010"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:34.933Z",
-      "name": "Exfiltration",
-      "description": "The adversary is trying to steal data.\n\nExfiltration consists of techniques that adversaries may use to steal data from your network. Once they’ve collected data, adversaries often package it to avoid detection while removing it. This can include compression and encryption. Techniques for getting data out of a target network typically include transferring it over their command and control channel or an alternate channel and may also include putting size limits on the transmission.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "exfiltration"
-    },
-    {
-      "modified": "2024-09-05T18:27:09.070Z",
-      "name": "Collection",
-      "description": "The adversary is trying to gather data of interest to their goal.\n\nCollection consists of techniques adversaries may use to gather information and the sources information is collected from that are relevant to following through on the adversary's objectives. Frequently, the next goal after collecting data is to either steal (exfiltrate) the data or to use the data to gain more information about the target environment. Common target sources include various drive types, browsers, audio, video, and email. Common collection methods include capturing screenshots and keyboard input.",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.1",
-      "x_mitre_shortname": "collection",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "id": "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
-      "created": "2018-10-17T00:14:20.652Z",
+      "created": "2020-01-28T17:05:14.707Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "revoked": false,
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0009",
-          "external_id": "TA0009"
+          "url": "https://attack.mitre.org/techniques/T1070/001",
+          "external_id": "T1070.001"
+        },
+        {
+          "source_name": "disable_win_evt_logging",
+          "description": "Heiligenstein, L. (n.d.). REP-25: Disable Windows Event Logging. Retrieved April 7, 2022.",
+          "url": "https://ptylu.github.io/content/report/report.html?report=25"
+        },
+        {
+          "source_name": "Microsoft Clear-EventLog",
+          "description": "Microsoft. (n.d.). Clear-EventLog. Retrieved July 2, 2018.",
+          "url": "https://docs.microsoft.com/powershell/module/microsoft.powershell.management/clear-eventlog"
+        },
+        {
+          "source_name": "Microsoft EventLog.Clear",
+          "description": "Microsoft. (n.d.). EventLog.Clear Method (). Retrieved July 2, 2018.",
+          "url": "https://msdn.microsoft.com/library/system.diagnostics.eventlog.clear.aspx"
+        },
+        {
+          "source_name": "Microsoft wevtutil Oct 2017",
+          "description": "Plett, C. et al.. (2017, October 16). wevtutil. Retrieved July 2, 2018.",
+          "url": "https://docs.microsoft.com/windows-server/administration/windows-commands/wevtutil"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:36.700Z",
+      "name": "Clear Windows Event Logs",
+      "description": "Adversaries may clear Windows Event Logs to hide the activity of an intrusion. Windows Event Logs are a record of a computer's alerts and notifications. There are three system-defined sources of events: System, Application, and Security, with five event types: Error, Warning, Information, Success Audit, and Failure Audit.\n\n\nWith administrator privileges, the event logs can be cleared with the following utility commands:\n\n* <code>wevtutil cl system</code>\n* <code>wevtutil cl application</code>\n* <code>wevtutil cl security</code>\n\nThese logs may also be cleared through other mechanisms, such as the event viewer GUI or [PowerShell](https://attack.mitre.org/techniques/T1059/001). For example, adversaries may use the PowerShell command <code>Remove-EventLog -LogName Security</code> to delete the Security EventLog and after reboot, disable future logging.  Note: events may still be generated and logged in the .evtx file between the time the command is run and the reboot.(Citation: disable_win_evt_logging)\n\nAdversaries may also attempt to clear logs by directly deleting the stored log files within `C:\\Windows\\System32\\winevt\\logs\\`.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "defense-evasion"
+        }
       ],
       "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
-    },
-    {
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "id": "x-mitre-tactic--daa4cbb1-b4f4-4723-a824-7f1efd6e0592",
-      "created": "2020-10-02T14:48:41.809Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0043",
-          "external_id": "TA0043"
-        }
+      "x_mitre_contributors": [
+        "Lucas Heiligenstein"
       ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:36.201Z",
-      "name": "Reconnaissance",
-      "description": "The adversary is trying to gather information they can use to plan future operations.\n\nReconnaissance consists of techniques that involve adversaries actively or passively gathering information that can be used to support targeting. Such information may include details of the victim organization, infrastructure, or staff/personnel. This information can be leveraged by the adversary to aid in other phases of the adversary lifecycle, such as using gathered information to plan and execute Initial Access, to scope and prioritize post-compromise objectives, or to drive and lead further Reconnaissance efforts.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "x_mitre_deprecated": false,
+      "x_mitre_detection": "Deleting Windows event logs (via native binaries (Citation: Microsoft wevtutil Oct 2017), API functions (Citation: Microsoft EventLog.Clear), or [PowerShell](https://attack.mitre.org/techniques/T1059/001) (Citation: Microsoft Clear-EventLog)) may also generate an alterable event (Event ID 1102: \"The audit log was cleared\").",
       "x_mitre_domains": [
         "enterprise-attack"
       ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "reconnaissance"
-    },
-    {
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0011",
-          "external_id": "TA0011"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:36.561Z",
-      "name": "Command and Control",
-      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
+      "x_mitre_is_subtechnique": true,
       "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
+      "x_mitre_platforms": [
+        "Windows"
       ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "command-and-control"
+      "x_mitre_version": "1.5",
+      "x_mitre_data_sources": [
+        "Command: Command Execution",
+        "File: File Deletion",
+        "Process: OS API Execution",
+        "Process: Process Creation"
+      ]
     },
     {
-      "type": "x-mitre-tactic",
+      "id": "attack-action--6f347c34-9d8a-48f1-889e-23752c87197b",
+      "type": "attack-action",
       "spec_version": "2.1",
-      "id": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0001",
-          "external_id": "TA0001"
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
         }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:36.917Z",
-      "name": "Initial Access",
-      "description": "The adversary is trying to get into your network.\n\nInitial Access consists of techniques that use various entry vectors to gain their initial foothold within a network. Techniques used to gain a foothold include targeted spearphishing and exploiting weaknesses on public-facing web servers. Footholds gained through initial access may allow for continued access, like valid accounts and use of external remote services, or may be limited-use due to changing passwords.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "initial-access"
-    },
-    {
-      "modified": "2025-03-19T15:00:40.855Z",
-      "name": "The MITRE Corporation",
-      "description": "",
-      "identity_class": "organization",
-      "type": "identity",
-      "spec_version": "2.1",
-      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "created": "2017-06-01T00:00:00.000Z",
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "x_mitre_attack_spec_version": "3.2.0"
-    },
-    {
-      "definition": {
-        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
       },
-      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
-      "type": "marking-definition",
+      "name": "Vulnerability Scanning",
+      "tactic_id": "TA0043",
+      "tactic_ref": "x-mitre-tactic--daa4cbb1-b4f4-4723-a824-7f1efd6e0592",
+      "technique_id": "T1595.002",
+      "technique_ref": "attack-pattern--5502c4e9-24ef-4d5f-8ee9-9e906c2f82c4",
+      "description": "US-CERT warned about a vulnerability within Apache Struts. Attackers searched the web for systems with this vulnerability",
+      "effect_refs": [
+        "attack-condition--6a38d6e6-107c-4941-9848-a7a91b9560f8"
+      ]
+    },
+    {
+      "id": "attack-action--ed1d3b65-7d96-4fb0-88c4-c2cd30623b03",
+      "type": "attack-action",
       "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "definition_type": "statement"
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Exploit Public-Facing Application",
+      "tactic_id": "TA0001",
+      "tactic_ref": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
+      "technique_id": "T1190",
+      "technique_ref": "attack-pattern--3f886f2a-874f-4333-b794-aa6075009b1c",
+      "description": "Attackers used software designed to exploit the Apache Struts Web Framework vulnerability to gain access to Equifax's online dispute portal",
+      "effect_refs": [
+        "attack-condition--085ff46c-3c7d-43f0-8e8f-0b265e209f4d"
+      ]
+    },
+    {
+      "id": "attack-action--6641e2c7-8ea1-443f-a29d-89e544be5eb9",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Encrypted Channel",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1573",
+      "technique_ref": "attack-pattern--b8902400-e6c5-4ba2-95aa-2d35b442b118",
+      "description": "Queried databases for PII using existing encrypted channels",
+      "effect_refs": [
+        "attack-condition--a0f50bb1-aacd-4678-8160-c2062fef2b10"
+      ]
+    },
+    {
+      "id": "attack-action--f4e8ee77-2e14-450d-92d4-d7a1b6595c16",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "File Deletion",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1070.004",
+      "technique_ref": "attack-pattern--d63a3fb8-9452-4e9d-a60a-54be68d5998c",
+      "description": "Deleted the compressed files after exfiltrating the sensitive data"
+    },
+    {
+      "id": "attack-action--61cfb4a1-6468-4095-bd42-c9e0476a9e00",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Clear Windows Event Logs",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1070.001",
+      "technique_ref": "attack-pattern--6495ae23-3ab4-43c5-a94f-5638a2c31fd2",
+      "description": "Wiped log files on a daily basis in an effort to eliminate records of activity"
+    },
+    {
+      "id": "attack-flow--5d6dbe20-6e8a-4a91-b927-49995af62ca5",
+      "type": "attack-flow",
+      "spec_version": "2.1",
+      "created": "2022-10-27T02:44:54.520Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--08a5760c-2807-4087-bd48-9a591840609a",
+      "start_refs": [
+        "attack-action--6f347c34-9d8a-48f1-889e-23752c87197b"
+      ],
+      "name": "Equifax Breach",
+      "description": "Attack flow on the 2017 Equifax breach.",
+      "scope": "incident",
+      "external_references": [
+        {
+          "source_name": "CNET",
+          "description": "Article",
+          "url": "https://www.cnet.com/news/privacy/equifaxs-hack-one-year-later-a-look-back-at-how-it-happened-and-whats-changed/"
+        },
+        {
+          "source_name": "CSO",
+          "description": "Article",
+          "url": "https://www.csoonline.com/article/3444488/equifax-data-breach-faq-what-happened-who-was-affected-what-was-the-impact.html"
+        },
+        {
+          "source_name": "Department of Justice",
+          "description": "Press Release",
+          "url": "https://www.justice.gov/opa/press-release/file/1246891/download"
+        },
+        {
+          "source_name": "Government Accountability Office",
+          "description": "Congressional Request",
+          "url": "https://www.warren.senate.gov/imo/media/doc/2018.09.06%20GAO%20Equifax%20report.pdf"
+        }
+      ]
+    },
+    {
+      "id": "relationship--1dd29ce9-260d-4d3b-b2b0-9f19b4330c8a",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--6f347c34-9d8a-48f1-889e-23752c87197b",
+      "target_ref": "vulnerability--236a6a2c-e12c-4ed9-983b-602b7af3bc2a"
+    },
+    {
+      "id": "relationship--5825ddd2-02df-49a2-9173-4961a41cc072",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-condition--6a38d6e6-107c-4941-9848-a7a91b9560f8",
+      "target_ref": "attack-action--ed1d3b65-7d96-4fb0-88c4-c2cd30623b03"
+    },
+    {
+      "id": "relationship--bc5c6d79-15fb-4b83-96e6-8e1b51ede535",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--ed1d3b65-7d96-4fb0-88c4-c2cd30623b03",
+      "target_ref": "vulnerability--236a6a2c-e12c-4ed9-983b-602b7af3bc2a"
+    },
+    {
+      "id": "attack-operator--6dd662da-1e03-4873-943c-d9a8d25b306d",
+      "type": "attack-operator",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND",
+      "effect_refs": [
+        "attack-action--6641e2c7-8ea1-443f-a29d-89e544be5eb9"
+      ]
+    },
+    {
+      "id": "attack-action--e0206671-984d-49d1-bd1a-12e10966395f",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Multi-hop Proxy",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1090.003",
+      "technique_ref": "attack-pattern--a782ebe2-daba-42c7-bc82-e8e9d923162d",
+      "description": "Attackers used multi-hop proxies in approximately thirty-four servers located in nearly twenty countries",
+      "effect_refs": [
+        "attack-action--61cfb4a1-6468-4095-bd42-c9e0476a9e00",
+        "attack-action--f4e8ee77-2e14-450d-92d4-d7a1b6595c16"
+      ]
+    },
+    {
+      "id": "attack-action--d9d6e1e2-dc1e-404f-a4fd-a1fac90c0a86",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Credentials",
+      "tactic_id": "TA0043",
+      "tactic_ref": "x-mitre-tactic--daa4cbb1-b4f4-4723-a824-7f1efd6e0592",
+      "technique_id": "T1589.001",
+      "technique_ref": "attack-pattern--bc76d0a4-db11-4551-9ac4-01a469cfb161",
+      "description": "Attackers conducted recon on the online dispute portal to obtain valid credentials for database servers",
+      "effect_refs": [
+        "attack-operator--6dd662da-1e03-4873-943c-d9a8d25b306d"
+      ]
+    },
+    {
+      "id": "attack-action--98563102-bd12-43d2-829c-e6591931f1fb",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Gather Victim Network Information",
+      "tactic_id": "TA0043",
+      "tactic_ref": "x-mitre-tactic--daa4cbb1-b4f4-4723-a824-7f1efd6e0592",
+      "technique_id": "T1590",
+      "technique_ref": "attack-pattern--9d48cab2-7929-4812-ad22-f536665f0109",
+      "description": "Attackers conducted recon to identify databases with PII",
+      "effect_refs": [
+        "attack-operator--6dd662da-1e03-4873-943c-d9a8d25b306d"
+      ]
+    },
+    {
+      "id": "attack-action--23fade7d-fc7b-42d6-b962-fd13f8d67e88",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
+      "tactic_id": "TA0010",
+      "tactic_ref": "x-mitre-tactic--9a4e74ab-5008-408c-84bf-a10dfbc53462",
+      "technique_id": "T1048.002",
+      "technique_ref": "attack-pattern--8e350c1d-ac79-4b5c-bd4e-7476d7e84ec5",
+      "description": "Exfiltration over standard encrypted web protocols to disguise the exchanges as normal network traffic",
+      "effect_refs": [
+        "attack-action--e0206671-984d-49d1-bd1a-12e10966395f"
+      ]
+    },
+    {
+      "id": "relationship--3785e7fc-8ee7-4a5f-8e2a-22ea3b9f3a58",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--e0206671-984d-49d1-bd1a-12e10966395f",
+      "target_ref": "infrastructure--82e17e5c-bd8a-493a-a209-8d6b2ab86e50"
+    },
+    {
+      "id": "relationship--77abf72a-7fc7-4027-a52f-477fd93028bb",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--e0206671-984d-49d1-bd1a-12e10966395f",
+      "target_ref": "infrastructure--66dbb482-b762-4299-a995-6e0ae0c48d42"
+    },
+    {
+      "id": "attack-action--21be9f13-3c4b-4c97-b532-326568e19550",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Web Shell",
+      "tactic_id": "TA0003",
+      "tactic_ref": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "technique_id": "T1505.003",
+      "technique_ref": "attack-pattern--5d0d3609-d06d-49e1-b9c9-b544e0c618cb",
+      "description": "New attackers exploited foothold and installed web shell onto the Online Dispute Portal",
+      "asset_refs": [
+        "attack-asset--c8ab9a0b-16c8-472d-8eca-a52c2e512019"
+      ],
+      "effect_refs": [
+        "attack-action--d9d6e1e2-dc1e-404f-a4fd-a1fac90c0a86",
+        "attack-action--98563102-bd12-43d2-829c-e6591931f1fb"
+      ]
+    },
+    {
+      "id": "attack-operator--c1e2a2c3-c2d0-4551-9969-2d39cb6f3053",
+      "type": "attack-operator",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND",
+      "effect_refs": [
+        "attack-action--23fade7d-fc7b-42d6-b962-fd13f8d67e88"
+      ]
+    },
+    {
+      "id": "relationship--1dc7004b-a706-4a2a-96bb-2ebd92dd8538",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-condition--085ff46c-3c7d-43f0-8e8f-0b265e209f4d",
+      "target_ref": "attack-action--21be9f13-3c4b-4c97-b532-326568e19550"
+    },
+    {
+      "id": "relationship--4370e267-47ad-4a2d-9176-a23ced7b4536",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--21be9f13-3c4b-4c97-b532-326568e19550",
+      "target_ref": "malware--49e4d378-bc15-4ab9-bb3f-b05e3b896bb0"
+    },
+    {
+      "id": "attack-action--bd230072-e0f0-4478-a209-7d7aded898f2",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Archive Collected Data",
+      "tactic_id": "TA0009",
+      "tactic_ref": "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
+      "technique_id": "T1560",
+      "technique_ref": "attack-pattern--53ac20cd-aca3-406e-9aa0-9fc7fdc60a5a",
+      "description": "Split and compress output files with information",
+      "effect_refs": [
+        "attack-operator--c1e2a2c3-c2d0-4551-9969-2d39cb6f3053"
+      ]
+    },
+    {
+      "id": "attack-action--20aa5b9f-3477-4e0a-a5d0-93b6c199be69",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Deobfuscate/Decode Files or Information",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1140",
+      "technique_ref": "attack-pattern--3ccef7ae-cb5e-48f6-8302-897105fbf55c",
+      "description": "Obfuscate PII information to evade DLP systems",
+      "effect_refs": [
+        "attack-operator--c1e2a2c3-c2d0-4551-9969-2d39cb6f3053"
+      ]
+    },
+    {
+      "id": "relationship--8bccd7d3-62ea-4b23-82f0-3d1a6d3a4401",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-condition--a0f50bb1-aacd-4678-8160-c2062fef2b10",
+      "target_ref": "attack-action--bd230072-e0f0-4478-a209-7d7aded898f2"
+    },
+    {
+      "id": "relationship--d4372233-9d4a-4397-8c8b-bca41c7d16d3",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-condition--a0f50bb1-aacd-4678-8160-c2062fef2b10",
+      "target_ref": "attack-action--20aa5b9f-3477-4e0a-a5d0-93b6c199be69"
     }
   ]
 }

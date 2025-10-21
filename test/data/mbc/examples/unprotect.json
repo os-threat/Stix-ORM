@@ -1,0 +1,70 @@
+{
+  "type": "bundle",
+  "id": "bundle--a24c8224-c148-4dfb-8f52-df0f9f463bf9",
+  "objects": [
+    {
+      "id": "malware-objective--a624a7a-ef64-46ce-b582-b963b7d6113f",
+      "type": "malware-objective",
+      "spec_version": "2.1",
+      "created": "2023-04-21T00:00:00.000Z",
+      "modified": "2023-04-21T00:00:00.000Z",
+      "name": "Anti-Debugging",
+      "obj_defn": {
+        "source_name": "unprotect-project",
+        "url": "https://www.unprotect.it/category/anti-debugging/"
+      },
+      "extensions": {
+        "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
+          "extension_type": "new-sdo"
+        }
+      }
+    },
+    {
+      "id": "malware-behavior--b4ab6e5e-82b2-4699-938a-778f840a80fa",
+      "type": "malware-behavior",
+      "spec_version": "2.1",
+      "created": "2019-03-18T00:00:00.000Z",
+      "modified": "2023-02-27T00:00:00.000Z",
+      "name": "GetTickCount",
+      "obj_defn": {
+        "source_name": "unprotect-project",
+        "description": "This is typical timing function which is used to measure <snip>",
+        "url": "https://www.unprotect.it/technique/gettickcount/",
+        "external_id": "U0125, B0001.032"
+      },
+      "labels": [
+        "gettickcount"
+      ],
+      "objective_refs": [
+        "malware-objective--a624a7a-ef64-46ce-b582-b963b7d6113f"
+      ],
+      "detection_rules": [
+        {
+          "rule_type": "capa",
+          "rule": "rule: \n meta: \n name: check for time delay via GetTickCount <snip>"
+        }
+      ],
+      "snippets": [
+        {
+          "snippet": "bool IsDebugged(DWORD dwNativeElapsed) \n{ \n DWORD <snip>",
+          "language": "c++"
+        }
+      ],
+      "external_references": [
+        {
+          "source_name": "palo alto networks",
+          "url": "https://researchcenter.paloaltonetworks.com/2015/10/ticked-off-upatre- malwares -simple-anti-analysis-trick-to-defeat-sandboxes/"
+        },
+        {
+          "source_name": "checkpoint",
+          "url": "https://anti-debug.checkpoint.com/techniques/timing.html#kernel-timing"
+        }
+      ],
+      "extensions": {
+        "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
+          "extension_type": "new-sdo"
+        }
+      }
+    }
+  ]
+}

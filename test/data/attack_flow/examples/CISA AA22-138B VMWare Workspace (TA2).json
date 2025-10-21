@@ -1,13 +1,280 @@
 {
   "type": "bundle",
-  "id": "bundle--e34f162c-57d3-4153-b95c-fa1fe670d919",
-  "spec_version": "2.1",
-  "created": "2025-07-30T19:47:12.672Z",
-  "modified": "2025-07-30T19:47:12.672Z",
+  "id": "bundle--d246018e-a17a-49fb-83b2-59b27b297c33",
   "objects": [
     {
-      "type": "extension-definition",
+      "id": "file--c5352f2b-f17b-410d-8167-fbc5e1532b16",
+      "type": "file",
+      "spec_version": "2.1",
+      "name": ".tmp12865xax"
+    },
+    {
+      "id": "process--962988c0-6c99-4e38-87a5-102533e7b019",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "cat"
+    },
+    {
+      "id": "directory--9a377862-1ee3-4022-a730-a612e7833932",
+      "type": "directory",
+      "spec_version": "2.1",
+      "path": "/webapps/cas/static/"
+    },
+    {
+      "id": "malware--c4bda44a-331f-4f00-b2f7-e0fa0b1d18a2",
+      "type": "malware",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "name": "Dingo J-spy webshell",
+      "description": "webshells (horizon_all.jsp and jquery.jsp) located in web directories",
+      "malware_types": [
+        "webshell"
+      ],
+      "is_family": false,
+      "capabilities": [
+        "communicates-with-c2"
+      ]
+    },
+    {
+      "id": "malware--5df8707c-c9ee-4167-bd6d-73d362e82dea",
+      "type": "malware",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "name": "JSP webshell",
+      "malware_types": [
+        "webshell"
+      ],
+      "is_family": false,
+      "capabilities": [
+        "communicates-with-c2"
+      ]
+    },
+    {
+      "id": "directory--03d5e338-b5ce-4b4b-9e9c-0be03fab23f4",
+      "type": "directory",
+      "spec_version": "2.1",
+      "path": "/opt/vmware/horizon/workspace/webapps/SAAS/horizon/portal/"
+    },
+    {
+      "id": "ipv4-addr--86821c08-9cd3-419f-acb8-c500d5db6383",
+      "type": "ipv4-addr",
+      "spec_version": "2.1",
+      "value": "84.38.133.149"
+    },
+    {
+      "id": "infrastructure--a9c94d6d-3cc0-4423-8e3c-1c0b42393b3d",
+      "type": "infrastructure",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "name": "binary",
+      "description": "reverse socks5 tunneling binary with TLS/SSL that connects to the URL",
+      "infrastructure_types": [
+        "anonymization"
+      ]
+    },
+    {
+      "id": "file--fefb41eb-5a77-4034-9f19-92cb46f0e770",
+      "type": "file",
+      "spec_version": "2.1",
+      "name": "horizon_all.jsp"
+    },
+    {
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "type": "identity",
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "x_mitre_attack_spec_version": "3.2.0"
+    },
+    {
+      "id": "identity--c82920cf-1a4c-47e4-9bda-ebca7eb854f6",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "name": "Lauren Parker",
+      "contact_information": "lparker@mitre.org"
+    },
+    {
+      "id": "process--ded9bd9f-456d-44f2-9003-62f0a92d52d9",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "whoami"
+    },
+    {
+      "id": "url--0056daec-35d2-48c3-b8af-6b4e93eeb50d",
+      "type": "url",
+      "spec_version": "2.1",
+      "value": "https://149.248.35[.]200.sslip.io"
+    },
+    {
+      "id": "attack-condition--98f53f54-8560-494e-b75f-6736bcd1bf0f",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "app.jsp downloaded successfully"
+    },
+    {
+      "id": "process--9c17754e-f5a9-44ae-aa1b-7438d43707ff",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "id"
+    },
+    {
+      "id": "artifact--c95b2009-e52a-4217-a1bd-1ed77f559a8e",
+      "type": "artifact",
+      "spec_version": "2.1",
+      "url": "http://84.38.133.149/img/icon1.gif",
+      "hashes": {
+        "md5": "F8FF5C72E8FFA2112B01802113148BD1"
+      }
+    },
+    {
+      "id": "file--6d13dae1-12c4-4a72-9e83-f2383fcd5b49",
+      "type": "file",
+      "spec_version": "2.1",
+      "name": "jquery.jsp"
+    },
+    {
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "id": "url--edfa7f23-b6d9-499d-9037-58046765e500",
+      "type": "url",
+      "spec_version": "2.1",
+      "value": "https://github[.]com/kost/revsocks/releases/download/v1.1.0/revsocks_linux_amd64"
+    },
+    {
+      "id": "directory--63e0c56c-9d2e-4d5c-b8bb-1bf7c85f059b",
+      "type": "directory",
+      "spec_version": "2.1",
+      "path": "/tmp"
+    },
+    {
+      "id": "malware--9e2ced66-df97-4713-b07d-8b1e57d9ba2a",
+      "type": "malware",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "name": "app.jsp",
+      "description": "publicly available webshell known as Godzilla",
+      "malware_types": [
+        "webshell"
+      ],
+      "is_family": false,
+      "capabilities": [
+        "communicates-with-c2"
+      ]
+    },
+    {
+      "id": "artifact--9c5f22d6-da6d-45d2-9755-43113bf4bcf6",
+      "type": "artifact",
+      "spec_version": "2.1",
+      "url": "http://51.79.171.53/app.jsp",
+      "hashes": {
+        "md5": "4cd8366345ad4068feca4d417738b4bd"
+      }
+    },
+    {
+      "id": "vulnerability--7d479fe1-7170-47d5-ada4-c869e7d5c7b3",
+      "type": "vulnerability",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "name": "CVE 2022-22954"
+    },
+    {
+      "id": "relationship--2c3ef578-1ace-40b1-a514-ed548097e206",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "file--fefb41eb-5a77-4034-9f19-92cb46f0e770",
+      "target_ref": "malware--c4bda44a-331f-4f00-b2f7-e0fa0b1d18a2"
+    },
+    {
+      "id": "relationship--9361b9da-0ca4-4679-9d72-17f00a8d1940",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "directory--03d5e338-b5ce-4b4b-9e9c-0be03fab23f4",
+      "target_ref": "file--fefb41eb-5a77-4034-9f19-92cb46f0e770"
+    },
+    {
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      },
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "definition_type": "statement"
+    },
+    {
+      "id": "relationship--3e991c01-3470-455e-8b9e-c63ed0b01358",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "infrastructure--a9c94d6d-3cc0-4423-8e3c-1c0b42393b3d",
+      "target_ref": "url--0056daec-35d2-48c3-b8af-6b4e93eeb50d"
+    },
+    {
+      "id": "relationship--ec91374d-6372-45c8-adc2-e10780fa3544",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "artifact--c95b2009-e52a-4217-a1bd-1ed77f559a8e",
+      "target_ref": "malware--5df8707c-c9ee-4167-bd6d-73d362e82dea"
+    },
+    {
+      "id": "relationship--466f943a-fbd1-4bfc-b710-1a547b5e796b",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "directory--9a377862-1ee3-4022-a730-a612e7833932",
+      "target_ref": "file--6d13dae1-12c4-4a72-9e83-f2383fcd5b49"
+    },
+    {
+      "id": "relationship--b8682660-d0dd-4010-838a-e607cc0e8c5f",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "file--6d13dae1-12c4-4a72-9e83-f2383fcd5b49",
+      "target_ref": "malware--c4bda44a-331f-4f00-b2f7-e0fa0b1d18a2"
+    },
+    {
       "id": "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "type": "extension-definition",
       "spec_version": "2.1",
       "created": "2022-08-02T19:34:35.143Z",
       "modified": "2022-08-02T19:34:35.143Z",
@@ -33,402 +300,8 @@
       ]
     },
     {
-      "type": "identity",
-      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
-      "spec_version": "2.1",
-      "created": "2022-08-02T19:34:35.143Z",
-      "modified": "2022-08-02T19:34:35.143Z",
-      "created_by_ref": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
-      "name": "MITRE Center for Threat-Informed Defense",
-      "identity_class": "organization"
-    },
-    {
-      "type": "attack-flow",
-      "id": "attack-flow--d291b8e5-6a89-402e-97c9-20296073e6b3",
-      "spec_version": "2.1",
-      "created": "2023-02-20T20:14:50.991Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "created_by_ref": "identity--c82920cf-1a4c-47e4-9bda-ebca7eb854f6",
-      "start_refs": [
-        "attack-action--1249135e-bfdd-48fa-b128-b86236337d73"
-      ],
-      "name": "CISA AA22-138B VMWare Workspace (TA2)",
-      "description": "Threat Actor 2 exploited VMWare Workspace ONE Access through various methods",
-      "scope": "incident",
-      "external_references": [
-        {
-          "source_name": "CISA",
-          "description": "Alert",
-          "url": "https://www.cisa.gov/uscert/ncas/alerts/aa22-138b"
-        }
-      ]
-    },
-    {
-      "type": "identity",
-      "id": "identity--c82920cf-1a4c-47e4-9bda-ebca7eb854f6",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "name": "Lauren Parker",
-      "contact_information": "lparker@mitre.org"
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--1249135e-bfdd-48fa-b128-b86236337d73",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Web Protocols",
-      "tactic_id": "TA0011",
-      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "technique_id": "T1071.001",
-      "technique_ref": "attack-pattern--df8b2a25-8bdf-4856-953c-a04372b1c161",
-      "description": "multiple GET requests to VMWare Workspace ONE Access to obtain RCE, upload binaries, and upload webshells",
-      "effect_refs": [
-        "attack-action--4b5c1c23-d2c7-464d-813d-439a36f837aa"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--4b5c1c23-d2c7-464d-813d-439a36f837aa",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Ingress Tool Transfer",
-      "tactic_id": "TA0011",
-      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "technique_id": "T1105",
-      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
-      "description": "Attackers attempted to download a webshell",
-      "effect_refs": [
-        "attack-condition--98f53f54-8560-494e-b75f-6736bcd1bf0f"
-      ]
-    },
-    {
-      "type": "vulnerability",
-      "id": "vulnerability--7d479fe1-7170-47d5-ada4-c869e7d5c7b3",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "name": "CVE 2022-22954"
-    },
-    {
-      "type": "attack-condition",
-      "id": "attack-condition--98f53f54-8560-494e-b75f-6736bcd1bf0f",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "app.jsp downloaded successfully"
-    },
-    {
-      "type": "malware",
-      "id": "malware--9e2ced66-df97-4713-b07d-8b1e57d9ba2a",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "name": "app.jsp",
-      "description": "publicly available webshell known as Godzilla",
-      "malware_types": [
-        "webshell"
-      ],
-      "is_family": false,
-      "capabilities": [
-        "communicates-with-c2"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--d32524ea-375d-4c91-8100-c77e2c9f904c",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Ingress Tool Transfer",
-      "tactic_id": "TA0011",
-      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "technique_id": "T1105",
-      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
-      "description": "Attackers downloaded a JSP webshell",
-      "effect_refs": [
-        "attack-action--a2b22b62-4ab7-483b-8d26-9d8306abc03c"
-      ]
-    },
-    {
-      "type": "malware",
-      "id": "malware--5df8707c-c9ee-4167-bd6d-73d362e82dea",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "name": "JSP webshell",
-      "malware_types": [
-        "webshell"
-      ],
-      "is_family": false,
-      "capabilities": [
-        "communicates-with-c2"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--a2b22b62-4ab7-483b-8d26-9d8306abc03c",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Unix Shell",
-      "tactic_id": "TA0002",
-      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
-      "technique_id": "T1059.004",
-      "technique_ref": "attack-pattern--a9d4b653-6915-42af-98b2-5758c4ceee56",
-      "description": "Attackers sent Unix commands",
-      "command_ref": "process--ded9bd9f-456d-44f2-9003-62f0a92d52d9",
-      "effect_refs": [
-        "attack-action--a0767d23-cc44-43bd-bd57-807e5e571721"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--a0767d23-cc44-43bd-bd57-807e5e571721",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "OS Credential Dumping: /etc/passwd and /etc/shadow",
-      "tactic_id": "TA0006",
-      "tactic_ref": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
-      "technique_id": "T1003.008",
-      "technique_ref": "attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4",
-      "description": "Attackers viewed /etc/passwd and /etc/shadow",
-      "effect_refs": [
-        "attack-action--3a2d7968-b69a-47cc-9fdd-30a7d27bf19d"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--3a2d7968-b69a-47cc-9fdd-30a7d27bf19d",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Ingress Tool Transfer",
-      "tactic_id": "TA0011",
-      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "technique_id": "T1105",
-      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
-      "description": "Attackers downloaded 2 copies of a webshell",
-      "effect_refs": [
-        "attack-action--96854c51-e17a-4747-b08b-51dbe773dc00"
-      ]
-    },
-    {
-      "type": "malware",
-      "id": "malware--c4bda44a-331f-4f00-b2f7-e0fa0b1d18a2",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "name": "Dingo J-spy webshell",
-      "description": "webshells (horizon_all.jsp and jquery.jsp) located in web directories",
-      "malware_types": [
-        "webshell"
-      ],
-      "is_family": false,
-      "capabilities": [
-        "communicates-with-c2"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--96854c51-e17a-4747-b08b-51dbe773dc00",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Symmetric Cryptography",
-      "tactic_id": "TA0011",
-      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "technique_id": "T1573.001",
-      "technique_ref": "attack-pattern--24bfaeba-cb0d-4525-b3dc-507c77ecec41",
-      "description": "POST requests used to communicate with webshells; commands and output were encrypted with XOR key",
-      "effect_refs": [
-        "attack-action--049af2f2-8d04-4d37-9c3a-9c4232119a5e"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--abb24ca4-0847-4eb8-9a2f-3330415f3006",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Proxy",
-      "tactic_id": "TA0011",
-      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "technique_id": "T1090",
-      "technique_ref": "attack-pattern--731f4f55-b6d0-41d1-a7a9-072a66389aea",
-      "description": "Attackers use reverse SOCKS proxy",
-      "effect_refs": [
-        "attack-action--af19a045-d1cd-4854-87b7-047e55033d5c"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--049af2f2-8d04-4d37-9c3a-9c4232119a5e",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Ingress Tool Transfer",
-      "tactic_id": "TA0011",
-      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "technique_id": "T1105",
-      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
-      "description": "Attackers downloaded a reverse SOCKS proxy",
-      "effect_refs": [
-        "attack-action--abb24ca4-0847-4eb8-9a2f-3330415f3006"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--af19a045-d1cd-4854-87b7-047e55033d5c",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "File and Directory Permissions Modification: Linux and Mac File and Directory Permissions Modification",
-      "tactic_id": "TA0005",
-      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
-      "technique_id": "T1222.002",
-      "technique_ref": "attack-pattern--09b130a2-a77e-4af0-a361-f46f9aad1345",
-      "description": "GET request with chmod to change permissions of hidden file in /tmp directory",
-      "effect_refs": [
-        "attack-action--22bae6a7-0937-447d-9a5b-8f0327a1c5bf"
-      ]
-    },
-    {
-      "type": "attack-action",
-      "id": "attack-action--22bae6a7-0937-447d-9a5b-8f0327a1c5bf",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Ingress Tool Transfer",
-      "tactic_id": "TA0011",
-      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "technique_id": "T1105",
-      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
-      "description": "Attackers downloaded binary"
-    },
-    {
-      "type": "infrastructure",
-      "id": "infrastructure--a9c94d6d-3cc0-4423-8e3c-1c0b42393b3d",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "name": "binary",
-      "description": "reverse socks5 tunneling binary with TLS/SSL that connects to the URL",
-      "infrastructure_types": [
-        "anonymization"
-      ]
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--79e449de-ffc2-4ee3-8cca-87e13e711f01",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--1249135e-bfdd-48fa-b128-b86236337d73",
-      "target_ref": "vulnerability--7d479fe1-7170-47d5-ada4-c869e7d5c7b3"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--42676595-1467-4ef7-b874-f09d13a9764b",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--4b5c1c23-d2c7-464d-813d-439a36f837aa",
-      "target_ref": "malware--9e2ced66-df97-4713-b07d-8b1e57d9ba2a"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--70da98a8-cbe7-4331-9cde-b1ea2b3d131f",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-condition--98f53f54-8560-494e-b75f-6736bcd1bf0f",
-      "target_ref": "attack-action--d32524ea-375d-4c91-8100-c77e2c9f904c"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--13be2e96-09fa-4266-90ed-797ea882df47",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--d32524ea-375d-4c91-8100-c77e2c9f904c",
-      "target_ref": "malware--5df8707c-c9ee-4167-bd6d-73d362e82dea"
-    },
-    {
-      "type": "relationship",
       "id": "relationship--f80b135f-45fc-4350-b20a-867223cf0535",
+      "type": "relationship",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.672Z",
       "modified": "2025-07-30T19:47:12.672Z",
@@ -437,436 +310,37 @@
       "target_ref": "malware--9e2ced66-df97-4713-b07d-8b1e57d9ba2a"
     },
     {
-      "type": "relationship",
-      "id": "relationship--ec91374d-6372-45c8-adc2-e10780fa3544",
+      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "type": "x-mitre-tactic",
       "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "artifact--c95b2009-e52a-4217-a1bd-1ed77f559a8e",
-      "target_ref": "malware--5df8707c-c9ee-4167-bd6d-73d362e82dea"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--1d1a8b4d-bc2f-4302-ac0b-8e361cf1975c",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--a2b22b62-4ab7-483b-8d26-9d8306abc03c",
-      "target_ref": "process--9c17754e-f5a9-44ae-aa1b-7438d43707ff"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--6215bf1a-9eb7-459e-8a6e-3c811cc99c42",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--a2b22b62-4ab7-483b-8d26-9d8306abc03c",
-      "target_ref": "process--962988c0-6c99-4e38-87a5-102533e7b019"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--8d0be66b-329c-4283-bf5d-5d6b68c9daec",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--a2b22b62-4ab7-483b-8d26-9d8306abc03c",
-      "target_ref": "ipv4-addr--86821c08-9cd3-419f-acb8-c500d5db6383"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--64fa075a-28f4-418c-b49f-ee5974c5ab51",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--3a2d7968-b69a-47cc-9fdd-30a7d27bf19d",
-      "target_ref": "malware--c4bda44a-331f-4f00-b2f7-e0fa0b1d18a2"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--466f943a-fbd1-4bfc-b710-1a547b5e796b",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "directory--9a377862-1ee3-4022-a730-a612e7833932",
-      "target_ref": "file--6d13dae1-12c4-4a72-9e83-f2383fcd5b49"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--2c3ef578-1ace-40b1-a514-ed548097e206",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "file--fefb41eb-5a77-4034-9f19-92cb46f0e770",
-      "target_ref": "malware--c4bda44a-331f-4f00-b2f7-e0fa0b1d18a2"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--9361b9da-0ca4-4679-9d72-17f00a8d1940",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "directory--03d5e338-b5ce-4b4b-9e9c-0be03fab23f4",
-      "target_ref": "file--fefb41eb-5a77-4034-9f19-92cb46f0e770"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--b8682660-d0dd-4010-838a-e607cc0e8c5f",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "file--6d13dae1-12c4-4a72-9e83-f2383fcd5b49",
-      "target_ref": "malware--c4bda44a-331f-4f00-b2f7-e0fa0b1d18a2"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--ad18bfa0-4d6a-4e40-a62e-1cb5382b9aba",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--af19a045-d1cd-4854-87b7-047e55033d5c",
-      "target_ref": "file--c5352f2b-f17b-410d-8167-fbc5e1532b16"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--a9267d6c-7ee4-4655-b51a-fcc07687c4d8",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--af19a045-d1cd-4854-87b7-047e55033d5c",
-      "target_ref": "directory--63e0c56c-9d2e-4d5c-b8bb-1bf7c85f059b"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--9affc041-82ac-477d-b4e7-e9af89d04d4e",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--22bae6a7-0937-447d-9a5b-8f0327a1c5bf",
-      "target_ref": "url--edfa7f23-b6d9-499d-9037-58046765e500"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--5a7ad849-4580-4c47-8f77-e259c241f236",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-action--22bae6a7-0937-447d-9a5b-8f0327a1c5bf",
-      "target_ref": "infrastructure--a9c94d6d-3cc0-4423-8e3c-1c0b42393b3d"
-    },
-    {
-      "type": "relationship",
-      "id": "relationship--3e991c01-3470-455e-8b9e-c63ed0b01358",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "infrastructure--a9c94d6d-3cc0-4423-8e3c-1c0b42393b3d",
-      "target_ref": "url--0056daec-35d2-48c3-b8af-6b4e93eeb50d"
-    },
-    {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
-      "id": "attack-pattern--09b130a2-a77e-4af0-a361-f46f9aad1345",
-      "created": "2020-02-04T19:24:27.774Z",
+      "created": "2018-10-17T00:14:20.652Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "revoked": false,
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1222/002",
-          "external_id": "T1222.002"
-        },
-        {
-          "source_name": "Hybrid Analysis Icacls1 June 2018",
-          "description": "Hybrid Analysis. (2018, June 12). c9b65b764985dfd7a11d3faf599c56b8.exe. Retrieved August 19, 2018.",
-          "url": "https://www.hybrid-analysis.com/sample/ef0d2628823e8e0a0de3b08b8eacaf41cf284c086a948bdfd67f4e4373c14e4d?environmentId=100"
-        },
-        {
-          "source_name": "Hybrid Analysis Icacls2 May 2018",
-          "description": "Hybrid Analysis. (2018, May 30). 2a8efbfadd798f6111340f7c1c956bee.dll. Retrieved August 19, 2018.",
-          "url": "https://www.hybrid-analysis.com/sample/22dab012c3e20e3d9291bce14a2bfc448036d3b966c6e78167f4626f5f9e38d6?environmentId=110"
-        },
-        {
-          "source_name": "20 macOS Common Tools and Techniques",
-          "description": "Phil Stokes. (2021, February 16). 20 Common Tools & Techniques Used by macOS Threat Actors & Malware. Retrieved August 23, 2021.",
-          "url": "https://labs.sentinelone.com/20-common-tools-techniques-used-by-macos-threat-actors-malware/"
+          "url": "https://attack.mitre.org/tactics/TA0011",
+          "external_id": "TA0011"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
-      "modified": "2025-04-15T22:46:00.944Z",
-      "name": "Linux and Mac File and Directory Permissions Modification",
-      "description": "Adversaries may modify file or directory permissions/attributes to evade access control lists (ACLs) and access protected files.(Citation: Hybrid Analysis Icacls1 June 2018)(Citation: Hybrid Analysis Icacls2 May 2018) File and directory permissions are commonly managed by ACLs configured by the file or directory owner, or users with the appropriate permissions. File and directory ACL implementations vary by platform, but generally explicitly designate which users or groups can perform which actions (read, write, execute, etc.).\n\nMost Linux and Linux-based platforms provide a standard set of permission groups (user, group, and other) and a standard set of permissions (read, write, and execute) that are applied to each group. While nuances of each platform’s permissions implementation may vary, most of the platforms provide two primary commands used to manipulate file and directory ACLs: <code>chown</code> (short for change owner), and <code>chmod</code> (short for change mode).\n\nAdversarial may use these commands to make themselves the owner of files and directories or change the mode if current permissions allow it. They could subsequently lock others out of the file. Specific file and directory modifications may be a required step for many techniques, such as establishing Persistence via [Unix Shell Configuration Modification](https://attack.mitre.org/techniques/T1546/004) or tainting/hijacking other instrumental binary/configuration files via [Hijack Execution Flow](https://attack.mitre.org/techniques/T1574).(Citation: 20 macOS Common Tools and Techniques) ",
-      "kill_chain_phases": [
-        {
-          "kill_chain_name": "mitre-attack",
-          "phase_name": "defense-evasion"
-        }
-      ],
-      "x_mitre_attack_spec_version": "3.2.0",
+      "modified": "2025-04-25T14:45:36.561Z",
+      "name": "Command and Control",
+      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "x_mitre_deprecated": false,
-      "x_mitre_detection": "Monitor and investigate attempts to modify ACLs and file/directory ownership. Many of the commands used to modify ACLs and file/directory ownership are built-in system utilities and may generate a high false positive alert rate, so compare against baseline knowledge for how systems are typically used and correlate modification events with other indications of malicious activity where possible. Commonly abused command arguments include <code>chmod +x</code>, <code>chmod -R 755</code>, and <code>chmod 777</code>.(Citation: 20 macOS Common Tools and Techniques) \n\nConsider enabling file/directory permission change auditing on folders containing key binary/configuration files.",
       "x_mitre_domains": [
         "enterprise-attack"
       ],
-      "x_mitre_is_subtechnique": true,
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_platforms": [
-        "macOS",
-        "Linux"
-      ],
-      "x_mitre_version": "1.2",
-      "x_mitre_data_sources": [
-        "Process: Process Creation",
-        "File: File Metadata",
-        "Command: Command Execution"
-      ]
-    },
-    {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
-      "id": "attack-pattern--24bfaeba-cb0d-4525-b3dc-507c77ecec41",
-      "created": "2020-03-16T15:45:17.032Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "revoked": false,
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1573/001",
-          "external_id": "T1573.001"
-        },
-        {
-          "source_name": "University of Birmingham C2",
-          "description": "Gardiner, J.,  Cova, M., Nagaraja, S. (2014, February). Command & Control Understanding, Denying and Detecting. Retrieved April 20, 2016.",
-          "url": "https://arxiv.org/ftp/arxiv/papers/1408/1408.1136.pdf"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-15T19:58:14.636Z",
-      "name": "Symmetric Cryptography",
-      "description": "Adversaries may employ a known symmetric encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Symmetric encryption algorithms use the same key for plaintext encryption and ciphertext decryption. Common symmetric encryption algorithms include AES, DES, 3DES, Blowfish, and RC4.",
-      "kill_chain_phases": [
-        {
-          "kill_chain_name": "mitre-attack",
-          "phase_name": "command-and-control"
-        }
-      ],
+      "x_mitre_version": "1.0",
       "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_deprecated": false,
-      "x_mitre_detection": "With symmetric encryption, it may be possible to obtain the algorithm and key from samples and use them to decode network traffic to detect malware communications signatures.\n\nIn general, analyze network data for uncommon data flows (e.g., a client sending significantly more data than it receives from a server). Processes utilizing the network that do not normally have network communication or have never been seen before are suspicious. Analyze packet contents to detect communications that do not follow the expected protocol behavior for the port that is being used.(Citation: University of Birmingham C2)",
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_is_subtechnique": true,
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_platforms": [
-        "Linux",
-        "Windows",
-        "macOS",
-        "Network Devices",
-        "ESXi"
-      ],
-      "x_mitre_version": "1.2",
-      "x_mitre_data_sources": [
-        "Network Traffic: Network Traffic Content"
-      ]
+      "x_mitre_shortname": "command-and-control"
     },
     {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
-      "id": "attack-pattern--731f4f55-b6d0-41d1-a7a9-072a66389aea",
-      "created": "2017-05-31T21:31:08.479Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1090",
-          "external_id": "T1090"
-        },
-        {
-          "source_name": "Trend Micro APT Attack Tools",
-          "description": "Wilhoit, K. (2013, March 4). In-Depth Look: APT Attack Tools of the Trade. Retrieved December 2, 2015.",
-          "url": "http://blog.trendmicro.com/trendlabs-security-intelligence/in-depth-look-apt-attack-tools-of-the-trade/"
-        },
-        {
-          "source_name": "University of Birmingham C2",
-          "description": "Gardiner, J.,  Cova, M., Nagaraja, S. (2014, February). Command & Control Understanding, Denying and Detecting. Retrieved April 20, 2016.",
-          "url": "https://arxiv.org/ftp/arxiv/papers/1408/1408.1136.pdf"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T15:15:44.084Z",
-      "name": "Proxy",
-      "description": "Adversaries may use a connection proxy to direct network traffic between systems or act as an intermediary for network communications to a command and control server to avoid direct connections to their infrastructure. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap. (Citation: Trend Micro APT Attack Tools) Adversaries use these types of proxies to manage command and control communications, reduce the number of simultaneous outbound network connections, provide resiliency in the face of connection loss, or to ride over existing trusted communications paths between victims to avoid suspicion. Adversaries may chain together multiple proxies to further disguise the source of malicious traffic.\n\nAdversaries can also take advantage of routing schemes in Content Delivery Networks (CDNs) to proxy command and control traffic.",
-      "kill_chain_phases": [
-        {
-          "kill_chain_name": "mitre-attack",
-          "phase_name": "command-and-control"
-        }
-      ],
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_contributors": [
-        "Jon Sheedy",
-        "Heather Linn",
-        "Walker Johnson"
-      ],
-      "x_mitre_deprecated": false,
-      "x_mitre_detection": "Analyze network data for uncommon data flows (e.g., a client sending significantly more data than it receives from a server or between clients that should not or often do not communicate with one another). Processes utilizing the network that do not normally have network communication or have never been seen before are suspicious. Analyze packet contents to detect communications that do not follow the expected protocol behavior for the port that is being used. (Citation: University of Birmingham C2)\n\nConsider monitoring for traffic to known anonymity networks (such as [Tor](https://attack.mitre.org/software/S0183)).",
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_is_subtechnique": false,
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_platforms": [
-        "Linux",
-        "macOS",
-        "Windows",
-        "Network Devices",
-        "ESXi"
-      ],
-      "x_mitre_version": "3.2",
-      "x_mitre_data_sources": [
-        "Network Traffic: Network Traffic Flow",
-        "Network Traffic: Network Traffic Content",
-        "Network Traffic: Network Connection Creation"
-      ]
-    },
-    {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
-      "id": "attack-pattern--a9d4b653-6915-42af-98b2-5758c4ceee56",
-      "created": "2020-03-09T14:15:05.330Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "revoked": false,
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1059/004",
-          "external_id": "T1059.004"
-        },
-        {
-          "source_name": "Apple ZShell",
-          "description": "Apple. (2020, January 28). Use zsh as the default shell on your Mac. Retrieved June 12, 2020.",
-          "url": "https://support.apple.com/HT208050"
-        },
-        {
-          "source_name": "DieNet Bash",
-          "description": "die.net. (n.d.). bash(1) - Linux man page. Retrieved June 12, 2020.",
-          "url": "https://linux.die.net/man/1/bash"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-15T19:58:56.647Z",
-      "name": "Unix Shell",
-      "description": "Adversaries may abuse Unix shell commands and scripts for execution. Unix shells are the primary command prompt on Linux, macOS, and ESXi systems, though many variations of the Unix shell exist (e.g. sh, ash, bash, zsh, etc.) depending on the specific OS or distribution.(Citation: DieNet Bash)(Citation: Apple ZShell) Unix shells can control every aspect of a system, with certain commands requiring elevated privileges.\n\nUnix shells also support scripts that enable sequential execution of commands as well as other typical programming operations such as conditionals and loops. Common uses of shell scripts include long or repetitive tasks, or the need to run the same set of commands on multiple systems.\n\nAdversaries may abuse Unix shells to execute various commands or payloads. Interactive shells may be accessed through command and control channels or during lateral movement such as with [SSH](https://attack.mitre.org/techniques/T1021/004). Adversaries may also leverage shell scripts to deliver and execute multiple commands on victims or as part of payloads used for persistence.\n\nSome systems, such as embedded devices, lightweight Linux distributions, and ESXi servers, may leverage stripped-down Unix shells via Busybox, a small executable that contains a variety of tools, including a simple shell.",
-      "kill_chain_phases": [
-        {
-          "kill_chain_name": "mitre-attack",
-          "phase_name": "execution"
-        }
-      ],
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_deprecated": false,
-      "x_mitre_detection": "Unix shell usage may be common on administrator, developer, or power user systems, depending on job function. If scripting is restricted for normal users, then any attempt to enable scripts running on a system would be considered suspicious. If scripts are not commonly used on a system, but enabled, scripts running out of cycle from patching or other administrator functions are suspicious. Scripts should be captured from the file system when possible to determine their actions and intent.\n\nScripts are likely to perform actions with various effects on a system that may generate events, depending on the types of monitoring used. Monitor processes and command-line arguments for script execution and subsequent behavior. Actions may be related to network and system information discovery, collection, or other scriptable post-compromise behaviors and could be used as indicators of detection leading back to the source script. ",
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_is_subtechnique": true,
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_platforms": [
-        "Linux",
-        "Network Devices",
-        "macOS",
-        "ESXi"
-      ],
-      "x_mitre_version": "1.3",
-      "x_mitre_data_sources": [
-        "Process: Process Creation",
-        "Command: Command Execution"
-      ]
-    },
-    {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
-      "id": "attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4",
-      "created": "2020-02-11T18:46:56.263Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "revoked": false,
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1003/008",
-          "external_id": "T1003.008"
-        },
-        {
-          "source_name": "Arctic Wolf",
-          "description": "Julian Tuin, Stefan Hostetler, Jon Grimm, Aaron Diaz, and Trevor Daher. (2024, November 22). Arctic Wolf Observes Threat Campaign Targeting Palo Alto Networks Firewall Devices. Retrieved January 8, 2025.",
-          "url": "https://arcticwolf.com/resources/blog/arctic-wolf-observes-threat-campaign-targeting-palo-alto-networks-firewall-devices/"
-        },
-        {
-          "source_name": "Linux Password and Shadow File Formats",
-          "description": "The Linux Documentation Project. (n.d.). Linux Password and Shadow File Formats. Retrieved February 19, 2020.",
-          "url": "https://www.tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html"
-        },
-        {
-          "source_name": "nixCraft - John the Ripper",
-          "description": "Vivek Gite. (2014, September 17). Linux Password Cracking: Explain unshadow and john Commands (John the Ripper Tool). Retrieved February 19, 2020.",
-          "url": "https://www.cyberciti.biz/faq/unix-linux-password-cracking-john-the-ripper/"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-15T19:59:09.955Z",
-      "name": "/etc/passwd and /etc/shadow",
-      "description": "Adversaries may attempt to dump the contents of <code>/etc/passwd</code> and <code>/etc/shadow</code> to enable offline password cracking. Most modern Linux operating systems use a combination of <code>/etc/passwd</code> and <code>/etc/shadow</code> to store user account information, including password hashes in <code>/etc/shadow</code>. By default, <code>/etc/shadow</code> is only readable by the root user.(Citation: Linux Password and Shadow File Formats)\n\nLinux stores user information such as user ID, group ID, home directory path, and login shell in <code>/etc/passwd</code>. A \"user\" on the system may belong to a person or a service. All password hashes are stored in <code>/etc/shadow</code> - including entries for users with no passwords and users with locked or disabled accounts.(Citation: Linux Password and Shadow File Formats)\n\nAdversaries may attempt to read or dump the <code>/etc/passwd</code> and <code>/etc/shadow</code> files on Linux systems via command line utilities such as the <code>cat</code> command.(Citation: Arctic Wolf) Additionally, the Linux utility <code>unshadow</code> can be used to combine the two files in a format suited for password cracking utilities such as John the Ripper - for example, via the command <code>/usr/bin/unshadow /etc/passwd /etc/shadow > /tmp/crack.password.db</code>(Citation: nixCraft - John the Ripper). Since the user information stored in <code>/etc/passwd</code> are linked to the password hashes in <code>/etc/shadow</code>, an adversary would need to have access to both.",
-      "kill_chain_phases": [
-        {
-          "kill_chain_name": "mitre-attack",
-          "phase_name": "credential-access"
-        }
-      ],
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_deprecated": false,
-      "x_mitre_detection": "The AuditD monitoring tool, which ships stock in many Linux distributions, can be used to watch for hostile processes attempting to access <code>/etc/passwd</code> and <code>/etc/shadow</code>, alerting on the pid, process name, and arguments of such programs.",
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_is_subtechnique": true,
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_platforms": [
-        "Linux"
-      ],
-      "x_mitre_version": "1.2",
-      "x_mitre_data_sources": [
-        "File: File Access",
-        "Command: Command Execution"
-      ]
-    },
-    {
-      "type": "attack-pattern",
-      "spec_version": "2.1",
       "id": "attack-pattern--df8b2a25-8bdf-4856-953c-a04372b1c161",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
       "created": "2020-03-15T16:13:46.151Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "revoked": false,
@@ -929,9 +403,9 @@
       ]
     },
     {
+      "id": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
       "type": "attack-pattern",
       "spec_version": "2.1",
-      "id": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
       "created": "2017-05-31T21:31:16.408Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "revoked": false,
@@ -1020,37 +494,65 @@
       ]
     },
     {
-      "type": "x-mitre-tactic",
+      "id": "attack-pattern--a9d4b653-6915-42af-98b2-5758c4ceee56",
+      "type": "attack-pattern",
       "spec_version": "2.1",
-      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
-      "created": "2018-10-17T00:14:20.652Z",
+      "created": "2020-03-09T14:15:05.330Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0006",
-          "external_id": "TA0006"
+          "url": "https://attack.mitre.org/techniques/T1059/004",
+          "external_id": "T1059.004"
+        },
+        {
+          "source_name": "Apple ZShell",
+          "description": "Apple. (2020, January 28). Use zsh as the default shell on your Mac. Retrieved June 12, 2020.",
+          "url": "https://support.apple.com/HT208050"
+        },
+        {
+          "source_name": "DieNet Bash",
+          "description": "die.net. (n.d.). bash(1) - Linux man page. Retrieved June 12, 2020.",
+          "url": "https://linux.die.net/man/1/bash"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
-      "modified": "2025-04-25T14:45:32.408Z",
-      "name": "Credential Access",
-      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "modified": "2025-04-15T19:58:56.647Z",
+      "name": "Unix Shell",
+      "description": "Adversaries may abuse Unix shell commands and scripts for execution. Unix shells are the primary command prompt on Linux, macOS, and ESXi systems, though many variations of the Unix shell exist (e.g. sh, ash, bash, zsh, etc.) depending on the specific OS or distribution.(Citation: DieNet Bash)(Citation: Apple ZShell) Unix shells can control every aspect of a system, with certain commands requiring elevated privileges.\n\nUnix shells also support scripts that enable sequential execution of commands as well as other typical programming operations such as conditionals and loops. Common uses of shell scripts include long or repetitive tasks, or the need to run the same set of commands on multiple systems.\n\nAdversaries may abuse Unix shells to execute various commands or payloads. Interactive shells may be accessed through command and control channels or during lateral movement such as with [SSH](https://attack.mitre.org/techniques/T1021/004). Adversaries may also leverage shell scripts to deliver and execute multiple commands on victims or as part of payloads used for persistence.\n\nSome systems, such as embedded devices, lightweight Linux distributions, and ESXi servers, may leverage stripped-down Unix shells via Busybox, a small executable that contains a variety of tools, including a simple shell.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "execution"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
       "x_mitre_deprecated": false,
+      "x_mitre_detection": "Unix shell usage may be common on administrator, developer, or power user systems, depending on job function. If scripting is restricted for normal users, then any attempt to enable scripts running on a system would be considered suspicious. If scripts are not commonly used on a system, but enabled, scripts running out of cycle from patching or other administrator functions are suspicious. Scripts should be captured from the file system when possible to determine their actions and intent.\n\nScripts are likely to perform actions with various effects on a system that may generate events, depending on the types of monitoring used. Monitor processes and command-line arguments for script execution and subsequent behavior. Actions may be related to network and system information discovery, collection, or other scriptable post-compromise behaviors and could be used as indicators of detection leading back to the source script. ",
       "x_mitre_domains": [
         "enterprise-attack"
       ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "credential-access"
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "Network Devices",
+        "macOS",
+        "ESXi"
+      ],
+      "x_mitre_version": "1.3",
+      "x_mitre_data_sources": [
+        "Process: Process Creation",
+        "Command: Command Execution"
+      ]
     },
     {
+      "id": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
       "type": "x-mitre-tactic",
       "spec_version": "2.1",
-      "id": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
       "created": "2018-10-17T00:14:20.652Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "external_references": [
@@ -1076,9 +578,208 @@
       "x_mitre_shortname": "execution"
     },
     {
+      "id": "attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "created": "2020-02-11T18:46:56.263Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1003/008",
+          "external_id": "T1003.008"
+        },
+        {
+          "source_name": "Arctic Wolf",
+          "description": "Julian Tuin, Stefan Hostetler, Jon Grimm, Aaron Diaz, and Trevor Daher. (2024, November 22). Arctic Wolf Observes Threat Campaign Targeting Palo Alto Networks Firewall Devices. Retrieved January 8, 2025.",
+          "url": "https://arcticwolf.com/resources/blog/arctic-wolf-observes-threat-campaign-targeting-palo-alto-networks-firewall-devices/"
+        },
+        {
+          "source_name": "Linux Password and Shadow File Formats",
+          "description": "The Linux Documentation Project. (n.d.). Linux Password and Shadow File Formats. Retrieved February 19, 2020.",
+          "url": "https://www.tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html"
+        },
+        {
+          "source_name": "nixCraft - John the Ripper",
+          "description": "Vivek Gite. (2014, September 17). Linux Password Cracking: Explain unshadow and john Commands (John the Ripper Tool). Retrieved February 19, 2020.",
+          "url": "https://www.cyberciti.biz/faq/unix-linux-password-cracking-john-the-ripper/"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:59:09.955Z",
+      "name": "/etc/passwd and /etc/shadow",
+      "description": "Adversaries may attempt to dump the contents of <code>/etc/passwd</code> and <code>/etc/shadow</code> to enable offline password cracking. Most modern Linux operating systems use a combination of <code>/etc/passwd</code> and <code>/etc/shadow</code> to store user account information, including password hashes in <code>/etc/shadow</code>. By default, <code>/etc/shadow</code> is only readable by the root user.(Citation: Linux Password and Shadow File Formats)\n\nLinux stores user information such as user ID, group ID, home directory path, and login shell in <code>/etc/passwd</code>. A \"user\" on the system may belong to a person or a service. All password hashes are stored in <code>/etc/shadow</code> - including entries for users with no passwords and users with locked or disabled accounts.(Citation: Linux Password and Shadow File Formats)\n\nAdversaries may attempt to read or dump the <code>/etc/passwd</code> and <code>/etc/shadow</code> files on Linux systems via command line utilities such as the <code>cat</code> command.(Citation: Arctic Wolf) Additionally, the Linux utility <code>unshadow</code> can be used to combine the two files in a format suited for password cracking utilities such as John the Ripper - for example, via the command <code>/usr/bin/unshadow /etc/passwd /etc/shadow > /tmp/crack.password.db</code>(Citation: nixCraft - John the Ripper). Since the user information stored in <code>/etc/passwd</code> are linked to the password hashes in <code>/etc/shadow</code>, an adversary would need to have access to both.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "credential-access"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "The AuditD monitoring tool, which ships stock in many Linux distributions, can be used to watch for hostile processes attempting to access <code>/etc/passwd</code> and <code>/etc/shadow</code>, alerting on the pid, process name, and arguments of such programs.",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux"
+      ],
+      "x_mitre_version": "1.2",
+      "x_mitre_data_sources": [
+        "File: File Access",
+        "Command: Command Execution"
+      ]
+    },
+    {
+      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
       "type": "x-mitre-tactic",
       "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0006",
+          "external_id": "TA0006"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:32.408Z",
+      "name": "Credential Access",
+      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "credential-access"
+    },
+    {
+      "id": "attack-pattern--24bfaeba-cb0d-4525-b3dc-507c77ecec41",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "created": "2020-03-16T15:45:17.032Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1573/001",
+          "external_id": "T1573.001"
+        },
+        {
+          "source_name": "University of Birmingham C2",
+          "description": "Gardiner, J.,  Cova, M., Nagaraja, S. (2014, February). Command & Control Understanding, Denying and Detecting. Retrieved April 20, 2016.",
+          "url": "https://arxiv.org/ftp/arxiv/papers/1408/1408.1136.pdf"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-15T19:58:14.636Z",
+      "name": "Symmetric Cryptography",
+      "description": "Adversaries may employ a known symmetric encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Symmetric encryption algorithms use the same key for plaintext encryption and ciphertext decryption. Common symmetric encryption algorithms include AES, DES, 3DES, Blowfish, and RC4.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "command-and-control"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "With symmetric encryption, it may be possible to obtain the algorithm and key from samples and use them to decode network traffic to detect malware communications signatures.\n\nIn general, analyze network data for uncommon data flows (e.g., a client sending significantly more data than it receives from a server). Processes utilizing the network that do not normally have network communication or have never been seen before are suspicious. Analyze packet contents to detect communications that do not follow the expected protocol behavior for the port that is being used.(Citation: University of Birmingham C2)",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "Network Devices",
+        "ESXi"
+      ],
+      "x_mitre_version": "1.2",
+      "x_mitre_data_sources": [
+        "Network Traffic: Network Traffic Content"
+      ]
+    },
+    {
+      "id": "attack-pattern--731f4f55-b6d0-41d1-a7a9-072a66389aea",
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "created": "2017-05-31T21:31:08.479Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/techniques/T1090",
+          "external_id": "T1090"
+        },
+        {
+          "source_name": "Trend Micro APT Attack Tools",
+          "description": "Wilhoit, K. (2013, March 4). In-Depth Look: APT Attack Tools of the Trade. Retrieved December 2, 2015.",
+          "url": "http://blog.trendmicro.com/trendlabs-security-intelligence/in-depth-look-apt-attack-tools-of-the-trade/"
+        },
+        {
+          "source_name": "University of Birmingham C2",
+          "description": "Gardiner, J.,  Cova, M., Nagaraja, S. (2014, February). Command & Control Understanding, Denying and Detecting. Retrieved April 20, 2016.",
+          "url": "https://arxiv.org/ftp/arxiv/papers/1408/1408.1136.pdf"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T15:15:44.084Z",
+      "name": "Proxy",
+      "description": "Adversaries may use a connection proxy to direct network traffic between systems or act as an intermediary for network communications to a command and control server to avoid direct connections to their infrastructure. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap. (Citation: Trend Micro APT Attack Tools) Adversaries use these types of proxies to manage command and control communications, reduce the number of simultaneous outbound network connections, provide resiliency in the face of connection loss, or to ride over existing trusted communications paths between victims to avoid suspicion. Adversaries may chain together multiple proxies to further disguise the source of malicious traffic.\n\nAdversaries can also take advantage of routing schemes in Content Delivery Networks (CDNs) to proxy command and control traffic.",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "command-and-control"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_contributors": [
+        "Jon Sheedy",
+        "Heather Linn",
+        "Walker Johnson"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_detection": "Analyze network data for uncommon data flows (e.g., a client sending significantly more data than it receives from a server or between clients that should not or often do not communicate with one another). Processes utilizing the network that do not normally have network communication or have never been seen before are suspicious. Analyze packet contents to detect communications that do not follow the expected protocol behavior for the port that is being used. (Citation: University of Birmingham C2)\n\nConsider monitoring for traffic to known anonymity networks (such as [Tor](https://attack.mitre.org/software/S0183)).",
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "Network Devices",
+        "ESXi"
+      ],
+      "x_mitre_version": "3.2",
+      "x_mitre_data_sources": [
+        "Network Traffic: Network Traffic Flow",
+        "Network Traffic: Network Traffic Content",
+        "Network Traffic: Network Connection Creation"
+      ]
+    },
+    {
       "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
       "created": "2018-10-17T00:14:20.652Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "external_references": [
@@ -1104,147 +805,439 @@
       "x_mitre_shortname": "defense-evasion"
     },
     {
-      "type": "x-mitre-tactic",
+      "id": "attack-pattern--09b130a2-a77e-4af0-a361-f46f9aad1345",
+      "type": "attack-pattern",
       "spec_version": "2.1",
-      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "created": "2018-10-17T00:14:20.652Z",
+      "created": "2020-02-04T19:24:27.774Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0011",
-          "external_id": "TA0011"
+          "url": "https://attack.mitre.org/techniques/T1222/002",
+          "external_id": "T1222.002"
+        },
+        {
+          "source_name": "Hybrid Analysis Icacls1 June 2018",
+          "description": "Hybrid Analysis. (2018, June 12). c9b65b764985dfd7a11d3faf599c56b8.exe. Retrieved August 19, 2018.",
+          "url": "https://www.hybrid-analysis.com/sample/ef0d2628823e8e0a0de3b08b8eacaf41cf284c086a948bdfd67f4e4373c14e4d?environmentId=100"
+        },
+        {
+          "source_name": "Hybrid Analysis Icacls2 May 2018",
+          "description": "Hybrid Analysis. (2018, May 30). 2a8efbfadd798f6111340f7c1c956bee.dll. Retrieved August 19, 2018.",
+          "url": "https://www.hybrid-analysis.com/sample/22dab012c3e20e3d9291bce14a2bfc448036d3b966c6e78167f4626f5f9e38d6?environmentId=110"
+        },
+        {
+          "source_name": "20 macOS Common Tools and Techniques",
+          "description": "Phil Stokes. (2021, February 16). 20 Common Tools & Techniques Used by macOS Threat Actors & Malware. Retrieved August 23, 2021.",
+          "url": "https://labs.sentinelone.com/20-common-tools-techniques-used-by-macos-threat-actors-malware/"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
-      "modified": "2025-04-25T14:45:36.561Z",
-      "name": "Command and Control",
-      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "modified": "2025-04-15T22:46:00.944Z",
+      "name": "Linux and Mac File and Directory Permissions Modification",
+      "description": "Adversaries may modify file or directory permissions/attributes to evade access control lists (ACLs) and access protected files.(Citation: Hybrid Analysis Icacls1 June 2018)(Citation: Hybrid Analysis Icacls2 May 2018) File and directory permissions are commonly managed by ACLs configured by the file or directory owner, or users with the appropriate permissions. File and directory ACL implementations vary by platform, but generally explicitly designate which users or groups can perform which actions (read, write, execute, etc.).\n\nMost Linux and Linux-based platforms provide a standard set of permission groups (user, group, and other) and a standard set of permissions (read, write, and execute) that are applied to each group. While nuances of each platform’s permissions implementation may vary, most of the platforms provide two primary commands used to manipulate file and directory ACLs: <code>chown</code> (short for change owner), and <code>chmod</code> (short for change mode).\n\nAdversarial may use these commands to make themselves the owner of files and directories or change the mode if current permissions allow it. They could subsequently lock others out of the file. Specific file and directory modifications may be a required step for many techniques, such as establishing Persistence via [Unix Shell Configuration Modification](https://attack.mitre.org/techniques/T1546/004) or tainting/hijacking other instrumental binary/configuration files via [Hijack Execution Flow](https://attack.mitre.org/techniques/T1574).(Citation: 20 macOS Common Tools and Techniques) ",
+      "kill_chain_phases": [
+        {
+          "kill_chain_name": "mitre-attack",
+          "phase_name": "defense-evasion"
+        }
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
       "x_mitre_deprecated": false,
+      "x_mitre_detection": "Monitor and investigate attempts to modify ACLs and file/directory ownership. Many of the commands used to modify ACLs and file/directory ownership are built-in system utilities and may generate a high false positive alert rate, so compare against baseline knowledge for how systems are typically used and correlate modification events with other indications of malicious activity where possible. Commonly abused command arguments include <code>chmod +x</code>, <code>chmod -R 755</code>, and <code>chmod 777</code>.(Citation: 20 macOS Common Tools and Techniques) \n\nConsider enabling file/directory permission change auditing on folders containing key binary/configuration files.",
       "x_mitre_domains": [
         "enterprise-attack"
       ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "command-and-control"
-    },
-    {
-      "modified": "2025-03-19T15:00:40.855Z",
-      "name": "The MITRE Corporation",
-      "description": "",
-      "identity_class": "organization",
-      "type": "identity",
-      "spec_version": "2.1",
-      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "created": "2017-06-01T00:00:00.000Z",
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "macOS",
+        "Linux"
       ],
-      "x_mitre_attack_spec_version": "3.2.0"
+      "x_mitre_version": "1.2",
+      "x_mitre_data_sources": [
+        "Process: Process Creation",
+        "File: File Metadata",
+        "Command: Command Execution"
+      ]
     },
     {
-      "definition": {
-        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      "id": "attack-action--4b5c1c23-d2c7-464d-813d-439a36f837aa",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
       },
-      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
-      "type": "marking-definition",
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "definition_type": "statement"
+      "name": "Ingress Tool Transfer",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1105",
+      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
+      "description": "Attackers attempted to download a webshell",
+      "effect_refs": [
+        "attack-condition--98f53f54-8560-494e-b75f-6736bcd1bf0f"
+      ]
     },
     {
-      "type": "artifact",
-      "id": "artifact--9c5f22d6-da6d-45d2-9755-43113bf4bcf6",
+      "id": "attack-action--22bae6a7-0937-447d-9a5b-8f0327a1c5bf",
+      "type": "attack-action",
       "spec_version": "2.1",
-      "url": "http://51.79.171.53/app.jsp",
-      "hashes": {
-        "md5": "4cd8366345ad4068feca4d417738b4bd"
-      }
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Ingress Tool Transfer",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1105",
+      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
+      "description": "Attackers downloaded binary"
     },
     {
-      "type": "artifact",
-      "id": "artifact--c95b2009-e52a-4217-a1bd-1ed77f559a8e",
+      "id": "attack-action--1249135e-bfdd-48fa-b128-b86236337d73",
+      "type": "attack-action",
       "spec_version": "2.1",
-      "url": "http://84.38.133.149/img/icon1.gif",
-      "hashes": {
-        "md5": "F8FF5C72E8FFA2112B01802113148BD1"
-      }
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Web Protocols",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1071.001",
+      "technique_ref": "attack-pattern--df8b2a25-8bdf-4856-953c-a04372b1c161",
+      "description": "multiple GET requests to VMWare Workspace ONE Access to obtain RCE, upload binaries, and upload webshells",
+      "effect_refs": [
+        "attack-action--4b5c1c23-d2c7-464d-813d-439a36f837aa"
+      ]
     },
     {
-      "type": "process",
-      "id": "process--ded9bd9f-456d-44f2-9003-62f0a92d52d9",
+      "id": "relationship--42676595-1467-4ef7-b874-f09d13a9764b",
+      "type": "relationship",
       "spec_version": "2.1",
-      "command_line": "whoami"
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--4b5c1c23-d2c7-464d-813d-439a36f837aa",
+      "target_ref": "malware--9e2ced66-df97-4713-b07d-8b1e57d9ba2a"
     },
     {
-      "type": "process",
-      "id": "process--9c17754e-f5a9-44ae-aa1b-7438d43707ff",
+      "id": "attack-action--af19a045-d1cd-4854-87b7-047e55033d5c",
+      "type": "attack-action",
       "spec_version": "2.1",
-      "command_line": "id"
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "File and Directory Permissions Modification: Linux and Mac File and Directory Permissions Modification",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1222.002",
+      "technique_ref": "attack-pattern--09b130a2-a77e-4af0-a361-f46f9aad1345",
+      "description": "GET request with chmod to change permissions of hidden file in /tmp directory",
+      "effect_refs": [
+        "attack-action--22bae6a7-0937-447d-9a5b-8f0327a1c5bf"
+      ]
     },
     {
-      "type": "process",
-      "id": "process--962988c0-6c99-4e38-87a5-102533e7b019",
+      "id": "relationship--9affc041-82ac-477d-b4e7-e9af89d04d4e",
+      "type": "relationship",
       "spec_version": "2.1",
-      "command_line": "cat"
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--22bae6a7-0937-447d-9a5b-8f0327a1c5bf",
+      "target_ref": "url--edfa7f23-b6d9-499d-9037-58046765e500"
     },
     {
-      "type": "ipv4-addr",
-      "id": "ipv4-addr--86821c08-9cd3-419f-acb8-c500d5db6383",
+      "id": "relationship--5a7ad849-4580-4c47-8f77-e259c241f236",
+      "type": "relationship",
       "spec_version": "2.1",
-      "value": "84.38.133.149"
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--22bae6a7-0937-447d-9a5b-8f0327a1c5bf",
+      "target_ref": "infrastructure--a9c94d6d-3cc0-4423-8e3c-1c0b42393b3d"
     },
     {
-      "type": "directory",
-      "id": "directory--9a377862-1ee3-4022-a730-a612e7833932",
+      "id": "attack-flow--d291b8e5-6a89-402e-97c9-20296073e6b3",
+      "type": "attack-flow",
       "spec_version": "2.1",
-      "path": "/webapps/cas/static/"
+      "created": "2023-02-20T20:14:50.991Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--c82920cf-1a4c-47e4-9bda-ebca7eb854f6",
+      "start_refs": [
+        "attack-action--1249135e-bfdd-48fa-b128-b86236337d73"
+      ],
+      "name": "CISA AA22-138B VMWare Workspace (TA2)",
+      "description": "Threat Actor 2 exploited VMWare Workspace ONE Access through various methods",
+      "scope": "incident",
+      "external_references": [
+        {
+          "source_name": "CISA",
+          "description": "Alert",
+          "url": "https://www.cisa.gov/uscert/ncas/alerts/aa22-138b"
+        }
+      ]
     },
     {
-      "type": "file",
-      "id": "file--fefb41eb-5a77-4034-9f19-92cb46f0e770",
+      "id": "relationship--79e449de-ffc2-4ee3-8cca-87e13e711f01",
+      "type": "relationship",
       "spec_version": "2.1",
-      "name": "horizon_all.jsp"
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--1249135e-bfdd-48fa-b128-b86236337d73",
+      "target_ref": "vulnerability--7d479fe1-7170-47d5-ada4-c869e7d5c7b3"
     },
     {
-      "type": "directory",
-      "id": "directory--03d5e338-b5ce-4b4b-9e9c-0be03fab23f4",
+      "id": "attack-action--abb24ca4-0847-4eb8-9a2f-3330415f3006",
+      "type": "attack-action",
       "spec_version": "2.1",
-      "path": "/opt/vmware/horizon/workspace/webapps/SAAS/horizon/portal/"
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Proxy",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1090",
+      "technique_ref": "attack-pattern--731f4f55-b6d0-41d1-a7a9-072a66389aea",
+      "description": "Attackers use reverse SOCKS proxy",
+      "effect_refs": [
+        "attack-action--af19a045-d1cd-4854-87b7-047e55033d5c"
+      ]
     },
     {
-      "type": "file",
-      "id": "file--6d13dae1-12c4-4a72-9e83-f2383fcd5b49",
+      "id": "relationship--ad18bfa0-4d6a-4e40-a62e-1cb5382b9aba",
+      "type": "relationship",
       "spec_version": "2.1",
-      "name": "jquery.jsp"
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--af19a045-d1cd-4854-87b7-047e55033d5c",
+      "target_ref": "file--c5352f2b-f17b-410d-8167-fbc5e1532b16"
     },
     {
-      "type": "file",
-      "id": "file--c5352f2b-f17b-410d-8167-fbc5e1532b16",
+      "id": "relationship--a9267d6c-7ee4-4655-b51a-fcc07687c4d8",
+      "type": "relationship",
       "spec_version": "2.1",
-      "name": ".tmp12865xax"
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--af19a045-d1cd-4854-87b7-047e55033d5c",
+      "target_ref": "directory--63e0c56c-9d2e-4d5c-b8bb-1bf7c85f059b"
     },
     {
-      "type": "directory",
-      "id": "directory--63e0c56c-9d2e-4d5c-b8bb-1bf7c85f059b",
+      "id": "attack-action--049af2f2-8d04-4d37-9c3a-9c4232119a5e",
+      "type": "attack-action",
       "spec_version": "2.1",
-      "path": "/tmp"
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Ingress Tool Transfer",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1105",
+      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
+      "description": "Attackers downloaded a reverse SOCKS proxy",
+      "effect_refs": [
+        "attack-action--abb24ca4-0847-4eb8-9a2f-3330415f3006"
+      ]
     },
     {
-      "type": "url",
-      "id": "url--edfa7f23-b6d9-499d-9037-58046765e500",
+      "id": "attack-action--96854c51-e17a-4747-b08b-51dbe773dc00",
+      "type": "attack-action",
       "spec_version": "2.1",
-      "value": "https://github[.]com/kost/revsocks/releases/download/v1.1.0/revsocks_linux_amd64"
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Symmetric Cryptography",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1573.001",
+      "technique_ref": "attack-pattern--24bfaeba-cb0d-4525-b3dc-507c77ecec41",
+      "description": "POST requests used to communicate with webshells; commands and output were encrypted with XOR key",
+      "effect_refs": [
+        "attack-action--049af2f2-8d04-4d37-9c3a-9c4232119a5e"
+      ]
     },
     {
-      "type": "url",
-      "id": "url--0056daec-35d2-48c3-b8af-6b4e93eeb50d",
+      "id": "attack-action--3a2d7968-b69a-47cc-9fdd-30a7d27bf19d",
+      "type": "attack-action",
       "spec_version": "2.1",
-      "value": "https://149.248.35[.]200.sslip.io"
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Ingress Tool Transfer",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1105",
+      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
+      "description": "Attackers downloaded 2 copies of a webshell",
+      "effect_refs": [
+        "attack-action--96854c51-e17a-4747-b08b-51dbe773dc00"
+      ]
+    },
+    {
+      "id": "attack-action--a0767d23-cc44-43bd-bd57-807e5e571721",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "OS Credential Dumping: /etc/passwd and /etc/shadow",
+      "tactic_id": "TA0006",
+      "tactic_ref": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
+      "technique_id": "T1003.008",
+      "technique_ref": "attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4",
+      "description": "Attackers viewed /etc/passwd and /etc/shadow",
+      "effect_refs": [
+        "attack-action--3a2d7968-b69a-47cc-9fdd-30a7d27bf19d"
+      ]
+    },
+    {
+      "id": "relationship--64fa075a-28f4-418c-b49f-ee5974c5ab51",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--3a2d7968-b69a-47cc-9fdd-30a7d27bf19d",
+      "target_ref": "malware--c4bda44a-331f-4f00-b2f7-e0fa0b1d18a2"
+    },
+    {
+      "id": "attack-action--a2b22b62-4ab7-483b-8d26-9d8306abc03c",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Unix Shell",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1059.004",
+      "technique_ref": "attack-pattern--a9d4b653-6915-42af-98b2-5758c4ceee56",
+      "description": "Attackers sent Unix commands",
+      "command_ref": "process--ded9bd9f-456d-44f2-9003-62f0a92d52d9",
+      "effect_refs": [
+        "attack-action--a0767d23-cc44-43bd-bd57-807e5e571721"
+      ]
+    },
+    {
+      "id": "attack-action--d32524ea-375d-4c91-8100-c77e2c9f904c",
+      "type": "attack-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Ingress Tool Transfer",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1105",
+      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
+      "description": "Attackers downloaded a JSP webshell",
+      "effect_refs": [
+        "attack-action--a2b22b62-4ab7-483b-8d26-9d8306abc03c"
+      ]
+    },
+    {
+      "id": "relationship--1d1a8b4d-bc2f-4302-ac0b-8e361cf1975c",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--a2b22b62-4ab7-483b-8d26-9d8306abc03c",
+      "target_ref": "process--9c17754e-f5a9-44ae-aa1b-7438d43707ff"
+    },
+    {
+      "id": "relationship--6215bf1a-9eb7-459e-8a6e-3c811cc99c42",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--a2b22b62-4ab7-483b-8d26-9d8306abc03c",
+      "target_ref": "process--962988c0-6c99-4e38-87a5-102533e7b019"
+    },
+    {
+      "id": "relationship--8d0be66b-329c-4283-bf5d-5d6b68c9daec",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--a2b22b62-4ab7-483b-8d26-9d8306abc03c",
+      "target_ref": "ipv4-addr--86821c08-9cd3-419f-acb8-c500d5db6383"
+    },
+    {
+      "id": "relationship--70da98a8-cbe7-4331-9cde-b1ea2b3d131f",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-condition--98f53f54-8560-494e-b75f-6736bcd1bf0f",
+      "target_ref": "attack-action--d32524ea-375d-4c91-8100-c77e2c9f904c"
+    },
+    {
+      "id": "relationship--13be2e96-09fa-4266-90ed-797ea882df47",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--d32524ea-375d-4c91-8100-c77e2c9f904c",
+      "target_ref": "malware--5df8707c-c9ee-4167-bd6d-73d362e82dea"
     }
   ]
 }

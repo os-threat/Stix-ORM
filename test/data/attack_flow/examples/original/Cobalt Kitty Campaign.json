@@ -1,0 +1,1114 @@
+{
+  "type": "bundle",
+  "id": "bundle--986b822e-e884-4c32-b036-4f487f612116",
+  "spec_version": "2.1",
+  "created": "2025-07-30T19:47:12.726Z",
+  "modified": "2025-07-30T19:47:12.726Z",
+  "objects": [
+    {
+      "type": "extension-definition",
+      "id": "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "Attack Flow",
+      "description": "Extends STIX 2.1 with features to create Attack Flows.",
+      "created_by_ref": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "schema": "https://center-for-threat-informed-defense.github.io/attack-flow/stix/attack-flow-schema-2.0.0.json",
+      "version": "2.0.0",
+      "extension_types": [
+        "new-sdo"
+      ],
+      "external_references": [
+        {
+          "source_name": "Documentation",
+          "description": "Documentation for Attack Flow",
+          "url": "https://center-for-threat-informed-defense.github.io/attack-flow"
+        },
+        {
+          "source_name": "GitHub",
+          "description": "Source code repository for Attack Flow",
+          "url": "https://github.com/center-for-threat-informed-defense/attack-flow"
+        }
+      ]
+    },
+    {
+      "type": "identity",
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "created_by_ref": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "type": "attack-flow",
+      "id": "attack-flow--cc1b4136-b914-402e-ba05-bb16768d4a13",
+      "spec_version": "2.1",
+      "created": "2022-10-27T02:44:54.520Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--f02f372c-5f8f-49a0-be8e-778cc6f53cc8",
+      "start_refs": [
+        "attack-action--7e43c3eb-f609-4a53-beb3-40829afb89aa",
+        "attack-action--508bc600-bbf4-4e31-a789-8971f51dc581"
+      ],
+      "name": "Cobalt Kitty Campaign",
+      "description": "Cobalt Kitty campaign conducted by OceanLotus.",
+      "scope": "campaign",
+      "external_references": [
+        {
+          "source_name": "Cybereason",
+          "description": "Article",
+          "url": "https://www.cybereason.com/blog/operation-cobalt-kitty-apt"
+        },
+        {
+          "source_name": "CrowdStrike",
+          "description": "Adversary Focus",
+          "url": "https://adversary.crowdstrike.com/en-US/adversary/ocean-buffalo/"
+        },
+        {
+          "source_name": "MITRE",
+          "description": "ATT&CK Group",
+          "url": "https://attack.mitre.org/groups/G0050/"
+        }
+      ]
+    },
+    {
+      "type": "identity",
+      "id": "identity--f02f372c-5f8f-49a0-be8e-778cc6f53cc8",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.726Z",
+      "modified": "2025-07-30T19:47:12.726Z",
+      "name": "Eric Kannampuzha",
+      "contact_information": "ekannampuzha@mitre.org"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--7e43c3eb-f609-4a53-beb3-40829afb89aa",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Spearphishing Link",
+      "tactic_id": "TA0001",
+      "tactic_ref": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
+      "technique_id": "T1566.002",
+      "technique_ref": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7",
+      "description": "Link to a malicious site that downloads a fake Flash Installer delivering Cobalt Strike beacon.",
+      "effect_refs": [
+        "attack-action--d3d7d621-23f1-4536-8777-aa37cfa4789f"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--398ab58e-b755-4251-9dc5-293817d349ea",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Deobfuscate/Decode Files or Information",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1140",
+      "technique_ref": "attack-pattern--3ccef7ae-cb5e-48f6-8302-897105fbf55c",
+      "description": "Obfuscated and XOR'ed PowerShell is decoded to download additional obfuscated PowerShell payloads",
+      "effect_refs": [
+        "attack-action--96bb23ee-9fa2-4442-b49c-4b2dcc49d043",
+        "attack-action--788fab85-7ed0-42d7-aed2-cec8ac099f32"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--508bc600-bbf4-4e31-a789-8971f51dc581",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Spearphishing Attachment",
+      "tactic_id": "TA0001",
+      "tactic_ref": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
+      "technique_id": "T1566.001",
+      "technique_ref": "attack-pattern--2e34237d-8574-43f6-aace-ae2915de8597",
+      "description": "Word documents with malicious macros downloading Cobalt Strike payloads",
+      "effect_refs": [
+        "attack-action--217d8b41-0faf-415e-be60-1489e39d3ee5"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--217d8b41-0faf-415e-be60-1489e39d3ee5",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Scheduled Task",
+      "tactic_id": "TA0003",
+      "tactic_ref": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "technique_id": "T1053.005",
+      "technique_ref": "attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9",
+      "description": "Two scheduled tasks are created that download additional payloads",
+      "effect_refs": [
+        "attack-operator--5c3ac180-7cb9-42a6-98de-66e906effc2b"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--d3d7d621-23f1-4536-8777-aa37cfa4789f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "PowerShell",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1059.001",
+      "technique_ref": "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736",
+      "description": "Obfuscated PowerShell scripts delivering Cobalt Strike beacons are downloaded",
+      "effect_refs": [
+        "attack-operator--5c3ac180-7cb9-42a6-98de-66e906effc2b"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--3488c178-ef07-4ba9-9007-6ca8aaff51c9",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Registry Run Keys / Startup Folder",
+      "tactic_id": "TA0003",
+      "tactic_ref": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "technique_id": "T1547.001",
+      "technique_ref": "attack-pattern--9efb1ea7-c37b-4595-9640-b7680cd84279",
+      "description": "Windows Registry Autorun is used to execute VBScript and PowerShell scripts residing in the ProgramData folder",
+      "effect_refs": [
+        "attack-operator--c75d6f51-0b7c-4b90-bd97-943385d84391"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--96bb23ee-9fa2-4442-b49c-4b2dcc49d043",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "PowerShell",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1059.001",
+      "technique_ref": "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736",
+      "description": "Obfuscated PowerShell scripts that executes a Cobalt Strike beacon",
+      "effect_refs": [
+        "attack-operator--8e2a58eb-6a0c-486b-b318-8527f5c3357a"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--8589d97f-43fd-4d11-83a0-41e5902cfe9f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "NTFS File Attributes",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1564.004",
+      "technique_ref": "attack-pattern--f2857333-11d4-45bf-b064-2c28d8525be5",
+      "description": "Payloads for persistence were hidden in NTFS Alternate Data Streams",
+      "effect_refs": [
+        "attack-operator--c75d6f51-0b7c-4b90-bd97-943385d84391"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--a19ca663-f6ef-4925-bef4-94248349f2e6",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Scheduled Task",
+      "tactic_id": "TA0003",
+      "tactic_ref": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "technique_id": "T1053.005",
+      "technique_ref": "attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9",
+      "description": "Scheduled tasks are created that load malicious PowerShell payloads using DLL hijacking with a Google Update binary",
+      "effect_refs": [
+        "attack-operator--c75d6f51-0b7c-4b90-bd97-943385d84391"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--ac381463-471d-4ccb-9177-ebd834ed5706",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Windows Service",
+      "tactic_id": "TA0003",
+      "tactic_ref": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "technique_id": "T1543.003",
+      "technique_ref": "attack-pattern--2959d63f-73fd-46a1-abd2-109d7dcede32",
+      "description": "Windows services were created and/or modified to load PowerShell scripts",
+      "effect_refs": [
+        "attack-operator--c75d6f51-0b7c-4b90-bd97-943385d84391"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--a229d676-e14f-46ee-9bc4-22e769c9abad",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Office Application Startup",
+      "tactic_id": "TA0003",
+      "tactic_ref": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "technique_id": "T1137",
+      "technique_ref": "attack-pattern--2c4d4e92-0ccf-4a97-b54c-86d662988a53",
+      "description": "Malicious Outlook backdoor macros were to used to communicate with C2 servers and exfiltrate data",
+      "effect_refs": [
+        "attack-operator--c75d6f51-0b7c-4b90-bd97-943385d84391"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--53f217bc-c353-4ada-b782-7391aaee5685",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "DLL Side-Loading",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1574.002",
+      "description": "A malicious DLL file was implanted where the Windows Search Service would run and load the DLL",
+      "effect_refs": [
+        "attack-action--4c1cd5fd-27ee-4600-901a-5897e05d1b58"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--4c1cd5fd-27ee-4600-901a-5897e05d1b58",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Regsvr32",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1218.010",
+      "technique_ref": "attack-pattern--b97f1d35-4249-4486-a6b5-ee60ccf24fab",
+      "description": "Regsvr32.exe is used to download COM scriplets for malicious execution",
+      "effect_refs": [
+        "attack-action--bad6fe95-996c-432e-9362-e187a87ba485",
+        "attack-action--a19b78e2-9d90-46a7-bb55-7dc533edee63",
+        "attack-action--2129fd6d-9887-4a29-b550-3a598b50f641"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--436a56c4-7998-45f2-8f4e-3e4709e3e80c",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Remote System Discovery",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1018",
+      "technique_ref": "attack-pattern--e358d692-23c0-4a31-9eb6-ecc13a8d7735",
+      "description": "Network scanning was performed against entire ranges to gain information on open ports, services, and operating systems for remote systems",
+      "effect_refs": [
+        "attack-operator--445fd1d0-da6d-4b9d-9bf2-35465cf2774c"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--a19b78e2-9d90-46a7-bb55-7dc533edee63",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Protocol Impersonation",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1001.003",
+      "technique_ref": "attack-pattern--c325b232-d5bc-4dde-a3ec-71f3db9e8adc",
+      "description": "Cobalt Strike's malleable C2 profiles were used to impersonate Amazon, Google Safe Browsing, Pandora, and OSCP traffic",
+      "effect_refs": [
+        "attack-operator--f7a7356a-a39f-438a-9a59-cd6654f88363"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--bad6fe95-996c-432e-9362-e187a87ba485",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "DNS",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1071.004",
+      "technique_ref": "attack-pattern--1996eef1-ced3-4d7f-bf94-33298cabbf72",
+      "description": "DNS tunneling was used for C2 communication and data exfiltration",
+      "effect_refs": [
+        "attack-operator--f7a7356a-a39f-438a-9a59-cd6654f88363"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--2129fd6d-9887-4a29-b550-3a598b50f641",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Mail Protocols",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1071.003",
+      "technique_ref": "attack-pattern--54b4c251-1f0e-4eba-ba6b-dbc7a6f6f06b",
+      "description": "Malicious Outlook macros were created to utilize email for C2 communication and data exfiltration",
+      "effect_refs": [
+        "attack-operator--f7a7356a-a39f-438a-9a59-cd6654f88363"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--e70b0b83-e9b0-4188-a1c1-c049cec1c48e",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "System Information Discovery",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1082",
+      "technique_ref": "attack-pattern--354a7f88-63fb-41b5-a801-ce3b377b36f1",
+      "description": "The attackers used several tools built into the Windows OS to gather information on the environment’s users.",
+      "effect_refs": [
+        "attack-operator--445fd1d0-da6d-4b9d-9bf2-35465cf2774c"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--90c24039-8903-407d-a9a8-9960faf084e2",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "System Network Configuration Discovery",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1016",
+      "technique_ref": "attack-pattern--707399d6-ab3e-4963-9315-d9d3818cd6a0",
+      "description": "The attackers used several tools built into the Windows OS to gather information on the environment’s network configurations.",
+      "effect_refs": [
+        "attack-operator--a414b5c1-9edb-455d-b737-72205d43b17a"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--47a28c6a-51bc-4144-afd3-8117e2ce6828",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Network Service Discovery",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1046",
+      "technique_ref": "attack-pattern--e3a12395-188d-4051-9a16-ea8e14d07b88",
+      "description": "Network scanning was performed against entire ranges to gain information on open ports, services, and operating systems",
+      "effect_refs": [
+        "attack-operator--445fd1d0-da6d-4b9d-9bf2-35465cf2774c"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--7ec57638-9eba-4456-af50-1a0e4804510d",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "LSA Secrets",
+      "tactic_id": "TA0006",
+      "tactic_ref": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
+      "technique_id": "T1003.004",
+      "technique_ref": "attack-pattern--1ecfdab8-7d59-4c98-95d4-dc41970f57fc",
+      "description": "Modified version of Mimikatz was used to dump credentials",
+      "effect_refs": [
+        "attack-action--c7ef4391-eb20-443b-91c2-cceaf0b06458",
+        "attack-action--2a0d98d7-92cc-4087-93ad-ff1db995bec6",
+        "attack-action--6c5276a7-4e5c-4807-957b-d1673f27aec5",
+        "attack-action--03fd7c2f-1eab-4468-8d67-7a331b75c261"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--03fd7c2f-1eab-4468-8d67-7a331b75c261",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "SMB/Windows Admin Shares",
+      "tactic_id": "TA0008",
+      "tactic_ref": "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
+      "technique_id": "T1021.002",
+      "technique_ref": "attack-pattern--4f9ca633-15c5-463c-9724-bdcd54fde541",
+      "description": "Net.exe was used to perform lateral movement via Windows Admin Shares",
+      "asset_refs": [
+        "attack-asset--1eccea60-8db3-4ac0-9db2-d4eef1c3b484"
+      ],
+      "effect_refs": [
+        "attack-operator--65620718-41a3-43e9-842a-e169a076170a"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--c7ef4391-eb20-443b-91c2-cceaf0b06458",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Windows Management Instrumentation",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1047",
+      "technique_ref": "attack-pattern--01a5a209-b94c-450b-b7f9-946497d91055",
+      "description": "WMI and 'net user' commands were used to deploy tools on remote machines",
+      "effect_refs": [
+        "attack-operator--65620718-41a3-43e9-842a-e169a076170a"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--2a0d98d7-92cc-4087-93ad-ff1db995bec6",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Pass the Hash",
+      "tactic_id": "TA0008",
+      "tactic_ref": "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
+      "technique_id": "T1550.002",
+      "technique_ref": "attack-pattern--e624264c-033a-424d-9fd7-fc9c3bbdb03e",
+      "description": "The attackers deployed a customized Mimikatz using stolen credentials from an administrative account, which they used to carry out a pass-the-hash attack",
+      "effect_refs": [
+        "attack-operator--65620718-41a3-43e9-842a-e169a076170a"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--6c5276a7-4e5c-4807-957b-d1673f27aec5",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Pass the Ticket",
+      "tactic_id": "TA0008",
+      "tactic_ref": "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
+      "technique_id": "T1550.003",
+      "technique_ref": "attack-pattern--7b211ac6-c815-4189-93a9-ab415deca926",
+      "description": "The attackers deployed a customized Mimikatz using stolen credentials from an administrative account, which they used to carry out a pass-the-ticket attack",
+      "effect_refs": [
+        "attack-operator--65620718-41a3-43e9-842a-e169a076170a"
+      ]
+    },
+    {
+      "type": "attack-operator",
+      "id": "attack-operator--f7a7356a-a39f-438a-9a59-cd6654f88363",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND",
+      "effect_refs": [
+        "attack-action--47a28c6a-51bc-4144-afd3-8117e2ce6828",
+        "attack-action--436a56c4-7998-45f2-8f4e-3e4709e3e80c",
+        "attack-action--e70b0b83-e9b0-4188-a1c1-c049cec1c48e"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--fa7a634c-2450-499a-9bf3-a09d8e34e937",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "System Network Connections Discovery",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1049",
+      "technique_ref": "attack-pattern--7e150503-88e7-4861-866b-ff1ac82c4475",
+      "description": "The attackers used several tools built into the Windows OS to gather information on the environment’s network connections.",
+      "effect_refs": [
+        "attack-operator--a414b5c1-9edb-455d-b737-72205d43b17a"
+      ]
+    },
+    {
+      "type": "attack-operator",
+      "id": "attack-operator--445fd1d0-da6d-4b9d-9bf2-35465cf2774c",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND",
+      "effect_refs": [
+        "attack-action--fa7a634c-2450-499a-9bf3-a09d8e34e937",
+        "attack-action--90c24039-8903-407d-a9a8-9960faf084e2"
+      ]
+    },
+    {
+      "type": "attack-operator",
+      "id": "attack-operator--8e2a58eb-6a0c-486b-b318-8527f5c3357a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND",
+      "effect_refs": [
+        "attack-action--ac381463-471d-4ccb-9177-ebd834ed5706",
+        "attack-action--8589d97f-43fd-4d11-83a0-41e5902cfe9f",
+        "attack-action--3488c178-ef07-4ba9-9007-6ca8aaff51c9",
+        "attack-action--a19ca663-f6ef-4925-bef4-94248349f2e6",
+        "attack-action--a229d676-e14f-46ee-9bc4-22e769c9abad"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--788fab85-7ed0-42d7-aed2-cec8ac099f32",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Visual Basic",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1059.005",
+      "technique_ref": "attack-pattern--dfd7cc1d-e1d8-4394-a198-97c4cab8aa67",
+      "description": "Attackers dropped Visual Basic and PowerShell scripts in folders that they created under the ProgramData",
+      "effect_refs": [
+        "attack-operator--8e2a58eb-6a0c-486b-b318-8527f5c3357a"
+      ]
+    },
+    {
+      "type": "threat-actor",
+      "id": "threat-actor--f5182f82-449b-4edd-9c74-bf2ad4bcaf9d",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "OceanLotus",
+      "description": "APT32 is a suspected Vietnam-based threat group that has been active since at least 2012. The group has targeted multiple private sector industries as well as foreign governments, dissidents, and journalists with a strong focus on Southeast Asian countries like Vietnam, the Philippines, Laos, and Cambodia. Their primary objective is to collect information related to perceived threats to the Vietnamese government, but with possible geopolitical and economic espionage objectives as well. They have extensively used strategic web compromises to compromise victims.",
+      "threat_actor_types": [
+        "Activist",
+        "Crime-syndicate",
+        "Competitor"
+      ],
+      "aliases": [
+        "Ocean Buffalo",
+        "SeaLotus",
+        "APT32",
+        "TIN WOODLAWN",
+        "APT-C-00"
+      ],
+      "first_seen": "2012-01-01T00:00:00.000Z",
+      "roles": [
+        "Agent",
+        "Independent"
+      ],
+      "goals": [
+        "Collect information on perceived threats to the Vietnamese government; geopolitical and economic espionage"
+      ],
+      "sophistication": "Expert",
+      "resource_level": "Organization",
+      "primary_motivation": "organizational-gain",
+      "secondary_motivations": [
+        "ideology"
+      ]
+    },
+    {
+      "type": "campaign",
+      "id": "campaign--8ed0c3ff-cecd-40f1-9d6b-e3dbe955ac7a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Operation Cobalt Kitty",
+      "description": "A large-scale campaign in Asia carried out by the OceanLotus Group",
+      "objective": "Stealing proprietary business information"
+    },
+    {
+      "type": "attack-operator",
+      "id": "attack-operator--5c3ac180-7cb9-42a6-98de-66e906effc2b",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "OR",
+      "effect_refs": [
+        "attack-action--398ab58e-b755-4251-9dc5-293817d349ea"
+      ]
+    },
+    {
+      "type": "attack-operator",
+      "id": "attack-operator--c75d6f51-0b7c-4b90-bd97-943385d84391",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND",
+      "effect_refs": [
+        "attack-action--53f217bc-c353-4ada-b782-7391aaee5685"
+      ]
+    },
+    {
+      "type": "attack-operator",
+      "id": "attack-operator--a414b5c1-9edb-455d-b737-72205d43b17a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND",
+      "effect_refs": [
+        "attack-action--7ec57638-9eba-4456-af50-1a0e4804510d"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--e378563e-c6df-4d01-89a9-f3545cc42517",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Windows Management Instrumentation (WMI)",
+      "tool_types": [
+        "Information-gathering"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--38394be6-1da8-45e2-86c4-180837bd00e8",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Arp",
+      "tool_types": [
+        "Information-gathering"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--127e715e-a04a-4103-84ef-99015b27d94f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Ipconfig",
+      "tool_types": [
+        "Information-gathering"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--09b75cde-799f-432c-9920-bbf13d0eb336",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Netstat",
+      "tool_types": [
+        "Information-gathering"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--cd07bd67-3e94-4fce-8c86-589ad7c314c0",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "net user/group/localgroup",
+      "tool_types": [
+        "Information-gathering"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--0ade6c1a-d0b5-47d2-a633-b61144024874",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Nslookup",
+      "tool_types": [
+        "Information-gathering"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--b1ddb6da-5c43-440d-9189-39c740659ccc",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Netsh",
+      "tool_types": [
+        "Information-gathering"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--f2fac0de-8565-48ab-9ce8-d67dee1edeb6",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Mimikatz",
+      "tool_types": [
+        "credential-exploitation"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--6c9c4fd4-1e75-45c2-921c-a2df79fd4108",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Net.exe",
+      "tool_types": [
+        "remote-access"
+      ]
+    },
+    {
+      "type": "attack-asset",
+      "id": "attack-asset--1eccea60-8db3-4ac0-9db2-d4eef1c3b484",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Windows Admin Shares"
+    },
+    {
+      "type": "tool",
+      "id": "tool--1d4a5369-38f8-4b40-8390-2c3cf8f940a0",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "WMI",
+      "tool_types": [
+        "Exploitation"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--a1e3e09a-26c1-439c-8985-5bdf2ed377fa",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Net user",
+      "tool_types": [
+        "remote-access",
+        "exploitation"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--750c2016-1016-48d8-95ea-df5b32a8f8ee",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Mimikatz",
+      "tool_types": [
+        "credential-exploitation"
+      ]
+    },
+    {
+      "type": "attack-operator",
+      "id": "attack-operator--65620718-41a3-43e9-842a-e169a076170a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--0f7bb0e9-02af-4051-a498-12aaefbb22cc",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--e70b0b83-e9b0-4188-a1c1-c049cec1c48e",
+      "target_ref": "tool--e378563e-c6df-4d01-89a9-f3545cc42517"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--90a79328-e84c-4c6c-8a4e-8bdb611b2bad",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--e70b0b83-e9b0-4188-a1c1-c049cec1c48e",
+      "target_ref": "tool--127e715e-a04a-4103-84ef-99015b27d94f"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--3cca2911-6967-468e-a115-3f3905ed4a3d",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--e70b0b83-e9b0-4188-a1c1-c049cec1c48e",
+      "target_ref": "tool--38394be6-1da8-45e2-86c4-180837bd00e8"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--6e287ce9-8d1a-422c-b64c-628232953ba4",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--90c24039-8903-407d-a9a8-9960faf084e2",
+      "target_ref": "tool--0ade6c1a-d0b5-47d2-a633-b61144024874"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--104997e4-a4f8-4fda-984b-0e4ed0511820",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--90c24039-8903-407d-a9a8-9960faf084e2",
+      "target_ref": "tool--cd07bd67-3e94-4fce-8c86-589ad7c314c0"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--2b0a4041-ce69-45a9-b94f-03df7d6cfa3e",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--90c24039-8903-407d-a9a8-9960faf084e2",
+      "target_ref": "tool--b1ddb6da-5c43-440d-9189-39c740659ccc"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--b8e4d978-6f0f-459a-948f-16580dde0b5a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--7ec57638-9eba-4456-af50-1a0e4804510d",
+      "target_ref": "tool--f2fac0de-8565-48ab-9ce8-d67dee1edeb6"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--38904348-17b3-4bad-9ea8-b41a6de8b3e3",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--03fd7c2f-1eab-4468-8d67-7a331b75c261",
+      "target_ref": "tool--6c9c4fd4-1e75-45c2-921c-a2df79fd4108"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--68c94e15-8050-42f7-aebb-9ba8e8975782",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--c7ef4391-eb20-443b-91c2-cceaf0b06458",
+      "target_ref": "tool--1d4a5369-38f8-4b40-8390-2c3cf8f940a0"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--f235d966-5e95-435a-b8fb-ce4ec1e77984",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--c7ef4391-eb20-443b-91c2-cceaf0b06458",
+      "target_ref": "tool--a1e3e09a-26c1-439c-8985-5bdf2ed377fa"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--f86f5447-f65a-4d5b-ac45-05c1ab8b1d9c",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--2a0d98d7-92cc-4087-93ad-ff1db995bec6",
+      "target_ref": "tool--750c2016-1016-48d8-95ea-df5b32a8f8ee"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--318aead0-4da4-4661-8958-d012ddfaafaa",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--6c5276a7-4e5c-4807-957b-d1673f27aec5",
+      "target_ref": "tool--750c2016-1016-48d8-95ea-df5b32a8f8ee"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--c318fb38-5c89-4728-87eb-ec001bf9ec8f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--fa7a634c-2450-499a-9bf3-a09d8e34e937",
+      "target_ref": "tool--09b75cde-799f-432c-9920-bbf13d0eb336"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--fac046aa-776d-493f-83df-b19f18fb2f60",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "relationship_type": "related-to",
+      "source_ref": "threat-actor--f5182f82-449b-4edd-9c74-bf2ad4bcaf9d",
+      "target_ref": "campaign--8ed0c3ff-cecd-40f1-9d6b-e3dbe955ac7a"
+    }
+  ]
+}

@@ -1,0 +1,1375 @@
+{
+  "type": "bundle",
+  "id": "bundle--bd17b78b-2ffd-45db-a4b0-d1104b95c2db",
+  "spec_version": "2.1",
+  "created": "2025-07-30T19:47:12.605Z",
+  "modified": "2025-07-30T19:47:12.605Z",
+  "objects": [
+    {
+      "type": "extension-definition",
+      "id": "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "Attack Flow",
+      "description": "Extends STIX 2.1 with features to create Attack Flows.",
+      "created_by_ref": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "schema": "https://center-for-threat-informed-defense.github.io/attack-flow/stix/attack-flow-schema-2.0.0.json",
+      "version": "2.0.0",
+      "extension_types": [
+        "new-sdo"
+      ],
+      "external_references": [
+        {
+          "source_name": "Documentation",
+          "description": "Documentation for Attack Flow",
+          "url": "https://center-for-threat-informed-defense.github.io/attack-flow"
+        },
+        {
+          "source_name": "GitHub",
+          "description": "Source code repository for Attack Flow",
+          "url": "https://github.com/center-for-threat-informed-defense/attack-flow"
+        }
+      ]
+    },
+    {
+      "type": "identity",
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "created_by_ref": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "type": "attack-flow",
+      "id": "attack-flow--042142d6-2080-4c1d-8ef2-bad02c39db3b",
+      "spec_version": "2.1",
+      "created": "2024-06-19T15:45:49.090Z",
+      "modified": "2025-07-30T19:47:12.606Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--0b55fa9f-cd34-442f-a59e-8dae3ff9c0a7",
+      "start_refs": [
+        "attack-action--a3679838-b02f-4c2b-a0b6-d3450ca2e1dd"
+      ],
+      "name": "Black Basta Ransomware",
+      "description": "Black Basta is a RaaS (Ransomware as a Service), written in C++, that has been in development since February 2022 and in active use since April 2022. Operators using Black Basta employ a double-extortion technique where they encrypt files on the target systems and demand payment for the decryption key while also threatening to leak the information if they are not paid.",
+      "scope": "malware",
+      "external_references": [
+        {
+          "source_name": "Unit 42",
+          "description": "Threat Assessment ",
+          "url": "https://unit42.paloaltonetworks.com/threat-assessment-black-basta-ransomware/"
+        }
+      ]
+    },
+    {
+      "type": "identity",
+      "id": "identity--0b55fa9f-cd34-442f-a59e-8dae3ff9c0a7",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.605Z",
+      "modified": "2025-07-30T19:47:12.605Z",
+      "name": "Lauren Parker",
+      "identity_class": "individual",
+      "contact_information": "lparker@mitre.org"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--a3679838-b02f-4c2b-a0b6-d3450ca2e1dd",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.606Z",
+      "modified": "2025-07-30T19:47:12.606Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Phishing: Spearphishing Attachment",
+      "tactic_id": "TA0001",
+      "tactic_ref": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
+      "technique_id": "T1566.001",
+      "technique_ref": "attack-pattern--2e34237d-8574-43f6-aace-ae2915de8597",
+      "description": "Victims receive spear phishing emails with  malicious zip files attached.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--b2345e48-33c8-4a67-99cc-7dec00f978cc"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--e5715d9b-4fd2-4ad3-85f8-75d958bddb5d",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.606Z",
+      "modified": "2025-07-30T19:47:12.606Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "User Execution: Malicious File",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1204.002",
+      "technique_ref": "attack-pattern--232b7f21-adf9-4b42-b936-b9d6f7df856e",
+      "description": "The zip files are extracted and usually contain a malicious document, such as a .doc, .pdf, or .xls.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--b681891b-bd67-4d54-8cd0-ceb3cce9767c"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--c14c8d17-1a12-439b-aef4-a2f1e66052ea",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "System Services: Service Execution",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1569.002",
+      "technique_ref": "attack-pattern--f1951e8a-500e-4a26-8803-76d95c4554b4",
+      "description": "Black Basta installs and uses PsExec to execute payloads on remote hosts.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--d4998f70-63bb-439c-a279-282cfddc53fe",
+        "attack-action--3a7cc2d4-25fe-4fb5-abee-5f2b6dc0caee",
+        "attack-action--a22fdaff-b20e-4896-ac6c-81a93ddb36df",
+        "attack-action--93a4a781-5805-494a-9d93-6cf72577876a"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--60f72c38-7df7-4c48-b5f6-8b6b7a39f00a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Windows Management Instrumentation",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1047",
+      "technique_ref": "attack-pattern--01a5a209-b94c-450b-b7f9-946497d91055",
+      "description": "Invoke-TotalExec is used to push out the ransomware binary.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-operator--9183210d-5db6-4fd9-bc57-5848734736d3"
+      ],
+      "command_ref": "process--eb023ba0-8c2c-42f9-af10-d17b460cadf9"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--ec4f8e09-7106-478a-886b-82d0732cf97a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Command and Scripting Interpreter: PowerShell",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1059.001",
+      "technique_ref": "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736",
+      "description": "Within the malicious files, encoded PowerShell scripts are used to download additional malicious scripts.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--c94bdb43-30a0-47ec-8bd9-b4487fdde268"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--967a2c1f-ae93-4e5b-8a12-06cf932e62ed",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "name": "PsExec",
+      "description": "run processes remotely using any user's credentials",
+      "tool_types": [
+        "remote-access"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--d88229be-c790-4963-92e8-ca0bf0080ad0",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Create Account",
+      "tactic_id": "TA0003",
+      "tactic_ref": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "technique_id": "T1136",
+      "technique_ref": "attack-pattern--e01be9c5-e763-4caf-aeb7-000b416aef67",
+      "description": "Accounts are created with names such as temp, r, or admin.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--1ab99f8c-71a2-4518-a034-9100998b949c"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--599cf0b7-3d8f-4988-85de-4301a29f86b6",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Account Manipulation",
+      "tactic_id": "TA0004",
+      "tactic_ref": "x-mitre-tactic--5e29b093-294e-49e9-a803-dab3d73b77dd",
+      "technique_id": "T1098",
+      "technique_ref": "attack-pattern--a10641f4-87b4-45a3-a906-92a149cb2c27",
+      "description": "The new accounts are added to the administrator's group to maintain elevated access.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-operator--14c72b05-5f68-4d8e-91ee-e8503a3fd9b5"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--a33a2a3b-2de7-4f03-855f-3564afdf4db7",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Create or Modify System Process: Windows Service",
+      "tactic_id": "TA0003",
+      "tactic_ref": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "technique_id": "T1543.003",
+      "technique_ref": "attack-pattern--2959d63f-73fd-46a1-abd2-109d7dcede32",
+      "description": "Benign-looking services are created for the ransomware binary.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-operator--14c72b05-5f68-4d8e-91ee-e8503a3fd9b5"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--c94bdb43-30a0-47ec-8bd9-b4487fdde268",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Hijack Execution Flow: DLL Search Order Hijacking",
+      "technique_id": "T1574.001",
+      "technique_ref": "attack-pattern--2fee9321-3e71-4cf4-af24-d4d40d355b34",
+      "description": "Black Basta uses Qakbot DLL files, which can exploit the Windows 7 calculator to execute malicious payloads.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--9f5746cd-931b-4e2a-815f-b65519baabfc"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--b681891b-bd67-4d54-8cd0-ceb3cce9767c",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Command and Scripting Interpreter: Visual Basic",
+      "tactic_id": "TA0002",
+      "tactic_ref": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
+      "technique_id": "T1059.005",
+      "technique_ref": "attack-pattern--dfd7cc1d-e1d8-4394-a198-97c4cab8aa67",
+      "description": "The extracted files contain malicious macros.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--ec4f8e09-7106-478a-886b-82d0732cf97a"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--1ab99f8c-71a2-4518-a034-9100998b949c",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Domain Policy Modification: Group Policy Modification",
+      "tactic_id": "TA0004",
+      "tactic_ref": "x-mitre-tactic--5e29b093-294e-49e9-a803-dab3d73b77dd",
+      "technique_id": "T1484.001",
+      "technique_ref": "attack-pattern--5d2be8b9-d24c-4e98-83bf-2f5f79477163",
+      "description": "The Group Policy is modified for privilege escalation and defense evasion.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--599cf0b7-3d8f-4988-85de-4301a29f86b6"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--9f5746cd-931b-4e2a-815f-b65519baabfc",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "System Binary Proxy Execution: Regsvr32",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1218.010",
+      "technique_ref": "attack-pattern--b97f1d35-4249-4486-a6b5-ee60ccf24fab",
+      "description": "regsvr32.exe is used to execute a malicious DLL",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--d88229be-c790-4963-92e8-ca0bf0080ad0",
+        "attack-action--a33a2a3b-2de7-4f03-855f-3564afdf4db7"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--a4051af5-0069-4c5e-9792-c785a0e1259d",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Indicator Removal on Host: File Deletion",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1070.004",
+      "technique_ref": "attack-pattern--d63a3fb8-9452-4e9d-a60a-54be68d5998c",
+      "description": "BlackBasta attempts to delete malicious batch files.",
+      "confidence": 100
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--aa944319-37e0-4642-9c25-1899132e5150",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Modify Registry",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1112",
+      "technique_ref": "attack-pattern--57340c81-c025-4189-8fa0-fc7ede51bae4",
+      "description": "Modifications are made to the Registry.",
+      "confidence": 100
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--b2345e48-33c8-4a67-99cc-7dec00f978cc",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Deobfuscate/Decode Files or Information",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1140",
+      "technique_ref": "attack-pattern--3ccef7ae-cb5e-48f6-8302-897105fbf55c",
+      "description": "Due to password protection, the zip files are able to bypass some AV detections.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--e5715d9b-4fd2-4ad3-85f8-75d958bddb5d"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--93a4a781-5805-494a-9d93-6cf72577876a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Impair Defenses: Disable or Modify Tools",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1562.001",
+      "technique_ref": "attack-pattern--ac08589e-ee59-4935-8667-d845e38fe579",
+      "description": "BlackBasta disables Windows Defender with batch scripts, such as d.bat or defof.bat.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--e4784eca-c724-4035-acb4-3fc76cbcb59f"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--c197e5b8-3522-43bb-b10d-55ff3a3ba540",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Impair Defenses: Disable or Modify System Firewall",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1562.004",
+      "technique_ref": "attack-pattern--5372c5fe-f424-4def-bcd5-d3a8e770f07b",
+      "description": "Batch scripts, such as rdp.bat or SERVI.bat, are used to modify the firewall to allow remote administration and RDP.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--bfc59d4e-32d1-42ae-94f7-8a1bc4d6dc91"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--ab3bbdcf-9899-4fa9-9365-52d416300957",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Impair Defenses: Safe Mode Boot",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1562.009",
+      "technique_ref": "attack-pattern--28170e17-8384-415c-8486-2e6b294cb803",
+      "description": "BlackBasta uses bcdedit to boot the device in safe mode.",
+      "confidence": 100,
+      "command_ref": "process--2c2cae3e-1fdd-4097-8e14-2fd5a8d76bbd",
+      "effect_refs": [
+        "attack-operator--80ce632d-44d6-4aaf-8345-b60e767659b3"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--3a7cc2d4-25fe-4fb5-abee-5f2b6dc0caee",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Debugger Evasion",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1622",
+      "technique_ref": "attack-pattern--e4dc8c01-417f-458d-9ee0-bb0617c1b391",
+      "description": "IsDebuggerPresent is used to check if processes are being debugged.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--e4784eca-c724-4035-acb4-3fc76cbcb59f"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--2d4931da-3298-420c-ace1-582fabc4a558",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Credentials from Password Stores",
+      "tactic_id": "TA0006",
+      "tactic_ref": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
+      "technique_id": "T1555",
+      "technique_ref": "attack-pattern--3fc9b85a-2862-4363-a64d-d692e3ffbee0",
+      "description": "Mimkatz is used to dump passwords.",
+      "confidence": 100,
+      "asset_refs": [
+        "attack-asset--31b2f0db-4950-438a-af27-17d5c8602d3c"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--f4c2c8bb-a5ea-4ef6-b5c2-5a4f0918454a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "name": "Mimikatz",
+      "description": "This tool allows users to extract passwords and credentials.",
+      "tool_types": [
+        "credential-exploitation"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--2bc3e3de-34a5-4c6e-bf2a-ae51bd70528d",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Account Discovery: Domain Account",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1087.002",
+      "technique_ref": "attack-pattern--21875073-b0ee-49e3-9077-1e2a885359af",
+      "description": "Commands are used to discover domain account information.",
+      "confidence": 100,
+      "command_ref": "process--5d0acb9c-6a7b-45cb-89dc-d7bc4badb520"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--021a2d7f-d3f6-4068-8cdb-8115a117d693",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "System Network Configuration Discovery",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1016",
+      "technique_ref": "attack-pattern--707399d6-ab3e-4963-9315-d9d3818cd6a0",
+      "description": "Attackers discovered internal IP addresses typically found on the domain controller.",
+      "confidence": 100
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--ee06934e-65d6-4e98-8edd-e87988064314",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "System Information Discovery",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1082",
+      "technique_ref": "attack-pattern--354a7f88-63fb-41b5-a801-ce3b377b36f1",
+      "description": "GetComputerName is used to query to the computer name",
+      "confidence": 100,
+      "command_ref": "process--e189e1d7-6ae2-484d-b5c5-00659e096fa0"
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--bfc59d4e-32d1-42ae-94f7-8a1bc4d6dc91",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Remote Services: Remote Desktop Protocol",
+      "tactic_id": "TA0008",
+      "tactic_ref": "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
+      "technique_id": "T1021.001",
+      "technique_ref": "attack-pattern--eb062747-2193-45de-8fa2-e62549c37ddf",
+      "description": "RDP used for lateral movement.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--c14c8d17-1a12-439b-aef4-a2f1e66052ea"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--e4784eca-c724-4035-acb4-3fc76cbcb59f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Archive Collected Data: Archive via Utility",
+      "tactic_id": "TA0009",
+      "tactic_ref": "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
+      "technique_id": "T1560.001",
+      "technique_ref": "attack-pattern--00f90846-cbd1-4fc5-9233-df5c2bf2a662",
+      "description": "BlackBasta collects data from infected systems.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--28045127-d6be-4d1a-b45b-d52e9185fbf8"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--44650151-de19-4ebd-a9ae-d8aa4e5015f5",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Exfiltration Over Web Service",
+      "tactic_id": "TA0010",
+      "tactic_ref": "x-mitre-tactic--9a4e74ab-5008-408c-84bf-a10dfbc53462",
+      "technique_id": "T1567",
+      "technique_ref": "attack-pattern--40597f16-0963-4249-bf4c-ac93b7fb9807",
+      "description": "BlackBasta exfiltrates data from the network prior to encrypting files.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--6ca21018-c0f8-470e-9896-d6993f59e068",
+        "attack-action--60f72c38-7df7-4c48-b5f6-8b6b7a39f00a",
+        "attack-action--2e169be0-a168-47ac-a428-2b653e401f5a"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--10048ae7-77fe-4da0-81fc-5a20ce0ccb63",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Remote Access Software",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1219",
+      "technique_ref": "attack-pattern--4061e78c-1284-44b4-9116-73e4ac3912f7",
+      "description": "Legitimate tools, such as TeamViewer and AnyConnect, are installed and used on targeted systems.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--bfc59d4e-32d1-42ae-94f7-8a1bc4d6dc91"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--28045127-d6be-4d1a-b45b-d52e9185fbf8",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Encrypted Channel",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1573",
+      "technique_ref": "attack-pattern--b8902400-e6c5-4ba2-95aa-2d35b442b118",
+      "description": "Cobalt Strike is used for command-and-control communications.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--44650151-de19-4ebd-a9ae-d8aa4e5015f5"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--da66195d-6188-4b2a-9b6c-01e47f0104e6",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "name": "Cobalt Strike",
+      "description": "threat emulation program",
+      "tool_types": [
+        "exploitation"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--fea70dfe-cdbe-405c-a1ab-9d4632f423cb",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Data Encrypted for Impact",
+      "tactic_id": "TA0040",
+      "tactic_ref": "x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8",
+      "technique_id": "T1486",
+      "technique_ref": "attack-pattern--b80d107d-fa0d-4b60-9684-b0433e8bdba0",
+      "description": "Files (except .exe, .cmd, .bat, and .com) on the system are encrypted using ChaCha20 or RSA-4096, and their extension is changed to .basta.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--1b746e0c-0285-4a7a-9619-1e76b2f5e92d"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--d09fa5d5-e991-4085-a8be-46d62ee28a7f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Modify Registry",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1112",
+      "technique_ref": "attack-pattern--57340c81-c025-4189-8fa0-fc7ede51bae4",
+      "description": "Registry key HKCU\\Control Panel\\Desktop is created and a .jpg file is add to change the icon of encrypted files.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-operator--80ce632d-44d6-4aaf-8345-b60e767659b3"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--d4998f70-63bb-439c-a279-282cfddc53fe",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Service Stop",
+      "tactic_id": "TA0040",
+      "tactic_ref": "x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8",
+      "technique_id": "T1489",
+      "technique_ref": "attack-pattern--20fb2507-d71c-455d-9b6d-6104461cf26b",
+      "description": "sc stop and taskkill is used to stop services.",
+      "confidence": 100,
+      "command_ref": "process--a72e1773-a037-405e-8b17-a6484b8a9934",
+      "effect_refs": [
+        "attack-action--e4784eca-c724-4035-acb4-3fc76cbcb59f"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--6ca21018-c0f8-470e-9896-d6993f59e068",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Inhibit System Recovery",
+      "tactic_id": "TA0040",
+      "tactic_ref": "x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8",
+      "technique_id": "T1490",
+      "technique_ref": "attack-pattern--f5d8eed6-48a9-4cdf-a3d7-d1ffa99c3d2a",
+      "description": "BlackBasta deletes volume shadow copies using vssadmin.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-operator--9183210d-5db6-4fd9-bc57-5848734736d3"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--8db6f663-3eda-4a6d-b887-3b67ac5d218c",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Encrypted Channel",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1573",
+      "technique_ref": "attack-pattern--b8902400-e6c5-4ba2-95aa-2d35b442b118",
+      "description": "Qakbot is used for command-and-control communications",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--21faed62-d790-40dd-a97c-e20cad02e4ed"
+      ]
+    },
+    {
+      "type": "malware",
+      "id": "malware--d72d1e00-9d85-40cb-9b95-8be1ff8b7dbf",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "name": "Qakbot",
+      "description": "aka Qbot; Windows malware strain that has evolved into a malware dropper",
+      "malware_types": [
+        "dropper"
+      ],
+      "is_family": true,
+      "capabilities": [
+        "communicates-with-c2",
+        "installs-other-components"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--21faed62-d790-40dd-a97c-e20cad02e4ed",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Ingress Tool Transfer",
+      "tactic_id": "TA0011",
+      "tactic_ref": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "technique_id": "T1105",
+      "technique_ref": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
+      "description": "Cobalt Strike is deployed on the targeted system.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--2d4931da-3298-420c-ace1-582fabc4a558",
+        "attack-action--2bc3e3de-34a5-4c6e-bf2a-ae51bd70528d",
+        "attack-action--ee06934e-65d6-4e98-8edd-e87988064314",
+        "attack-action--021a2d7f-d3f6-4068-8cdb-8115a117d693",
+        "attack-action--aa944319-37e0-4642-9c25-1899132e5150",
+        "attack-action--c197e5b8-3522-43bb-b10d-55ff3a3ba540",
+        "attack-action--10048ae7-77fe-4da0-81fc-5a20ce0ccb63"
+      ]
+    },
+    {
+      "type": "attack-operator",
+      "id": "attack-operator--14c72b05-5f68-4d8e-91ee-e8503a3fd9b5",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND",
+      "effect_refs": [
+        "attack-action--8db6f663-3eda-4a6d-b887-3b67ac5d218c"
+      ]
+    },
+    {
+      "type": "process",
+      "id": "process--5d0acb9c-6a7b-45cb-89dc-d7bc4badb520",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "command_line": "net user /domain"
+    },
+    {
+      "type": "process",
+      "id": "process--5bd68d5f-095b-4e29-9f9c-c655c68606a7",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "command_line": "net group /domain"
+    },
+    {
+      "type": "attack-operator",
+      "id": "attack-operator--9183210d-5db6-4fd9-bc57-5848734736d3",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND",
+      "effect_refs": [
+        "attack-action--d09fa5d5-e991-4085-a8be-46d62ee28a7f",
+        "attack-action--ab3bbdcf-9899-4fa9-9365-52d416300957"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--fb48d182-4241-483c-b97d-bdb1440ab5e5",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "File and Directory Discovery",
+      "tactic_id": "TA0007",
+      "tactic_ref": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "technique_id": "T1083",
+      "technique_ref": "attack-pattern--7bc57495-ea59-4380-be31-a64af124ef18",
+      "description": "Once booted in safe mode, BlackBasta will iterate through the entire file system",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--fea70dfe-cdbe-405c-a1ab-9d4632f423cb"
+      ]
+    },
+    {
+      "type": "tool",
+      "id": "tool--5b990951-15c5-4daf-8c03-15ff2afc139a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "name": "vssadmin.exe",
+      "description": "A command-line tool that manages Volume Shadow Copy Service (VSS), which captures and copies stable images for backups on running systems."
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--1b746e0c-0285-4a7a-9619-1e76b2f5e92d",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Internal Defacement",
+      "tactic_id": "TA0040",
+      "tactic_ref": "x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8",
+      "technique_id": "T1491.001",
+      "technique_ref": "attack-pattern--8c41090b-aa47-4331-986b-8c9a51a91103",
+      "description": "The files <random-letters>.ico and <random-letters>.jpg are written to the %TEMP% directory. The .jpg file is leveraged to overwrite the desktop background and appears as follows: \"Your network is encrypted by the Black Basta group. Instructions in the file readme.txt\"",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--a4051af5-0069-4c5e-9792-c785a0e1259d"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--2e169be0-a168-47ac-a428-2b653e401f5a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Financial Theft",
+      "tactic_id": "TA0040",
+      "tactic_ref": "x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8",
+      "technique_id": "T1657",
+      "technique_ref": "attack-pattern--851e071f-208d-4c79-adc6-5974c85c78f3",
+      "description": "BlackBasta leverages double extortion as part of its attacks. The group not only executes ransomware and demands money to decrypt the files, but they also exfiltrate sensitive data and threaten to release that data publicly if their demands are not met.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-operator--9183210d-5db6-4fd9-bc57-5848734736d3"
+      ]
+    },
+    {
+      "type": "attack-action",
+      "id": "attack-action--a22fdaff-b20e-4896-ac6c-81a93ddb36df",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Virtualization/Sandbox Evasion",
+      "tactic_id": "TA0005",
+      "tactic_ref": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "technique_id": "T1497",
+      "technique_ref": "attack-pattern--82caa33e-d11a-433a-94ea-9b5a5fbef81d",
+      "description": "The ransomware includes anti-analysis techniques that attempt to detect code emulation or sandboxing to avoid virtual/analysis machine environments.",
+      "confidence": 100,
+      "effect_refs": [
+        "attack-action--e4784eca-c724-4035-acb4-3fc76cbcb59f"
+      ]
+    },
+    {
+      "type": "user-account",
+      "id": "user-account--8e9cbc36-0f85-43ff-b103-5fd6210dad4a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "display_name": "r"
+    },
+    {
+      "type": "user-account",
+      "id": "user-account--e7764048-783c-4ae6-bf2f-b14bc3692f3d",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "display_name": "temp"
+    },
+    {
+      "type": "user-account",
+      "id": "user-account--94c69c12-1690-43e9-a34a-dbb077a5d04a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "display_name": "admin"
+    },
+    {
+      "type": "process",
+      "id": "process--e189e1d7-6ae2-484d-b5c5-00659e096fa0",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "command_line": "GetComputerName"
+    },
+    {
+      "type": "file",
+      "id": "file--e69260b1-065d-49c6-8346-5304cff3752a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "name": "rdp.bat"
+    },
+    {
+      "type": "file",
+      "id": "file--a249d3e4-5fa7-45f0-9446-bbdbbfac7e13",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "name": "SERVI.bat"
+    },
+    {
+      "type": "software",
+      "id": "software--a4b5bbc8-8f94-4de5-8a45-6674c0cead1f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "name": "TeamViewer"
+    },
+    {
+      "type": "software",
+      "id": "software--372ffe99-9ead-4f5b-a88c-02f350921ba8",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "name": "AnyConnect"
+    },
+    {
+      "type": "file",
+      "id": "file--4baa3384-acee-47fe-9b5a-c50ad16a268a",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "name": "defof.bat"
+    },
+    {
+      "type": "file",
+      "id": "file--3228c985-f519-4d19-8ec4-f058d85e8a92",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "name": "d.bat"
+    },
+    {
+      "type": "process",
+      "id": "process--2c2cae3e-1fdd-4097-8e14-2fd5a8d76bbd",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "command_line": "bcdedit"
+    },
+    {
+      "type": "process",
+      "id": "process--a72e1773-a037-405e-8b17-a6484b8a9934",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "command_line": "sc stop"
+    },
+    {
+      "type": "process",
+      "id": "process--a6a24d6c-9089-466b-9da2-b6ca5dd65d23",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "command_line": "taskkill"
+    },
+    {
+      "type": "process",
+      "id": "process--eb023ba0-8c2c-42f9-af10-d17b460cadf9",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "command_line": "Invoke-TotalExec"
+    },
+    {
+      "type": "windows-registry-key",
+      "id": "windows-registry-key--98145823-cd60-4ea0-8733-93ec0ffc6947",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "key": "HKEY_CURRENT_USER\\Control Panel",
+      "values": [
+        {
+          "name": "Wallpaper",
+          "data": "<random_name>.jpg",
+          "data_type": "REG_SZ"
+        }
+      ]
+    },
+    {
+      "type": "directory",
+      "id": "directory--ea527216-ac4c-4a68-95f2-f7509a059af8",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "path": "%TEMP%"
+    },
+    {
+      "type": "attack-asset",
+      "id": "attack-asset--31b2f0db-4950-438a-af27-17d5c8602d3c",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "User Credentials",
+      "description": "User credentials are obtained from credential dumping.",
+      "object_ref": "attack-action--bfc59d4e-32d1-42ae-94f7-8a1bc4d6dc91"
+    },
+    {
+      "type": "attack-operator",
+      "id": "attack-operator--80ce632d-44d6-4aaf-8345-b60e767659b3",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND",
+      "effect_refs": [
+        "attack-action--fb48d182-4241-483c-b97d-bdb1440ab5e5"
+      ]
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--b4ccbae5-59f5-4877-9eb6-9d6bbf6b6d3c",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--c14c8d17-1a12-439b-aef4-a2f1e66052ea",
+      "target_ref": "tool--967a2c1f-ae93-4e5b-8a12-06cf932e62ed"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--a77ab13f-9217-466b-b27e-13574ba17455",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--d88229be-c790-4963-92e8-ca0bf0080ad0",
+      "target_ref": "user-account--e7764048-783c-4ae6-bf2f-b14bc3692f3d"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--7c672bb4-624d-4370-a3ab-1a26d61af5e8",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--d88229be-c790-4963-92e8-ca0bf0080ad0",
+      "target_ref": "user-account--8e9cbc36-0f85-43ff-b103-5fd6210dad4a"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--01da97ba-444d-4da8-8dae-c8b2cc7566f0",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--d88229be-c790-4963-92e8-ca0bf0080ad0",
+      "target_ref": "user-account--94c69c12-1690-43e9-a34a-dbb077a5d04a"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--e7fb581f-521e-4ae8-90d4-749a3013f25f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--c94bdb43-30a0-47ec-8bd9-b4487fdde268",
+      "target_ref": "malware--d72d1e00-9d85-40cb-9b95-8be1ff8b7dbf"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--a0232e16-1e49-4e93-8fbe-a11a4153fa05",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--93a4a781-5805-494a-9d93-6cf72577876a",
+      "target_ref": "file--4baa3384-acee-47fe-9b5a-c50ad16a268a"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--b16ee82d-488f-46ef-8d88-973fdd123c8f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--93a4a781-5805-494a-9d93-6cf72577876a",
+      "target_ref": "file--3228c985-f519-4d19-8ec4-f058d85e8a92"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--d48e9ab7-59c6-4982-92b1-7e9a9c566fb6",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--c197e5b8-3522-43bb-b10d-55ff3a3ba540",
+      "target_ref": "file--e69260b1-065d-49c6-8346-5304cff3752a"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--c5140d94-01e6-4715-9280-4a7830d556f9",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--c197e5b8-3522-43bb-b10d-55ff3a3ba540",
+      "target_ref": "file--a249d3e4-5fa7-45f0-9446-bbdbbfac7e13"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--17670446-5444-43fb-a588-b91b8ccbb32f",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--2d4931da-3298-420c-ace1-582fabc4a558",
+      "target_ref": "tool--f4c2c8bb-a5ea-4ef6-b5c2-5a4f0918454a"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--10ed764d-5a3d-41e2-b17e-682b6fa16563",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--2bc3e3de-34a5-4c6e-bf2a-ae51bd70528d",
+      "target_ref": "process--5bd68d5f-095b-4e29-9f9c-c655c68606a7"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--ea77ad08-16c6-4500-aaa9-8552a02ff2be",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--10048ae7-77fe-4da0-81fc-5a20ce0ccb63",
+      "target_ref": "software--a4b5bbc8-8f94-4de5-8a45-6674c0cead1f"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--95522596-0b4e-4c8c-b95f-5a4bdba72dc9",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--10048ae7-77fe-4da0-81fc-5a20ce0ccb63",
+      "target_ref": "software--372ffe99-9ead-4f5b-a88c-02f350921ba8"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--de8b89be-0ded-457b-9687-b946f0212829",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--d09fa5d5-e991-4085-a8be-46d62ee28a7f",
+      "target_ref": "windows-registry-key--98145823-cd60-4ea0-8733-93ec0ffc6947"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--f19f0d57-02aa-4caa-85e9-5a921bcc92d1",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--d4998f70-63bb-439c-a279-282cfddc53fe",
+      "target_ref": "process--a6a24d6c-9089-466b-9da2-b6ca5dd65d23"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--20742152-9beb-4e20-bfac-4b8a46a39900",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--6ca21018-c0f8-470e-9896-d6993f59e068",
+      "target_ref": "tool--5b990951-15c5-4daf-8c03-15ff2afc139a"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--a10a7013-42d8-44c8-a9d6-38f7f7d41a0d",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--21faed62-d790-40dd-a97c-e20cad02e4ed",
+      "target_ref": "tool--da66195d-6188-4b2a-9b6c-01e47f0104e6"
+    },
+    {
+      "type": "relationship",
+      "id": "relationship--3afd1569-6bd9-495d-b558-1393e7b7a702",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.609Z",
+      "modified": "2025-07-30T19:47:12.609Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-action--1b746e0c-0285-4a7a-9619-1e76b2f5e92d",
+      "target_ref": "directory--ea527216-ac4c-4a68-95f2-f7509a059af8"
+    }
+  ]
+}
