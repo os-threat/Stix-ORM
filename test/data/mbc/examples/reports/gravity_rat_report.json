@@ -1,5 +1,5 @@
 {
-  "report_date_time": "2025-10-21 21:02:20",
+  "report_date_time": "2025-10-22 15:40:20",
   "total_number_of_objects_processed": 7,
   "clean_operation_outcome": true,
   "return_message": "Successfully processed 7 STIX objects (started with 3)",
@@ -37,13 +37,9 @@
       "deleted_fields_and_values": [
         {
           "stix_id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-          "deleted_fields": [
-            {
-              "field_name": "object_marking_refs",
-              "deleted_value": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-              ]
-            }
+          "field_name": "object_marking_refs",
+          "deleted_value": [
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
           ]
         }
       ]
@@ -56,12 +52,44 @@
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
         "attack-pattern--72b74d71-8169-42aa-92e0-e7b04b9f5a08",
         "malware--1d1fce2f-0db5-402b-9843-4278a0694637",
-        "relationship--1ca370e5-6fd3-4f7a-bd04-7bb3ab37b3db",
-        "relationship--39c88be9-803c-46fe-9ba2-5a465a2b3218"
+        "relationship--317b8221-af95-4f8c-baea-51085fe1e986",
+        "relationship--46271d16-fd2c-4cc2-a9ea-89c815606c2a"
       ],
-      "diagram_of_sorted_dependencies": "Dependency Diagram:\n==================================================\nmalware--ccdec6fb-3f9e-4bb6-922b-e16d37ee1ebf (malware) [leaf]\nidentity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5 (identity) [leaf]\nmarking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168 (marking-definition) -> 1 refs\nattack-pattern--72b74d71-8169-42aa-92e0-e7b04b9f5a08 (attack-pattern) -> 2 refs\nmalware--1d1fce2f-0db5-402b-9843-4278a0694637 (malware) -> 2 refs\n  relationship--1ca370e5-6fd3-4f7a-bd04-7bb3ab37b3db (relationship) -> 2 refs\n  relationship--39c88be9-803c-46fe-9ba2-5a465a2b3218 (relationship) -> 2 refs",
+      "diagram_of_sorted_dependencies": "Dependency Diagram:\n==================================================\nmalware--ccdec6fb-3f9e-4bb6-922b-e16d37ee1ebf (malware) [leaf]\nidentity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5 (identity) [leaf]\nmarking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168 (marking-definition) -> 1 refs\nattack-pattern--72b74d71-8169-42aa-92e0-e7b04b9f5a08 (attack-pattern) -> 2 refs\nmalware--1d1fce2f-0db5-402b-9843-4278a0694637 (malware) -> 2 refs\n  relationship--317b8221-af95-4f8c-baea-51085fe1e986 (relationship) -> 2 refs\n  relationship--46271d16-fd2c-4cc2-a9ea-89c815606c2a (relationship) -> 2 refs",
       "unresolved_references": []
     },
-    "file_report": null
+    "operation_timings": [
+      {
+        "operation_name": "Object Expansion Round 1",
+        "start_time": "2025-10-22 15:40:20.374343",
+        "end_time": "2025-10-22 15:40:27.345383",
+        "duration_seconds": 6.97104
+      },
+      {
+        "operation_name": "Object Expansion Round 2",
+        "start_time": "2025-10-22 15:40:27.345383",
+        "end_time": "2025-10-22 15:40:34.365639",
+        "duration_seconds": 7.020256
+      },
+      {
+        "operation_name": "SCO Field Cleaning",
+        "start_time": "2025-10-22 15:40:34.365639",
+        "end_time": "2025-10-22 15:40:34.365639",
+        "duration_seconds": 0.0
+      },
+      {
+        "operation_name": "Circular Reference Resolution",
+        "start_time": "2025-10-22 15:40:34.365639",
+        "end_time": "2025-10-22 15:40:34.365639",
+        "duration_seconds": 0.0
+      },
+      {
+        "operation_name": "Dependency Sorting",
+        "start_time": "2025-10-22 15:40:34.365639",
+        "end_time": "2025-10-22 15:40:34.365639",
+        "duration_seconds": 0.0
+      }
+    ],
+    "total_processing_time_seconds": 13.991296
   }
 }

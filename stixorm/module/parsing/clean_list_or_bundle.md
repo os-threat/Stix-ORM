@@ -261,6 +261,15 @@ class StixBundle(BaseModel):
 
 ### Report Models
 
+#### DeduplicationReport
+```python
+class DeduplicationReport(BaseModel):
+    number_of_objects_before_deduplication: int
+    number_of_objects_after_deduplication: int
+    number_of_duplicates_removed: int
+    list_of_duplicate_stix_ids: List[str]
+```
+
 #### ExpansionReport
 ```python
 class ExpansionReport(BaseModel):

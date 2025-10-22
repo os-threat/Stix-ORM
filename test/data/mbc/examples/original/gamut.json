@@ -41,7 +41,7 @@
     {
         "type": "relationship",
         "spec_version": "2.1",
-        "id": "relationship--3b3a781f-23a1-4fa9-b6b4-1bb327b2929a",
+        "id": "relationship--2faba4f3-9b0a-4ed6-a18b-5eaa23ebc911",
         "created": "2023-03-20T00:00:00.000Z",
         "modified": "2023-03-20T00:00:00.000Z",
         "relationship_type": "uses",
@@ -128,7 +128,7 @@
     {
         "type": "relationship",
         "spec_version": "2.1",
-        "id": "relationship--96cd8697-4467-4df0-a41f-1c53b05b2431",
+        "id": "relationship--5e8a2121-6e0d-4d6f-b4c2-0d84928cf39e",
         "created": "2023-03-20T00:00:00.000Z",
         "modified": "2023-03-20T00:00:00.000Z",
         "relationship_type": "uses",
@@ -182,12 +182,12 @@
     {
         "type": "relationship",
         "spec_version": "2.1",
-        "id": "relationship--c8194de8-c2ba-4c74-896a-fd746232e7d0",
+        "id": "relationship--a9bd4515-4e8a-4c4e-b54b-a612c9da6585",
         "created": "2023-03-20T00:00:00.000Z",
         "modified": "2023-03-20T00:00:00.000Z",
         "relationship_type": "uses",
         "source_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
-        "target_ref": "malware-behavior--a446fac9-4d4e-439e-9b06-a3a7665c2281",
+        "target_ref": "malware-behavior--bb415897-9886-4d23-8e61-b421808d6931",
         "description": "File System::Delete File (C0047)-- Gamut deletes files. (Citation: capa analysis output)"
     },
     {
@@ -201,14 +201,14 @@
         ],
         "name": "Gamut hash",
         "description": "This is an IoC for Gamut",
-        "pattern": "[ file:hashes.'SHA-256' = 'a56162bc623841102301df...1c838fcf256654932' ]",
+        "pattern": "[ file:hashes.'SHA-256' = 'eb51501a7265afec11753ee135a6ef8d0f972eb6af3346f036c5cb8be645d6d4' ]",
         "pattern_type": "stix",
         "valid_from": "2023-03-01T00:00:00.000Z"
     },
     {
         "type": "relationship",
         "spec_version": "2.1",
-        "id": "relationship--1cffe80b-7cf8-416e-b2fe-a89c3fba7d9b",
+        "id": "relationship--150c0f85-161a-49c6-a028-8c79bc046adb",
         "created": "2023-03-01T00:00:00.000Z",
         "modified": "2023-03-01T00:00:00.000Z",
         "relationship_type": "indicates",

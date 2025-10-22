@@ -1,6 +1,6 @@
 {
   "type": "bundle",
-  "id": "bundle--479d60a9-c2f8-4769-9d60-46d94b751396",
+  "id": "bundle--da3e642b-0e4b-4ca0-bc74-a949d84bcfe7",
   "objects": [
     {
       "id": "malware--ccdec6fb-3f9e-4bb6-922b-e16d37ee1ebf",
@@ -18,7 +18,7 @@
         }
       ],
       "extensions": {
-        "extension-definition--8e9e338f-c9ee-4d4f-8cac-85b4dcfdf3c": {
+        "extension-definition--8e9e338f-c9ee-4d4f-8cac-85b4dcfdf3c1": {
           "extension_type": "property-extension",
           "obj_defn": {
             "source_name": "mbc",
@@ -171,7 +171,7 @@
       "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
     },
     {
-      "id": "relationship--1ca370e5-6fd3-4f7a-bd04-7bb3ab37b3db",
+      "id": "relationship--317b8221-af95-4f8c-baea-51085fe1e986",
       "type": "relationship",
       "spec_version": "2.1",
       "created": "2023-05-03T00:00:00.000Z",
@@ -182,7 +182,7 @@
       "description": "Discovery::Account Discovery (T1087) -- GravityRAT gets session username (Citation: capa analysis)."
     },
     {
-      "id": "relationship--39c88be9-803c-46fe-9ba2-5a465a2b3218",
+      "id": "relationship--46271d16-fd2c-4cc2-a9ea-89c815606c2a",
       "type": "relationship",
       "spec_version": "2.1",
       "created": "2023-05-03T00:00:00.000Z",

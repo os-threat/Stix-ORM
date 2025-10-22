@@ -1,5 +1,5 @@
 {
-  "report_date_time": "2025-10-21 21:03:12",
+  "report_date_time": "2025-10-22 15:41:13",
   "total_number_of_objects_processed": 2,
   "clean_operation_outcome": true,
   "return_message": "Successfully processed 2 STIX objects (started with 2)",
@@ -24,12 +24,44 @@
     "sorting_report": {
       "sorting_successful": true,
       "sorted_list_of_stix_ids": [
-        "malware-objective--a624a7a-ef64-46ce-b582-b963b7d6113f",
+        "malware-objective--a624a7aa-ef64-46ce-b582-b963b7d6113f",
         "malware-behavior--b4ab6e5e-82b2-4699-938a-778f840a80fa"
       ],
-      "diagram_of_sorted_dependencies": "Dependency Diagram:\n==================================================\nmalware-objective--a624a7a-ef64-46ce-b582-b963b7d6113f (malware-objective) [leaf]\nmalware-behavior--b4ab6e5e-82b2-4699-938a-778f840a80fa (malware-behavior) -> 1 refs",
+      "diagram_of_sorted_dependencies": "Dependency Diagram:\n==================================================\nmalware-objective--a624a7aa-ef64-46ce-b582-b963b7d6113f (malware-objective) [leaf]\nmalware-behavior--b4ab6e5e-82b2-4699-938a-778f840a80fa (malware-behavior) -> 1 refs",
       "unresolved_references": []
     },
-    "file_report": null
+    "operation_timings": [
+      {
+        "operation_name": "Object Expansion Round 1",
+        "start_time": "2025-10-22 15:41:13.279142",
+        "end_time": "2025-10-22 15:41:13.279142",
+        "duration_seconds": 0.0
+      },
+      {
+        "operation_name": "Object Expansion Round 2",
+        "start_time": "2025-10-22 15:41:13.279142",
+        "end_time": "2025-10-22 15:41:13.279142",
+        "duration_seconds": 0.0
+      },
+      {
+        "operation_name": "SCO Field Cleaning",
+        "start_time": "2025-10-22 15:41:13.279142",
+        "end_time": "2025-10-22 15:41:13.279142",
+        "duration_seconds": 0.0
+      },
+      {
+        "operation_name": "Circular Reference Resolution",
+        "start_time": "2025-10-22 15:41:13.279142",
+        "end_time": "2025-10-22 15:41:13.279142",
+        "duration_seconds": 0.0
+      },
+      {
+        "operation_name": "Dependency Sorting",
+        "start_time": "2025-10-22 15:41:13.279142",
+        "end_time": "2025-10-22 15:41:13.279142",
+        "duration_seconds": 0.0
+      }
+    ],
+    "total_processing_time_seconds": 0.0
   }
 }

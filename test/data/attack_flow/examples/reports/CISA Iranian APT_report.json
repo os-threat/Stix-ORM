@@ -1,5 +1,5 @@
 {
-  "report_date_time": "2025-10-21 19:14:23",
+  "report_date_time": "2025-10-22 15:42:16",
   "total_number_of_objects_processed": 102,
   "clean_operation_outcome": true,
   "return_message": "Successfully processed 102 STIX objects (started with 76)",
@@ -83,22 +83,14 @@
       "deleted_fields_and_values": [
         {
           "stix_id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
-          "deleted_fields": [
-            {
-              "field_name": "created_by_ref",
-              "deleted_value": "identity--fb9c968a-745b-4ade-9b25-c324172197f4"
-            }
-          ]
+          "field_name": "created_by_ref",
+          "deleted_value": "identity--fb9c968a-745b-4ade-9b25-c324172197f4"
         },
         {
           "stix_id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-          "deleted_fields": [
-            {
-              "field_name": "object_marking_refs",
-              "deleted_value": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-              ]
-            }
+          "field_name": "object_marking_refs",
+          "deleted_value": [
+            "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
           ]
         }
       ]
@@ -106,57 +98,57 @@
     "sorting_report": {
       "sorting_successful": true,
       "sorted_list_of_stix_ids": [
-        "url--5cb4ac20-de90-4aba-8467-fe57ba5af2a8",
-        "attack-asset--1713a15d-fa56-404a-92eb-2c4f7089d399",
-        "tool--5b7f7115-8d96-4f17-ab2f-b305b476f8c1",
-        "malware--31658705-f1fd-4d16-a928-ecc093820ed4",
-        "process--3f5b9295-9d49-410e-b542-54f258b52434",
-        "attack-asset--abf74a16-1d54-4a82-9384-b7eac0d9f4c4",
-        "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
-        "malware--5e38cef0-6735-40f6-97dd-1b549424788e",
-        "vulnerability--924ed7f2-54ae-42ad-b1af-94734ff368e0",
-        "tool--d783a8af-533c-4ecf-a097-698326a213ed",
-        "malware--ab4c411d-58e9-4f99-b0f7-0f67f1f43159",
-        "malware--89e310ac-f996-4bc7-9ee7-84b527178fa7",
-        "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-        "attack-asset--f37681b2-371c-4764-ae2f-36fdf3244460",
-        "ipv4-addr--c51c9009-568d-46c6-8fac-09b4ce1e848c",
-        "tool--6f3d8f4c-e92c-42aa-b065-351f552fe10c",
-        "identity--391ef12c-f25e-4964-85e2-cc330ae46deb",
-        "directory--02b1765f-0d2e-4991-8ba8-1053ef09de2c",
-        "ipv4-addr--903efce3-4a7d-4272-9c33-7868fc767876",
-        "user-account--039865eb-337f-4941-92c5-14de002c7753",
-        "malware--ac51c325-5c08-4c3d-b89e-c31b1a171a84",
-        "malware--d8f8e9a7-0c82-4094-a811-348661a542ac",
-        "process--6a0cd876-3fd3-4557-9dfc-7d004cf217ae",
-        "malware--ad11d63f-b48d-4c18-b7ff-0baf8edca7e3",
-        "infrastructure--b7ee6cab-d421-4ea9-8f97-d529c383e7fe",
-        "malware--a6988ce0-635c-47fc-9d91-a4d919e97950",
         "url--3e9fd4ff-625f-42e3-8285-762835bd6b50",
+        "malware--89e310ac-f996-4bc7-9ee7-84b527178fa7",
+        "malware--5e38cef0-6735-40f6-97dd-1b549424788e",
+        "infrastructure--b7ee6cab-d421-4ea9-8f97-d529c383e7fe",
+        "process--6a0cd876-3fd3-4557-9dfc-7d004cf217ae",
+        "tool--5b7f7115-8d96-4f17-ab2f-b305b476f8c1",
+        "identity--391ef12c-f25e-4964-85e2-cc330ae46deb",
+        "malware--a6988ce0-635c-47fc-9d91-a4d919e97950",
+        "malware--d8f8e9a7-0c82-4094-a811-348661a542ac",
+        "user-account--039865eb-337f-4941-92c5-14de002c7753",
         "attack-asset--b7164aca-5ac6-449f-b4da-d66f94be41b2",
+        "tool--d783a8af-533c-4ecf-a097-698326a213ed",
+        "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+        "malware--ad11d63f-b48d-4c18-b7ff-0baf8edca7e3",
+        "process--3f5b9295-9d49-410e-b542-54f258b52434",
+        "vulnerability--924ed7f2-54ae-42ad-b1af-94734ff368e0",
+        "tool--6f3d8f4c-e92c-42aa-b065-351f552fe10c",
+        "malware--ab4c411d-58e9-4f99-b0f7-0f67f1f43159",
+        "malware--31658705-f1fd-4d16-a928-ecc093820ed4",
         "user-account--8b025fd8-d5a5-408a-8b29-c6795ba84c37",
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
+        "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+        "directory--02b1765f-0d2e-4991-8ba8-1053ef09de2c",
+        "attack-asset--abf74a16-1d54-4a82-9384-b7eac0d9f4c4",
+        "url--5cb4ac20-de90-4aba-8467-fe57ba5af2a8",
+        "ipv4-addr--c51c9009-568d-46c6-8fac-09b4ce1e848c",
+        "attack-asset--f37681b2-371c-4764-ae2f-36fdf3244460",
+        "attack-asset--1713a15d-fa56-404a-92eb-2c4f7089d399",
+        "ipv4-addr--903efce3-4a7d-4272-9c33-7868fc767876",
+        "malware--ac51c325-5c08-4c3d-b89e-c31b1a171a84",
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
         "note--715f87ed-5429-478b-93da-f466a3695f5a",
+        "relationship--9fc05563-82c9-4dfd-8204-9dea4b74e7c3",
         "relationship--effea3db-5e17-4786-9e0a-78cc4a0e854e",
         "relationship--16e97564-cc86-4cd6-9fbc-85e76dbe95e3",
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
         "relationship--c7754d7e-c15d-4699-b933-553b96408221",
         "relationship--b25e8f47-357d-4dc4-82e7-1403f49f0844",
         "relationship--972e2d16-efb4-41a8-a57c-73190df3e64c",
-        "relationship--9fc05563-82c9-4dfd-8204-9dea4b74e7c3",
         "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
         "attack-pattern--3f886f2a-874f-4333-b794-aa6075009b1c",
         "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736",
         "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
-        "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
         "attack-pattern--ac08589e-ee59-4935-8667-d845e38fe579",
-        "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+        "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
         "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
+        "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
         "attack-pattern--d63a3fb8-9452-4e9d-a60a-54be68d5998c",
         "attack-pattern--635cbe30-392d-4e27-978e-66774357c762",
         "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
-        "attack-pattern--132d5b37-aac5-4378-a8dc-3127b18a73dc",
         "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+        "attack-pattern--132d5b37-aac5-4378-a8dc-3127b18a73dc",
         "attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9",
         "attack-pattern--eb062747-2193-45de-8fa2-e62549c37ddf",
         "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
@@ -166,8 +158,8 @@
         "attack-pattern--731f4f55-b6d0-41d1-a7a9-072a66389aea",
         "attack-pattern--e358d692-23c0-4a31-9eb6-ecc13a8d7735",
         "attack-pattern--a10641f4-87b4-45a3-a906-92a149cb2c27",
-        "attack-pattern--65f2d882-3f41-4d48-8a06-29af77ec9f90",
         "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
+        "attack-pattern--65f2d882-3f41-4d48-8a06-29af77ec9f90",
         "attack-action--99406b0d-2c64-4f78-a80b-f50898876197",
         "attack-action--792aaa39-bd97-4206-b088-2c29e5119da6",
         "note--ed71e0af-94b7-40ae-a434-81b815dea5c8",
@@ -209,9 +201,41 @@
         "relationship--9f3c6a41-f142-4aee-8d02-3b956aa18cf9",
         "relationship--c3fea80a-957e-4022-a4cc-320098cac0d9"
       ],
-      "diagram_of_sorted_dependencies": "Dependency Diagram:\n==================================================\nurl--5cb4ac20-de90-4aba-8467-fe57ba5af2a8 (url) [leaf]\nattack-asset--1713a15d-fa56-404a-92eb-2c4f7089d399 (attack-asset) [leaf]\ntool--5b7f7115-8d96-4f17-ab2f-b305b476f8c1 (tool) [leaf]\nmalware--31658705-f1fd-4d16-a928-ecc093820ed4 (malware) [leaf]\nprocess--3f5b9295-9d49-410e-b542-54f258b52434 (process) [leaf]\n  attack-asset--abf74a16-1d54-4a82-9384-b7eac0d9f4c4 (attack-asset) [leaf]\n  identity--fb9c968a-745b-4ade-9b25-c324172197f4 (identity) [leaf]\n  malware--5e38cef0-6735-40f6-97dd-1b549424788e (malware) [leaf]\n  vulnerability--924ed7f2-54ae-42ad-b1af-94734ff368e0 (vulnerability) [leaf]\n  tool--d783a8af-533c-4ecf-a097-698326a213ed (tool) [leaf]\n    malware--ab4c411d-58e9-4f99-b0f7-0f67f1f43159 (malware) [leaf]\n    malware--89e310ac-f996-4bc7-9ee7-84b527178fa7 (malware) [leaf]\n    identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5 (identity) [leaf]\n    attack-asset--f37681b2-371c-4764-ae2f-36fdf3244460 (attack-asset) [leaf]\n    ipv4-addr--c51c9009-568d-46c6-8fac-09b4ce1e848c (ipv4-addr) [leaf]\n      tool--6f3d8f4c-e92c-42aa-b065-351f552fe10c (tool) [leaf]\n      identity--391ef12c-f25e-4964-85e2-cc330ae46deb (identity) [leaf]\n      directory--02b1765f-0d2e-4991-8ba8-1053ef09de2c (directory) [leaf]\n      ipv4-addr--903efce3-4a7d-4272-9c33-7868fc767876 (ipv4-addr) [leaf]\n      user-account--039865eb-337f-4941-92c5-14de002c7753 (user-account) [leaf]\n        malware--ac51c325-5c08-4c3d-b89e-c31b1a171a84 (malware) [leaf]\n        malware--d8f8e9a7-0c82-4094-a811-348661a542ac (malware) [leaf]\n        process--6a0cd876-3fd3-4557-9dfc-7d004cf217ae (process) [leaf]\n        malware--ad11d63f-b48d-4c18-b7ff-0baf8edca7e3 (malware) [leaf]\n        infrastructure--b7ee6cab-d421-4ea9-8f97-d529c383e7fe (infrastructure) [leaf]\n          malware--a6988ce0-635c-47fc-9d91-a4d919e97950 (malware) [leaf]\n          url--3e9fd4ff-625f-42e3-8285-762835bd6b50 (url) [leaf]\n          attack-asset--b7164aca-5ac6-449f-b4da-d66f94be41b2 (attack-asset) [leaf]\n          user-account--8b025fd8-d5a5-408a-8b29-c6795ba84c37 (user-account) [leaf]\n          extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4 (extension-definition) -> 1 refs\n            note--715f87ed-5429-478b-93da-f466a3695f5a (note) -> 1 refs\n            relationship--effea3db-5e17-4786-9e0a-78cc4a0e854e (relationship) -> 2 refs\n            relationship--16e97564-cc86-4cd6-9fbc-85e76dbe95e3 (relationship) -> 2 refs\n            marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168 (marking-definition) -> 1 refs\n            relationship--c7754d7e-c15d-4699-b933-553b96408221 (relationship) -> 2 refs\n              relationship--b25e8f47-357d-4dc4-82e7-1403f49f0844 (relationship) -> 2 refs\n              relationship--972e2d16-efb4-41a8-a57c-73190df3e64c (relationship) -> 2 refs\n              relationship--9fc05563-82c9-4dfd-8204-9dea4b74e7c3 (relationship) -> 2 refs\n              x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca (x-mitre-tactic) -> 2 refs\n              attack-pattern--3f886f2a-874f-4333-b794-aa6075009b1c (attack-pattern) -> 2 refs\n                attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736 (attack-pattern) -> 2 refs\n                x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5 (x-mitre-tactic) -> 2 refs\n                x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a (x-mitre-tactic) -> 2 refs\n                attack-pattern--ac08589e-ee59-4935-8667-d845e38fe579 (attack-pattern) -> 2 refs\n                x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813 (x-mitre-tactic) -> 2 refs\n                  attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add (attack-pattern) -> 2 refs\n                  attack-pattern--d63a3fb8-9452-4e9d-a60a-54be68d5998c (attack-pattern) -> 2 refs\n                  attack-pattern--635cbe30-392d-4e27-978e-66774357c762 (attack-pattern) -> 2 refs\n                  x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92 (x-mitre-tactic) -> 2 refs\n                  attack-pattern--132d5b37-aac5-4378-a8dc-3127b18a73dc (attack-pattern) -> 2 refs\n                    x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9 (x-mitre-tactic) -> 2 refs\n                    attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9 (attack-pattern) -> 2 refs\n                    attack-pattern--eb062747-2193-45de-8fa2-e62549c37ddf (attack-pattern) -> 2 refs\n                    x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e (x-mitre-tactic) -> 2 refs\n                    attack-pattern--6151cbea-819b-455a-9fa6-99a1cc58797d (attack-pattern) -> 2 refs\n                    attack-pattern--7610cada-1499-41a4-b3dd-46467b68d177 (attack-pattern) -> 2 refs\n                    attack-pattern--bf90d72c-c00b-45e3-b3aa-68560560d4c5 (attack-pattern) -> 2 refs\n                    attack-pattern--731f4f55-b6d0-41d1-a7a9-072a66389aea (attack-pattern) -> 2 refs\n                    attack-pattern--e358d692-23c0-4a31-9eb6-ecc13a8d7735 (attack-pattern) -> 2 refs\n                    attack-pattern--a10641f4-87b4-45a3-a906-92a149cb2c27 (attack-pattern) -> 2 refs\n                    attack-pattern--65f2d882-3f41-4d48-8a06-29af77ec9f90 (attack-pattern) -> 2 refs\n                    x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263 (x-mitre-tactic) -> 2 refs\n                    attack-action--99406b0d-2c64-4f78-a80b-f50898876197 (attack-action) -> 2 refs\n                    attack-action--792aaa39-bd97-4206-b088-2c29e5119da6 (attack-action) -> 3 refs\n                    note--ed71e0af-94b7-40ae-a434-81b815dea5c8 (note) -> 1 refs\n                    attack-action--45e8b0a1-83a5-41dc-8186-7d6d4c8a7c0a (attack-action) -> 4 refs\n                    attack-action--2f9114f6-e715-448a-b0b7-3ccce0f95f7a (attack-action) -> 3 refs\n                    attack-action--7e2175b8-63f8-4934-82cf-394390accd82 (attack-action) -> 4 refs\n                    attack-action--4beb5555-7460-4636-a2e4-096a01b54186 (attack-action) -> 3 refs\n                    attack-action--ee829570-2ca7-4948-a3de-a667f81fa2f5 (attack-action) -> 3 refs\n                    note--31244bf1-3b1c-4ba6-bb41-063352cdcfa4 (note) -> 1 refs\n                    relationship--465fe06e-e3fd-4957-86c5-2f2014f937c9 (relationship) -> 2 refs\n                    relationship--b3bde29e-b41b-4187-a008-a668a5e2417f (relationship) -> 2 refs\n                    attack-action--1d283005-09ce-49d3-8610-625a75635755 (attack-action) -> 3 refs\n                    relationship--a6bcd7ec-9967-4095-9e41-1bef605f8641 (relationship) -> 2 refs\n                    attack-action--52069465-600c-487a-8185-e809ed74588b (attack-action) -> 3 refs\n                    attack-action--d8ba9c2f-c6a6-4950-8cb3-d2d84c97859f (attack-action) -> 3 refs\n                    attack-action--0606c44c-4fcf-4d24-837c-e78341f77183 (attack-action) -> 3 refs\n                    attack-action--c55d72d0-4b7b-4e86-93cf-a65a79ee24ce (attack-action) -> 3 refs\n                    relationship--c1341961-e9b2-46aa-a417-974208a508cf (relationship) -> 2 refs\n                    relationship--023366e3-dd9a-455c-9776-447f11723737 (relationship) -> 2 refs\n                    relationship--09c18eaa-7f16-48aa-9102-794549410fee (relationship) -> 2 refs\n                    attack-action--57e36a89-fa92-470c-9d78-a90d8bd938a7 (attack-action) -> 2 refs\n                    attack-action--f8daeaa9-22f9-4601-96f9-ef3426c4630b (attack-action) -> 3 refs\n                    relationship--a79fe811-b60d-4698-8205-e911d75c11eb (relationship) -> 2 refs\n                    attack-action--de68b787-80bb-424d-8d70-32b0cec8c94f (attack-action) -> 3 refs\n                    attack-action--69978025-0b45-44ae-8a3e-1730d7d93d07 (attack-action) -> 3 refs\n                    relationship--1d637c1f-0c91-44d6-a22f-db39d6ce58af (relationship) -> 2 refs\n                    relationship--63f829e6-dc56-4524-be96-f6f9831f6c60 (relationship) -> 2 refs\n                    attack-action--857eaaa1-d168-417a-8446-fe6e80095490 (attack-action) -> 3 refs\n                    attack-action--9c30cd6b-b97c-4336-8f91-777437b3824c (attack-action) -> 3 refs\n                    attack-action--3fbadab6-0484-4754-85af-fe99f575677e (attack-action) -> 3 refs\n                    attack-action--cfae690b-64c4-405f-84f1-5e8b65da3f83 (attack-action) -> 3 refs\n                    relationship--346b731d-5aa0-4c89-af25-b59cb6c8814f (relationship) -> 2 refs\n                    attack-action--56ca6034-001b-4c5d-99b4-4f9bd3db56ba (attack-action) -> 3 refs\n                    relationship--206e790c-a7b1-46f3-a164-5021a01d44f5 (relationship) -> 2 refs\n                    attack-action--0d573bcd-ee5d-4231-ab43-188ef7e809e9 (attack-action) -> 5 refs\n                    relationship--e0ca9303-65ee-4a0c-8f63-cd8e3243f139 (relationship) -> 2 refs\n                    attack-action--b6143619-dac3-4f9c-ae0a-605961bef9c7 (attack-action) -> 4 refs\n                    attack-flow--a2b7e8ad-9fb2-48b3-8e5c-e94da374ab89 (attack-flow) -> 2 refs\n                    relationship--9f3c6a41-f142-4aee-8d02-3b956aa18cf9 (relationship) -> 2 refs\n                    relationship--c3fea80a-957e-4022-a4cc-320098cac0d9 (relationship) -> 2 refs",
+      "diagram_of_sorted_dependencies": "Dependency Diagram:\n==================================================\nurl--3e9fd4ff-625f-42e3-8285-762835bd6b50 (url) [leaf]\nmalware--89e310ac-f996-4bc7-9ee7-84b527178fa7 (malware) [leaf]\nmalware--5e38cef0-6735-40f6-97dd-1b549424788e (malware) [leaf]\ninfrastructure--b7ee6cab-d421-4ea9-8f97-d529c383e7fe (infrastructure) [leaf]\nprocess--6a0cd876-3fd3-4557-9dfc-7d004cf217ae (process) [leaf]\n  tool--5b7f7115-8d96-4f17-ab2f-b305b476f8c1 (tool) [leaf]\n  identity--391ef12c-f25e-4964-85e2-cc330ae46deb (identity) [leaf]\n  malware--a6988ce0-635c-47fc-9d91-a4d919e97950 (malware) [leaf]\n  malware--d8f8e9a7-0c82-4094-a811-348661a542ac (malware) [leaf]\n  user-account--039865eb-337f-4941-92c5-14de002c7753 (user-account) [leaf]\n    attack-asset--b7164aca-5ac6-449f-b4da-d66f94be41b2 (attack-asset) [leaf]\n    tool--d783a8af-533c-4ecf-a097-698326a213ed (tool) [leaf]\n    identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5 (identity) [leaf]\n    malware--ad11d63f-b48d-4c18-b7ff-0baf8edca7e3 (malware) [leaf]\n    process--3f5b9295-9d49-410e-b542-54f258b52434 (process) [leaf]\n      vulnerability--924ed7f2-54ae-42ad-b1af-94734ff368e0 (vulnerability) [leaf]\n      tool--6f3d8f4c-e92c-42aa-b065-351f552fe10c (tool) [leaf]\n      malware--ab4c411d-58e9-4f99-b0f7-0f67f1f43159 (malware) [leaf]\n      malware--31658705-f1fd-4d16-a928-ecc093820ed4 (malware) [leaf]\n      user-account--8b025fd8-d5a5-408a-8b29-c6795ba84c37 (user-account) [leaf]\n        identity--fb9c968a-745b-4ade-9b25-c324172197f4 (identity) [leaf]\n        directory--02b1765f-0d2e-4991-8ba8-1053ef09de2c (directory) [leaf]\n        attack-asset--abf74a16-1d54-4a82-9384-b7eac0d9f4c4 (attack-asset) [leaf]\n        url--5cb4ac20-de90-4aba-8467-fe57ba5af2a8 (url) [leaf]\n        ipv4-addr--c51c9009-568d-46c6-8fac-09b4ce1e848c (ipv4-addr) [leaf]\n          attack-asset--f37681b2-371c-4764-ae2f-36fdf3244460 (attack-asset) [leaf]\n          attack-asset--1713a15d-fa56-404a-92eb-2c4f7089d399 (attack-asset) [leaf]\n          ipv4-addr--903efce3-4a7d-4272-9c33-7868fc767876 (ipv4-addr) [leaf]\n          malware--ac51c325-5c08-4c3d-b89e-c31b1a171a84 (malware) [leaf]\n          marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168 (marking-definition) -> 1 refs\n            note--715f87ed-5429-478b-93da-f466a3695f5a (note) -> 1 refs\n            relationship--9fc05563-82c9-4dfd-8204-9dea4b74e7c3 (relationship) -> 2 refs\n            relationship--effea3db-5e17-4786-9e0a-78cc4a0e854e (relationship) -> 2 refs\n            relationship--16e97564-cc86-4cd6-9fbc-85e76dbe95e3 (relationship) -> 2 refs\n            extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4 (extension-definition) -> 1 refs\n              relationship--c7754d7e-c15d-4699-b933-553b96408221 (relationship) -> 2 refs\n              relationship--b25e8f47-357d-4dc4-82e7-1403f49f0844 (relationship) -> 2 refs\n              relationship--972e2d16-efb4-41a8-a57c-73190df3e64c (relationship) -> 2 refs\n              x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca (x-mitre-tactic) -> 2 refs\n              attack-pattern--3f886f2a-874f-4333-b794-aa6075009b1c (attack-pattern) -> 2 refs\n                attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736 (attack-pattern) -> 2 refs\n                x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5 (x-mitre-tactic) -> 2 refs\n                attack-pattern--ac08589e-ee59-4935-8667-d845e38fe579 (attack-pattern) -> 2 refs\n                x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a (x-mitre-tactic) -> 2 refs\n                attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add (attack-pattern) -> 2 refs\n                  x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813 (x-mitre-tactic) -> 2 refs\n                  attack-pattern--d63a3fb8-9452-4e9d-a60a-54be68d5998c (attack-pattern) -> 2 refs\n                  attack-pattern--635cbe30-392d-4e27-978e-66774357c762 (attack-pattern) -> 2 refs\n                  x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92 (x-mitre-tactic) -> 2 refs\n                  x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9 (x-mitre-tactic) -> 2 refs\n                    attack-pattern--132d5b37-aac5-4378-a8dc-3127b18a73dc (attack-pattern) -> 2 refs\n                    attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9 (attack-pattern) -> 2 refs\n                    attack-pattern--eb062747-2193-45de-8fa2-e62549c37ddf (attack-pattern) -> 2 refs\n                    x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e (x-mitre-tactic) -> 2 refs\n                    attack-pattern--6151cbea-819b-455a-9fa6-99a1cc58797d (attack-pattern) -> 2 refs\n                    attack-pattern--7610cada-1499-41a4-b3dd-46467b68d177 (attack-pattern) -> 2 refs\n                    attack-pattern--bf90d72c-c00b-45e3-b3aa-68560560d4c5 (attack-pattern) -> 2 refs\n                    attack-pattern--731f4f55-b6d0-41d1-a7a9-072a66389aea (attack-pattern) -> 2 refs\n                    attack-pattern--e358d692-23c0-4a31-9eb6-ecc13a8d7735 (attack-pattern) -> 2 refs\n                    attack-pattern--a10641f4-87b4-45a3-a906-92a149cb2c27 (attack-pattern) -> 2 refs\n                    x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263 (x-mitre-tactic) -> 2 refs\n                    attack-pattern--65f2d882-3f41-4d48-8a06-29af77ec9f90 (attack-pattern) -> 2 refs\n                    attack-action--99406b0d-2c64-4f78-a80b-f50898876197 (attack-action) -> 2 refs\n                    attack-action--792aaa39-bd97-4206-b088-2c29e5119da6 (attack-action) -> 3 refs\n                    note--ed71e0af-94b7-40ae-a434-81b815dea5c8 (note) -> 1 refs\n                    attack-action--45e8b0a1-83a5-41dc-8186-7d6d4c8a7c0a (attack-action) -> 4 refs\n                    attack-action--2f9114f6-e715-448a-b0b7-3ccce0f95f7a (attack-action) -> 3 refs\n                    attack-action--7e2175b8-63f8-4934-82cf-394390accd82 (attack-action) -> 4 refs\n                    attack-action--4beb5555-7460-4636-a2e4-096a01b54186 (attack-action) -> 3 refs\n                    attack-action--ee829570-2ca7-4948-a3de-a667f81fa2f5 (attack-action) -> 3 refs\n                    note--31244bf1-3b1c-4ba6-bb41-063352cdcfa4 (note) -> 1 refs\n                    relationship--465fe06e-e3fd-4957-86c5-2f2014f937c9 (relationship) -> 2 refs\n                    relationship--b3bde29e-b41b-4187-a008-a668a5e2417f (relationship) -> 2 refs\n                    attack-action--1d283005-09ce-49d3-8610-625a75635755 (attack-action) -> 3 refs\n                    relationship--a6bcd7ec-9967-4095-9e41-1bef605f8641 (relationship) -> 2 refs\n                    attack-action--52069465-600c-487a-8185-e809ed74588b (attack-action) -> 3 refs\n                    attack-action--d8ba9c2f-c6a6-4950-8cb3-d2d84c97859f (attack-action) -> 3 refs\n                    attack-action--0606c44c-4fcf-4d24-837c-e78341f77183 (attack-action) -> 3 refs\n                    attack-action--c55d72d0-4b7b-4e86-93cf-a65a79ee24ce (attack-action) -> 3 refs\n                    relationship--c1341961-e9b2-46aa-a417-974208a508cf (relationship) -> 2 refs\n                    relationship--023366e3-dd9a-455c-9776-447f11723737 (relationship) -> 2 refs\n                    relationship--09c18eaa-7f16-48aa-9102-794549410fee (relationship) -> 2 refs\n                    attack-action--57e36a89-fa92-470c-9d78-a90d8bd938a7 (attack-action) -> 2 refs\n                    attack-action--f8daeaa9-22f9-4601-96f9-ef3426c4630b (attack-action) -> 3 refs\n                    relationship--a79fe811-b60d-4698-8205-e911d75c11eb (relationship) -> 2 refs\n                    attack-action--de68b787-80bb-424d-8d70-32b0cec8c94f (attack-action) -> 3 refs\n                    attack-action--69978025-0b45-44ae-8a3e-1730d7d93d07 (attack-action) -> 3 refs\n                    relationship--1d637c1f-0c91-44d6-a22f-db39d6ce58af (relationship) -> 2 refs\n                    relationship--63f829e6-dc56-4524-be96-f6f9831f6c60 (relationship) -> 2 refs\n                    attack-action--857eaaa1-d168-417a-8446-fe6e80095490 (attack-action) -> 3 refs\n                    attack-action--9c30cd6b-b97c-4336-8f91-777437b3824c (attack-action) -> 3 refs\n                    attack-action--3fbadab6-0484-4754-85af-fe99f575677e (attack-action) -> 3 refs\n                    attack-action--cfae690b-64c4-405f-84f1-5e8b65da3f83 (attack-action) -> 3 refs\n                    relationship--346b731d-5aa0-4c89-af25-b59cb6c8814f (relationship) -> 2 refs\n                    attack-action--56ca6034-001b-4c5d-99b4-4f9bd3db56ba (attack-action) -> 3 refs\n                    relationship--206e790c-a7b1-46f3-a164-5021a01d44f5 (relationship) -> 2 refs\n                    attack-action--0d573bcd-ee5d-4231-ab43-188ef7e809e9 (attack-action) -> 5 refs\n                    relationship--e0ca9303-65ee-4a0c-8f63-cd8e3243f139 (relationship) -> 2 refs\n                    attack-action--b6143619-dac3-4f9c-ae0a-605961bef9c7 (attack-action) -> 4 refs\n                    attack-flow--a2b7e8ad-9fb2-48b3-8e5c-e94da374ab89 (attack-flow) -> 2 refs\n                    relationship--9f3c6a41-f142-4aee-8d02-3b956aa18cf9 (relationship) -> 2 refs\n                    relationship--c3fea80a-957e-4022-a4cc-320098cac0d9 (relationship) -> 2 refs",
       "unresolved_references": []
     },
-    "file_report": null
+    "operation_timings": [
+      {
+        "operation_name": "Object Expansion Round 1",
+        "start_time": "2025-10-22 15:42:16.689913",
+        "end_time": "2025-10-22 15:42:23.677517",
+        "duration_seconds": 6.987604
+      },
+      {
+        "operation_name": "Object Expansion Round 2",
+        "start_time": "2025-10-22 15:42:23.677517",
+        "end_time": "2025-10-22 15:42:30.666623",
+        "duration_seconds": 6.989106
+      },
+      {
+        "operation_name": "SCO Field Cleaning",
+        "start_time": "2025-10-22 15:42:30.666623",
+        "end_time": "2025-10-22 15:42:30.687535",
+        "duration_seconds": 0.020912
+      },
+      {
+        "operation_name": "Circular Reference Resolution",
+        "start_time": "2025-10-22 15:42:30.687535",
+        "end_time": "2025-10-22 15:42:30.687535",
+        "duration_seconds": 0.0
+      },
+      {
+        "operation_name": "Dependency Sorting",
+        "start_time": "2025-10-22 15:42:30.687535",
+        "end_time": "2025-10-22 15:42:30.698981",
+        "duration_seconds": 0.011446
+      }
+    ],
+    "total_processing_time_seconds": 14.009068
   }
 }

@@ -1,21 +1,7 @@
 {
   "type": "bundle",
-  "id": "bundle--4a3ea4e6-454e-4d17-9fa9-1c47e993caaa",
+  "id": "bundle--f083edef-9857-4e61-adb6-8f7023d1de34",
   "objects": [
-    {
-      "id": "attack-asset--12823850-2efb-44c5-be26-ac34703683b8",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.747Z",
-      "modified": "2025-07-30T19:47:12.747Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Microsoft Office document",
-      "description": "The document is a downloader-dropper. Examples include Cobalt Strike, IcedID, and TrickBot."
-    },
     {
       "id": "identity--b6ce8d4a-5ccf-40d4-a40d-7436778fd198",
       "type": "identity",
@@ -24,19 +10,6 @@
       "modified": "2025-07-30T19:47:12.746Z",
       "name": "Dr. Desiree Beck",
       "contact_information": "dbeck@mitre.org"
-    },
-    {
-      "id": "attack-condition--223e9388-26aa-4cd7-88a3-bc192aa13622",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.747Z",
-      "modified": "2025-07-30T19:47:12.747Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Admin hash is compromised"
     },
     {
       "id": "attack-condition--a32b0dae-0b41-472b-9c23-fd234955beca",
@@ -52,31 +25,6 @@
       "description": "Patient Zero workstation is compromised"
     },
     {
-      "id": "attack-asset--14a9c069-abae-41d2-8615-8ca20ba0ca68",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.746Z",
-      "modified": "2025-07-30T19:47:12.746Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "User of Patient Zero workstation",
-      "description": "The user compromised by the spearfishing email."
-    },
-    {
-      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "type": "identity",
-      "modified": "2025-03-19T15:00:40.855Z",
-      "name": "The MITRE Corporation",
-      "description": "",
-      "identity_class": "organization",
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "x_mitre_attack_spec_version": "3.2.0"
-    },
-    {
       "id": "attack-condition--623bc1c8-fc38-4a2d-a3d0-d925f073af53",
       "type": "attack-condition",
       "spec_version": "2.1",
@@ -90,7 +38,7 @@
       "description": "Network Asset C is compromised"
     },
     {
-      "id": "attack-condition--f8f14cd5-8cb3-41eb-a7de-d13c92afd312",
+      "id": "attack-condition--223e9388-26aa-4cd7-88a3-bc192aa13622",
       "type": "attack-condition",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.747Z",
@@ -100,84 +48,7 @@
           "extension_type": "new-sdo"
         }
       },
-      "description": "User of Patient Zero workstation is compromised"
-    },
-    {
-      "id": "attack-asset--ad245cbc-08a4-4a73-a0fd-cd49205b5721",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.747Z",
-      "modified": "2025-07-30T19:47:12.747Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "RDP account",
-      "description": "Compromised RDP account"
-    },
-    {
-      "id": "attack-condition--060bac6c-30cd-4cef-93e2-04c1939f3fc2",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.747Z",
-      "modified": "2025-07-30T19:47:12.747Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "HSE Server is compromised"
-    },
-    {
-      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2022-08-02T19:34:35.143Z",
-      "modified": "2022-08-02T19:34:35.143Z",
-      "name": "MITRE Center for Threat-Informed Defense",
-      "identity_class": "organization"
-    },
-    {
-      "id": "attack-asset--68bf90ee-2a96-48e3-8acc-cb3068e20db0",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.747Z",
-      "modified": "2025-07-30T19:47:12.747Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Software",
-      "description": "Remote desktop software or remote monitoring and management software."
-    },
-    {
-      "id": "attack-condition--759ddb9f-c0a6-4fa4-bc83-f20a4ae8ea35",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.747Z",
-      "modified": "2025-07-30T19:47:12.747Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Network Asset A is compromised"
-    },
-    {
-      "id": "attack-asset--6c3bf979-882d-49ad-8cb5-43a59f42d32e",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.747Z",
-      "modified": "2025-07-30T19:47:12.747Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Exfiltrated Data",
-      "description": "Data exfiltrated by threat actor."
+      "description": "Admin hash is compromised"
     },
     {
       "id": "attack-asset--b25c46f7-e302-4bcc-a75f-7b97913dedeb",
@@ -194,6 +65,122 @@
       "description": "User credentials for a valid account"
     },
     {
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "type": "identity",
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "x_mitre_attack_spec_version": "3.2.0"
+    },
+    {
+      "id": "attack-asset--6c3bf979-882d-49ad-8cb5-43a59f42d32e",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.747Z",
+      "modified": "2025-07-30T19:47:12.747Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Exfiltrated Data",
+      "description": "Data exfiltrated by threat actor."
+    },
+    {
+      "id": "attack-condition--060bac6c-30cd-4cef-93e2-04c1939f3fc2",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.747Z",
+      "modified": "2025-07-30T19:47:12.747Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "HSE Server is compromised"
+    },
+    {
+      "id": "attack-asset--12823850-2efb-44c5-be26-ac34703683b8",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.747Z",
+      "modified": "2025-07-30T19:47:12.747Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Microsoft Office document",
+      "description": "The document is a downloader-dropper. Examples include Cobalt Strike, IcedID, and TrickBot."
+    },
+    {
+      "id": "attack-asset--ad245cbc-08a4-4a73-a0fd-cd49205b5721",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.747Z",
+      "modified": "2025-07-30T19:47:12.747Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "RDP account",
+      "description": "Compromised RDP account"
+    },
+    {
+      "id": "attack-asset--68bf90ee-2a96-48e3-8acc-cb3068e20db0",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.747Z",
+      "modified": "2025-07-30T19:47:12.747Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Software",
+      "description": "Remote desktop software or remote monitoring and management software."
+    },
+    {
+      "id": "attack-condition--1a4cb2c8-008f-4bec-8659-6a4cccb638b4",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.747Z",
+      "modified": "2025-07-30T19:47:12.747Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Network Asset B is compromised"
+    },
+    {
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "id": "attack-asset--14a9c069-abae-41d2-8615-8ca20ba0ca68",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.746Z",
+      "modified": "2025-07-30T19:47:12.746Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "User of Patient Zero workstation",
+      "description": "The user compromised by the spearfishing email."
+    },
+    {
       "id": "attack-asset--bce29a7e-123b-4e98-a7ae-f3590236d856",
       "type": "attack-asset",
       "spec_version": "2.1",
@@ -208,7 +195,7 @@
       "description": "Data encrypted by Conti ransomware."
     },
     {
-      "id": "attack-condition--1a4cb2c8-008f-4bec-8659-6a4cccb638b4",
+      "id": "attack-condition--759ddb9f-c0a6-4fa4-bc83-f20a4ae8ea35",
       "type": "attack-condition",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.747Z",
@@ -218,7 +205,20 @@
           "extension_type": "new-sdo"
         }
       },
-      "description": "Network Asset B is compromised"
+      "description": "Network Asset A is compromised"
+    },
+    {
+      "id": "attack-condition--f8f14cd5-8cb3-41eb-a7de-d13c92afd312",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.747Z",
+      "modified": "2025-07-30T19:47:12.747Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "User of Patient Zero workstation is compromised"
     },
     {
       "id": "attack-operator--ee2f9478-ca65-4b3c-9c77-77cd2a277a91",
@@ -246,22 +246,6 @@
       "created": "2017-06-01T00:00:00.000Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "definition_type": "statement"
-    },
-    {
-      "id": "attack-operator--7686e85f-53e7-4e22-b799-cd068137d4c8",
-      "type": "attack-operator",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.747Z",
-      "modified": "2025-07-30T19:47:12.747Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "operator": "OR",
-      "effect_refs": [
-        "attack-condition--f8f14cd5-8cb3-41eb-a7de-d13c92afd312"
-      ]
     },
     {
       "id": "attack-operator--ad5f81ee-b495-4efb-b6f9-d62fe07cfe0b",
@@ -307,32 +291,20 @@
       ]
     },
     {
-      "id": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
-      "type": "x-mitre-tactic",
+      "id": "attack-operator--7686e85f-53e7-4e22-b799-cd068137d4c8",
+      "type": "attack-operator",
       "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0001",
-          "external_id": "TA0001"
+      "created": "2025-07-30T19:47:12.747Z",
+      "modified": "2025-07-30T19:47:12.747Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
         }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:36.917Z",
-      "name": "Initial Access",
-      "description": "The adversary is trying to get into your network.\n\nInitial Access consists of techniques that use various entry vectors to gain their initial foothold within a network. Techniques used to gain a foothold include targeted spearphishing and exploiting weaknesses on public-facing web servers. Footholds gained through initial access may allow for continued access, like valid accounts and use of external remote services, or may be limited-use due to changing passwords.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "initial-access"
+      },
+      "operator": "OR",
+      "effect_refs": [
+        "attack-condition--f8f14cd5-8cb3-41eb-a7de-d13c92afd312"
+      ]
     },
     {
       "id": "attack-pattern--2e34237d-8574-43f6-aace-ae2915de8597",
@@ -403,6 +375,34 @@
         "Application Log: Application Log Content",
         "File: File Creation"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0001",
+          "external_id": "TA0001"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:36.917Z",
+      "name": "Initial Access",
+      "description": "The adversary is trying to get into your network.\n\nInitial Access consists of techniques that use various entry vectors to gain their initial foothold within a network. Techniques used to gain a foothold include targeted spearphishing and exploiting weaknesses on public-facing web servers. Footholds gained through initial access may allow for continued access, like valid accounts and use of external remote services, or may be limited-use due to changing passwords.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "initial-access"
     },
     {
       "id": "attack-pattern--232b7f21-adf9-4b42-b936-b9d6f7df856e",
@@ -486,34 +486,6 @@
       "x_mitre_shortname": "execution"
     },
     {
-      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0006",
-          "external_id": "TA0006"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:32.408Z",
-      "name": "Credential Access",
-      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "credential-access"
-    },
-    {
       "id": "attack-pattern--f2877f7f-9a4c-4251-879f-1224e3006bee",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -594,6 +566,34 @@
       ]
     },
     {
+      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0006",
+          "external_id": "TA0006"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:32.408Z",
+      "name": "Credential Access",
+      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "credential-access"
+    },
+    {
       "id": "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
       "type": "x-mitre-tactic",
       "spec_version": "2.1",
@@ -620,34 +620,6 @@
       "x_mitre_version": "1.0",
       "x_mitre_attack_spec_version": "3.2.0",
       "x_mitre_shortname": "lateral-movement"
-    },
-    {
-      "id": "x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2019-03-14T18:44:44.639Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0040",
-          "external_id": "TA0040"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:33.130Z",
-      "name": "Impact",
-      "description": "The adversary is trying to manipulate, interrupt, or destroy your systems and data.\n \nImpact consists of techniques that adversaries use to disrupt availability or compromise integrity by manipulating business and operational processes. Techniques used for impact can include destroying or tampering with data. In some cases, business processes can look fine, but may have been altered to benefit the adversaries’ goals. These techniques might be used by adversaries to follow through on their end goal or to provide cover for a confidentiality breach.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "impact"
     },
     {
       "id": "attack-pattern--b80d107d-fa0d-4b60-9684-b0433e8bdba0",
@@ -761,6 +733,34 @@
       ]
     },
     {
+      "id": "x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2019-03-14T18:44:44.639Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0040",
+          "external_id": "TA0040"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:33.130Z",
+      "name": "Impact",
+      "description": "The adversary is trying to manipulate, interrupt, or destroy your systems and data.\n \nImpact consists of techniques that adversaries use to disrupt availability or compromise integrity by manipulating business and operational processes. Techniques used for impact can include destroying or tampering with data. In some cases, business processes can look fine, but may have been altered to benefit the adversaries’ goals. These techniques might be used by adversaries to follow through on their end goal or to provide cover for a confidentiality breach.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "impact"
+    },
+    {
       "id": "x-mitre-tactic--9a4e74ab-5008-408c-84bf-a10dfbc53462",
       "type": "x-mitre-tactic",
       "spec_version": "2.1",
@@ -787,34 +787,6 @@
       "x_mitre_version": "1.0",
       "x_mitre_attack_spec_version": "3.2.0",
       "x_mitre_shortname": "exfiltration"
-    },
-    {
-      "id": "x-mitre-tactic--d679bca2-e57d-4935-8650-8031c87a4400",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2020-09-30T16:11:59.650Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0042",
-          "external_id": "TA0042"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:35.841Z",
-      "name": "Resource Development",
-      "description": "The adversary is trying to establish resources they can use to support operations.\n\nResource Development consists of techniques that involve adversaries creating, purchasing, or compromising/stealing resources that can be used to support targeting. Such resources include infrastructure, accounts, or capabilities. These resources can be leveraged by the adversary to aid in other phases of the adversary lifecycle, such as using purchased domains to support Command and Control, email accounts for phishing as a part of Initial Access, or stealing code signing certificates to help with Defense Evasion.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "resource-development"
     },
     {
       "id": "attack-pattern--e5d550f3-2202-4634-85f2-4a200a1d49b3",
@@ -901,6 +873,34 @@
       "x_mitre_data_sources": [
         "Internet Scan: Response Content"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--d679bca2-e57d-4935-8650-8031c87a4400",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2020-09-30T16:11:59.650Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0042",
+          "external_id": "TA0042"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:35.841Z",
+      "name": "Resource Development",
+      "description": "The adversary is trying to establish resources they can use to support operations.\n\nResource Development consists of techniques that involve adversaries creating, purchasing, or compromising/stealing resources that can be used to support targeting. Such resources include infrastructure, accounts, or capabilities. These resources can be leveraged by the adversary to aid in other phases of the adversary lifecycle, such as using purchased domains to support Command and Control, email accounts for phishing as a part of Initial Access, or stealing code signing certificates to help with Defense Evasion.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "resource-development"
     },
     {
       "id": "attack-pattern--6a5d222a-a7e0-4656-b110-782c33098289",

@@ -1,82 +1,29 @@
 {
   "type": "bundle",
-  "id": "bundle--3a29faad-e06d-4997-9d69-80f689ece08a",
+  "id": "bundle--1ff2436e-8ea6-4ddc-ab72-e1cf879d33a0",
   "objects": [
     {
-      "id": "url--5cb4ac20-de90-4aba-8467-fe57ba5af2a8",
+      "id": "url--3e9fd4ff-625f-42e3-8285-762835bd6b50",
       "type": "url",
       "spec_version": "2.1",
-      "value": "tunnel.us.ngrok[.]com"
+      "value": "korgn.su.lennut[.]com"
     },
     {
-      "id": "attack-asset--1713a15d-fa56-404a-92eb-2c4f7089d399",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.700Z",
-      "modified": "2025-07-30T19:47:12.700Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Active Directory"
-    },
-    {
-      "id": "tool--5b7f7115-8d96-4f17-ab2f-b305b476f8c1",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "name": "PsExec",
-      "description": "Microsoft signed tool for system administrators",
-      "tool_types": [
-        "remote-access"
-      ]
-    },
-    {
-      "id": "malware--31658705-f1fd-4d16-a928-ecc093820ed4",
+      "id": "malware--89e310ac-f996-4bc7-9ee7-84b527178fa7",
       "type": "malware",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.700Z",
       "modified": "2025-07-30T19:47:12.700Z",
-      "name": "file.zip",
-      "description": "mde.ps1 downloads file.zip from 182.54.217.2; contained 4 files",
+      "name": "mde.ps1",
+      "description": "mdeploy.text downloaded from 182.54.217.2/mdeploy.txt to C:\\users\\public\\mde.ps1",
       "malware_types": [
-        "dropper"
+        "downloader"
       ],
       "is_family": false,
       "capabilities": [
-        "escalates-privileges",
+        "communicates-with-c2",
         "installs-other-components"
       ]
-    },
-    {
-      "id": "process--3f5b9295-9d49-410e-b542-54f258b52434",
-      "type": "process",
-      "spec_version": "2.1",
-      "command_line": "powershell try{Add-MpPreference -ExclusionPath 'C:\\'; Write-Host 'added-exclusion'} catch {Write-Host 'adding-exclusion-failed' }; powershell -enc \"$BASE64 encoded payload to download next stage and execute it\""
-    },
-    {
-      "id": "attack-asset--abf74a16-1d54-4a82-9384-b7eac0d9f4c4",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Domain Controller"
-    },
-    {
-      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2022-08-02T19:34:35.143Z",
-      "modified": "2022-08-02T19:34:35.143Z",
-      "name": "MITRE Center for Threat-Informed Defense",
-      "identity_class": "organization"
     },
     {
       "id": "malware--5e38cef0-6735-40f6-97dd-1b549424788e",
@@ -95,13 +42,94 @@
       ]
     },
     {
-      "id": "vulnerability--924ed7f2-54ae-42ad-b1af-94734ff368e0",
-      "type": "vulnerability",
+      "id": "infrastructure--b7ee6cab-d421-4ea9-8f97-d529c383e7fe",
+      "type": "infrastructure",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.700Z",
       "modified": "2025-07-30T19:47:12.700Z",
-      "name": "CVE-2021-44228",
-      "description": "Log4Shell vulnerability that allows attackers to execute arbitrary code loaded from LDAP servers"
+      "name": "182.54.217.2",
+      "infrastructure_types": [
+        "command-and-control"
+      ]
+    },
+    {
+      "id": "process--6a0cd876-3fd3-4557-9dfc-7d004cf217ae",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "Powershell.exe get-adcomputer -filter * -properties * | select name,operatingsystem,ipv4address &gt;"
+    },
+    {
+      "id": "tool--5b7f7115-8d96-4f17-ab2f-b305b476f8c1",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.701Z",
+      "modified": "2025-07-30T19:47:12.701Z",
+      "name": "PsExec",
+      "description": "Microsoft signed tool for system administrators",
+      "tool_types": [
+        "remote-access"
+      ]
+    },
+    {
+      "id": "identity--391ef12c-f25e-4964-85e2-cc330ae46deb",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.700Z",
+      "modified": "2025-07-30T19:47:12.700Z",
+      "name": "Lauren Parker",
+      "contact_information": "lparker@mitre.org"
+    },
+    {
+      "id": "malware--a6988ce0-635c-47fc-9d91-a4d919e97950",
+      "type": "malware",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.701Z",
+      "modified": "2025-07-30T19:47:12.701Z",
+      "name": "Ngrok",
+      "description": "reverse proxy tool for proxying an internal service onto an Ngrok domain, which the user can then access at a randomly generated subdomain at *.ngrok.io",
+      "malware_types": [
+        "webshell"
+      ],
+      "is_family": false,
+      "capabilities": [
+        "persists-after-system-reboot"
+      ]
+    },
+    {
+      "id": "malware--d8f8e9a7-0c82-4094-a811-348661a542ac",
+      "type": "malware",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.700Z",
+      "modified": "2025-07-30T19:47:12.700Z",
+      "name": "wuacltservice.exe",
+      "description": "XMRig Miner",
+      "malware_types": [
+        "resource-exploitation"
+      ],
+      "is_family": false,
+      "capabilities": [
+        "compromises-system-availability"
+      ]
+    },
+    {
+      "id": "user-account--039865eb-337f-4941-92c5-14de002c7753",
+      "type": "user-account",
+      "spec_version": "2.1",
+      "account_type": "windows-local",
+      "display_name": "DefaultAccount"
+    },
+    {
+      "id": "attack-asset--b7164aca-5ac6-449f-b4da-d66f94be41b2",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.701Z",
+      "modified": "2025-07-30T19:47:12.701Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "VMware VDI-KMS host"
     },
     {
       "id": "tool--d783a8af-533c-4ecf-a097-698326a213ed",
@@ -113,6 +141,62 @@
       "description": "XMRig Miner configuration",
       "tool_types": [
         "unknown"
+      ]
+    },
+    {
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "type": "identity",
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "x_mitre_attack_spec_version": "3.2.0"
+    },
+    {
+      "id": "malware--ad11d63f-b48d-4c18-b7ff-0baf8edca7e3",
+      "type": "malware",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.701Z",
+      "modified": "2025-07-30T19:47:12.701Z",
+      "name": "RuntimeBrokerService.exe",
+      "description": "scheduled task is named RuntimeBrokerService.exe, masquerading as a legitimate Windows task",
+      "malware_types": [
+        "trojan"
+      ],
+      "is_family": false,
+      "capabilities": [
+        "communicates-with-c2",
+        "installs-other-components",
+        "persists-after-system-reboot"
+      ]
+    },
+    {
+      "id": "process--3f5b9295-9d49-410e-b542-54f258b52434",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "powershell try{Add-MpPreference -ExclusionPath 'C:\\'; Write-Host 'added-exclusion'} catch {Write-Host 'adding-exclusion-failed' }; powershell -enc \"$BASE64 encoded payload to download next stage and execute it\""
+    },
+    {
+      "id": "vulnerability--924ed7f2-54ae-42ad-b1af-94734ff368e0",
+      "type": "vulnerability",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.700Z",
+      "modified": "2025-07-30T19:47:12.700Z",
+      "name": "CVE-2021-44228",
+      "description": "Log4Shell vulnerability that allows attackers to execute arbitrary code loaded from LDAP servers"
+    },
+    {
+      "id": "tool--6f3d8f4c-e92c-42aa-b065-351f552fe10c",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.701Z",
+      "modified": "2025-07-30T19:47:12.701Z",
+      "name": "Mimikatz",
+      "description": "credential recovery/theft tool",
+      "tool_types": [
+        "credential-exploitation"
       ]
     },
     {
@@ -135,32 +219,67 @@
       ]
     },
     {
-      "id": "malware--89e310ac-f996-4bc7-9ee7-84b527178fa7",
+      "id": "malware--31658705-f1fd-4d16-a928-ecc093820ed4",
       "type": "malware",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.700Z",
       "modified": "2025-07-30T19:47:12.700Z",
-      "name": "mde.ps1",
-      "description": "mdeploy.text downloaded from 182.54.217.2/mdeploy.txt to C:\\users\\public\\mde.ps1",
+      "name": "file.zip",
+      "description": "mde.ps1 downloads file.zip from 182.54.217.2; contained 4 files",
       "malware_types": [
-        "downloader"
+        "dropper"
       ],
       "is_family": false,
       "capabilities": [
-        "communicates-with-c2",
+        "escalates-privileges",
         "installs-other-components"
       ]
     },
     {
-      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "type": "identity",
-      "modified": "2025-03-19T15:00:40.855Z",
-      "name": "The MITRE Corporation",
-      "description": "",
-      "identity_class": "organization",
+      "id": "user-account--8b025fd8-d5a5-408a-8b29-c6795ba84c37",
+      "type": "user-account",
       "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "x_mitre_attack_spec_version": "3.2.0"
+      "display_name": "SYSTEM"
+    },
+    {
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "id": "directory--02b1765f-0d2e-4991-8ba8-1053ef09de2c",
+      "type": "directory",
+      "spec_version": "2.1",
+      "path": "c:\\drive"
+    },
+    {
+      "id": "attack-asset--abf74a16-1d54-4a82-9384-b7eac0d9f4c4",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.701Z",
+      "modified": "2025-07-30T19:47:12.701Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Domain Controller"
+    },
+    {
+      "id": "url--5cb4ac20-de90-4aba-8467-fe57ba5af2a8",
+      "type": "url",
+      "spec_version": "2.1",
+      "value": "tunnel.us.ngrok[.]com"
+    },
+    {
+      "id": "ipv4-addr--c51c9009-568d-46c6-8fac-09b4ce1e848c",
+      "type": "ipv4-addr",
+      "spec_version": "2.1",
+      "value": "182.54.217.2"
     },
     {
       "id": "attack-asset--f37681b2-371c-4764-ae2f-36fdf3244460",
@@ -176,50 +295,23 @@
       "name": "VMware Horizon server"
     },
     {
-      "id": "ipv4-addr--c51c9009-568d-46c6-8fac-09b4ce1e848c",
-      "type": "ipv4-addr",
-      "spec_version": "2.1",
-      "value": "182.54.217.2"
-    },
-    {
-      "id": "tool--6f3d8f4c-e92c-42aa-b065-351f552fe10c",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "name": "Mimikatz",
-      "description": "credential recovery/theft tool",
-      "tool_types": [
-        "credential-exploitation"
-      ]
-    },
-    {
-      "id": "identity--391ef12c-f25e-4964-85e2-cc330ae46deb",
-      "type": "identity",
+      "id": "attack-asset--1713a15d-fa56-404a-92eb-2c4f7089d399",
+      "type": "attack-asset",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.700Z",
       "modified": "2025-07-30T19:47:12.700Z",
-      "name": "Lauren Parker",
-      "contact_information": "lparker@mitre.org"
-    },
-    {
-      "id": "directory--02b1765f-0d2e-4991-8ba8-1053ef09de2c",
-      "type": "directory",
-      "spec_version": "2.1",
-      "path": "c:\\drive"
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Active Directory"
     },
     {
       "id": "ipv4-addr--903efce3-4a7d-4272-9c33-7868fc767876",
       "type": "ipv4-addr",
       "spec_version": "2.1",
       "value": "182.54.217.2"
-    },
-    {
-      "id": "user-account--039865eb-337f-4941-92c5-14de002c7753",
-      "type": "user-account",
-      "spec_version": "2.1",
-      "account_type": "windows-local",
-      "display_name": "DefaultAccount"
     },
     {
       "id": "malware--ac51c325-5c08-4c3d-b89e-c31b1a171a84",
@@ -238,96 +330,56 @@
       ]
     },
     {
-      "id": "malware--d8f8e9a7-0c82-4094-a811-348661a542ac",
-      "type": "malware",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.700Z",
-      "modified": "2025-07-30T19:47:12.700Z",
-      "name": "wuacltservice.exe",
-      "description": "XMRig Miner",
-      "malware_types": [
-        "resource-exploitation"
-      ],
-      "is_family": false,
-      "capabilities": [
-        "compromises-system-availability"
-      ]
-    },
-    {
-      "id": "process--6a0cd876-3fd3-4557-9dfc-7d004cf217ae",
-      "type": "process",
-      "spec_version": "2.1",
-      "command_line": "Powershell.exe get-adcomputer -filter * -properties * | select name,operatingsystem,ipv4address &gt;"
-    },
-    {
-      "id": "malware--ad11d63f-b48d-4c18-b7ff-0baf8edca7e3",
-      "type": "malware",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "name": "RuntimeBrokerService.exe",
-      "description": "scheduled task is named RuntimeBrokerService.exe, masquerading as a legitimate Windows task",
-      "malware_types": [
-        "trojan"
-      ],
-      "is_family": false,
-      "capabilities": [
-        "communicates-with-c2",
-        "installs-other-components",
-        "persists-after-system-reboot"
-      ]
-    },
-    {
-      "id": "infrastructure--b7ee6cab-d421-4ea9-8f97-d529c383e7fe",
-      "type": "infrastructure",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.700Z",
-      "modified": "2025-07-30T19:47:12.700Z",
-      "name": "182.54.217.2",
-      "infrastructure_types": [
-        "command-and-control"
-      ]
-    },
-    {
-      "id": "malware--a6988ce0-635c-47fc-9d91-a4d919e97950",
-      "type": "malware",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "name": "Ngrok",
-      "description": "reverse proxy tool for proxying an internal service onto an Ngrok domain, which the user can then access at a randomly generated subdomain at *.ngrok.io",
-      "malware_types": [
-        "webshell"
-      ],
-      "is_family": false,
-      "capabilities": [
-        "persists-after-system-reboot"
-      ]
-    },
-    {
-      "id": "url--3e9fd4ff-625f-42e3-8285-762835bd6b50",
-      "type": "url",
-      "spec_version": "2.1",
-      "value": "korgn.su.lennut[.]com"
-    },
-    {
-      "id": "attack-asset--b7164aca-5ac6-449f-b4da-d66f94be41b2",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
       },
-      "name": "VMware VDI-KMS host"
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "definition_type": "statement"
     },
     {
-      "id": "user-account--8b025fd8-d5a5-408a-8b29-c6795ba84c37",
-      "type": "user-account",
+      "id": "note--715f87ed-5429-478b-93da-f466a3695f5a",
+      "type": "note",
       "spec_version": "2.1",
-      "display_name": "SYSTEM"
+      "created": "2025-07-30T19:47:12.700Z",
+      "modified": "2025-07-30T19:47:12.700Z",
+      "content": "LDAP server (51.89.181.64) is used to exploit Log4Shell",
+      "object_refs": [
+        "vulnerability--924ed7f2-54ae-42ad-b1af-94734ff368e0"
+      ]
+    },
+    {
+      "id": "relationship--9fc05563-82c9-4dfd-8204-9dea4b74e7c3",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.701Z",
+      "modified": "2025-07-30T19:47:12.701Z",
+      "relationship_type": "related-to",
+      "source_ref": "malware--31658705-f1fd-4d16-a928-ecc093820ed4",
+      "target_ref": "malware--d8f8e9a7-0c82-4094-a811-348661a542ac"
+    },
+    {
+      "id": "relationship--effea3db-5e17-4786-9e0a-78cc4a0e854e",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.701Z",
+      "modified": "2025-07-30T19:47:12.701Z",
+      "relationship_type": "related-to",
+      "source_ref": "malware--31658705-f1fd-4d16-a928-ecc093820ed4",
+      "target_ref": "tool--d783a8af-533c-4ecf-a097-698326a213ed"
+    },
+    {
+      "id": "relationship--16e97564-cc86-4cd6-9fbc-85e76dbe95e3",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.701Z",
+      "modified": "2025-07-30T19:47:12.701Z",
+      "relationship_type": "related-to",
+      "source_ref": "malware--31658705-f1fd-4d16-a928-ecc093820ed4",
+      "target_ref": "malware--ab4c411d-58e9-4f99-b0f7-0f67f1f43159"
     },
     {
       "id": "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
@@ -355,48 +407,6 @@
           "url": "https://github.com/center-for-threat-informed-defense/attack-flow"
         }
       ]
-    },
-    {
-      "id": "note--715f87ed-5429-478b-93da-f466a3695f5a",
-      "type": "note",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.700Z",
-      "modified": "2025-07-30T19:47:12.700Z",
-      "content": "LDAP server (51.89.181.64) is used to exploit Log4Shell",
-      "object_refs": [
-        "vulnerability--924ed7f2-54ae-42ad-b1af-94734ff368e0"
-      ]
-    },
-    {
-      "id": "relationship--effea3db-5e17-4786-9e0a-78cc4a0e854e",
-      "type": "relationship",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "relationship_type": "related-to",
-      "source_ref": "malware--31658705-f1fd-4d16-a928-ecc093820ed4",
-      "target_ref": "tool--d783a8af-533c-4ecf-a097-698326a213ed"
-    },
-    {
-      "id": "relationship--16e97564-cc86-4cd6-9fbc-85e76dbe95e3",
-      "type": "relationship",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "relationship_type": "related-to",
-      "source_ref": "malware--31658705-f1fd-4d16-a928-ecc093820ed4",
-      "target_ref": "malware--ab4c411d-58e9-4f99-b0f7-0f67f1f43159"
-    },
-    {
-      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
-      "type": "marking-definition",
-      "definition": {
-        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
-      },
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "definition_type": "statement"
     },
     {
       "id": "relationship--c7754d7e-c15d-4699-b933-553b96408221",
@@ -427,16 +437,6 @@
       "relationship_type": "related-to",
       "source_ref": "malware--31658705-f1fd-4d16-a928-ecc093820ed4",
       "target_ref": "malware--ac51c325-5c08-4c3d-b89e-c31b1a171a84"
-    },
-    {
-      "id": "relationship--9fc05563-82c9-4dfd-8204-9dea4b74e7c3",
-      "type": "relationship",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.701Z",
-      "modified": "2025-07-30T19:47:12.701Z",
-      "relationship_type": "related-to",
-      "source_ref": "malware--31658705-f1fd-4d16-a928-ecc093820ed4",
-      "target_ref": "malware--d8f8e9a7-0c82-4094-a811-348661a542ac"
     },
     {
       "id": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
@@ -694,34 +694,6 @@
       "x_mitre_shortname": "execution"
     },
     {
-      "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0005",
-          "external_id": "TA0005"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:34.581Z",
-      "name": "Defense Evasion",
-      "description": "The adversary is trying to avoid being detected.\n\nDefense Evasion consists of techniques that adversaries use to avoid detection throughout their compromise. Techniques used for defense evasion include uninstalling/disabling security software or obfuscating/encrypting data and scripts. Adversaries also leverage and abuse trusted processes to hide and masquerade their malware. Other tactics’ techniques are cross-listed here when those techniques include the added benefit of subverting defenses. ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "defense-evasion"
-    },
-    {
       "id": "attack-pattern--ac08589e-ee59-4935-8667-d845e38fe579",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -853,7 +825,7 @@
       ]
     },
     {
-      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
       "type": "x-mitre-tactic",
       "spec_version": "2.1",
       "created": "2018-10-17T00:14:20.652Z",
@@ -861,16 +833,16 @@
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0011",
-          "external_id": "TA0011"
+          "url": "https://attack.mitre.org/tactics/TA0005",
+          "external_id": "TA0005"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
-      "modified": "2025-04-25T14:45:36.561Z",
-      "name": "Command and Control",
-      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
+      "modified": "2025-04-25T14:45:34.581Z",
+      "name": "Defense Evasion",
+      "description": "The adversary is trying to avoid being detected.\n\nDefense Evasion consists of techniques that adversaries use to avoid detection throughout their compromise. Techniques used for defense evasion include uninstalling/disabling security software or obfuscating/encrypting data and scripts. Adversaries also leverage and abuse trusted processes to hide and masquerade their malware. Other tactics’ techniques are cross-listed here when those techniques include the added benefit of subverting defenses. ",
       "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "x_mitre_deprecated": false,
       "x_mitre_domains": [
@@ -878,7 +850,7 @@
       ],
       "x_mitre_version": "1.0",
       "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "command-and-control"
+      "x_mitre_shortname": "defense-evasion"
     },
     {
       "id": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
@@ -970,6 +942,34 @@
         "Command: Command Execution",
         "Network Traffic: Network Connection Creation"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0011",
+          "external_id": "TA0011"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:36.561Z",
+      "name": "Command and Control",
+      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "command-and-control"
     },
     {
       "id": "attack-pattern--d63a3fb8-9452-4e9d-a60a-54be68d5998c",
@@ -1121,6 +1121,34 @@
       "x_mitre_shortname": "persistence"
     },
     {
+      "id": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0007",
+          "external_id": "TA0007"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:35.302Z",
+      "name": "Discovery",
+      "description": "The adversary is trying to figure out your environment.\n\nDiscovery consists of techniques an adversary may use to gain knowledge about the system and internal network. These techniques help adversaries observe the environment and orient themselves before deciding how to act. They also allow adversaries to explore what they can control and what’s around their entry point in order to discover how it could benefit their current objective. Native operating system tools are often used toward this post-compromise information-gathering objective. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "discovery"
+    },
+    {
       "id": "attack-pattern--132d5b37-aac5-4378-a8dc-3127b18a73dc",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -1164,34 +1192,6 @@
         "Process: Process Creation",
         "Command: Command Execution"
       ]
-    },
-    {
-      "id": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0007",
-          "external_id": "TA0007"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:35.302Z",
-      "name": "Discovery",
-      "description": "The adversary is trying to figure out your environment.\n\nDiscovery consists of techniques an adversary may use to gain knowledge about the system and internal network. These techniques help adversaries observe the environment and orient themselves before deciding how to act. They also allow adversaries to explore what they can control and what’s around their entry point in order to discover how it could benefit their current objective. Native operating system tools are often used toward this post-compromise information-gathering objective. ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "discovery"
     },
     {
       "id": "attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9",
@@ -1840,6 +1840,34 @@
       ]
     },
     {
+      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0006",
+          "external_id": "TA0006"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:32.408Z",
+      "name": "Credential Access",
+      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "credential-access"
+    },
+    {
       "id": "attack-pattern--65f2d882-3f41-4d48-8a06-29af77ec9f90",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -1927,34 +1955,6 @@
         "Command: Command Execution",
         "File: File Creation"
       ]
-    },
-    {
-      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0006",
-          "external_id": "TA0006"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:32.408Z",
-      "name": "Credential Access",
-      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "credential-access"
     },
     {
       "id": "attack-action--99406b0d-2c64-4f78-a80b-f50898876197",

@@ -1,23 +1,26 @@
 {
   "type": "bundle",
-  "id": "bundle--0c18eab5-a3c1-40f0-8a89-516b6d5b6867",
+  "id": "bundle--c362c559-69b5-4001-a1b0-745e8412d191",
   "objects": [
     {
-      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2022-08-02T19:34:35.143Z",
-      "modified": "2022-08-02T19:34:35.143Z",
-      "name": "MITRE Center for Threat-Informed Defense",
-      "identity_class": "organization"
-    },
-    {
-      "id": "tool--b1ddb6da-5c43-440d-9189-39c740659ccc",
+      "id": "tool--a1e3e09a-26c1-439c-8985-5bdf2ed377fa",
       "type": "tool",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.727Z",
       "modified": "2025-07-30T19:47:12.727Z",
-      "name": "Netsh",
+      "name": "Net user",
+      "tool_types": [
+        "remote-access",
+        "exploitation"
+      ]
+    },
+    {
+      "id": "tool--09b75cde-799f-432c-9920-bbf13d0eb336",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Netstat",
       "tool_types": [
         "Information-gathering"
       ]
@@ -34,83 +37,14 @@
       ]
     },
     {
-      "id": "tool--f2fac0de-8565-48ab-9ce8-d67dee1edeb6",
+      "id": "tool--b1ddb6da-5c43-440d-9189-39c740659ccc",
       "type": "tool",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.727Z",
       "modified": "2025-07-30T19:47:12.727Z",
-      "name": "Mimikatz",
-      "tool_types": [
-        "credential-exploitation"
-      ]
-    },
-    {
-      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "type": "identity",
-      "modified": "2025-03-19T15:00:40.855Z",
-      "name": "The MITRE Corporation",
-      "description": "",
-      "identity_class": "organization",
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "x_mitre_attack_spec_version": "3.2.0"
-    },
-    {
-      "id": "tool--a1e3e09a-26c1-439c-8985-5bdf2ed377fa",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.727Z",
-      "modified": "2025-07-30T19:47:12.727Z",
-      "name": "Net user",
-      "tool_types": [
-        "remote-access",
-        "exploitation"
-      ]
-    },
-    {
-      "id": "attack-operator--65620718-41a3-43e9-842a-e169a076170a",
-      "type": "attack-operator",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.727Z",
-      "modified": "2025-07-30T19:47:12.727Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "operator": "AND"
-    },
-    {
-      "id": "tool--0ade6c1a-d0b5-47d2-a633-b61144024874",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.727Z",
-      "modified": "2025-07-30T19:47:12.727Z",
-      "name": "Nslookup",
+      "name": "Netsh",
       "tool_types": [
         "Information-gathering"
-      ]
-    },
-    {
-      "id": "tool--127e715e-a04a-4103-84ef-99015b27d94f",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.727Z",
-      "modified": "2025-07-30T19:47:12.727Z",
-      "name": "Ipconfig",
-      "tool_types": [
-        "Information-gathering"
-      ]
-    },
-    {
-      "id": "tool--6c9c4fd4-1e75-45c2-921c-a2df79fd4108",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.727Z",
-      "modified": "2025-07-30T19:47:12.727Z",
-      "name": "Net.exe",
-      "tool_types": [
-        "remote-access"
       ]
     },
     {
@@ -127,14 +61,99 @@
       "name": "Windows Admin Shares"
     },
     {
-      "id": "tool--09b75cde-799f-432c-9920-bbf13d0eb336",
+      "id": "attack-operator--65620718-41a3-43e9-842a-e169a076170a",
+      "type": "attack-operator",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND"
+    },
+    {
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "type": "identity",
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "x_mitre_attack_spec_version": "3.2.0"
+    },
+    {
+      "id": "tool--750c2016-1016-48d8-95ea-df5b32a8f8ee",
       "type": "tool",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.727Z",
       "modified": "2025-07-30T19:47:12.727Z",
-      "name": "Netstat",
+      "name": "Mimikatz",
+      "tool_types": [
+        "credential-exploitation"
+      ]
+    },
+    {
+      "id": "identity--f02f372c-5f8f-49a0-be8e-778cc6f53cc8",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.726Z",
+      "modified": "2025-07-30T19:47:12.726Z",
+      "name": "Eric Kannampuzha",
+      "contact_information": "ekannampuzha@mitre.org"
+    },
+    {
+      "id": "tool--127e715e-a04a-4103-84ef-99015b27d94f",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Ipconfig",
       "tool_types": [
         "Information-gathering"
+      ]
+    },
+    {
+      "id": "campaign--8ed0c3ff-cecd-40f1-9d6b-e3dbe955ac7a",
+      "type": "campaign",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Operation Cobalt Kitty",
+      "description": "A large-scale campaign in Asia carried out by the OceanLotus Group",
+      "objective": "Stealing proprietary business information"
+    },
+    {
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "id": "tool--38394be6-1da8-45e2-86c4-180837bd00e8",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Arp",
+      "tool_types": [
+        "Information-gathering"
+      ]
+    },
+    {
+      "id": "tool--f2fac0de-8565-48ab-9ce8-d67dee1edeb6",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Mimikatz",
+      "tool_types": [
+        "credential-exploitation"
       ]
     },
     {
@@ -173,53 +192,12 @@
       ]
     },
     {
-      "id": "tool--750c2016-1016-48d8-95ea-df5b32a8f8ee",
+      "id": "tool--0ade6c1a-d0b5-47d2-a633-b61144024874",
       "type": "tool",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.727Z",
       "modified": "2025-07-30T19:47:12.727Z",
-      "name": "Mimikatz",
-      "tool_types": [
-        "credential-exploitation"
-      ]
-    },
-    {
-      "id": "campaign--8ed0c3ff-cecd-40f1-9d6b-e3dbe955ac7a",
-      "type": "campaign",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.727Z",
-      "modified": "2025-07-30T19:47:12.727Z",
-      "name": "Operation Cobalt Kitty",
-      "description": "A large-scale campaign in Asia carried out by the OceanLotus Group",
-      "objective": "Stealing proprietary business information"
-    },
-    {
-      "id": "tool--cd07bd67-3e94-4fce-8c86-589ad7c314c0",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.727Z",
-      "modified": "2025-07-30T19:47:12.727Z",
-      "name": "net user/group/localgroup",
-      "tool_types": [
-        "Information-gathering"
-      ]
-    },
-    {
-      "id": "identity--f02f372c-5f8f-49a0-be8e-778cc6f53cc8",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.726Z",
-      "modified": "2025-07-30T19:47:12.726Z",
-      "name": "Eric Kannampuzha",
-      "contact_information": "ekannampuzha@mitre.org"
-    },
-    {
-      "id": "tool--38394be6-1da8-45e2-86c4-180837bd00e8",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.727Z",
-      "modified": "2025-07-30T19:47:12.727Z",
-      "name": "Arp",
+      "name": "Nslookup",
       "tool_types": [
         "Information-gathering"
       ]
@@ -234,6 +212,39 @@
       "tool_types": [
         "Exploitation"
       ]
+    },
+    {
+      "id": "tool--cd07bd67-3e94-4fce-8c86-589ad7c314c0",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "net user/group/localgroup",
+      "tool_types": [
+        "Information-gathering"
+      ]
+    },
+    {
+      "id": "tool--6c9c4fd4-1e75-45c2-921c-a2df79fd4108",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.727Z",
+      "modified": "2025-07-30T19:47:12.727Z",
+      "name": "Net.exe",
+      "tool_types": [
+        "remote-access"
+      ]
+    },
+    {
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      },
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "definition_type": "statement"
     },
     {
       "id": "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
@@ -263,17 +274,6 @@
       ]
     },
     {
-      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
-      "type": "marking-definition",
-      "definition": {
-        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
-      },
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "definition_type": "statement"
-    },
-    {
       "id": "relationship--fac046aa-776d-493f-83df-b19f18fb2f60",
       "type": "relationship",
       "spec_version": "2.1",
@@ -282,6 +282,34 @@
       "relationship_type": "related-to",
       "source_ref": "threat-actor--f5182f82-449b-4edd-9c74-bf2ad4bcaf9d",
       "target_ref": "campaign--8ed0c3ff-cecd-40f1-9d6b-e3dbe955ac7a"
+    },
+    {
+      "id": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0001",
+          "external_id": "TA0001"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:36.917Z",
+      "name": "Initial Access",
+      "description": "The adversary is trying to get into your network.\n\nInitial Access consists of techniques that use various entry vectors to gain their initial foothold within a network. Techniques used to gain a foothold include targeted spearphishing and exploiting weaknesses on public-facing web servers. Footholds gained through initial access may allow for continued access, like valid accounts and use of external remote services, or may be limited-use due to changing passwords.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "initial-access"
     },
     {
       "id": "attack-pattern--2b742742-28c3-4e1b-bab7-8350d6300fa7",
@@ -385,34 +413,6 @@
         "Application Log: Application Log Content",
         "Network Traffic: Network Traffic Content"
       ]
-    },
-    {
-      "id": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0001",
-          "external_id": "TA0001"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:36.917Z",
-      "name": "Initial Access",
-      "description": "The adversary is trying to get into your network.\n\nInitial Access consists of techniques that use various entry vectors to gain their initial foothold within a network. Techniques used to gain a foothold include targeted spearphishing and exploiting weaknesses on public-facing web servers. Footholds gained through initial access may allow for continued access, like valid accounts and use of external remote services, or may be limited-use due to changing passwords.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "initial-access"
     },
     {
       "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
@@ -585,6 +585,34 @@
       ]
     },
     {
+      "id": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0003",
+          "external_id": "TA0003"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:33.492Z",
+      "name": "Persistence",
+      "description": "The adversary is trying to maintain their foothold.\n\nPersistence consists of techniques that adversaries use to keep access to systems across restarts, changed credentials, and other interruptions that could cut off their access. Techniques used for persistence include any access, action, or configuration changes that let them maintain their foothold on systems, such as replacing or hijacking legitimate code or adding startup code. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "persistence"
+    },
+    {
       "id": "attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -701,34 +729,6 @@
         "Network Traffic: Network Traffic Flow",
         "Scheduled Job: Scheduled Job Creation"
       ]
-    },
-    {
-      "id": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0003",
-          "external_id": "TA0003"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:33.492Z",
-      "name": "Persistence",
-      "description": "The adversary is trying to maintain their foothold.\n\nPersistence consists of techniques that adversaries use to keep access to systems across restarts, changed credentials, and other interruptions that could cut off their access. Techniques used for persistence include any access, action, or configuration changes that let them maintain their foothold on systems, such as replacing or hijacking legitimate code or adding startup code. ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "persistence"
     },
     {
       "id": "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736",
@@ -1294,6 +1294,34 @@
       ]
     },
     {
+      "id": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0007",
+          "external_id": "TA0007"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:35.302Z",
+      "name": "Discovery",
+      "description": "The adversary is trying to figure out your environment.\n\nDiscovery consists of techniques an adversary may use to gain knowledge about the system and internal network. These techniques help adversaries observe the environment and orient themselves before deciding how to act. They also allow adversaries to explore what they can control and what’s around their entry point in order to discover how it could benefit their current objective. Native operating system tools are often used toward this post-compromise information-gathering objective. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "discovery"
+    },
+    {
       "id": "attack-pattern--e358d692-23c0-4a31-9eb6-ecc13a8d7735",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -1363,62 +1391,6 @@
       ]
     },
     {
-      "id": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0007",
-          "external_id": "TA0007"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:35.302Z",
-      "name": "Discovery",
-      "description": "The adversary is trying to figure out your environment.\n\nDiscovery consists of techniques an adversary may use to gain knowledge about the system and internal network. These techniques help adversaries observe the environment and orient themselves before deciding how to act. They also allow adversaries to explore what they can control and what’s around their entry point in order to discover how it could benefit their current objective. Native operating system tools are often used toward this post-compromise information-gathering objective. ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "discovery"
-    },
-    {
-      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0011",
-          "external_id": "TA0011"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:36.561Z",
-      "name": "Command and Control",
-      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "command-and-control"
-    },
-    {
       "id": "attack-pattern--c325b232-d5bc-4dde-a3ec-71f3db9e8adc",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -1480,6 +1452,34 @@
       "x_mitre_data_sources": [
         "Network Traffic: Network Traffic Content"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0011",
+          "external_id": "TA0011"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:36.561Z",
+      "name": "Command and Control",
+      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "command-and-control"
     },
     {
       "id": "attack-pattern--1996eef1-ced3-4d7f-bf94-33298cabbf72",
@@ -1833,6 +1833,34 @@
       ]
     },
     {
+      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0006",
+          "external_id": "TA0006"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:32.408Z",
+      "name": "Credential Access",
+      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "credential-access"
+    },
+    {
       "id": "attack-pattern--1ecfdab8-7d59-4c98-95d4-dc41970f57fc",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -1902,62 +1930,6 @@
         "Windows Registry: Windows Registry Key Access",
         "Command: Command Execution"
       ]
-    },
-    {
-      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0006",
-          "external_id": "TA0006"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:32.408Z",
-      "name": "Credential Access",
-      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "credential-access"
-    },
-    {
-      "id": "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0008",
-          "external_id": "TA0008"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:34.223Z",
-      "name": "Lateral Movement",
-      "description": "The adversary is trying to move through your environment.\n\nLateral Movement consists of techniques that adversaries use to enter and control remote systems on a network. Following through on their primary objective often requires exploring the network to find their target and subsequently gaining access to it. Reaching their objective often involves pivoting through multiple systems and accounts to gain. Adversaries might install their own remote access tools to accomplish Lateral Movement or use legitimate credentials with native network and operating system tools, which may be stealthier. ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "lateral-movement"
     },
     {
       "id": "attack-pattern--4f9ca633-15c5-463c-9724-bdcd54fde541",
@@ -2035,6 +2007,34 @@
         "Process: Process Creation",
         "Command: Command Execution"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0008",
+          "external_id": "TA0008"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:34.223Z",
+      "name": "Lateral Movement",
+      "description": "The adversary is trying to move through your environment.\n\nLateral Movement consists of techniques that adversaries use to enter and control remote systems on a network. Following through on their primary objective often requires exploring the network to find their target and subsequently gaining access to it. Reaching their objective often involves pivoting through multiple systems and accounts to gain. Adversaries might install their own remote access tools to accomplish Lateral Movement or use legitimate credentials with native network and operating system tools, which may be stealthier. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "lateral-movement"
     },
     {
       "id": "attack-pattern--01a5a209-b94c-450b-b7f9-946497d91055",

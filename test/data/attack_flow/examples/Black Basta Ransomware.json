@@ -1,177 +1,12 @@
 {
   "type": "bundle",
-  "id": "bundle--2be98f4d-4a0c-4d83-b66b-acaf91f489f6",
+  "id": "bundle--68e6408d-e078-43b3-b5b1-77cab2289959",
   "objects": [
-    {
-      "id": "directory--ea527216-ac4c-4a68-95f2-f7509a059af8",
-      "type": "directory",
-      "spec_version": "2.1",
-      "path": "%TEMP%"
-    },
-    {
-      "id": "file--4baa3384-acee-47fe-9b5a-c50ad16a268a",
-      "type": "file",
-      "spec_version": "2.1",
-      "name": "defof.bat"
-    },
-    {
-      "id": "process--eb023ba0-8c2c-42f9-af10-d17b460cadf9",
-      "type": "process",
-      "spec_version": "2.1",
-      "command_line": "Invoke-TotalExec"
-    },
-    {
-      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2022-08-02T19:34:35.143Z",
-      "modified": "2022-08-02T19:34:35.143Z",
-      "name": "MITRE Center for Threat-Informed Defense",
-      "identity_class": "organization"
-    },
-    {
-      "id": "tool--5b990951-15c5-4daf-8c03-15ff2afc139a",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.608Z",
-      "modified": "2025-07-30T19:47:12.608Z",
-      "name": "vssadmin.exe",
-      "description": "A command-line tool that manages Volume Shadow Copy Service (VSS), which captures and copies stable images for backups on running systems."
-    },
-    {
-      "id": "software--372ffe99-9ead-4f5b-a88c-02f350921ba8",
-      "type": "software",
-      "spec_version": "2.1",
-      "name": "AnyConnect"
-    },
-    {
-      "id": "user-account--e7764048-783c-4ae6-bf2f-b14bc3692f3d",
-      "type": "user-account",
-      "spec_version": "2.1",
-      "display_name": "temp"
-    },
-    {
-      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "type": "identity",
-      "modified": "2025-03-19T15:00:40.855Z",
-      "name": "The MITRE Corporation",
-      "description": "",
-      "identity_class": "organization",
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "x_mitre_attack_spec_version": "3.2.0"
-    },
     {
       "id": "file--a249d3e4-5fa7-45f0-9446-bbdbbfac7e13",
       "type": "file",
       "spec_version": "2.1",
       "name": "SERVI.bat"
-    },
-    {
-      "id": "process--a6a24d6c-9089-466b-9da2-b6ca5dd65d23",
-      "type": "process",
-      "spec_version": "2.1",
-      "command_line": "taskkill"
-    },
-    {
-      "id": "file--e69260b1-065d-49c6-8346-5304cff3752a",
-      "type": "file",
-      "spec_version": "2.1",
-      "name": "rdp.bat"
-    },
-    {
-      "id": "tool--da66195d-6188-4b2a-9b6c-01e47f0104e6",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.608Z",
-      "modified": "2025-07-30T19:47:12.608Z",
-      "name": "Cobalt Strike",
-      "description": "threat emulation program",
-      "tool_types": [
-        "exploitation"
-      ]
-    },
-    {
-      "id": "user-account--8e9cbc36-0f85-43ff-b103-5fd6210dad4a",
-      "type": "user-account",
-      "spec_version": "2.1",
-      "display_name": "r"
-    },
-    {
-      "id": "process--2c2cae3e-1fdd-4097-8e14-2fd5a8d76bbd",
-      "type": "process",
-      "spec_version": "2.1",
-      "command_line": "bcdedit"
-    },
-    {
-      "id": "tool--f4c2c8bb-a5ea-4ef6-b5c2-5a4f0918454a",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.607Z",
-      "modified": "2025-07-30T19:47:12.607Z",
-      "name": "Mimikatz",
-      "description": "This tool allows users to extract passwords and credentials.",
-      "tool_types": [
-        "credential-exploitation"
-      ]
-    },
-    {
-      "id": "identity--0b55fa9f-cd34-442f-a59e-8dae3ff9c0a7",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.605Z",
-      "modified": "2025-07-30T19:47:12.605Z",
-      "name": "Lauren Parker",
-      "identity_class": "individual",
-      "contact_information": "lparker@mitre.org"
-    },
-    {
-      "id": "tool--967a2c1f-ae93-4e5b-8a12-06cf932e62ed",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.607Z",
-      "modified": "2025-07-30T19:47:12.607Z",
-      "name": "PsExec",
-      "description": "run processes remotely using any user's credentials",
-      "tool_types": [
-        "remote-access"
-      ]
-    },
-    {
-      "id": "software--a4b5bbc8-8f94-4de5-8a45-6674c0cead1f",
-      "type": "software",
-      "spec_version": "2.1",
-      "name": "TeamViewer"
-    },
-    {
-      "id": "file--3228c985-f519-4d19-8ec4-f058d85e8a92",
-      "type": "file",
-      "spec_version": "2.1",
-      "name": "d.bat"
-    },
-    {
-      "id": "process--e189e1d7-6ae2-484d-b5c5-00659e096fa0",
-      "type": "process",
-      "spec_version": "2.1",
-      "command_line": "GetComputerName"
-    },
-    {
-      "id": "process--5bd68d5f-095b-4e29-9f9c-c655c68606a7",
-      "type": "process",
-      "spec_version": "2.1",
-      "command_line": "net group /domain"
-    },
-    {
-      "id": "user-account--94c69c12-1690-43e9-a34a-dbb077a5d04a",
-      "type": "user-account",
-      "spec_version": "2.1",
-      "display_name": "admin"
-    },
-    {
-      "id": "process--a72e1773-a037-405e-8b17-a6484b8a9934",
-      "type": "process",
-      "spec_version": "2.1",
-      "command_line": "sc stop"
     },
     {
       "id": "malware--d72d1e00-9d85-40cb-9b95-8be1ff8b7dbf",
@@ -191,6 +26,117 @@
       ]
     },
     {
+      "id": "identity--0b55fa9f-cd34-442f-a59e-8dae3ff9c0a7",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.605Z",
+      "modified": "2025-07-30T19:47:12.605Z",
+      "name": "Lauren Parker",
+      "identity_class": "individual",
+      "contact_information": "lparker@mitre.org"
+    },
+    {
+      "id": "user-account--8e9cbc36-0f85-43ff-b103-5fd6210dad4a",
+      "type": "user-account",
+      "spec_version": "2.1",
+      "display_name": "r"
+    },
+    {
+      "id": "software--a4b5bbc8-8f94-4de5-8a45-6674c0cead1f",
+      "type": "software",
+      "spec_version": "2.1",
+      "name": "TeamViewer"
+    },
+    {
+      "id": "process--a6a24d6c-9089-466b-9da2-b6ca5dd65d23",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "taskkill"
+    },
+    {
+      "id": "software--372ffe99-9ead-4f5b-a88c-02f350921ba8",
+      "type": "software",
+      "spec_version": "2.1",
+      "name": "AnyConnect"
+    },
+    {
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "type": "identity",
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "x_mitre_attack_spec_version": "3.2.0"
+    },
+    {
+      "id": "tool--5b990951-15c5-4daf-8c03-15ff2afc139a",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "name": "vssadmin.exe",
+      "description": "A command-line tool that manages Volume Shadow Copy Service (VSS), which captures and copies stable images for backups on running systems."
+    },
+    {
+      "id": "tool--da66195d-6188-4b2a-9b6c-01e47f0104e6",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.608Z",
+      "modified": "2025-07-30T19:47:12.608Z",
+      "name": "Cobalt Strike",
+      "description": "threat emulation program",
+      "tool_types": [
+        "exploitation"
+      ]
+    },
+    {
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "id": "user-account--e7764048-783c-4ae6-bf2f-b14bc3692f3d",
+      "type": "user-account",
+      "spec_version": "2.1",
+      "display_name": "temp"
+    },
+    {
+      "id": "tool--967a2c1f-ae93-4e5b-8a12-06cf932e62ed",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "name": "PsExec",
+      "description": "run processes remotely using any user's credentials",
+      "tool_types": [
+        "remote-access"
+      ]
+    },
+    {
+      "id": "tool--f4c2c8bb-a5ea-4ef6-b5c2-5a4f0918454a",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.607Z",
+      "modified": "2025-07-30T19:47:12.607Z",
+      "name": "Mimikatz",
+      "description": "This tool allows users to extract passwords and credentials.",
+      "tool_types": [
+        "credential-exploitation"
+      ]
+    },
+    {
+      "id": "file--4baa3384-acee-47fe-9b5a-c50ad16a268a",
+      "type": "file",
+      "spec_version": "2.1",
+      "name": "defof.bat"
+    },
+    {
       "id": "windows-registry-key--98145823-cd60-4ea0-8733-93ec0ffc6947",
       "type": "windows-registry-key",
       "spec_version": "2.1",
@@ -204,10 +150,75 @@
       ]
     },
     {
+      "id": "file--e69260b1-065d-49c6-8346-5304cff3752a",
+      "type": "file",
+      "spec_version": "2.1",
+      "name": "rdp.bat"
+    },
+    {
+      "id": "process--5bd68d5f-095b-4e29-9f9c-c655c68606a7",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "net group /domain"
+    },
+    {
+      "id": "process--a72e1773-a037-405e-8b17-a6484b8a9934",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "sc stop"
+    },
+    {
+      "id": "process--e189e1d7-6ae2-484d-b5c5-00659e096fa0",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "GetComputerName"
+    },
+    {
+      "id": "file--3228c985-f519-4d19-8ec4-f058d85e8a92",
+      "type": "file",
+      "spec_version": "2.1",
+      "name": "d.bat"
+    },
+    {
+      "id": "directory--ea527216-ac4c-4a68-95f2-f7509a059af8",
+      "type": "directory",
+      "spec_version": "2.1",
+      "path": "%TEMP%"
+    },
+    {
+      "id": "process--2c2cae3e-1fdd-4097-8e14-2fd5a8d76bbd",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "bcdedit"
+    },
+    {
+      "id": "user-account--94c69c12-1690-43e9-a34a-dbb077a5d04a",
+      "type": "user-account",
+      "spec_version": "2.1",
+      "display_name": "admin"
+    },
+    {
       "id": "process--5d0acb9c-6a7b-45cb-89dc-d7bc4badb520",
       "type": "process",
       "spec_version": "2.1",
       "command_line": "net user /domain"
+    },
+    {
+      "id": "process--eb023ba0-8c2c-42f9-af10-d17b460cadf9",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "Invoke-TotalExec"
+    },
+    {
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      },
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "definition_type": "statement"
     },
     {
       "id": "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
@@ -235,17 +246,6 @@
           "url": "https://github.com/center-for-threat-informed-defense/attack-flow"
         }
       ]
-    },
-    {
-      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
-      "type": "marking-definition",
-      "definition": {
-        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
-      },
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "definition_type": "statement"
     },
     {
       "id": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
@@ -745,34 +745,6 @@
       "x_mitre_shortname": "persistence"
     },
     {
-      "id": "x-mitre-tactic--5e29b093-294e-49e9-a803-dab3d73b77dd",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0004",
-          "external_id": "TA0004"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:33.853Z",
-      "name": "Privilege Escalation",
-      "description": "The adversary is trying to gain higher-level permissions.\n\nPrivilege Escalation consists of techniques that adversaries use to gain higher-level permissions on a system or network. Adversaries can often enter and explore a network with unprivileged access but require elevated permissions to follow through on their objectives. Common approaches are to take advantage of system weaknesses, misconfigurations, and vulnerabilities. Examples of elevated access include: \n\n* SYSTEM/root level\n* local administrator\n* user account with admin-like access \n* user accounts with access to specific system or perform specific function\n\nThese techniques often overlap with Persistence techniques, as OS features that let an adversary persist can execute in an elevated context.  ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "privilege-escalation"
-    },
-    {
       "id": "attack-pattern--a10641f4-87b4-45a3-a906-92a149cb2c27",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -863,6 +835,34 @@
         "Group: Group Modification",
         "User Account: User Account Modification"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--5e29b093-294e-49e9-a803-dab3d73b77dd",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0004",
+          "external_id": "TA0004"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:33.853Z",
+      "name": "Privilege Escalation",
+      "description": "The adversary is trying to gain higher-level permissions.\n\nPrivilege Escalation consists of techniques that adversaries use to gain higher-level permissions on a system or network. Adversaries can often enter and explore a network with unprivileged access but require elevated permissions to follow through on their objectives. Common approaches are to take advantage of system weaknesses, misconfigurations, and vulnerabilities. Examples of elevated access include: \n\n* SYSTEM/root level\n* local administrator\n* user account with admin-like access \n* user accounts with access to specific system or perform specific function\n\nThese techniques often overlap with Persistence techniques, as OS features that let an adversary persist can execute in an elevated context.  ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "privilege-escalation"
     },
     {
       "id": "attack-pattern--2959d63f-73fd-46a1-abd2-109d7dcede32",
@@ -1249,34 +1249,6 @@
       ]
     },
     {
-      "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0005",
-          "external_id": "TA0005"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:34.581Z",
-      "name": "Defense Evasion",
-      "description": "The adversary is trying to avoid being detected.\n\nDefense Evasion consists of techniques that adversaries use to avoid detection throughout their compromise. Techniques used for defense evasion include uninstalling/disabling security software or obfuscating/encrypting data and scripts. Adversaries also leverage and abuse trusted processes to hide and masquerade their malware. Other tactics’ techniques are cross-listed here when those techniques include the added benefit of subverting defenses. ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "defense-evasion"
-    },
-    {
       "id": "attack-pattern--b97f1d35-4249-4486-a6b5-ee60ccf24fab",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -1343,6 +1315,34 @@
         "Network Traffic: Network Connection Creation",
         "Process: Process Creation"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0005",
+          "external_id": "TA0005"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:34.581Z",
+      "name": "Defense Evasion",
+      "description": "The adversary is trying to avoid being detected.\n\nDefense Evasion consists of techniques that adversaries use to avoid detection throughout their compromise. Techniques used for defense evasion include uninstalling/disabling security software or obfuscating/encrypting data and scripts. Adversaries also leverage and abuse trusted processes to hide and masquerade their malware. Other tactics’ techniques are cross-listed here when those techniques include the added benefit of subverting defenses. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "defense-evasion"
     },
     {
       "id": "attack-pattern--d63a3fb8-9452-4e9d-a60a-54be68d5998c",
@@ -1973,34 +1973,6 @@
       ]
     },
     {
-      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0006",
-          "external_id": "TA0006"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:32.408Z",
-      "name": "Credential Access",
-      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "credential-access"
-    },
-    {
       "id": "attack-pattern--3fc9b85a-2862-4363-a64d-d692e3ffbee0",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -2054,6 +2026,62 @@
         "Process: Process Creation",
         "Process: OS API Execution"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0006",
+          "external_id": "TA0006"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:32.408Z",
+      "name": "Credential Access",
+      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "credential-access"
+    },
+    {
+      "id": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0007",
+          "external_id": "TA0007"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:35.302Z",
+      "name": "Discovery",
+      "description": "The adversary is trying to figure out your environment.\n\nDiscovery consists of techniques an adversary may use to gain knowledge about the system and internal network. These techniques help adversaries observe the environment and orient themselves before deciding how to act. They also allow adversaries to explore what they can control and what’s around their entry point in order to discover how it could benefit their current objective. Native operating system tools are often used toward this post-compromise information-gathering objective. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "discovery"
     },
     {
       "id": "attack-pattern--21875073-b0ee-49e3-9077-1e2a885359af",
@@ -2111,34 +2139,6 @@
         "Network Traffic: Network Traffic Content",
         "Group: Group Enumeration"
       ]
-    },
-    {
-      "id": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0007",
-          "external_id": "TA0007"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:35.302Z",
-      "name": "Discovery",
-      "description": "The adversary is trying to figure out your environment.\n\nDiscovery consists of techniques an adversary may use to gain knowledge about the system and internal network. These techniques help adversaries observe the environment and orient themselves before deciding how to act. They also allow adversaries to explore what they can control and what’s around their entry point in order to discover how it could benefit their current objective. Native operating system tools are often used toward this post-compromise information-gathering objective. ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "discovery"
     },
     {
       "id": "attack-pattern--707399d6-ab3e-4963-9315-d9d3818cd6a0",
@@ -2493,6 +2493,34 @@
       "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
     },
     {
+      "id": "x-mitre-tactic--9a4e74ab-5008-408c-84bf-a10dfbc53462",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0010",
+          "external_id": "TA0010"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:34.933Z",
+      "name": "Exfiltration",
+      "description": "The adversary is trying to steal data.\n\nExfiltration consists of techniques that adversaries may use to steal data from your network. Once they’ve collected data, adversaries often package it to avoid detection while removing it. This can include compression and encryption. Techniques for getting data out of a target network typically include transferring it over their command and control channel or an alternate channel and may also include putting size limits on the transmission.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "exfiltration"
+    },
+    {
       "id": "attack-pattern--40597f16-0963-4249-bf4c-ac93b7fb9807",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -2546,62 +2574,6 @@
         "File: File Access",
         "Application Log: Application Log Content"
       ]
-    },
-    {
-      "id": "x-mitre-tactic--9a4e74ab-5008-408c-84bf-a10dfbc53462",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0010",
-          "external_id": "TA0010"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:34.933Z",
-      "name": "Exfiltration",
-      "description": "The adversary is trying to steal data.\n\nExfiltration consists of techniques that adversaries may use to steal data from your network. Once they’ve collected data, adversaries often package it to avoid detection while removing it. This can include compression and encryption. Techniques for getting data out of a target network typically include transferring it over their command and control channel or an alternate channel and may also include putting size limits on the transmission.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "exfiltration"
-    },
-    {
-      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0011",
-          "external_id": "TA0011"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:36.561Z",
-      "name": "Command and Control",
-      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "command-and-control"
     },
     {
       "id": "attack-pattern--4061e78c-1284-44b4-9116-73e4ac3912f7",
@@ -2682,6 +2654,34 @@
       ]
     },
     {
+      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0011",
+          "external_id": "TA0011"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:36.561Z",
+      "name": "Command and Control",
+      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "command-and-control"
+    },
+    {
       "id": "attack-pattern--b8902400-e6c5-4ba2-95aa-2d35b442b118",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -2741,34 +2741,6 @@
       "x_mitre_data_sources": [
         "Network Traffic: Network Traffic Content"
       ]
-    },
-    {
-      "id": "x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2019-03-14T18:44:44.639Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0040",
-          "external_id": "TA0040"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:33.130Z",
-      "name": "Impact",
-      "description": "The adversary is trying to manipulate, interrupt, or destroy your systems and data.\n \nImpact consists of techniques that adversaries use to disrupt availability or compromise integrity by manipulating business and operational processes. Techniques used for impact can include destroying or tampering with data. In some cases, business processes can look fine, but may have been altered to benefit the adversaries’ goals. These techniques might be used by adversaries to follow through on their end goal or to provide cover for a confidentiality breach.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "impact"
     },
     {
       "id": "attack-pattern--b80d107d-fa0d-4b60-9684-b0433e8bdba0",
@@ -2880,6 +2852,34 @@
         "Command: Command Execution",
         "Process: Process Creation"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2019-03-14T18:44:44.639Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0040",
+          "external_id": "TA0040"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:33.130Z",
+      "name": "Impact",
+      "description": "The adversary is trying to manipulate, interrupt, or destroy your systems and data.\n \nImpact consists of techniques that adversaries use to disrupt availability or compromise integrity by manipulating business and operational processes. Techniques used for impact can include destroying or tampering with data. In some cases, business processes can look fine, but may have been altered to benefit the adversaries’ goals. These techniques might be used by adversaries to follow through on their end goal or to provide cover for a confidentiality breach.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "impact"
     },
     {
       "id": "attack-pattern--20fb2507-d71c-455d-9b6d-6104461cf26b",

@@ -55,6 +55,14 @@ class StixBundle(BaseModel):
     objects: List[StixObject]
 
 
+class DeduplicationReport(BaseModel):
+    """Report for object deduplication operations"""
+    number_of_objects_before_deduplication: int
+    number_of_objects_after_deduplication: int
+    number_of_duplicates_removed: int
+    list_of_duplicate_stix_ids: List[str]
+
+
 class ExpansionSource(BaseModel):
     """Model for expansion source information"""
     source_name: str
@@ -77,23 +85,26 @@ class CleaningSCOReport(BaseModel):
     list_of_stix_ids_where_other_fields_were_removed: List[Dict[str, List[str]]]  # [{"stix_id": str, "removed_fields": List[str]}]
 
 
-class DeletedFieldAndValue(BaseModel):
+class DeletedFieldAndValues(BaseModel):
     """Model for tracking deleted field information"""
-    field_name: str
-    deleted_value: Union[str, List[str], Dict]
+    stix_id: str  # of the object where the field is deleted
+    field_name: str  # field name deleted
+    deleted_value: Union[str, List[str]]  # Stix_id or list of Stix_id's referenced by the deleted field
 
 
-class DeletedFieldsForObject(BaseModel):
-    """Model for tracking deleted fields for a specific object"""
-    stix_id: str
-    deleted_fields: List[DeletedFieldAndValue]
+class OperationTiming(BaseModel):
+    """Model for tracking operation timing"""
+    operation_name: str
+    start_time: str  # Format: "%Y-%m-%d %H:%M:%S.%f"
+    end_time: str    # Format: "%Y-%m-%d %H:%M:%S.%f"
+    duration_seconds: float
 
 
 class CircularReferenceReport(BaseModel):
     """Report for circular reference resolution"""
     number_of_circular_references_found: int
     list_of_circular_reference_paths: List[List[str]]  # Each inner list represents a circular path
-    deleted_fields_and_values: List[DeletedFieldsForObject]
+    deleted_fields_and_values: List[DeletedFieldAndValues]
 
 
 class SortingReport(BaseModel):
@@ -104,29 +115,28 @@ class SortingReport(BaseModel):
     unresolved_references: List[str]
 
 
-class SingleFileReport(BaseModel):
-    """Report for individual file processing"""
+class ListReport(BaseModel):
+    """Core operations report for processing a single STIX list"""
+    deduplication_report: DeduplicationReport
+    expansion_report: ExpansionReport
+    cleaning_sco_report: CleaningSCOReport
+    circular_reference_report: CircularReferenceReport
+    sorting_report: SortingReport
+    operation_timings: List[OperationTiming]  # Time measurements for each of the 7 operations
+    total_processing_time_seconds: float  # Sum of all operation durations
+
+
+class FileReport(BaseModel):
+    """Report for directory processing containing ListReport + file metadata"""
+    directory_path: str
     original_file_name: str
     original_file_path: str
     updated_file_name: str
     updated_file_path: str
     report_file_name: str
     report_file_path: str
-
-
-class FileReport(BaseModel):
-    """Report for directory processing"""
-    number_of_files_processed: int
-    list_of_processed_changes_per_file: List[SingleFileReport]
-
-
-class OperationsReport(BaseModel):
-    """Comprehensive report for all operations"""
-    expansion_report: ExpansionReport
-    cleaning_sco_report: CleaningSCOReport
-    circular_reference_report: CircularReferenceReport
-    sorting_report: SortingReport
-    file_report: Optional[FileReport] = None
+    operations_report: ListReport
+    total_processing_time_seconds: float
 
 
 class CleanStixListSuccessReport(BaseModel):
@@ -135,7 +145,7 @@ class CleanStixListSuccessReport(BaseModel):
     total_number_of_objects_processed: int
     clean_operation_outcome: Literal[True]
     return_message: str
-    detailed_operation_reports: OperationsReport
+    detailed_operation_reports: Union[FileReport, ListReport]
 
 
 class CleanStixListFailureReport(BaseModel):
@@ -144,7 +154,7 @@ class CleanStixListFailureReport(BaseModel):
     total_number_of_objects_processed: int
     clean_operation_outcome: Literal[False]
     return_message: str
-    detailed_operation_reports: OperationsReport
+    detailed_operation_reports: Union[FileReport, ListReport]
 
 
 # =============================================================================
@@ -180,44 +190,80 @@ EXTERNAL_SOURCES = [
 # =============================================================================
 
 def _extract_references_from_object(obj: Dict[str, Any]) -> Set[str]:
-    """Extract all STIX ID references from a STIX object"""
+    """
+    Extract all STIX ID references from a STIX object using dynamic detection.
+    
+    This function automatically detects:
+    1. All fields ending with '_ref' or '_refs' 
+    2. Any string value that matches STIX ID pattern (type--uuid)
+    
+    This approach is future-proof and works with any STIX extensions or custom objects.
+    """
     references = set()
     
-    # Common reference fields
-    ref_fields = [
-        'created_by_ref', 'object_marking_refs', 'where_sighted_refs',
-        'observed_data_refs', 'sighting_of_ref', 'attributed_to_refs',
-        'targets_refs', 'uses_refs', 'indicates_refs', 'based_on_refs',
-        'derived_from_refs', 'duplicate_of_refs', 'related_to_refs'
-    ]
+    def _is_valid_stix_id(value: str) -> bool:
+        """Check if a string matches STIX ID pattern: type--uuid"""
+        if not isinstance(value, str):
+            return False
+        
+        # STIX ID pattern: must have exactly one '--' separator
+        if value.count('--') != 1:
+            return False
+        
+        # Split and validate format
+        parts = value.split('--')
+        if len(parts) != 2:
+            return False
+        
+        stix_type, stix_uuid = parts
+        
+        # Validate type part (must be non-empty, alphanumeric with hyphens)
+        if not stix_type or not all(c.isalnum() or c in '-_' for c in stix_type):
+            return False
+        
+        # Validate UUID part (must be non-empty, UUID-like format)
+        if not stix_uuid or len(stix_uuid) < 8:
+            return False
+        
+        return True
     
-    for field in ref_fields:
-        if field in obj:
-            value = obj[field]
-            if isinstance(value, str) and value.count('--') == 1:
-                references.add(value)
-            elif isinstance(value, list):
-                for ref in value:
-                    if isinstance(ref, str) and ref.count('--') == 1:
-                        references.add(ref)
-    
-    # Handle nested objects (like cyber observable references)
-    def _extract_from_nested(data):
+    def _extract_from_data(data: Any, current_path: str = "") -> None:
+        """Recursively extract references from any data structure"""
         if isinstance(data, dict):
             for key, value in data.items():
-                if key.endswith('_ref') and isinstance(value, str) and value.count('--') == 1:
-                    references.add(value)
-                elif key.endswith('_refs') and isinstance(value, list):
-                    for ref in value:
-                        if isinstance(ref, str) and ref.count('--') == 1:
-                            references.add(ref)
-                else:
-                    _extract_from_nested(value)
+                current_key_path = f"{current_path}.{key}" if current_path else key
+                
+                # Method 1: Check fields ending with _ref or _refs
+                if key.endswith('_ref') or key.endswith('_refs'):
+                    if isinstance(value, str) and _is_valid_stix_id(value):
+                        references.add(value)
+                    elif isinstance(value, list):
+                        for item in value:
+                            if isinstance(item, str) and _is_valid_stix_id(item):
+                                references.add(item)
+                
+                # Method 2: Check any string value for STIX ID pattern
+                elif isinstance(value, str) and _is_valid_stix_id(value):
+                    # Exclude the object's own ID field
+                    if key != 'id':
+                        references.add(value)
+                
+                # Continue recursive search
+                _extract_from_data(value, current_key_path)
+                
         elif isinstance(data, list):
-            for item in data:
-                _extract_from_nested(item)
+            for i, item in enumerate(data):
+                current_index_path = f"{current_path}[{i}]" if current_path else f"[{i}]"
+                
+                # Method 2: Check list items for STIX ID pattern
+                if isinstance(item, str) and _is_valid_stix_id(item):
+                    references.add(item)
+                
+                # Continue recursive search
+                _extract_from_data(item, current_index_path)
     
-    _extract_from_nested(obj)
+    # Start extraction from root object
+    _extract_from_data(obj)
     return references
 
 
@@ -381,7 +427,33 @@ def _prune_unreferenced_objects(objects: List[StixObject], original_objects: Lis
 # Core Operations
 # =============================================================================
 
-def _operation_1_expansion_round_1(objects: List[StixObject]) -> Tuple[List[StixObject], ExpansionReport]:
+def _operation_1_object_deduplication(objects: List[StixObject]) -> Tuple[List[StixObject], DeduplicationReport]:
+    """Operation 1: Remove duplicate STIX objects by ID"""
+    original_count = len(objects)
+    unique_objects = {}
+    duplicate_ids = []
+    
+    # Track duplicates while maintaining order
+    for obj in objects:
+        if obj.id in unique_objects:
+            duplicate_ids.append(obj.id)
+        else:
+            unique_objects[obj.id] = obj
+    
+    deduplicated_objects = list(unique_objects.values())
+    final_count = len(deduplicated_objects)
+    
+    report = DeduplicationReport(
+        number_of_objects_before_deduplication=original_count,
+        number_of_objects_after_deduplication=final_count,
+        number_of_duplicates_removed=original_count - final_count,
+        list_of_duplicate_stix_ids=list(set(duplicate_ids))  # Remove duplicates from duplicates list
+    )
+    
+    return deduplicated_objects, report
+
+
+def _operation_2_expansion_round_1(objects: List[StixObject]) -> Tuple[List[StixObject], ExpansionReport]:
     """Operation 1: First round of object expansion"""
     # Extract all references and defined IDs
     all_references = set()
@@ -432,7 +504,7 @@ def _operation_1_expansion_round_1(objects: List[StixObject]) -> Tuple[List[Stix
     return expanded_objects, report
 
 
-def _operation_2_expansion_round_2(objects: List[StixObject], round_1_report: ExpansionReport) -> Tuple[List[StixObject], ExpansionReport]:
+def _operation_3_expansion_round_2(objects: List[StixObject], round_1_report: ExpansionReport) -> Tuple[List[StixObject], ExpansionReport]:
     """Operation 2: Second round of object expansion for transitive dependencies"""
     # Get current state
     defined_ids = {obj.id for obj in objects}
@@ -500,7 +572,7 @@ def _operation_2_expansion_round_2(objects: List[StixObject], round_1_report: Ex
     return final_objects, updated_report
 
 
-def _operation_3_sco_cleaning(objects: List[StixObject], clean_sco_fields: bool) -> Tuple[List[StixObject], CleaningSCOReport]:
+def _operation_4_sco_cleaning(objects: List[StixObject], clean_sco_fields: bool) -> Tuple[List[StixObject], CleaningSCOReport]:
     """Operation 3: SCO field cleaning (conditional)"""
     if not clean_sco_fields:
         # Return unchanged with empty report
@@ -570,10 +642,10 @@ def _operation_3_sco_cleaning(objects: List[StixObject], clean_sco_fields: bool)
     return cleaned_objects, report
 
 
-def _operation_4_circular_reference_resolution(objects: List[StixObject]) -> Tuple[List[StixObject], CircularReferenceReport]:
+def _operation_5_circular_reference_resolution(objects: List[StixObject]) -> Tuple[List[StixObject], CircularReferenceReport]:
     """Operation 4: Resolve circular references"""
     circular_paths = _detect_circular_references(objects)
-    deleted_fields = []
+    deleted_fields_and_values = []
     resolved_objects = []
     
     # Create a mapping for modifications
@@ -584,7 +656,6 @@ def _operation_4_circular_reference_resolution(objects: List[StixObject]) -> Tup
             # Self-reference case
             obj_id = path[0]
             obj_data = obj_modifications[obj_id]
-            deleted_fields_for_obj = []
             
             # Remove self-referencing fields
             ref_fields = ['created_by_ref', 'object_marking_refs']
@@ -592,14 +663,16 @@ def _operation_4_circular_reference_resolution(objects: List[StixObject]) -> Tup
                 if field in obj_data:
                     value = obj_data[field]
                     if field == 'created_by_ref' and value == obj_id:
-                        deleted_fields_for_obj.append(DeletedFieldAndValue(
+                        deleted_fields_and_values.append(DeletedFieldAndValues(
+                            stix_id=obj_id,
                             field_name=field,
                             deleted_value=value
                         ))
                         del obj_data[field]
                     elif field == 'object_marking_refs' and isinstance(value, list) and obj_id in value:
                         new_value = [v for v in value if v != obj_id]
-                        deleted_fields_for_obj.append(DeletedFieldAndValue(
+                        deleted_fields_and_values.append(DeletedFieldAndValues(
+                            stix_id=obj_id,
                             field_name=field,
                             deleted_value=[obj_id]
                         ))
@@ -607,12 +680,6 @@ def _operation_4_circular_reference_resolution(objects: List[StixObject]) -> Tup
                             obj_data[field] = new_value
                         else:
                             del obj_data[field]
-            
-            if deleted_fields_for_obj:
-                deleted_fields.append(DeletedFieldsForObject(
-                    stix_id=obj_id,
-                    deleted_fields=deleted_fields_for_obj
-                ))
                 
         elif len(path) == 2:
             # Bidirectional reference
@@ -629,12 +696,10 @@ def _operation_4_circular_reference_resolution(objects: List[StixObject]) -> Tup
                 if 'object_marking_refs' in obj1_data and obj2_id in obj1_data['object_marking_refs']:
                     old_refs = obj1_data['object_marking_refs']
                     new_refs = [ref for ref in old_refs if ref != obj2_id]
-                    deleted_fields.append(DeletedFieldsForObject(
+                    deleted_fields_and_values.append(DeletedFieldAndValues(
                         stix_id=obj1_id,
-                        deleted_fields=[DeletedFieldAndValue(
-                            field_name='object_marking_refs',
-                            deleted_value=[obj2_id]
-                        )]
+                        field_name='object_marking_refs',
+                        deleted_value=[obj2_id]
                     ))
                     if new_refs:
                         obj1_data['object_marking_refs'] = new_refs
@@ -645,26 +710,41 @@ def _operation_4_circular_reference_resolution(objects: List[StixObject]) -> Tup
                 if 'object_marking_refs' in obj2_data and obj1_id in obj2_data['object_marking_refs']:
                     old_refs = obj2_data['object_marking_refs']
                     new_refs = [ref for ref in old_refs if ref != obj1_id]
-                    deleted_fields.append(DeletedFieldsForObject(
+                    deleted_fields_and_values.append(DeletedFieldAndValues(
                         stix_id=obj2_id,
-                        deleted_fields=[DeletedFieldAndValue(
-                            field_name='object_marking_refs',
-                            deleted_value=[obj1_id]
-                        )]
+                        field_name='object_marking_refs',
+                        deleted_value=[obj1_id]
                     ))
                     if new_refs:
                         obj2_data['object_marking_refs'] = new_refs
                     else:
                         del obj2_data['object_marking_refs']
+            # Check for Malware Behavior <-> Malware Method pattern
+            elif obj1_type == 'malware-behavior' and obj2_type == 'malware-method':
+                # Remove behavior_ref from malware method
+                if 'behavior_ref' in obj2_data and obj2_data['behavior_ref'] == obj1_id:
+                    deleted_fields_and_values.append(DeletedFieldAndValues(
+                        stix_id=obj2_id,
+                        field_name='behavior_ref',
+                        deleted_value=obj1_id
+                    ))
+                    del obj2_data['behavior_ref']
+            elif obj2_type == 'malware-behavior' and obj1_type == 'malware-method':
+                # Remove behavior_ref from malware method
+                if 'behavior_ref' in obj1_data and obj1_data['behavior_ref'] == obj2_id:
+                    deleted_fields_and_values.append(DeletedFieldAndValues(
+                        stix_id=obj1_id,
+                        field_name='behavior_ref',
+                        deleted_value=obj2_id
+                    ))
+                    del obj1_data['behavior_ref']
             else:
                 # Generic bidirectional - remove created_by_ref from second object
                 if 'created_by_ref' in obj2_data and obj2_data['created_by_ref'] == obj1_id:
-                    deleted_fields.append(DeletedFieldsForObject(
+                    deleted_fields_and_values.append(DeletedFieldAndValues(
                         stix_id=obj2_id,
-                        deleted_fields=[DeletedFieldAndValue(
-                            field_name='created_by_ref',
-                            deleted_value=obj1_id
-                        )]
+                        field_name='created_by_ref',
+                        deleted_value=obj1_id
                     ))
                     del obj2_data['created_by_ref']
     
@@ -678,13 +758,13 @@ def _operation_4_circular_reference_resolution(objects: List[StixObject]) -> Tup
     report = CircularReferenceReport(
         number_of_circular_references_found=len(circular_paths),
         list_of_circular_reference_paths=circular_paths,
-        deleted_fields_and_values=deleted_fields
+        deleted_fields_and_values=deleted_fields_and_values
     )
     
     return resolved_objects, report
 
 
-def _operation_5_dependency_sorting(objects: List[StixObject]) -> Tuple[List[StixObject], SortingReport]:
+def _operation_6_dependency_sorting(objects: List[StixObject]) -> Tuple[List[StixObject], SortingReport]:
     """Operation 5: Sort objects by dependency order"""
     sorted_ids, unresolved_refs, success = _topological_sort(objects)
     
@@ -709,20 +789,25 @@ def _operation_5_dependency_sorting(objects: List[StixObject]) -> Tuple[List[Sti
     return sorted_objects, report
 
 
-def _operation_6_comprehensive_reporting(
+def _operation_7_comprehensive_reporting(
+    deduplication_report: DeduplicationReport,
     expansion_report: ExpansionReport,
     sco_report: CleaningSCOReport,
     circular_report: CircularReferenceReport,
     sorting_report: SortingReport,
-    file_report: Optional[FileReport] = None
-) -> OperationsReport:
-    """Operation 6: Create comprehensive report"""
-    return OperationsReport(
+    operation_timings: List[OperationTiming]
+) -> ListReport:
+    """Operation 7: Create comprehensive report for STIX list operations"""
+    total_time = sum(timing.duration_seconds for timing in operation_timings)
+    
+    return ListReport(
+        deduplication_report=deduplication_report,
         expansion_report=expansion_report,
         cleaning_sco_report=sco_report,
         circular_reference_report=circular_report,
         sorting_report=sorting_report,
-        file_report=file_report
+        operation_timings=operation_timings,
+        total_processing_time_seconds=total_time
     )
 
 
@@ -735,7 +820,7 @@ def clean_stix_list(
     clean_sco_fields: bool = False
 ) -> Tuple[List[StixObject], Union[CleanStixListSuccessReport, CleanStixListFailureReport]]:
     """
-    Clean STIX objects in memory through 6-operation pipeline.
+    Clean STIX objects in memory through 7-operation pipeline.
     
     Args:
         stix_list (List[StixObject]): Raw STIX objects requiring cleaning
@@ -748,16 +833,44 @@ def clean_stix_list(
     """
     start_time = datetime.now()
     original_count = len(stix_list)
+    operation_timings = []
     
     try:
         # Make a deep copy to avoid modifying original data
         working_objects = deepcopy(stix_list)
         
-        # Operation 1: Expansion Round 1
-        working_objects, expansion_report = _operation_1_expansion_round_1(working_objects)
+        # Operation 1: Object Deduplication
+        op_start = datetime.now()
+        working_objects, deduplication_report = _operation_1_object_deduplication(working_objects)
+        op_end = datetime.now()
+        operation_timings.append(OperationTiming(
+            operation_name="Object Deduplication",
+            start_time=op_start.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            end_time=op_end.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            duration_seconds=(op_end - op_start).total_seconds()
+        ))
         
-        # Operation 2: Expansion Round 2
-        working_objects, expansion_report = _operation_2_expansion_round_2(working_objects, expansion_report)
+        # Operation 2: Expansion Round 1
+        op_start = datetime.now()
+        working_objects, expansion_report = _operation_2_expansion_round_1(working_objects)
+        op_end = datetime.now()
+        operation_timings.append(OperationTiming(
+            operation_name="Object Expansion Round 1",
+            start_time=op_start.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            end_time=op_end.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            duration_seconds=(op_end - op_start).total_seconds()
+        ))
+        
+        # Operation 3: Expansion Round 2
+        op_start = datetime.now()
+        working_objects, expansion_report = _operation_3_expansion_round_2(working_objects, expansion_report)
+        op_end = datetime.now()
+        operation_timings.append(OperationTiming(
+            operation_name="Object Expansion Round 2",
+            start_time=op_start.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            end_time=op_end.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            duration_seconds=(op_end - op_start).total_seconds()
+        ))
         
         # Pruning Step: Remove unreferenced objects added during expansion  
         original_objects = deepcopy(stix_list)
@@ -766,19 +879,51 @@ def clean_stix_list(
         # Update expansion report to reflect final object count after pruning
         expansion_report.number_of_objects_defined = len(working_objects)
         
-        # Operation 3: SCO Cleaning (conditional)
-        working_objects, sco_report = _operation_3_sco_cleaning(working_objects, clean_sco_fields)
+        # Operation 4: SCO Cleaning (conditional)
+        op_start = datetime.now()
+        working_objects, sco_report = _operation_4_sco_cleaning(working_objects, clean_sco_fields)
+        op_end = datetime.now()
+        operation_timings.append(OperationTiming(
+            operation_name="SCO Field Cleaning",
+            start_time=op_start.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            end_time=op_end.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            duration_seconds=(op_end - op_start).total_seconds()
+        ))
         
-        # Operation 4: Circular Reference Resolution
-        working_objects, circular_report = _operation_4_circular_reference_resolution(working_objects)
+        # Operation 5: Circular Reference Resolution
+        op_start = datetime.now()
+        working_objects, circular_report = _operation_5_circular_reference_resolution(working_objects)
+        op_end = datetime.now()
+        operation_timings.append(OperationTiming(
+            operation_name="Circular Reference Resolution",
+            start_time=op_start.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            end_time=op_end.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            duration_seconds=(op_end - op_start).total_seconds()
+        ))
         
-        # Operation 5: Dependency Sorting
-        working_objects, sorting_report = _operation_5_dependency_sorting(working_objects)
+        # Operation 6: Dependency Sorting
+        op_start = datetime.now()
+        working_objects, sorting_report = _operation_6_dependency_sorting(working_objects)
+        op_end = datetime.now()
+        operation_timings.append(OperationTiming(
+            operation_name="Dependency Sorting",
+            start_time=op_start.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            end_time=op_end.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            duration_seconds=(op_end - op_start).total_seconds()
+        ))
         
-        # Operation 6: Comprehensive Reporting
-        operations_report = _operation_6_comprehensive_reporting(
-            expansion_report, sco_report, circular_report, sorting_report
+        # Operation 7: Comprehensive Reporting
+        op_start = datetime.now()
+        list_report = _operation_7_comprehensive_reporting(
+            deduplication_report, expansion_report, sco_report, circular_report, sorting_report, operation_timings
         )
+        op_end = datetime.now()
+        operation_timings.append(OperationTiming(
+            operation_name="Comprehensive Reporting",
+            start_time=op_start.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            end_time=op_end.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            duration_seconds=(op_end - op_start).total_seconds()
+        ))
         
         # Create success report
         success_report = CleanStixListSuccessReport(
@@ -786,7 +931,7 @@ def clean_stix_list(
             total_number_of_objects_processed=len(working_objects),
             clean_operation_outcome=True,
             return_message=f"Successfully processed {len(working_objects)} STIX objects (started with {original_count})",
-            detailed_operation_reports=operations_report
+            detailed_operation_reports=list_report
         )
         
         return working_objects, success_report
@@ -820,18 +965,66 @@ def clean_stix_list(
                 unresolved_references=[]
             )
             
-            operations_report = _operation_6_comprehensive_reporting(
-                empty_expansion, empty_sco, empty_circular, empty_sorting
+            # Create empty timing records for failed operations
+            empty_timings = [OperationTiming(
+                operation_name="Failed Operations",
+                start_time=start_time.strftime("%Y-%m-%d %H:%M:%S.%f"),
+                end_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"),
+                duration_seconds=0.0
+            )]
+            
+            empty_deduplication = DeduplicationReport(
+                number_of_objects_before_deduplication=original_count,
+                number_of_objects_after_deduplication=original_count,
+                number_of_duplicates_removed=0,
+                list_of_duplicate_stix_ids=[]
             )
-        except:
-            operations_report = None
+            
+            list_report = _operation_7_comprehensive_reporting(
+                empty_deduplication, empty_expansion, empty_sco, empty_circular, empty_sorting, empty_timings
+            )
+        except Exception:
+            # Create minimal list report for complete failure
+            list_report = ListReport(
+                deduplication_report=DeduplicationReport(
+                    number_of_objects_before_deduplication=original_count,
+                    number_of_objects_after_deduplication=original_count,
+                    number_of_duplicates_removed=0,
+                    list_of_duplicate_stix_ids=[]
+                ),
+                expansion_report=ExpansionReport(
+                    number_of_objects_defined=original_count,
+                    number_of_objects_referenced=0,
+                    missing_ids_list=[],
+                    sources_of_expansion=[]
+                ),
+                cleaning_sco_report=CleaningSCOReport(
+                    number_of_scos_cleaned=0,
+                    list_of_stix_ids_where_created_field_was_removed=[],
+                    list_of_stix_ids_where_modified_field_was_removed=[],
+                    list_of_stix_ids_where_other_fields_were_removed=[]
+                ),
+                circular_reference_report=CircularReferenceReport(
+                    number_of_circular_references_found=0,
+                    list_of_circular_reference_paths=[],
+                    deleted_fields_and_values=[]
+                ),
+                sorting_report=SortingReport(
+                    sorting_successful=False,
+                    sorted_list_of_stix_ids=[],
+                    diagram_of_sorted_dependencies="Failed to generate",
+                    unresolved_references=[]
+                ),
+                operation_timings=[],
+                total_processing_time_seconds=0.0
+            )
         
         failure_report = CleanStixListFailureReport(
             report_date_time=start_time.strftime("%Y-%m-%d %H:%M:%S"),
             total_number_of_objects_processed=original_count,
             clean_operation_outcome=False,
             return_message=f"Failed to process STIX objects: {str(e)}",
-            detailed_operation_reports=operations_report
+            detailed_operation_reports=list_report
         )
         
         return stix_list, failure_report
@@ -872,7 +1065,6 @@ def clean_stix_directory(
         return []
     
     results = []
-    file_reports = []
     
     for json_file in json_files:
         try:
@@ -941,69 +1133,66 @@ def clean_stix_directory(
             with open(report_path, 'w', encoding='utf-8') as f:
                 json.dump(report.model_dump(), f, indent=2, ensure_ascii=False)
             
-            # Create file report entry
-            single_file_report = SingleFileReport(
-                original_file_name=original_name,
-                original_file_path=str(original_path),
-                updated_file_name=cleaned_name,
-                updated_file_path=str(cleaned_path),
-                report_file_name=report_name,
-                report_file_path=str(report_path)
-            )
-            file_reports.append(single_file_report)
-            
-            # Update report with file information
+            # Create FileReport with embedded ListReport
             if isinstance(report, CleanStixListSuccessReport):
-                report.detailed_operation_reports.file_report = FileReport(
-                    number_of_files_processed=1,
-                    list_of_processed_changes_per_file=[single_file_report]
+                file_start = datetime.now()
+                file_report = FileReport(
+                    directory_path=str(directory),
+                    original_file_name=original_name,
+                    original_file_path=str(original_path),
+                    updated_file_name=cleaned_name,
+                    updated_file_path=str(cleaned_path),
+                    report_file_name=report_name,
+                    report_file_path=str(report_path),
+                    operations_report=report.detailed_operation_reports,
+                    total_processing_time_seconds=report.detailed_operation_reports.total_processing_time_seconds + (datetime.now() - file_start).total_seconds()
                 )
+                
+                # Update the report to use FileReport instead of ListReport
+                report.detailed_operation_reports = file_report
             
             results.append(report)
             
         except Exception as e:
             # Create failure report for this file
+            # Create minimal reports for failure
+            empty_list_report = ListReport(
+                expansion_report=ExpansionReport(
+                    number_of_objects_defined=0,
+                    number_of_objects_referenced=0,
+                    missing_ids_list=[],
+                    sources_of_expansion=[]
+                ),
+                cleaning_sco_report=CleaningSCOReport(
+                    number_of_scos_cleaned=0,
+                    list_of_stix_ids_where_created_field_was_removed=[],
+                    list_of_stix_ids_where_modified_field_was_removed=[],
+                    list_of_stix_ids_where_other_fields_were_removed=[]
+                ),
+                circular_reference_report=CircularReferenceReport(
+                    number_of_circular_references_found=0,
+                    list_of_circular_reference_paths=[],
+                    deleted_fields_and_values=[]
+                ),
+                sorting_report=SortingReport(
+                    sorting_successful=False,
+                    sorted_list_of_stix_ids=[],
+                    diagram_of_sorted_dependencies="Failed",
+                    unresolved_references=[]
+                ),
+                operation_timings=[],
+                total_processing_time_seconds=0.0
+            )
+            
             failure_report = CleanStixListFailureReport(
                 report_date_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 total_number_of_objects_processed=0,
                 clean_operation_outcome=False,
                 return_message=f"Failed to process file {json_file.name}: {str(e)}",
-                detailed_operation_reports=OperationsReport(
-                    expansion_report=ExpansionReport(
-                        number_of_objects_defined=0,
-                        number_of_objects_referenced=0,
-                        missing_ids_list=[],
-                        sources_of_expansion=[]
-                    ),
-                    cleaning_sco_report=CleaningSCOReport(
-                        number_of_scos_cleaned=0,
-                        list_of_stix_ids_where_created_field_was_removed=[],
-                        list_of_stix_ids_where_modified_field_was_removed=[],
-                        list_of_stix_ids_where_other_fields_were_removed=[]
-                    ),
-                    circular_reference_report=CircularReferenceReport(
-                        number_of_circular_references_found=0,
-                        list_of_circular_reference_paths=[],
-                        deleted_fields_and_values=[]
-                    ),
-                    sorting_report=SortingReport(
-                        sorting_successful=False,
-                        sorted_list_of_stix_ids=[],
-                        diagram_of_sorted_dependencies="Failed",
-                        unresolved_references=[]
-                    )
-                )
+                detailed_operation_reports=empty_list_report
             )
             results.append(failure_report)
     
-    # Update all success reports with complete file information
-    complete_file_report = FileReport(
-        number_of_files_processed=len(file_reports),
-        list_of_processed_changes_per_file=file_reports
-    )
-    
-    for report in results:
-        if isinstance(report, CleanStixListSuccessReport):
-            report.detailed_operation_reports.file_report = complete_file_report
+    # Each report now contains its own FileReport with embedded ListReport
     
     return results

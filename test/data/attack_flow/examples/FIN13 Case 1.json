@@ -1,54 +1,7 @@
 {
   "type": "bundle",
-  "id": "bundle--643f5299-a1f4-4ea8-bc58-f2612968190e",
+  "id": "bundle--134b682b-2850-45ed-8a9d-ed9f9205c55a",
   "objects": [
-    {
-      "id": "attack-asset--34ad99a8-0996-41d7-990a-dbeb89b00ce8",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Oracle Web Server",
-      "description": "Exposed server running a vulnerable version of WebLogic"
-    },
-    {
-      "id": "malware--00a06b29-7a3f-41b1-8f2c-8a6ea7d1fe7b",
-      "type": "malware",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": ".weblog.jsp",
-      "description": "a jspRAT that can manipulate files and directories and run arbitrary Windows commands",
-      "malware_types": [
-        "webshell",
-        "remote-access-trojan",
-        "trojan"
-      ],
-      "is_family": false,
-      "capabilities": [
-        "communicates-with-c2",
-        "probes-network-environment",
-        "installs-other-components"
-      ]
-    },
-    {
-      "id": "attack-asset--2d75a947-cbdd-48f9-b890-5ea82f508e73",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "DMZ DNS server"
-    },
     {
       "id": "infrastructure--9df29fec-776c-4950-9ddd-871cd87b9052",
       "type": "infrastructure",
@@ -62,118 +15,10 @@
       ]
     },
     {
-      "id": "attack-condition--4f01bf9f-4880-4568-964c-5daa5a20ce1a",
-      "type": "attack-condition",
+      "id": "file--f347ae73-c5d2-4a40-a7bc-8a8bf64f93d4",
+      "type": "file",
       "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Attacker switched tactics to access SecurID server"
-    },
-    {
-      "id": "threat-actor--0fb5ffcd-5a32-4143-b96a-32be81723dbf",
-      "type": "threat-actor",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "FIN13",
-      "description": "FIN13 is a financially-motivated actor primarily focusing on Latin America with activity stretching back to early 2016. FIN13 has a history of highly localized targeting against the financial, retail, and hospitality industries.",
-      "threat_actor_types": [
-        "Crime-syndicate"
-      ],
-      "aliases": [
-        "Elephant Beetle",
-        "TG2003"
-      ],
-      "first_seen": "2016-01-01T00:00:00.000Z",
-      "roles": [
-        "Director"
-      ],
-      "goals": [
-        "financially-motivated and targeting Latin American organizations in financial, retail, and hospitality industries"
-      ],
-      "sophistication": "Advanced",
-      "resource_level": "Team",
-      "primary_motivation": "organizational-gain"
-    },
-    {
-      "id": "vulnerability--cdab8da6-ae5e-4137-93da-893c2c172e0b",
-      "type": "vulnerability",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "CVE-2019-2729",
-      "description": "Oracle WebLogic Server Deserialization RCE (aka object injection vulnerability) - user-controllable data is deserialized by a website, allowing an attacker to pass harmful data into an application. This vulnerability is exploitable without authentication."
-    },
-    {
-      "id": "tool--705ce69c-2ef3-43eb-8e1d-69ca35801019",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "PowerShell HTTP BindShell",
-      "tool_types": [
-        "remote-access"
-      ]
-    },
-    {
-      "id": "tool--de7ae5b8-64a2-4e60-99a0-0eb85ca9cc4f",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "Added tools",
-      "description": "s0b.j, str-isis.txt, jtds-1.2.1.jar, str-bio.txt",
-      "tool_types": [
-        "exploitation"
-      ]
-    },
-    {
-      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2022-08-02T19:34:35.143Z",
-      "modified": "2022-08-02T19:34:35.143Z",
-      "name": "MITRE Center for Threat-Informed Defense",
-      "identity_class": "organization"
-    },
-    {
-      "id": "malware--5fe11f7c-ce4b-4417-ab25-16cbbc609bd6",
-      "type": "malware",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "WSO PHP webshell",
-      "malware_types": [
-        "webshell"
-      ],
-      "is_family": false,
-      "capabilities": [
-        "communicates-with-c2",
-        "escalates-privileges",
-        "exfiltrates-data",
-        "infects-files",
-        "installs-other-components",
-        "fingerprints-host",
-        "steals-authentication-credentials"
-      ]
-    },
-    {
-      "id": "attack-condition--0e98866c-8f21-4b2c-abdb-9e6bdb0d3dbe",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Identified a cluster of RSA SecurID servers"
+      "name": "srt*.txt"
     },
     {
       "id": "attack-action--96a46807-7785-414b-956c-0ae6a1cdb9a8",
@@ -190,422 +35,10 @@
       "description": "Attacker transferred money from the online banking system"
     },
     {
-      "id": "process--2fd98894-7d8b-4b65-afaa-c8ddeb8dbe4f",
-      "type": "process",
-      "spec_version": "2.1",
-      "command_line": "whoami"
-    },
-    {
-      "id": "tool--1a76d629-1a37-4133-a73b-daccfa9844dc",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "s0b.j",
-      "description": "Accepts base64 encoded SQL queries and uses a configuration file that contains the connection string and credentials of the target database server",
-      "tool_types": [
-        "exploitation"
-      ]
-    },
-    {
-      "id": "file--e08b6551-d0d4-446b-b71b-c295c94e8d67",
-      "type": "file",
-      "spec_version": "2.1",
-      "name": "/etc/shadow"
-    },
-    {
-      "id": "directory--7cf1c5f5-45aa-4aae-a9d5-bffe1309fc13",
-      "type": "directory",
-      "spec_version": "2.1",
-      "path": "/srv/www/htdocs/gif"
-    },
-    {
-      "id": "attack-condition--d8b37caa-b051-4229-a859-139d7ee3000e",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Identified Domain Controller through scan of the Backend DMZ Lan and waited 1 week to attack the AD server"
-    },
-    {
-      "id": "attack-condition--d91bbf42-1a99-4b12-89fd-8f57a0ebbbb2",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Attacker checked for file 65510 in /dev/shm"
-    },
-    {
       "id": "directory--b626e448-b184-43d5-b695-7a4d67f2b60f",
       "type": "directory",
       "spec_version": "2.1",
       "path": "/var/log/apache2/"
-    },
-    {
-      "id": "user-account--f33d628c-e2c5-4884-96a9-15fc06555862",
-      "type": "user-account",
-      "spec_version": "2.1",
-      "display_name": "sqlservice"
-    },
-    {
-      "id": "infrastructure--4a29334f-9c07-44bc-99cc-10445ca03601",
-      "type": "infrastructure",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "web server",
-      "description": "infected web server is used to stage malicious executables for the attacker",
-      "infrastructure_types": [
-        "hosting-malware"
-      ]
-    },
-    {
-      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "type": "identity",
-      "modified": "2025-03-19T15:00:40.855Z",
-      "name": "The MITRE Corporation",
-      "description": "",
-      "identity_class": "organization",
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "x_mitre_attack_spec_version": "3.2.0"
-    },
-    {
-      "id": "attack-condition--81b20953-5fba-4207-a0b9-7805ed28078f",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Gained control of the Zabbix server"
-    },
-    {
-      "id": "attack-condition--f5518d77-b508-4543-a606-17d6d976cc2d",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Attacker logged on to the Backweb server"
-    },
-    {
-      "id": "tool--0caac53e-77c9-4276-a271-0b7e06588718",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "Transferred Tools",
-      "description": "Malicious tools found in Zabbix server: 65.txt (perl webshell), chart10.php (webshell), p.txt (Java port scanner), pr64.zip (procdump64), bi.txt (perl bind shell), s0b.j (Jar that queries db), str-isis.txt (jdbc connection/credential info), jtds-1.2.1.jar (likely jdbc deriver), and str-bio.txt (jdbc connection/credential info)",
-      "tool_types": [
-        "remote-access",
-        "information-gathering",
-        "exploitation",
-        "credential-exploitation"
-      ]
-    },
-    {
-      "id": "directory--11737a10-d109-4024-8a82-79d42eb10175",
-      "type": "directory",
-      "spec_version": "2.1",
-      "path": "/dev/shm"
-    },
-    {
-      "id": "infrastructure--1a978a53-c344-4708-99b9-9b88c4191742",
-      "type": "infrastructure",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "IP Address",
-      "description": "The attacker used IP address 185.193.126.22 to scan the perimeter network and later again to scan the target web server.",
-      "infrastructure_types": [
-        "Reconnaissance"
-      ],
-      "first_seen": "2021-03-01T00:00:00.000Z"
-    },
-    {
-      "id": "attack-asset--4e6f13fe-483c-4212-8a6a-27c0ee977b75",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.905Z",
-      "modified": "2025-07-30T19:47:12.905Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "daily token transactions"
-    },
-    {
-      "id": "tool--f0fa3bab-b1d6-49b4-9c9f-ae8d132a54bb",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "RawCap",
-      "description": "The attacker installed the Java capture tool RawCap to sniff credentials.",
-      "tool_types": [
-        "credential-exploitation"
-      ]
-    },
-    {
-      "id": "attack-condition--c3595f21-9aa4-4c6a-a687-f8916d96bffb",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Discovered a DMZ monitoring server, Auth server, and DMZ DNS server"
-    },
-    {
-      "id": "attack-asset--2ed8001b-8b48-4b91-a302-0cef62b0aba2",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Oracle Identity Manager server"
-    },
-    {
-      "id": "attack-asset--c20f8f3b-8d52-4e7b-bc22-17b8b8dda69f",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.905Z",
-      "modified": "2025-07-30T19:47:12.905Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "domain accounts"
-    },
-    {
-      "id": "attack-condition--28a5ad6a-c051-4d29-9ee3-9fd7637e3945",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Attacker intercepted additional domain and local passwords."
-    },
-    {
-      "id": "tool--ead45881-66db-4866-9fa9-f55192c86ef1",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "PortHole",
-      "description": "Java-based port scanner",
-      "tool_types": [
-        "information-gathering"
-      ]
-    },
-    {
-      "id": "user-account--05a45e84-229e-46ca-94ba-51ef9852c257",
-      "type": "user-account",
-      "spec_version": "2.1",
-      "account_type": "windows-local",
-      "display_name": "customasp"
-    },
-    {
-      "id": "tool--a2cecae8-93cf-4648-a09f-b48aaa8704bf",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "pr64.zip",
-      "description": "renamed procdump",
-      "tool_types": [
-        "credential-exploitation"
-      ]
-    },
-    {
-      "id": "attack-condition--eba88067-cabc-41e2-a8f8-7c0bd2436b3d",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Attacker activated the token recovery procedure for bank users"
-    },
-    {
-      "id": "file--5a85bc98-f407-4aa6-b34d-5f08a2ed1960",
-      "type": "file",
-      "spec_version": "2.1",
-      "name": "/var/log/btmp"
-    },
-    {
-      "id": "identity--6778fe07-3ec3-4b28-a737-1135b8c34eb3",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.903Z",
-      "modified": "2025-07-30T19:47:12.903Z",
-      "name": "Mia Sanchez",
-      "contact_information": "msanschez@mitre.org"
-    },
-    {
-      "id": "infrastructure--043ad1c0-09f8-4b5d-91cd-cdee9f54c754",
-      "type": "infrastructure",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "IP Address",
-      "description": "187.177.170.111",
-      "infrastructure_types": [
-        "Command-and-control"
-      ],
-      "first_seen": "2021-06-01T00:00:00.000Z"
-    },
-    {
-      "id": "attack-condition--18044ef4-83a8-4573-ac79-0ad9a69a4223",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Discovered a vulnerable webserver - Oracle Weblogic"
-    },
-    {
-      "id": "attack-asset--28e50ac0-ab5f-4bac-84bf-85faa7af2e94",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Auth server"
-    },
-    {
-      "id": "attack-asset--bb5d56be-0823-4a76-999f-4b8a13cb49f4",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Oracle IAM server administrative UI"
-    },
-    {
-      "id": "tool--bc72aad0-8921-4be6-a0cb-fb26698c19cc",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "Java Scanner",
-      "tool_types": [
-        "information-gathering"
-      ]
-    },
-    {
-      "id": "file--f347ae73-c5d2-4a40-a7bc-8a8bf64f93d4",
-      "type": "file",
-      "spec_version": "2.1",
-      "name": "srt*.txt"
-    },
-    {
-      "id": "campaign--5733693b-c9aa-418e-ac09-312251d23259",
-      "type": "campaign",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "FIN13 Case 1",
-      "description": "This attack began in March 2021 and targeted a Latin American bank. After exploiting the system, the attackers committed fraud between Sept-Oct 2021, impacting hundreds of accounts and stealing a significant amount of money.",
-      "first_seen": "2021-03-01T00:00:00.000Z",
-      "last_seen": "2021-10-01T00:00:00.000Z",
-      "objective": "stealing money for financial gain"
-    },
-    {
-      "id": "tool--45116e1c-100f-4a86-867a-e1de47ce6466",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "Nmap",
-      "tool_types": [
-        "Information-gathering"
-      ]
-    },
-    {
-      "id": "attack-asset--e18f253a-e3aa-4f98-958e-53be3bb33ef3",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Backweb server",
-      "description": "an internal web portal including domain accounts"
-    },
-    {
-      "id": "ipv4-addr--e8cdf5e7-451f-4a37-a21a-d2125296a7ac",
-      "type": "ipv4-addr",
-      "spec_version": "2.1",
-      "value": "179.6.92.161"
-    },
-    {
-      "id": "file--1ce3f438-bc34-4e7a-b731-4472bb661079",
-      "type": "file",
-      "spec_version": "2.1",
-      "name": "65510"
-    },
-    {
-      "id": "attack-condition--c23ddfc1-2cfb-41e0-901a-e33c1208977c",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Machine responds to the ping sweep"
     },
     {
       "id": "attack-condition--e3caaa44-e11d-46ab-b8c4-b91a6600bae0",
@@ -634,17 +67,97 @@
       "name": "DMZ segment"
     },
     {
-      "id": "user-account--be58553f-e500-43bf-8742-aed3a67c6ea4",
+      "id": "user-account--f33d628c-e2c5-4884-96a9-15fc06555862",
       "type": "user-account",
       "spec_version": "2.1",
-      "account_type": "windows-domain",
-      "display_name": "sysadmin"
+      "display_name": "sqlservice"
     },
     {
-      "id": "directory--b07abfab-73bf-4faf-b347-4ccfe1fa162c",
+      "id": "directory--7cf1c5f5-45aa-4aae-a9d5-bffe1309fc13",
       "type": "directory",
       "spec_version": "2.1",
-      "path": "Windows\\Temp"
+      "path": "/srv/www/htdocs/gif"
+    },
+    {
+      "id": "attack-asset--5a4b12bb-619d-4913-929b-b879a8b1186b",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "service account folder"
+    },
+    {
+      "id": "infrastructure--1a978a53-c344-4708-99b9-9b88c4191742",
+      "type": "infrastructure",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "IP Address",
+      "description": "The attacker used IP address 185.193.126.22 to scan the perimeter network and later again to scan the target web server.",
+      "infrastructure_types": [
+        "Reconnaissance"
+      ],
+      "first_seen": "2021-03-01T00:00:00.000Z"
+    },
+    {
+      "id": "attack-condition--f5518d77-b508-4543-a606-17d6d976cc2d",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Attacker logged on to the Backweb server"
+    },
+    {
+      "id": "tool--45116e1c-100f-4a86-867a-e1de47ce6466",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "Nmap",
+      "tool_types": [
+        "Information-gathering"
+      ]
+    },
+    {
+      "id": "tool--de7ae5b8-64a2-4e60-99a0-0eb85ca9cc4f",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "Added tools",
+      "description": "s0b.j, str-isis.txt, jtds-1.2.1.jar, str-bio.txt",
+      "tool_types": [
+        "exploitation"
+      ]
+    },
+    {
+      "id": "attack-condition--28a5ad6a-c051-4d29-9ee3-9fd7637e3945",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Attacker intercepted additional domain and local passwords."
+    },
+    {
+      "id": "file--e08b6551-d0d4-446b-b71b-c295c94e8d67",
+      "type": "file",
+      "spec_version": "2.1",
+      "name": "/etc/shadow"
     },
     {
       "id": "malware--491784b9-025a-4460-b2ce-b80ad6a10e07",
@@ -666,17 +179,204 @@
       ]
     },
     {
-      "id": "attack-asset--927a6c6f-d696-4f56-9822-1b520d18ef70",
+      "id": "attack-asset--bb5d56be-0823-4a76-999f-4b8a13cb49f4",
       "type": "attack-asset",
       "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.905Z",
-      "modified": "2025-07-30T19:47:12.905Z",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
       "extensions": {
         "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
           "extension_type": "new-sdo"
         }
       },
-      "name": "token serials"
+      "name": "Oracle IAM server administrative UI"
+    },
+    {
+      "id": "user-account--be58553f-e500-43bf-8742-aed3a67c6ea4",
+      "type": "user-account",
+      "spec_version": "2.1",
+      "account_type": "windows-domain",
+      "display_name": "sysadmin"
+    },
+    {
+      "id": "attack-condition--2541e4a4-d068-4278-a455-0afb29baf445",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Using s0b.j, attacker accessed multiple databases, including a database storing the SecurID token serials with corresponding end-user accounts"
+    },
+    {
+      "id": "attack-condition--81b20953-5fba-4207-a0b9-7805ed28078f",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Gained control of the Zabbix server"
+    },
+    {
+      "id": "attack-condition--4f01bf9f-4880-4568-964c-5daa5a20ce1a",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Attacker switched tactics to access SecurID server"
+    },
+    {
+      "id": "directory--11737a10-d109-4024-8a82-79d42eb10175",
+      "type": "directory",
+      "spec_version": "2.1",
+      "path": "/dev/shm"
+    },
+    {
+      "id": "identity--6778fe07-3ec3-4b28-a737-1135b8c34eb3",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.903Z",
+      "modified": "2025-07-30T19:47:12.903Z",
+      "name": "Mia Sanchez",
+      "contact_information": "msanschez@mitre.org"
+    },
+    {
+      "id": "attack-asset--2ed8001b-8b48-4b91-a302-0cef62b0aba2",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Oracle Identity Manager server"
+    },
+    {
+      "id": "attack-condition--d91bbf42-1a99-4b12-89fd-8f57a0ebbbb2",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Attacker checked for file 65510 in /dev/shm"
+    },
+    {
+      "id": "vulnerability--cdab8da6-ae5e-4137-93da-893c2c172e0b",
+      "type": "vulnerability",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "CVE-2019-2729",
+      "description": "Oracle WebLogic Server Deserialization RCE (aka object injection vulnerability) - user-controllable data is deserialized by a website, allowing an attacker to pass harmful data into an application. This vulnerability is exploitable without authentication."
+    },
+    {
+      "id": "attack-asset--2d75a947-cbdd-48f9-b890-5ea82f508e73",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "DMZ DNS server"
+    },
+    {
+      "id": "user-account--873ae4f3-17b0-4dd7-b004-6fd50104bbca",
+      "type": "user-account",
+      "spec_version": "2.1",
+      "display_name": "sqlinstall"
+    },
+    {
+      "id": "malware--00a06b29-7a3f-41b1-8f2c-8a6ea7d1fe7b",
+      "type": "malware",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": ".weblog.jsp",
+      "description": "a jspRAT that can manipulate files and directories and run arbitrary Windows commands",
+      "malware_types": [
+        "webshell",
+        "remote-access-trojan",
+        "trojan"
+      ],
+      "is_family": false,
+      "capabilities": [
+        "communicates-with-c2",
+        "probes-network-environment",
+        "installs-other-components"
+      ]
+    },
+    {
+      "id": "tool--f0fa3bab-b1d6-49b4-9c9f-ae8d132a54bb",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "RawCap",
+      "description": "The attacker installed the Java capture tool RawCap to sniff credentials.",
+      "tool_types": [
+        "credential-exploitation"
+      ]
+    },
+    {
+      "id": "tool--705ce69c-2ef3-43eb-8e1d-69ca35801019",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "PowerShell HTTP BindShell",
+      "tool_types": [
+        "remote-access"
+      ]
+    },
+    {
+      "id": "tool--a2cecae8-93cf-4648-a09f-b48aaa8704bf",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "pr64.zip",
+      "description": "renamed procdump",
+      "tool_types": [
+        "credential-exploitation"
+      ]
+    },
+    {
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "type": "identity",
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "x_mitre_attack_spec_version": "3.2.0"
+    },
+    {
+      "id": "file--5a85bc98-f407-4aa6-b34d-5f08a2ed1960",
+      "type": "file",
+      "spec_version": "2.1",
+      "name": "/var/log/btmp"
     },
     {
       "id": "attack-asset--7fab7a0b-2edc-4d28-88f8-fdb8a88d3edb",
@@ -693,26 +393,7 @@
       "description": "DMZ monitoring service"
     },
     {
-      "id": "url--97b18b6d-7da0-4201-a12a-98dc1247e886",
-      "type": "url",
-      "spec_version": "2.1",
-      "value": "AsyncResponseServiceHttps"
-    },
-    {
-      "id": "attack-asset--5a4b12bb-619d-4913-929b-b879a8b1186b",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "service account folder"
-    },
-    {
-      "id": "attack-condition--2541e4a4-d068-4278-a455-0afb29baf445",
+      "id": "attack-condition--c3595f21-9aa4-4c6a-a687-f8916d96bffb",
       "type": "attack-condition",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.904Z",
@@ -722,32 +403,22 @@
           "extension_type": "new-sdo"
         }
       },
-      "description": "Using s0b.j, attacker accessed multiple databases, including a database storing the SecurID token serials with corresponding end-user accounts"
+      "description": "Discovered a DMZ monitoring server, Auth server, and DMZ DNS server"
     },
     {
-      "id": "attack-asset--334e26d6-dcb4-48e5-a902-144bb13e6d8d",
-      "type": "attack-asset",
+      "id": "tool--ead45881-66db-4866-9fa9-f55192c86ef1",
+      "type": "tool",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.904Z",
       "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "monitoring server"
+      "name": "PortHole",
+      "description": "Java-based port scanner",
+      "tool_types": [
+        "information-gathering"
+      ]
     },
     {
-      "id": "vulnerability--c17bc217-fc16-4916-b7f6-c57e711d1ffb",
-      "type": "vulnerability",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "name": "CWE-309",
-      "description": "Use of Password System for Primary Authentication - the Zabbix root password was also the password for the Oracle Identity Manager server"
-    },
-    {
-      "id": "attack-asset--27de8418-b47e-4bb5-a6cb-1cb672409e81",
+      "id": "attack-asset--c20f8f3b-8d52-4e7b-bc22-17b8b8dda69f",
       "type": "attack-asset",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.905Z",
@@ -757,13 +428,104 @@
           "extension_type": "new-sdo"
         }
       },
-      "name": "RSA SecurID servers"
+      "name": "domain accounts"
     },
     {
-      "id": "user-account--873ae4f3-17b0-4dd7-b004-6fd50104bbca",
-      "type": "user-account",
+      "id": "attack-condition--eba88067-cabc-41e2-a8f8-7c0bd2436b3d",
+      "type": "attack-condition",
       "spec_version": "2.1",
-      "display_name": "sqlinstall"
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Attacker activated the token recovery procedure for bank users"
+    },
+    {
+      "id": "attack-condition--c23ddfc1-2cfb-41e0-901a-e33c1208977c",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Machine responds to the ping sweep"
+    },
+    {
+      "id": "process--2fd98894-7d8b-4b65-afaa-c8ddeb8dbe4f",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "whoami"
+    },
+    {
+      "id": "vulnerability--f9a8f240-ab61-4f10-b74c-1e83abb866f1",
+      "type": "vulnerability",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "Firewall Misconfiguration",
+      "description": "misconfigured firewall allowed the attacker to put the webshell accessible from the Internet by publishing it on a public IP belonging to the victim IPv4 public address space on port TCP/80"
+    },
+    {
+      "id": "tool--bc72aad0-8921-4be6-a0cb-fb26698c19cc",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "Java Scanner",
+      "tool_types": [
+        "information-gathering"
+      ]
+    },
+    {
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "id": "tool--0caac53e-77c9-4276-a271-0b7e06588718",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "Transferred Tools",
+      "description": "Malicious tools found in Zabbix server: 65.txt (perl webshell), chart10.php (webshell), p.txt (Java port scanner), pr64.zip (procdump64), bi.txt (perl bind shell), s0b.j (Jar that queries db), str-isis.txt (jdbc connection/credential info), jtds-1.2.1.jar (likely jdbc deriver), and str-bio.txt (jdbc connection/credential info)",
+      "tool_types": [
+        "remote-access",
+        "information-gathering",
+        "exploitation",
+        "credential-exploitation"
+      ]
+    },
+    {
+      "id": "malware--5fe11f7c-ce4b-4417-ab25-16cbbc609bd6",
+      "type": "malware",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "WSO PHP webshell",
+      "malware_types": [
+        "webshell"
+      ],
+      "is_family": false,
+      "capabilities": [
+        "communicates-with-c2",
+        "escalates-privileges",
+        "exfiltrates-data",
+        "infects-files",
+        "installs-other-components",
+        "fingerprints-host",
+        "steals-authentication-credentials"
+      ]
     },
     {
       "id": "tool--fd2a795d-3027-47d5-b187-f50567280d2c",
@@ -781,13 +543,312 @@
       ]
     },
     {
-      "id": "vulnerability--f9a8f240-ab61-4f10-b74c-1e83abb866f1",
+      "id": "attack-asset--4e6f13fe-483c-4212-8a6a-27c0ee977b75",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.905Z",
+      "modified": "2025-07-30T19:47:12.905Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "daily token transactions"
+    },
+    {
+      "id": "attack-condition--0e98866c-8f21-4b2c-abdb-9e6bdb0d3dbe",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Identified a cluster of RSA SecurID servers"
+    },
+    {
+      "id": "file--1ce3f438-bc34-4e7a-b731-4472bb661079",
+      "type": "file",
+      "spec_version": "2.1",
+      "name": "65510"
+    },
+    {
+      "id": "attack-condition--18044ef4-83a8-4573-ac79-0ad9a69a4223",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Discovered a vulnerable webserver - Oracle Weblogic"
+    },
+    {
+      "id": "threat-actor--0fb5ffcd-5a32-4143-b96a-32be81723dbf",
+      "type": "threat-actor",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "FIN13",
+      "description": "FIN13 is a financially-motivated actor primarily focusing on Latin America with activity stretching back to early 2016. FIN13 has a history of highly localized targeting against the financial, retail, and hospitality industries.",
+      "threat_actor_types": [
+        "Crime-syndicate"
+      ],
+      "aliases": [
+        "Elephant Beetle",
+        "TG2003"
+      ],
+      "first_seen": "2016-01-01T00:00:00.000Z",
+      "roles": [
+        "Director"
+      ],
+      "goals": [
+        "financially-motivated and targeting Latin American organizations in financial, retail, and hospitality industries"
+      ],
+      "sophistication": "Advanced",
+      "resource_level": "Team",
+      "primary_motivation": "organizational-gain"
+    },
+    {
+      "id": "vulnerability--c17bc217-fc16-4916-b7f6-c57e711d1ffb",
       "type": "vulnerability",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.904Z",
       "modified": "2025-07-30T19:47:12.904Z",
-      "name": "Firewall Misconfiguration",
-      "description": "misconfigured firewall allowed the attacker to put the webshell accessible from the Internet by publishing it on a public IP belonging to the victim IPv4 public address space on port TCP/80"
+      "name": "CWE-309",
+      "description": "Use of Password System for Primary Authentication - the Zabbix root password was also the password for the Oracle Identity Manager server"
+    },
+    {
+      "id": "attack-asset--34ad99a8-0996-41d7-990a-dbeb89b00ce8",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Oracle Web Server",
+      "description": "Exposed server running a vulnerable version of WebLogic"
+    },
+    {
+      "id": "attack-asset--28e50ac0-ab5f-4bac-84bf-85faa7af2e94",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Auth server"
+    },
+    {
+      "id": "directory--b07abfab-73bf-4faf-b347-4ccfe1fa162c",
+      "type": "directory",
+      "spec_version": "2.1",
+      "path": "Windows\\Temp"
+    },
+    {
+      "id": "attack-asset--27de8418-b47e-4bb5-a6cb-1cb672409e81",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.905Z",
+      "modified": "2025-07-30T19:47:12.905Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "RSA SecurID servers"
+    },
+    {
+      "id": "attack-asset--927a6c6f-d696-4f56-9822-1b520d18ef70",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.905Z",
+      "modified": "2025-07-30T19:47:12.905Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "token serials"
+    },
+    {
+      "id": "attack-asset--e18f253a-e3aa-4f98-958e-53be3bb33ef3",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Backweb server",
+      "description": "an internal web portal including domain accounts"
+    },
+    {
+      "id": "campaign--5733693b-c9aa-418e-ac09-312251d23259",
+      "type": "campaign",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "FIN13 Case 1",
+      "description": "This attack began in March 2021 and targeted a Latin American bank. After exploiting the system, the attackers committed fraud between Sept-Oct 2021, impacting hundreds of accounts and stealing a significant amount of money.",
+      "first_seen": "2021-03-01T00:00:00.000Z",
+      "last_seen": "2021-10-01T00:00:00.000Z",
+      "objective": "stealing money for financial gain"
+    },
+    {
+      "id": "attack-asset--334e26d6-dcb4-48e5-a902-144bb13e6d8d",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "monitoring server"
+    },
+    {
+      "id": "infrastructure--4a29334f-9c07-44bc-99cc-10445ca03601",
+      "type": "infrastructure",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "web server",
+      "description": "infected web server is used to stage malicious executables for the attacker",
+      "infrastructure_types": [
+        "hosting-malware"
+      ]
+    },
+    {
+      "id": "url--97b18b6d-7da0-4201-a12a-98dc1247e886",
+      "type": "url",
+      "spec_version": "2.1",
+      "value": "AsyncResponseServiceHttps"
+    },
+    {
+      "id": "attack-condition--d8b37caa-b051-4229-a859-139d7ee3000e",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Identified Domain Controller through scan of the Backend DMZ Lan and waited 1 week to attack the AD server"
+    },
+    {
+      "id": "tool--1a76d629-1a37-4133-a73b-daccfa9844dc",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "s0b.j",
+      "description": "Accepts base64 encoded SQL queries and uses a configuration file that contains the connection string and credentials of the target database server",
+      "tool_types": [
+        "exploitation"
+      ]
+    },
+    {
+      "id": "infrastructure--043ad1c0-09f8-4b5d-91cd-cdee9f54c754",
+      "type": "infrastructure",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "name": "IP Address",
+      "description": "187.177.170.111",
+      "infrastructure_types": [
+        "Command-and-control"
+      ],
+      "first_seen": "2021-06-01T00:00:00.000Z"
+    },
+    {
+      "id": "user-account--05a45e84-229e-46ca-94ba-51ef9852c257",
+      "type": "user-account",
+      "spec_version": "2.1",
+      "account_type": "windows-local",
+      "display_name": "customasp"
+    },
+    {
+      "id": "ipv4-addr--e8cdf5e7-451f-4a37-a21a-d2125296a7ac",
+      "type": "ipv4-addr",
+      "spec_version": "2.1",
+      "value": "179.6.92.161"
+    },
+    {
+      "id": "attack-operator--7fb8210d-6eb7-4dcd-a252-5da5db1edf2e",
+      "type": "attack-operator",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.904Z",
+      "modified": "2025-07-30T19:47:12.904Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "operator": "AND",
+      "effect_refs": [
+        "attack-condition--81b20953-5fba-4207-a0b9-7805ed28078f"
+      ]
+    },
+    {
+      "id": "relationship--7f14fafe-2cd4-4682-b7b7-2e47075c375c",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.905Z",
+      "modified": "2025-07-30T19:47:12.905Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-condition--d91bbf42-1a99-4b12-89fd-8f57a0ebbbb2",
+      "target_ref": "directory--11737a10-d109-4024-8a82-79d42eb10175"
+    },
+    {
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      },
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "definition_type": "statement"
+    },
+    {
+      "id": "note--24c015f4-bf09-4656-91fb-0ed679e3b21d",
+      "type": "note",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.905Z",
+      "modified": "2025-07-30T19:47:12.905Z",
+      "content": "showed the failed SSH connection attempts, indicating a dictionary-based access attempts",
+      "authors": [
+        "Lauren Parker"
+      ],
+      "object_refs": [
+        "file--5a85bc98-f407-4aa6-b34d-5f08a2ed1960"
+      ]
+    },
+    {
+      "id": "relationship--a4287721-d858-4643-ace8-526d220f8335",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.905Z",
+      "modified": "2025-07-30T19:47:12.905Z",
+      "relationship_type": "related-to",
+      "source_ref": "attack-condition--c3595f21-9aa4-4c6a-a687-f8916d96bffb",
+      "target_ref": "attack-asset--2d75a947-cbdd-48f9-b890-5ea82f508e73"
     },
     {
       "id": "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
@@ -817,65 +878,14 @@
       ]
     },
     {
-      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
-      "type": "marking-definition",
-      "definition": {
-        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
-      },
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "definition_type": "statement"
-    },
-    {
-      "id": "attack-operator--7fb8210d-6eb7-4dcd-a252-5da5db1edf2e",
-      "type": "attack-operator",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.904Z",
-      "modified": "2025-07-30T19:47:12.904Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "operator": "AND",
-      "effect_refs": [
-        "attack-condition--81b20953-5fba-4207-a0b9-7805ed28078f"
-      ]
-    },
-    {
-      "id": "relationship--7f14fafe-2cd4-4682-b7b7-2e47075c375c",
+      "id": "relationship--dc230760-f8bd-4088-af03-aeb292a21d01",
       "type": "relationship",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.905Z",
       "modified": "2025-07-30T19:47:12.905Z",
       "relationship_type": "related-to",
       "source_ref": "attack-condition--d91bbf42-1a99-4b12-89fd-8f57a0ebbbb2",
-      "target_ref": "directory--11737a10-d109-4024-8a82-79d42eb10175"
-    },
-    {
-      "id": "relationship--a4287721-d858-4643-ace8-526d220f8335",
-      "type": "relationship",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.905Z",
-      "modified": "2025-07-30T19:47:12.905Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-condition--c3595f21-9aa4-4c6a-a687-f8916d96bffb",
-      "target_ref": "attack-asset--2d75a947-cbdd-48f9-b890-5ea82f508e73"
-    },
-    {
-      "id": "note--24c015f4-bf09-4656-91fb-0ed679e3b21d",
-      "type": "note",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.905Z",
-      "modified": "2025-07-30T19:47:12.905Z",
-      "content": "showed the failed SSH connection attempts, indicating a dictionary-based access attempts",
-      "authors": [
-        "Lauren Parker"
-      ],
-      "object_refs": [
-        "file--5a85bc98-f407-4aa6-b34d-5f08a2ed1960"
-      ]
+      "target_ref": "file--1ce3f438-bc34-4e7a-b731-4472bb661079"
     },
     {
       "id": "relationship--fa70a9f9-5a5f-452f-9e95-8947f2904876",
@@ -888,14 +898,14 @@
       "target_ref": "attack-asset--28e50ac0-ab5f-4bac-84bf-85faa7af2e94"
     },
     {
-      "id": "relationship--5b75a772-df39-40aa-8801-f7fcf4d69987",
+      "id": "relationship--ebaecf99-0efa-4d75-a40c-523d4ca12460",
       "type": "relationship",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.905Z",
       "modified": "2025-07-30T19:47:12.905Z",
       "relationship_type": "related-to",
-      "source_ref": "tool--1a76d629-1a37-4133-a73b-daccfa9844dc",
-      "target_ref": "file--f347ae73-c5d2-4a40-a7bc-8a8bf64f93d4"
+      "source_ref": "attack-condition--0e98866c-8f21-4b2c-abdb-9e6bdb0d3dbe",
+      "target_ref": "attack-asset--27de8418-b47e-4bb5-a6cb-1cb672409e81"
     },
     {
       "id": "relationship--f273d77f-6238-45d7-9eb9-33c2117c4a04",
@@ -908,26 +918,6 @@
       "target_ref": "threat-actor--0fb5ffcd-5a32-4143-b96a-32be81723dbf"
     },
     {
-      "id": "relationship--16071f42-bdc0-45b7-b366-e7eab06baba5",
-      "type": "relationship",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.905Z",
-      "modified": "2025-07-30T19:47:12.905Z",
-      "relationship_type": "related-to",
-      "source_ref": "infrastructure--9df29fec-776c-4950-9ddd-871cd87b9052",
-      "target_ref": "ipv4-addr--e8cdf5e7-451f-4a37-a21a-d2125296a7ac"
-    },
-    {
-      "id": "relationship--dc230760-f8bd-4088-af03-aeb292a21d01",
-      "type": "relationship",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.905Z",
-      "modified": "2025-07-30T19:47:12.905Z",
-      "relationship_type": "related-to",
-      "source_ref": "attack-condition--d91bbf42-1a99-4b12-89fd-8f57a0ebbbb2",
-      "target_ref": "file--1ce3f438-bc34-4e7a-b731-4472bb661079"
-    },
-    {
       "id": "relationship--3e1d53d2-4de6-414c-92de-86c090624bea",
       "type": "relationship",
       "spec_version": "2.1",
@@ -938,14 +928,24 @@
       "target_ref": "attack-asset--334e26d6-dcb4-48e5-a902-144bb13e6d8d"
     },
     {
-      "id": "relationship--ebaecf99-0efa-4d75-a40c-523d4ca12460",
+      "id": "relationship--5b75a772-df39-40aa-8801-f7fcf4d69987",
       "type": "relationship",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.905Z",
       "modified": "2025-07-30T19:47:12.905Z",
       "relationship_type": "related-to",
-      "source_ref": "attack-condition--0e98866c-8f21-4b2c-abdb-9e6bdb0d3dbe",
-      "target_ref": "attack-asset--27de8418-b47e-4bb5-a6cb-1cb672409e81"
+      "source_ref": "tool--1a76d629-1a37-4133-a73b-daccfa9844dc",
+      "target_ref": "file--f347ae73-c5d2-4a40-a7bc-8a8bf64f93d4"
+    },
+    {
+      "id": "relationship--16071f42-bdc0-45b7-b366-e7eab06baba5",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.905Z",
+      "modified": "2025-07-30T19:47:12.905Z",
+      "relationship_type": "related-to",
+      "source_ref": "infrastructure--9df29fec-776c-4950-9ddd-871cd87b9052",
+      "target_ref": "ipv4-addr--e8cdf5e7-451f-4a37-a21a-d2125296a7ac"
     },
     {
       "id": "x-mitre-tactic--daa4cbb1-b4f4-4723-a824-7f1efd6e0592",
@@ -1213,34 +1213,6 @@
       ]
     },
     {
-      "id": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0003",
-          "external_id": "TA0003"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:33.492Z",
-      "name": "Persistence",
-      "description": "The adversary is trying to maintain their foothold.\n\nPersistence consists of techniques that adversaries use to keep access to systems across restarts, changed credentials, and other interruptions that could cut off their access. Techniques used for persistence include any access, action, or configuration changes that let them maintain their foothold on systems, such as replacing or hijacking legitimate code or adding startup code. ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "persistence"
-    },
-    {
       "id": "attack-pattern--5d0d3609-d06d-49e1-b9c9-b544e0c618cb",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -1314,6 +1286,62 @@
       ]
     },
     {
+      "id": "x-mitre-tactic--5bc1d813-693e-4823-9961-abf9af4b0e92",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0003",
+          "external_id": "TA0003"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:33.492Z",
+      "name": "Persistence",
+      "description": "The adversary is trying to maintain their foothold.\n\nPersistence consists of techniques that adversaries use to keep access to systems across restarts, changed credentials, and other interruptions that could cut off their access. Techniques used for persistence include any access, action, or configuration changes that let them maintain their foothold on systems, such as replacing or hijacking legitimate code or adding startup code. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "persistence"
+    },
+    {
+      "id": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0007",
+          "external_id": "TA0007"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:35.302Z",
+      "name": "Discovery",
+      "description": "The adversary is trying to figure out your environment.\n\nDiscovery consists of techniques an adversary may use to gain knowledge about the system and internal network. These techniques help adversaries observe the environment and orient themselves before deciding how to act. They also allow adversaries to explore what they can control and what’s around their entry point in order to discover how it could benefit their current objective. Native operating system tools are often used toward this post-compromise information-gathering objective. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "discovery"
+    },
+    {
       "id": "attack-pattern--e3a12395-188d-4051-9a16-ea8e14d07b88",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -1380,62 +1408,6 @@
         "Command: Command Execution",
         "Cloud Service: Cloud Service Enumeration"
       ]
-    },
-    {
-      "id": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0007",
-          "external_id": "TA0007"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:35.302Z",
-      "name": "Discovery",
-      "description": "The adversary is trying to figure out your environment.\n\nDiscovery consists of techniques an adversary may use to gain knowledge about the system and internal network. These techniques help adversaries observe the environment and orient themselves before deciding how to act. They also allow adversaries to explore what they can control and what’s around their entry point in order to discover how it could benefit their current objective. Native operating system tools are often used toward this post-compromise information-gathering objective. ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "discovery"
-    },
-    {
-      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0011",
-          "external_id": "TA0011"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:36.561Z",
-      "name": "Command and Control",
-      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "command-and-control"
     },
     {
       "id": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
@@ -1527,6 +1499,34 @@
         "Command: Command Execution",
         "Network Traffic: Network Connection Creation"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0011",
+          "external_id": "TA0011"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:36.561Z",
+      "name": "Command and Control",
+      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "command-and-control"
     },
     {
       "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
@@ -1743,34 +1743,6 @@
       ]
     },
     {
-      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0006",
-          "external_id": "TA0006"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:32.408Z",
-      "name": "Credential Access",
-      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "credential-access"
-    },
-    {
       "id": "attack-pattern--3fc9b85a-2862-4363-a64d-d692e3ffbee0",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -1824,6 +1796,34 @@
         "Process: Process Creation",
         "Process: OS API Execution"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0006",
+          "external_id": "TA0006"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:32.408Z",
+      "name": "Credential Access",
+      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "credential-access"
     },
     {
       "id": "attack-pattern--db8f5003-3b20-48f0-9b76-123e44208120",

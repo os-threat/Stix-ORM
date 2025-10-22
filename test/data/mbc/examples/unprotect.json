@@ -1,9 +1,9 @@
 {
   "type": "bundle",
-  "id": "bundle--a24c8224-c148-4dfb-8f52-df0f9f463bf9",
+  "id": "bundle--5c99985d-47e4-428b-bbc4-016a7ad0ff71",
   "objects": [
     {
-      "id": "malware-objective--a624a7a-ef64-46ce-b582-b963b7d6113f",
+      "id": "malware-objective--a624a7aa-ef64-46ce-b582-b963b7d6113f",
       "type": "malware-objective",
       "spec_version": "2.1",
       "created": "2023-04-21T00:00:00.000Z",
@@ -36,7 +36,7 @@
         "gettickcount"
       ],
       "objective_refs": [
-        "malware-objective--a624a7a-ef64-46ce-b582-b963b7d6113f"
+        "malware-objective--a624a7aa-ef64-46ce-b582-b963b7d6113f"
       ],
       "detection_rules": [
         {

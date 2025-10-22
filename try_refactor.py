@@ -238,6 +238,14 @@ def backdoor_add_dir(dirpath):
                     # logger.debug('----------------------------------------------------------------------------------------------------')
                     # layers, indexes, missing, cyclical = update_layers(layers, indexes, missing, dep_obj, cyclical)
 
+    # Deduplicate objects by ID before cleaning
+    unique_objects = {}
+    for obj in obj_list:
+        obj_id = obj.get('id')
+        if obj_id and obj_id not in unique_objects:
+            unique_objects[obj_id] = obj
+    obj_list = list(unique_objects.values())
+    print(f'\nDeduplication: Reduced from {len(id_list)} to {len(obj_list)} unique objects')
     
     cleaned_objects, report = clean_stix_list(obj_list)
     newlist = []
@@ -262,8 +270,40 @@ def backdoor_add_dir(dirpath):
         print(upload_string)
         type_ql_list.append(upload_string)
 
-    # add list of strings to typedb
-    load_typeql_data(type_ql_list, connection)
+    # Two-pass loading to handle forward references
+    # Pass 1: Load objects without dependencies (objects that don't require matches)
+    # Pass 2: Load objects with dependencies (objects that require matches)
+    
+    independent_queries = []
+    dependent_queries = []
+    
+    for query in type_ql_list:
+        if query.strip().startswith('match '):
+            dependent_queries.append(query)
+        else:
+            independent_queries.append(query)
+    
+    print(f"\n=== TWO-PASS LOADING ===")
+    print(f"Pass 1: Loading {len(independent_queries)} independent objects")
+    print(f"Pass 2: Loading {len(dependent_queries)} dependent objects")
+    
+    # Pass 1: Load independent objects
+    if independent_queries:
+        try:
+            load_typeql_data(independent_queries, connection)
+            print(f"✅ Pass 1 completed successfully")
+        except Exception as e:
+            print(f"❌ Pass 1 failed: {e}")
+    
+    # Pass 2: Load dependent objects
+    if dependent_queries:
+        try:
+            load_typeql_data(dependent_queries, connection)
+            print(f"✅ Pass 2 completed successfully")
+        except Exception as e:
+            print(f"❌ Pass 2 failed: {e}")
+    
+    # Check results
     id_set = set(id_list)
     id_typedb = set(get_stix_ids())
     len_files = len(id_set)

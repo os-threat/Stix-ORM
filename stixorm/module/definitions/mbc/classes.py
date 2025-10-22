@@ -108,6 +108,7 @@ class DetectionRule(_STIXBase21):
         ('description', StringProperty()),
         ('detection-rule', ListProperty(StringProperty)),
         ('api_fncs', ListProperty(StringProperty)),
+        ('class', StringProperty()),  # Added to support class field in MBC data
     ])
 
 

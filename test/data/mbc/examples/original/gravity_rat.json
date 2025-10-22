@@ -15,7 +15,7 @@
             }
         ],
         "extensions": {
-            "extension-definition--8e9e338f-c9ee-4d4f-8cac-85b4dcfdf3c": {
+            "extension-definition--8e9e338f-c9ee-4d4f-8cac-85b4dcfdf3c1": {
                 "extension_type": "property-extension",
                 "obj_defn": {
                     "source_name": "mbc",
@@ -33,7 +33,7 @@
     {
         "type": "relationship",
         "spec_version": "2.1",
-        "id": "relationship--1ca370e5-6fd3-4f7a-bd04-7bb3ab37b3db",
+        "id": "relationship--317b8221-af95-4f8c-baea-51085fe1e986",
         "created": "2023-05-03T00:00:00.000Z",
         "modified": "2023-05-03T00:00:00.000Z",
         "relationship_type": "uses",
@@ -44,7 +44,7 @@
     {
         "type": "relationship",
         "spec_version": "2.1",
-        "id": "relationship--39c88be9-803c-46fe-9ba2-5a465a2b3218",
+        "id": "relationship--46271d16-fd2c-4cc2-a9ea-89c815606c2a",
         "created": "2023-05-03T00:00:00.000Z",
         "modified": "2023-05-03T00:00:00.000Z",
         "relationship_type": "related-to",

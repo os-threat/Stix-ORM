@@ -17,15 +17,16 @@ Create a comprehensive STIX cleaning module with the following deliverables:
 1. **`clean_stix_list()`** - Process STIX objects directly from memory
 2. **`clean_stix_directory()`** - Process STIX files from filesystem with organization
 
-### Processing Pipeline (6 Sequential Operations)
+### Processing Pipeline (7 Sequential Operations)
 
-Both functions must execute the same 6-step cleaning pipeline on every STIX object collection:
+Both functions must execute the same 7-step cleaning pipeline on every STIX object collection:
 
-**Step 1-2: Object Expansion** (Two-round expansion for transitive dependencies)
-**Step 3: SCO Field Cleaning** (Remove forbidden fields from STIX Cyber Observables)
-**Step 4: Circular Reference Resolution** (Break dependency cycles)
-**Step 5: Dependency Sorting** (Topological ordering)
-**Step 6: Comprehensive Reporting** (Detailed operation tracking)
+**Step 1: Object Deduplication** (Remove duplicate objects by STIX ID)
+**Step 2-3: Object Expansion** (Two-round expansion for transitive dependencies)
+**Step 4: SCO Field Cleaning** (Remove forbidden fields from STIX Cyber Observables)
+**Step 5: Circular Reference Resolution** (Break dependency cycles)
+**Step 6: Dependency Sorting** (Topological ordering)
+**Step 7: Comprehensive Reporting** (Detailed operation tracking)
 
 ### File Organization Strategy (Directory Processing)
 
@@ -72,9 +73,23 @@ def clean_stix_directory(directory_path: str, clean_sco_fields: bool = False) ->
     """
 ```
 
-## 2. Six Operations Specification (Apply to Every STIX List)
+## 2. Seven Operations Specification (Apply to Every STIX List)
 
-### Operation 1: Object Expansion (Round 1)
+### Operation 1: Object Deduplication
+
+**Objective**: Remove duplicate STIX objects that share the same ID to prevent database constraint violations.
+
+**Algorithm**:
+
+1. Create a dictionary keyed by STIX ID
+2. Iterate through all objects and keep only the first occurrence of each ID
+3. Return deduplicated object list maintaining original order where possible
+
+**Rationale**: When processing multiple STIX files, common objects (like identity and marking-definition objects) often appear in multiple files, causing unique key constraint violations during database insertion.
+
+**Output**: Deduplicated object list + DeduplicationReport
+
+### Operation 2: Object Expansion (Round 1)
 
 **Objective**: Expand STIX objects by fetching missing referenced objects from external sources.
 
@@ -96,17 +111,17 @@ def clean_stix_directory(directory_path: str, clean_sco_fields: bool = False) ->
 
 **Output**: Expanded object list + ExpansionReport
 
-### Operation 2: Object Expansion (Round 2)
+### Operation 3: Object Expansion (Round 2)
 
 **Objective**: Handle transitive dependencies introduced by newly added objects.
 
-**Algorithm**: Repeat Operation 1 logic on the expanded dataset from Operation 1.
+**Algorithm**: Repeat Operation 2 logic on the expanded dataset from Operation 2.
 
 **Rationale**: New objects may reference additional objects not yet in the collection.
 
 **Output**: Fully expanded object list + Updated ExpansionReport
 
-### Operation 3: SCO Field Cleaning (Conditional)
+### Operation 4: SCO Field Cleaning (Conditional)
 
 **Objective**: Remove forbidden fields from STIX Cyber Observable (SCO) objects.
 
@@ -125,11 +140,12 @@ is_sco = get_group_from_type(stix_type) == "sco"
 - `modified` (forbidden in STIX spec for SCOs)
 - Any other non-specification fields
 
-**Output**: 
+**Output**:
+
 - When `clean_sco_fields=True`: Cleaned object list + CleaningSCOReport
 - When `clean_sco_fields=False`: Unchanged object list + Empty CleaningSCOReport
 
-### Operation 4: Circular Reference Resolution
+### Operation 5: Circular Reference Resolution
 
 **Objective**: Detect and break circular reference chains to enable dependency sorting.
 
@@ -142,10 +158,11 @@ is_sco = get_group_from_type(stix_type) == "sco"
 
 1. **Self-Reference**: Delete the referencing field
 2. **Identity ↔ Marking Definition**: Remove `object_marking_refs` from Identity if the marking definition object referenced has "created_by_ref" pointing back to the Identity
+3. **Malware Behavior ↔ Malware Method**: Remove the `behavior_ref` field from the malware method if the malware behavior object it points to references back to the malware method in the `detect_ref` or `examplify_ref` fields
 
 **Output**: Acyclic object list + CircularReferenceReport
 
-### Operation 5: Dependency Sorting
+### Operation 6: Dependency Sorting
 
 **Objective**: Topologically sort objects so referenced objects appear before referencing objects.
 
@@ -160,13 +177,13 @@ is_sco = get_group_from_type(stix_type) == "sco"
 
 **Output**: Dependency-sorted object list + SortingReport
 
-### Operation 6: Comprehensive Reporting
+### Operation 7: Comprehensive Reporting
 
 **Objective**: Aggregate all operation results into final success/failure report.
 
 **Process**:
 
-1. Collect reports from Operations 1-5
+1. Collect reports from Operations 1-6
 2. Determine overall success/failure status
 3. Generate timestamp and summary statistics
 4. Package into appropriate report type
@@ -196,6 +213,12 @@ class StixBundle(BaseModel):
 ### 3.2 Operation Report Models
 
 ```python
+class DeduplicationReport(BaseModel):
+    number_of_objects_before_deduplication: int
+    number_of_objects_after_deduplication: int
+    number_of_duplicates_removed: int
+    list_of_duplicate_stix_ids: List[str]
+
 class ExpansionReport(BaseModel):
     number_of_objects_defined: int
     number_of_objects_referenced: int
@@ -208,14 +231,21 @@ class CleaningSCOReport(BaseModel):
     list_of_stix_ids_where_modified_field_was_removed: List[str]
     list_of_stix_ids_where_other_fields_were_removed: List[Dict[str, List[str]]]  # [{"stix_id": str, "removed_fields": List[str]}]
 
-class DeletedFieldAndValue(BaseModel):
-    field_name: str
-    deleted_value: Union[str, List[str], Dict]
+class DeletedFieldAndValues(BaseModel):
+    stix_id: str # of the object where the field is deleted
+    field_name: str # field name deleted
+    deleted_value: Union[str, List[str]] # Stix_id or list of Stix_id's referenced by the deleted field
+
+class OperationTiming(BaseModel):
+    operation_name: str
+    start_time: str  # Format: "%Y-%m-%d %H:%M:%S.%f"
+    end_time: str    # Format: "%Y-%m-%d %H:%M:%S.%f"
+    duration_seconds: float
 
 class CircularReferenceReport(BaseModel):
     number_of_circular_references_found: int
     list_of_circular_reference_paths: List[List[str]]  # Each inner list represents a circular path
-    deleted_fields_and_values: List[Dict[str, List[DeletedFieldAndValue]]]  # [{"stix_id": str, "deleted_fields": List[DeletedFieldAndValue]}]
+    deleted_fields_and_values: List[DeletedFieldAndValues]  # [{"stix_id": str, "deleted_fields": List[DeletedFieldAndValue]}]
 
 class SortingReport(BaseModel):
     sorting_successful: bool
@@ -223,38 +253,40 @@ class SortingReport(BaseModel):
     diagram_of_sorted_dependencies: str  # String representation of dependency graph
     unresolved_references: List[str]
 
-class SingleFileReport(BaseModel):
+class ListReport(BaseModel):
+    deduplication_report: DeduplicationReport
+    expansion_report: ExpansionReport
+    cleaning_sco_report: CleaningSCOReport
+    circular_reference_report: CircularReferenceReport
+    sorting_report: SortingReport
+    operation_timings: List[OperationTiming]  # Time measurements for each of the 7 operations
+    total_processing_time_seconds: float  # Sum of all operation durations
+
+class FileReport(BaseModel):
+    directory_path: str
     original_file_name: str
     original_file_path: str
     updated_file_name: str
     updated_file_path: str
     report_file_name: str
     report_file_path: str
+    operations_report: ListReport
+    total_processing_time_seconds: float
 
-class FileReport(BaseModel):
-    number_of_files_processed: int
-    list_of_processed_changes_per_file: List[SingleFileReport]
-
-class OperationsReport(BaseModel):
-    expansion_report: ExpansionReport
-    cleaning_sco_report: CleaningSCOReport
-    circular_reference_report: CircularReferenceReport
-    sorting_report: SortingReport
-    file_report: Optional[FileReport] = None
 
 class CleanStixListSuccessReport(BaseModel):
     report_date_time: str  # Format: "%Y-%m-%d %H:%M:%S"
     total_number_of_objects_processed: int
     clean_operation_outcome: Literal[True]
     return_message: str
-    detailed_operation_reports: OperationsReport
+    detailed_operation_reports: Union[FileReport, ListReport]
 
 class CleanStixListFailureReport(BaseModel):
     report_date_time: str  # Format: "%Y-%m-%d %H:%M:%S"
     total_number_of_objects_processed: int
     clean_operation_outcome: Literal[False]
     return_message: str
-    detailed_operation_reports: OperationsReport
+    detailed_operation_reports: Union[FileReport, ListReport]
 ```
 
 ## 4. File Organization Rules (Directory Processing Only)
@@ -327,13 +359,18 @@ class CleanStixListFailureReport(BaseModel):
 - **Memory Management**: Process large datasets efficiently
 - **Caching**: Cache external source data during processing session
 - **Batch Processing**: Minimize network round-trips where possible
+- **Operation Timing Requirements**:
+  - Measure precise timing for each of the 7 operations per STIX list processed
+  - Use OperationTiming class with microsecond precision timestamps
+  - Calculate total_processing_time_seconds as sum of individual operation durations
+  - For directory processing, FileReport timing covers file I/O + ListReport timing for list operations
 
 ## 7. Documentation Requirements
 
 Create comprehensive `clean_list_or_bundle.md` documentation including:
 
 - **Function Reference**: Complete signatures and parameters
-- **Workflow Diagrams**: Visual representation of 6-operation pipeline
+- **Workflow Diagrams**: Visual representation of 7-operation pipeline
 - **Usage Examples**: Code examples for both functions
 - **Model Reference**: Complete Pydantic model documentation
 - **Error Handling**: Common error patterns and solutions

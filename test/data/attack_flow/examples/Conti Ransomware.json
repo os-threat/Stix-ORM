@@ -1,103 +1,13 @@
 {
   "type": "bundle",
-  "id": "bundle--42e74d1d-9320-41e3-a7e6-1ef6e1aa489f",
+  "id": "bundle--6e9b6b98-170b-414c-b647-d7f0a7eb9236",
   "objects": [
-    {
-      "id": "attack-asset--98664a49-6df3-4b14-aa0e-91a911151517",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.773Z",
-      "modified": "2025-07-30T19:47:12.773Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Admin shares"
-    },
-    {
-      "id": "tool--c91f15b0-bd6f-4980-8384-082dfb37a952",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.773Z",
-      "modified": "2025-07-30T19:47:12.773Z",
-      "name": "Psexec",
-      "tool_types": [
-        "remote-access"
-      ]
-    },
     {
       "id": "user-account--023a9b4a-a76d-4af3-b769-2845daad5cb0",
       "type": "user-account",
       "spec_version": "2.1",
       "account_type": "windows-domain",
       "display_name": "nuuser"
-    },
-    {
-      "id": "attack-condition--e9da9ad8-37a3-4bbe-9ec7-95cfab867d96",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.773Z",
-      "modified": "2025-07-30T19:47:12.773Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "IcedID malware went quiet for 2 days"
-    },
-    {
-      "id": "attack-asset--da35e072-b1c8-4835-812c-bed410e4a10d",
-      "type": "attack-asset",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.773Z",
-      "modified": "2025-07-30T19:47:12.773Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "name": "Domain Controllers"
-    },
-    {
-      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2022-08-02T19:34:35.143Z",
-      "modified": "2022-08-02T19:34:35.143Z",
-      "name": "MITRE Center for Threat-Informed Defense",
-      "identity_class": "organization"
-    },
-    {
-      "id": "course-of-action--c0e08841-d642-43f8-9c02-ef9535168f13",
-      "type": "course-of-action",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.773Z",
-      "modified": "2025-07-30T19:47:12.773Z",
-      "name": "Firewall Configurations",
-      "description": "allowed connections through the firewall on the domain controllers"
-    },
-    {
-      "id": "tool--9502bfd2-cc01-4b88-8451-4092879e9365",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.773Z",
-      "modified": "2025-07-30T19:47:12.773Z",
-      "name": "net.exe",
-      "tool_types": [
-        "information-gathering"
-      ]
-    },
-    {
-      "id": "tool--acb7026b-0b81-40c9-b7d6-f5ee333c24fc",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.773Z",
-      "modified": "2025-07-30T19:47:12.773Z",
-      "name": "nltest.exe",
-      "tool_types": [
-        "information-gathering"
-      ]
     },
     {
       "id": "attack-condition--534de596-fd76-447b-a244-7549d501e222",
@@ -113,53 +23,19 @@
       "description": "Conti is executed in memory using Cobalt Strike Beacons domain-wide"
     },
     {
-      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "type": "identity",
-      "modified": "2025-03-19T15:00:40.855Z",
-      "name": "The MITRE Corporation",
-      "description": "",
-      "identity_class": "organization",
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "x_mitre_attack_spec_version": "3.2.0"
-    },
-    {
-      "id": "identity--5cf1ca4e-0879-46bf-9b91-8c5c4ef29a28",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.773Z",
-      "modified": "2025-07-30T19:47:12.773Z",
-      "name": "Alaa Nasser"
-    },
-    {
-      "id": "tool--1831f55d-27f6-4ed6-86b0-f58453b02d43",
+      "id": "tool--c91f15b0-bd6f-4980-8384-082dfb37a952",
       "type": "tool",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.773Z",
       "modified": "2025-07-30T19:47:12.773Z",
-      "name": "rundll32.exe",
+      "name": "Psexec",
       "tool_types": [
-        "Unknown"
+        "remote-access"
       ]
     },
     {
-      "id": "tool--21748dc0-729d-48ad-ade0-34af41c962c4",
-      "type": "tool",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.773Z",
-      "modified": "2025-07-30T19:47:12.773Z",
-      "name": "dsquery",
-      "description": "Used to enumerate what networks were present in the environment"
-    },
-    {
-      "id": "process--a3634015-af4d-4c6a-baa1-7b8d438b700b",
-      "type": "process",
-      "spec_version": "2.1",
-      "command_line": "“named pipe impersonation\""
-    },
-    {
-      "id": "attack-condition--387968cd-25e3-4867-ae68-4893a32bce0f",
-      "type": "attack-condition",
+      "id": "attack-asset--da35e072-b1c8-4835-812c-bed410e4a10d",
+      "type": "attack-asset",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.773Z",
       "modified": "2025-07-30T19:47:12.773Z",
@@ -168,7 +44,21 @@
           "extension_type": "new-sdo"
         }
       },
-      "description": "The attackers went quiet for 15 minutes"
+      "name": "Domain Controllers"
+    },
+    {
+      "id": "attack-asset--f4a90ba8-b4db-481d-8dfa-c07368d62e1a",
+      "type": "attack-asset",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.773Z",
+      "modified": "2025-07-30T19:47:12.773Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "name": "Scanned Ports",
+      "description": "ports 22, 135, 445, 1433, 1434, 3389, 4343, 5000, 5985"
     },
     {
       "id": "tool--1e8a9396-74e5-4993-81ce-0d5e005031e0",
@@ -180,15 +70,6 @@
       "tool_types": [
         "information-gathering"
       ]
-    },
-    {
-      "id": "infrastructure--ff48a8f3-4738-43d8-a708-a7474f90da39",
-      "type": "infrastructure",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.773Z",
-      "modified": "2025-07-30T19:47:12.773Z",
-      "name": "Proxy",
-      "description": "Allowed connections proxied through a redirector (38.135.122.194:8080) passing through the IcedID process"
     },
     {
       "id": "malware--df317a47-9716-4fb4-9436-b7733cbfda5f",
@@ -207,7 +88,116 @@
       ]
     },
     {
-      "id": "attack-asset--f4a90ba8-b4db-481d-8dfa-c07368d62e1a",
+      "id": "attack-condition--e9da9ad8-37a3-4bbe-9ec7-95cfab867d96",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.773Z",
+      "modified": "2025-07-30T19:47:12.773Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "IcedID malware went quiet for 2 days"
+    },
+    {
+      "id": "identity--5cf1ca4e-0879-46bf-9b91-8c5c4ef29a28",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.773Z",
+      "modified": "2025-07-30T19:47:12.773Z",
+      "name": "Alaa Nasser"
+    },
+    {
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "type": "identity",
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "x_mitre_attack_spec_version": "3.2.0"
+    },
+    {
+      "id": "attack-condition--387968cd-25e3-4867-ae68-4893a32bce0f",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.773Z",
+      "modified": "2025-07-30T19:47:12.773Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "The attackers went quiet for 15 minutes"
+    },
+    {
+      "id": "infrastructure--ff48a8f3-4738-43d8-a708-a7474f90da39",
+      "type": "infrastructure",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.773Z",
+      "modified": "2025-07-30T19:47:12.773Z",
+      "name": "Proxy",
+      "description": "Allowed connections proxied through a redirector (38.135.122.194:8080) passing through the IcedID process"
+    },
+    {
+      "id": "tool--acb7026b-0b81-40c9-b7d6-f5ee333c24fc",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.773Z",
+      "modified": "2025-07-30T19:47:12.773Z",
+      "name": "nltest.exe",
+      "tool_types": [
+        "information-gathering"
+      ]
+    },
+    {
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "id": "process--a3634015-af4d-4c6a-baa1-7b8d438b700b",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "“named pipe impersonation\""
+    },
+    {
+      "id": "tool--21748dc0-729d-48ad-ade0-34af41c962c4",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.773Z",
+      "modified": "2025-07-30T19:47:12.773Z",
+      "name": "dsquery",
+      "description": "Used to enumerate what networks were present in the environment"
+    },
+    {
+      "id": "tool--9502bfd2-cc01-4b88-8451-4092879e9365",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.773Z",
+      "modified": "2025-07-30T19:47:12.773Z",
+      "name": "net.exe",
+      "tool_types": [
+        "information-gathering"
+      ]
+    },
+    {
+      "id": "course-of-action--c0e08841-d642-43f8-9c02-ef9535168f13",
+      "type": "course-of-action",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.773Z",
+      "modified": "2025-07-30T19:47:12.773Z",
+      "name": "Firewall Configurations",
+      "description": "allowed connections through the firewall on the domain controllers"
+    },
+    {
+      "id": "attack-asset--98664a49-6df3-4b14-aa0e-91a911151517",
       "type": "attack-asset",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.773Z",
@@ -217,8 +207,29 @@
           "extension_type": "new-sdo"
         }
       },
-      "name": "Scanned Ports",
-      "description": "ports 22, 135, 445, 1433, 1434, 3389, 4343, 5000, 5985"
+      "name": "Admin shares"
+    },
+    {
+      "id": "tool--1831f55d-27f6-4ed6-86b0-f58453b02d43",
+      "type": "tool",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.773Z",
+      "modified": "2025-07-30T19:47:12.773Z",
+      "name": "rundll32.exe",
+      "tool_types": [
+        "Unknown"
+      ]
+    },
+    {
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      },
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "definition_type": "statement"
     },
     {
       "id": "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
@@ -246,17 +257,6 @@
           "url": "https://github.com/center-for-threat-informed-defense/attack-flow"
         }
       ]
-    },
-    {
-      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
-      "type": "marking-definition",
-      "definition": {
-        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
-      },
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "definition_type": "statement"
     },
     {
       "id": "x-mitre-tactic--ffd5bcee-6e16-4dd2-8eca-7b3beedf33ca",
@@ -461,6 +461,34 @@
       ]
     },
     {
+      "id": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0007",
+          "external_id": "TA0007"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:35.302Z",
+      "name": "Discovery",
+      "description": "The adversary is trying to figure out your environment.\n\nDiscovery consists of techniques an adversary may use to gain knowledge about the system and internal network. These techniques help adversaries observe the environment and orient themselves before deciding how to act. They also allow adversaries to explore what they can control and what’s around their entry point in order to discover how it could benefit their current objective. Native operating system tools are often used toward this post-compromise information-gathering objective. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "discovery"
+    },
+    {
       "id": "attack-pattern--03d7999c-1f4c-42cc-8373-e7690d318104",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -525,34 +553,6 @@
         "File: File Access",
         "Process: Process Access"
       ]
-    },
-    {
-      "id": "x-mitre-tactic--c17c5845-175e-4421-9713-829d0573dbc9",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0007",
-          "external_id": "TA0007"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:35.302Z",
-      "name": "Discovery",
-      "description": "The adversary is trying to figure out your environment.\n\nDiscovery consists of techniques an adversary may use to gain knowledge about the system and internal network. These techniques help adversaries observe the environment and orient themselves before deciding how to act. They also allow adversaries to explore what they can control and what’s around their entry point in order to discover how it could benefit their current objective. Native operating system tools are often used toward this post-compromise information-gathering objective. ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "discovery"
     },
     {
       "id": "attack-pattern--15dbf668-795c-41e6-8219-f0447c0e64ce",
@@ -692,34 +692,6 @@
       ]
     },
     {
-      "id": "x-mitre-tactic--5e29b093-294e-49e9-a803-dab3d73b77dd",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0004",
-          "external_id": "TA0004"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:33.853Z",
-      "name": "Privilege Escalation",
-      "description": "The adversary is trying to gain higher-level permissions.\n\nPrivilege Escalation consists of techniques that adversaries use to gain higher-level permissions on a system or network. Adversaries can often enter and explore a network with unprivileged access but require elevated permissions to follow through on their objectives. Common approaches are to take advantage of system weaknesses, misconfigurations, and vulnerabilities. Examples of elevated access include: \n\n* SYSTEM/root level\n* local administrator\n* user account with admin-like access \n* user accounts with access to specific system or perform specific function\n\nThese techniques often overlap with Persistence techniques, as OS features that let an adversary persist can execute in an elevated context.  ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "privilege-escalation"
-    },
-    {
       "id": "attack-pattern--dcaa092b-7de9-4a21-977f-7fcb77e89c48",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -807,7 +779,7 @@
       ]
     },
     {
-      "id": "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
+      "id": "x-mitre-tactic--5e29b093-294e-49e9-a803-dab3d73b77dd",
       "type": "x-mitre-tactic",
       "spec_version": "2.1",
       "created": "2018-10-17T00:14:20.652Z",
@@ -815,16 +787,16 @@
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0008",
-          "external_id": "TA0008"
+          "url": "https://attack.mitre.org/tactics/TA0004",
+          "external_id": "TA0004"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
-      "modified": "2025-04-25T14:45:34.223Z",
-      "name": "Lateral Movement",
-      "description": "The adversary is trying to move through your environment.\n\nLateral Movement consists of techniques that adversaries use to enter and control remote systems on a network. Following through on their primary objective often requires exploring the network to find their target and subsequently gaining access to it. Reaching their objective often involves pivoting through multiple systems and accounts to gain. Adversaries might install their own remote access tools to accomplish Lateral Movement or use legitimate credentials with native network and operating system tools, which may be stealthier. ",
+      "modified": "2025-04-25T14:45:33.853Z",
+      "name": "Privilege Escalation",
+      "description": "The adversary is trying to gain higher-level permissions.\n\nPrivilege Escalation consists of techniques that adversaries use to gain higher-level permissions on a system or network. Adversaries can often enter and explore a network with unprivileged access but require elevated permissions to follow through on their objectives. Common approaches are to take advantage of system weaknesses, misconfigurations, and vulnerabilities. Examples of elevated access include: \n\n* SYSTEM/root level\n* local administrator\n* user account with admin-like access \n* user accounts with access to specific system or perform specific function\n\nThese techniques often overlap with Persistence techniques, as OS features that let an adversary persist can execute in an elevated context.  ",
       "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "x_mitre_deprecated": false,
       "x_mitre_domains": [
@@ -832,7 +804,7 @@
       ],
       "x_mitre_version": "1.0",
       "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "lateral-movement"
+      "x_mitre_shortname": "privilege-escalation"
     },
     {
       "id": "attack-pattern--4f9ca633-15c5-463c-9724-bdcd54fde541",
@@ -910,6 +882,34 @@
         "Process: Process Creation",
         "Command: Command Execution"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--7141578b-e50b-4dcc-bfa4-08a8dd689e9e",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0008",
+          "external_id": "TA0008"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:34.223Z",
+      "name": "Lateral Movement",
+      "description": "The adversary is trying to move through your environment.\n\nLateral Movement consists of techniques that adversaries use to enter and control remote systems on a network. Following through on their primary objective often requires exploring the network to find their target and subsequently gaining access to it. Reaching their objective often involves pivoting through multiple systems and accounts to gain. Adversaries might install their own remote access tools to accomplish Lateral Movement or use legitimate credentials with native network and operating system tools, which may be stealthier. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "lateral-movement"
     },
     {
       "id": "attack-pattern--e3a12395-188d-4051-9a16-ea8e14d07b88",
@@ -1096,34 +1096,6 @@
       ]
     },
     {
-      "id": "x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2019-03-14T18:44:44.639Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0040",
-          "external_id": "TA0040"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:33.130Z",
-      "name": "Impact",
-      "description": "The adversary is trying to manipulate, interrupt, or destroy your systems and data.\n \nImpact consists of techniques that adversaries use to disrupt availability or compromise integrity by manipulating business and operational processes. Techniques used for impact can include destroying or tampering with data. In some cases, business processes can look fine, but may have been altered to benefit the adversaries’ goals. These techniques might be used by adversaries to follow through on their end goal or to provide cover for a confidentiality breach.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "impact"
-    },
-    {
       "id": "attack-pattern--b80d107d-fa0d-4b60-9684-b0433e8bdba0",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -1233,6 +1205,34 @@
         "Command: Command Execution",
         "Process: Process Creation"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--5569339b-94c2-49ee-afb3-2222936582c8",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2019-03-14T18:44:44.639Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0040",
+          "external_id": "TA0040"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:33.130Z",
+      "name": "Impact",
+      "description": "The adversary is trying to manipulate, interrupt, or destroy your systems and data.\n \nImpact consists of techniques that adversaries use to disrupt availability or compromise integrity by manipulating business and operational processes. Techniques used for impact can include destroying or tampering with data. In some cases, business processes can look fine, but may have been altered to benefit the adversaries’ goals. These techniques might be used by adversaries to follow through on their end goal or to provide cover for a confidentiality breach.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "impact"
     },
     {
       "id": "attack-pattern--0f4a0c76-ab2d-4cb0-85d3-3f0efb8cba0d",
@@ -1359,34 +1359,6 @@
       "x_mitre_shortname": "execution"
     },
     {
-      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0011",
-          "external_id": "TA0011"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:36.561Z",
-      "name": "Command and Control",
-      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "command-and-control"
-    },
-    {
       "id": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -1476,6 +1448,34 @@
         "Command: Command Execution",
         "Network Traffic: Network Connection Creation"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0011",
+          "external_id": "TA0011"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:36.561Z",
+      "name": "Command and Control",
+      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "command-and-control"
     },
     {
       "id": "x-mitre-tactic--9a4e74ab-5008-408c-84bf-a10dfbc53462",

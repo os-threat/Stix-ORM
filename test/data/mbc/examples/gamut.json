@@ -1,6 +1,6 @@
 {
   "type": "bundle",
-  "id": "bundle--79f395f4-ab45-4f06-bb0a-31b61be3a55b",
+  "id": "bundle--f05d57b5-2993-4a3d-8dee-e6aa1aa51dc3",
   "objects": [
     {
       "id": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
@@ -42,15 +42,19 @@
       }
     },
     {
-      "id": "relationship--3b3a781f-23a1-4fa9-b6b4-1bb327b2929a",
-      "type": "relationship",
+      "id": "indicator--25ad5feb-3716-44b6-9867-8643f5b2aac8",
+      "type": "indicator",
       "spec_version": "2.1",
-      "created": "2023-03-20T00:00:00.000Z",
-      "modified": "2023-03-20T00:00:00.000Z",
-      "relationship_type": "uses",
-      "source_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
-      "target_ref": "attack-pattern--0a5231ec-41af-4a35-83d0-6bdf11f28c65",
-      "description": "Execution::Shared Modules (T1129) -- Gamut links functions <snip> (Citation: trustwave gamut analysis) <snip>"
+      "created": "2023-03-01T00:00:00.000Z",
+      "modified": "2023-03-01T00:00:00.000Z",
+      "indicator_types": [
+        "malicious-activity"
+      ],
+      "name": "Gamut hash",
+      "description": "This is an IoC for Gamut",
+      "pattern": "[ file:hashes.'SHA-256' = 'eb51501a7265afec11753ee135a6ef8d0f972eb6af3346f036c5cb8be645d6d4' ]",
+      "pattern_type": "stix",
+      "valid_from": "2023-03-01T00:00:00.000Z"
     },
     {
       "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
@@ -59,6 +63,46 @@
       "identity_class": "organization",
       "modified": "2017-06-01T00:00:00.000Z",
       "created": "2017-06-01T00:00:00.000Z"
+    },
+    {
+      "id": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2020-01-01T00:00:00.000Z",
+      "modified": "2020-01-01T00:00:00.000Z",
+      "name": "The MITRE Corporation",
+      "identity_class": "organization"
+    },
+    {
+      "id": "relationship--150c0f85-161a-49c6-a028-8c79bc046adb",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2023-03-01T00:00:00.000Z",
+      "modified": "2023-03-01T00:00:00.000Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--25ad5feb-3716-44b6-9867-8643f5b2aac8",
+      "target_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455"
+    },
+    {
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      },
+      "created": "2017-06-01T00:00:00.000Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "definition_type": "statement"
+    },
+    {
+      "id": "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3",
+      "type": "marking-definition",
+      "spec_version": "2.1",
+      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+      "created": "2020-01-01T00:00:00.000Z",
+      "definition_type": "statement",
+      "definition": {
+        "statement": "Copyright (c) 2020-2023, The MITRE Corporation. All rights reserved."
+      }
     },
     {
       "id": "attack-pattern--20138b9d-1aac-4a26-8654-a36b6bbf2bba",
@@ -117,106 +161,6 @@
         "SaaS"
       ],
       "x_mitre_version": "1.2"
-    },
-    {
-      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
-      "type": "marking-definition",
-      "definition": {
-        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
-      },
-      "created": "2017-06-01T00:00:00.000Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "definition_type": "statement"
-    },
-    {
-      "id": "relationship--96cd8697-4467-4df0-a41f-1c53b05b2431",
-      "type": "relationship",
-      "spec_version": "2.1",
-      "created": "2023-03-20T00:00:00.000Z",
-      "modified": "2023-03-20T00:00:00.000Z",
-      "relationship_type": "uses",
-      "source_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
-      "target_ref": "malware-method--b9c9fb8c-71d5-4e9f-9b06-88ba43873c86",
-      "description": "Command and Control::C2 Communication::Receive Data (B0030.002) -- The malware sends data to the C2. (Citation: trustwave gamut analysis)"
-    },
-    {
-      "id": "malware-method--b9c9fb8c-71d5-4e9f-9b06-88ba43873c86",
-      "type": "malware-method",
-      "created": "2020-08-14T00:00:00.000Z",
-      "behavior_ref": "malware-behavior--a28f7a00-c512-4a1e-88a9-9eeeca8a162a",
-      "spec_version": "2.1",
-      "extensions": {
-        "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
-      "modified": "2024-04-29T00:00:00.000Z",
-      "name": "Resolve Free Hosting Domain",
-      "obj_defn": {
-        "description": "Resolves a free hosting domain (e.g., freeiz.com).",
-        "external_id": "C0011.005",
-        "source_name": "mitre-mbc"
-      },
-      "object_marking_refs": [
-        "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3"
-      ]
-    },
-    {
-      "id": "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3",
-      "type": "marking-definition",
-      "spec_version": "2.1",
-      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
-      "created": "2020-01-01T00:00:00.000Z",
-      "definition_type": "statement",
-      "definition": {
-        "statement": "Copyright (c) 2020-2023, The MITRE Corporation. All rights reserved."
-      }
-    },
-    {
-      "id": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2020-01-01T00:00:00.000Z",
-      "modified": "2020-01-01T00:00:00.000Z",
-      "name": "The MITRE Corporation",
-      "identity_class": "organization"
-    },
-    {
-      "id": "relationship--c8194de8-c2ba-4c74-896a-fd746232e7d0",
-      "type": "relationship",
-      "spec_version": "2.1",
-      "created": "2023-03-20T00:00:00.000Z",
-      "modified": "2023-03-20T00:00:00.000Z",
-      "relationship_type": "uses",
-      "source_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
-      "target_ref": "malware-behavior--a446fac9-4d4e-439e-9b06-a3a7665c2281",
-      "description": "File System::Delete File (C0047)-- Gamut deletes files. (Citation: capa analysis output)"
-    },
-    {
-      "id": "indicator--25ad5feb-3716-44b6-9867-8643f5b2aac8",
-      "type": "indicator",
-      "spec_version": "2.1",
-      "created": "2023-03-01T00:00:00.000Z",
-      "modified": "2023-03-01T00:00:00.000Z",
-      "indicator_types": [
-        "malicious-activity"
-      ],
-      "name": "Gamut hash",
-      "description": "This is an IoC for Gamut",
-      "pattern": "[ file:hashes.'SHA-256' = 'a56162bc623841102301df...1c838fcf256654932' ]",
-      "pattern_type": "stix",
-      "valid_from": "2023-03-01T00:00:00.000Z"
-    },
-    {
-      "id": "relationship--1cffe80b-7cf8-416e-b2fe-a89c3fba7d9b",
-      "type": "relationship",
-      "spec_version": "2.1",
-      "created": "2023-03-01T00:00:00.000Z",
-      "modified": "2023-03-01T00:00:00.000Z",
-      "relationship_type": "indicates",
-      "source_ref": "indicator--25ad5feb-3716-44b6-9867-8643f5b2aac8",
-      "target_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455"
     },
     {
       "id": "attack-pattern--0a5231ec-41af-4a35-83d0-6bdf11f28c65",
@@ -290,6 +234,85 @@
         "Process: OS API Execution",
         "Module: Module Load"
       ]
+    },
+    {
+      "id": "malware-objective--5823a1fb-61cd-4484-abfc-adfa88cca816",
+      "type": "malware-objective",
+      "created": "2020-08-14T00:00:00.000Z",
+      "spec_version": "2.1",
+      "extensions": {
+        "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+      "micro": true,
+      "modified": "2023-05-08T00:00:00.000Z",
+      "name": "Communication",
+      "obj_defn": {
+        "description": "Micro-behaviors that enable malware to communicate.",
+        "external_id": "OC0006",
+        "source_name": "mitre-mbc",
+        "url": "https://github.com/MBCProject/mbc-markdown/blob/main/micro-behaviors/communication/README.md"
+      },
+      "object_marking_refs": [
+        "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3"
+      ]
+    },
+    {
+      "id": "malware-method--40cb93ee-9bab-4239-a0de-0556ad4cd999",
+      "type": "malware-method",
+      "created": "2020-08-14T00:00:00.000Z",
+      "spec_version": "2.1",
+      "extensions": {
+        "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+      "modified": "2024-04-29T00:00:00.000Z",
+      "name": "Resolve",
+      "obj_defn": {
+        "description": "Resolves a domain.",
+        "external_id": "C0011.001",
+        "source_name": "mitre-mbc"
+      },
+      "object_marking_refs": [
+        "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3"
+      ]
+    },
+    {
+      "id": "malware-method--8d2f6d63-16d3-4b1e-9a5c-2ea3cede8a96",
+      "type": "malware-method",
+      "created": "2020-08-14T00:00:00.000Z",
+      "spec_version": "2.1",
+      "extensions": {
+        "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
+      "modified": "2023-09-13T00:00:00.000Z",
+      "name": "Server Connect",
+      "obj_defn": {
+        "description": "Connects to DNS server.",
+        "external_id": "C0011.002",
+        "source_name": "mitre-mbc"
+      },
+      "object_marking_refs": [
+        "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3"
+      ]
+    },
+    {
+      "id": "relationship--2faba4f3-9b0a-4ed6-a18b-5eaa23ebc911",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2023-03-20T00:00:00.000Z",
+      "modified": "2023-03-20T00:00:00.000Z",
+      "relationship_type": "uses",
+      "source_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
+      "target_ref": "attack-pattern--0a5231ec-41af-4a35-83d0-6bdf11f28c65",
+      "description": "Execution::Shared Modules (T1129) -- Gamut links functions <snip> (Citation: trustwave gamut analysis) <snip>"
     },
     {
       "id": "malware-behavior--a28f7a00-c512-4a1e-88a9-9eeeca8a162a",
@@ -409,54 +432,7 @@
       ]
     },
     {
-      "id": "malware-objective--5823a1fb-61cd-4484-abfc-adfa88cca816",
-      "type": "malware-objective",
-      "created": "2020-08-14T00:00:00.000Z",
-      "spec_version": "2.1",
-      "extensions": {
-        "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
-      "micro": true,
-      "modified": "2023-05-08T00:00:00.000Z",
-      "name": "Communication",
-      "obj_defn": {
-        "description": "Micro-behaviors that enable malware to communicate.",
-        "external_id": "OC0006",
-        "source_name": "mitre-mbc",
-        "url": "https://github.com/MBCProject/mbc-markdown/blob/main/micro-behaviors/communication/README.md"
-      },
-      "object_marking_refs": [
-        "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3"
-      ]
-    },
-    {
-      "id": "malware-method--8d2f6d63-16d3-4b1e-9a5c-2ea3cede8a96",
-      "type": "malware-method",
-      "created": "2020-08-14T00:00:00.000Z",
-      "behavior_ref": "malware-behavior--a28f7a00-c512-4a1e-88a9-9eeeca8a162a",
-      "spec_version": "2.1",
-      "extensions": {
-        "extension-definition--d57b7c9c-7fa6-436b-b82c-8e6f69cdc3d0": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
-      "modified": "2023-09-13T00:00:00.000Z",
-      "name": "Server Connect",
-      "obj_defn": {
-        "description": "Connects to DNS server.",
-        "external_id": "C0011.002",
-        "source_name": "mitre-mbc"
-      },
-      "object_marking_refs": [
-        "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3"
-      ]
-    },
-    {
-      "id": "malware-method--40cb93ee-9bab-4239-a0de-0556ad4cd999",
+      "id": "malware-method--b9c9fb8c-71d5-4e9f-9b06-88ba43873c86",
       "type": "malware-method",
       "created": "2020-08-14T00:00:00.000Z",
       "behavior_ref": "malware-behavior--a28f7a00-c512-4a1e-88a9-9eeeca8a162a",
@@ -468,15 +444,37 @@
       },
       "created_by_ref": "identity--b73c59c1-8560-449a-b8d0-c2ce0533c5bf",
       "modified": "2024-04-29T00:00:00.000Z",
-      "name": "Resolve",
+      "name": "Resolve Free Hosting Domain",
       "obj_defn": {
-        "description": "Resolves a domain.",
-        "external_id": "C0011.001",
+        "description": "Resolves a free hosting domain (e.g., freeiz.com).",
+        "external_id": "C0011.005",
         "source_name": "mitre-mbc"
       },
       "object_marking_refs": [
         "marking-definition--093b6375-cd45-4aa3-8f91-6a03ddd7a3d3"
       ]
+    },
+    {
+      "id": "relationship--5e8a2121-6e0d-4d6f-b4c2-0d84928cf39e",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2023-03-20T00:00:00.000Z",
+      "modified": "2023-03-20T00:00:00.000Z",
+      "relationship_type": "uses",
+      "source_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
+      "target_ref": "malware-method--b9c9fb8c-71d5-4e9f-9b06-88ba43873c86",
+      "description": "Command and Control::C2 Communication::Receive Data (B0030.002) -- The malware sends data to the C2. (Citation: trustwave gamut analysis)"
+    },
+    {
+      "id": "relationship--a9bd4515-4e8a-4c4e-b54b-a612c9da6585",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2023-03-20T00:00:00.000Z",
+      "modified": "2023-03-20T00:00:00.000Z",
+      "relationship_type": "uses",
+      "source_ref": "malware--47e74de4-bf1d-4210-a087-2becffdaa455",
+      "target_ref": "malware-behavior--a28f7a00-c512-4a1e-88a9-9eeeca8a162a",
+      "description": "File System::Delete File (C0047)-- Gamut deletes files. (Citation: capa analysis output)"
     }
   ]
 }

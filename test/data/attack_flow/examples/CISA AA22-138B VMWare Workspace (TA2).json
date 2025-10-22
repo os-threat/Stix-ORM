@@ -1,7 +1,22 @@
 {
   "type": "bundle",
-  "id": "bundle--d246018e-a17a-49fb-83b2-59b27b297c33",
+  "id": "bundle--6021a9e2-1e5d-4ded-9e62-a9f25424acfc",
   "objects": [
+    {
+      "id": "malware--5df8707c-c9ee-4167-bd6d-73d362e82dea",
+      "type": "malware",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "name": "JSP webshell",
+      "malware_types": [
+        "webshell"
+      ],
+      "is_family": false,
+      "capabilities": [
+        "communicates-with-c2"
+      ]
+    },
     {
       "id": "file--c5352f2b-f17b-410d-8167-fbc5e1532b16",
       "type": "file",
@@ -9,16 +24,10 @@
       "name": ".tmp12865xax"
     },
     {
-      "id": "process--962988c0-6c99-4e38-87a5-102533e7b019",
-      "type": "process",
+      "id": "ipv4-addr--86821c08-9cd3-419f-acb8-c500d5db6383",
+      "type": "ipv4-addr",
       "spec_version": "2.1",
-      "command_line": "cat"
-    },
-    {
-      "id": "directory--9a377862-1ee3-4022-a730-a612e7833932",
-      "type": "directory",
-      "spec_version": "2.1",
-      "path": "/webapps/cas/static/"
+      "value": "84.38.133.149"
     },
     {
       "id": "malware--c4bda44a-331f-4f00-b2f7-e0fa0b1d18a2",
@@ -37,12 +46,13 @@
       ]
     },
     {
-      "id": "malware--5df8707c-c9ee-4167-bd6d-73d362e82dea",
+      "id": "malware--9e2ced66-df97-4713-b07d-8b1e57d9ba2a",
       "type": "malware",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.672Z",
       "modified": "2025-07-30T19:47:12.672Z",
-      "name": "JSP webshell",
+      "name": "app.jsp",
+      "description": "publicly available webshell known as Godzilla",
       "malware_types": [
         "webshell"
       ],
@@ -52,16 +62,25 @@
       ]
     },
     {
-      "id": "directory--03d5e338-b5ce-4b4b-9e9c-0be03fab23f4",
-      "type": "directory",
+      "id": "file--fefb41eb-5a77-4034-9f19-92cb46f0e770",
+      "type": "file",
       "spec_version": "2.1",
-      "path": "/opt/vmware/horizon/workspace/webapps/SAAS/horizon/portal/"
+      "name": "horizon_all.jsp"
     },
     {
-      "id": "ipv4-addr--86821c08-9cd3-419f-acb8-c500d5db6383",
-      "type": "ipv4-addr",
+      "id": "artifact--9c5f22d6-da6d-45d2-9755-43113bf4bcf6",
+      "type": "artifact",
       "spec_version": "2.1",
-      "value": "84.38.133.149"
+      "url": "http://51.79.171.53/app.jsp",
+      "hashes": {
+        "md5": "4cd8366345ad4068feca4d417738b4bd"
+      }
+    },
+    {
+      "id": "process--ded9bd9f-456d-44f2-9003-62f0a92d52d9",
+      "type": "process",
+      "spec_version": "2.1",
+      "command_line": "whoami"
     },
     {
       "id": "infrastructure--a9c94d6d-3cc0-4423-8e3c-1c0b42393b3d",
@@ -76,23 +95,6 @@
       ]
     },
     {
-      "id": "file--fefb41eb-5a77-4034-9f19-92cb46f0e770",
-      "type": "file",
-      "spec_version": "2.1",
-      "name": "horizon_all.jsp"
-    },
-    {
-      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "type": "identity",
-      "modified": "2025-03-19T15:00:40.855Z",
-      "name": "The MITRE Corporation",
-      "description": "",
-      "identity_class": "organization",
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "x_mitre_attack_spec_version": "3.2.0"
-    },
-    {
       "id": "identity--c82920cf-1a4c-47e4-9bda-ebca7eb854f6",
       "type": "identity",
       "spec_version": "2.1",
@@ -102,10 +104,60 @@
       "contact_information": "lparker@mitre.org"
     },
     {
-      "id": "process--ded9bd9f-456d-44f2-9003-62f0a92d52d9",
+      "id": "vulnerability--7d479fe1-7170-47d5-ada4-c869e7d5c7b3",
+      "type": "vulnerability",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "name": "CVE 2022-22954"
+    },
+    {
+      "id": "artifact--c95b2009-e52a-4217-a1bd-1ed77f559a8e",
+      "type": "artifact",
+      "spec_version": "2.1",
+      "url": "http://84.38.133.149/img/icon1.gif",
+      "hashes": {
+        "md5": "F8FF5C72E8FFA2112B01802113148BD1"
+      }
+    },
+    {
+      "id": "directory--03d5e338-b5ce-4b4b-9e9c-0be03fab23f4",
+      "type": "directory",
+      "spec_version": "2.1",
+      "path": "/opt/vmware/horizon/workspace/webapps/SAAS/horizon/portal/"
+    },
+    {
+      "id": "process--9c17754e-f5a9-44ae-aa1b-7438d43707ff",
       "type": "process",
       "spec_version": "2.1",
-      "command_line": "whoami"
+      "command_line": "id"
+    },
+    {
+      "id": "directory--9a377862-1ee3-4022-a730-a612e7833932",
+      "type": "directory",
+      "spec_version": "2.1",
+      "path": "/webapps/cas/static/"
+    },
+    {
+      "id": "file--6d13dae1-12c4-4a72-9e83-f2383fcd5b49",
+      "type": "file",
+      "spec_version": "2.1",
+      "name": "jquery.jsp"
+    },
+    {
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "id": "directory--63e0c56c-9d2e-4d5c-b8bb-1bf7c85f059b",
+      "type": "directory",
+      "spec_version": "2.1",
+      "path": "/tmp"
     },
     {
       "id": "url--0056daec-35d2-48c3-b8af-6b4e93eeb50d",
@@ -127,34 +179,10 @@
       "description": "app.jsp downloaded successfully"
     },
     {
-      "id": "process--9c17754e-f5a9-44ae-aa1b-7438d43707ff",
+      "id": "process--962988c0-6c99-4e38-87a5-102533e7b019",
       "type": "process",
       "spec_version": "2.1",
-      "command_line": "id"
-    },
-    {
-      "id": "artifact--c95b2009-e52a-4217-a1bd-1ed77f559a8e",
-      "type": "artifact",
-      "spec_version": "2.1",
-      "url": "http://84.38.133.149/img/icon1.gif",
-      "hashes": {
-        "md5": "F8FF5C72E8FFA2112B01802113148BD1"
-      }
-    },
-    {
-      "id": "file--6d13dae1-12c4-4a72-9e83-f2383fcd5b49",
-      "type": "file",
-      "spec_version": "2.1",
-      "name": "jquery.jsp"
-    },
-    {
-      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2022-08-02T19:34:35.143Z",
-      "modified": "2022-08-02T19:34:35.143Z",
-      "name": "MITRE Center for Threat-Informed Defense",
-      "identity_class": "organization"
+      "command_line": "cat"
     },
     {
       "id": "url--edfa7f23-b6d9-499d-9037-58046765e500",
@@ -163,43 +191,15 @@
       "value": "https://github[.]com/kost/revsocks/releases/download/v1.1.0/revsocks_linux_amd64"
     },
     {
-      "id": "directory--63e0c56c-9d2e-4d5c-b8bb-1bf7c85f059b",
-      "type": "directory",
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "type": "identity",
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
       "spec_version": "2.1",
-      "path": "/tmp"
-    },
-    {
-      "id": "malware--9e2ced66-df97-4713-b07d-8b1e57d9ba2a",
-      "type": "malware",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "name": "app.jsp",
-      "description": "publicly available webshell known as Godzilla",
-      "malware_types": [
-        "webshell"
-      ],
-      "is_family": false,
-      "capabilities": [
-        "communicates-with-c2"
-      ]
-    },
-    {
-      "id": "artifact--9c5f22d6-da6d-45d2-9755-43113bf4bcf6",
-      "type": "artifact",
-      "spec_version": "2.1",
-      "url": "http://51.79.171.53/app.jsp",
-      "hashes": {
-        "md5": "4cd8366345ad4068feca4d417738b4bd"
-      }
-    },
-    {
-      "id": "vulnerability--7d479fe1-7170-47d5-ada4-c869e7d5c7b3",
-      "type": "vulnerability",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "name": "CVE 2022-22954"
+      "created": "2017-06-01T00:00:00.000Z",
+      "x_mitre_attack_spec_version": "3.2.0"
     },
     {
       "id": "relationship--2c3ef578-1ace-40b1-a514-ed548097e206",
@@ -212,35 +212,14 @@
       "target_ref": "malware--c4bda44a-331f-4f00-b2f7-e0fa0b1d18a2"
     },
     {
-      "id": "relationship--9361b9da-0ca4-4679-9d72-17f00a8d1940",
+      "id": "relationship--f80b135f-45fc-4350-b20a-867223cf0535",
       "type": "relationship",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.672Z",
       "modified": "2025-07-30T19:47:12.672Z",
       "relationship_type": "related-to",
-      "source_ref": "directory--03d5e338-b5ce-4b4b-9e9c-0be03fab23f4",
-      "target_ref": "file--fefb41eb-5a77-4034-9f19-92cb46f0e770"
-    },
-    {
-      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
-      "type": "marking-definition",
-      "definition": {
-        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
-      },
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "definition_type": "statement"
-    },
-    {
-      "id": "relationship--3e991c01-3470-455e-8b9e-c63ed0b01358",
-      "type": "relationship",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.672Z",
-      "modified": "2025-07-30T19:47:12.672Z",
-      "relationship_type": "related-to",
-      "source_ref": "infrastructure--a9c94d6d-3cc0-4423-8e3c-1c0b42393b3d",
-      "target_ref": "url--0056daec-35d2-48c3-b8af-6b4e93eeb50d"
+      "source_ref": "artifact--9c5f22d6-da6d-45d2-9755-43113bf4bcf6",
+      "target_ref": "malware--9e2ced66-df97-4713-b07d-8b1e57d9ba2a"
     },
     {
       "id": "relationship--ec91374d-6372-45c8-adc2-e10780fa3544",
@@ -251,6 +230,16 @@
       "relationship_type": "related-to",
       "source_ref": "artifact--c95b2009-e52a-4217-a1bd-1ed77f559a8e",
       "target_ref": "malware--5df8707c-c9ee-4167-bd6d-73d362e82dea"
+    },
+    {
+      "id": "relationship--9361b9da-0ca4-4679-9d72-17f00a8d1940",
+      "type": "relationship",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.672Z",
+      "modified": "2025-07-30T19:47:12.672Z",
+      "relationship_type": "related-to",
+      "source_ref": "directory--03d5e338-b5ce-4b4b-9e9c-0be03fab23f4",
+      "target_ref": "file--fefb41eb-5a77-4034-9f19-92cb46f0e770"
     },
     {
       "id": "relationship--466f943a-fbd1-4bfc-b710-1a547b5e796b",
@@ -300,42 +289,25 @@
       ]
     },
     {
-      "id": "relationship--f80b135f-45fc-4350-b20a-867223cf0535",
+      "id": "relationship--3e991c01-3470-455e-8b9e-c63ed0b01358",
       "type": "relationship",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.672Z",
       "modified": "2025-07-30T19:47:12.672Z",
       "relationship_type": "related-to",
-      "source_ref": "artifact--9c5f22d6-da6d-45d2-9755-43113bf4bcf6",
-      "target_ref": "malware--9e2ced66-df97-4713-b07d-8b1e57d9ba2a"
+      "source_ref": "infrastructure--a9c94d6d-3cc0-4423-8e3c-1c0b42393b3d",
+      "target_ref": "url--0056daec-35d2-48c3-b8af-6b4e93eeb50d"
     },
     {
-      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "type": "x-mitre-tactic",
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      },
       "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
+      "created": "2017-06-01T00:00:00.000Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0011",
-          "external_id": "TA0011"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:36.561Z",
-      "name": "Command and Control",
-      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "command-and-control"
+      "definition_type": "statement"
     },
     {
       "id": "attack-pattern--df8b2a25-8bdf-4856-953c-a04372b1c161",
@@ -401,6 +373,34 @@
         "Network Traffic: Network Traffic Content",
         "Network Traffic: Network Traffic Flow"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0011",
+          "external_id": "TA0011"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:36.561Z",
+      "name": "Command and Control",
+      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "command-and-control"
     },
     {
       "id": "attack-pattern--e6919abc-99f9-4c6c-95a5-14761e7b2add",
@@ -578,6 +578,34 @@
       "x_mitre_shortname": "execution"
     },
     {
+      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0006",
+          "external_id": "TA0006"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:32.408Z",
+      "name": "Credential Access",
+      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "credential-access"
+    },
+    {
       "id": "attack-pattern--d0b4fcdb-d67d-4ed2-99ce-788b12f8c0f4",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -634,34 +662,6 @@
         "File: File Access",
         "Command: Command Execution"
       ]
-    },
-    {
-      "id": "x-mitre-tactic--2558fd61-8c75-4730-94c4-11926db2a263",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0006",
-          "external_id": "TA0006"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:32.408Z",
-      "name": "Credential Access",
-      "description": "The adversary is trying to steal account names and passwords.\n\nCredential Access consists of techniques for stealing credentials like account names and passwords. Techniques used to get credentials include keylogging or credential dumping. Using legitimate credentials can give adversaries access to systems, make them harder to detect, and provide the opportunity to create more accounts to help achieve their goals.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "credential-access"
     },
     {
       "id": "attack-pattern--24bfaeba-cb0d-4525-b3dc-507c77ecec41",

@@ -1,0 +1,1105 @@
+
+Deduplication: Reduced from 33 to 33 unique objects
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $sequence0 isa sequence, has stix-id "sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8";
+ insert $start-step isa start-step,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sequence-type $sequence-type,
+ has step-type $step-type;
+
+ $stix-type "sequence";
+ $spec-version "2.1";
+ $stix-id "sequence--5ced78bf-aab8-4650-9c9e-a6914d68b46e";
+ $created 2025-07-27T06:01:16.100;
+ $modified 2025-07-27T06:01:16.100;
+ $sequence-type "event";
+ $step-type "start_step";
+
+
+ $on-completion0 (source:$start-step, target:$sequence0) isa on-completion;
+ $sequence-extension isa sequence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $sequence-ext0 (sequence-base:$start-step, sequence-spec:$sequence-extension) isa sequence-ext;
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $sequence0 isa sequence, has stix-id "sequence--4089e2b7-816d-4ad4-9d11-2604739b16ef";
+ insert $start-step isa start-step,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sequence-type $sequence-type,
+ has step-type $step-type;
+
+ $stix-type "sequence";
+ $spec-version "2.1";
+ $stix-id "sequence--fb97db29-be35-4f8d-b483-c2899750838d";
+ $created 2025-07-27T06:01:16.433;
+ $modified 2025-07-27T06:01:16.433;
+ $sequence-type "task";
+ $step-type "start_step";
+
+
+ $on-completion0 (source:$start-step, target:$sequence0) isa on-completion;
+ $sequence-extension isa sequence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $sequence-ext0 (sequence-base:$start-step, sequence-spec:$sequence-extension) isa sequence-ext;
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $event0 isa event, has stix-id "event--e8f641e7-89ca-4776-a828-6838d8eccdca";
+ insert $single-step isa single-step,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sequence-type $sequence-type,
+ has step-type $step-type;
+
+ $stix-type "sequence";
+ $spec-version "2.1";
+ $stix-id "sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8";
+ $created 2025-07-27T06:01:16.900;
+ $modified 2025-07-27T06:01:16.900;
+ $sequence-type "event";
+ $step-type "single_step";
+
+
+ $sequenced-object0 (sequence:$single-step, object:$event0) isa sequenced-object;
+ $sequence-extension isa sequence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $sequence-ext0 (sequence-base:$single-step, sequence-spec:$sequence-extension) isa sequence-ext;
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $task0 isa task, has stix-id "task--3f23faa4-e21e-4880-bd8a-c8d89aa453aa";
+ insert $single-step isa single-step,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sequence-type $sequence-type,
+ has step-type $step-type;
+
+ $stix-type "sequence";
+ $spec-version "2.1";
+ $stix-id "sequence--4089e2b7-816d-4ad4-9d11-2604739b16ef";
+ $created 2025-07-27T06:01:16.321;
+ $modified 2025-07-27T06:01:16.321;
+ $sequence-type "task";
+ $step-type "single_step";
+
+
+ $sequenced-object0 (sequence:$single-step, object:$task0) isa sequenced-object;
+ $sequence-extension isa sequence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $sequence-ext0 (sequence-base:$single-step, sequence-spec:$sequence-extension) isa sequence-ext;
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $task0 isa task, has stix-id "task--01537439-3b2d-4afe-81a3-45b2dd35c655";
+ insert $single-step isa single-step,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sequence-type $sequence-type,
+ has step-type $step-type;
+
+ $stix-type "sequence";
+ $spec-version "2.1";
+ $stix-id "sequence--10fe3d71-a3d1-4f83-ad54-9c290d7136e9";
+ $created 2025-07-27T06:01:28.363;
+ $modified 2025-07-27T06:01:28.363;
+ $sequence-type "task";
+ $step-type "single_step";
+
+
+ $sequenced-object0 (sequence:$single-step, object:$task0) isa sequenced-object;
+ $sequence-extension isa sequence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $sequence-ext0 (sequence-base:$single-step, sequence-spec:$sequence-extension) isa sequence-ext;
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $identity01 isa identity, has stix-id "identity--3789a438-8d49-4f2a-bb1a-06d3575d2f33";
+ insert $impact isa impact,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has impact-category $impact-category,
+ has criticality $criticality,
+ has description $description,
+ has end-time $end-time,
+ has recoverability $recoverability,
+ has start-time $start-time;
+
+ $stix-type "impact";
+ $spec-version "2.1";
+ $stix-id "impact--1b87fa10-78fd-4b3e-970e-dea91e9a7457";
+ $created 2025-07-27T06:01:28.148;
+ $modified 2025-07-27T06:01:28.148;
+ $impact-category "availability";
+ $criticality 99;
+ $description "Laptop is stuffed";
+ $end-time 2025-07-27T06:01:28.148;
+ $recoverability "regular";
+ $start-time 2025-07-27T06:01:28.148;
+
+
+ $entity-key0 isa entity-key;  $entity-key0 has dict-key "computers-mobile";
+ $entity-key0 has entity-value "1";
+ $impact-counter (impact-driver:$impact, counters: $entity-key0) isa impact-counter;
+
+
+ $impacted-refs1 (the-impact:$impact, impacted-thing:$identity01) isa impacted-refs;
+ $availability isa availability,
+ has impacted-availability $impacted-availability;
+
+ $impacted-availability 99;
+
+ $availability-imp0 (impact-base:$impact, availability-impact:$availability) isa availability-imp;
+
+ $impact-extension isa impact-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $impact-ext1 (impact-base:$impact, impact-spec:$impact-extension) isa impact-ext;
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $event isa event,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has description $description,
+ has end-time $end-time,
+ has event-types $event_types0,
+ has name $name,
+ has start-time $start-time;
+
+ $stix-type "event";
+ $spec-version "2.1";
+ $stix-id "event--e8f641e7-89ca-4776-a828-6838d8eccdca";
+ $created 2025-07-27T06:01:15.914;
+ $modified 2025-07-27T06:01:15.914;
+ $description "Suspicious email reported by user";
+ $end-time 2025-07-27T06:01:15.914;
+ $event_types0 "dissemination-phishing-emails";
+ $name "Potential Phishing Email";
+ $start-time 2025-07-27T06:01:15.914;
+
+ $event-extension isa event-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $event-ext0 (event-base:$event, event-spec:$event-extension) isa event-ext;
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $task isa task,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has description $description,
+ has end-time $end-time,
+ has name $name,
+ has start-time $start-time;
+
+ $stix-type "task";
+ $spec-version "2.1";
+ $stix-id "task--3f23faa4-e21e-4880-bd8a-c8d89aa453aa";
+ $created 2025-07-27T06:01:16.214;
+ $modified 2025-07-27T06:01:16.214;
+ $description "Suspicious email reported by user";
+ $end-time 2025-07-27T06:01:16.214;
+ $name "Potential Phishing Email";
+ $start-time 2025-07-27T06:01:16.214;
+
+ $task-extension isa task-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $task-ext0 (task-base:$task, task-spec:$task-extension) isa task-ext;
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $task isa task,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has description $description,
+ has end-time $end-time,
+ has name $name,
+ has start-time $start-time;
+
+ $stix-type "task";
+ $spec-version "2.1";
+ $stix-id "task--01537439-3b2d-4afe-81a3-45b2dd35c655";
+ $created 2025-07-27T06:01:28.264;
+ $modified 2025-07-27T06:01:28.264;
+ $description "Find out who else got the email";
+ $end-time 2025-07-27T06:01:28.264;
+ $name "Query Exchange Server";
+ $start-time 2025-07-27T06:01:28.264;
+
+ $task-extension isa task-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $task-ext0 (task-base:$task, task-spec:$task-extension) isa task-ext;
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value,
+ has display-name $display-name;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--eb38d07e-6ba8-56c1-b107-d4db4aacf212";
+ $stix-value "evil@northkorea.nk";
+ $display-name "Bad Man";
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value,
+ has display-name $display-name;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--c99b87bd-f0a8-50ca-9f84-68072efc61e3";
+ $stix-value "different5@man.org";
+ $display-name "Different Man";
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $user-account0 isa user-account, has stix-id "user-account--597ad4d4-35ba-585d-8f6d-134a75032f9b";
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value,
+ has display-name $display-name;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--4722424c-7012-56b0-84d5-01d076fc547b";
+ $stix-value "naive@example.com";
+ $display-name "Naive Smith";
+
+
+ $belongs0 (belonged:$email-addr, belongs-to:$user-account0) isa belongs;
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $user-account isa user-account,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has user-id $user-id,
+ has account-login $account-login,
+ has account-type $account-type,
+ has display-name $display-name;
+
+ $stix-type "user-account";
+ $spec-version "2.1";
+ $stix-id "user-account--597ad4d4-35ba-585d-8f6d-134a75032f9b";
+ $user-id "79563902";
+ $account-login "nsmith";
+ $account-type "sales,";
+ $display-name "Naive Smith";
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $user-account isa user-account,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has user-id $user-id,
+ has account-login $account-login,
+ has account-type $account-type,
+ has display-name $display-name;
+
+ $stix-type "user-account";
+ $spec-version "2.1";
+ $stix-id "user-account--83658594-537d-5c32-b9f0-137354bd9bc3";
+ $user-id "79563902";
+ $account-login "dman";
+ $account-type "sales,";
+ $display-name "Different Man";
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $email-addr0 isa email-addr, has stix-id "email-addr--4722424c-7012-56b0-84d5-01d076fc547b";
+ $user-account0 isa user-account, has stix-id "user-account--597ad4d4-35ba-585d-8f6d-134a75032f9b";
+ insert $identity isa identity,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has stix-role $roles0,
+ has stix-role $roles1,
+ has identity-class $identity-class,
+ has sector $sectors0;
+
+ $stix-type "identity";
+ $spec-version "2.1";
+ $stix-id "identity--ce31dd38-f69b-45ba-9bcd-2a208bbf8017";
+ $created 2025-07-27T06:00:42.271;
+ $modified 2025-07-27T06:00:42.271;
+ $name "Naive Smith";
+ $description "A Naive Individual";
+ $roles0 "user";
+ $roles1 "sales";
+ $identity-class "individual";
+ $sectors0 "technology";
+
+ $identity-contact isa identity-contact,
+ has extension-type $extension-type,
+ has first-name $first-name,
+ has last-name $last-name,
+ has middle-name $middle-name,
+ has prefix $prefix,
+ has team $team;
+
+ $extension-type "property-extension";
+ $first-name "Naive";
+ $last-name "Smith";
+ $middle-name "Weakling";
+ $prefix "Mr";
+ $team "Sales";
+
+ $identity-ext0 (identity-base:$identity, identity-spec:$identity-contact) isa identity-ext;
+
+
+$contact-number-sub0 isa contact-number-sub,
+ has contact-number "work-phone",
+ has contact-number-type "0499-999-109";
+
+ $identity-number (identity:$identity-contact, number-object:$contact-number-sub0) isa identity-number;
+
+$email-contact-sub0 isa email-contact-sub,
+ has digital-contact-type "work";
+
+ $identity-email (identity:$identity-contact, email-object:$email-contact-sub0) isa identity-email;
+
+ $email-ref0 (origin:$email-contact-sub0, email:$email-addr0) isa email-ref;
+
+$social-media-sub0 isa social-media-sub,
+ has digital-contact-type "work";
+
+ $identity-account (identity:$identity-contact, account-object:$social-media-sub0) isa identity-account;
+
+ $user-account-ref0 (origin:$social-media-sub0, account:$user-account0) isa user-account-ref;
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $email-addr0 isa email-addr, has stix-id "email-addr--c99b87bd-f0a8-50ca-9f84-68072efc61e3";
+ $user-account0 isa user-account, has stix-id "user-account--83658594-537d-5c32-b9f0-137354bd9bc3";
+ insert $identity isa identity,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has stix-role $roles0,
+ has stix-role $roles1,
+ has identity-class $identity-class,
+ has sector $sectors0;
+
+ $stix-type "identity";
+ $spec-version "2.1";
+ $stix-id "identity--31f2aeea-dfe1-4fc9-98c9-38e590e3b55b";
+ $created 2025-07-27T06:00:40.582;
+ $modified 2025-07-27T06:00:40.582;
+ $name "Trusty Jones";
+ $description "A Trusty Individual";
+ $roles0 "soc";
+ $roles1 "support";
+ $identity-class "individual";
+ $sectors0 "technology";
+
+ $identity-contact isa identity-contact,
+ has extension-type $extension-type,
+ has first-name $first-name,
+ has last-name $last-name,
+ has middle-name $middle-name,
+ has prefix $prefix,
+ has team $team;
+
+ $extension-type "property-extension";
+ $first-name "Me";
+ $last-name "Jones";
+ $middle-name "Percival";
+ $prefix "Dr";
+ $team "os-threat";
+
+ $identity-ext0 (identity-base:$identity, identity-spec:$identity-contact) isa identity-ext;
+
+
+$contact-number-sub0 isa contact-number-sub,
+ has contact-number "work-phone",
+ has contact-number-type "0418-208-368";
+
+ $identity-number (identity:$identity-contact, number-object:$contact-number-sub0) isa identity-number;
+
+$email-contact-sub0 isa email-contact-sub,
+ has digital-contact-type "work";
+
+ $identity-email (identity:$identity-contact, email-object:$email-contact-sub0) isa identity-email;
+
+ $email-ref0 (origin:$email-contact-sub0, email:$email-addr0) isa email-ref;
+
+$social-media-sub0 isa social-media-sub,
+ has digital-contact-type "work";
+
+ $identity-account (identity:$identity-contact, account-object:$social-media-sub0) isa identity-account;
+
+ $user-account-ref0 (origin:$social-media-sub0, account:$user-account0) isa user-account-ref;
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $url isa url,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value;
+
+ $stix-type "url";
+ $spec-version "2.1";
+ $stix-id "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7";
+ $stix-value "https://www.northkorea.nk/we/are/mad/";
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $email-addr0 isa email-addr, has stix-id "email-addr--eb38d07e-6ba8-56c1-b107-d4db4aacf212";
+ $email-addr01 isa email-addr, has stix-id "email-addr--4722424c-7012-56b0-84d5-01d076fc547b";
+ insert $email-message isa email-message,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has is-multipart $is-multipart,
+ has date $date,
+ has subject $subject,
+ has body $body;
+
+ $stix-type "email-message";
+ $spec-version "2.1";
+ $stix-id "email-message--6090e3d4-1fa8-5b36-9d2d-4a66d824995d";
+ $is-multipart false;
+ $date 2020-10-19T01:01:01.0;
+ $subject "we are coming for you";
+ $body "some bad stuff written here";
+
+
+ $from-email0 (email:$email-message, email-address:$email-addr0) isa from-email;
+
+ $to-email1 (email:$email-message, email-address:$email-addr01) isa to-email;
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $email-addr00 isa email-addr, has stix-id "email-addr--eb38d07e-6ba8-56c1-b107-d4db4aacf212";
+ $user-account10 isa user-account, has stix-id "user-account--597ad4d4-35ba-585d-8f6d-134a75032f9b";
+ $email-addr20 isa email-addr, has stix-id "email-addr--4722424c-7012-56b0-84d5-01d076fc547b";
+ $url30 isa url, has stix-id "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7";
+ $email-message40 isa email-message, has stix-id "email-message--6090e3d4-1fa8-5b36-9d2d-4a66d824995d";
+ insert $observed-data isa observed-data,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has first-observed $first-observed,
+ has last-observed $last-observed,
+ has number-observed $number-observed;
+
+ $stix-type "observed-data";
+ $spec-version "2.1";
+ $stix-id "observed-data--5aa35ce5-7d95-4cbb-8ab4-f29b44de80ad";
+ $created 2025-07-27T06:01:15.521;
+ $modified 2025-07-27T06:01:15.521;
+ $first-observed 2020-10-19T01:01:01.0;
+ $last-observed 2020-10-19T01:01:01.0;
+ $number-observed 1;
+
+
+ $obj-refs0 (object:$observed-data, referred:$email-addr00, referred:$user-account10, referred:$email-addr20, referred:$url30, referred:$email-message40) isa obj-refs;
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $indicator isa indicator,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has indicator-type $indicator_types0,
+ has pattern $pattern,
+ has pattern-type $pattern-type,
+ has pattern-version $pattern-version,
+ has valid-from $valid-from;
+
+ $stix-type "indicator";
+ $spec-version "2.1";
+ $stix-id "indicator--dd52359a-1dd5-43c3-8970-2cc8aa0e1544";
+ $created 2025-07-27T06:01:15.680;
+ $modified 2025-07-27T06:01:15.680;
+ $name "Potential Phishing Email";
+ $description "Suspicious email reported by user";
+ $indicator_types0 "unknown";
+ $pattern "[email-addr:value = 'evil@northkorea.nk' AND email:subject = 'we are coming for you']";
+ $pattern-type "stix";
+ $pattern-version "2.1";
+ $valid-from 2025-07-27T06:01:15.680;
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  
+ $indicator0 isa indicator, has stix-id "indicator--dd52359a-1dd5-43c3-8970-2cc8aa0e1544";
+ $observed-data0 isa observed-data, has stix-id "observed-data--5aa35ce5-7d95-4cbb-8ab4-f29b44de80ad";
+ $identity1 isa identity, has stix-id "identity--ce31dd38-f69b-45ba-9bcd-2a208bbf8017";
+ insert 
+$sighting (sighting-of:$indicator0, observed:$observed-data0, where-sighted:$identity1) isa sighting,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sighting-count $sighting-count;
+
+ $stix-type "sighting";
+ $spec-version "2.1";
+ $stix-id "sighting--06faabfe-490a-4516-a66e-1340aad78870";
+ $created 2025-07-27T06:01:15.791;
+ $modified 2025-07-27T06:01:15.791;
+ $sighting-count 1;
+
+ $alert-evidence isa alert-evidence,
+ has name $name,
+ has log $log,
+ has system-id $system-id,
+ has source $source;
+
+ $name "user-report";
+ $log "I have found a suspicious email";
+ $system-id "XYZ-1234";
+ $source "user submission";
+
+ $alert-ext0 (sighting-base:$sighting, alert-extension:$alert-evidence) isa alert-ext;
+
+ $evidence-extension isa evidence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "property-extension";
+
+ $evidence-ext1 (evidence-base:$sighting, evidence-spec:$evidence-extension) isa evidence-ext;
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $identity isa identity,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has stix-role $roles0,
+ has identity-class $identity-class,
+ has sector $sectors0;
+
+ $stix-type "identity";
+ $spec-version "2.1";
+ $stix-id "identity--3789a438-8d49-4f2a-bb1a-06d3575d2f33";
+ $created 2025-07-27T06:00:43.719;
+ $modified 2025-07-27T06:00:43.719;
+ $name "HP Laptop 1";
+ $description "Usr 1's Laptop";
+ $roles0 "laptop";
+ $identity-class "asset";
+ $sectors0 "technology";
+
+$external-reference0 isa external-reference,
+ has source-name "HP Ultima 10",
+ has description "16GB RAM, 1TB SD, Microsoft Windows 11 Professional",
+ has url-link "https://mail.echange.microsoft.com",
+ has external-id "Asset--629456a";
+
+ $external-references (referenced:$identity, referencing:$external-reference0) isa external-references;
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $anecdote isa anecdote,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has anecdote-value $anecdote-value,
+ has report-date $report-date;
+
+ $stix-type "anecdote";
+ $spec-version "2.1";
+ $stix-id "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f";
+ $anecdote-value "I clicked on the link, and my laptop screen went weird";
+ $report-date 2025-07-27T06:01:27.512;
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $anecdote00 isa anecdote, has stix-id "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f";
+ insert $observed-data isa observed-data,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has first-observed $first-observed,
+ has last-observed $last-observed,
+ has number-observed $number-observed;
+
+ $stix-type "observed-data";
+ $spec-version "2.1";
+ $stix-id "observed-data--98f47f54-715a-4bdf-ac74-4d65f22bea8e";
+ $created 2025-07-27T06:01:27.617;
+ $modified 2025-07-27T06:01:27.617;
+ $first-observed 2020-10-19T01:01:01.0;
+ $last-observed 2020-10-19T01:01:01.0;
+ $number-observed 1;
+
+
+ $obj-refs0 (object:$observed-data, referred:$anecdote00) isa obj-refs;
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  
+ $identity0 isa identity, has stix-id "identity--ce31dd38-f69b-45ba-9bcd-2a208bbf8017";
+ $observed-data0 isa observed-data, has stix-id "observed-data--98f47f54-715a-4bdf-ac74-4d65f22bea8e";
+ $identity1 isa identity, has stix-id "identity--31f2aeea-dfe1-4fc9-98c9-38e590e3b55b";
+ insert 
+$sighting (sighting-of:$identity0, observed:$observed-data0, where-sighted:$identity1) isa sighting,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sighting-count $sighting-count;
+
+ $stix-type "sighting";
+ $spec-version "2.1";
+ $stix-id "sighting--4fb5cd06-3c90-42d7-be38-abea7f752fba";
+ $created 2025-07-27T06:01:27.714;
+ $modified 2025-07-27T06:01:27.714;
+ $sighting-count 1;
+
+ $anecdote-evidence isa anecdote-evidence,
+ has person-name $person-name,
+ has person-context $person-context,
+ has report-submission $report-submission;
+
+ $person-name "user-report";
+ $person-context "employee";
+ $report-submission "interview";
+
+ $anecdote-ext0 (sighting-base:$sighting, anecdote-extension:$anecdote-evidence) isa anecdote-ext;
+
+ $evidence-extension isa evidence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "property-extension";
+
+ $evidence-ext1 (evidence-base:$sighting, evidence-spec:$evidence-extension) isa evidence-ext;
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $sequence00 isa sequence, has stix-id "sequence--5ced78bf-aab8-4650-9c9e-a6914d68b46e";
+ $sequence10 isa sequence, has stix-id "sequence--fb97db29-be35-4f8d-b483-c2899750838d";
+ $sequence00 isa sequence, has stix-id "sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8";
+ $sequence10 isa sequence, has stix-id "sequence--4089e2b7-816d-4ad4-9d11-2604739b16ef";
+ $sequence20 isa sequence, has stix-id "sequence--10fe3d71-a3d1-4f83-ad54-9c290d7136e9";
+ $task00 isa task, has stix-id "task--3f23faa4-e21e-4880-bd8a-c8d89aa453aa";
+ $task10 isa task, has stix-id "task--01537439-3b2d-4afe-81a3-45b2dd35c655";
+ $event00 isa event, has stix-id "event--e8f641e7-89ca-4776-a828-6838d8eccdca";
+ $impact00 isa impact, has stix-id "impact--1b87fa10-78fd-4b3e-970e-dea91e9a7457";
+ $email-addr00 isa email-addr, has stix-id "email-addr--eb38d07e-6ba8-56c1-b107-d4db4aacf212";
+ $email-addr10 isa email-addr, has stix-id "email-addr--4722424c-7012-56b0-84d5-01d076fc547b";
+ $user-account20 isa user-account, has stix-id "user-account--597ad4d4-35ba-585d-8f6d-134a75032f9b";
+ $identity30 isa identity, has stix-id "identity--ce31dd38-f69b-45ba-9bcd-2a208bbf8017";
+ $identity40 isa identity, has stix-id "identity--31f2aeea-dfe1-4fc9-98c9-38e590e3b55b";
+ $url50 isa url, has stix-id "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7";
+ $email-message60 isa email-message, has stix-id "email-message--6090e3d4-1fa8-5b36-9d2d-4a66d824995d";
+ $observed-data70 isa observed-data, has stix-id "observed-data--5aa35ce5-7d95-4cbb-8ab4-f29b44de80ad";
+ $indicator80 isa indicator, has stix-id "indicator--dd52359a-1dd5-43c3-8970-2cc8aa0e1544";
+ $sighting90 isa sighting, has stix-id "sighting--06faabfe-490a-4516-a66e-1340aad78870";
+ $identity100 isa identity, has stix-id "identity--3789a438-8d49-4f2a-bb1a-06d3575d2f33";
+ $anecdote110 isa anecdote, has stix-id "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f";
+ $observed-data120 isa observed-data, has stix-id "observed-data--98f47f54-715a-4bdf-ac74-4d65f22bea8e";
+ $sighting130 isa sighting, has stix-id "sighting--4fb5cd06-3c90-42d7-be38-abea7f752fba";
+ insert $incident isa incident,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name;
+
+ $stix-type "incident";
+ $spec-version "2.1";
+ $stix-id "incident--145eb841-90db-4526-8407-b25fd2d705c1";
+ $created 2025-07-27T06:01:14.656;
+ $modified 2025-07-27T06:01:14.656;
+ $name "potential phishing";
+
+ $incident-ext isa incident-ext,
+ has extension-type $extension-type,
+ has investigation-status $investigation-status,
+ has incident-types $incident_types0;
+
+ $extension-type "property-extension";
+ $investigation-status "new";
+ $incident_types0 "dissemination-phishing-emails";
+
+ $occurence-ext0 (occurence:$incident, incident-core:$incident-ext) isa occurence-ext;
+
+
+
+ $sequence-start-refs0 (incident:$incident-ext, sequence-start:$sequence00, sequence-start:$sequence10) isa sequence-start-refs;
+
+
+ $sequence-refs0 (incident:$incident-ext, the-steps:$sequence00, the-steps:$sequence10, the-steps:$sequence20) isa sequence-refs;
+
+
+ $task-refs0 (incident:$incident-ext, the-task:$task00, the-task:$task10) isa task-refs;
+
+
+ $event-refs0 (incident:$incident-ext, the-event:$event00) isa event-refs;
+
+
+ $impact-refs0 (incident:$incident-ext, the-impact:$impact00) isa impact-refs;
+
+
+ $other-obj-refs0 (object:$incident-ext, referred:$email-addr00, referred:$email-addr10, referred:$user-account20, referred:$identity30, referred:$identity40, referred:$url50, referred:$email-message60, referred:$observed-data70, referred:$indicator80, referred:$sighting90, referred:$identity100, referred:$anecdote110, referred:$observed-data120, referred:$sighting130) isa other-obj-refs;
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--06029cc1-105d-5495-9fc5-3d252dd7af76";
+ $stix-value "paolo@priam.ai";
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--78b946aa-91ab-5ce8-829b-4d078a8ecc00";
+ $stix-value "paolo@nomadenergy.co.uk";
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $user-account isa user-account,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has account-login $account-login,
+ has account-type $account-type;
+
+ $stix-type "user-account";
+ $spec-version "2.1";
+ $stix-id "user-account--7aa68be3-1d4d-5b0f-8c26-8410085e5741";
+ $account-login "paolo di prodi";
+ $account-type "LinkedIn";
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--a04693c3-b040-44c5-833a-75cbe45386b5";
+ $stix-value "brett@cloudaccelerator.co";
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--25769d7c-b38f-496b-9ca5-5359537d9ff9";
+ $stix-value "brett@innovolve.ai";
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $email-addr0 isa email-addr, has stix-id "email-addr--06029cc1-105d-5495-9fc5-3d252dd7af76";
+ $email-addr1 isa email-addr, has stix-id "email-addr--78b946aa-91ab-5ce8-829b-4d078a8ecc00";
+ $user-account0 isa user-account, has stix-id "user-account--7aa68be3-1d4d-5b0f-8c26-8410085e5741";
+ insert $identity isa identity,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has stix-role $roles0,
+ has identity-class $identity-class,
+ has contact-information $contact-information;
+
+ $stix-type "identity";
+ $spec-version "2.1";
+ $stix-id "identity--4e0dd272-7d68-4c8d-b6bc-0cb9d4b8e924";
+ $created 2022-05-06T01:01:01.0;
+ $modified 2022-12-16T01:01:01.0;
+ $name "Paolo";
+ $description "The main point of contact for the incident.";
+ $roles0 "security-point-of-contact";
+ $identity-class "individual";
+ $contact-information "Ring him as he is unreliable on Slack";
+
+ $identity-contact isa identity-contact,
+ has extension-type $extension-type,
+ has first-name $first-name,
+ has last-name $last-name,
+ has middle-name $middle-name,
+ has team $team;
+
+ $extension-type "property-extension";
+ $first-name "Paolo";
+ $last-name "Di Prodi";
+ $middle-name "";
+ $team "responders";
+
+ $identity-ext0 (identity-base:$identity, identity-spec:$identity-contact) isa identity-ext;
+
+
+$contact-number-sub0 isa contact-number-sub,
+ has contact-number "work-phone",
+ has contact-number-type "123-456-7890";
+
+ $identity-number (identity:$identity-contact, number-object:$contact-number-sub0) isa identity-number;
+
+$email-contact-sub0 isa email-contact-sub,
+ has digital-contact-type "work";
+$email-contact-sub1 isa email-contact-sub,
+ has digital-contact-type "organizational";
+
+ $identity-email (identity:$identity-contact, email-object:$email-contact-sub0, email-object:$email-contact-sub1) isa identity-email;
+
+ $email-ref0 (origin:$email-contact-sub0, email:$email-addr0) isa email-ref;
+
+ $email-ref1 (origin:$email-contact-sub1, email:$email-addr1) isa email-ref;
+
+$social-media-sub0 isa social-media-sub,
+ has description "Paolo's LinkeIn contact details",
+ has digital-contact-type "career";
+
+ $identity-account (identity:$identity-contact, account-object:$social-media-sub0) isa identity-account;
+
+ $user-account-ref0 (origin:$social-media-sub0, account:$user-account0) isa user-account-ref;
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&
+ 
+match  $email-addr0 isa email-addr, has stix-id "email-addr--a04693c3-b040-44c5-833a-75cbe45386b5";
+ $email-addr1 isa email-addr, has stix-id "email-addr--25769d7c-b38f-496b-9ca5-5359537d9ff9";
+ insert $identity isa identity,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has stix-role $roles0,
+ has identity-class $identity-class,
+ has contact-information $contact-information;
+
+ $stix-type "identity";
+ $spec-version "2.1";
+ $stix-id "identity--48405e34-669b-41fa-9ad3-a292b4e6b3b7";
+ $created 2022-05-06T01:01:01.0;
+ $modified 2022-12-16T01:01:01.0;
+ $name "Brett";
+ $description "The secondary point of contact for the incident.";
+ $roles0 "security-point-of-contact";
+ $identity-class "individual";
+ $contact-information "Very reliable on Slack";
+
+ $identity-contact isa identity-contact,
+ has extension-type $extension-type,
+ has first-name $first-name,
+ has last-name $last-name,
+ has middle-name $middle-name,
+ has team $team;
+
+ $extension-type "property-extension";
+ $first-name "Brett";
+ $last-name "Forbes";
+ $middle-name "Colin";
+ $team "responders";
+
+ $identity-ext0 (identity-base:$identity, identity-spec:$identity-contact) isa identity-ext;
+
+
+$contact-number-sub0 isa contact-number-sub,
+ has contact-number "work-phone",
+ has contact-number-type "0491 629 206";
+
+ $identity-number (identity:$identity-contact, number-object:$contact-number-sub0) isa identity-number;
+
+$email-contact-sub0 isa email-contact-sub,
+ has digital-contact-type "work";
+$email-contact-sub1 isa email-contact-sub,
+ has digital-contact-type "organizational";
+
+ $identity-email (identity:$identity-contact, email-object:$email-contact-sub0, email-object:$email-contact-sub1) isa identity-email;
+
+ $email-ref0 (origin:$email-contact-sub0, email:$email-addr0) isa email-ref;
+
+ $email-ref1 (origin:$email-contact-sub1, email:$email-addr1) isa email-ref;
+
+
+
+
+===========================
+input len -> 33, typedb len ->20
+difference -> 
+email-addr--4722424c-7012-56b0-84d5-01d076fc547b
+email-message--6090e3d4-1fa8-5b36-9d2d-4a66d824995d
+identity--ce31dd38-f69b-45ba-9bcd-2a208bbf8017
+impact--1b87fa10-78fd-4b3e-970e-dea91e9a7457
+incident--145eb841-90db-4526-8407-b25fd2d705c1
+observed-data--5aa35ce5-7d95-4cbb-8ab4-f29b44de80ad
+sequence--10fe3d71-a3d1-4f83-ad54-9c290d7136e9
+sequence--4089e2b7-816d-4ad4-9d11-2604739b16ef
+sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8
+sequence--5ced78bf-aab8-4650-9c9e-a6914d68b46e
+sequence--fb97db29-be35-4f8d-b483-c2899750838d
+sighting--06faabfe-490a-4516-a66e-1340aad78870
+sighting--4fb5cd06-3c90-42d7-be38-abea7f752fba
+
+===================================================
+Exercising test components with data from os-threat/examples

@@ -66,6 +66,7 @@ define
         owns description,
         owns api-fncs,
         owns url-string,
+        owns class-name,
         plays detect-ref:rule,
         plays detection-rules:rule;
 
@@ -186,7 +187,7 @@ define
         plays uses:used,
         plays led-to:initial,
         plays led-to:subsequent,
-        plays objective-refs:behavior,
+        plays objective-refs:objective,
 	    plays mbc-ext:mbc;
 
 
@@ -223,5 +224,6 @@ define
         actual-hash sub stix-attribute-string;
         url-string sub stix-attribute-string;
         dict-key sub stix-attribute-string;
+        class-name sub stix-attribute-string;
     # Boolean
         micro sub stix-attribute-boolean;

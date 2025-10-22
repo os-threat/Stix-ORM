@@ -1,6 +1,7 @@
 {
 	"rule_type": "rule-type",
 	"rule_name": "rule-name",
+	"class": "class-name",
 	"rule": "rule",
 	"url": "url-string",
 	"detect_ref": "",

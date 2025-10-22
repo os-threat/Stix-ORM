@@ -201,7 +201,7 @@
         ],
         "name": "Gamut hash",
         "description": "This is an IoC for Gamut",
-        "pattern": "[ file:hashes.'SHA-256' = 'a56162bc623841102301df...1c838fcf256654932' ]",
+        "pattern": "[ file:hashes.'SHA-256' = 'eb51501a7265afec11753ee135a6ef8d0f972eb6af3346f036c5cb8be645d6d4' ]",
         "pattern_type": "stix",
         "valid_from": "2023-03-01T00:00:00.000Z"
     },

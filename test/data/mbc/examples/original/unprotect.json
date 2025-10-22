@@ -2,7 +2,7 @@
     {
         "type": "malware-objective",
         "spec_version": "2.1",
-        "id": "malware-objective--a624a7a-ef64-46ce-b582-b963b7d6113f",
+        "id": "malware-objective--a624a7aa-ef64-46ce-b582-b963b7d6113f",
         "created": "2023-04-21T00:00:00.000Z",
         "modified": "2023-04-21T00:00:00.000Z",
         "name": "Anti-Debugging",
@@ -33,7 +33,7 @@
             "gettickcount"
         ],
         "objective_refs": [
-            "malware-objective--a624a7a-ef64-46ce-b582-b963b7d6113f"
+            "malware-objective--a624a7aa-ef64-46ce-b582-b963b7d6113f"
         ],
         "detection_rules": [
             {

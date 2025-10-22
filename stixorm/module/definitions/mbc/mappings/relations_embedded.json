@@ -24,7 +24,7 @@
         "owner-is-source": false
     },
     {
-        "rel": "contributor-refs",
+        "rel": "contributor_refs",
         "owner": "object",
         "pointed-to": "contributor",
         "typeql": "contributor-refs",

@@ -1,18 +1,18 @@
 {
   "type": "bundle",
-  "id": "bundle--a692d4db-af5c-4e42-98b7-c6191cd7cbdc",
+  "id": "bundle--0f90b62f-776a-4f32-b922-54f83c990862",
   "objects": [
     {
-      "id": "infrastructure--6f00d94e-3724-4f17-a01d-d2e73c9860cf",
-      "type": "infrastructure",
+      "id": "directory--07354f90-6d57-4de7-b9af-7f6130ba9dc3",
+      "type": "directory",
       "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.626Z",
-      "modified": "2025-07-30T19:47:12.626Z",
-      "name": "20.232.97.189",
-      "description": "Command and Control",
-      "infrastructure_types": [
-        "command-and-control"
-      ]
+      "path": "/opt/vmware/horizon/workspace/webapps/SAAS/horizon/images/"
+    },
+    {
+      "id": "directory--d277228f-6835-488e-8145-4e43af09f875",
+      "type": "directory",
+      "spec_version": "2.1",
+      "path": "/usr/local/horizon/conf"
     },
     {
       "id": "identity--63e39c17-b7e7-4cc5-886d-449b56901a58",
@@ -24,29 +24,6 @@
       "contact_information": "lparker@mitre.org"
     },
     {
-      "id": "file--23625c13-d92b-4e65-8f82-91a4820319ee",
-      "type": "file",
-      "spec_version": "2.1",
-      "name": "fd86ald0.pem"
-    },
-    {
-      "id": "url--e1c165a0-165b-4760-8da0-dcd112475096",
-      "type": "url",
-      "spec_version": "2.1",
-      "value": "http://84.38.133[.]149/img/icon.gif"
-    },
-    {
-      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "type": "identity",
-      "modified": "2025-03-19T15:00:40.855Z",
-      "name": "The MITRE Corporation",
-      "description": "",
-      "identity_class": "organization",
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "x_mitre_attack_spec_version": "3.2.0"
-    },
-    {
       "id": "vulnerability--bfbfe054-666b-498e-a067-ed49356fab29",
       "type": "vulnerability",
       "spec_version": "2.1",
@@ -55,37 +32,10 @@
       "name": "CVE 2022-22960"
     },
     {
-      "id": "ipv4-addr--e01fce30-934b-4d5c-ab81-ca635e99b406",
-      "type": "ipv4-addr",
+      "id": "file--23625c13-d92b-4e65-8f82-91a4820319ee",
+      "type": "file",
       "spec_version": "2.1",
-      "value": "8.45.41.114"
-    },
-    {
-      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2022-08-02T19:34:35.143Z",
-      "modified": "2022-08-02T19:34:35.143Z",
-      "name": "MITRE Center for Threat-Informed Defense",
-      "identity_class": "organization"
-    },
-    {
-      "id": "ipv4-addr--545cfd59-0603-4476-93fc-c7c91c22e0bd",
-      "type": "ipv4-addr",
-      "spec_version": "2.1",
-      "value": "194.31.98.141"
-    },
-    {
-      "id": "directory--d277228f-6835-488e-8145-4e43af09f875",
-      "type": "directory",
-      "spec_version": "2.1",
-      "path": "/usr/local/horizon/conf"
-    },
-    {
-      "id": "directory--07354f90-6d57-4de7-b9af-7f6130ba9dc3",
-      "type": "directory",
-      "spec_version": "2.1",
-      "path": "/opt/vmware/horizon/workspace/webapps/SAAS/horizon/images/"
+      "name": "fd86ald0.pem"
     },
     {
       "id": "malware--c6e2dfb4-33c5-4908-86a2-db3a3612c0c5",
@@ -114,6 +64,24 @@
       ]
     },
     {
+      "id": "ipv4-addr--545cfd59-0603-4476-93fc-c7c91c22e0bd",
+      "type": "ipv4-addr",
+      "spec_version": "2.1",
+      "value": "194.31.98.141"
+    },
+    {
+      "id": "ipv4-addr--e01fce30-934b-4d5c-ab81-ca635e99b406",
+      "type": "ipv4-addr",
+      "spec_version": "2.1",
+      "value": "8.45.41.114"
+    },
+    {
+      "id": "url--e1c165a0-165b-4760-8da0-dcd112475096",
+      "type": "url",
+      "spec_version": "2.1",
+      "value": "http://84.38.133[.]149/img/icon.gif"
+    },
+    {
       "id": "tool--1ca54adf-82f5-427b-bb74-e748b132af57",
       "type": "tool",
       "spec_version": "2.1",
@@ -123,15 +91,50 @@
       "description": "linux archive utility"
     },
     {
-      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
-      "type": "marking-definition",
-      "definition": {
-        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
-      },
+      "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2022-08-02T19:34:35.143Z",
+      "modified": "2022-08-02T19:34:35.143Z",
+      "name": "MITRE Center for Threat-Informed Defense",
+      "identity_class": "organization"
+    },
+    {
+      "id": "infrastructure--6f00d94e-3724-4f17-a01d-d2e73c9860cf",
+      "type": "infrastructure",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.626Z",
+      "modified": "2025-07-30T19:47:12.626Z",
+      "name": "20.232.97.189",
+      "description": "Command and Control",
+      "infrastructure_types": [
+        "command-and-control"
+      ]
+    },
+    {
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "type": "identity",
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
       "spec_version": "2.1",
       "created": "2017-06-01T00:00:00.000Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "definition_type": "statement"
+      "x_mitre_attack_spec_version": "3.2.0"
+    },
+    {
+      "id": "note--6b8158c0-becf-443c-ab7b-c72fba4890ee",
+      "type": "note",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.626Z",
+      "modified": "2025-07-30T19:47:12.626Z",
+      "content": "The following IPs download, execute, and check the bash script: 45.72.112.245; 115.167.53.141; 191.102.179.197; 209.127.110.126; 45.72.85.172; 192.241.67.12",
+      "authors": [
+        "Lauren Parker"
+      ],
+      "object_refs": [
+        "malware--c6e2dfb4-33c5-4908-86a2-db3a3612c0c5"
+      ]
     },
     {
       "id": "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4",
@@ -161,18 +164,15 @@
       ]
     },
     {
-      "id": "note--6b8158c0-becf-443c-ab7b-c72fba4890ee",
-      "type": "note",
+      "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
+      "type": "marking-definition",
+      "definition": {
+        "statement": "Copyright 2015-2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation."
+      },
       "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.626Z",
-      "modified": "2025-07-30T19:47:12.626Z",
-      "content": "The following IPs download, execute, and check the bash script: 45.72.112.245; 115.167.53.141; 191.102.179.197; 209.127.110.126; 45.72.85.172; 192.241.67.12",
-      "authors": [
-        "Lauren Parker"
-      ],
-      "object_refs": [
-        "malware--c6e2dfb4-33c5-4908-86a2-db3a3612c0c5"
-      ]
+      "created": "2017-06-01T00:00:00.000Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "definition_type": "statement"
     },
     {
       "id": "x-mitre-tactic--4ca45d45-df4d-4613-8980-bac22d278fa5",
@@ -441,34 +441,6 @@
       "x_mitre_shortname": "discovery"
     },
     {
-      "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0005",
-          "external_id": "TA0005"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:34.581Z",
-      "name": "Defense Evasion",
-      "description": "The adversary is trying to avoid being detected.\n\nDefense Evasion consists of techniques that adversaries use to avoid detection throughout their compromise. Techniques used for defense evasion include uninstalling/disabling security software or obfuscating/encrypting data and scripts. Adversaries also leverage and abuse trusted processes to hide and masquerade their malware. Other tactics’ techniques are cross-listed here when those techniques include the added benefit of subverting defenses. ",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "defense-evasion"
-    },
-    {
       "id": "attack-pattern--799ace7f-e227-4411-baa0-8868704f2a69",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -533,6 +505,34 @@
         "Network Traffic: Network Traffic Content",
         "Windows Registry: Windows Registry Key Deletion"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",
+      "type": "x-mitre-tactic",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0005",
+          "external_id": "TA0005"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "modified": "2025-04-25T14:45:34.581Z",
+      "name": "Defense Evasion",
+      "description": "The adversary is trying to avoid being detected.\n\nDefense Evasion consists of techniques that adversaries use to avoid detection throughout their compromise. Techniques used for defense evasion include uninstalling/disabling security software or obfuscating/encrypting data and scripts. Adversaries also leverage and abuse trusted processes to hide and masquerade their malware. Other tactics’ techniques are cross-listed here when those techniques include the added benefit of subverting defenses. ",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_shortname": "defense-evasion"
     },
     {
       "id": "attack-pattern--00f90846-cbd1-4fc5-9233-df5c2bf2a662",

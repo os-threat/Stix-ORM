@@ -1,7 +1,39 @@
 {
   "type": "bundle",
-  "id": "bundle--15f18317-5530-4f85-a1de-10bdfe2b5ffe",
+  "id": "bundle--420384f6-ce28-4cef-aad8-fc59a45bb5ac",
   "objects": [
+    {
+      "id": "vulnerability--236a6a2c-e12c-4ed9-983b-602b7af3bc2a",
+      "type": "vulnerability",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "name": "CVE-2017-5638",
+      "description": "The Jakarta Multipart parser in Apache Struts 2 2.3.x before 2.3.32 and 2.5.x before 2.5.10.1 has incorrect exception handling and error-message generation during file-upload attempts, which allows remote attackers to execute arbitrary commands via a crafted Content-Type, Content-Disposition, or Content-Length HTTP header, as exploited in the wild in March 2017 with a Content-Type header containing a #cmd= string."
+    },
+    {
+      "id": "threat-actor--ed3f9e1b-1c65-4d72-9bb3-01e0ec01b094",
+      "type": "threat-actor",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "name": "Wang Qian",
+      "description": "Member of the PLA who was indicted by DoJ for computer fraud, economic espionage, and wire fraud for hacking into credit reporting agency Equifax",
+      "threat_actor_types": [
+        "Nation-state"
+      ],
+      "first_seen": "2017-05-13T04:00:00.000Z",
+      "last_seen": "2017-07-30T04:00:00.000Z",
+      "roles": [
+        "Agent"
+      ],
+      "goals": [
+        "access protected computers for economic espionage; transmit information from a protected computer to cause harm; steal, convey, and sell trade secrets from Equifax to benefit a foreign government, namely China"
+      ],
+      "sophistication": "Expert",
+      "resource_level": "Government",
+      "primary_motivation": "organizational-gain"
+    },
     {
       "id": "attack-condition--085ff46c-3c7d-43f0-8e8f-0b265e209f4d",
       "type": "attack-condition",
@@ -28,13 +60,53 @@
       ]
     },
     {
-      "id": "vulnerability--236a6a2c-e12c-4ed9-983b-602b7af3bc2a",
-      "type": "vulnerability",
+      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "type": "identity",
+      "modified": "2025-03-19T15:00:40.855Z",
+      "name": "The MITRE Corporation",
+      "description": "",
+      "identity_class": "organization",
+      "spec_version": "2.1",
+      "created": "2017-06-01T00:00:00.000Z",
+      "x_mitre_attack_spec_version": "3.2.0"
+    },
+    {
+      "id": "malware--49e4d378-bc15-4ab9-bb3f-b05e3b896bb0",
+      "type": "malware",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.813Z",
       "modified": "2025-07-30T19:47:12.813Z",
-      "name": "CVE-2017-5638",
-      "description": "The Jakarta Multipart parser in Apache Struts 2 2.3.x before 2.3.32 and 2.5.x before 2.5.10.1 has incorrect exception handling and error-message generation during file-upload attempts, which allows remote attackers to execute arbitrary commands via a crafted Content-Type, Content-Disposition, or Content-Length HTTP header, as exploited in the wild in March 2017 with a Content-Type header containing a #cmd= string."
+      "name": "Web Shell",
+      "malware_types": [
+        "webshell"
+      ],
+      "is_family": false,
+      "capabilities": [
+        "communicates-with-c2",
+        "exfiltrates-data"
+      ]
+    },
+    {
+      "id": "identity--08a5760c-2807-4087-bd48-9a591840609a",
+      "type": "identity",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.812Z",
+      "modified": "2025-07-30T19:47:12.812Z",
+      "name": "Lauren Parker",
+      "contact_information": "lparker@mitre.org"
+    },
+    {
+      "id": "attack-condition--6a38d6e6-107c-4941-9848-a7a91b9560f8",
+      "type": "attack-condition",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "extensions": {
+        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
+          "extension_type": "new-sdo"
+        }
+      },
+      "description": "Attackers discovered vulnerable Apache Struts Web Framework on Equifax's dispute portal"
     },
     {
       "id": "attack-condition--a0f50bb1-aacd-4678-8160-c2062fef2b10",
@@ -63,61 +135,6 @@
       "name": "Online Dispute Portal"
     },
     {
-      "id": "identity--08a5760c-2807-4087-bd48-9a591840609a",
-      "type": "identity",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.812Z",
-      "modified": "2025-07-30T19:47:12.812Z",
-      "name": "Lauren Parker",
-      "contact_information": "lparker@mitre.org"
-    },
-    {
-      "id": "infrastructure--82e17e5c-bd8a-493a-a209-8d6b2ab86e50",
-      "type": "infrastructure",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "name": "Servers",
-      "description": "Adversary used 34 servers located in nearly 20 countries to host multi-hop proxies for obfuscation",
-      "infrastructure_types": [
-        "anonymization"
-      ]
-    },
-    {
-      "id": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "type": "identity",
-      "modified": "2025-03-19T15:00:40.855Z",
-      "name": "The MITRE Corporation",
-      "description": "",
-      "identity_class": "organization",
-      "spec_version": "2.1",
-      "created": "2017-06-01T00:00:00.000Z",
-      "x_mitre_attack_spec_version": "3.2.0"
-    },
-    {
-      "id": "threat-actor--ed3f9e1b-1c65-4d72-9bb3-01e0ec01b094",
-      "type": "threat-actor",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "name": "Wang Qian",
-      "description": "Member of the PLA who was indicted by DoJ for computer fraud, economic espionage, and wire fraud for hacking into credit reporting agency Equifax",
-      "threat_actor_types": [
-        "Nation-state"
-      ],
-      "first_seen": "2017-05-13T04:00:00.000Z",
-      "last_seen": "2017-07-30T04:00:00.000Z",
-      "roles": [
-        "Agent"
-      ],
-      "goals": [
-        "access protected computers for economic espionage; transmit information from a protected computer to cause harm; steal, convey, and sell trade secrets from Equifax to benefit a foreign government, namely China"
-      ],
-      "sophistication": "Expert",
-      "resource_level": "Government",
-      "primary_motivation": "organizational-gain"
-    },
-    {
       "id": "identity--fb9c968a-745b-4ade-9b25-c324172197f4",
       "type": "identity",
       "spec_version": "2.1",
@@ -125,42 +142,6 @@
       "modified": "2022-08-02T19:34:35.143Z",
       "name": "MITRE Center for Threat-Informed Defense",
       "identity_class": "organization"
-    },
-    {
-      "id": "threat-actor--60ee3b8c-c6f9-4ac5-ab95-7d7e5a592638",
-      "type": "threat-actor",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "name": "Liu Lei",
-      "description": "Member of the PLA who was indicted by DoJ for computer fraud, economic espionage, and wire fraud for hacking into credit reporting agency Equifax",
-      "threat_actor_types": [
-        "Nation-state"
-      ],
-      "first_seen": "2017-05-13T04:00:00.000Z",
-      "last_seen": "2017-07-30T04:00:00.000Z",
-      "roles": [
-        "Agent"
-      ],
-      "goals": [
-        "access protected computers for economic espionage; transmit information from a protected computer to cause harm; steal, convey, and sell trade secrets from Equifax to benefit a foreign government, namely China"
-      ],
-      "sophistication": "Expert",
-      "resource_level": "Government",
-      "primary_motivation": "organizational-gain"
-    },
-    {
-      "id": "attack-condition--6a38d6e6-107c-4941-9848-a7a91b9560f8",
-      "type": "attack-condition",
-      "spec_version": "2.1",
-      "created": "2025-07-30T19:47:12.813Z",
-      "modified": "2025-07-30T19:47:12.813Z",
-      "extensions": {
-        "extension-definition--fb9c968a-745b-4ade-9b25-c324172197f4": {
-          "extension_type": "new-sdo"
-        }
-      },
-      "description": "Attackers discovered vulnerable Apache Struts Web Framework on Equifax's dispute portal"
     },
     {
       "id": "threat-actor--52e873ba-3b38-46d4-ac6f-fa5d4875d049",
@@ -209,20 +190,39 @@
       "primary_motivation": "organizational-gain"
     },
     {
-      "id": "malware--49e4d378-bc15-4ab9-bb3f-b05e3b896bb0",
-      "type": "malware",
+      "id": "infrastructure--82e17e5c-bd8a-493a-a209-8d6b2ab86e50",
+      "type": "infrastructure",
       "spec_version": "2.1",
       "created": "2025-07-30T19:47:12.813Z",
       "modified": "2025-07-30T19:47:12.813Z",
-      "name": "Web Shell",
-      "malware_types": [
-        "webshell"
-      ],
-      "is_family": false,
-      "capabilities": [
-        "communicates-with-c2",
-        "exfiltrates-data"
+      "name": "Servers",
+      "description": "Adversary used 34 servers located in nearly 20 countries to host multi-hop proxies for obfuscation",
+      "infrastructure_types": [
+        "anonymization"
       ]
+    },
+    {
+      "id": "threat-actor--60ee3b8c-c6f9-4ac5-ab95-7d7e5a592638",
+      "type": "threat-actor",
+      "spec_version": "2.1",
+      "created": "2025-07-30T19:47:12.813Z",
+      "modified": "2025-07-30T19:47:12.813Z",
+      "name": "Liu Lei",
+      "description": "Member of the PLA who was indicted by DoJ for computer fraud, economic espionage, and wire fraud for hacking into credit reporting agency Equifax",
+      "threat_actor_types": [
+        "Nation-state"
+      ],
+      "first_seen": "2017-05-13T04:00:00.000Z",
+      "last_seen": "2017-07-30T04:00:00.000Z",
+      "roles": [
+        "Agent"
+      ],
+      "goals": [
+        "access protected computers for economic espionage; transmit information from a protected computer to cause harm; steal, convey, and sell trade secrets from Equifax to benefit a foreign government, namely China"
+      ],
+      "sophistication": "Expert",
+      "resource_level": "Government",
+      "primary_motivation": "organizational-gain"
     },
     {
       "id": "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168",
@@ -735,34 +735,6 @@
       "x_mitre_version": "1.0"
     },
     {
-      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
-      "type": "x-mitre-tactic",
-      "spec_version": "2.1",
-      "created": "2018-10-17T00:14:20.652Z",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "external_references": [
-        {
-          "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0011",
-          "external_id": "TA0011"
-        }
-      ],
-      "object_marking_refs": [
-        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-      ],
-      "modified": "2025-04-25T14:45:36.561Z",
-      "name": "Command and Control",
-      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.0",
-      "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_shortname": "command-and-control"
-    },
-    {
       "id": "attack-pattern--b8902400-e6c5-4ba2-95aa-2d35b442b118",
       "type": "attack-pattern",
       "spec_version": "2.1",
@@ -824,33 +796,32 @@
       ]
     },
     {
-      "id": "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
+      "id": "x-mitre-tactic--f72804c5-f15a-449e-a5da-2eecd181f813",
       "type": "x-mitre-tactic",
-      "modified": "2024-09-05T18:27:09.070Z",
-      "name": "Collection",
-      "description": "The adversary is trying to gather data of interest to their goal.\n\nCollection consists of techniques adversaries may use to gather information and the sources information is collected from that are relevant to following through on the adversary's objectives. Frequently, the next goal after collecting data is to either steal (exfiltrate) the data or to use the data to gain more information about the target environment. Common target sources include various drive types, browsers, audio, video, and email. Common collection methods include capturing screenshots and keyboard input.",
-      "x_mitre_deprecated": false,
-      "x_mitre_domains": [
-        "enterprise-attack"
-      ],
-      "x_mitre_version": "1.1",
-      "x_mitre_shortname": "collection",
       "spec_version": "2.1",
       "created": "2018-10-17T00:14:20.652Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "revoked": false,
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/tactics/TA0009",
-          "external_id": "TA0009"
+          "url": "https://attack.mitre.org/tactics/TA0011",
+          "external_id": "TA0011"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
+      "modified": "2025-04-25T14:45:36.561Z",
+      "name": "Command and Control",
+      "description": "The adversary is trying to communicate with compromised systems to control them.\n\nCommand and Control consists of techniques that adversaries may use to communicate with systems under their control within a victim network. Adversaries commonly attempt to mimic normal, expected traffic to avoid detection. There are many ways an adversary can establish command and control with various levels of stealth depending on the victim’s network structure and defenses.",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.0",
       "x_mitre_attack_spec_version": "3.2.0",
-      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
+      "x_mitre_shortname": "command-and-control"
     },
     {
       "id": "attack-pattern--53ac20cd-aca3-406e-9aa0-9fc7fdc60a5a",
@@ -908,6 +879,35 @@
         "Process: Process Creation",
         "File: File Creation"
       ]
+    },
+    {
+      "id": "x-mitre-tactic--d108ce10-2419-4cf9-a774-46161d6c6cfe",
+      "type": "x-mitre-tactic",
+      "modified": "2024-09-05T18:27:09.070Z",
+      "name": "Collection",
+      "description": "The adversary is trying to gather data of interest to their goal.\n\nCollection consists of techniques adversaries may use to gather information and the sources information is collected from that are relevant to following through on the adversary's objectives. Frequently, the next goal after collecting data is to either steal (exfiltrate) the data or to use the data to gain more information about the target environment. Common target sources include various drive types, browsers, audio, video, and email. Common collection methods include capturing screenshots and keyboard input.",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_version": "1.1",
+      "x_mitre_shortname": "collection",
+      "spec_version": "2.1",
+      "created": "2018-10-17T00:14:20.652Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "revoked": false,
+      "external_references": [
+        {
+          "source_name": "mitre-attack",
+          "url": "https://attack.mitre.org/tactics/TA0009",
+          "external_id": "TA0009"
+        }
+      ],
+      "object_marking_refs": [
+        "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5"
     },
     {
       "id": "x-mitre-tactic--78b23412-0651-46d7-a540-170a1ce8bd5a",

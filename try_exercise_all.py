@@ -59,28 +59,28 @@ import_type =  import_type_factory.get_all_imports()
 all_imports = import_type_factory.get_all_imports()
 base_dir = "test/data/"
 proven = {    
-    "stix": "standard"
+    "stix": "examples"
 }
 directories = {
-    "stix": "standard",
-    "os_threat": "os-threat/exercise",
-    "oca": "oca/docs_data",
-    "attack": "mitre/test",
+    "stix": "examples",
+    "os_threat": "os-threat/examples",
+    "oca": "oca/examples",
+    "attack": "attack/examples",
     "mbc": "mbc/examples",
     "attack_flow": "attack_flow/examples"
 }
 test1 = "test_data"
-test2 = "os-threat/exercise"
+test2 = "os-threat/examples"
 test3 = "mbc/examples"
 test4 = "attack_flow/examples"
-test5 = "mitre/test"
+test5 = "attack/examples"
 test_dir = {
-    "test": test4
+    "test": test2
 }
 
 frameworks = {
-    "attack_enterprise": "mitre/latest/enterprise-attack-17.1.json",
-    "attack_ics": "mitre/latest/ics-attack-17.1.json",
+    "attack_enterprise": "attack/latest/enterprise-attack-17.1.json",
+    "attack_ics": "attack/latest/ics-attack-17.1.json",
     "mbc": "mbc/framework/mbc.json"
 }
 
@@ -184,7 +184,7 @@ def exercise_all():
     """Exercise all data directories and frameworks.
 
     """
-    # backdoor_add_dir(os.path.join(base_dir, test1))
+    backdoor_add_dir(os.path.join(base_dir, test2))
     # typedb_sink = TypeDBSink(connection, True, import_type)
     # typedb_source = TypeDBSource(connection, import_type)
     for name, path in test_dir.items():
@@ -194,7 +194,7 @@ def exercise_all():
         print(f'Exercising {name} components with data from {path}')
         # Here you would call the function to process the data
         # For example: process_data(name, path)
-        exercise_each_file_directory(name, os.path.join(base_dir, path))
+        # exercise_each_file_directory(name, os.path.join(base_dir, path))
         # backdoor_add_dir(os.path.join(base_dir, path))
 
     for name, path in frameworks.items():
