@@ -247,7 +247,61 @@ def backdoor_add_dir(dirpath):
     obj_list = list(unique_objects.values())
     print(f'\nDeduplication: Reduced from {len(id_list)} to {len(obj_list)} unique objects')
     
-    cleaned_objects, report = clean_stix_list(obj_list)
+    try:
+        cleaned_objects, report = clean_stix_list(obj_list)
+    except Exception as cleaning_error:
+        print(f"CRITICAL: clean_stix_list failed with error: {cleaning_error}")
+        print(f"Error type: {type(cleaning_error).__name__}")
+        # Fall back to original list order
+        cleaned_objects = obj_list
+        report = None
+    
+    # Debug: Check the order returned by clean_stix_list
+    print(f"\nDEBUG: Order returned by clean_stix_list ({len(cleaned_objects)} objects):")
+    problem_ids = ["sequence--5ced78bf-aab8-4650-9c9e-a6914d68b46e", "sequence--fb97db29-be35-4f8d-b483-c2899750838d", "sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8", "sequence--4089e2b7-816d-4ad4-9d11-2604739b16ef", "incident--145eb841-90db-4526-8407-b25fd2d705c1"]
+    
+    for i, obj in enumerate(cleaned_objects):
+        obj_id = obj.get('id', 'unknown')
+        if obj_id in problem_ids:
+            print(f"  {i:2d}: {obj_id}")
+    
+    # Show the full sequence to understand the dependency issue
+    print(f"DEBUG: Full sequence of first 30 objects:")
+    for i, obj in enumerate(cleaned_objects[:30]):
+        obj_id = obj.get('id', 'unknown')
+        obj_type = obj.get('type', 'unknown')
+        if obj_type == 'sequence' or obj_type == 'incident':
+            print(f"  {i:2d}: {obj_type} {obj_id}")
+    
+    # Also check if any of our problem objects are missing from cleaned_objects
+    cleaned_ids = {obj.get('id') for obj in cleaned_objects}
+    missing_ids = []
+    for prob_id in problem_ids:
+        if prob_id not in cleaned_ids:
+            missing_ids.append(prob_id)
+    
+    if missing_ids:
+        print(f"DEBUG: Problem objects MISSING from cleaned_objects: {missing_ids}")
+    
+    # Check if there were any issues in the cleaning report
+    if report:
+        if hasattr(report, 'sorting_report') and hasattr(report.sorting_report, 'unresolved_references'):
+            if report.sorting_report.unresolved_references:
+                print(f"DEBUG: Unresolved references from cleaning: {report.sorting_report.unresolved_references}")
+        
+        print(f"DEBUG: Cleaning report success: {getattr(report, 'clean_operation_outcome', 'unknown')}")
+        
+        # Get more details from the report
+        if hasattr(report, 'detailed_operation_reports'):
+            detailed = report.detailed_operation_reports
+            if hasattr(detailed, 'sorting_report'):
+                sorting = detailed.sorting_report
+                print(f"DEBUG: Sorting successful: {getattr(sorting, 'sorting_successful', 'unknown')}")
+                if hasattr(sorting, 'unresolved_references'):
+                    print(f"DEBUG: Unresolved refs: {sorting.unresolved_references}")
+    else:
+        print("DEBUG: No cleaning report available (cleaning failed)")
+    
     newlist = []
     for obj in cleaned_objects:
         stixid = obj.get("id", None)
@@ -270,38 +324,49 @@ def backdoor_add_dir(dirpath):
         print(upload_string)
         type_ql_list.append(upload_string)
 
-    # Two-pass loading to handle forward references
-    # Pass 1: Load objects without dependencies (objects that don't require matches)
-    # Pass 2: Load objects with dependencies (objects that require matches)
+    # Use proper topological sorting instead of crude two-pass approach
+    print("\n=== DEPENDENCY-ORDERED LOADING ===")
+    print(f"Loading {len(type_ql_list)} objects in correct dependency order...")
     
-    independent_queries = []
-    dependent_queries = []
-    
-    for query in type_ql_list:
-        if query.strip().startswith('match '):
-            dependent_queries.append(query)
-        else:
-            independent_queries.append(query)
-    
-    print(f"\n=== TWO-PASS LOADING ===")
-    print(f"Pass 1: Loading {len(independent_queries)} independent objects")
-    print(f"Pass 2: Loading {len(dependent_queries)} dependent objects")
-    
-    # Pass 1: Load independent objects
-    if independent_queries:
-        try:
-            load_typeql_data(independent_queries, connection)
-            print(f"✅ Pass 1 completed successfully")
-        except Exception as e:
-            print(f"❌ Pass 1 failed: {e}")
-    
-    # Pass 2: Load dependent objects
-    if dependent_queries:
-        try:
-            load_typeql_data(dependent_queries, connection)
-            print(f"✅ Pass 2 completed successfully")
-        except Exception as e:
-            print(f"❌ Pass 2 failed: {e}")
+    # Load all queries in the order provided by the cleaning module's topological sort
+    try:
+        load_typeql_data(type_ql_list, connection)
+        print(f"[SUCCESS] All objects loaded successfully in dependency order")
+    except Exception as e:
+        print(f"[FAILED] Dependency-ordered loading failed: {e}")
+        print(f"Error type: {type(e).__name__}")
+        
+        # Fallback: Try loading one by one to identify failures
+        print("Attempting individual loading to identify specific failures...")
+        successful_objects = []
+        failed_objects = []
+        
+        for i, query in enumerate(type_ql_list):
+            # Extract STIX ID for debugging
+            stix_id = "unknown"
+            try:
+                if 'stix-id "' in query:
+                    start = query.find('stix-id "') + len('stix-id "')
+                    end = query.find('"', start)
+                    stix_id = query[start:end]
+            except:
+                pass
+            
+            try:
+                load_typeql_data([query], connection)
+                successful_objects.append(stix_id)
+                print(f"  [SUCCESS] {stix_id}")
+            except Exception as query_error:
+                failed_objects.append((stix_id, query_error))
+                print(f"  [FAILED] {stix_id}: {type(query_error).__name__} - {str(query_error)[:100]}")
+        
+        print(f"\nSummary: {len(successful_objects)} successful, {len(failed_objects)} failed")
+        
+        if failed_objects:
+            print("Failed objects:")
+            for stix_id, error in failed_objects:
+                print(f"  - {stix_id}: {type(error).__name__}")
+            
     
     # Check results
     id_set = set(id_list)

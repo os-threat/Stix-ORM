@@ -233,7 +233,7 @@ def _extract_references_from_object(obj: Dict[str, Any]) -> Set[str]:
             for key, value in data.items():
                 current_key_path = f"{current_path}.{key}" if current_path else key
                 
-                # Method 1: Check fields ending with _ref or _refs
+                # Method 1: Check fields ending with _ref or _refs (standard STIX pattern)
                 if key.endswith('_ref') or key.endswith('_refs'):
                     if isinstance(value, str) and _is_valid_stix_id(value):
                         references.add(value)
@@ -242,9 +242,9 @@ def _extract_references_from_object(obj: Dict[str, Any]) -> Set[str]:
                             if isinstance(item, str) and _is_valid_stix_id(item):
                                 references.add(item)
                 
-                # Method 2: Check any string value for STIX ID pattern
+                # Method 2: Check ANY string value for STIX ID pattern (universal approach)
                 elif isinstance(value, str) and _is_valid_stix_id(value):
-                    # Exclude the object's own ID field
+                    # Exclude the object's own ID field - all other STIX IDs are potential references
                     if key != 'id':
                         references.add(value)
                 
@@ -315,9 +315,104 @@ def _detect_circular_references(objects: List[StixObject]) -> List[List[str]]:
     return circular_paths
 
 
+def _topological_sort_with_dependencies(object_dependencies: List[Dict]) -> List[Dict]:
+    """
+    Perform topological sort using pre-computed dependencies.
+    
+    Args:
+        object_dependencies: List of dicts with keys: 'object', 'dependencies', 'id'
+    
+    Returns:
+        List of dependency objects in topologically sorted order
+    """
+    # Build dependency graph using pre-computed dependencies
+    in_degree = defaultdict(int)
+    adj_list = defaultdict(list)
+    obj_dict = {item['id']: item for item in object_dependencies}
+    all_ids = set(obj_dict.keys())
+    
+    print(f"DEBUG TOPO: Starting with {len(object_dependencies)} objects")
+    
+    # Initialize in-degree for all objects
+    for obj_id in all_ids:
+        in_degree[obj_id] = 0
+    
+    # Build the graph using pre-computed dependencies
+    for item in object_dependencies:
+        obj_id = item['id']
+        dependencies = item['dependencies']
+        
+        # Debug specific sequences
+        if obj_id in ["sequence--5ced78bf-aab8-4650-9c9e-a6914d68b46e", "sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8"]:
+            print(f"DEBUG GRAPH: {obj_id[:20]}... dependencies: {dependencies}")
+        
+        for dep_id in dependencies:
+            if dep_id in all_ids:  # Only consider dependencies within our object set
+                adj_list[dep_id].append(obj_id)  # dep_id must come before obj_id
+                in_degree[obj_id] += 1
+                
+                if obj_id in ["sequence--5ced78bf-aab8-4650-9c9e-a6914d68b46e"] or dep_id in ["sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8"]:
+                    print(f"DEBUG GRAPH: {obj_id[:20]}... depends on {dep_id[:20]}..., in_degree now {in_degree[obj_id]}")
+    
+    # Kahn's algorithm
+    queue = [obj_id for obj_id in all_ids if in_degree[obj_id] == 0]
+    sorted_objects = []
+    
+    print(f"DEBUG TOPO: Starting queue (in_degree=0): {[id[:20]+'...' for id in queue]}")
+    
+    while queue:
+        current_id = queue.pop(0)
+        sorted_objects.append(obj_dict[current_id])
+        
+        print(f"DEBUG TOPO: Processing {current_id[:20]}...")
+        
+        # Reduce in-degree of dependent objects
+        for dependent_id in adj_list[current_id]:
+            in_degree[dependent_id] -= 1
+            if in_degree[dependent_id] == 0:
+                queue.append(dependent_id)
+                print(f"DEBUG TOPO: Added {dependent_id[:20]}... to queue (in_degree now 0)")
+    
+    if len(sorted_objects) != len(object_dependencies):
+        print(f"DEBUG TOPO: Cycle detected! Got {len(sorted_objects)} of {len(object_dependencies)} objects")
+        # Return remaining objects in original order
+        remaining = [item for item in object_dependencies if item['id'] not in [obj['id'] for obj in sorted_objects]]
+        sorted_objects.extend(remaining)
+    
+    print(f"DEBUG TOPO: Final order: {[obj['id'][:20]+'...' for obj in sorted_objects]}")
+    return sorted_objects
+
+
 def _topological_sort(objects: List[StixObject]) -> Tuple[List[str], List[str], bool]:
     """
-    Perform topological sort using Kahn's algorithm
+    Legacy function for StixObject compatibility - converts to new format
+    Returns: (sorted_ids, unresolved_refs, success)
+    """
+    # Convert StixObjects to dependency format
+    object_dependencies = []
+    for obj in objects:
+        # Extract references from the StixObject
+        references = _extract_references_from_object(obj.model_dump())
+        object_dependencies.append({
+            'object': obj,
+            'dependencies': references,
+            'id': obj.id
+        })
+    
+    # Sort using new function
+    sorted_deps = _topological_sort_with_dependencies(object_dependencies)
+    
+    # Extract just the IDs for legacy return format
+    sorted_ids = [item['id'] for item in sorted_deps]
+    unresolved_refs = []  # TODO: Calculate from sorting results
+    success = len(sorted_ids) == len(objects)
+    
+    return sorted_ids, unresolved_refs, success
+
+
+def _legacy_topological_sort(objects: List[StixObject]) -> Tuple[List[str], List[str], bool]:
+    """
+    Original topological sort implementation - kept for reference
     Returns: (sorted_ids, unresolved_refs, success)
     """
     # Build dependency graph
@@ -330,38 +425,97 @@ def _topological_sort(objects: List[StixObject]) -> Tuple[List[str], List[str], 
     for obj_id in all_ids:
         in_degree[obj_id] = 0
     
-    # Build graph and calculate in-degrees
+    # Build graph and calculate in-degrees with debugging
+    reference_map = {}  # Track what each object references
     for obj in objects:
         obj_data = obj.model_dump()
         references = _extract_references_from_object(obj_data)
+        reference_map[obj.id] = references
+        
+        # Debug for sequence objects
+        if obj.id in ["sequence--5ced78bf-aab8-4650-9c9e-a6914d68b46e", "sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8"]:
+            print(f"DEBUG GRAPH: {obj.id[:20]}... references: {references}")
         
         for ref_id in references:
             if ref_id in all_ids:  # Only consider internal references
                 adj_list[ref_id].append(obj.id)
                 in_degree[obj.id] += 1
+                
+                # Debug dependency relationships for sequences
+                if obj.id in ["sequence--5ced78bf-aab8-4650-9c9e-a6914d68b46e"] or ref_id in ["sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8"]:
+                    print(f"DEBUG GRAPH: {obj.id[:20]}... depends on {ref_id[:20]}..., in_degree now {in_degree[obj.id]}")
     
-    # Kahn's algorithm
+    # Debug problematic sequence objects  
+    problem_sequences = [
+        "sequence--5ced78bf-aab8-4650-9c9e-a6914d68b46e", 
+        "sequence--fb97db29-be35-4f8d-b483-c2899750838d"
+    ]
+    
+    target_sequences = [
+        "sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8",
+        "sequence--4089e2b7-816d-4ad4-9d11-2604739b16ef"
+    ]
+    
+    print(f"DEBUG TOPOLOGICAL SORT: Analyzing {len(objects)} objects")
+    
+    for seq_id in problem_sequences + target_sequences:
+        if seq_id in all_ids:
+            refs = reference_map.get(seq_id, set())
+            print(f"DEBUG: {seq_id[:20]}... references: {refs}")
+            print(f"DEBUG: {seq_id[:20]}... in_degree: {in_degree[seq_id]}")
+            
+            # Show raw object data for problem sequences to verify field detection
+            if seq_id in problem_sequences:
+                obj_data = obj_dict[seq_id].model_dump()
+                print(f"DEBUG: {seq_id[:20]}... raw on_completion field: {obj_data.get('on_completion', 'NOT FOUND')}")
+            
+            # Check if referenced objects exist
+            for ref in refs:
+                if ref in all_ids:
+                    print(f"DEBUG: Referenced object {ref[:20]}... exists in dataset")
+                else:
+                    print(f"DEBUG: Referenced object {ref[:20]}... MISSING from dataset")
+    
+    # Kahn's algorithm with enhanced tracking
     queue = deque([obj_id for obj_id in all_ids if in_degree[obj_id] == 0])
     sorted_ids = []
+    
+    print(f"DEBUG: Initial queue (in_degree=0): {list(queue)}")
     
     while queue:
         current = queue.popleft()
         sorted_ids.append(current)
         
+        # Debug when we process the target sequences
+        if current in ["sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8", "sequence--4089e2b7-816d-4ad4-9d11-2604739b16ef"]:
+            print(f"DEBUG: Processing target sequence {current}, dependents: {adj_list[current]}")
+        
         for neighbor in adj_list[current]:
             in_degree[neighbor] -= 1
+            if neighbor in problem_sequences:
+                print(f"DEBUG: Reduced in_degree for {neighbor} to {in_degree[neighbor]}")
+            
             if in_degree[neighbor] == 0:
                 queue.append(neighbor)
+                if neighbor in problem_sequences:
+                    print(f"DEBUG: Added {neighbor} to queue (in_degree now 0)")
     
     # Check for cycles
     success = len(sorted_ids) == len(all_ids)
     unresolved_refs = [obj_id for obj_id in all_ids if in_degree[obj_id] > 0]
     
+    if unresolved_refs:
+        print(f"DEBUG: Unresolved objects: {unresolved_refs}")
+        for unresolved in unresolved_refs:
+            if unresolved in problem_sequences:
+                print(f"DEBUG: Problem sequence {unresolved} final in_degree: {in_degree[unresolved]}")
+                print(f"DEBUG: Problem sequence {unresolved} references: {reference_map.get(unresolved, set())}")
+    
     return sorted_ids, unresolved_refs, success
 
 
 def _create_dependency_diagram(objects: List[StixObject], sorted_ids: List[str]) -> str:
-    """Create a string representation of the dependency graph"""
+    """Create a string representation of the dependency graph from StixObjects"""
     lines = ["Dependency Diagram:", "=" * 50]
     
     obj_dict = {obj.id: obj for obj in objects}
@@ -379,6 +533,28 @@ def _create_dependency_diagram(objects: List[StixObject], sorted_ids: List[str])
             lines.append(f"{indent}{obj_id} ({obj.type}) -> {len(internal_refs)} refs")
         else:
             lines.append(f"{indent}{obj_id} ({obj.type}) [leaf]")
+    
+    return "\n".join(lines)
+
+
+def _create_dependency_diagram_from_dicts(objects: List[Dict[str, Any]], sorted_ids: List[str]) -> str:
+    """Create a string representation of the dependency graph from raw dictionaries"""
+    lines = ["Dependency Diagram:", "=" * 50]
+    
+    obj_dict = {obj['id']: obj for obj in objects}
+    
+    for i, obj_id in enumerate(sorted_ids):
+        obj = obj_dict[obj_id]
+        references = _extract_references_from_object(obj)
+        
+        # Filter for internal references only
+        internal_refs = [ref for ref in references if ref in obj_dict]
+        
+        indent = "  " * min(i // 5, 10)  # Progressive indentation
+        if internal_refs:
+            lines.append(f"{indent}{obj_id} ({obj['type']}) -> {len(internal_refs)} refs")
+        else:
+            lines.append(f"{indent}{obj_id} ({obj['type']}) [leaf]")
     
     return "\n".join(lines)
 
@@ -765,19 +941,49 @@ def _operation_5_circular_reference_resolution(objects: List[StixObject]) -> Tup
 
 
 def _operation_6_dependency_sorting(objects: List[StixObject]) -> Tuple[List[StixObject], SortingReport]:
-    """Operation 5: Sort objects by dependency order"""
-    sorted_ids, unresolved_refs, success = _topological_sort(objects)
+    """Operation 6: Sort StixObjects by dependency order using pre-computed dependencies"""
+    print(f"DEBUG OP6: Starting dependency sorting with {len(objects)} objects")
     
+    # Phase 1: Pre-compute dependencies for each StixObject
+    object_dependencies = []
+    for obj in objects:
+        # Convert StixObject to dict for dependency extraction
+        obj_dict = obj.model_dump()
+        dependencies = _extract_references_from_object(obj_dict)
+        object_dependencies.append({
+            'object': obj,  # Keep as StixObject
+            'dependencies': dependencies,
+            'id': obj.id
+        })
+        
+        # Debug specific objects
+        if obj.id in ["sequence--5ced78bf-aab8-4650-9c9e-a6914d68b46e", "sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8"]:
+            print(f"DEBUG OP6: {obj.id[:20]}... pre-computed dependencies: {dependencies}")
+    
+    # Phase 2: Sort using computed dependencies
+    sorted_deps = _topological_sort_with_dependencies(object_dependencies)
+    
+    # Extract sorted objects and metadata
+    sorted_objects = [item['object'] for item in sorted_deps]  # These are StixObjects
+    sorted_ids = [item['id'] for item in sorted_deps]
+    success = len(sorted_objects) == len(objects)
+    
+    # Calculate unresolved references (dependencies not found in object set)
+    all_ids = {obj.id for obj in objects}
+    unresolved_refs = []
+    for item in object_dependencies:
+        for dep_id in item['dependencies']:
+            if dep_id not in all_ids:
+                unresolved_refs.append(dep_id)
+    unresolved_refs = list(set(unresolved_refs))  # Remove duplicates
+    
+    # Create diagram using StixObjects
     if success:
-        # Reorder objects according to sorted IDs
-        obj_dict = {obj.id: obj for obj in objects}
-        sorted_objects = [obj_dict[obj_id] for obj_id in sorted_ids]
         diagram = _create_dependency_diagram(sorted_objects, sorted_ids)
     else:
-        # If sorting failed, keep original order but report issues
-        sorted_objects = objects
-        sorted_ids = [obj.id for obj in objects]
         diagram = "Sorting failed due to circular dependencies"
+    
+    print(f"DEBUG OP6: Completed sorting - success={success}, unresolved={len(unresolved_refs)}")
     
     report = SortingReport(
         sorting_successful=success,
@@ -816,19 +1022,20 @@ def _operation_7_comprehensive_reporting(
 # =============================================================================
 
 def clean_stix_list(
-    stix_list: List[StixObject], 
+    stix_list: List[Dict[str, Any]], 
     clean_sco_fields: bool = False
-) -> Tuple[List[StixObject], Union[CleanStixListSuccessReport, CleanStixListFailureReport]]:
+) -> Tuple[List[Dict[str, Any]], Union[CleanStixListSuccessReport, CleanStixListFailureReport]]:
     """
     Clean STIX objects in memory through 7-operation pipeline.
+    Accepts raw dictionaries, converts to StixObjects internally, then returns dictionaries.
     
     Args:
-        stix_list (List[StixObject]): Raw STIX objects requiring cleaning
+        stix_list (List[Dict]): Raw STIX object dictionaries requiring cleaning
         clean_sco_fields (bool): Whether to run SCO Field Cleaning operation (default: False)
     
     Returns:
         Tuple containing:
-        - List[StixObject]: Processed and sorted STIX objects
+        - List[Dict]: Processed and dependency-ordered STIX object dictionaries
         - Report: Success/failure report with detailed operation metrics
     """
     start_time = datetime.now()
@@ -836,8 +1043,16 @@ def clean_stix_list(
     operation_timings = []
     
     try:
+        # Convert raw dictionaries to StixObjects for internal processing
+        stix_objects = []
+        for obj_dict in stix_list:
+            if isinstance(obj_dict, dict) and 'id' in obj_dict and 'type' in obj_dict:
+                stix_objects.append(StixObject(**obj_dict))
+            else:
+                raise ValueError(f"Invalid STIX object missing required fields: {obj_dict}")
+        
         # Make a deep copy to avoid modifying original data
-        working_objects = deepcopy(stix_list)
+        working_objects = deepcopy(stix_objects)
         
         # Operation 1: Object Deduplication
         op_start = datetime.now()
@@ -873,7 +1088,8 @@ def clean_stix_list(
         ))
         
         # Pruning Step: Remove unreferenced objects added during expansion  
-        original_objects = deepcopy(stix_list)
+        # Use the converted StixObjects, not the original dictionaries
+        original_objects = deepcopy(stix_objects)
         working_objects, _ = _prune_unreferenced_objects(working_objects, original_objects)
         
         # Update expansion report to reflect final object count after pruning
@@ -934,7 +1150,16 @@ def clean_stix_list(
             detailed_operation_reports=list_report
         )
         
-        return working_objects, success_report
+        # Convert StixObjects back to dictionaries for return
+        result_dicts = []
+        for obj in working_objects:
+            if isinstance(obj, StixObject):
+                result_dicts.append(obj.model_dump())
+            else:
+                # This shouldn't happen, but handle gracefully
+                result_dicts.append(obj)
+        
+        return result_dicts, success_report
         
     except Exception as e:
         # Create failure report

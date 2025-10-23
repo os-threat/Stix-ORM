@@ -153,26 +153,47 @@ for report in reports:
 
 ### Operation 6: Dependency Sorting
 
-**Objective**: Topologically sort objects so dependencies appear before dependents using dynamic reference detection.
+**Objective**: Topologically sort raw STIX object dictionaries using pre-computed dependency information.
 
-**Algorithm**: Kahn's algorithm for directed acyclic graphs with intelligent reference extraction
+**Two-Step Process**:
+1. **Dependency Detection**: Pre-compute all references for each object using dual-method strategy
+2. **Dependency Ordering**: Sort objects using computed dependencies while preserving original JSON format
 
 **Reference Detection Strategy**:
-1. **Dynamic Field Detection**: Automatically identifies all fields ending with `_ref` or `_refs`
-2. **Pattern-Based Scanning**: Searches all string values for valid STIX ID patterns (`type--uuid`)
+1. **Primary Detection**: Fields ending with `_ref` or `_refs` (captures most standard STIX references)
+2. **Secondary Detection**: All remaining string values matching STIX ID pattern (`type--uuid`)
 3. **Recursive Traversal**: Processes nested objects and arrays at any depth
-4. **Future-Proof Design**: Works with any STIX extensions, custom objects, or new reference types
+4. **No Hardcoded Fields**: Zero dependency on static field name lists
+5. **Comprehensive Coverage**: Catches both standard fields and custom reference fields like `on_completion`
 
-**Process**:
-1. Dynamically extract all STIX ID references from objects using dual detection methods
-2. Build dependency graph with detected references  
-3. Perform topological sort using Kahn's algorithm
-4. Handle any remaining cycles as unresolved references
+**Implementation Details**:
+```python
+def _operation_6_dependency_sorting(objects: List[Dict]) -> List[Dict]:
+    """
+    Two-phase dependency sorting:
+    1. Extract dependencies from raw object dictionaries
+    2. Sort using computed dependencies while keeping objects as dictionaries
+    """
+    # Phase 1: Compute dependencies for each object
+    object_dependencies = []
+    for obj in objects:
+        dependencies = _extract_references_from_object(obj)
+        object_dependencies.append({
+            'object': obj,
+            'dependencies': dependencies,
+            'id': obj['id']
+        })
+    
+    # Phase 2: Topological sort using dependencies
+    sorted_objects = _topological_sort_with_dependencies(object_dependencies)
+    return [item['object'] for item in sorted_objects]
+```
 
 **Key Advantages**:
-- **No Static Lists**: Eliminates fragile hardcoded reference field lists
-- **Extension Compatible**: Automatically handles os_threat, MBC, and custom STIX extensions  
-- **Comprehensive Coverage**: Finds references regardless of field naming conventions
+- **Preserves Original Format**: Objects remain as dictionaries throughout processing
+- **Explicit Dependencies**: Dependencies computed once and passed to sorting algorithm
+- **No Object Conversion**: Avoids unnecessary conversion to/from STIX object instances
+- **Extension Compatible**: Automatically handles os_threat, MBC, and custom STIX extensions
 - **Maintainability**: Self-adapting to new STIX specifications and extensions
 
 ### Operation 7: Comprehensive Reporting
