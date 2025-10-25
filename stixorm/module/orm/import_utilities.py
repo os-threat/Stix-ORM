@@ -545,7 +545,8 @@ def embedded_relation(prop,
             prop_type = get_tqlname_from_content_by_ID(prop_v, protocol)
             if prop_type == 'relationship':
                 prop_type = 'stix-core-relationship'
-            prop_var = '$' + prop_type + str(i) + inc_add
+            # Include relation name in variable to prevent collisions
+            prop_var = '$' + prop.replace('_', '-') + '-' + prop_type + str(i) + inc_add
             prop_var_list.append(prop_var)
             match += ' ' + prop_var + ' isa ' + prop_type + ', has stix-id ' + '"' + prop_v + '";\n'
     # else, match in the single prop_value
@@ -557,7 +558,8 @@ def embedded_relation(prop,
             prop_type = 'stix-core-relationship'
         if prop_type == 'attack-identity':
             prop_type = 'identity'
-        prop_var = '$' + prop_type + inc_add
+        # Include relation name in variable to prevent collisions
+        prop_var = '$' + prop.replace('_', '-') + '-' + prop_type + inc_add
         prop_var_list.append(prop_var)
         match += ' ' + prop_var + ' isa ' + prop_type + ', has stix-id ' + '"' + prop_value + '";\n'
 

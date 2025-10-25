@@ -6,12 +6,14 @@ The `clean_list_or_bundle.py` module provides comprehensive cleaning operations 
 
 ## Key Features
 
-- **7-Operation Pipeline**: Object deduplication, expansion (2 rounds), SCO cleaning, circular reference resolution, dependency sorting, and comprehensive reporting
-- **External Source Integration**: Automatically fetches missing objects from 5 MITRE/MBC data sources
+- **7-Operation Pipeline**: Object deduplication, conditional expansion (2 rounds), conditional SCO cleaning, circular reference resolution, dependency sorting, and comprehensive reporting  
+- **Conditional External Source Integration**: Optionally fetches missing objects from 5 MITRE/MBC data sources when `enrich_from_external_sources=True`
+- **Missing Dependency Detection**: When enrichment disabled, identifies and reports missing dependencies for debugging
 - **Timing Measurement**: Precise operation timing with microsecond accuracy
 - **Streamlined Reporting**: Nested report structure (ListReport → FileReport → Success/Failure Reports)
 - **File Organization**: Automatic directory structure management for batch processing
 - **Circular Reference Resolution**: Handles Identity↔Marking Definition and Malware Behavior↔Malware Method patterns
+- **Configurable Processing**: Both SCO cleaning and enrichment are optional, disabled by default
 
 ## Function Reference
 
@@ -19,37 +21,54 @@ The `clean_list_or_bundle.py` module provides comprehensive cleaning operations 
 
 ```python
 def clean_stix_list(
-    stix_list: List[StixObject], 
-    clean_sco_fields: bool = False
-) -> Tuple[List[StixObject], Union[CleanStixListSuccessReport, CleanStixListFailureReport]]
+    stix_list: List[Dict[str, Any]], 
+    clean_sco_fields: bool = False,
+    enrich_from_external_sources: bool = False
+) -> Tuple[List[Dict[str, Any]], Union[CleanStixListSuccessReport, CleanStixListFailureReport]]
 ```
 
-**Purpose**: Process STIX objects in memory through the complete 7-operation cleaning pipeline.
+**Purpose**: Process STIX objects in memory through the complete 7-operation cleaning pipeline with conditional enrichment.
 
 **Parameters**:
-- `stix_list`: List of STIX objects to process
+- `stix_list`: List of STIX object dictionaries to process  
 - `clean_sco_fields`: Whether to remove forbidden fields from STIX Cyber Observable objects (default: False)
+- `enrich_from_external_sources`: Whether to fetch missing objects from external sources (default: False)
 
 **Returns**:
-- `Tuple[List[StixObject], Report]`: Cleaned objects and detailed processing report
+- `Tuple[List[Dict], Report]`: Cleaned objects and detailed processing report
 
-**Usage Example**:
+**Behavior Control**:
+- When `enrich_from_external_sources=False`: Operations 2-3 (expansion) are skipped
+- When missing dependencies found and enrichment disabled: Returns failure report with missing IDs
+- When `clean_sco_fields=False`: Operation 4 (SCO cleaning) is skipped
+
+**Usage Examples**:
 ```python
 from stixorm.module.parsing.clean_list_or_bundle import clean_stix_list
-from stixorm.module.parsing.clean_list_or_bundle import StixObject
 
-# Load your STIX objects
-stix_objects = [StixObject(**obj_data) for obj_data in raw_data]
+# Load your STIX object dictionaries
+stix_objects = [obj_dict for obj_dict in raw_data]
 
-# Clean the objects
-cleaned_objects, report = clean_stix_list(stix_objects, clean_sco_fields=True)
+# Basic cleaning (no enrichment, no SCO cleaning)
+cleaned_objects, report = clean_stix_list(stix_objects)
+
+# Clean with external enrichment and SCO field cleaning
+cleaned_objects, report = clean_stix_list(
+    stix_objects, 
+    clean_sco_fields=True,
+    enrich_from_external_sources=True
+)
+
+# Check for missing dependencies without enrichment
+cleaned_objects, report = clean_stix_list(stix_objects, enrich_from_external_sources=False)
 
 # Check results
 if report.clean_operation_outcome:
     print(f"Success! Processed {report.total_number_of_objects_processed} objects")
-    print(f"Total time: {report.detailed_operation_reports.total_processing_time_seconds}s")
 else:
     print(f"Failed: {report.return_message}")
+    if hasattr(report.detailed_operation_reports.expansion_report, 'missing_ids_list'):
+        print(f"Missing IDs: {report.detailed_operation_reports.expansion_report.missing_ids_list}")
 ```
 
 ### clean_stix_directory()
@@ -57,18 +76,25 @@ else:
 ```python
 def clean_stix_directory(
     directory_path: str, 
-    clean_sco_fields: bool = False
+    clean_sco_fields: bool = False,
+    enrich_from_external_sources: bool = False
 ) -> List[Union[CleanStixListSuccessReport, CleanStixListFailureReport]]
 ```
 
-**Purpose**: Process all JSON files in a directory through the cleaning pipeline with automatic file organization.
+**Purpose**: Process all JSON files in a directory through the cleaning pipeline with automatic file organization and conditional enrichment.
 
 **Parameters**:
 - `directory_path`: Path to directory containing STIX JSON files
 - `clean_sco_fields`: Whether to remove forbidden fields from SCO objects (default: False)
+- `enrich_from_external_sources`: Whether to fetch missing objects from external sources (default: False)
 
 **Returns**:
 - `List[Report]`: List of processing reports (one per input file)
+
+**Behavior Control**:
+- When `enrich_from_external_sources=False`: Expansion operations are skipped for all files
+- When missing dependencies found and enrichment disabled: Returns failure reports with missing IDs
+- When `clean_sco_fields=False`: SCO cleaning is skipped for all files
 
 **File Organization**:
 ```
@@ -79,12 +105,22 @@ target_directory/
 └── cleaned_file2.json
 ```
 
-**Usage Example**:
+**Usage Examples**:
 ```python
 from stixorm.module.parsing.clean_list_or_bundle import clean_stix_directory
 
-# Process all JSON files in directory
-reports = clean_stix_directory("/path/to/stix/files", clean_sco_fields=True)
+# Basic processing (no enrichment, no SCO cleaning)  
+reports = clean_stix_directory("/path/to/stix/files")
+
+# Process with external enrichment and SCO field cleaning
+reports = clean_stix_directory(
+    "/path/to/stix/files", 
+    clean_sco_fields=True,
+    enrich_from_external_sources=True
+)
+
+# Check for missing dependencies without enrichment
+reports = clean_stix_directory("/path/to/stix/files", enrich_from_external_sources=False)
 
 # Review results
 for report in reports:
@@ -110,9 +146,15 @@ for report in reports:
 
 **Rationale**: Multiple STIX files often contain identical common objects (identity, marking-definition), causing unique key constraint violations during database operations.
 
-### Operation 2-3: Object Expansion (Two Rounds)
+### Operation 2-3: Object Expansion (Two Rounds) - CONDITIONAL
 
 **Objective**: Fetch missing referenced objects from external MITRE/MBC sources.
+
+**Execution Control**: Only runs when `enrich_from_external_sources=True` parameter is set (default: False)
+
+**Conditional Behavior**:
+- When `enrich_from_external_sources=True`: Performs full expansion from external sources
+- When `enrich_from_external_sources=False`: Skips expansion, identifies missing dependencies for reporting
 
 **External Sources** (checked in order):
 1. MITRE ATT&CK Enterprise
@@ -121,12 +163,17 @@ for report in reports:
 4. MITRE Atlas
 5. Malware MBC
 
-**Process**:
+**Process** (when enabled):
 1. Extract all STIX ID references from existing objects
 2. Identify missing object definitions
 3. Query external sources for missing objects
 4. Perform second round to handle transitive dependencies
 5. Prune unreferenced objects added during expansion
+
+**Missing Dependency Handling** (when disabled):
+1. Detects all missing dependencies without fetching
+2. Returns failure report containing list of missing object IDs
+3. Allows debugging of incomplete datasets without external network calls
 
 ### Operation 4: SCO Field Cleaning
 

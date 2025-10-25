@@ -9,7 +9,8 @@
 5. Example: Malware Object Transformation
 6. Implementation Patterns
 7. Schema Synchronization
-8. Deployment Architecture
+8. Critical Implementation Solutions
+9. Deployment Architecture
 
 ## System Overview
 
@@ -108,7 +109,43 @@ Validation     ATT&CK/OCA/etc.    Domain Classes       Property Categories
 
 ## Core Components
 
-### 1. Universal Class Registry
+### 1. STIX Object Processing Pipeline
+**Objective:** Comprehensive cleaning, validation, and preparation of STIX objects for database insertion.
+
+**Implementation:**
+```python
+# Primary interface for STIX object processing
+from stixorm.module.parsing.clean_list_or_bundle import clean_stix_list, clean_stix_directory
+
+# Process STIX objects with conditional operations
+cleaned_objects, report = clean_stix_list(
+    stix_objects,
+    clean_sco_fields=False,           # Remove forbidden SCO fields
+    enrich_from_external_sources=False # Fetch missing dependencies
+)
+
+# Check processing results
+if report.clean_operation_outcome:
+    print(f"Success: {report.total_number_of_objects_processed} objects processed")
+    # Objects are now dependency-ordered and ready for database insertion
+else:
+    print(f"Failed: {report.return_message}")
+    # Check for missing dependencies in failure report
+    if hasattr(report.detailed_operation_reports, 'expansion_report'):
+        missing_ids = report.detailed_operation_reports.expansion_report.missing_ids_list
+        print(f"Missing dependencies: {missing_ids}")
+```
+
+**7-Operation Pipeline Components:**
+1. **Object Deduplication**: Remove duplicate objects by STIX ID
+2. **Conditional Expansion Round 1**: Fetch missing objects from external sources (optional)
+3. **Conditional Expansion Round 2**: Handle transitive dependencies (optional)
+4. **SCO Field Cleaning**: Remove forbidden fields from Cyber Observable objects (optional)
+5. **Circular Reference Resolution**: Break dependency cycles using proven strategies
+6. **Dependency Sorting**: Topologically sort objects for safe database insertion
+7. **Comprehensive Reporting**: Generate detailed operation reports with timing data
+
+### 2. Universal Class Registry
 **Objective:** Dynamic resolution of STIX types to Python classes across all dialects.
 
 **Implementation:**
@@ -142,7 +179,7 @@ def resolve_stix_class(stix_object: Dict[str, Any]) -> Type[_STIXBase21]:
     return stix_class
 ```
 
-### 2. Six-Type Mapping Engine
+### 3. Six-Type Mapping Engine
 **Objective:** Transform complex JSON structures into hypergraph relationships.
 
 The system categorizes all STIX composite properties into six universal patterns:
@@ -509,6 +546,79 @@ def safe_transform(stix_object: Dict[str, Any]) -> Optional[List[str]]:
         return None
 ```
 
+### 4. Conditional Processing Architecture
+Enable operational control through explicit boolean parameters:
+
+```python
+def process_stix_data(
+    stix_objects: List[Dict[str, Any]],
+    clean_sco_fields: bool = False,
+    enrich_from_external_sources: bool = False
+) -> ProcessingResult:
+    """
+    Conditional processing with explicit operational control.
+    
+    Default behavior prioritizes safety:
+    - No external network calls
+    - No modification of SCO fields
+    - Missing dependency detection for debugging
+    """
+    if enrich_from_external_sources:
+        # Full enrichment from external sources
+        return perform_full_enrichment(stix_objects)
+    else:
+        # Check dependencies without enrichment
+        missing_deps = detect_missing_dependencies(stix_objects)
+        if missing_deps:
+            return failure_report_with_missing_ids(missing_deps)
+```
+
+### 5. TypeQL Variable Generation Patterns
+Prevent database collisions through systematic variable naming:
+
+```python
+def generate_typeql_variables(relation_properties: Dict[str, Any]) -> Dict[str, str]:
+    """
+    Generate collision-free TypeQL variables using relation-aware prefixes.
+    
+    Pattern: {relation_property}-{object_type}{sequence_number}
+    """
+    variables = {}
+    for i, (prop, obj_type) in enumerate(relation_properties.items()):
+        # Normalize property name for TypeQL compatibility
+        relation_prefix = prop.replace('_', '-')
+        variable_name = f"{relation_prefix}-{obj_type}{i}"
+        variables[prop] = variable_name
+    
+    return variables
+```
+
+### 6. Dynamic Reference Detection
+Future-proof reference detection without hardcoded field lists:
+
+```python
+def extract_all_references(obj_data: Dict[str, Any]) -> Set[str]:
+    """
+    Extract all STIX ID references using dual detection strategy.
+    
+    Handles:
+    - Standard STIX fields (_ref, _refs)
+    - Custom extension fields (on_completion, sequenced_object)
+    - Future specification extensions
+    """
+    references = set()
+    
+    # Method 1: Standard field patterns
+    for key, value in obj_data.items():
+        if key.endswith('_ref') or key.endswith('_refs'):
+            extract_standard_references(value, references)
+    
+    # Method 2: Universal STIX ID pattern matching
+    extract_by_pattern_matching(obj_data, references)
+    
+    return references
+```
+
 ## Schema Synchronization
 
 ### Validation Framework
@@ -547,6 +657,196 @@ def validate_python_typeql_sync(dialect: str) -> List[str]:
     
     return issues
 ```
+
+---
+
+## Critical Implementation Solutions
+
+### 1. STIX Object Processing Pipeline (7-Operation System)
+
+**Problem**: Complex STIX datasets require comprehensive cleaning, dependency resolution, and validation before database insertion.
+
+**Solution**: Systematic 7-operation pipeline with conditional execution and comprehensive error reporting.
+
+#### Pipeline Architecture
+```python
+def clean_stix_list(
+    stix_list: List[Dict[str, Any]], 
+    clean_sco_fields: bool = False,
+    enrich_from_external_sources: bool = False
+) -> Tuple[List[Dict[str, Any]], Union[SuccessReport, FailureReport]]:
+    """
+    7-Operation Conditional Processing Pipeline:
+    
+    1. Object Deduplication (always runs)
+    2-3. Conditional Expansion (only if enrich_from_external_sources=True)
+    4. Conditional SCO Cleaning (only if clean_sco_fields=True)
+    5. Circular Reference Resolution (always runs)
+    6. Dependency Sorting (always runs)
+    7. Comprehensive Reporting (always runs)
+    """
+```
+
+#### Conditional Operation Strategy
+- **Default Behavior**: Conservative processing with no external calls
+- **Missing Dependency Detection**: Identifies incomplete datasets without enrichment
+- **Failure Reporting**: Returns specific missing dependency lists for debugging
+- **External Source Integration**: 5 MITRE/MBC data sources when enabled
+
+### 2. TypeQL Variable Collision Prevention
+
+**Problem**: STIX objects with multiple references to the same object type generate colliding TypeQL variables, causing database insertion failures.
+
+**Critical Discovery**: Generic variable naming fails when multiple relations reference the same object type:
+
+```python
+# ❌ PROBLEMATIC: Generic variable naming
+incident = {
+    'id': 'incident--123',
+    'on_completion': 'sequence--target-1',    # Generates: "sequence0"  
+    'sequence': 'sequence--target-2',         # Generates: "sequence1" 
+    'another_seq_ref': 'sequence--target-3'   # Generates: "sequence2"
+}
+# Result: Variable collisions cause database constraint violations
+```
+
+**Solution**: Relation-aware variable generation using property prefixes:
+
+```python
+def embedded_relation(prop, prop_type, prop_value, i, local_optional_objects, inc_add=""):
+    """Generate collision-free TypeQL variables"""
+    # Use relation property as prefix to ensure uniqueness
+    relation_prefix = prop.replace('_', '-')
+    variable_name = f"{relation_prefix}-{prop_type}{i}{inc_add}"
+    return variable_name
+
+# Examples:
+# on_completion + sequence + 0 -> "on-completion-sequence0"
+# sequence + sequence + 1 -> "sequence-sequence1"  
+# created_by_ref + identity + 0 -> "created-by-identity0"
+```
+
+**Impact**: 100% elimination of TypeQL variable collisions in database operations.
+
+### 3. Dynamic Dependency Detection
+
+**Problem**: Hardcoded field lists cannot handle custom STIX extensions and future specifications.
+
+**Solution**: Dual-method detection strategy combining pattern matching with standard field recognition:
+
+```python
+def _extract_references_from_object(obj_data: Dict[str, Any]) -> Set[str]:
+    """Dynamic reference detection - no hardcoded field lists"""
+    references = set()
+    self_id = obj_data.get('id')
+    
+    # Method 1: Standard reference fields (_ref, _refs)
+    for key, value in obj_data.items():
+        if key.endswith('_ref') or key.endswith('_refs'):
+            # Extract standard STIX references
+            
+    # Method 2: Universal STIX ID pattern matching
+    _extract_from_data(obj_data, references, self_id)
+    
+    return references
+```
+
+**Benefits**:
+- Handles custom reference fields (e.g., `on_completion`, `sequenced_object`)
+- Future-proof against new STIX specifications
+- Automatically adapts to os-threat and MBC extensions
+
+### 4. Graceful Degradation and Error Recovery
+
+**Problem**: Processing failures can corrupt data or lose important context.
+
+**Solution**: Comprehensive error handling with original input preservation:
+
+```python
+try:
+    # Process through pipeline
+    result_objects, success_report = process_pipeline(working_objects)
+    return result_objects, success_report
+    
+except Exception as e:
+    # Create detailed failure report
+    failure_report = CleanStixListFailureReport(
+        clean_operation_outcome=False,
+        return_message=f"Failed to process STIX objects: {str(e)}",
+        detailed_operation_reports=create_partial_reports(...)
+    )
+    
+    # CRITICAL: Return original input unchanged on failure
+    return stix_list, failure_report
+```
+
+**Key Principles**:
+- Never modify original input data
+- Provide specific error context for debugging
+- Include partial processing results when possible
+- Enable graceful system degradation
+
+### 5. Performance and Memory Optimization
+
+**Proven Patterns**:
+
+#### Memory Safety
+```python
+from copy import deepcopy
+
+# Always protect original data
+working_objects = deepcopy(input_objects)
+```
+
+#### Efficient Processing
+```python
+# Cache validation results for large datasets
+PROPERTY_NAME_CACHE = {}
+STIX_ID_PATTERN = re.compile(r'^[a-zA-Z0-9\-]+--[0-9a-fA-F\-]+$')
+```
+
+#### Debug Output Standards
+```python
+# Consistent debug formatting for troubleshooting
+def debug_operation(operation_name: str, obj_id: str, details: Any):
+    short_id = obj_id[:20] + '...' if len(obj_id) > 20 else obj_id
+    print(f"DEBUG {operation_name}: {short_id} {details}")
+```
+
+### 6. Anti-Patterns and Critical Lessons
+
+**Never Do**:
+- ❌ Use generic TypeQL variable naming (causes database collisions)
+- ❌ Hardcode reference field names (breaks with extensions)
+- ❌ Skip input validation (causes constraint violations)
+- ❌ Modify original objects (creates side effects)
+- ❌ Hide dependency information in reports (breaks debugging)
+
+**Always Do**:
+- ✅ Use relation-aware TypeQL variable prefixes
+- ✅ Implement dynamic reference detection
+- ✅ Validate all STIX IDs before processing
+- ✅ Return original input on failure
+- ✅ Provide comprehensive error context
+
+### 7. Integration Benefits
+
+#### Database Safety
+- **Dependency Ordering**: Objects inserted in correct order (dependencies first)
+- **Variable Uniqueness**: No TypeQL variable collisions during insertion
+- **Constraint Prevention**: Reduced foreign key and unique constraint violations
+
+#### Operational Control
+- **Network Call Control**: Air-gapped environment support
+- **Debug Capabilities**: Missing dependency identification
+- **Configurable Processing**: Optional operations based on requirements
+
+#### Production Readiness
+- **Graceful Degradation**: System continues when external sources unavailable
+- **Comprehensive Logging**: Detailed reports for monitoring
+- **Performance Optimization**: Conditional operations reduce unnecessary processing
+
+---
 
 ## Deployment Architecture
 

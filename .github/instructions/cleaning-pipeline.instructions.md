@@ -6,23 +6,40 @@ Rules for implementing and maintaining the STIX object cleaning pipeline with de
 ## Pipeline Architecture Rules
 
 ### Rule 1: 7-Operation Pipeline Structure
-Always maintain this exact operation sequence:
+Always maintain this exact operation sequence with conditional parameters:
 
 ```python
-def clean_stix_list(stix_list: List[Dict[str, Any]], clean_sco_fields: bool = False):
-    """7-operation cleaning pipeline"""
+def clean_stix_list(
+    stix_list: List[Dict[str, Any]], 
+    clean_sco_fields: bool = False,
+    enrich_from_external_sources: bool = False
+) -> Tuple[List[Dict[str, Any]], Union[CleanStixListSuccessReport, CleanStixListFailureReport]]:
+    """7-operation cleaning pipeline with conditional enrichment"""
     
     # Operation 1: Object Deduplication
     working_objects, dedup_report = _operation_1_object_deduplication(working_objects)
     
-    # Operation 2: Expansion Round 1  
-    working_objects, expansion_report = _operation_2_expansion_round_1(working_objects)
-    
-    # Operation 3: Expansion Round 2
-    working_objects, expansion_report = _operation_3_expansion_round_2(working_objects, expansion_report)
-    
-    # Pruning Step: Remove unreferenced objects
-    working_objects, _ = _prune_unreferenced_objects(working_objects, original_objects)
+    # Operations 2-3: Conditional Expansion (only if enrich_from_external_sources=True)
+    if enrich_from_external_sources:
+        # Operation 2: Expansion Round 1  
+        working_objects, expansion_report = _operation_2_expansion_round_1(working_objects)
+        
+        # Operation 3: Expansion Round 2
+        working_objects, expansion_report = _operation_3_expansion_round_2(working_objects, expansion_report)
+        
+        # Pruning Step: Remove unreferenced objects
+        working_objects, _ = _prune_unreferenced_objects(working_objects, original_objects)
+    else:
+        # Check for missing dependencies without enrichment
+        working_objects, expansion_report = _operation_2_check_dependencies_only(working_objects)
+        
+        # If missing dependencies found, return failure report
+        if expansion_report.missing_ids_list:
+            return stix_list, CleanStixListFailureReport(
+                clean_operation_outcome=False,
+                return_message=f"Missing dependencies detected: {expansion_report.missing_ids_list}",
+                detailed_operation_reports=create_partial_reports(expansion_report)
+            )
     
     # Operation 4: SCO Field Cleaning (conditional)
     working_objects, sco_report = _operation_4_sco_cleaning(working_objects, clean_sco_fields)
@@ -100,11 +117,41 @@ def _operation_1_object_deduplication(objects: List[StixObject]) -> Tuple[List[S
     return list(unique_objects.values()), DeduplicationReport(...)
 ```
 
-### Rule 5: Operations 2-3 - Expansion Rounds
+### Rule 5: Operations 2-3 - Conditional Expansion Rounds
+**CRITICAL**: Expansion is now conditional based on `enrich_from_external_sources` parameter.
+
+**When `enrich_from_external_sources=True`:**
 - Extract all references from existing objects
-- Fetch missing objects from external sources
+- Fetch missing objects from external sources  
 - Run two rounds to catch cascading dependencies
 - Prune unreferenced objects added during expansion
+
+**When `enrich_from_external_sources=False`:**
+- Check for missing dependencies without fetching
+- Return failure report if missing dependencies detected
+- Skip external source network calls entirely
+
+```python
+def _operation_2_check_dependencies_only(objects: List[StixObject]) -> Tuple[List[StixObject], ExpansionReport]:
+    """Check for missing dependencies without enrichment"""
+    all_ids = {obj.id for obj in objects}
+    missing_ids = set()
+    
+    for obj in objects:
+        obj_dict = obj.model_dump()
+        dependencies = _extract_references_from_object(obj_dict)
+        for dep_id in dependencies:
+            if dep_id not in all_ids:
+                missing_ids.add(dep_id)
+    
+    expansion_report = ExpansionReport(
+        missing_ids_list=list(missing_ids),
+        sources_of_expansion=[],
+        warning_messages=[] if not missing_ids else [f"Missing dependencies: {missing_ids}"]
+    )
+    
+    return objects, expansion_report
+```
 
 ### Rule 6: Operation 4 - SCO Field Cleaning
 - Only run when `clean_sco_fields=True`
@@ -330,6 +377,7 @@ Every function must document:
 4. **Ignore timing**: Performance regression detection is critical
 5. **Return different formats**: Input format must match output format
 6. **Skip validation**: Always validate STIX IDs and object structures
+7. **Use generic variable names in TypeQL**: Avoid collisions in embedded relations
 
 ### ✅ Always Do:
 1. **Deep copy inputs**: Protect original data
@@ -338,3 +386,33 @@ Every function must document:
 4. **Track timing**: Monitor performance over time
 5. **Maintain format consistency**: Predictable interfaces
 6. **Validate everything**: Robust error detection
+7. **Use relation-aware variable naming**: Prevent TypeQL variable collisions
+
+## TypeQL Variable Naming Rules
+
+### Rule 23: Relation-Aware Variable Generation
+When generating TypeQL variables for embedded relations, always use relation-aware prefixes to prevent collisions:
+
+```python
+# ✅ CORRECT: Relation-aware variable naming
+def embedded_relation(prop, prop_type, prop_value, i, local_optional_objects, inc_add=""):
+    # Use relation prefix to avoid collisions
+    relation_prefix = prop.replace('_', '-')
+    variable_name = f"{relation_prefix}-{prop_type}{i}{inc_add}"
+    
+    # Example outputs:
+    # "on-completion-sequence0" (for on_completion relation)
+    # "sequence-sequence1" (for sequence relation)
+    # "created-by-identity0" (for created_by_ref relation)
+    
+# ❌ WRONG: Generic variable naming that causes collisions
+def embedded_relation(prop, prop_type, prop_value, i, local_optional_objects, inc_add=""):
+    variable_name = f"{prop_type}{i}{inc_add}"  # Causes collisions!
+    # Would generate: "sequence0", "sequence1" for all sequence relations
+```
+
+### Rule 24: Collision Prevention Strategy
+- **Prefix with relation name**: Include the property name that establishes the relation
+- **Normalize relation names**: Replace underscores with hyphens for consistency
+- **Test collision scenarios**: Verify with objects containing multiple same-type references
+- **Document variable patterns**: Make naming conventions explicit in comments

@@ -22,8 +22,8 @@ Create a comprehensive STIX cleaning module with dynamic dependency sorting capa
 Both functions execute the same 7-step cleaning pipeline with **dynamic dependency detection**:
 
 **Step 1: Object Deduplication** (Remove duplicate objects by STIX ID)
-**Step 2-3: Object Expansion** (Two-round expansion for transitive dependencies)  
-**Step 4: SCO Field Cleaning** (Remove forbidden fields from STIX Cyber Observables)
+**Step 2-3: Object Expansion** (CONDITIONAL: Two-round expansion for transitive dependencies - only if `enrich_from_external_sources=True`)  
+**Step 4: SCO Field Cleaning** (CONDITIONAL: Remove forbidden fields from STIX Cyber Observables - only if `clean_sco_fields=True`)
 **Step 5: Circular Reference Resolution** (Break dependency cycles)
 **Step 6: Dynamic Dependency Sorting** ⭐ **ENHANCED** (Dual-method reference detection + topological ordering)
 **Step 7: Comprehensive Reporting** (Detailed operation tracking with dependency information)
@@ -52,7 +52,8 @@ target_directory/
 ```python
 def clean_stix_list(
     stix_list: List[Dict[str, Any]], 
-    clean_sco_fields: bool = False
+    clean_sco_fields: bool = False,
+    enrich_from_external_sources: bool = False
 ) -> Tuple[List[Dict[str, Any]], Union[CleanStixListSuccessReport, CleanStixListFailureReport]]:
     """
     Clean STIX objects in memory through enhanced 7-operation pipeline with dynamic dependency sorting.
@@ -62,10 +63,12 @@ def clean_stix_list(
     - Dynamic dependency detection (no hardcoded field lists)
     - Handles custom reference fields (on_completion, sequenced_object, etc.)
     - Returns dependency-ordered objects ready for database insertion
+    - Conditional enrichment and SCO cleaning based on parameters
     
     Args:
         stix_list (List[Dict]): Raw STIX object dictionaries requiring cleaning
         clean_sco_fields (bool): Whether to run SCO Field Cleaning operation (default: False)
+        enrich_from_external_sources (bool): Whether to fetch missing objects from external sources (default: False)
     
     Returns:
         Tuple containing:
@@ -77,15 +80,22 @@ def clean_stix_list(
         - Uses dual-method dependency detection (standard fields + STIX ID pattern matching)
         - Returns objects in topological order (dependencies before dependents)
         - Converts back to dictionaries maintaining original format
+        - When enrich_from_external_sources=False: Operations 2-3 (expansion) are skipped
+        - When missing dependencies found and enrichment disabled: Returns failure report with missing IDs
     """
 
-def clean_stix_directory(directory_path: str, clean_sco_fields: bool = False) -> List[Union[CleanStixListSuccessReport, CleanStixListFailureReport]]:
+def clean_stix_directory(
+    directory_path: str, 
+    clean_sco_fields: bool = False,
+    enrich_from_external_sources: bool = False
+) -> List[Union[CleanStixListSuccessReport, CleanStixListFailureReport]]:
     """
     Process all JSON files in directory through cleaning pipeline with file organization.
     
     Args:
         directory_path (str): Target directory containing STIX JSON files
         clean_sco_fields (bool): Whether to run SCO Field Cleaning operation (default: False)
+        enrich_from_external_sources (bool): Whether to fetch missing objects from external sources (default: False)
     
     Returns:
         List[Report]: Collection of processing reports (one per input file)
@@ -94,6 +104,10 @@ def clean_stix_directory(directory_path: str, clean_sco_fields: bool = False) ->
         - Originals moved to: {directory_path}/original/
         - Reports saved to: {directory_path}/reports/
         - Cleaned bundles saved to: {directory_path}/ (root)
+        
+    Enrichment Control:
+        - When enrich_from_external_sources=False: Operations 2-3 (expansion) are skipped
+        - When missing dependencies found and enrichment disabled: Returns failure report with missing IDs
     """
 ```
 
@@ -113,19 +127,22 @@ def clean_stix_directory(directory_path: str, clean_sco_fields: bool = False) ->
 
 **Output**: Deduplicated object list + DeduplicationReport
 
-### Operation 2: Object Expansion (Round 1)
+### Operation 2: Object Expansion (Round 1) - CONDITIONAL
 
 **Objective**: Expand STIX objects by fetching missing referenced objects from external sources.
+
+**Execution Control**: Only runs when `enrich_from_external_sources=True` parameter is set (default: False)
 
 **Algorithm**:
 
 1. Extract all unique STIX IDs referenced by existing objects
 2. Compare referenced IDs to defined object IDs
 3. Identify missing object definitions
-4. Sequentially check external sources for missing objects
-5. Add found objects to the collection
+4. **When enrichment enabled**: Sequentially check external sources for missing objects
+5. **When enrichment disabled**: Return failure report with missing dependency IDs
+6. Add found objects to the collection (enrichment enabled only)
 
-**External Sources** (check in this order):
+**External Sources** (check in this order when enrichment enabled):
 
 1. MITRE ATT&CK Enterprise: `https://raw.githubusercontent.com/mitre-attack/attack-stix-data/refs/heads/master/enterprise-attack/enterprise-attack.json`
 2. MITRE ATT&CK Mobile: `https://raw.githubusercontent.com/mitre-attack/attack-stix-data/refs/heads/master/mobile-attack/mobile-attack.json`
@@ -133,17 +150,23 @@ def clean_stix_directory(directory_path: str, clean_sco_fields: bool = False) ->
 4. MITRE Atlas: `https://raw.githubusercontent.com/mitre-atlas/atlas-navigator-data/refs/heads/main/dist/stix-atlas.json`
 5. Malware MBC: `https://raw.githubusercontent.com/MBCProject/mbc-stix2.1/refs/heads/main/mbc/mbc.json`
 
-**Output**: Expanded object list + ExpansionReport
+**Output**: 
+- When `enrich_from_external_sources=True`: Expanded object list + ExpansionReport
+- When `enrich_from_external_sources=False`: Unchanged object list + ExpansionReport (with missing dependencies listed)
 
-### Operation 3: Object Expansion (Round 2)
+### Operation 3: Object Expansion (Round 2) - CONDITIONAL
 
 **Objective**: Handle transitive dependencies introduced by newly added objects.
+
+**Execution Control**: Only runs when `enrich_from_external_sources=True` parameter is set (default: False)
 
 **Algorithm**: Repeat Operation 2 logic on the expanded dataset from Operation 2.
 
 **Rationale**: New objects may reference additional objects not yet in the collection.
 
-**Output**: Fully expanded object list + Updated ExpansionReport
+**Output**: 
+- When `enrich_from_external_sources=True`: Fully expanded object list + Updated ExpansionReport
+- When `enrich_from_external_sources=False`: Skipped operation + Empty ExpansionReport
 
 ### Operation 4: SCO Field Cleaning (Conditional)
 

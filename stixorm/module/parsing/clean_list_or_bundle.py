@@ -629,6 +629,32 @@ def _operation_1_object_deduplication(objects: List[StixObject]) -> Tuple[List[S
     return deduplicated_objects, report
 
 
+def _operation_2_check_dependencies_only(objects: List[StixObject]) -> Tuple[List[StixObject], ExpansionReport]:
+    """Check for missing dependencies without enrichment from external sources"""
+    # Extract all references and defined IDs
+    all_references = set()
+    defined_ids = set()
+    
+    for obj in objects:
+        defined_ids.add(obj.id)
+        obj_data = obj.model_dump()
+        references = _extract_references_from_object(obj_data)
+        all_references.update(references)
+    
+    # Find missing IDs
+    missing_ids = all_references - defined_ids
+    
+    # Create expansion report (no sources, just missing IDs)
+    report = ExpansionReport(
+        number_of_objects_defined=len(defined_ids),
+        number_of_objects_referenced=len(all_references),
+        missing_ids_list=list(missing_ids),
+        sources_of_expansion=[]  # No external sources checked
+    )
+    
+    return objects, report
+
+
 def _operation_2_expansion_round_1(objects: List[StixObject]) -> Tuple[List[StixObject], ExpansionReport]:
     """Operation 1: First round of object expansion"""
     # Extract all references and defined IDs
@@ -1023,20 +1049,27 @@ def _operation_7_comprehensive_reporting(
 
 def clean_stix_list(
     stix_list: List[Dict[str, Any]], 
-    clean_sco_fields: bool = False
+    clean_sco_fields: bool = False,
+    enrich_from_external_sources: bool = False
 ) -> Tuple[List[Dict[str, Any]], Union[CleanStixListSuccessReport, CleanStixListFailureReport]]:
     """
-    Clean STIX objects in memory through 7-operation pipeline.
+    Clean STIX objects in memory through 7-operation pipeline with conditional enrichment.
     Accepts raw dictionaries, converts to StixObjects internally, then returns dictionaries.
     
     Args:
         stix_list (List[Dict]): Raw STIX object dictionaries requiring cleaning
         clean_sco_fields (bool): Whether to run SCO Field Cleaning operation (default: False)
+        enrich_from_external_sources (bool): Whether to fetch missing objects from external sources (default: False)
     
     Returns:
         Tuple containing:
         - List[Dict]: Processed and dependency-ordered STIX object dictionaries
         - Report: Success/failure report with detailed operation metrics
+        
+    When enrich_from_external_sources=False and missing dependencies are found:
+        - Returns failure report with missing dependency IDs
+        - No external sources are contacted
+        - SCO cleaning and enrichment operations are skipped
     """
     start_time = datetime.now()
     original_count = len(stix_list)
@@ -1065,35 +1098,88 @@ def clean_stix_list(
             duration_seconds=(op_end - op_start).total_seconds()
         ))
         
-        # Operation 2: Expansion Round 1
+        # Operation 2: Expansion Round 1 (conditional)
         op_start = datetime.now()
-        working_objects, expansion_report = _operation_2_expansion_round_1(working_objects)
+        if enrich_from_external_sources:
+            working_objects, expansion_report = _operation_2_expansion_round_1(working_objects)
+        else:
+            # Check for missing dependencies without enrichment
+            working_objects, expansion_report = _operation_2_check_dependencies_only(working_objects)
+            # If missing dependencies found, return failure
+            if expansion_report.missing_ids_list:
+                op_end = datetime.now()
+                operation_timings.append(OperationTiming(
+                    operation_name="Dependency Check (No Enrichment)",
+                    start_time=op_start.strftime("%Y-%m-%d %H:%M:%S.%f"),
+                    end_time=op_end.strftime("%Y-%m-%d %H:%M:%S.%f"),
+                    duration_seconds=(op_end - op_start).total_seconds()
+                ))
+                
+                # Convert working objects back to dictionaries
+                result_dicts = [obj.model_dump() for obj in working_objects]
+                
+                # Create failure report  
+                list_report = ListReport(
+                    deduplication_report=deduplication_report,
+                    expansion_report=expansion_report,
+                    cleaning_sco_report=CleaningSCOReport(
+                        number_of_scos_cleaned=0,
+                        list_of_stix_ids_where_created_field_was_removed=[],
+                        list_of_stix_ids_where_modified_field_was_removed=[],
+                        list_of_stix_ids_where_other_fields_were_removed=[]
+                    ),
+                    circular_reference_report=CircularReferenceReport(
+                        number_of_circular_references_found=0,
+                        list_of_circular_reference_paths=[],
+                        deleted_fields_and_values=[]
+                    ),
+                    sorting_report=SortingReport(
+                        sorting_successful=False,
+                        sorted_list_of_stix_ids=[],
+                        diagram_of_sorted_dependencies="",
+                        unresolved_references=[]
+                    ),
+                    operation_timings=operation_timings,
+                    total_processing_time_seconds=(datetime.now() - start_time).total_seconds()
+                )
+                
+                failure_report = CleanStixListFailureReport(
+                    report_date_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    total_number_of_objects_processed=original_count,
+                    clean_operation_outcome=False,
+                    return_message=f"Missing dependencies found (enrichment disabled): {', '.join(expansion_report.missing_ids_list[:10])}{'...' if len(expansion_report.missing_ids_list) > 10 else ''}",
+                    detailed_operation_reports=list_report
+                )
+                
+                return result_dicts, failure_report
+        
         op_end = datetime.now()
         operation_timings.append(OperationTiming(
-            operation_name="Object Expansion Round 1",
+            operation_name="Object Expansion Round 1" if enrich_from_external_sources else "Dependency Check (No Enrichment)",
             start_time=op_start.strftime("%Y-%m-%d %H:%M:%S.%f"),
             end_time=op_end.strftime("%Y-%m-%d %H:%M:%S.%f"),
             duration_seconds=(op_end - op_start).total_seconds()
         ))
         
-        # Operation 3: Expansion Round 2
-        op_start = datetime.now()
-        working_objects, expansion_report = _operation_3_expansion_round_2(working_objects, expansion_report)
-        op_end = datetime.now()
-        operation_timings.append(OperationTiming(
-            operation_name="Object Expansion Round 2",
-            start_time=op_start.strftime("%Y-%m-%d %H:%M:%S.%f"),
-            end_time=op_end.strftime("%Y-%m-%d %H:%M:%S.%f"),
-            duration_seconds=(op_end - op_start).total_seconds()
-        ))
-        
-        # Pruning Step: Remove unreferenced objects added during expansion  
-        # Use the converted StixObjects, not the original dictionaries
-        original_objects = deepcopy(stix_objects)
-        working_objects, _ = _prune_unreferenced_objects(working_objects, original_objects)
-        
-        # Update expansion report to reflect final object count after pruning
-        expansion_report.number_of_objects_defined = len(working_objects)
+        # Operation 3: Expansion Round 2 (conditional)
+        if enrich_from_external_sources:
+            op_start = datetime.now()
+            working_objects, expansion_report = _operation_3_expansion_round_2(working_objects, expansion_report)
+            op_end = datetime.now()
+            operation_timings.append(OperationTiming(
+                operation_name="Object Expansion Round 2",
+                start_time=op_start.strftime("%Y-%m-%d %H:%M:%S.%f"),
+                end_time=op_end.strftime("%Y-%m-%d %H:%M:%S.%f"),
+                duration_seconds=(op_end - op_start).total_seconds()
+            ))
+            
+            # Pruning Step: Remove unreferenced objects added during expansion  
+            # Use the converted StixObjects, not the original dictionaries
+            original_objects = deepcopy(stix_objects)
+            working_objects, _ = _prune_unreferenced_objects(working_objects, original_objects)
+            
+            # Update expansion report to reflect final object count after pruning
+            expansion_report.number_of_objects_defined = len(working_objects)
         
         # Operation 4: SCO Cleaning (conditional)
         op_start = datetime.now()
@@ -1257,7 +1343,8 @@ def clean_stix_list(
 
 def clean_stix_directory(
     directory_path: str, 
-    clean_sco_fields: bool = False
+    clean_sco_fields: bool = False,
+    enrich_from_external_sources: bool = False
 ) -> List[Union[CleanStixListSuccessReport, CleanStixListFailureReport]]:
     """
     Process all JSON files in directory through cleaning pipeline with file organization.
@@ -1265,6 +1352,7 @@ def clean_stix_directory(
     Args:
         directory_path (str): Target directory containing STIX JSON files
         clean_sco_fields (bool): Whether to run SCO Field Cleaning operation (default: False)
+        enrich_from_external_sources (bool): Whether to fetch missing objects from external sources (default: False)
     
     Returns:
         List[Report]: Collection of processing reports (one per input file)
@@ -1273,6 +1361,10 @@ def clean_stix_directory(
         - Originals moved to: {directory_path}/original/
         - Reports saved to: {directory_path}/reports/
         - Cleaned bundles saved to: {directory_path}/ (root)
+        
+    When enrich_from_external_sources=False and missing dependencies are found:
+        - Returns failure report with missing dependency IDs
+        - No external sources are contacted
     """
     directory = Path(directory_path)
     if not directory.exists() or not directory.is_dir():
@@ -1328,7 +1420,7 @@ def clean_stix_directory(
                 raise ValueError(f"No valid STIX objects found in {json_file.name}")
             
             # Process objects
-            cleaned_objects, report = clean_stix_list(stix_objects, clean_sco_fields)
+            cleaned_objects, report = clean_stix_list(stix_objects, clean_sco_fields, enrich_from_external_sources)
             
             # Generate file paths
             original_name = json_file.name

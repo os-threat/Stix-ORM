@@ -425,3 +425,146 @@ def assert_dependency_order(objects: List[Dict], target_ids: List[str], dependen
 # Usage:
 assert_dependency_order(sorted_objects, target_seq_ids, dependent_seq_ids)
 ```
+
+## Conditional Operation Patterns
+
+### Pattern 19: Conditional Processing with Early Return
+Handle conditional operations with proper failure reporting:
+
+```python
+def conditional_enrichment_operation(
+    objects: List[StixObject], 
+    enrich_from_external_sources: bool = False
+) -> Tuple[List[StixObject], Union[SuccessReport, FailureReport]]:
+    """Conditional enrichment with missing dependency detection"""
+    
+    if enrich_from_external_sources:
+        # Perform full enrichment
+        return _perform_enrichment(objects)
+    else:
+        # Check for missing dependencies without enrichment
+        missing_deps = _detect_missing_dependencies(objects)
+        
+        if missing_deps:
+            # Return failure report with missing dependency list
+            failure_report = FailureReport(
+                missing_ids_list=missing_deps,
+                return_message=f"Missing dependencies: {missing_deps}"
+            )
+            return objects, failure_report
+        else:
+            # No missing dependencies, continue processing
+            success_report = SuccessReport(
+                return_message="No missing dependencies detected"
+            )
+            return objects, success_report
+```
+
+### Pattern 20: Boolean Parameter Validation
+Always validate boolean parameters and provide clear defaults:
+
+```python
+def enhanced_clean_function(
+    stix_list: List[Dict[str, Any]], 
+    clean_sco_fields: bool = False,
+    enrich_from_external_sources: bool = False
+) -> Tuple[List[Dict[str, Any]], Report]:
+    """Enhanced cleaning with explicit boolean parameters"""
+    
+    # Validate parameters
+    if not isinstance(clean_sco_fields, bool):
+        raise TypeError("clean_sco_fields must be a boolean")
+    if not isinstance(enrich_from_external_sources, bool):
+        raise TypeError("enrich_from_external_sources must be a boolean")
+    
+    # Document behavior in comments
+    # clean_sco_fields=False: Skip SCO field cleaning (default)
+    # enrich_from_external_sources=False: Check dependencies only, no enrichment (default)
+    
+    return _process_with_conditions(stix_list, clean_sco_fields, enrich_from_external_sources)
+```
+
+## TypeQL Variable Generation Patterns
+
+### Pattern 21: Collision-Free Variable Naming
+Generate unique TypeQL variables using relation-aware prefixes:
+
+```python
+def generate_typeql_variable(
+    relation_property: str, 
+    object_type: str, 
+    sequence_number: int, 
+    additional_suffix: str = ""
+) -> str:
+    """Generate collision-free TypeQL variable names"""
+    
+    # Normalize relation property name
+    relation_prefix = relation_property.replace('_', '-')
+    
+    # Combine with object type and sequence
+    variable_name = f"{relation_prefix}-{object_type}{sequence_number}{additional_suffix}"
+    
+    return variable_name
+
+# Examples:
+# generate_typeql_variable("on_completion", "sequence", 0) -> "on-completion-sequence0"
+# generate_typeql_variable("created_by_ref", "identity", 1) -> "created-by-identity1"
+# generate_typeql_variable("sequence", "sequence", 2) -> "sequence-sequence2"
+```
+
+### Pattern 22: Variable Collision Testing
+Test for TypeQL variable uniqueness in complex scenarios:
+
+```python
+def test_typeql_variable_uniqueness():
+    """Test that TypeQL variables are unique across relations"""
+    
+    # Create incident with multiple sequence references
+    incident_data = {
+        'type': 'incident',
+        'id': 'incident--test-123',
+        'on_completion': 'sequence--target-1',
+        'sequence': 'sequence--target-2',
+        'other_sequence_ref': 'sequence--target-3'
+    }
+    
+    # Generate variables for each relation
+    variables = []
+    for i, (prop, value) in enumerate(incident_data.items()):
+        if prop.endswith('_ref') or 'sequence' in prop:
+            var = generate_typeql_variable(prop, 'sequence', i)
+            variables.append(var)
+    
+    # Assert all variables are unique
+    assert len(variables) == len(set(variables)), f"Variable collision detected: {variables}"
+    
+    # Expected output:
+    # ["on-completion-sequence0", "sequence-sequence1", "other-sequence-sequence2"]
+```
+
+## Integration Pattern Updates
+
+### Pattern 23: Enhanced Error Context
+Provide comprehensive error context for debugging:
+
+```python
+def enhanced_error_handling(operation_name: str, input_data: Any):
+    """Enhanced error context for debugging"""
+    
+    try:
+        result = process_operation(input_data)
+        return result, None
+        
+    except Exception as e:
+        error_context = {
+            'operation': operation_name,
+            'input_type': type(input_data).__name__,
+            'input_count': len(input_data) if hasattr(input_data, '__len__') else 'N/A',
+            'error_type': type(e).__name__,
+            'error_message': str(e),
+            'stack_trace': traceback.format_exc()
+        }
+        
+        logger.error(f"Operation {operation_name} failed", extra=error_context)
+        return input_data, error_context  # Return original input on failure
+```

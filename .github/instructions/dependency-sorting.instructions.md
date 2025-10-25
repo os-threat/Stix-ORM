@@ -251,6 +251,7 @@ print(f"DEBUG TOPO: Starting queue (in_degree=0): {[id[:20]+'...' for id in queu
 4. **Convert unnecessarily**: Converting between dict/object formats multiple times
 5. **Hide dependency info**: Not including dependency data in reports
 6. **Skip error handling**: Not handling circular dependencies or missing references
+7. **Use generic TypeQL variables**: Creates collisions in database operations
 
 ### ✅ Always Do These:
 1. **Use pattern matching**: Scan all strings for STIX ID patterns
@@ -259,6 +260,51 @@ print(f"DEBUG TOPO: Starting queue (in_degree=0): {[id[:20]+'...' for id in queu
 4. **Preserve data formats**: Input format = output format
 5. **Report dependencies**: Include in sorting reports for debugging
 6. **Handle edge cases**: Circular dependencies, missing objects, malformed data
+7. **Use relation-aware TypeQL variables**: Prevent database insertion collisions
+
+## TypeQL Integration Rules
+
+### Rule 11: Variable Collision Prevention
+When dependency-sorted objects are processed through TypeQL generation, ensure variable naming prevents collisions:
+
+```python
+# ✅ CORRECT: Relation-aware variable naming in TypeQL generation
+def embedded_relation(prop, prop_type, prop_value, i, local_optional_objects, inc_add=""):
+    """Generate TypeQL variables with relation-aware prefixes"""
+    # Use property name as prefix to avoid collisions
+    relation_prefix = prop.replace('_', '-')
+    variable_name = f"{relation_prefix}-{prop_type}{i}{inc_add}"
+    
+    # Examples for incident objects with multiple sequence references:
+    # on_completion -> "on-completion-sequence0" 
+    # sequence -> "sequence-sequence1"
+    # This prevents collisions when same object types appear in different relations
+
+# ❌ WRONG: Generic variable naming causing collisions
+def embedded_relation(prop, prop_type, prop_value, i, local_optional_objects, inc_add=""):
+    variable_name = f"{prop_type}{i}{inc_add}"  # Collision risk!
+    # Both on_completion and sequence would generate "sequence0", "sequence1"
+```
+
+### Rule 12: Database Insertion Order
+The dependency sorting ensures proper order for TypeQL insertion:
+
+1. **Dependencies first**: Objects with fewer dependencies are sorted earlier
+2. **Collision-free variables**: Each relation generates unique TypeQL variables
+3. **Transaction safety**: All referenced objects exist before dependents are inserted
+4. **Error prevention**: Reduces foreign key constraint violations
+
+```python
+# Dependency sorting enables this TypeQL insertion pattern:
+for sorted_object in dependency_sorted_objects:
+    # Generate collision-free TypeQL with relation-aware variables
+    typeql_query = generate_typeql_insert(sorted_object)
+    
+    # Safe to execute because:
+    # 1. All dependencies already inserted (sorted order)
+    # 2. Variables are unique per relation (collision prevention)
+    database.execute(typeql_query)
+```
 
 ## Performance Considerations
 

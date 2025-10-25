@@ -1,8 +1,15 @@
 # Stix-ORM Overview
 
-
-
 The Stix-ORM Library is an open-source Python Library built on top of the [OASIS Stix2 Python Library](https://stix2.readthedocs.io/en/latest/index.html) in order to make it simple to use TypeDB as a [DataStore](https://stix2.readthedocs.io/en/latest/guide/datastore.html), and extend it to suit additional protocols, such as Mitre ATT&CK, OASIS CACAO, OCA Kestrel, and custom objects (e.g. case management, feed management etc).
+
+## Documentation Structure
+
+- **[Architecture Blueprint](../blueprint.md)**: High-level system architecture and design patterns
+- **[Implementation Guide](implementation-guide.md)**: Critical technical solutions and implementation patterns
+- **[STIX Object Cleaning](../clean_list_or_bundle.md)**: Comprehensive STIX object processing pipeline
+- **[Installation Guide](install/configuration.md)**: Setup and configuration instructions
+- **[API Reference](python_api/overview.md)**: Python API documentation
+- **[Protocol Support](protocols/overview.md)**: Supported STIX dialects and extensions
 
 
 
