@@ -36387,3 +36387,1301 @@ input len -> 33, typedn len ->33
 17:30:14,921 __main__ INFO ===================================================
 
 
+01:59:06,649 stixorm.module.initialise INFO ========================== Database initialisation ============================
+01:59:06,722 stixorm.module.initialise INFO Loading TQL objects
+01:59:06,722 stixorm.module.initialise INFO 
+
+ insert $mark isa tlp-white, has stix-type "marking-definition", has stix-id "marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9", has spec-version "2.1", has created 2017-01-20T00:00:00.000;
+
+
+01:59:06,723 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E68E91360>
+01:59:06,981 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"_3": Attribute(Attribute { iid: ID[0x836f80f13280000159b92c3800], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2017-01-20T00:00:00), is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f80302800386d61726b696e672d646566696e6974696f6e2d2d36313366326532362d343037642d343863372d396563612d623865393164663939646339], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9"), is_inferred: false }), "_0": Attribute(Attribute { iid: ID[0x836f80252800126d61726b696e672d646566696e6974696f6e], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition"), is_inferred: false }), "mark": Entity(Entity { iid: ID[0x826e800a7fffffffffffffff], type_: EntityType { label: "tlp-white", is_root: false, is_abstract: false }, is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:06,982 stixorm.module.initialise INFO 
+
+ insert $mark isa tlp-green, has stix-type "marking-definition", has stix-id "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da", has spec-version "2.1", has created 2017-01-20T00:00:00.000;
+
+
+01:59:06,986 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E68E91420>
+01:59:07,32 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"mark": Entity(Entity { iid: ID[0x826e80447fffffffffffffff], type_: EntityType { label: "tlp-green", is_root: false, is_abstract: false }, is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f80f13280000159b92c3800], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2017-01-20T00:00:00), is_inferred: false }), "_0": Attribute(Attribute { iid: ID[0x836f80252800126d61726b696e672d646566696e6974696f6e], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition"), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f80302800386d61726b696e672d646566696e6974696f6e2d2d33343039386663652d383630662d343861652d386535302d656264336363356534316461], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:07,32 stixorm.module.initialise INFO 
+
+ insert $mark isa tlp-amber, has stix-type "marking-definition", has stix-id "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82", has spec-version "2.1", has created 2017-01-20T00:00:00.000;
+
+
+01:59:07,34 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E68E913C0>
+01:59:07,75 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"_0": Attribute(Attribute { iid: ID[0x836f80252800126d61726b696e672d646566696e6974696f6e], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition"), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "mark": Entity(Entity { iid: ID[0x826e801b7fffffffffffffff], type_: EntityType { label: "tlp-amber", is_root: false, is_abstract: false }, is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f80f13280000159b92c3800], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2017-01-20T00:00:00), is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f80302800386d61726b696e672d646566696e6974696f6e2d2d66383864333166362d343836662d343464612d623331372d303133333362646530623832], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition--f88d31f6-486f-44da-b317-01333bde0b82"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:07,75 stixorm.module.initialise INFO 
+
+ insert $mark isa tlp-red, has stix-type "marking-definition", has stix-id "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed", has spec-version "2.1", has created 2017-01-20T00:00:00.000;
+
+
+01:59:07,76 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E68E91330>
+01:59:07,107 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"mark": Entity(Entity { iid: ID[0x826e800e7fffffffffffffff], type_: EntityType { label: "tlp-red", is_root: false, is_abstract: false }, is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f80f13280000159b92c3800], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2017-01-20T00:00:00), is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f80302800386d61726b696e672d646566696e6974696f6e2d2d35653537633733392d333931612d346562332d623662652d376431356361393264356564], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"), is_inferred: false }), "_0": Attribute(Attribute { iid: ID[0x836f80252800126d61726b696e672d646566696e6974696f6e], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("marking-definition"), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:07,193 stixorm.module.initialise INFO ===============================================================================
+
+
+01:59:07,193 stixorm.module.typedb INFO we have loaded Stix schema
+01:59:21,879 stixorm.module.typedb INFO we have loaded Stix rules
+01:59:25,8 stixorm.module.typedb INFO we have loaded ATT&CK schema
+01:59:27,430 stixorm.module.typedb INFO we have loaded OS_THREAT schema
+01:59:30,557 stixorm.module.typedb INFO we have loaded OCA schema
+01:59:33,222 stixorm.module.typedb INFO we have loaded MBC schema
+01:59:35,927 stixorm.module.typedb INFO we have loaded ATTACK_FLOW schema
+01:59:36,532 stixorm.module.initialise INFO Loading TQL objects
+01:59:36,532 stixorm.module.initialise INFO 
+
+ insert $user-account isa user-account,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has user-id $user-id,
+ has account-login $account-login,
+ has account-type $account-type,
+ has display-name $display-name;
+
+ $stix-type "user-account";
+ $spec-version "2.1";
+ $stix-id "user-account--597ad4d4-35ba-585d-8f6d-134a75032f9b";
+ $user-id "79563902";
+ $account-login "nsmith";
+ $account-type "sales,";
+ $display-name "Naive Smith";
+
+
+
+
+01:59:36,533 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB250>
+01:59:36,592 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"account-login": Attribute(Attribute { iid: ID[0x836f80212800066e736d697468], type_: AttributeType { label: "account-login", is_root: false, is_abstract: false, value_type: String }, value: String("nsmith"), is_inferred: false }), "user-id": Attribute(Attribute { iid: ID[0x836f80992800083739353633393032], type_: AttributeType { label: "user-id", is_root: false, is_abstract: false, value_type: String }, value: String("79563902"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000c757365722d6163636f756e74], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("user-account"), is_inferred: false }), "account-type": Attribute(Attribute { iid: ID[0x836f802428000673616c65732c], type_: AttributeType { label: "account-type", is_root: false, is_abstract: false, value_type: String }, value: String("sales,"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f8030280032757365722d6163636f756e742d2d35393761643464342d333562612d353835642d386636642d313334613735303332663962], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("user-account--597ad4d4-35ba-585d-8f6d-134a75032f9b"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "display-name": Attribute(Attribute { iid: ID[0x836f806d28000b4e6169766520536d697468], type_: AttributeType { label: "display-name", is_root: false, is_abstract: false, value_type: String }, value: String("Naive Smith"), is_inferred: false }), "user-account": Entity(Entity { iid: ID[0x826e803a7fffffffffffffff], type_: EntityType { label: "user-account", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,592 stixorm.module.initialise INFO 
+
+ insert $user-account isa user-account,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has user-id $user-id,
+ has account-login $account-login,
+ has account-type $account-type,
+ has display-name $display-name;
+
+ $stix-type "user-account";
+ $spec-version "2.1";
+ $stix-id "user-account--83658594-537d-5c32-b9f0-137354bd9bc3";
+ $user-id "79563902";
+ $account-login "dman";
+ $account-type "sales,";
+ $display-name "Different Man";
+
+
+
+
+01:59:36,593 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAFB0>
+01:59:36,614 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"stix-type": Attribute(Attribute { iid: ID[0x836f802528000c757365722d6163636f756e74], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("user-account"), is_inferred: false }), "account-type": Attribute(Attribute { iid: ID[0x836f802428000673616c65732c], type_: AttributeType { label: "account-type", is_root: false, is_abstract: false, value_type: String }, value: String("sales,"), is_inferred: false }), "user-id": Attribute(Attribute { iid: ID[0x836f80992800083739353633393032], type_: AttributeType { label: "user-id", is_root: false, is_abstract: false, value_type: String }, value: String("79563902"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "display-name": Attribute(Attribute { iid: ID[0x836f806d28000d446966666572656e74204d616e], type_: AttributeType { label: "display-name", is_root: false, is_abstract: false, value_type: String }, value: String("Different Man"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f8030280032757365722d6163636f756e742d2d38333635383539342d353337642d356333322d623966302d313337333534626439626333], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("user-account--83658594-537d-5c32-b9f0-137354bd9bc3"), is_inferred: false }), "account-login": Attribute(Attribute { iid: ID[0x836f8021280004646d616e], type_: AttributeType { label: "account-login", is_root: false, is_abstract: false, value_type: String }, value: String("dman"), is_inferred: false }), "user-account": Entity(Entity { iid: ID[0x826e803a7ffffffffffffffe], type_: EntityType { label: "user-account", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,615 stixorm.module.initialise INFO 
+
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--78b946aa-91ab-5ce8-829b-4d078a8ecc00";
+ $stix-value "paolo@nomadenergy.co.uk";
+
+
+
+
+01:59:36,616 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAFE0>
+01:59:36,646 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"email-addr": Entity(Entity { iid: ID[0x826e805d7fffffffffffffff], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f8030280030656d61696c2d616464722d2d37386239343661612d393161622d356365382d383239622d346430373861386563633030], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr--78b946aa-91ab-5ce8-829b-4d078a8ecc00"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000a656d61696c2d61646472], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr"), is_inferred: false }), "stix-value": Attribute(Attribute { iid: ID[0x836f80dc28001770616f6c6f406e6f6d6164656e657267792e636f2e756b], type_: AttributeType { label: "stix-value", is_root: false, is_abstract: false, value_type: String }, value: String("paolo@nomadenergy.co.uk"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,646 stixorm.module.initialise INFO 
+
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value,
+ has display-name $display-name;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--c99b87bd-f0a8-50ca-9f84-68072efc61e3";
+ $stix-value "different5@man.org";
+ $display-name "Different Man";
+
+
+
+
+01:59:36,646 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB280>
+01:59:36,677 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f8030280030656d61696c2d616464722d2d63393962383762642d663061382d353063612d396638342d363830373265666336316533], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr--c99b87bd-f0a8-50ca-9f84-68072efc61e3"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000a656d61696c2d61646472], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr"), is_inferred: false }), "display-name": Attribute(Attribute { iid: ID[0x836f806d28000d446966666572656e74204d616e], type_: AttributeType { label: "display-name", is_root: false, is_abstract: false, value_type: String }, value: String("Different Man"), is_inferred: false }), "email-addr": Entity(Entity { iid: ID[0x826e805d7ffffffffffffffe], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "stix-value": Attribute(Attribute { iid: ID[0x836f80dc280012646966666572656e7435406d616e2e6f7267], type_: AttributeType { label: "stix-value", is_root: false, is_abstract: false, value_type: String }, value: String("different5@man.org"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,677 stixorm.module.initialise INFO 
+
+ insert $user-account isa user-account,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has account-login $account-login,
+ has account-type $account-type;
+
+ $stix-type "user-account";
+ $spec-version "2.1";
+ $stix-id "user-account--7aa68be3-1d4d-5b0f-8c26-8410085e5741";
+ $account-login "paolo di prodi";
+ $account-type "LinkedIn";
+
+
+
+
+01:59:36,677 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB250>
+01:59:36,707 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"account-login": Attribute(Attribute { iid: ID[0x836f802128000e70616f6c6f2064692070726f6469], type_: AttributeType { label: "account-login", is_root: false, is_abstract: false, value_type: String }, value: String("paolo di prodi"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "account-type": Attribute(Attribute { iid: ID[0x836f80242800084c696e6b6564496e], type_: AttributeType { label: "account-type", is_root: false, is_abstract: false, value_type: String }, value: String("LinkedIn"), is_inferred: false }), "user-account": Entity(Entity { iid: ID[0x826e803a7ffffffffffffffd], type_: EntityType { label: "user-account", is_root: false, is_abstract: false }, is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f8030280032757365722d6163636f756e742d2d37616136386265332d316434642d356230662d386332362d383431303038356535373431], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("user-account--7aa68be3-1d4d-5b0f-8c26-8410085e5741"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000c757365722d6163636f756e74], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("user-account"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,707 stixorm.module.initialise INFO 
+
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--06029cc1-105d-5495-9fc5-3d252dd7af76";
+ $stix-value "paolo@priam.ai";
+
+
+
+
+01:59:36,708 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAFB0>
+01:59:36,738 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"stix-value": Attribute(Attribute { iid: ID[0x836f80dc28000e70616f6c6f40707269616d2e6169], type_: AttributeType { label: "stix-value", is_root: false, is_abstract: false, value_type: String }, value: String("paolo@priam.ai"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f8030280030656d61696c2d616464722d2d30363032396363312d313035642d353439352d396663352d336432353264643761663736], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr--06029cc1-105d-5495-9fc5-3d252dd7af76"), is_inferred: false }), "email-addr": Entity(Entity { iid: ID[0x826e805d7ffffffffffffffd], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000a656d61696c2d61646472], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,738 stixorm.module.initialise INFO 
+
+ insert $task isa task,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has description $description,
+ has end-time $end-time,
+ has name $name,
+ has start-time $start-time;
+
+ $stix-type "task";
+ $spec-version "2.1";
+ $stix-id "task--3f23faa4-e21e-4880-bd8a-c8d89aa453aa";
+ $created 2025-07-27T06:01:16.214;
+ $modified 2025-07-27T06:01:16.214;
+ $description "Suspicious email reported by user";
+ $end-time 2025-07-27T06:01:16.214;
+ $name "Potential Phishing Email";
+ $start-time 2025-07-27T06:01:16.214;
+
+ $task-extension isa task-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $task-ext0 (task-base:$task, task-spec:$task-extension) isa task-ext;
+
+
+
+
+01:59:36,738 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAFE0>
+01:59:36,788 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"end-time": Attribute(Attribute { iid: ID[0x836f819232800001984a78a0b6], type_: AttributeType { label: "end-time", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:16.214), is_inferred: false }), "description": Attribute(Attribute { iid: ID[0x836f80a9280021537573706963696f757320656d61696c207265706f727465642062792075736572], type_: AttributeType { label: "description", is_root: false, is_abstract: false, value_type: String }, value: String("Suspicious email reported by user"), is_inferred: false }), "task-extension": Entity(Entity { iid: ID[0x826e809c7fffffffffffffff], type_: EntityType { label: "task-extension", is_root: false, is_abstract: false }, is_inferred: false }), "name": Attribute(Attribute { iid: ID[0x836f8079280018506f74656e7469616c205068697368696e6720456d61696c], type_: AttributeType { label: "name", is_root: false, is_abstract: false, value_type: String }, value: String("Potential Phishing Email"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f80252800047461736b], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("task"), is_inferred: false }), "start-time": Attribute(Attribute { iid: ID[0x836f808a32800001984a78a0b6], type_: AttributeType { label: "start-time", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:16.214), is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a78a0b6], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:16.214), is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a78a0b6], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:16.214), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002a7461736b2d2d33663233666161342d653231652d343838302d626438612d633864383961613435336161], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("task--3f23faa4-e21e-4880-bd8a-c8d89aa453aa"), is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d2800076e65772d73646f], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("new-sdo"), is_inferred: false }), "task-ext0": Relation(Relation { iid: ID[0x847080c17fffffffffffffff], type_: RelationType { label: "task-ext", is_root: false, is_abstract: false }, is_inferred: false }), "task": Entity(Entity { iid: ID[0x826e80997fffffffffffffff], type_: EntityType { label: "task", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,789 stixorm.module.initialise INFO 
+
+ insert $task isa task,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has description $description,
+ has end-time $end-time,
+ has name $name,
+ has start-time $start-time;
+
+ $stix-type "task";
+ $spec-version "2.1";
+ $stix-id "task--01537439-3b2d-4afe-81a3-45b2dd35c655";
+ $created 2025-07-27T06:01:28.264;
+ $modified 2025-07-27T06:01:28.264;
+ $description "Find out who else got the email";
+ $end-time 2025-07-27T06:01:28.264;
+ $name "Query Exchange Server";
+ $start-time 2025-07-27T06:01:28.264;
+
+ $task-extension isa task-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $task-ext0 (task-base:$task, task-spec:$task-extension) isa task-ext;
+
+
+
+
+01:59:36,789 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB280>
+01:59:36,802 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"task-extension": Entity(Entity { iid: ID[0x826e809c7ffffffffffffffe], type_: EntityType { label: "task-extension", is_root: false, is_abstract: false }, is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a78cfc8], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:28.264), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f80252800047461736b], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("task"), is_inferred: false }), "task": Entity(Entity { iid: ID[0x826e80997ffffffffffffffe], type_: EntityType { label: "task", is_root: false, is_abstract: false }, is_inferred: false }), "description": Attribute(Attribute { iid: ID[0x836f80a928001f46696e64206f75742077686f20656c736520676f742074686520656d61696c], type_: AttributeType { label: "description", is_root: false, is_abstract: false, value_type: String }, value: String("Find out who else got the email"), is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a78cfc8], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:28.264), is_inferred: false }), "start-time": Attribute(Attribute { iid: ID[0x836f808a32800001984a78cfc8], type_: AttributeType { label: "start-time", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:28.264), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002a7461736b2d2d30313533373433392d336232642d346166652d383161332d343562326464333563363535], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("task--01537439-3b2d-4afe-81a3-45b2dd35c655"), is_inferred: false }), "name": Attribute(Attribute { iid: ID[0x836f807928001551756572792045786368616e676520536572766572], type_: AttributeType { label: "name", is_root: false, is_abstract: false, value_type: String }, value: String("Query Exchange Server"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d2800076e65772d73646f], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("new-sdo"), is_inferred: false }), "end-time": Attribute(Attribute { iid: ID[0x836f819232800001984a78cfc8], type_: AttributeType { label: "end-time", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:28.264), is_inferred: false }), "task-ext0": Relation(Relation { iid: ID[0x847080c17ffffffffffffffe], type_: RelationType { label: "task-ext", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,802 stixorm.module.initialise INFO 
+
+ insert $url isa url,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value;
+
+ $stix-type "url";
+ $spec-version "2.1";
+ $stix-id "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7";
+ $stix-value "https://www.northkorea.nk/we/are/mad/";
+
+
+
+
+01:59:36,802 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB250>
+01:59:36,830 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"stix-id": Attribute(Attribute { iid: ID[0x836f803028002975726c2d2d33323739633764652d386639312d356331612d393964392d643635343663366334316637], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000375726c], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("url"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "stix-value": Attribute(Attribute { iid: ID[0x836f80dc28002568747470733a2f2f7777772e6e6f7274686b6f7265612e6e6b2f77652f6172652f6d61642f], type_: AttributeType { label: "stix-value", is_root: false, is_abstract: false, value_type: String }, value: String("https://www.northkorea.nk/we/are/mad/"), is_inferred: false }), "url": Entity(Entity { iid: ID[0x826e80187fffffffffffffff], type_: EntityType { label: "url", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,830 stixorm.module.initialise INFO 
+
+ insert $identity isa identity,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has stix-role $roles0,
+ has identity-class $identity-class,
+ has sector $sectors0;
+
+ $stix-type "identity";
+ $spec-version "2.1";
+ $stix-id "identity--3789a438-8d49-4f2a-bb1a-06d3575d2f33";
+ $created 2025-07-27T06:00:43.719;
+ $modified 2025-07-27T06:00:43.719;
+ $name "HP Laptop 1";
+ $description "Usr 1's Laptop";
+ $roles0 "laptop";
+ $identity-class "asset";
+ $sectors0 "technology";
+
+$external-reference0 isa external-reference,
+ has source-name "HP Ultima 10",
+ has description "16GB RAM, 1TB SD, Microsoft Windows 11 Professional",
+ has url-link "https://mail.echange.microsoft.com",
+ has external-id "Asset--629456a";
+
+ $external-references (referenced:$identity, referencing:$external-reference0) isa external-references;
+
+
+
+01:59:36,830 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAFB0>
+01:59:36,861 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"roles0": Attribute(Attribute { iid: ID[0x836f807c2800066c6170746f70], type_: AttributeType { label: "stix-role", is_root: false, is_abstract: false, value_type: String }, value: String("laptop"), is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f808228000e41737365742d2d36323934353661], type_: AttributeType { label: "external-id", is_root: false, is_abstract: false, value_type: String }, value: String("Asset--629456a"), is_inferred: false }), "identity": Entity(Entity { iid: ID[0x826e80267fffffffffffffff], type_: EntityType { label: "identity", is_root: false, is_abstract: false }, is_inferred: false }), "external-references": Relation(Relation { iid: ID[0x8470801b7fffffffffffffff], type_: RelationType { label: "external-references", is_root: false, is_abstract: false }, is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a7821c7], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:00:43.719), is_inferred: false }), "sectors0": Attribute(Attribute { iid: ID[0x836f800128000a746563686e6f6c6f6779], type_: AttributeType { label: "sector", is_root: false, is_abstract: false, value_type: String }, value: String("technology"), is_inferred: false }), "external-reference0": Entity(Entity { iid: ID[0x826e801d7fffffffffffffff], type_: EntityType { label: "external-reference", is_root: false, is_abstract: false }, is_inferred: false }), "name": Attribute(Attribute { iid: ID[0x836f807928000b4850204c6170746f702031], type_: AttributeType { label: "name", is_root: false, is_abstract: false, value_type: String }, value: String("HP Laptop 1"), is_inferred: false }), "identity-class": Attribute(Attribute { iid: ID[0x836f80752800056173736574], type_: AttributeType { label: "identity-class", is_root: false, is_abstract: false, value_type: String }, value: String("asset"), is_inferred: false }), "_0": Attribute(Attribute { iid: ID[0x836f802728000c485020556c74696d61203130], type_: AttributeType { label: "source-name", is_root: false, is_abstract: false, value_type: String }, value: String("HP Ultima 10"), is_inferred: false }), "description": Attribute(Attribute { iid: ID[0x836f80a928000e55737220312773204c6170746f70], type_: AttributeType { label: "description", is_root: false, is_abstract: false, value_type: String }, value: String("Usr 1's Laptop"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f80252800086964656e74697479], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("identity"), is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a7821c7], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:00:43.719), is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f80a9280033313647422052414d2c203154422053442c204d6963726f736f66742057696e646f77732031312050726f66657373696f6e616c], type_: AttributeType { label: "description", is_root: false, is_abstract: false, value_type: String }, value: String("16GB RAM, 1TB SD, Microsoft Windows 11 Professional"), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f80b028002268747470733a2f2f6d61696c2e656368616e67652e6d6963726f736f66742e636f6d], type_: AttributeType { label: "url-link", is_root: false, is_abstract: false, value_type: String }, value: String("https://mail.echange.microsoft.com"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002e6964656e746974792d2d33373839613433382d386434392d346632612d626231612d303664333537356432663333], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("identity--3789a438-8d49-4f2a-bb1a-06d3575d2f33"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,862 stixorm.module.initialise INFO 
+
+ insert $indicator isa indicator,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has indicator-type $indicator_types0,
+ has pattern $pattern,
+ has pattern-type $pattern-type,
+ has pattern-version $pattern-version,
+ has valid-from $valid-from;
+
+ $stix-type "indicator";
+ $spec-version "2.1";
+ $stix-id "indicator--dd52359a-1dd5-43c3-8970-2cc8aa0e1544";
+ $created 2025-07-27T06:01:15.680;
+ $modified 2025-07-27T06:01:15.680;
+ $name "Potential Phishing Email";
+ $description "Suspicious email reported by user";
+ $indicator_types0 "unknown";
+ $pattern "[email-addr:value = 'evil@northkorea.nk' AND email:subject = 'we are coming for you']";
+ $pattern-type "stix";
+ $pattern-version "2.1";
+ $valid-from 2025-07-27T06:01:15.680;
+
+
+
+
+01:59:36,862 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAFE0>
+01:59:36,892 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"indicator_types0": Attribute(Attribute { iid: ID[0x836f805a280007756e6b6e6f776e], type_: AttributeType { label: "indicator-type", is_root: false, is_abstract: false, value_type: String }, value: String("unknown"), is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a789ea0], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:15.680), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "description": Attribute(Attribute { iid: ID[0x836f80a9280021537573706963696f757320656d61696c207265706f727465642062792075736572], type_: AttributeType { label: "description", is_root: false, is_abstract: false, value_type: String }, value: String("Suspicious email reported by user"), is_inferred: false }), "valid-from": Attribute(Attribute { iid: ID[0x836f804432800001984a789ea0], type_: AttributeType { label: "valid-from", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:15.680), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f8025280009696e64696361746f72], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("indicator"), is_inferred: false }), "name": Attribute(Attribute { iid: ID[0x836f8079280018506f74656e7469616c205068697368696e6720456d61696c], type_: AttributeType { label: "name", is_root: false, is_abstract: false, value_type: String }, value: String("Potential Phishing Email"), is_inferred: false }), "pattern-version": Attribute(Attribute { iid: ID[0x836f8015280003322e31], type_: AttributeType { label: "pattern-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "pattern-type": Attribute(Attribute { iid: ID[0x836f806228000473746978], type_: AttributeType { label: "pattern-type", is_root: false, is_abstract: false, value_type: String }, value: String("stix"), is_inferred: false }), "indicator": Entity(Entity { iid: ID[0x826e80247fffffffffffffff], type_: EntityType { label: "indicator", is_root: false, is_abstract: false }, is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002f696e64696361746f722d2d64643532333539612d316464352d343363332d383937302d326363386161306531353434], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("indicator--dd52359a-1dd5-43c3-8970-2cc8aa0e1544"), is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a789ea0], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:15.680), is_inferred: false }), "pattern": Attribute(Attribute { iid: ID[0x836f806e2800555b656d61696c2d616464723a76616c7565203d20276576696c406e6f7274686b6f7265612e6e6b2720414e4420656d61696c3a7375626a656374203d202777652061726520636f6d696e6720666f7220796f75275d], type_: AttributeType { label: "pattern", is_root: false, is_abstract: false, value_type: String }, value: String("[email-addr:value = 'evil@northkorea.nk' AND email:subject = 'we are coming for you']"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,892 stixorm.module.initialise INFO 
+
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--25769d7c-b38f-496b-9ca5-5359537d9ff9";
+ $stix-value "brett@innovolve.ai";
+
+
+
+
+01:59:36,892 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB280>
+01:59:36,922 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"email-addr": Entity(Entity { iid: ID[0x826e805d7ffffffffffffffc], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "stix-value": Attribute(Attribute { iid: ID[0x836f80dc280012627265747440696e6e6f766f6c76652e6169], type_: AttributeType { label: "stix-value", is_root: false, is_abstract: false, value_type: String }, value: String("brett@innovolve.ai"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f8030280030656d61696c2d616464722d2d32353736396437632d623338662d343936622d396361352d353335393533376439666639], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr--25769d7c-b38f-496b-9ca5-5359537d9ff9"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000a656d61696c2d61646472], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,922 stixorm.module.initialise INFO 
+
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value,
+ has display-name $display-name;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--eb38d07e-6ba8-56c1-b107-d4db4aacf212";
+ $stix-value "evil@northkorea.nk";
+ $display-name "Bad Man";
+
+
+
+
+01:59:36,924 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB250>
+01:59:36,952 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"stix-type": Attribute(Attribute { iid: ID[0x836f802528000a656d61696c2d61646472], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr"), is_inferred: false }), "email-addr": Entity(Entity { iid: ID[0x826e805d7ffffffffffffffb], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "stix-value": Attribute(Attribute { iid: ID[0x836f80dc2800126576696c406e6f7274686b6f7265612e6e6b], type_: AttributeType { label: "stix-value", is_root: false, is_abstract: false, value_type: String }, value: String("evil@northkorea.nk"), is_inferred: false }), "display-name": Attribute(Attribute { iid: ID[0x836f806d280007426164204d616e], type_: AttributeType { label: "display-name", is_root: false, is_abstract: false, value_type: String }, value: String("Bad Man"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f8030280030656d61696c2d616464722d2d65623338643037652d366261382d353663312d623130372d643464623461616366323132], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr--eb38d07e-6ba8-56c1-b107-d4db4aacf212"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,952 stixorm.module.initialise INFO 
+
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--a04693c3-b040-44c5-833a-75cbe45386b5";
+ $stix-value "brett@cloudaccelerator.co";
+
+
+
+
+01:59:36,952 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAFB0>
+01:59:36,984 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"stix-value": Attribute(Attribute { iid: ID[0x836f80dc280019627265747440636c6f7564616363656c657261746f722e636f], type_: AttributeType { label: "stix-value", is_root: false, is_abstract: false, value_type: String }, value: String("brett@cloudaccelerator.co"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000a656d61696c2d61646472], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr"), is_inferred: false }), "email-addr": Entity(Entity { iid: ID[0x826e805d7ffffffffffffffa], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f8030280030656d61696c2d616464722d2d61303436393363332d623034302d343463352d383333612d373563626534353338366235], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr--a04693c3-b040-44c5-833a-75cbe45386b5"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:36,985 stixorm.module.initialise INFO 
+
+ insert $event isa event,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has description $description,
+ has end-time $end-time,
+ has event-types $event_types0,
+ has name $name,
+ has start-time $start-time;
+
+ $stix-type "event";
+ $spec-version "2.1";
+ $stix-id "event--e8f641e7-89ca-4776-a828-6838d8eccdca";
+ $created 2025-07-27T06:01:15.914;
+ $modified 2025-07-27T06:01:15.914;
+ $description "Suspicious email reported by user";
+ $end-time 2025-07-27T06:01:15.914;
+ $event_types0 "dissemination-phishing-emails";
+ $name "Potential Phishing Email";
+ $start-time 2025-07-27T06:01:15.914;
+
+ $event-extension isa event-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $event-ext0 (event-base:$event, event-spec:$event-extension) isa event-ext;
+
+
+
+
+01:59:36,985 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAFE0>
+01:59:37,14 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"stix-type": Attribute(Attribute { iid: ID[0x836f80252800056576656e74], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("event"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d2800076e65772d73646f], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("new-sdo"), is_inferred: false }), "description": Attribute(Attribute { iid: ID[0x836f80a9280021537573706963696f757320656d61696c207265706f727465642062792075736572], type_: AttributeType { label: "description", is_root: false, is_abstract: false, value_type: String }, value: String("Suspicious email reported by user"), is_inferred: false }), "name": Attribute(Attribute { iid: ID[0x836f8079280018506f74656e7469616c205068697368696e6720456d61696c], type_: AttributeType { label: "name", is_root: false, is_abstract: false, value_type: String }, value: String("Potential Phishing Email"), is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a789f8a], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:15.914), is_inferred: false }), "event": Entity(Entity { iid: ID[0x826e807f7fffffffffffffff], type_: EntityType { label: "event", is_root: false, is_abstract: false }, is_inferred: false }), "event-ext0": Relation(Relation { iid: ID[0x847080837fffffffffffffff], type_: RelationType { label: "event-ext", is_root: false, is_abstract: false }, is_inferred: false }), "end-time": Attribute(Attribute { iid: ID[0x836f819232800001984a789f8a], type_: AttributeType { label: "end-time", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:15.914), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002b6576656e742d2d65386636343165372d383963612d343737362d613832382d363833386438656363646361], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("event--e8f641e7-89ca-4776-a828-6838d8eccdca"), is_inferred: false }), "event-extension": Entity(Entity { iid: ID[0x826e809a7fffffffffffffff], type_: EntityType { label: "event-extension", is_root: false, is_abstract: false }, is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a789f8a], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:15.914), is_inferred: false }), "start-time": Attribute(Attribute { iid: ID[0x836f808a32800001984a789f8a], type_: AttributeType { label: "start-time", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:15.914), is_inferred: false }), "event_types0": Attribute(Attribute { iid: ID[0x836f816628001d64697373656d696e6174696f6e2d7068697368696e672d656d61696c73], type_: AttributeType { label: "event-types", is_root: false, is_abstract: false, value_type: String }, value: String("dissemination-phishing-emails"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,14 stixorm.module.initialise INFO 
+
+match  $belongs-to-ref-user-account0 isa user-account, has stix-id "user-account--597ad4d4-35ba-585d-8f6d-134a75032f9b";
+ insert $email-addr isa email-addr,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has stix-value $stix-value,
+ has display-name $display-name;
+
+ $stix-type "email-addr";
+ $spec-version "2.1";
+ $stix-id "email-addr--4722424c-7012-56b0-84d5-01d076fc547b";
+ $stix-value "naive@example.com";
+ $display-name "Naive Smith";
+
+
+ $belongs0 (belonged:$email-addr, belongs-to:$belongs-to-ref-user-account0) isa belongs;
+
+
+
+01:59:37,15 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB280>
+01:59:37,93 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"belongs0": Relation(Relation { iid: ID[0x847080187fffffffffffffff], type_: RelationType { label: "belongs", is_root: false, is_abstract: false }, is_inferred: false }), "email-addr": Entity(Entity { iid: ID[0x826e805d7ffffffffffffff9], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "stix-value": Attribute(Attribute { iid: ID[0x836f80dc2800116e61697665406578616d706c652e636f6d], type_: AttributeType { label: "stix-value", is_root: false, is_abstract: false, value_type: String }, value: String("naive@example.com"), is_inferred: false }), "belongs-to-ref-user-account0": Entity(Entity { iid: ID[0x826e803a7fffffffffffffff], type_: EntityType { label: "user-account", is_root: false, is_abstract: false }, is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f8030280030656d61696c2d616464722d2d34373232343234632d373031322d353662302d383464352d303164303736666335343762], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr--4722424c-7012-56b0-84d5-01d076fc547b"), is_inferred: false }), "display-name": Attribute(Attribute { iid: ID[0x836f806d28000b4e6169766520536d697468], type_: AttributeType { label: "display-name", is_root: false, is_abstract: false, value_type: String }, value: String("Naive Smith"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000a656d61696c2d61646472], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("email-addr"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,94 stixorm.module.initialise INFO 
+
+match  $email-address-ref-email-addr0 isa email-addr, has stix-id "email-addr--c99b87bd-f0a8-50ca-9f84-68072efc61e3";
+ $user-account-ref-user-account0 isa user-account, has stix-id "user-account--83658594-537d-5c32-b9f0-137354bd9bc3";
+ insert $identity isa identity,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has stix-role $roles0,
+ has stix-role $roles1,
+ has identity-class $identity-class,
+ has sector $sectors0;
+
+ $stix-type "identity";
+ $spec-version "2.1";
+ $stix-id "identity--31f2aeea-dfe1-4fc9-98c9-38e590e3b55b";
+ $created 2025-07-27T06:00:40.582;
+ $modified 2025-07-27T06:00:40.582;
+ $name "Trusty Jones";
+ $description "A Trusty Individual";
+ $roles0 "soc";
+ $roles1 "support";
+ $identity-class "individual";
+ $sectors0 "technology";
+
+ $identity-contact isa identity-contact,
+ has extension-type $extension-type,
+ has first-name $first-name,
+ has last-name $last-name,
+ has middle-name $middle-name,
+ has prefix $prefix,
+ has team $team;
+
+ $extension-type "property-extension";
+ $first-name "Me";
+ $last-name "Jones";
+ $middle-name "Percival";
+ $prefix "Dr";
+ $team "os-threat";
+
+ $identity-ext0 (identity-base:$identity, identity-spec:$identity-contact) isa identity-ext;
+
+
+$contact-number-sub0 isa contact-number-sub,
+ has contact-number "work-phone",
+ has contact-number-type "0418-208-368";
+
+ $identity-number (identity:$identity-contact, number-object:$contact-number-sub0) isa identity-number;
+
+$email-contact-sub0 isa email-contact-sub,
+ has digital-contact-type "work";
+
+ $identity-email (identity:$identity-contact, email-object:$email-contact-sub0) isa identity-email;
+
+ $email-ref0 (origin:$email-contact-sub0, email:$email-address-ref-email-addr0) isa email-ref;
+
+$social-media-sub0 isa social-media-sub,
+ has digital-contact-type "work";
+
+ $identity-account (identity:$identity-contact, account-object:$social-media-sub0) isa identity-account;
+
+ $user-account-ref0 (origin:$social-media-sub0, account:$user-account-ref-user-account0) isa user-account-ref;
+
+
+
+01:59:37,94 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB250>
+01:59:37,272 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"last-name": Attribute(Attribute { iid: ID[0x836f81782800054a6f6e6573], type_: AttributeType { label: "last-name", is_root: false, is_abstract: false, value_type: String }, value: String("Jones"), is_inferred: false }), "roles1": Attribute(Attribute { iid: ID[0x836f807c280007737570706f7274], type_: AttributeType { label: "stix-role", is_root: false, is_abstract: false, value_type: String }, value: String("support"), is_inferred: false }), "sectors0": Attribute(Attribute { iid: ID[0x836f800128000a746563686e6f6c6f6779], type_: AttributeType { label: "sector", is_root: false, is_abstract: false, value_type: String }, value: String("technology"), is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f8139280004776f726b], type_: AttributeType { label: "digital-contact-type", is_root: false, is_abstract: false, value_type: String }, value: String("work"), is_inferred: false }), "user-account-ref-user-account0": Entity(Entity { iid: ID[0x826e803a7ffffffffffffffe], type_: EntityType { label: "user-account", is_root: false, is_abstract: false }, is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f815b28000c303431382d3230382d333638], type_: AttributeType { label: "contact-number-type", is_root: false, is_abstract: false, value_type: String }, value: String("0418-208-368"), is_inferred: false }), "identity-class": Attribute(Attribute { iid: ID[0x836f807528000a696e646976696475616c], type_: AttributeType { label: "identity-class", is_root: false, is_abstract: false, value_type: String }, value: String("individual"), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f8139280004776f726b], type_: AttributeType { label: "digital-contact-type", is_root: false, is_abstract: false, value_type: String }, value: String("work"), is_inferred: false }), "identity-number": Relation(Relation { iid: ID[0x847080b87fffffffffffffff], type_: RelationType { label: "identity-number", is_root: false, is_abstract: false }, is_inferred: false }), "identity-email": Relation(Relation { iid: ID[0x847080b97fffffffffffffff], type_: RelationType { label: "identity-email", is_root: false, is_abstract: false }, is_inferred: false }), "name": Attribute(Attribute { iid: ID[0x836f807928000c547275737479204a6f6e6573], type_: AttributeType { label: "name", is_root: false, is_abstract: false, value_type: String }, value: String("Trusty Jones"), is_inferred: false }), "team": Attribute(Attribute { iid: ID[0x836f815f2800096f732d746872656174], type_: AttributeType { label: "team", is_root: false, is_abstract: false, value_type: String }, value: String("os-threat"), is_inferred: false }), "roles0": Attribute(Attribute { iid: ID[0x836f807c280003736f63], type_: AttributeType { label: "stix-role", is_root: false, is_abstract: false, value_type: String }, value: String("soc"), is_inferred: false }), "identity-ext0": Relation(Relation { iid: ID[0x847080ba7fffffffffffffff], type_: RelationType { label: "identity-ext", is_root: false, is_abstract: false }, is_inferred: false }), "user-account-ref0": Relation(Relation { iid: ID[0x847080987fffffffffffffff], type_: RelationType { label: "user-account-ref", is_root: false, is_abstract: false }, is_inferred: false }), "identity-account": Relation(Relation { iid: ID[0x847080bb7fffffffffffffff], type_: RelationType { label: "identity-account", is_root: false, is_abstract: false }, is_inferred: false }), "first-name": Attribute(Attribute { iid: ID[0x836f81622800024d65], type_: AttributeType { label: "first-name", is_root: false, is_abstract: false, value_type: String }, value: String("Me"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f80252800086964656e74697479], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("identity"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002e6964656e746974792d2d33316632616565612d646665312d346663392d393863392d333865353930653362353562], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("identity--31f2aeea-dfe1-4fc9-98c9-38e590e3b55b"), is_inferred: false }), "social-media-sub0": Entity(Entity { iid: ID[0x826e80857fffffffffffffff], type_: EntityType { label: "social-media-sub", is_root: false, is_abstract: false }, is_inferred: false }), "_0": Attribute(Attribute { iid: ID[0x836f817528000a776f726b2d70686f6e65], type_: AttributeType { label: "contact-number", is_root: false, is_abstract: false, value_type: String }, value: String("work-phone"), is_inferred: false }), "contact-number-sub0": Entity(Entity { iid: ID[0x826e80a07fffffffffffffff], type_: EntityType { label: "contact-number-sub", is_root: false, is_abstract: false }, is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a781586], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:00:40.582), is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a781586], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:00:40.582), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "description": Attribute(Attribute { iid: ID[0x836f80a9280013412054727573747920496e646976696475616c], type_: AttributeType { label: "description", is_root: false, is_abstract: false, value_type: String }, value: String("A Trusty Individual"), is_inferred: false }), "identity": Entity(Entity { iid: ID[0x826e80267ffffffffffffffe], type_: EntityType { label: "identity", is_root: false, is_abstract: false }, is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d28001270726f70657274792d657874656e73696f6e], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("property-extension"), is_inferred: false }), "prefix": Attribute(Attribute { iid: ID[0x836f817c2800024472], type_: AttributeType { label: "prefix", is_root: false, is_abstract: false, value_type: String }, value: String("Dr"), is_inferred: false }), "identity-contact": Entity(Entity { iid: ID[0x826e80a17fffffffffffffff], type_: EntityType { label: "identity-contact", is_root: false, is_abstract: false }, is_inferred: false }), "email-address-ref-email-addr0": Entity(Entity { iid: ID[0x826e805d7ffffffffffffffe], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "middle-name": Attribute(Attribute { iid: ID[0x836f817a280008506572636976616c], type_: AttributeType { label: "middle-name", is_root: false, is_abstract: false, value_type: String }, value: String("Percival"), is_inferred: false }), "email-contact-sub0": Entity(Entity { iid: ID[0x826e80797fffffffffffffff], type_: EntityType { label: "email-contact-sub", is_root: false, is_abstract: false }, is_inferred: false }), "email-ref0": Relation(Relation { iid: ID[0x8470808f7fffffffffffffff], type_: RelationType { label: "email-ref", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,272 stixorm.module.initialise INFO 
+
+match  $email-address-ref-email-addr0 isa email-addr, has stix-id "email-addr--06029cc1-105d-5495-9fc5-3d252dd7af76";
+ $email-address-ref-email-addr1 isa email-addr, has stix-id "email-addr--78b946aa-91ab-5ce8-829b-4d078a8ecc00";
+ $user-account-ref-user-account0 isa user-account, has stix-id "user-account--7aa68be3-1d4d-5b0f-8c26-8410085e5741";
+ insert $identity isa identity,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has stix-role $roles0,
+ has identity-class $identity-class,
+ has contact-information $contact-information;
+
+ $stix-type "identity";
+ $spec-version "2.1";
+ $stix-id "identity--4e0dd272-7d68-4c8d-b6bc-0cb9d4b8e924";
+ $created 2022-05-06T01:01:01.0;
+ $modified 2022-12-16T01:01:01.0;
+ $name "Paolo";
+ $description "The main point of contact for the incident.";
+ $roles0 "security-point-of-contact";
+ $identity-class "individual";
+ $contact-information "Ring him as he is unreliable on Slack";
+
+ $identity-contact isa identity-contact,
+ has extension-type $extension-type,
+ has first-name $first-name,
+ has last-name $last-name,
+ has middle-name $middle-name,
+ has team $team;
+
+ $extension-type "property-extension";
+ $first-name "Paolo";
+ $last-name "Di Prodi";
+ $middle-name "";
+ $team "responders";
+
+ $identity-ext0 (identity-base:$identity, identity-spec:$identity-contact) isa identity-ext;
+
+
+$contact-number-sub0 isa contact-number-sub,
+ has contact-number "work-phone",
+ has contact-number-type "123-456-7890";
+
+ $identity-number (identity:$identity-contact, number-object:$contact-number-sub0) isa identity-number;
+
+$email-contact-sub0 isa email-contact-sub,
+ has digital-contact-type "work";
+$email-contact-sub1 isa email-contact-sub,
+ has digital-contact-type "organizational";
+
+ $identity-email (identity:$identity-contact, email-object:$email-contact-sub0, email-object:$email-contact-sub1) isa identity-email;
+
+ $email-ref0 (origin:$email-contact-sub0, email:$email-address-ref-email-addr0) isa email-ref;
+
+ $email-ref1 (origin:$email-contact-sub1, email:$email-address-ref-email-addr1) isa email-ref;
+
+$social-media-sub0 isa social-media-sub,
+ has description "Paolo's LinkeIn contact details",
+ has digital-contact-type "career";
+
+ $identity-account (identity:$identity-contact, account-object:$social-media-sub0) isa identity-account;
+
+ $user-account-ref0 (origin:$social-media-sub0, account:$user-account-ref-user-account0) isa user-account-ref;
+
+
+
+01:59:37,273 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAFB0>
+01:59:37,442 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"email-contact-sub0": Entity(Entity { iid: ID[0x826e80797ffffffffffffffe], type_: EntityType { label: "email-contact-sub", is_root: false, is_abstract: false }, is_inferred: false }), "middle-name": Attribute(Attribute { iid: ID[0x836f817a280000], type_: AttributeType { label: "middle-name", is_root: false, is_abstract: false, value_type: String }, value: String(""), is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f813928000e6f7267616e697a6174696f6e616c], type_: AttributeType { label: "digital-contact-type", is_root: false, is_abstract: false, value_type: String }, value: String("organizational"), is_inferred: false }), "email-contact-sub1": Entity(Entity { iid: ID[0x826e80797ffffffffffffffd], type_: EntityType { label: "email-contact-sub", is_root: false, is_abstract: false }, is_inferred: false }), "identity-account": Relation(Relation { iid: ID[0x847080bb7ffffffffffffffe], type_: RelationType { label: "identity-account", is_root: false, is_abstract: false }, is_inferred: false }), "description": Attribute(Attribute { iid: ID[0x836f80a928002b546865206d61696e20706f696e74206f6620636f6e7461637420666f722074686520696e636964656e742e], type_: AttributeType { label: "description", is_root: false, is_abstract: false, value_type: String }, value: String("The main point of contact for the incident."), is_inferred: false }), "identity-contact": Entity(Entity { iid: ID[0x826e80a17ffffffffffffffe], type_: EntityType { label: "identity-contact", is_root: false, is_abstract: false }, is_inferred: false }), "last-name": Attribute(Attribute { iid: ID[0x836f817828000844692050726f6469], type_: AttributeType { label: "last-name", is_root: false, is_abstract: false, value_type: String }, value: String("Di Prodi"), is_inferred: false }), "user-account-ref0": Relation(Relation { iid: ID[0x847080987ffffffffffffffe], type_: RelationType { label: "user-account-ref", is_root: false, is_abstract: false }, is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f815b28000c3132332d3435362d37383930], type_: AttributeType { label: "contact-number-type", is_root: false, is_abstract: false, value_type: String }, value: String("123-456-7890"), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f8139280004776f726b], type_: AttributeType { label: "digital-contact-type", is_root: false, is_abstract: false, value_type: String }, value: String("work"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f80252800086964656e74697479], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("identity"), is_inferred: false }), "contact-number-sub0": Entity(Entity { iid: ID[0x826e80a07ffffffffffffffe], type_: EntityType { label: "contact-number-sub", is_root: false, is_abstract: false }, is_inferred: false }), "identity-email": Relation(Relation { iid: ID[0x847080b97ffffffffffffffe], type_: RelationType { label: "identity-email", is_root: false, is_abstract: false }, is_inferred: false }), "team": Attribute(Attribute { iid: ID[0x836f815f28000a726573706f6e64657273], type_: AttributeType { label: "team", is_root: false, is_abstract: false, value_type: String }, value: String("responders"), is_inferred: false }), "roles0": Attribute(Attribute { iid: ID[0x836f807c28001973656375726974792d706f696e742d6f662d636f6e74616374], type_: AttributeType { label: "stix-role", is_root: false, is_abstract: false, value_type: String }, value: String("security-point-of-contact"), is_inferred: false }), "name": Attribute(Attribute { iid: ID[0x836f807928000550616f6c6f], type_: AttributeType { label: "name", is_root: false, is_abstract: false, value_type: String }, value: String("Paolo"), is_inferred: false }), "_4": Attribute(Attribute { iid: ID[0x836f80a928001f50616f6c6f2773204c696e6b65496e20636f6e746163742064657461696c73], type_: AttributeType { label: "description", is_root: false, is_abstract: false, value_type: String }, value: String("Paolo's LinkeIn contact details"), is_inferred: false }), "social-media-sub0": Entity(Entity { iid: ID[0x826e80857ffffffffffffffe], type_: EntityType { label: "social-media-sub", is_root: false, is_abstract: false }, is_inferred: false }), "identity-class": Attribute(Attribute { iid: ID[0x836f807528000a696e646976696475616c], type_: AttributeType { label: "identity-class", is_root: false, is_abstract: false, value_type: String }, value: String("individual"), is_inferred: false }), "identity-ext0": Relation(Relation { iid: ID[0x847080ba7ffffffffffffffe], type_: RelationType { label: "identity-ext", is_root: false, is_abstract: false }, is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001851872e4c8], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2022-12-16T01:01:01), is_inferred: false }), "contact-information": Attribute(Attribute { iid: ID[0x836f805928002552696e672068696d20617320686520697320756e72656c6961626c65206f6e20536c61636b], type_: AttributeType { label: "contact-information", is_root: false, is_abstract: false, value_type: String }, value: String("Ring him as he is unreliable on Slack"), is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d28001270726f70657274792d657874656e73696f6e], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("property-extension"), is_inferred: false }), "_0": Attribute(Attribute { iid: ID[0x836f817528000a776f726b2d70686f6e65], type_: AttributeType { label: "contact-number", is_root: false, is_abstract: false, value_type: String }, value: String("work-phone"), is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f1328000018096e264c8], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2022-05-06T01:01:01), is_inferred: false }), "_5": Attribute(Attribute { iid: ID[0x836f8139280006636172656572], type_: AttributeType { label: "digital-contact-type", is_root: false, is_abstract: false, value_type: String }, value: String("career"), is_inferred: false }), "first-name": Attribute(Attribute { iid: ID[0x836f816228000550616f6c6f], type_: AttributeType { label: "first-name", is_root: false, is_abstract: false, value_type: String }, value: String("Paolo"), is_inferred: false }), "identity": Entity(Entity { iid: ID[0x826e80267ffffffffffffffd], type_: EntityType { label: "identity", is_root: false, is_abstract: false }, is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002e6964656e746974792d2d34653064643237322d376436382d346338642d623662632d306362396434623865393234], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("identity--4e0dd272-7d68-4c8d-b6bc-0cb9d4b8e924"), is_inferred: false }), "user-account-ref-user-account0": Entity(Entity { iid: ID[0x826e803a7ffffffffffffffd], type_: EntityType { label: "user-account", is_root: false, is_abstract: false }, is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "email-ref0": Relation(Relation { iid: ID[0x8470808f7ffffffffffffffd], type_: RelationType { label: "email-ref", is_root: false, is_abstract: false }, is_inferred: false }), "email-address-ref-email-addr0": Entity(Entity { iid: ID[0x826e805d7ffffffffffffffd], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "email-address-ref-email-addr1": Entity(Entity { iid: ID[0x826e805d7fffffffffffffff], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "email-ref1": Relation(Relation { iid: ID[0x8470808f7ffffffffffffffe], type_: RelationType { label: "email-ref", is_root: false, is_abstract: false }, is_inferred: false }), "identity-number": Relation(Relation { iid: ID[0x847080b87ffffffffffffffe], type_: RelationType { label: "identity-number", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,442 stixorm.module.initialise INFO 
+
+match  $sequenced-object-task0 isa task, has stix-id "task--3f23faa4-e21e-4880-bd8a-c8d89aa453aa";
+ insert $single-step isa single-step,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sequence-type $sequence-type,
+ has step-type $step-type;
+
+ $stix-type "sequence";
+ $spec-version "2.1";
+ $stix-id "sequence--4089e2b7-816d-4ad4-9d11-2604739b16ef";
+ $created 2025-07-27T06:01:16.321;
+ $modified 2025-07-27T06:01:16.321;
+ $sequence-type "task";
+ $step-type "single_step";
+
+
+ $sequenced-object0 (sequence:$single-step, object:$sequenced-object-task0) isa sequenced-object;
+ $sequence-extension isa sequence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $sequence-ext0 (sequence-base:$single-step, sequence-spec:$sequence-extension) isa sequence-ext;
+
+
+
+
+01:59:37,442 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAFE0>
+01:59:37,512 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"sequence-extension": Entity(Entity { iid: ID[0x826e80847fffffffffffffff], type_: EntityType { label: "sequence-extension", is_root: false, is_abstract: false }, is_inferred: false }), "sequenced-object-task0": Entity(Entity { iid: ID[0x826e80997fffffffffffffff], type_: EntityType { label: "task", is_root: false, is_abstract: false }, is_inferred: false }), "sequence-type": Attribute(Attribute { iid: ID[0x836f81352800047461736b], type_: AttributeType { label: "sequence-type", is_root: false, is_abstract: false, value_type: String }, value: String("task"), is_inferred: false }), "step-type": Attribute(Attribute { iid: ID[0x836f813628000b73696e676c655f73746570], type_: AttributeType { label: "step-type", is_root: false, is_abstract: false, value_type: String }, value: String("single_step"), is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a78a121], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:16.321), is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a78a121], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:16.321), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000873657175656e6365], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("sequence"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "single-step": Entity(Entity { iid: ID[0x826e80967fffffffffffffff], type_: EntityType { label: "single-step", is_root: false, is_abstract: false }, is_inferred: false }), "sequenced-object0": Relation(Relation { iid: ID[0x847080bd7fffffffffffffff], type_: RelationType { label: "sequenced-object", is_root: false, is_abstract: false }, is_inferred: false }), "sequence-ext0": Relation(Relation { iid: ID[0x847080a87fffffffffffffff], type_: RelationType { label: "sequence-ext", is_root: false, is_abstract: false }, is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d2800076e65772d73646f], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("new-sdo"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002e73657175656e63652d2d34303839653262372d383136642d346164342d396431312d323630343733396231366566], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("sequence--4089e2b7-816d-4ad4-9d11-2604739b16ef"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,512 stixorm.module.initialise INFO 
+
+match  $sequenced-object-task0 isa task, has stix-id "task--01537439-3b2d-4afe-81a3-45b2dd35c655";
+ insert $single-step isa single-step,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sequence-type $sequence-type,
+ has step-type $step-type;
+
+ $stix-type "sequence";
+ $spec-version "2.1";
+ $stix-id "sequence--10fe3d71-a3d1-4f83-ad54-9c290d7136e9";
+ $created 2025-07-27T06:01:28.363;
+ $modified 2025-07-27T06:01:28.363;
+ $sequence-type "task";
+ $step-type "single_step";
+
+
+ $sequenced-object0 (sequence:$single-step, object:$sequenced-object-task0) isa sequenced-object;
+ $sequence-extension isa sequence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $sequence-ext0 (sequence-base:$single-step, sequence-spec:$sequence-extension) isa sequence-ext;
+
+
+
+
+01:59:37,512 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB280>
+01:59:37,543 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"step-type": Attribute(Attribute { iid: ID[0x836f813628000b73696e676c655f73746570], type_: AttributeType { label: "step-type", is_root: false, is_abstract: false, value_type: String }, value: String("single_step"), is_inferred: false }), "sequence-extension": Entity(Entity { iid: ID[0x826e80847ffffffffffffffe], type_: EntityType { label: "sequence-extension", is_root: false, is_abstract: false }, is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d2800076e65772d73646f], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("new-sdo"), is_inferred: false }), "sequence-ext0": Relation(Relation { iid: ID[0x847080a87ffffffffffffffe], type_: RelationType { label: "sequence-ext", is_root: false, is_abstract: false }, is_inferred: false }), "sequenced-object0": Relation(Relation { iid: ID[0x847080bd7ffffffffffffffe], type_: RelationType { label: "sequenced-object", is_root: false, is_abstract: false }, is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002e73657175656e63652d2d31306665336437312d613364312d346638332d616435342d396332393064373133366539], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("sequence--10fe3d71-a3d1-4f83-ad54-9c290d7136e9"), is_inferred: false }), "sequence-type": Attribute(Attribute { iid: ID[0x836f81352800047461736b], type_: AttributeType { label: "sequence-type", is_root: false, is_abstract: false, value_type: String }, value: String("task"), is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a78d02b], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:28.363), is_inferred: false }), "sequenced-object-task0": Entity(Entity { iid: ID[0x826e80997ffffffffffffffe], type_: EntityType { label: "task", is_root: false, is_abstract: false }, is_inferred: false }), "single-step": Entity(Entity { iid: ID[0x826e80967ffffffffffffffe], type_: EntityType { label: "single-step", is_root: false, is_abstract: false }, is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000873657175656e6365], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("sequence"), is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a78d02b], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:28.363), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,543 stixorm.module.initialise INFO 
+
+match  $impacted-refs-identity01 isa identity, has stix-id "identity--3789a438-8d49-4f2a-bb1a-06d3575d2f33";
+ insert $impact isa impact,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has impact-category $impact-category,
+ has criticality $criticality,
+ has description $description,
+ has end-time $end-time,
+ has recoverability $recoverability,
+ has start-time $start-time;
+
+ $stix-type "impact";
+ $spec-version "2.1";
+ $stix-id "impact--1b87fa10-78fd-4b3e-970e-dea91e9a7457";
+ $created 2025-07-27T06:01:28.148;
+ $modified 2025-07-27T06:01:28.148;
+ $impact-category "availability";
+ $criticality 99;
+ $description "Laptop is stuffed";
+ $end-time 2025-07-27T06:01:28.148;
+ $recoverability "regular";
+ $start-time 2025-07-27T06:01:28.148;
+
+
+ $entity-key0 isa entity-key;  $entity-key0 has dict-key "computers-mobile";
+ $entity-key0 has entity-value "1";
+ $impact-counter (impact-driver:$impact, counters: $entity-key0) isa impact-counter;
+
+
+ $impacted-refs1 (the-impact:$impact, impacted-thing:$impacted-refs-identity01) isa impacted-refs;
+ $availability isa availability,
+ has impacted-availability $impacted-availability;
+
+ $impacted-availability 99;
+
+ $availability-imp0 (impact-base:$impact, availability-impact:$availability) isa availability-imp;
+
+ $impact-extension isa impact-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $impact-ext1 (impact-base:$impact, impact-spec:$impact-extension) isa impact-ext;
+
+
+
+
+01:59:37,543 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAB60>
+01:59:37,621 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"impacted-refs-identity01": Entity(Entity { iid: ID[0x826e80267fffffffffffffff], type_: EntityType { label: "identity", is_root: false, is_abstract: false }, is_inferred: false }), "recoverability": Attribute(Attribute { iid: ID[0x836f8141280007726567756c6172], type_: AttributeType { label: "recoverability", is_root: false, is_abstract: false, value_type: String }, value: String("regular"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f8025280006696d70616374], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("impact"), is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f817b28000131], type_: AttributeType { label: "entity-value", is_root: false, is_abstract: false, value_type: String }, value: String("1"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002c696d706163742d2d31623837666131302d373866642d346233652d393730652d646561393165396137343537], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("impact--1b87fa10-78fd-4b3e-970e-dea91e9a7457"), is_inferred: false }), "criticality": Attribute(Attribute { iid: ID[0x836f815c148000000000000063], type_: AttributeType { label: "criticality", is_root: false, is_abstract: false, value_type: Long }, value: Long(99), is_inferred: false }), "_0": Attribute(Attribute { iid: ID[0x836f8073280010636f6d7075746572732d6d6f62696c65], type_: AttributeType { label: "dict-key", is_root: false, is_abstract: false, value_type: String }, value: String("computers-mobile"), is_inferred: false }), "impact-extension": Entity(Entity { iid: ID[0x826e80957fffffffffffffff], type_: EntityType { label: "impact-extension", is_root: false, is_abstract: false }, is_inferred: false }), "impacted-refs1": Relation(Relation { iid: ID[0x847080a47fffffffffffffff], type_: RelationType { label: "impacted-refs", is_root: false, is_abstract: false }, is_inferred: false }), "end-time": Attribute(Attribute { iid: ID[0x836f819232800001984a78cf54], type_: AttributeType { label: "end-time", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:28.148), is_inferred: false }), "impact-category": Attribute(Attribute { iid: ID[0x836f814428000c617661696c6162696c697479], type_: AttributeType { label: "impact-category", is_root: false, is_abstract: false, value_type: String }, value: String("availability"), is_inferred: false }), "availability-imp0": Relation(Relation { iid: ID[0x847080b47fffffffffffffff], type_: RelationType { label: "availability-imp", is_root: false, is_abstract: false }, is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a78cf54], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:28.148), is_inferred: false }), "impacted-availability": Attribute(Attribute { iid: ID[0x836f816a148000000000000063], type_: AttributeType { label: "impacted-availability", is_root: false, is_abstract: false, value_type: Long }, value: Long(99), is_inferred: false }), "start-time": Attribute(Attribute { iid: ID[0x836f808a32800001984a78cf54], type_: AttributeType { label: "start-time", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:28.148), is_inferred: false }), "impact-ext1": Relation(Relation { iid: ID[0x8470808e7fffffffffffffff], type_: RelationType { label: "impact-ext", is_root: false, is_abstract: false }, is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a78cf54], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:28.148), is_inferred: false }), "description": Attribute(Attribute { iid: ID[0x836f80a92800114c6170746f702069732073747566666564], type_: AttributeType { label: "description", is_root: false, is_abstract: false, value_type: String }, value: String("Laptop is stuffed"), is_inferred: false }), "impact-counter": Relation(Relation { iid: ID[0x8470809e7fffffffffffffff], type_: RelationType { label: "impact-counter", is_root: false, is_abstract: false }, is_inferred: false }), "entity-key0": Entity(Entity { iid: ID[0x826e808c7fffffffffffffff], type_: EntityType { label: "entity-key", is_root: false, is_abstract: false }, is_inferred: false }), "availability": Entity(Entity { iid: ID[0x826e809d7fffffffffffffff], type_: EntityType { label: "availability", is_root: false, is_abstract: false }, is_inferred: false }), "impact": Entity(Entity { iid: ID[0x826e80787fffffffffffffff], type_: EntityType { label: "impact", is_root: false, is_abstract: false }, is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d2800076e65772d73646f], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("new-sdo"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,621 stixorm.module.initialise INFO 
+
+match  $email-address-ref-email-addr0 isa email-addr, has stix-id "email-addr--a04693c3-b040-44c5-833a-75cbe45386b5";
+ $email-address-ref-email-addr1 isa email-addr, has stix-id "email-addr--25769d7c-b38f-496b-9ca5-5359537d9ff9";
+ insert $identity isa identity,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has stix-role $roles0,
+ has identity-class $identity-class,
+ has contact-information $contact-information;
+
+ $stix-type "identity";
+ $spec-version "2.1";
+ $stix-id "identity--48405e34-669b-41fa-9ad3-a292b4e6b3b7";
+ $created 2022-05-06T01:01:01.0;
+ $modified 2022-12-16T01:01:01.0;
+ $name "Brett";
+ $description "The secondary point of contact for the incident.";
+ $roles0 "security-point-of-contact";
+ $identity-class "individual";
+ $contact-information "Very reliable on Slack";
+
+ $identity-contact isa identity-contact,
+ has extension-type $extension-type,
+ has first-name $first-name,
+ has last-name $last-name,
+ has middle-name $middle-name,
+ has team $team;
+
+ $extension-type "property-extension";
+ $first-name "Brett";
+ $last-name "Forbes";
+ $middle-name "Colin";
+ $team "responders";
+
+ $identity-ext0 (identity-base:$identity, identity-spec:$identity-contact) isa identity-ext;
+
+
+$contact-number-sub0 isa contact-number-sub,
+ has contact-number "work-phone",
+ has contact-number-type "0491 629 206";
+
+ $identity-number (identity:$identity-contact, number-object:$contact-number-sub0) isa identity-number;
+
+$email-contact-sub0 isa email-contact-sub,
+ has digital-contact-type "work";
+$email-contact-sub1 isa email-contact-sub,
+ has digital-contact-type "organizational";
+
+ $identity-email (identity:$identity-contact, email-object:$email-contact-sub0, email-object:$email-contact-sub1) isa identity-email;
+
+ $email-ref0 (origin:$email-contact-sub0, email:$email-address-ref-email-addr0) isa email-ref;
+
+ $email-ref1 (origin:$email-contact-sub1, email:$email-address-ref-email-addr1) isa email-ref;
+
+
+
+01:59:37,621 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692F8070>
+01:59:37,683 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"identity": Entity(Entity { iid: ID[0x826e80267ffffffffffffffc], type_: EntityType { label: "identity", is_root: false, is_abstract: false }, is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f815b28000c303439312036323920323036], type_: AttributeType { label: "contact-number-type", is_root: false, is_abstract: false, value_type: String }, value: String("0491 629 206"), is_inferred: false }), "description": Attribute(Attribute { iid: ID[0x836f80a9280030546865207365636f6e6461727920706f696e74206f6620636f6e7461637420666f722074686520696e636964656e742e], type_: AttributeType { label: "description", is_root: false, is_abstract: false, value_type: String }, value: String("The secondary point of contact for the incident."), is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d28001270726f70657274792d657874656e73696f6e], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("property-extension"), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f8139280004776f726b], type_: AttributeType { label: "digital-contact-type", is_root: false, is_abstract: false, value_type: String }, value: String("work"), is_inferred: false }), "first-name": Attribute(Attribute { iid: ID[0x836f81622800054272657474], type_: AttributeType { label: "first-name", is_root: false, is_abstract: false, value_type: String }, value: String("Brett"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002e6964656e746974792d2d34383430356533342d363639622d343166612d396164332d613239326234653662336237], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("identity--48405e34-669b-41fa-9ad3-a292b4e6b3b7"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "identity-number": Relation(Relation { iid: ID[0x847080b87ffffffffffffffd], type_: RelationType { label: "identity-number", is_root: false, is_abstract: false }, is_inferred: false }), "name": Attribute(Attribute { iid: ID[0x836f80792800054272657474], type_: AttributeType { label: "name", is_root: false, is_abstract: false, value_type: String }, value: String("Brett"), is_inferred: false }), "identity-ext0": Relation(Relation { iid: ID[0x847080ba7ffffffffffffffd], type_: RelationType { label: "identity-ext", is_root: false, is_abstract: false }, is_inferred: false }), "contact-number-sub0": Entity(Entity { iid: ID[0x826e80a07ffffffffffffffd], type_: EntityType { label: "contact-number-sub", is_root: false, is_abstract: false }, is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f813928000e6f7267616e697a6174696f6e616c], type_: AttributeType { label: "digital-contact-type", is_root: false, is_abstract: false, value_type: String }, value: String("organizational"), is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001851872e4c8], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2022-12-16T01:01:01), is_inferred: false }), "email-address-ref-email-addr0": Entity(Entity { iid: ID[0x826e805d7ffffffffffffffa], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "middle-name": Attribute(Attribute { iid: ID[0x836f817a280005436f6c696e], type_: AttributeType { label: "middle-name", is_root: false, is_abstract: false, value_type: String }, value: String("Colin"), is_inferred: false }), "identity-class": Attribute(Attribute { iid: ID[0x836f807528000a696e646976696475616c], type_: AttributeType { label: "identity-class", is_root: false, is_abstract: false, value_type: String }, value: String("individual"), is_inferred: false }), "roles0": Attribute(Attribute { iid: ID[0x836f807c28001973656375726974792d706f696e742d6f662d636f6e74616374], type_: AttributeType { label: "stix-role", is_root: false, is_abstract: false, value_type: String }, value: String("security-point-of-contact"), is_inferred: false }), "team": Attribute(Attribute { iid: ID[0x836f815f28000a726573706f6e64657273], type_: AttributeType { label: "team", is_root: false, is_abstract: false, value_type: String }, value: String("responders"), is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f1328000018096e264c8], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2022-05-06T01:01:01), is_inferred: false }), "contact-information": Attribute(Attribute { iid: ID[0x836f8059280016566572792072656c6961626c65206f6e20536c61636b], type_: AttributeType { label: "contact-information", is_root: false, is_abstract: false, value_type: String }, value: String("Very reliable on Slack"), is_inferred: false }), "email-ref1": Relation(Relation { iid: ID[0x8470808f7ffffffffffffffc], type_: RelationType { label: "email-ref", is_root: false, is_abstract: false }, is_inferred: false }), "email-contact-sub0": Entity(Entity { iid: ID[0x826e80797ffffffffffffffc], type_: EntityType { label: "email-contact-sub", is_root: false, is_abstract: false }, is_inferred: false }), "email-address-ref-email-addr1": Entity(Entity { iid: ID[0x826e805d7ffffffffffffffc], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "email-ref0": Relation(Relation { iid: ID[0x8470808f7ffffffffffffffb], type_: RelationType { label: "email-ref", is_root: false, is_abstract: false }, is_inferred: false }), "email-contact-sub1": Entity(Entity { iid: ID[0x826e80797ffffffffffffffb], type_: EntityType { label: "email-contact-sub", is_root: false, is_abstract: false }, is_inferred: false }), "_0": Attribute(Attribute { iid: ID[0x836f817528000a776f726b2d70686f6e65], type_: AttributeType { label: "contact-number", is_root: false, is_abstract: false, value_type: String }, value: String("work-phone"), is_inferred: false }), "identity-email": Relation(Relation { iid: ID[0x847080b97ffffffffffffffd], type_: RelationType { label: "identity-email", is_root: false, is_abstract: false }, is_inferred: false }), "last-name": Attribute(Attribute { iid: ID[0x836f8178280006466f72626573], type_: AttributeType { label: "last-name", is_root: false, is_abstract: false, value_type: String }, value: String("Forbes"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f80252800086964656e74697479], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("identity"), is_inferred: false }), "identity-contact": Entity(Entity { iid: ID[0x826e80a17ffffffffffffffd], type_: EntityType { label: "identity-contact", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,684 stixorm.module.initialise INFO 
+
+match  $sequenced-object-event0 isa event, has stix-id "event--e8f641e7-89ca-4776-a828-6838d8eccdca";
+ insert $single-step isa single-step,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sequence-type $sequence-type,
+ has step-type $step-type;
+
+ $stix-type "sequence";
+ $spec-version "2.1";
+ $stix-id "sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8";
+ $created 2025-07-27T06:01:16.900;
+ $modified 2025-07-27T06:01:16.900;
+ $sequence-type "event";
+ $step-type "single_step";
+
+
+ $sequenced-object0 (sequence:$single-step, object:$sequenced-object-event0) isa sequenced-object;
+ $sequence-extension isa sequence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $sequence-ext0 (sequence-base:$single-step, sequence-spec:$sequence-extension) isa sequence-ext;
+
+
+
+
+01:59:37,684 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB280>
+01:59:37,744 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a78a364], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:16.900), is_inferred: false }), "step-type": Attribute(Attribute { iid: ID[0x836f813628000b73696e676c655f73746570], type_: AttributeType { label: "step-type", is_root: false, is_abstract: false, value_type: String }, value: String("single_step"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000873657175656e6365], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("sequence"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002e73657175656e63652d2d34633931303066322d303661312d343537302d626135312d376461626465323337316238], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8"), is_inferred: false }), "single-step": Entity(Entity { iid: ID[0x826e80967ffffffffffffffd], type_: EntityType { label: "single-step", is_root: false, is_abstract: false }, is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d2800076e65772d73646f], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("new-sdo"), is_inferred: false }), "sequence-extension": Entity(Entity { iid: ID[0x826e80847ffffffffffffffd], type_: EntityType { label: "sequence-extension", is_root: false, is_abstract: false }, is_inferred: false }), "sequence-type": Attribute(Attribute { iid: ID[0x836f81352800056576656e74], type_: AttributeType { label: "sequence-type", is_root: false, is_abstract: false, value_type: String }, value: String("event"), is_inferred: false }), "sequenced-object0": Relation(Relation { iid: ID[0x847080bd7ffffffffffffffd], type_: RelationType { label: "sequenced-object", is_root: false, is_abstract: false }, is_inferred: false }), "sequence-ext0": Relation(Relation { iid: ID[0x847080a87ffffffffffffffd], type_: RelationType { label: "sequence-ext", is_root: false, is_abstract: false }, is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a78a364], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:16.900), is_inferred: false }), "sequenced-object-event0": Entity(Entity { iid: ID[0x826e807f7fffffffffffffff], type_: EntityType { label: "event", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,744 stixorm.module.initialise INFO 
+
+match  $email-address-ref-email-addr0 isa email-addr, has stix-id "email-addr--4722424c-7012-56b0-84d5-01d076fc547b";
+ $user-account-ref-user-account0 isa user-account, has stix-id "user-account--597ad4d4-35ba-585d-8f6d-134a75032f9b";
+ insert $identity isa identity,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name,
+ has description $description,
+ has stix-role $roles0,
+ has stix-role $roles1,
+ has identity-class $identity-class,
+ has sector $sectors0;
+
+ $stix-type "identity";
+ $spec-version "2.1";
+ $stix-id "identity--ce31dd38-f69b-45ba-9bcd-2a208bbf8017";
+ $created 2025-07-27T06:00:42.271;
+ $modified 2025-07-27T06:00:42.271;
+ $name "Naive Smith";
+ $description "A Naive Individual";
+ $roles0 "user";
+ $roles1 "sales";
+ $identity-class "individual";
+ $sectors0 "technology";
+
+ $identity-contact isa identity-contact,
+ has extension-type $extension-type,
+ has first-name $first-name,
+ has last-name $last-name,
+ has middle-name $middle-name,
+ has prefix $prefix,
+ has team $team;
+
+ $extension-type "property-extension";
+ $first-name "Naive";
+ $last-name "Smith";
+ $middle-name "Weakling";
+ $prefix "Mr";
+ $team "Sales";
+
+ $identity-ext0 (identity-base:$identity, identity-spec:$identity-contact) isa identity-ext;
+
+
+$contact-number-sub0 isa contact-number-sub,
+ has contact-number "work-phone",
+ has contact-number-type "0499-999-109";
+
+ $identity-number (identity:$identity-contact, number-object:$contact-number-sub0) isa identity-number;
+
+$email-contact-sub0 isa email-contact-sub,
+ has digital-contact-type "work";
+
+ $identity-email (identity:$identity-contact, email-object:$email-contact-sub0) isa identity-email;
+
+ $email-ref0 (origin:$email-contact-sub0, email:$email-address-ref-email-addr0) isa email-ref;
+
+$social-media-sub0 isa social-media-sub,
+ has digital-contact-type "work";
+
+ $identity-account (identity:$identity-contact, account-object:$social-media-sub0) isa identity-account;
+
+ $user-account-ref0 (origin:$social-media-sub0, account:$user-account-ref-user-account0) isa user-account-ref;
+
+
+
+01:59:37,745 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAB60>
+01:59:37,776 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"email-contact-sub0": Entity(Entity { iid: ID[0x826e80797ffffffffffffffa], type_: EntityType { label: "email-contact-sub", is_root: false, is_abstract: false }, is_inferred: false }), "email-ref0": Relation(Relation { iid: ID[0x8470808f7ffffffffffffffa], type_: RelationType { label: "email-ref", is_root: false, is_abstract: false }, is_inferred: false }), "_3": Attribute(Attribute { iid: ID[0x836f8139280004776f726b], type_: AttributeType { label: "digital-contact-type", is_root: false, is_abstract: false, value_type: String }, value: String("work"), is_inferred: false }), "first-name": Attribute(Attribute { iid: ID[0x836f81622800054e61697665], type_: AttributeType { label: "first-name", is_root: false, is_abstract: false, value_type: String }, value: String("Naive"), is_inferred: false }), "user-account-ref-user-account0": Entity(Entity { iid: ID[0x826e803a7fffffffffffffff], type_: EntityType { label: "user-account", is_root: false, is_abstract: false }, is_inferred: false }), "email-address-ref-email-addr0": Entity(Entity { iid: ID[0x826e805d7ffffffffffffff9], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "description": Attribute(Attribute { iid: ID[0x836f80a928001241204e6169766520496e646976696475616c], type_: AttributeType { label: "description", is_root: false, is_abstract: false, value_type: String }, value: String("A Naive Individual"), is_inferred: false }), "contact-number-sub0": Entity(Entity { iid: ID[0x826e80a07ffffffffffffffc], type_: EntityType { label: "contact-number-sub", is_root: false, is_abstract: false }, is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a781c1f], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:00:42.271), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "_1": Attribute(Attribute { iid: ID[0x836f815b28000c303439392d3939392d313039], type_: AttributeType { label: "contact-number-type", is_root: false, is_abstract: false, value_type: String }, value: String("0499-999-109"), is_inferred: false }), "sectors0": Attribute(Attribute { iid: ID[0x836f800128000a746563686e6f6c6f6779], type_: AttributeType { label: "sector", is_root: false, is_abstract: false, value_type: String }, value: String("technology"), is_inferred: false }), "identity-class": Attribute(Attribute { iid: ID[0x836f807528000a696e646976696475616c], type_: AttributeType { label: "identity-class", is_root: false, is_abstract: false, value_type: String }, value: String("individual"), is_inferred: false }), "name": Attribute(Attribute { iid: ID[0x836f807928000b4e6169766520536d697468], type_: AttributeType { label: "name", is_root: false, is_abstract: false, value_type: String }, value: String("Naive Smith"), is_inferred: false }), "roles1": Attribute(Attribute { iid: ID[0x836f807c28000573616c6573], type_: AttributeType { label: "stix-role", is_root: false, is_abstract: false, value_type: String }, value: String("sales"), is_inferred: false }), "roles0": Attribute(Attribute { iid: ID[0x836f807c28000475736572], type_: AttributeType { label: "stix-role", is_root: false, is_abstract: false, value_type: String }, value: String("user"), is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a781c1f], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:00:42.271), is_inferred: false }), "team": Attribute(Attribute { iid: ID[0x836f815f28000553616c6573], type_: AttributeType { label: "team", is_root: false, is_abstract: false, value_type: String }, value: String("Sales"), is_inferred: false }), "identity-contact": Entity(Entity { iid: ID[0x826e80a17ffffffffffffffc], type_: EntityType { label: "identity-contact", is_root: false, is_abstract: false }, is_inferred: false }), "identity": Entity(Entity { iid: ID[0x826e80267ffffffffffffffb], type_: EntityType { label: "identity", is_root: false, is_abstract: false }, is_inferred: false }), "_0": Attribute(Attribute { iid: ID[0x836f817528000a776f726b2d70686f6e65], type_: AttributeType { label: "contact-number", is_root: false, is_abstract: false, value_type: String }, value: String("work-phone"), is_inferred: false }), "identity-email": Relation(Relation { iid: ID[0x847080b97ffffffffffffffc], type_: RelationType { label: "identity-email", is_root: false, is_abstract: false }, is_inferred: false }), "social-media-sub0": Entity(Entity { iid: ID[0x826e80857ffffffffffffffd], type_: EntityType { label: "social-media-sub", is_root: false, is_abstract: false }, is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002e6964656e746974792d2d63653331646433382d663639622d343562612d396263642d326132303862626638303137], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("identity--ce31dd38-f69b-45ba-9bcd-2a208bbf8017"), is_inferred: false }), "_2": Attribute(Attribute { iid: ID[0x836f8139280004776f726b], type_: AttributeType { label: "digital-contact-type", is_root: false, is_abstract: false, value_type: String }, value: String("work"), is_inferred: false }), "identity-account": Relation(Relation { iid: ID[0x847080bb7ffffffffffffffd], type_: RelationType { label: "identity-account", is_root: false, is_abstract: false }, is_inferred: false }), "identity-number": Relation(Relation { iid: ID[0x847080b87ffffffffffffffc], type_: RelationType { label: "identity-number", is_root: false, is_abstract: false }, is_inferred: false }), "prefix": Attribute(Attribute { iid: ID[0x836f817c2800024d72], type_: AttributeType { label: "prefix", is_root: false, is_abstract: false, value_type: String }, value: String("Mr"), is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d28001270726f70657274792d657874656e73696f6e], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("property-extension"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f80252800086964656e74697479], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("identity"), is_inferred: false }), "last-name": Attribute(Attribute { iid: ID[0x836f8178280005536d697468], type_: AttributeType { label: "last-name", is_root: false, is_abstract: false, value_type: String }, value: String("Smith"), is_inferred: false }), "identity-ext0": Relation(Relation { iid: ID[0x847080ba7ffffffffffffffc], type_: RelationType { label: "identity-ext", is_root: false, is_abstract: false }, is_inferred: false }), "middle-name": Attribute(Attribute { iid: ID[0x836f817a2800085765616b6c696e67], type_: AttributeType { label: "middle-name", is_root: false, is_abstract: false, value_type: String }, value: String("Weakling"), is_inferred: false }), "user-account-ref0": Relation(Relation { iid: ID[0x847080987ffffffffffffffd], type_: RelationType { label: "user-account-ref", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,776 stixorm.module.initialise INFO 
+
+match  $from-ref-email-addr0 isa email-addr, has stix-id "email-addr--eb38d07e-6ba8-56c1-b107-d4db4aacf212";
+ $to-refs-email-addr01 isa email-addr, has stix-id "email-addr--4722424c-7012-56b0-84d5-01d076fc547b";
+ insert $email-message isa email-message,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has is-multipart $is-multipart,
+ has date $date,
+ has subject $subject,
+ has body $body;
+
+ $stix-type "email-message";
+ $spec-version "2.1";
+ $stix-id "email-message--6090e3d4-1fa8-5b36-9d2d-4a66d824995d";
+ $is-multipart false;
+ $date 2020-10-19T01:01:01.0;
+ $subject "we are coming for you";
+ $body "some bad stuff written here";
+
+
+ $from-email0 (email:$email-message, email-address:$from-ref-email-addr0) isa from-email;
+
+ $to-email1 (email:$email-message, email-address:$to-refs-email-addr01) isa to-email;
+
+
+
+01:59:37,776 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB250>
+01:59:37,852 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"email-message": Entity(Entity { iid: ID[0x826e80027fffffffffffffff], type_: EntityType { label: "email-message", is_root: false, is_abstract: false }, is_inferred: false }), "body": Attribute(Attribute { iid: ID[0x836f807d28001b736f6d6520626164207374756666207772697474656e2068657265], type_: AttributeType { label: "body", is_root: false, is_abstract: false, value_type: String }, value: String("some bad stuff written here"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000d656d61696c2d6d657373616765], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("email-message"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f8030280033656d61696c2d6d6573736167652d2d36303930653364342d316661382d356233362d396432642d346136366438323439393564], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("email-message--6090e3d4-1fa8-5b36-9d2d-4a66d824995d"), is_inferred: false }), "date": Attribute(Attribute { iid: ID[0x836f80bc32800001753e5fb4c8], type_: AttributeType { label: "date", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2020-10-19T01:01:01), is_inferred: false }), "subject": Attribute(Attribute { iid: ID[0x836f80a828001577652061726520636f6d696e6720666f7220796f75], type_: AttributeType { label: "subject", is_root: false, is_abstract: false, value_type: String }, value: String("we are coming for you"), is_inferred: false }), "from-ref-email-addr0": Entity(Entity { iid: ID[0x826e805d7ffffffffffffffb], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "is-multipart": Attribute(Attribute { iid: ID[0x836f80630a00], type_: AttributeType { label: "is-multipart", is_root: false, is_abstract: false, value_type: Boolean }, value: Boolean(false), is_inferred: false }), "from-email0": Relation(Relation { iid: ID[0x847080597fffffffffffffff], type_: RelationType { label: "from-email", is_root: false, is_abstract: false }, is_inferred: false }), "to-refs-email-addr01": Entity(Entity { iid: ID[0x826e805d7ffffffffffffff9], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "to-email1": Relation(Relation { iid: ID[0x8470800c7fffffffffffffff], type_: RelationType { label: "to-email", is_root: false, is_abstract: false }, is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,852 stixorm.module.initialise INFO 
+
+match  $on-completion-sequence0 isa sequence, has stix-id "sequence--4089e2b7-816d-4ad4-9d11-2604739b16ef";
+ insert $start-step isa start-step,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sequence-type $sequence-type,
+ has step-type $step-type;
+
+ $stix-type "sequence";
+ $spec-version "2.1";
+ $stix-id "sequence--fb97db29-be35-4f8d-b483-c2899750838d";
+ $created 2025-07-27T06:01:16.433;
+ $modified 2025-07-27T06:01:16.433;
+ $sequence-type "task";
+ $step-type "start_step";
+
+
+ $on-completion0 (source:$start-step, target:$on-completion-sequence0) isa on-completion;
+ $sequence-extension isa sequence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $sequence-ext0 (sequence-base:$start-step, sequence-spec:$sequence-extension) isa sequence-ext;
+
+
+
+
+01:59:37,852 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692F8070>
+01:59:37,915 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"stix-id": Attribute(Attribute { iid: ID[0x836f803028002e73657175656e63652d2d66623937646232392d626533352d346638642d623438332d633238393937353038333864], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("sequence--fb97db29-be35-4f8d-b483-c2899750838d"), is_inferred: false }), "on-completion-sequence0": Entity(Entity { iid: ID[0x826e80967fffffffffffffff], type_: EntityType { label: "single-step", is_root: false, is_abstract: false }, is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a78a191], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:16.433), is_inferred: false }), "on-completion0": Relation(Relation { iid: ID[0x847080bc7fffffffffffffff], type_: RelationType { label: "on-completion", is_root: false, is_abstract: false }, is_inferred: false }), "sequence-ext0": Relation(Relation { iid: ID[0x847080a87ffffffffffffffc], type_: RelationType { label: "sequence-ext", is_root: false, is_abstract: false }, is_inferred: false }), "sequence-extension": Entity(Entity { iid: ID[0x826e80847ffffffffffffffc], type_: EntityType { label: "sequence-extension", is_root: false, is_abstract: false }, is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000873657175656e6365], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("sequence"), is_inferred: false }), "step-type": Attribute(Attribute { iid: ID[0x836f813628000a73746172745f73746570], type_: AttributeType { label: "step-type", is_root: false, is_abstract: false, value_type: String }, value: String("start_step"), is_inferred: false }), "start-step": Entity(Entity { iid: ID[0x826e80907fffffffffffffff], type_: EntityType { label: "start-step", is_root: false, is_abstract: false }, is_inferred: false }), "sequence-type": Attribute(Attribute { iid: ID[0x836f81352800047461736b], type_: AttributeType { label: "sequence-type", is_root: false, is_abstract: false, value_type: String }, value: String("task"), is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a78a191], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:16.433), is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d2800076e65772d73646f], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("new-sdo"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,915 stixorm.module.initialise INFO 
+
+match  $on-completion-sequence0 isa sequence, has stix-id "sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8";
+ insert $start-step isa start-step,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sequence-type $sequence-type,
+ has step-type $step-type;
+
+ $stix-type "sequence";
+ $spec-version "2.1";
+ $stix-id "sequence--5ced78bf-aab8-4650-9c9e-a6914d68b46e";
+ $created 2025-07-27T06:01:16.100;
+ $modified 2025-07-27T06:01:16.100;
+ $sequence-type "event";
+ $step-type "start_step";
+
+
+ $on-completion0 (source:$start-step, target:$on-completion-sequence0) isa on-completion;
+ $sequence-extension isa sequence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "new-sdo";
+
+ $sequence-ext0 (sequence-base:$start-step, sequence-spec:$sequence-extension) isa sequence-ext;
+
+
+
+
+01:59:37,916 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB280>
+01:59:37,945 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a78a044], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:16.100), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "on-completion0": Relation(Relation { iid: ID[0x847080bc7ffffffffffffffe], type_: RelationType { label: "on-completion", is_root: false, is_abstract: false }, is_inferred: false }), "step-type": Attribute(Attribute { iid: ID[0x836f813628000a73746172745f73746570], type_: AttributeType { label: "step-type", is_root: false, is_abstract: false, value_type: String }, value: String("start_step"), is_inferred: false }), "start-step": Entity(Entity { iid: ID[0x826e80907ffffffffffffffe], type_: EntityType { label: "start-step", is_root: false, is_abstract: false }, is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000873657175656e6365], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("sequence"), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002e73657175656e63652d2d35636564373862662d616162382d343635302d396339652d613639313464363862343665], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("sequence--5ced78bf-aab8-4650-9c9e-a6914d68b46e"), is_inferred: false }), "sequence-ext0": Relation(Relation { iid: ID[0x847080a87ffffffffffffffb], type_: RelationType { label: "sequence-ext", is_root: false, is_abstract: false }, is_inferred: false }), "on-completion-sequence0": Entity(Entity { iid: ID[0x826e80967ffffffffffffffd], type_: EntityType { label: "single-step", is_root: false, is_abstract: false }, is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a78a044], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:16.100), is_inferred: false }), "sequence-type": Attribute(Attribute { iid: ID[0x836f81352800056576656e74], type_: AttributeType { label: "sequence-type", is_root: false, is_abstract: false, value_type: String }, value: String("event"), is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d2800076e65772d73646f], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("new-sdo"), is_inferred: false }), "sequence-extension": Entity(Entity { iid: ID[0x826e80847ffffffffffffffb], type_: EntityType { label: "sequence-extension", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,946 stixorm.module.initialise INFO 
+
+ insert $anecdote isa anecdote,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has anecdote-value $anecdote-value,
+ has report-date $report-date;
+
+ $stix-type "anecdote";
+ $spec-version "2.1";
+ $stix-id "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f";
+ $anecdote-value "I clicked on the link, and my laptop screen went weird";
+ $report-date 2025-07-27T06:01:27.512;
+
+
+
+
+01:59:37,946 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAB60>
+01:59:37,976 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"stix-id": Attribute(Attribute { iid: ID[0x836f803028002e616e6563646f74652d2d65313239386263302d383138652d356364622d393135342d656163333763386532363066], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f"), is_inferred: false }), "report-date": Attribute(Attribute { iid: ID[0x836f817232800001984a78ccd8], type_: AttributeType { label: "report-date", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:27.512), is_inferred: false }), "anecdote": Entity(Entity { iid: ID[0x826e80977fffffffffffffff], type_: EntityType { label: "anecdote", is_root: false, is_abstract: false }, is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f8025280008616e6563646f7465], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("anecdote"), is_inferred: false }), "anecdote-value": Attribute(Attribute { iid: ID[0x836f81712800364920636c69636b6564206f6e20746865206c696e6b2c20616e64206d79206c6170746f702073637265656e2077656e74207765697264], type_: AttributeType { label: "anecdote-value", is_root: false, is_abstract: false, value_type: String }, value: String("I clicked on the link, and my laptop screen went weird"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:37,976 stixorm.module.initialise INFO 
+
+match  $object-refs-email-addr00 isa email-addr, has stix-id "email-addr--eb38d07e-6ba8-56c1-b107-d4db4aacf212";
+ $object-refs-user-account10 isa user-account, has stix-id "user-account--597ad4d4-35ba-585d-8f6d-134a75032f9b";
+ $object-refs-email-addr20 isa email-addr, has stix-id "email-addr--4722424c-7012-56b0-84d5-01d076fc547b";
+ $object-refs-url30 isa url, has stix-id "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7";
+ $object-refs-email-message40 isa email-message, has stix-id "email-message--6090e3d4-1fa8-5b36-9d2d-4a66d824995d";
+ insert $observed-data isa observed-data,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has first-observed $first-observed,
+ has last-observed $last-observed,
+ has number-observed $number-observed;
+
+ $stix-type "observed-data";
+ $spec-version "2.1";
+ $stix-id "observed-data--5aa35ce5-7d95-4cbb-8ab4-f29b44de80ad";
+ $created 2025-07-27T06:01:15.521;
+ $modified 2025-07-27T06:01:15.521;
+ $first-observed 2020-10-19T01:01:01.0;
+ $last-observed 2020-10-19T01:01:01.0;
+ $number-observed 1;
+
+
+ $obj-refs0 (object:$observed-data, referred:$object-refs-email-addr00, referred:$object-refs-user-account10, referred:$object-refs-email-addr20, referred:$object-refs-url30, referred:$object-refs-email-message40) isa obj-refs;
+
+
+
+01:59:37,977 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB250>
+01:59:38,69 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"object-refs-email-addr00": Entity(Entity { iid: ID[0x826e805d7ffffffffffffffb], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "object-refs-email-addr20": Entity(Entity { iid: ID[0x826e805d7ffffffffffffff9], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "object-refs-email-message40": Entity(Entity { iid: ID[0x826e80027fffffffffffffff], type_: EntityType { label: "email-message", is_root: false, is_abstract: false }, is_inferred: false }), "last-observed": Attribute(Attribute { iid: ID[0x836f802d32800001753e5fb4c8], type_: AttributeType { label: "last-observed", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2020-10-19T01:01:01), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "number-observed": Attribute(Attribute { iid: ID[0x836f8038148000000000000001], type_: AttributeType { label: "number-observed", is_root: false, is_abstract: false, value_type: Long }, value: Long(1), is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a789e01], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:15.521), is_inferred: false }), "object-refs-url30": Entity(Entity { iid: ID[0x826e80187fffffffffffffff], type_: EntityType { label: "url", is_root: false, is_abstract: false }, is_inferred: false }), "obj-refs0": Relation(Relation { iid: ID[0x847080617fffffffffffffff], type_: RelationType { label: "obj-refs", is_root: false, is_abstract: false }, is_inferred: false }), "observed-data": Entity(Entity { iid: ID[0x826e80037fffffffffffffff], type_: EntityType { label: "observed-data", is_root: false, is_abstract: false }, is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f80302800336f627365727665642d646174612d2d35616133356365352d376439352d346362622d386162342d663239623434646538306164], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("observed-data--5aa35ce5-7d95-4cbb-8ab4-f29b44de80ad"), is_inferred: false }), "object-refs-user-account10": Entity(Entity { iid: ID[0x826e803a7fffffffffffffff], type_: EntityType { label: "user-account", is_root: false, is_abstract: false }, is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a789e01], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:15.521), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000d6f627365727665642d64617461], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("observed-data"), is_inferred: false }), "first-observed": Attribute(Attribute { iid: ID[0x836f802832800001753e5fb4c8], type_: AttributeType { label: "first-observed", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2020-10-19T01:01:01), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:38,70 stixorm.module.initialise INFO 
+
+match  $object-refs-anecdote00 isa anecdote, has stix-id "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f";
+ insert $observed-data isa observed-data,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has first-observed $first-observed,
+ has last-observed $last-observed,
+ has number-observed $number-observed;
+
+ $stix-type "observed-data";
+ $spec-version "2.1";
+ $stix-id "observed-data--98f47f54-715a-4bdf-ac74-4d65f22bea8e";
+ $created 2025-07-27T06:01:27.617;
+ $modified 2025-07-27T06:01:27.617;
+ $first-observed 2020-10-19T01:01:01.0;
+ $last-observed 2020-10-19T01:01:01.0;
+ $number-observed 1;
+
+
+ $obj-refs0 (object:$observed-data, referred:$object-refs-anecdote00) isa obj-refs;
+
+
+
+01:59:38,70 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692F8070>
+01:59:38,132 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"obj-refs0": Relation(Relation { iid: ID[0x847080617ffffffffffffffe], type_: RelationType { label: "obj-refs", is_root: false, is_abstract: false }, is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a78cd41], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:27.617), is_inferred: false }), "first-observed": Attribute(Attribute { iid: ID[0x836f802832800001753e5fb4c8], type_: AttributeType { label: "first-observed", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2020-10-19T01:01:01), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f80302800336f627365727665642d646174612d2d39386634376635342d373135612d346264662d616337342d346436356632326265613865], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("observed-data--98f47f54-715a-4bdf-ac74-4d65f22bea8e"), is_inferred: false }), "object-refs-anecdote00": Entity(Entity { iid: ID[0x826e80977fffffffffffffff], type_: EntityType { label: "anecdote", is_root: false, is_abstract: false }, is_inferred: false }), "last-observed": Attribute(Attribute { iid: ID[0x836f802d32800001753e5fb4c8], type_: AttributeType { label: "last-observed", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2020-10-19T01:01:01), is_inferred: false }), "number-observed": Attribute(Attribute { iid: ID[0x836f8038148000000000000001], type_: AttributeType { label: "number-observed", is_root: false, is_abstract: false, value_type: Long }, value: Long(1), is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a78cd41], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:27.617), is_inferred: false }), "observed-data": Entity(Entity { iid: ID[0x826e80037ffffffffffffffe], type_: EntityType { label: "observed-data", is_root: false, is_abstract: false }, is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f802528000d6f627365727665642d64617461], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("observed-data"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:38,132 stixorm.module.initialise INFO 
+
+match  
+ $indicator0 isa indicator, has stix-id "indicator--dd52359a-1dd5-43c3-8970-2cc8aa0e1544";
+ $observed-data0 isa observed-data, has stix-id "observed-data--5aa35ce5-7d95-4cbb-8ab4-f29b44de80ad";
+ $identity1 isa identity, has stix-id "identity--ce31dd38-f69b-45ba-9bcd-2a208bbf8017";
+ insert 
+$sighting (sighting-of:$indicator0, observed:$observed-data0, where-sighted:$identity1) isa sighting,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sighting-count $sighting-count;
+
+ $stix-type "sighting";
+ $spec-version "2.1";
+ $stix-id "sighting--06faabfe-490a-4516-a66e-1340aad78870";
+ $created 2025-07-27T06:01:15.791;
+ $modified 2025-07-27T06:01:15.791;
+ $sighting-count 1;
+
+ $alert-evidence isa alert-evidence,
+ has name $name,
+ has log $log,
+ has system-id $system-id,
+ has source $source;
+
+ $name "user-report";
+ $log "I have found a suspicious email";
+ $system-id "XYZ-1234";
+ $source "user submission";
+
+ $alert-ext0 (sighting-base:$sighting, alert-extension:$alert-evidence) isa alert-ext;
+
+ $evidence-extension isa evidence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "property-extension";
+
+ $evidence-ext1 (evidence-base:$sighting, evidence-spec:$evidence-extension) isa evidence-ext;
+
+
+
+
+01:59:38,132 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB280>
+01:59:38,210 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"observed-data0": Entity(Entity { iid: ID[0x826e80037fffffffffffffff], type_: EntityType { label: "observed-data", is_root: false, is_abstract: false }, is_inferred: false }), "name": Attribute(Attribute { iid: ID[0x836f807928000b757365722d7265706f7274], type_: AttributeType { label: "name", is_root: false, is_abstract: false, value_type: String }, value: String("user-report"), is_inferred: false }), "evidence-ext1": Relation(Relation { iid: ID[0x8470808d7fffffffffffffff], type_: RelationType { label: "evidence-ext", is_root: false, is_abstract: false }, is_inferred: false }), "sighting": Relation(Relation { iid: ID[0x847080677fffffffffffffff], type_: RelationType { label: "sighting", is_root: false, is_abstract: false }, is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "source": Attribute(Attribute { iid: ID[0x836f813b28000f75736572207375626d697373696f6e], type_: AttributeType { label: "source", is_root: false, is_abstract: false, value_type: String }, value: String("user submission"), is_inferred: false }), "system-id": Attribute(Attribute { iid: ID[0x836f813c28000858595a2d31323334], type_: AttributeType { label: "system-id", is_root: false, is_abstract: false, value_type: String }, value: String("XYZ-1234"), is_inferred: false }), "evidence-extension": Entity(Entity { iid: ID[0x826e80947fffffffffffffff], type_: EntityType { label: "evidence-extension", is_root: false, is_abstract: false }, is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a789f0f], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:15.791), is_inferred: false }), "log": Attribute(Attribute { iid: ID[0x836f818928001f49206861766520666f756e64206120737573706963696f757320656d61696c], type_: AttributeType { label: "log", is_root: false, is_abstract: false, value_type: String }, value: String("I have found a suspicious email"), is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d28001270726f70657274792d657874656e73696f6e], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("property-extension"), is_inferred: false }), "sighting-count": Attribute(Attribute { iid: ID[0x836f80c91ebff0000000000000], type_: AttributeType { label: "sighting-count", is_root: false, is_abstract: false, value_type: Double }, value: Double(1.0), is_inferred: false }), "alert-evidence": Entity(Entity { iid: ID[0x826e808b7fffffffffffffff], type_: EntityType { label: "alert-evidence", is_root: false, is_abstract: false }, is_inferred: false }), "identity1": Entity(Entity { iid: ID[0x826e80267ffffffffffffffb], type_: EntityType { label: "identity", is_root: false, is_abstract: false }, is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a789f0f], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:15.791), is_inferred: false }), "alert-ext0": Relation(Relation { iid: ID[0x847080907fffffffffffffff], type_: RelationType { label: "alert-ext", is_root: false, is_abstract: false }, is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002e7369676874696e672d2d30366661616266652d343930612d343531362d613636652d313334306161643738383730], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("sighting--06faabfe-490a-4516-a66e-1340aad78870"), is_inferred: false }), "indicator0": Entity(Entity { iid: ID[0x826e80247fffffffffffffff], type_: EntityType { label: "indicator", is_root: false, is_abstract: false }, is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f80252800087369676874696e67], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("sighting"), is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:38,210 stixorm.module.initialise INFO 
+
+match  
+ $identity0 isa identity, has stix-id "identity--ce31dd38-f69b-45ba-9bcd-2a208bbf8017";
+ $observed-data0 isa observed-data, has stix-id "observed-data--98f47f54-715a-4bdf-ac74-4d65f22bea8e";
+ $identity1 isa identity, has stix-id "identity--31f2aeea-dfe1-4fc9-98c9-38e590e3b55b";
+ insert 
+$sighting (sighting-of:$identity0, observed:$observed-data0, where-sighted:$identity1) isa sighting,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has sighting-count $sighting-count;
+
+ $stix-type "sighting";
+ $spec-version "2.1";
+ $stix-id "sighting--4fb5cd06-3c90-42d7-be38-abea7f752fba";
+ $created 2025-07-27T06:01:27.714;
+ $modified 2025-07-27T06:01:27.714;
+ $sighting-count 1;
+
+ $anecdote-evidence isa anecdote-evidence,
+ has person-name $person-name,
+ has person-context $person-context,
+ has report-submission $report-submission;
+
+ $person-name "user-report";
+ $person-context "employee";
+ $report-submission "interview";
+
+ $anecdote-ext0 (sighting-base:$sighting, anecdote-extension:$anecdote-evidence) isa anecdote-ext;
+
+ $evidence-extension isa evidence-extension,
+ has extension-type $extension-type;
+
+ $extension-type "property-extension";
+
+ $evidence-ext1 (evidence-base:$sighting, evidence-spec:$evidence-extension) isa evidence-ext;
+
+
+
+
+01:59:38,211 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FAB60>
+01:59:38,286 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"stix-id": Attribute(Attribute { iid: ID[0x836f803028002e7369676874696e672d2d34666235636430362d336339302d343264372d626533382d616265613766373532666261], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("sighting--4fb5cd06-3c90-42d7-be38-abea7f752fba"), is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a78cda2], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:27.714), is_inferred: false }), "report-submission": Attribute(Attribute { iid: ID[0x836f8158280009696e74657276696577], type_: AttributeType { label: "report-submission", is_root: false, is_abstract: false, value_type: String }, value: String("interview"), is_inferred: false }), "sighting-count": Attribute(Attribute { iid: ID[0x836f80c91ebff0000000000000], type_: AttributeType { label: "sighting-count", is_root: false, is_abstract: false, value_type: Double }, value: Double(1.0), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a78cda2], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:27.714), is_inferred: false }), "identity0": Entity(Entity { iid: ID[0x826e80267ffffffffffffffb], type_: EntityType { label: "identity", is_root: false, is_abstract: false }, is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d28001270726f70657274792d657874656e73696f6e], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("property-extension"), is_inferred: false }), "person-context": Attribute(Attribute { iid: ID[0x836f8140280008656d706c6f796565], type_: AttributeType { label: "person-context", is_root: false, is_abstract: false, value_type: String }, value: String("employee"), is_inferred: false }), "evidence-ext1": Relation(Relation { iid: ID[0x8470808d7ffffffffffffffe], type_: RelationType { label: "evidence-ext", is_root: false, is_abstract: false }, is_inferred: false }), "sighting": Relation(Relation { iid: ID[0x847080677ffffffffffffffe], type_: RelationType { label: "sighting", is_root: false, is_abstract: false }, is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f80252800087369676874696e67], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("sighting"), is_inferred: false }), "identity1": Entity(Entity { iid: ID[0x826e80267ffffffffffffffe], type_: EntityType { label: "identity", is_root: false, is_abstract: false }, is_inferred: false }), "person-name": Attribute(Attribute { iid: ID[0x836f814528000b757365722d7265706f7274], type_: AttributeType { label: "person-name", is_root: false, is_abstract: false, value_type: String }, value: String("user-report"), is_inferred: false }), "evidence-extension": Entity(Entity { iid: ID[0x826e80947ffffffffffffffe], type_: EntityType { label: "evidence-extension", is_root: false, is_abstract: false }, is_inferred: false }), "anecdote-evidence": Entity(Entity { iid: ID[0x826e808a7fffffffffffffff], type_: EntityType { label: "anecdote-evidence", is_root: false, is_abstract: false }, is_inferred: false }), "observed-data0": Entity(Entity { iid: ID[0x826e80037ffffffffffffffe], type_: EntityType { label: "observed-data", is_root: false, is_abstract: false }, is_inferred: false }), "anecdote-ext0": Relation(Relation { iid: ID[0x847080847fffffffffffffff], type_: RelationType { label: "anecdote-ext", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:38,287 stixorm.module.initialise INFO 
+
+match  $sequence-start-refs-sequence00 isa sequence, has stix-id "sequence--5ced78bf-aab8-4650-9c9e-a6914d68b46e";
+ $sequence-start-refs-sequence10 isa sequence, has stix-id "sequence--fb97db29-be35-4f8d-b483-c2899750838d";
+ $sequence-refs-sequence00 isa sequence, has stix-id "sequence--4c9100f2-06a1-4570-ba51-7dabde2371b8";
+ $sequence-refs-sequence10 isa sequence, has stix-id "sequence--4089e2b7-816d-4ad4-9d11-2604739b16ef";
+ $sequence-refs-sequence20 isa sequence, has stix-id "sequence--10fe3d71-a3d1-4f83-ad54-9c290d7136e9";
+ $task-refs-task00 isa task, has stix-id "task--3f23faa4-e21e-4880-bd8a-c8d89aa453aa";
+ $task-refs-task10 isa task, has stix-id "task--01537439-3b2d-4afe-81a3-45b2dd35c655";
+ $event-refs-event00 isa event, has stix-id "event--e8f641e7-89ca-4776-a828-6838d8eccdca";
+ $impact-refs-impact00 isa impact, has stix-id "impact--1b87fa10-78fd-4b3e-970e-dea91e9a7457";
+ $other-object-refs-email-addr00 isa email-addr, has stix-id "email-addr--eb38d07e-6ba8-56c1-b107-d4db4aacf212";
+ $other-object-refs-email-addr10 isa email-addr, has stix-id "email-addr--4722424c-7012-56b0-84d5-01d076fc547b";
+ $other-object-refs-user-account20 isa user-account, has stix-id "user-account--597ad4d4-35ba-585d-8f6d-134a75032f9b";
+ $other-object-refs-identity30 isa identity, has stix-id "identity--ce31dd38-f69b-45ba-9bcd-2a208bbf8017";
+ $other-object-refs-identity40 isa identity, has stix-id "identity--31f2aeea-dfe1-4fc9-98c9-38e590e3b55b";
+ $other-object-refs-url50 isa url, has stix-id "url--3279c7de-8f91-5c1a-99d9-d6546c6c41f7";
+ $other-object-refs-email-message60 isa email-message, has stix-id "email-message--6090e3d4-1fa8-5b36-9d2d-4a66d824995d";
+ $other-object-refs-observed-data70 isa observed-data, has stix-id "observed-data--5aa35ce5-7d95-4cbb-8ab4-f29b44de80ad";
+ $other-object-refs-indicator80 isa indicator, has stix-id "indicator--dd52359a-1dd5-43c3-8970-2cc8aa0e1544";
+ $other-object-refs-sighting90 isa sighting, has stix-id "sighting--06faabfe-490a-4516-a66e-1340aad78870";
+ $other-object-refs-identity100 isa identity, has stix-id "identity--3789a438-8d49-4f2a-bb1a-06d3575d2f33";
+ $other-object-refs-anecdote110 isa anecdote, has stix-id "anecdote--e1298bc0-818e-5cdb-9154-eac37c8e260f";
+ $other-object-refs-observed-data120 isa observed-data, has stix-id "observed-data--98f47f54-715a-4bdf-ac74-4d65f22bea8e";
+ $other-object-refs-sighting130 isa sighting, has stix-id "sighting--4fb5cd06-3c90-42d7-be38-abea7f752fba";
+ insert $incident isa incident,
+ has stix-type $stix-type,
+ has spec-version $spec-version,
+ has stix-id $stix-id,
+ has created $created,
+ has modified $modified,
+ has name $name;
+
+ $stix-type "incident";
+ $spec-version "2.1";
+ $stix-id "incident--145eb841-90db-4526-8407-b25fd2d705c1";
+ $created 2025-07-27T06:01:14.656;
+ $modified 2025-07-27T06:01:14.656;
+ $name "potential phishing";
+
+ $incident-ext isa incident-ext,
+ has extension-type $extension-type,
+ has investigation-status $investigation-status,
+ has incident-types $incident_types0;
+
+ $extension-type "property-extension";
+ $investigation-status "new";
+ $incident_types0 "dissemination-phishing-emails";
+
+ $occurence-ext0 (occurence:$incident, incident-core:$incident-ext) isa occurence-ext;
+
+
+
+ $sequence-start-refs0 (incident:$incident-ext, sequence-start:$sequence-start-refs-sequence00, sequence-start:$sequence-start-refs-sequence10) isa sequence-start-refs;
+
+
+ $sequence-refs0 (incident:$incident-ext, the-steps:$sequence-refs-sequence00, the-steps:$sequence-refs-sequence10, the-steps:$sequence-refs-sequence20) isa sequence-refs;
+
+
+ $task-refs0 (incident:$incident-ext, the-task:$task-refs-task00, the-task:$task-refs-task10) isa task-refs;
+
+
+ $event-refs0 (incident:$incident-ext, the-event:$event-refs-event00) isa event-refs;
+
+
+ $impact-refs0 (incident:$incident-ext, the-impact:$impact-refs-impact00) isa impact-refs;
+
+
+ $other-obj-refs0 (object:$incident-ext, referred:$other-object-refs-email-addr00, referred:$other-object-refs-email-addr10, referred:$other-object-refs-user-account20, referred:$other-object-refs-identity30, referred:$other-object-refs-identity40, referred:$other-object-refs-url50, referred:$other-object-refs-email-message60, referred:$other-object-refs-observed-data70, referred:$other-object-refs-indicator80, referred:$other-object-refs-sighting90, referred:$other-object-refs-identity100, referred:$other-object-refs-anecdote110, referred:$other-object-refs-observed-data120, referred:$other-object-refs-sighting130) isa other-obj-refs;
+
+
+
+01:59:38,287 stixorm.module.initialise INFO insert_iterator response ->
+<map object at 0x0000029E692FB250>
+01:59:38,873 stixorm.module.initialise INFO typedb response ->
+ConceptMap { map: {"sequence-refs-sequence20": Entity(Entity { iid: ID[0x826e80967ffffffffffffffe], type_: EntityType { label: "single-step", is_root: false, is_abstract: false }, is_inferred: false }), "other-object-refs-indicator80": Entity(Entity { iid: ID[0x826e80247fffffffffffffff], type_: EntityType { label: "indicator", is_root: false, is_abstract: false }, is_inferred: false }), "occurence-ext0": Relation(Relation { iid: ID[0x847080b17fffffffffffffff], type_: RelationType { label: "occurence-ext", is_root: false, is_abstract: false }, is_inferred: false }), "other-object-refs-sighting90": Relation(Relation { iid: ID[0x847080677fffffffffffffff], type_: RelationType { label: "sighting", is_root: false, is_abstract: false }, is_inferred: false }), "other-object-refs-sighting130": Relation(Relation { iid: ID[0x847080677ffffffffffffffe], type_: RelationType { label: "sighting", is_root: false, is_abstract: false }, is_inferred: false }), "other-object-refs-url50": Entity(Entity { iid: ID[0x826e80187fffffffffffffff], type_: EntityType { label: "url", is_root: false, is_abstract: false }, is_inferred: false }), "name": Attribute(Attribute { iid: ID[0x836f8079280012706f74656e7469616c207068697368696e67], type_: AttributeType { label: "name", is_root: false, is_abstract: false, value_type: String }, value: String("potential phishing"), is_inferred: false }), "incident": Entity(Entity { iid: ID[0x826e80477fffffffffffffff], type_: EntityType { label: "incident", is_root: false, is_abstract: false }, is_inferred: false }), "incident-ext": Entity(Entity { iid: ID[0x826e80887fffffffffffffff], type_: EntityType { label: "incident-ext", is_root: false, is_abstract: false }, is_inferred: false }), "sequence-refs-sequence10": Entity(Entity { iid: ID[0x826e80967fffffffffffffff], type_: EntityType { label: "single-step", is_root: false, is_abstract: false }, is_inferred: false }), "event-refs0": Relation(Relation { iid: ID[0x847080937fffffffffffffff], type_: RelationType { label: "event-refs", is_root: false, is_abstract: false }, is_inferred: false }), "impact-refs-impact00": Entity(Entity { iid: ID[0x826e80787fffffffffffffff], type_: EntityType { label: "impact", is_root: false, is_abstract: false }, is_inferred: false }), "other-object-refs-identity40": Entity(Entity { iid: ID[0x826e80267ffffffffffffffe], type_: EntityType { label: "identity", is_root: false, is_abstract: false }, is_inferred: false }), "extension-type": Attribute(Attribute { iid: ID[0x836f815d28001270726f70657274792d657874656e73696f6e], type_: AttributeType { label: "extension-type", is_root: false, is_abstract: false, value_type: String }, value: String("property-extension"), is_inferred: false }), "other-object-refs-email-message60": Entity(Entity { iid: ID[0x826e80027fffffffffffffff], type_: EntityType { label: "email-message", is_root: false, is_abstract: false }, is_inferred: false }), "event-refs-event00": Entity(Entity { iid: ID[0x826e807f7fffffffffffffff], type_: EntityType { label: "event", is_root: false, is_abstract: false }, is_inferred: false }), "sequence-start-refs-sequence00": Entity(Entity { iid: ID[0x826e80907ffffffffffffffe], type_: EntityType { label: "start-step", is_root: false, is_abstract: false }, is_inferred: false }), "other-object-refs-email-addr00": Entity(Entity { iid: ID[0x826e805d7ffffffffffffffb], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "other-object-refs-identity30": Entity(Entity { iid: ID[0x826e80267ffffffffffffffb], type_: EntityType { label: "identity", is_root: false, is_abstract: false }, is_inferred: false }), "task-refs0": Relation(Relation { iid: ID[0x8470809a7fffffffffffffff], type_: RelationType { label: "task-refs", is_root: false, is_abstract: false }, is_inferred: false }), "sequence-start-refs0": Relation(Relation { iid: ID[0x847080a27fffffffffffffff], type_: RelationType { label: "sequence-start-refs", is_root: false, is_abstract: false }, is_inferred: false }), "other-object-refs-email-addr10": Entity(Entity { iid: ID[0x826e805d7ffffffffffffff9], type_: EntityType { label: "email-addr", is_root: false, is_abstract: false }, is_inferred: false }), "investigation-status": Attribute(Attribute { iid: ID[0x836f814f2800036e6577], type_: AttributeType { label: "investigation-status", is_root: false, is_abstract: false, value_type: String }, value: String("new"), is_inferred: false }), "spec-version": Attribute(Attribute { iid: ID[0x836f80cf280003322e31], type_: AttributeType { label: "spec-version", is_root: false, is_abstract: false, value_type: String }, value: String("2.1"), is_inferred: false }), "impact-refs0": Relation(Relation { iid: ID[0x847080947fffffffffffffff], type_: RelationType { label: "impact-refs", is_root: false, is_abstract: false }, is_inferred: false }), "sequence-refs0": Relation(Relation { iid: ID[0x847080a77fffffffffffffff], type_: RelationType { label: "sequence-refs", is_root: false, is_abstract: false }, is_inferred: false }), "other-object-refs-observed-data70": Entity(Entity { iid: ID[0x826e80037fffffffffffffff], type_: EntityType { label: "observed-data", is_root: false, is_abstract: false }, is_inferred: false }), "created": Attribute(Attribute { iid: ID[0x836f80f132800001984a789aa0], type_: AttributeType { label: "created", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:14.656), is_inferred: false }), "other-object-refs-anecdote110": Entity(Entity { iid: ID[0x826e80977fffffffffffffff], type_: EntityType { label: "anecdote", is_root: false, is_abstract: false }, is_inferred: false }), "task-refs-task10": Entity(Entity { iid: ID[0x826e80997ffffffffffffffe], type_: EntityType { label: "task", is_root: false, is_abstract: false }, is_inferred: false }), "modified": Attribute(Attribute { iid: ID[0x836f80b332800001984a789aa0], type_: AttributeType { label: "modified", is_root: false, is_abstract: false, value_type: DateTime }, value: DateTime(2025-07-27T06:01:14.656), is_inferred: false }), "stix-id": Attribute(Attribute { iid: ID[0x836f803028002e696e636964656e742d2d31343565623834312d393064622d343532362d383430372d623235666432643730356331], type_: AttributeType { label: "stix-id", is_root: false, is_abstract: false, value_type: String }, value: String("incident--145eb841-90db-4526-8407-b25fd2d705c1"), is_inferred: false }), "other-obj-refs0": Relation(Relation { iid: ID[0x847080b07fffffffffffffff], type_: RelationType { label: "other-obj-refs", is_root: false, is_abstract: false }, is_inferred: false }), "stix-type": Attribute(Attribute { iid: ID[0x836f8025280008696e636964656e74], type_: AttributeType { label: "stix-type", is_root: false, is_abstract: false, value_type: String }, value: String("incident"), is_inferred: false }), "sequence-refs-sequence00": Entity(Entity { iid: ID[0x826e80967ffffffffffffffd], type_: EntityType { label: "single-step", is_root: false, is_abstract: false }, is_inferred: false }), "incident_types0": Attribute(Attribute { iid: ID[0x836f818e28001d64697373656d696e6174696f6e2d7068697368696e672d656d61696c73], type_: AttributeType { label: "incident-types", is_root: false, is_abstract: false, value_type: String }, value: String("dissemination-phishing-emails"), is_inferred: false }), "task-refs-task00": Entity(Entity { iid: ID[0x826e80997fffffffffffffff], type_: EntityType { label: "task", is_root: false, is_abstract: false }, is_inferred: false }), "other-object-refs-identity100": Entity(Entity { iid: ID[0x826e80267fffffffffffffff], type_: EntityType { label: "identity", is_root: false, is_abstract: false }, is_inferred: false }), "other-object-refs-observed-data120": Entity(Entity { iid: ID[0x826e80037ffffffffffffffe], type_: EntityType { label: "observed-data", is_root: false, is_abstract: false }, is_inferred: false }), "sequence-start-refs-sequence10": Entity(Entity { iid: ID[0x826e80907fffffffffffffff], type_: EntityType { label: "start-step", is_root: false, is_abstract: false }, is_inferred: false }), "other-object-refs-user-account20": Entity(Entity { iid: ID[0x826e803a7fffffffffffffff], type_: EntityType { label: "user-account", is_root: false, is_abstract: false }, is_inferred: false })}, explainables: Explainables { relations: {}, attributes: {}, ownerships: {} } }
+01:59:39,55 __main__ INFO 
+===================================================
+01:59:39,55 __main__ INFO Exercising test components with data from os-threat/examples
