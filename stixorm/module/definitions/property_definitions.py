@@ -116,7 +116,7 @@ def is_stix_type(obj_type, spec_version, valid_types):
         return process_valid_types(obj_type, valid_types)
 
 
-class ThreatReference(Property):
+class OSThreatReference(Property):
 
     _WHITELIST, _BLACKLIST = range(2)
 
@@ -147,7 +147,7 @@ class ThreatReference(Property):
         self.valid_types = valid_types
         self.invalid_types = invalid_types
 
-        super(ThreatReference, self).__init__(**kwargs)
+        super(OSThreatReference, self).__init__(**kwargs)
 
     def clean(self, value, allow_custom):
         if isinstance(value, _STIXBase):
@@ -194,12 +194,12 @@ def _get_dict(data):
 
 
 
-class ThreatExtensionsProperty(DictionaryProperty):
+class OSThreatExtensionsProperty(DictionaryProperty):
     """Property for representing extensions on Observable objects.
     """
 
     def __init__(self, spec_version=DEFAULT_VERSION, required=False):
-        super(ThreatExtensionsProperty, self).__init__(spec_version=spec_version, required=required)
+        super(OSThreatExtensionsProperty, self).__init__(spec_version=spec_version, required=required)
 
     def clean(self, value, allow_custom):
         try:

@@ -19,7 +19,7 @@ from stix2.v21.vocab import (
     PROCESSOR_ARCHITECTURE, TOOL_TYPE,
 )
 
-from stixorm.module.definitions.property_definitions import ThreatReference, ThreatExtensionsProperty
+from stixorm.module.definitions.property_definitions import OSThreatReference, OSThreatExtensionsProperty
 
 
 import logging
@@ -58,7 +58,7 @@ class AttackFlow(_DomainObject):
         ('name', StringProperty(required=True)),
         ('description', StringProperty()),
         ('scope', StringProperty(required=True)),
-        ('start_refs', ListProperty(ThreatReference(valid_types=['attack-action', 'attack-condition'], spec_version='2.1'))),
+        ('start_refs', ListProperty(OSThreatReference(valid_types=['attack-action', 'attack-condition'], spec_version='2.1'))),
         ('revoked', BooleanProperty(default=lambda: False)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
@@ -66,7 +66,7 @@ class AttackFlow(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -87,15 +87,15 @@ class FlowAction(_DomainObject):
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('name', StringProperty(required=True)),
         ('tactic_id', StringProperty()),
-        ('tactic_ref', ThreatReference(valid_types='x-mitre-tactic', spec_version='2.1')),
+        ('tactic_ref', OSThreatReference(valid_types='x-mitre-tactic', spec_version='2.1')),
         ('technique_id', StringProperty()),
-        ('technique_ref', ThreatReference(valid_types='attack-pattern', spec_version='2.1')),
+        ('technique_ref', OSThreatReference(valid_types='attack-pattern', spec_version='2.1')),
         ('description', StringProperty()),
         ('execution_start', TimestampProperty()),
         ('execution_end', TimestampProperty()),
-        ('command_ref', ThreatReference(valid_types='process', spec_version='2.1')),
-        ('asset_refs', ListProperty(ThreatReference(valid_types="attack-asset", spec_version='2.1'))),
-        ('effect_refs', ListProperty(ThreatReference(valid_types=['attack-action', 'attack-condition',"attack-operator"], spec_version='2.1'))),
+        ('command_ref', OSThreatReference(valid_types='process', spec_version='2.1')),
+        ('asset_refs', ListProperty(OSThreatReference(valid_types="attack-asset", spec_version='2.1'))),
+        ('effect_refs', ListProperty(OSThreatReference(valid_types=['attack-action', 'attack-condition',"attack-operator"], spec_version='2.1'))),
         ('revoked', BooleanProperty(default=lambda: False)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
@@ -103,7 +103,7 @@ class FlowAction(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -123,7 +123,7 @@ class FlowAsset(_DomainObject):
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('name', StringProperty(required=True)),
         ('description', StringProperty()),
-        ('object_ref', ThreatReference(valid_types=['_sdo', '_sco'], spec_version='2.1')),
+        ('object_ref', OSThreatReference(valid_types=['_sdo', '_sco'], spec_version='2.1')),
         ('revoked', BooleanProperty(default=lambda: False)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
@@ -131,7 +131,7 @@ class FlowAsset(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -156,8 +156,8 @@ class FlowCondition(_DomainObject):
         ('pattern', StringProperty()),
         ('pattern_type', StringProperty()),
         ('pattern_version', StringProperty()),
-        ('on_true_refs', ListProperty(ThreatReference(valid_types=['attack-action', 'attack-condition', 'attack-operator'], spec_version='2.1'))),
-        ('on_false_refs', ListProperty(ThreatReference(valid_types=['attack-action', 'attack-condition', 'attack-operator'], spec_version='2.1'))),
+        ('on_true_refs', ListProperty(OSThreatReference(valid_types=['attack-action', 'attack-condition', 'attack-operator'], spec_version='2.1'))),
+        ('on_false_refs', ListProperty(OSThreatReference(valid_types=['attack-action', 'attack-condition', 'attack-operator'], spec_version='2.1'))),
         ('revoked', BooleanProperty(default=lambda: False)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
@@ -165,7 +165,7 @@ class FlowCondition(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -186,7 +186,7 @@ class FlowOperator(_DomainObject):
         ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('operator', StringProperty(required=True)),
-        ('effect_refs', ListProperty(ThreatReference(valid_types=['attack-action', 'attack-condition',"attack-operator"], spec_version='2.1'))),
+        ('effect_refs', ListProperty(OSThreatReference(valid_types=['attack-action', 'attack-condition',"attack-operator"], spec_version='2.1'))),
         ('revoked', BooleanProperty(default=lambda: False)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
@@ -194,6 +194,6 @@ class FlowOperator(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 

@@ -34,7 +34,7 @@ from stix2.v21.vocab import (
 
 import logging
 
-from stixorm.module.definitions.property_definitions import ThreatReference, ThreatExtensionsProperty
+from stixorm.module.definitions.property_definitions import OSThreatReference, OSThreatExtensionsProperty
 
 
 logger = logging.getLogger(__name__)
@@ -69,7 +69,7 @@ class CourseOfAction(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -97,7 +97,7 @@ class Incident(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -128,7 +128,7 @@ class Identity(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -165,7 +165,7 @@ class Malware(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
     def _check_object_constraints(self):
@@ -202,7 +202,7 @@ class Note(_DomainObject):
         ('abstract', StringProperty()),
         ('content', StringProperty(required=True)),
         ('authors', ListProperty(StringProperty)),
-        ('object_refs', ListProperty(ThreatReference(valid_types=valid_obj, spec_version='2.1'), required=True)),
+        ('object_refs', ListProperty(OSThreatReference(valid_types=valid_obj, spec_version='2.1'), required=True)),
         ('revoked', BooleanProperty(default=lambda: False)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
@@ -231,7 +231,7 @@ class ObservedData(_DomainObject):
         ('last_observed', TimestampProperty(required=True)),
         ('number_observed', IntegerProperty(min=1, max=999999999, required=True)),
         ('objects', ObservableProperty(spec_version='2.1')),
-        ('object_refs', ListProperty(ThreatReference(valid_types=valid_obj, spec_version='2.1'), required=True)),
+        ('object_refs', ListProperty(OSThreatReference(valid_types=valid_obj, spec_version='2.1'), required=True)),
         ('revoked', BooleanProperty(default=lambda: False)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
@@ -287,7 +287,7 @@ class Report(_DomainObject):
         ('description', StringProperty()),
         ('report_types', ListProperty(OpenVocabProperty(REPORT_TYPE))),
         ('published', TimestampProperty(required=True)),
-        ('object_refs', ListProperty(ThreatReference(valid_types=valid_obj, spec_version='2.1'), required=True)),
+        ('object_refs', ListProperty(OSThreatReference(valid_types=valid_obj, spec_version='2.1'), required=True)),
         ('revoked', BooleanProperty(default=lambda: False)),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
@@ -327,7 +327,7 @@ class Tool(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -619,7 +619,7 @@ class NetworkTraffic(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["start", "end", "src_ref", "dst_ref", "src_port", "dst_port", "protocols",
                                    "extensions"]
@@ -707,7 +707,7 @@ class Process(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = []
 
@@ -747,7 +747,7 @@ class WindowsRegistryKey(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["key", "values"]
 
@@ -774,8 +774,8 @@ class Relationship(_RelationshipObject):
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('relationship_type', StringProperty(required=True)),
         ('description', StringProperty()),
-        ('source_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1', required=True)),
-        ('target_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1', required=True)),
+        ('source_ref', OSThreatReference(valid_types=valid_obj, spec_version='2.1', required=True)),
+        ('target_ref', OSThreatReference(valid_types=valid_obj, spec_version='2.1', required=True)),
         ('start_time', TimestampProperty()),
         ('stop_time', TimestampProperty()),
         ('revoked', BooleanProperty(default=lambda: False)),
@@ -841,7 +841,7 @@ class Sighting(_RelationshipObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
     # Explicitly define the first kwargs to make readable Sighting declarations.

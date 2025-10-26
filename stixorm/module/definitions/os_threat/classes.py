@@ -28,7 +28,7 @@ from stix2.v21.vocab import (
 
 import logging
 
-from stixorm.module.definitions.property_definitions import ThreatReference, ThreatExtensionsProperty
+from stixorm.module.definitions.property_definitions import OSThreatReference, OSThreatExtensionsProperty
 
 
 logger = logging.getLogger(__name__)
@@ -47,7 +47,7 @@ class ThreatSubObject(_STIXBase21):
     `the OS-Threat documentation`__.
     """
     _properties = OrderedDict([
-        ('object_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1')),
+        ('object_ref', OSThreatReference(valid_types=valid_obj, spec_version='2.1')),
         ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
     ])
@@ -103,8 +103,8 @@ class Feeds(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
-        ('contained', ListProperty(ThreatReference(valid_types='feed', spec_version='2.1'))),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
+        ('contained', ListProperty(OSThreatReference(valid_types='feed', spec_version='2.1'))),
     ])
 
 
@@ -141,20 +141,20 @@ class Sequence(_DomainObject):
         ('created_by_ref', ReferenceProperty(valid_types='identity', spec_version='2.1')),
         ('created', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
-        ('sequenced_object', ThreatReference(valid_types=valid_obj, spec_version='2.1')),
+        ('sequenced_object', OSThreatReference(valid_types=valid_obj, spec_version='2.1')),
         ('sequence_type', StringProperty()),
         ('step_type', StringProperty()),
-        ('on_completion', ThreatReference(valid_types='sequence', spec_version='2.1')),
-        ('on_success', ThreatReference(valid_types='sequence', spec_version='2.1')),
-        ('on_failure', ThreatReference(valid_types='sequence', spec_version='2.1')),
-        ('next_steps', ListProperty(ThreatReference(valid_types='sequence', spec_version='2.1'))),
+        ('on_completion', OSThreatReference(valid_types='sequence', spec_version='2.1')),
+        ('on_success', OSThreatReference(valid_types='sequence', spec_version='2.1')),
+        ('on_failure', OSThreatReference(valid_types='sequence', spec_version='2.1')),
+        ('next_steps', ListProperty(OSThreatReference(valid_types='sequence', spec_version='2.1'))),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
         ('lang', StringProperty()),
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -167,8 +167,8 @@ class StateChangeObject(_STIXBase21):
     """
     _properties = OrderedDict([
         ('state_change_type', StringProperty()),
-        ('initial_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1')),
-        ('result_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1')),
+        ('initial_ref', OSThreatReference(valid_types=valid_obj, spec_version='2.1')),
+        ('result_ref', OSThreatReference(valid_types=valid_obj, spec_version='2.1')),
     ])
 
 
@@ -203,7 +203,7 @@ class Event(_DomainObject):
         ('event_types', ListProperty(StringProperty)),
         ('goal', StringProperty()),
         ('name', StringProperty()),
-        ('sighting_refs', ListProperty(ThreatReference(valid_types=valid_obj, spec_version='2.1'))),
+        ('sighting_refs', ListProperty(OSThreatReference(valid_types=valid_obj, spec_version='2.1'))),
         ('start_time', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('start_time_fidelity', StringProperty()),
         ('labels', ListProperty(StringProperty)),
@@ -212,7 +212,7 @@ class Event(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 ###############################################################################
 # Impact object
@@ -338,18 +338,18 @@ class Impact(_DomainObject):
         ('end_time', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('end_time_fidelity', StringProperty()),
         ('impacted_entity_counts', DictionaryProperty(spec_version='2.1')),
-        ('impacted_refs', ListProperty(ThreatReference(valid_types=valid_obj, spec_version='2.1'))),
+        ('impacted_refs', ListProperty(OSThreatReference(valid_types=valid_obj, spec_version='2.1'))),
         ('recoverability', StringProperty()),
         ('start_time', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
         ('start_time_fidelity', StringProperty()),
-        ('superseded_by_ref', ThreatReference(valid_types='impact', spec_version='2.1')),
+        ('superseded_by_ref', OSThreatReference(valid_types='impact', spec_version='2.1')),
         ('labels', ListProperty(StringProperty)),
         ('confidence', IntegerProperty()),
         ('lang', StringProperty()),
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -385,12 +385,12 @@ class IncidentCoreExt(_Extension):
         ('impacted_entity_counts', DictionaryProperty(spec_version='2.1')),
         ('recoverability', ListProperty(StringProperty)),
         ('scores', ListProperty(EmbeddedObjectProperty(type=IncidentScoreObject))),
-        ('sequence_start_refs', ListProperty(ThreatReference(valid_types='sequence'))),
-        ('sequence_refs', ListProperty(ThreatReference(valid_types='sequence'))),
-        ('task_refs', ListProperty(ThreatReference(valid_types='task'))),
-        ('event_refs', ListProperty(ThreatReference(valid_types='event'))),
-        ('impact_refs', ListProperty(ThreatReference(valid_types='impact'))),
-        ('other_object_refs', ListProperty(ThreatReference(valid_types=valid_obj))),
+        ('sequence_start_refs', ListProperty(OSThreatReference(valid_types='sequence'))),
+        ('sequence_refs', ListProperty(OSThreatReference(valid_types='sequence'))),
+        ('task_refs', ListProperty(OSThreatReference(valid_types='task'))),
+        ('event_refs', ListProperty(OSThreatReference(valid_types='event'))),
+        ('impact_refs', ListProperty(OSThreatReference(valid_types='impact'))),
+        ('other_object_refs', ListProperty(OSThreatReference(valid_types=valid_obj))),
     ])
 
 ###############################################################################
@@ -439,7 +439,7 @@ class Task(_DomainObject):
         ('external_references', ListProperty(ExternalReference)),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 

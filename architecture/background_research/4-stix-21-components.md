@@ -55,7 +55,7 @@ Every STIX 2.1 Python class is comprised of a unique combination of these underl
 | ObjectReferenceProperty(StringProperty) | Reference to a valid object | Object_Ref |
 | ReferenceProperty(Property) | Reference to a Stix-only valid object | Reference |
 | SelectorProperty(Property) | Enables selection of properties | Selector |
-| ThreatReference(Property) | Reference to an all-objects valid object | ThreatReference |
+| OSThreatReference(Property) | Reference to an all-objects valid object | OSThreatReference |
 
 ### Category 5: Common Subobjects (3 Types)
 
@@ -68,12 +68,12 @@ Every STIX 2.1 Python class is comprised of a unique combination of these underl
 ## Critical Insights for STIX-ORM Development
 
 ### Reference Property Analysis
-The **Reference Properties** are most critical for understanding STIX-ORM's challenges:
+The **Reference Properties** are foreign key edges to other objects
 
 1. **ObjectReferenceProperty**: Standard `_ref` fields (e.g., `created_by_ref`)
-2. **ReferenceProperty**: STIX-specific object references  
-3. **ThreatReference**: All-objects valid references (includes custom extensions)
-4. **EmbeddedObjectProperty**: Sub-objects within main objects
+2. **ReferenceProperty**: only can accept STIX-specific object references
+3. **OSThreatReference**: All-objects valid references (includes custom extensions)
+4. **EmbeddedObjectProperty**: Sub-objects within main objects, often inside lists
 
 ### Dynamic Detection Implications
 - **Pattern Recognition**: `_ref` and `_refs` suffixes indicate reference fields
@@ -135,7 +135,7 @@ class Identity(_DomainObject):
         ('identity_class', OpenVocabProperty(IDENTITY_CLASS)),
         
         # Extension Properties
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 ```
 

@@ -115,8 +115,8 @@ For more detailed information on this object's properties, see
 - **x_mitre_domains** (*ListProperty*)
 - **x_mitre_attack_spec_version** (*StringProperty*)
 - **x_mitre_platforms** (*ListProperty*)
-- **source_ref** (*ThreatReference, required*)
-- **target_ref** (*ThreatReference, required*)
+- **source_ref** (*OSThreatReference, required*)
+- **target_ref** (*OSThreatReference, required*)
 - **start_time** (*TimestampProperty*)
 - **stop_time** (*TimestampProperty*)
 - **revoked** (*BooleanProperty*)
@@ -328,7 +328,7 @@ For more detailed information on this object's properties, see
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md>`__.
 
 **Properties:**
-- **object_ref** (*ThreatReference*)
+- **object_ref** (*OSThreatReference*)
 - **object_modified** (*TimestampProperty*)
 <br><br>
 
@@ -631,7 +631,7 @@ For more detailed information on this object's properties, see
 - **external_references** (*ListProperty*)
 - **object_marking_refs** (*ListProperty*)
 - **granular_markings** (*ListProperty*)
-- **extensions** (*ThreatExtensionsProperty*)
+- **extensions** (*OSThreatExtensionsProperty*)
 <br><br>
 
 *class* **EventCoreExt**
@@ -744,14 +744,14 @@ For more detailed information on this object's properties, see
 - **recoverability** (*StringProperty*)
 - **start_time** (*TimestampProperty*)
 - **start_time_fidelity** (*StringProperty*)
-- **superseded_by_ref** (*ThreatReference*)
+- **superseded_by_ref** (*OSThreatReference*)
 - **labels** (*ListProperty*)
 - **confidence** (*IntegerProperty*)
 - **lang** (*StringProperty*)
 - **external_references** (*ListProperty*)
 - **object_marking_refs** (*ListProperty*)
 - **granular_markings** (*ListProperty*)
-- **extensions** (*ThreatExtensionsProperty*)
+- **extensions** (*OSThreatExtensionsProperty*)
 <br><br>
 
 *class* **ImpactCoreExt**
@@ -847,12 +847,12 @@ For more detailed information on this object's properties, see
 - **created_by_ref** (*ReferenceProperty*)
 - **created** (*TimestampProperty*)
 - **modified** (*TimestampProperty*)
-- **sequenced_object** (*ThreatReference*)
+- **sequenced_object** (*OSThreatReference*)
 - **sequence_type** (*StringProperty*)
 - **step_type** (*StringProperty*)
-- **on_completion** (*ThreatReference*)
-- **on_success** (*ThreatReference*)
-- **on_failure** (*ThreatReference*)
+- **on_completion** (*OSThreatReference*)
+- **on_success** (*OSThreatReference*)
+- **on_failure** (*OSThreatReference*)
 - **next_steps** (*ListProperty*)
 - **labels** (*ListProperty*)
 - **confidence** (*IntegerProperty*)
@@ -860,7 +860,7 @@ For more detailed information on this object's properties, see
 - **external_references** (*ListProperty*)
 - **object_marking_refs** (*ListProperty*)
 - **granular_markings** (*ListProperty*)
-- **extensions** (*ThreatExtensionsProperty*)
+- **extensions** (*OSThreatExtensionsProperty*)
 <br><br>
 
 *class* **SequenceExt**
@@ -997,8 +997,8 @@ For more detailed information on this object's properties, see
 
 **Properties:**
 - **state_change_type** (*StringProperty*)
-- **initial_ref** (*ThreatReference*)
-- **result_ref** (*ThreatReference*)
+- **initial_ref** (*OSThreatReference*)
+- **result_ref** (*OSThreatReference*)
 <br><br>
 
 *class* **Task**
@@ -1032,7 +1032,7 @@ For more detailed information on this object's properties, see
 - **external_references** (*ListProperty*)
 - **object_marking_refs** (*ListProperty*)
 - **granular_markings** (*ListProperty*)
-- **extensions** (*ThreatExtensionsProperty*)
+- **extensions** (*OSThreatExtensionsProperty*)
 <br><br>
 
 *class* **TaskCoreExt**
@@ -1050,7 +1050,7 @@ For more detailed information on this object's properties, see
     `the OS-Threat documentation`__.
 
 **Properties:**
-- **object_ref** (*ThreatReference*)
+- **object_ref** (*OSThreatReference*)
 - **created** (*TimestampProperty*)
 - **modified** (*TimestampProperty*)
 <br><br>
@@ -1090,7 +1090,7 @@ For more detailed information on this object's properties, see
 - **external_references** (*ListProperty*)
 - **object_marking_refs** (*ListProperty*)
 - **granular_markings** (*ListProperty*)
-- **extensions** (*ThreatExtensionsProperty*)
+- **extensions** (*OSThreatExtensionsProperty*)
 <br><br>
 
 *class* **Incident**
@@ -1115,7 +1115,7 @@ For more detailed information on this object's properties, see
 - **external_references** (*ListProperty*)
 - **object_marking_refs** (*ListProperty*)
 - **granular_markings** (*ListProperty*)
-- **extensions** (*ThreatExtensionsProperty*)
+- **extensions** (*OSThreatExtensionsProperty*)
 <br><br>
 
 *class* **Note**
@@ -1185,8 +1185,8 @@ For more detailed information on this object's properties, see
 - **modified** (*TimestampProperty*)
 - **relationship_type** (*StringProperty, required*)
 - **description** (*StringProperty*)
-- **source_ref** (*ThreatReference, required*)
-- **target_ref** (*ThreatReference, required*)
+- **source_ref** (*OSThreatReference, required*)
+- **target_ref** (*OSThreatReference, required*)
 - **start_time** (*TimestampProperty*)
 - **stop_time** (*TimestampProperty*)
 - **revoked** (*BooleanProperty*)
@@ -1253,6 +1253,6 @@ For more detailed information on this object's properties, see
 - **external_references** (*ListProperty*)
 - **object_marking_refs** (*ListProperty*)
 - **granular_markings** (*ListProperty*)
-- **extensions** (*ThreatExtensionsProperty*)
+- **extensions** (*OSThreatExtensionsProperty*)
 <br><br>
 

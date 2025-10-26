@@ -71,7 +71,7 @@ def database(generate_connection):
     yield db
     db.clear_db()
 
-from stixorm.module.definitions.os_threat.classes import ThreatReference,ThreatSubObject,Feed,Feeds
+from stixorm.module.definitions.os_threat.classes import OSThreatReference,ThreatSubObject,Feed,Feeds
 from stix2.v21.common import ExternalReference,MarkingDefinition,StatementMarking
 from stix2.v21 import Identity,ObservedData,Indicator,IPv4Address,File,Bundle
 

@@ -31,7 +31,7 @@ from stix2.v21.vocab import (
 
 import logging
 
-from stixorm.module.definitions.property_definitions import ThreatReference, ThreatExtensionsProperty
+from stixorm.module.definitions.property_definitions import OSThreatReference, OSThreatExtensionsProperty
 
 
 logger = logging.getLogger(__name__)
@@ -86,7 +86,7 @@ class Behavior(_DomainObject):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('revoked', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -148,7 +148,7 @@ class Playbook(_DomainObject):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('revoked', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -197,7 +197,7 @@ class Detection(_DomainObject):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('revoked', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -243,7 +243,7 @@ class Detector(_DomainObject):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('revoked', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
 
 
@@ -342,7 +342,7 @@ class OCAFile(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["hashes", "name", "parent_directory_ref", "extensions"]
 
@@ -437,7 +437,7 @@ class OCANetworkTraffic(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["start", "end", "src_ref", "dst_ref", "src_port", "dst_port", "protocols", "extensions"]
 
@@ -497,7 +497,7 @@ class OCAProcess(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = []
 
@@ -562,7 +562,7 @@ class OCASoftware(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["name", "cpe", "swid", "vendor", "version"]
 
@@ -613,7 +613,7 @@ class OCAUserAccount(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["account_type", "user_id", "account_login"]
 
@@ -674,7 +674,7 @@ class OCAFinding(_Observable):
         ('dst_os_ref', ReferenceProperty(valid_types='software', spec_version='2.1')),
         ('src_application_ref', ReferenceProperty(valid_types='software', spec_version='2.1')),
         ('dst_application_ref', ReferenceProperty(valid_types='software', spec_version='2.1')),
-        ('src_geo_ref', ThreatReference(valid_types='x-oca-geo', spec_version='2.1')),
+        ('src_geo_ref', OSThreatReference(valid_types='x-oca-geo', spec_version='2.1')),
         ('src_device', StringProperty()),
         ('dst_device', StringProperty()),
         ('src_application_user_ref', ReferenceProperty(valid_types='user-account', spec_version='2.1')),
@@ -692,12 +692,12 @@ class OCAFinding(_Observable):
         ('time_observed', StringProperty()),
         ('start', IntegerProperty()),
         ('end', IntegerProperty()),
-        ('ttp_tagging_refs', ListProperty(ThreatReference(valid_types=['x-ibm-ttp-tagging'], spec_version='2.1'))),
+        ('ttp_tagging_refs', ListProperty(OSThreatReference(valid_types=['x-ibm-ttp-tagging'], spec_version='2.1'))),
         ('ioc_refs', ListProperty(ReferenceProperty(valid_types=['file', 'ipv4-addr', 'ipv6-addr', 'domain', 'url'], spec_version='2.1'))),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["value"]
 
@@ -740,7 +740,7 @@ class OCATagging(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["value"]
 
@@ -824,11 +824,11 @@ class OCAAsset(_Observable):
         ('host_id', StringProperty()),
         ('ingress', EmbeddedObjectProperty(type=OCATrafficSubObject)),
         ('egress', EmbeddedObjectProperty(type=OCATrafficSubObject)),
-        ('geo_ref', ThreatReference(valid_types='x-oca-geo', spec_version='2.1')),
+        ('geo_ref', OSThreatReference(valid_types='x-oca-geo', spec_version='2.1')),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["value"]
 
@@ -905,7 +905,7 @@ class OCAEvent(_Observable):
         ('original_ref',  ReferenceProperty(valid_types='artifact', spec_version='2.1')),
         ('provider', StringProperty()),
         ('agent', StringProperty()),
-        ('host_ref',  ThreatReference(valid_types='x-oca-asset', spec_version='2.1')),
+        ('host_ref',  OSThreatReference(valid_types='x-oca-asset', spec_version='2.1')),
         ('url_ref',  ReferenceProperty(valid_types='url', spec_version='2.1')),
         ('file_ref',  ReferenceProperty(valid_types='file', spec_version='2.1')),
         ('process_ref',  ReferenceProperty(valid_types='process', spec_version='2.1')),
@@ -920,11 +920,11 @@ class OCAEvent(_Observable):
         ('timezone', StringProperty()),
         ('dataset', StringProperty()),
         ('pipe_name', StringProperty()),
-        ('x_ttp_tagging_refs', ListProperty(ThreatReference(valid_types='x-ibm-ttp-tagging', spec_version='2.1'))),
+        ('x_ttp_tagging_refs', ListProperty(OSThreatReference(valid_types='x-ibm-ttp-tagging', spec_version='2.1'))),
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["value"]
 
@@ -970,7 +970,7 @@ class OCAGeo(_Observable):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('defanged', BooleanProperty(default=lambda: False)),
-        ('extensions', ThreatExtensionsProperty(spec_version='2.1')),
+        ('extensions', OSThreatExtensionsProperty(spec_version='2.1')),
     ])
     _id_contributing_properties = ["value"]
 

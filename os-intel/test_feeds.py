@@ -7,7 +7,7 @@ from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink,TypeDBSource
 from stixorm.module.typedb_lib.instructions import ResultStatus
 
-from stixorm.module.definitions.os_threat.classes import ThreatReference,ThreatSubObject,Feed,Feeds
+from stixorm.module.definitions.os_threat.classes import OSThreatReference,ThreatSubObject,Feed,Feeds
 from stix2.v21.common import ExternalReference,MarkingDefinition,StatementMarking
 from stix2.v21 import Identity,ObservedData,Indicator,IPv4Address,File,Bundle
 

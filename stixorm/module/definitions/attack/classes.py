@@ -25,7 +25,7 @@ from stix2.v21.vocab import (
 
 import logging
 
-from stixorm.module.definitions.property_definitions import ThreatReference
+from stixorm.module.definitions.property_definitions import OSThreatReference
 from stixorm.module.typedb_lib.auth_types import all_auth_types
 from stixorm.module.typedb_lib.factories.mappings_factory import get_mapping_factory_instance
 
@@ -52,13 +52,13 @@ class AttackRelation(_RelationshipObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_old_attack_id', StringProperty()),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_platforms', ListProperty(StringProperty)),
-        ('source_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1', required=True)),
-        ('target_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1', required=True)),
+        ('source_ref', OSThreatReference(valid_types=valid_obj, spec_version='2.1', required=True)),
+        ('target_ref', OSThreatReference(valid_types=valid_obj, spec_version='2.1', required=True)),
         ('start_time', TimestampProperty()),
         ('stop_time', TimestampProperty()),
         ('revoked', BooleanProperty(default=lambda: False)),
@@ -116,7 +116,7 @@ class Tactic(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),
@@ -149,7 +149,7 @@ class Matrix(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('revoked', BooleanProperty(default=lambda: False)),
@@ -162,7 +162,7 @@ class Matrix(_DomainObject):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('extensions', ExtensionsProperty(spec_version='2.1')),
-        ('tactic_refs', ListProperty(ThreatReference(valid_types='x-mitre-tactic', spec_version='2.1'))),
+        ('tactic_refs', ListProperty(OSThreatReference(valid_types='x-mitre-tactic', spec_version='2.1'))),
     ])
 
 
@@ -185,7 +185,7 @@ class Technique(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_deprecated', BooleanProperty(default=lambda: False)),
@@ -233,7 +233,7 @@ class SubTechnique(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),
@@ -288,7 +288,7 @@ class AttackAsset(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_sectors', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
@@ -324,7 +324,7 @@ class Mitigation(_DomainObject):
         ('action', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),
@@ -356,7 +356,7 @@ class Group(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),
@@ -406,7 +406,7 @@ class SoftwareMalware(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),
@@ -468,7 +468,7 @@ class SoftwareTool(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),
@@ -508,7 +508,7 @@ class DetectionStrategy(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),
@@ -521,7 +521,7 @@ class DetectionStrategy(_DomainObject):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('extensions', ExtensionsProperty(spec_version='2.1')),
-        ('x_mitre_analytic_refs', ListProperty(ThreatReference(valid_types='x-mitre-analytic', spec_version='2.1'))),
+        ('x_mitre_analytic_refs', ListProperty(OSThreatReference(valid_types='x-mitre-analytic', spec_version='2.1'))),
     ])
 
 
@@ -541,7 +541,7 @@ class XMitreLogSourceReference(_STIXBase21):
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
     _properties = OrderedDict([
-        ('x_mitre_data_component_ref', ThreatReference(valid_types='x-mitre-data-component', spec_version='2.1')),
+        ('x_mitre_data_component_ref', OSThreatReference(valid_types='x-mitre-data-component', spec_version='2.1')),
         ('name', StringProperty()),
         ('channel', StringProperty()),
     ])
@@ -563,7 +563,7 @@ class Analytic(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),
@@ -600,7 +600,7 @@ class DataSource(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),
@@ -647,7 +647,7 @@ class DataComponent(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),
@@ -660,7 +660,7 @@ class DataComponent(_DomainObject):
         ('object_marking_refs', ListProperty(ReferenceProperty(valid_types='marking-definition', spec_version='2.1'))),
         ('granular_markings', ListProperty(GranularMarking)),
         ('extensions', ExtensionsProperty(spec_version='2.1')),
-        ('x_mitre_data_source_ref', ThreatReference(valid_types='x-mitre-data-source', spec_version='2.1')),
+        ('x_mitre_data_source_ref', OSThreatReference(valid_types='x-mitre-data-source', spec_version='2.1')),
         ('x_mitre_log_sources', ListProperty(EmbeddedObjectProperty(type=XMitreLogSource))),
     ])
 
@@ -681,7 +681,7 @@ class AttackCampaign(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),
@@ -720,7 +720,7 @@ class ObjectVersion(_STIXBase21):
     `the MITRE ATT&CK Stix specifications <https://github.com/mitre-attack/attack-data-model/blob/main/docs/SPEC.md>`__.
     """
     _properties = OrderedDict([
-        ('object_ref', ThreatReference(valid_types=valid_obj, spec_version='2.1')),
+        ('object_ref', OSThreatReference(valid_types=valid_obj, spec_version='2.1')),
         ('object_modified', TimestampProperty(default=lambda: NOW, precision='millisecond', precision_constraint='min')),
     ])
 
@@ -742,7 +742,7 @@ class Collection(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),
@@ -775,7 +775,7 @@ class AttackMarking(_STIXBase21, _MarkingsMixin):
         ('definition', MarkingProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),
@@ -842,7 +842,7 @@ class AttackIdentity(_DomainObject):
         ('description', StringProperty()),
         ('x_mitre_version', StringProperty()),
         ('x_mitre_contributors', ListProperty(StringProperty)),
-        ('x_mitre_modified_by_ref', ThreatReference(valid_types="identity", spec_version='2.1')),
+        ('x_mitre_modified_by_ref', OSThreatReference(valid_types="identity", spec_version='2.1')),
         ('x_mitre_domains', ListProperty(StringProperty)),
         ('x_mitre_attack_spec_version', StringProperty()),
         ('x_mitre_old_attack_id', StringProperty()),

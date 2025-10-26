@@ -5,6 +5,34 @@ applyTo: '**/*'
 
 # PRIMARY INSTRUCTIONS - READ FIRST
 
+## 🏢 **CRITICAL REPOSITORY INFORMATION - READ FIRST**
+
+### **Copyright & Ownership**
+- **Company**: OS Threat Pty Limited
+- **License**: Apache 2.0 (Open for use and contribution)
+- **Copyright**: OS Threat Pty Limited asserts copyright over all code in this repository
+- **Co-Authors & Inventors** (Equal Contributors): 
+  - denis@osthreat.com
+  - brett@osthreat.com  
+  - paolo@osthreat.com
+
+### **Key Collaborative Contributions**
+- **Paolo**: Critical architectural insight - created definitions directory structure, separated dialect data from ORM
+- **Brett**: Original STIX-ORM implementation, STIX21 content, ORM and parsing foundations, initial TypeDB classes
+- **Denis**: Complete TypeDB interaction pipeline (stixorm\module\typedb_lib), functional data pipeline architecture
+
+### **Usage Rights**
+- **Apache 2.0 License**: People are welcome to use and contribute to this codebase
+- **Copyright Notice**: All contributions and usage must respect OS Threat Pty Limited copyright
+- **Repository**: Stix-ORM (os-threat/Stix-ORM)
+
+### **Contributors to Instructions & Architecture Documentation**
+Based on git history analysis, key contributors to the instructions and architecture documentation include:
+- **Brett Forbes (BrettForbes)**: Primary author of instruction optimization framework and pan-dialect analysis
+- **Additional Contributors**: Multiple team members have contributed to the broader codebase and foundational research that enabled this documentation
+
+**Attribution Note**: All documentation builds upon collaborative work across the STIX-ORM development team. Contributors are identified from git commit history where available.
+
 ## 🚨 CRITICAL: SIZE-EFFICIENT INSTRUCTION OPTIMIZATION
 
 ### AI Context Constraints
