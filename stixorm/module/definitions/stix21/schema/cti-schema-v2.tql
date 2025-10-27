@@ -1571,9 +1571,9 @@ embedded sub relation,
 			relates file as sco,
 			relates image as extension;
 			
-		EXIF-tags sub extensions,
-			relates image as sco,
-			relates info as extension;
+		EXIF-tags sub embedded,
+			relates image as owner,
+			relates info as pointed-to;
 
 		windows-pebinary-extension sub extensions,
 			relates file as sco,

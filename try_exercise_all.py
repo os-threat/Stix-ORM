@@ -79,9 +79,11 @@ test_dir = {
 }
 
 frameworks = {
-    "attack_enterprise": "attack/latest/enterprise-attack-17.1.json",
-    "attack_ics": "attack/latest/ics-attack-17.1.json",
-    "mbc": "mbc/framework/mbc.json"
+    "mitre_attack_enterprise": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/refs/heads/master/enterprise-attack/enterprise-attack-17.1.json",
+    "mitre_attack_ics": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/refs/heads/master/ics-attack/ics-attack-17.1.json",
+    "mitre_attack_mobile": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/refs/heads/master/mobile-attack/mobile-attack-17.1.json",
+    "malware_mbc": "https://raw.githubusercontent.com/MBCProject/mbc-stix2.1/refs/heads/main/mbc/mbc.json",
+    "mitre_atlas": "https://raw.githubusercontent.com/mitre-atlas/atlas-navigator-data/refs/heads/main/dist/stix-atlas.json"
 }
 
 def get_stix_ids(get_id_query = get_ids):
