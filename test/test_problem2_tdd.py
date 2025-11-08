@@ -12,7 +12,7 @@ def test_missing_references_should_be_enriched(generate_connection):
     Current behaviour — expected to FAIL: returns missing dependency instead of success.
     """
     import_type = import_type_factory.get_default_import()
-    typedb = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type)
+    typedb = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type, sanitize_profile="attack_flow")
 
     # Identity A references Identity B (not present in bundle)
     identity_a = {
@@ -40,7 +40,7 @@ def test_attack_flow_sco_timestamps_should_be_sanitised(generate_connection):
     Current behaviour — expected to FAIL: parser/loader rejects/treats as error.
     """
     import_type = import_type_factory.get_default_import()
-    typedb = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type)
+    typedb = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type, sanitize_profile="attack_flow")
 
     # Minimal SCO (file) with forbidden created/modified (Attack Flow quirk)
     sco_file = {

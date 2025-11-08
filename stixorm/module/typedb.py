@@ -71,7 +71,10 @@ class TypeDBSink(DataSink):
                  clear=False,
                  import_type: Optional[ImportType]=None,
                  schema_path: Optional[str] = None,
-                 strict_failure: bool = False, **kwargs):
+                 strict_failure: bool = False,
+                 enrich_resolver: Optional[callable] = None,
+                 sanitize_profile: Optional[str] = None,
+                 **kwargs):
         super(TypeDBSink, self).__init__()
         logger.debug(f'TypeDBSink: {connection}')
 
@@ -90,6 +93,10 @@ class TypeDBSink(DataSink):
 
         self.schema_path = schema_path
         self.import_type: ImportType = import_type
+
+        # Problem 2 options
+        self.enrich_resolver = enrich_resolver
+        self.sanitize_profile = sanitize_profile
 
         self.__initialise()
 
@@ -654,13 +661,13 @@ class TypeDBSink(DataSink):
                 if isinstance(src, str): refs.add(src)
                 if isinstance(tgt, str): refs.add(tgt)
 
-        # Sanitize SCO timestamps and collect ids/refs
+        # Sanitize SCO timestamps (if enabled) and collect ids/refs
         for o in objects:
             obj = dict(o)  # shallow copy to avoid mutating caller input
             t = obj.get("type")
             if "id" in obj:
                 declared_ids.add(obj["id"])
-            if isinstance(t, str) and t in sco_types:
+            if isinstance(t, str) and t in sco_types and self.sanitize_profile == "attack_flow":
                 # Remove forbidden fields for SCOs
                 obj.pop("created", None)
                 obj.pop("modified", None)
@@ -671,7 +678,28 @@ class TypeDBSink(DataSink):
         if not missing:
             return cleaned
 
-        # Minimal skeleton creation for a subset of types (Identity is sufficient for our TDD)
+        additions: List[dict] = []
+
+        # Resolver first: allow external fetch for any missing id
+        if getattr(self, "enrich_resolver", None) is not None:
+            for mid in sorted(missing):
+                try:
+                    fetched = self.enrich_resolver(mid)
+                except Exception as e:
+                    fetched = None
+                    logger.warning(f"enrich_resolver failed for {mid}: {e}")
+                if fetched:
+                    for fo in fetched:
+                        if not isinstance(fo, dict):
+                            continue
+                        # Sanitize fetched SCOs too (if enabled)
+                        if fo.get("type") in sco_types and self.sanitize_profile == "attack_flow":
+                            fo = dict(fo)
+                            fo.pop("created", None)
+                            fo.pop("modified", None)
+                        additions.append(fo)
+
+        # Minimal skeleton creation for a subset of types (Identity) as fallback
         def make_skeleton(stix_id: str) -> dict:
             try:
                 type_prefix = stix_id.split("--", 1)[0]
@@ -692,8 +720,9 @@ class TypeDBSink(DataSink):
             # Unknown: no skeleton
             return {}
 
-        additions: List[dict] = []
-        for mid in sorted(missing):
+        # Fill remaining missing with skeletons
+        resolved_ids = {o["id"] for o in additions if isinstance(o, dict) and "id" in o}
+        for mid in sorted(missing - resolved_ids):
             skel = make_skeleton(mid)
             if skel:
                 additions.append(skel)
