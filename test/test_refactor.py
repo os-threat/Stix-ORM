@@ -187,28 +187,28 @@ def translation_campaign_path() -> str:
 
 
 def x509_path() -> str:
-    data_standard_path = "data/standard/"
+    data_standard_path = "data/stix/examples"
     top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("x509_cert_v3_ext.json"))
 
 def aaa_identity_path() -> str:
-    data_standard_path = "data/standard/"
+    data_standard_path = "data/stix/examples"
     top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_identity.json"))
 
 def network_tunnel_dns_path() -> str:
-    data_standard_path = "data/standard/issues"
+    data_standard_path = "data/stix/exmaples/issues"
     top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("network_tunnel_DNS.json"))
 
 def aaa_attack_path() -> str:
-    data_standard_path = "data/standard/"
+    data_standard_path = "data/example/"
     top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_attack_pattern.json"))
 
 def variable_all_standard_data_filepaths() -> List[str]:
     top_dir_path = top_path()
-    standard_data_path = top_dir_path.joinpath("data/standard/")
+    standard_data_path = top_dir_path.joinpath("data/examples/")
     paths = []
 
     files_in_dir = list(standard_data_path.iterdir())
@@ -221,7 +221,7 @@ def variable_all_standard_data_filepaths() -> List[str]:
 def cert_filepaths() -> List[str]:
     paths = []
 
-    cert_root = "data/stix_cert_data"
+    cert_root = "data/stix/stix_cert_data"
 
     cert_list = [
         "attack_pattern_sharing",
