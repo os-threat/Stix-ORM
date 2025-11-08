@@ -691,11 +691,22 @@ class TypeDBSink(DataSink):
             import re
             dep_match_str = tql.dep_match or ""
             match_vars = set(re.findall(r"(\$\w[\w\-]*)", dep_match_str))
-            insert_vars = set(re.findall(r"(\$\w[\w\-]*)", tql.dep_insert or ""))
+            dep_insert_str = tql.dep_insert or ""
+            # Avoid re-assigning key 'stix-id' in Phase-2 (already set in Phase-1)
+            dep_insert_str = re.sub(r'^\s*has\s+stix-id\s+\$\w[\w\-]*,?\s*$', '', dep_insert_str, flags=re.MULTILINE)
+            # Also remove dangling variable assignment lines for $stix-id to prevent missing isa errors
+            dep_insert_str = re.sub(r'^\s*\$stix-id\b.*$', '', dep_insert_str, flags=re.MULTILINE)
+            insert_vars = set(re.findall(r"(\$\w[\w\-]*)", dep_insert_str))
             # Detect relation alias variables (e.g., `$rel (`)
-            rel_aliases = set(re.findall(r"^\s*(\$\w[\w\-]*)\s*\(", tql.dep_insert or "", flags=re.MULTILINE))
-            # Bind only non-relation variables that are missing (typically the owner entity var)
-            missing_vars = (insert_vars - match_vars) - rel_aliases
+            rel_aliases = set(re.findall(r"^\s*(\$\w[\w\-]*)\s*\(", dep_insert_str, flags=re.MULTILINE))
+            # Detect owner variables declared with "var isa Type" in insert
+            owner_declared = set(re.findall(r"^\s*(\$\w[\w\-]*)\s+isa\s+\w+", dep_insert_str, flags=re.MULTILINE))
+            # Default missing set: only owner vars if present; otherwise non-relation vars
+            if owner_declared:
+                candidate_missing = owner_declared
+            else:
+                candidate_missing = insert_vars - rel_aliases
+            missing_vars = candidate_missing - match_vars
             try:
                 type_label = instr.id.split("--", 1)[0]
             except Exception:
@@ -704,9 +715,9 @@ class TypeDBSink(DataSink):
             if type_label and missing_vars:
                 extra_bind = " " + " ".join([f'{v} isa {type_label}, has stix-id "{instr.id}";' for v in sorted(missing_vars)])
             if dep_match_str or extra_bind:
-                q = "match" + extra_bind + (" " + dep_match_str if dep_match_str else "") + " insert " + tql.dep_insert
+                q = "match" + extra_bind + (" " + dep_match_str if dep_match_str else "") + " insert " + dep_insert_str
             else:
-                q = "insert " + tql.dep_insert
+                q = "insert " + dep_insert_str
             rel_ins.insert_add_instruction(instr.id, None)
             rel_ins.instructions[instr.id].status = InsStatus.CREATED_QUERY
             rel_ins.instructions[instr.id].query = q
