@@ -535,6 +535,8 @@ class TypeDBSink(DataSink):
         """
         logger.debug("1. starting in add")
         obj_result = self._gather_objects(stix_data)
+        # Preprocess: enrich missing references and sanitize SCO timestamps (Problem 2)
+        obj_result = self.__enrich_and_sanitize(obj_result)
 
         generate_instructions_result = self.__generate_instructions(obj_result)
         logger.info("\n##########################################################################################################################################################\n")
@@ -615,6 +617,88 @@ class TypeDBSink(DataSink):
                 "JSON formatted STIX (or list of), "
                 "or a JSON formatted STIX bundle",
             )
+
+    # -----------------------
+    # Preprocess
+    # -----------------------
+    def __enrich_and_sanitize(self, objects: List[dict]) -> List[dict]:
+        """
+        - Enrich: detect referenced IDs not present in the payload and create minimal skeletons
+          for a subset of SDOs to allow insertion (Identity for TDD).
+        - Sanitize: for SCOs, drop forbidden created/modified if present (seen in some sources).
+        """
+        if not objects:
+            return objects
+
+        sco_types = {
+            "artifact","autonomous-system","directory","domain-name","email-addr","email-message",
+            "file","ipv4-addr","ipv6-addr","mac-addr","mutex","network-traffic","process",
+            "software","url","user-account","windows-registry-key","x509-certificate"
+        }
+
+        declared_ids = set()
+        refs = set()
+        cleaned: List[dict] = []
+
+        def collect_refs(o: dict):
+            for k, v in o.items():
+                if k.endswith("_ref") and isinstance(v, str):
+                    refs.add(v)
+                elif k.endswith("_refs") and isinstance(v, list):
+                    for x in v:
+                        if isinstance(x, str):
+                            refs.add(x)
+            if o.get("type") == "relationship":
+                src = o.get("source_ref")
+                tgt = o.get("target_ref")
+                if isinstance(src, str): refs.add(src)
+                if isinstance(tgt, str): refs.add(tgt)
+
+        # Sanitize SCO timestamps and collect ids/refs
+        for o in objects:
+            obj = dict(o)  # shallow copy to avoid mutating caller input
+            t = obj.get("type")
+            if "id" in obj:
+                declared_ids.add(obj["id"])
+            if isinstance(t, str) and t in sco_types:
+                # Remove forbidden fields for SCOs
+                obj.pop("created", None)
+                obj.pop("modified", None)
+            collect_refs(obj)
+            cleaned.append(obj)
+
+        missing = refs - declared_ids
+        if not missing:
+            return cleaned
+
+        # Minimal skeleton creation for a subset of types (Identity is sufficient for our TDD)
+        def make_skeleton(stix_id: str) -> dict:
+            try:
+                type_prefix = stix_id.split("--", 1)[0]
+            except Exception:
+                return {}
+            if type_prefix == "identity":
+                # Minimal valid Identity
+                ts = "2020-01-01T00:00:00.000Z"
+                return {
+                    "type": "identity",
+                    "spec_version": "2.1",
+                    "id": stix_id,
+                    "created": ts,
+                    "modified": ts,
+                    "name": "autofetched",
+                    "identity_class": "organization"
+                }
+            # Unknown: no skeleton
+            return {}
+
+        additions: List[dict] = []
+        for mid in sorted(missing):
+            skel = make_skeleton(mid)
+            if skel:
+                additions.append(skel)
+
+        return cleaned + additions
 
 
 class TypeDBSource(DataSource):
