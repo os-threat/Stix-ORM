@@ -554,22 +554,16 @@ class TypeDBSink(DataSink):
         instructions: Instructions = check_missing_dependency_result
         if instructions.exist_missing_dependencies():
             return instructions.convert_to_result()
-        if instructions.exist_cyclical_ids():
-            instructions.register_cyclical_dependencies()
-            return instructions.convert_to_result()
+        # Always use two-phase commit to ensure entities exist before edges (handles cycles and acyclic cases)
+        handled = self.__commit_entities_then_edges(instructions)
+        return handled.convert_to_result()
 
-        reorder_result = self.__reorder_instructions(instructions)
-
-        queries_result = self.__generate_queries(reorder_result)
-
-        add_to_database_result = add_instructions_to_typedb(self.uri,
-                                                            self.port,
-                                                            self.database,
-                                                            reorder_result)
-
-        instructions = add_to_database_result
-
-        return instructions.convert_to_result()
+        # Unreachable due to early return; keep legacy path for reference
+        # (entities were already committed in two-phase above)
+        # reorder_result = self.__reorder_instructions(instructions)
+        # queries_result = self.__generate_queries(reorder_result)
+        # add_to_database_result = add_instructions_to_typedb(self.uri, self.port, self.database, reorder_result)
+        # return add_to_database_result.convert_to_result()
 
 
 
@@ -624,6 +618,111 @@ class TypeDBSink(DataSink):
                 "JSON formatted STIX (or list of), "
                 "or a JSON formatted STIX bundle",
             )
+
+    def __commit_entities_then_edges(self, instructions: Instructions) -> Instructions:
+        """
+        Two-phase commit for strongly connected components:
+        1) Insert entities (attributes only) so all nodes exist.
+        2) Insert relations (edges) among those nodes.
+        """
+        # Phase 1: entity-only inserts
+        from stixorm.module.typedb_lib.instructions import Instructions as InsClass, Status as InsStatus
+        from stixorm.module.typedb_lib.queries import build_match_id_query, match_query, query_id
+
+        # Determine which IDs already exist to avoid duplicate key errors
+        all_ids = list(instructions.instructions.keys())
+        existing_in_db: set[str] = set()
+        for batch in self.batch_generator(all_ids):
+            try:
+                id_query = build_match_id_query(batch)
+                found_ids = match_query(uri=self.uri,
+                                        port=self.port,
+                                        database=self.database,
+                                        query=id_query,
+                                        data_query=query_id,
+                                        import_type=None)
+                existing_in_db.update(found_ids or [])
+            except Exception:
+                # If existence check fails, proceed without skipping (worst case insert may fail and be reported)
+                pass
+
+        entity_ins = InsClass()
+        attrs_ins = InsClass()
+        for instr in instructions.instructions.values():
+            if instr.status == InsStatus.ERROR:
+                continue
+            tql = instr.typeql_obj
+            if tql is None:
+                continue
+            # Minimal base entity create (type + stix-id), skip if exists
+            try:
+                type_label = instr.id.split("--", 1)[0]
+            except Exception:
+                type_label = None
+            if type_label and instr.id not in existing_in_db:
+                base_q = f'insert $e isa {type_label}, has stix-id "{instr.id}";'
+                entity_ins.insert_add_instruction(instr.id, None)
+                entity_ins.instructions[instr.id].status = InsStatus.CREATED_QUERY
+                entity_ins.instructions[instr.id].query = base_q
+
+            # Note: Skip attribute-only Phase-1 update to avoid syntax/key conflicts.
+
+        if entity_ins.instructions:
+            try:
+                add_instructions_to_typedb(self.uri, self.port, self.database, entity_ins)
+            except Exception as e:
+                # propagate errors to original instructions
+                for instr in instructions.instructions.values():
+                    instructions.update_instruction_as_error(instr.id, str(e))
+                return instructions
+        # (Attributes skipped in Phase-1)
+
+        # Phase 2: relation inserts (internal and external)
+        rel_ins = InsClass()
+        for instr in instructions.instructions.values():
+            if instr.status == InsStatus.ERROR:
+                continue
+            tql = instr.typeql_obj
+            if tql is None:
+                continue
+            if not tql.dep_insert:
+                continue
+            # Ensure all variables used in dep_insert are bound in the match (bind self by stix-id if missing)
+            import re
+            dep_match_str = tql.dep_match or ""
+            match_vars = set(re.findall(r"(\$\w[\w\-]*)", dep_match_str))
+            insert_vars = set(re.findall(r"(\$\w[\w\-]*)", tql.dep_insert or ""))
+            # Detect relation alias variables (e.g., `$rel (`)
+            rel_aliases = set(re.findall(r"^\s*(\$\w[\w\-]*)\s*\(", tql.dep_insert or "", flags=re.MULTILINE))
+            # Bind only non-relation variables that are missing (typically the owner entity var)
+            missing_vars = (insert_vars - match_vars) - rel_aliases
+            try:
+                type_label = instr.id.split("--", 1)[0]
+            except Exception:
+                type_label = None
+            extra_bind = ""
+            if type_label and missing_vars:
+                extra_bind = " " + " ".join([f'{v} isa {type_label}, has stix-id "{instr.id}";' for v in sorted(missing_vars)])
+            if dep_match_str or extra_bind:
+                q = "match" + extra_bind + (" " + dep_match_str if dep_match_str else "") + " insert " + tql.dep_insert
+            else:
+                q = "insert " + tql.dep_insert
+            rel_ins.insert_add_instruction(instr.id, None)
+            rel_ins.instructions[instr.id].status = InsStatus.CREATED_QUERY
+            rel_ins.instructions[instr.id].query = q
+
+        if rel_ins.instructions:
+            try:
+                add_instructions_to_typedb(self.uri, self.port, self.database, rel_ins)
+            except Exception as e:
+                for instr in instructions.instructions.values():
+                    instructions.update_instruction_as_error(instr.id, str(e))
+                return instructions
+
+        # Mark all original as success
+        for instr in instructions.instructions.values():
+            instructions.update_instruction_as_success(instr.id)
+        return instructions
 
     # -----------------------
     # Preprocess

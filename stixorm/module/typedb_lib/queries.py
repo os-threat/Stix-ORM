@@ -19,9 +19,10 @@ logger = logging.getLogger(__name__)
 
 
 def build_insert_query(layer):
-    dep_match = layer["dep_match"]
-    dep_insert = layer["dep_insert"]
-    indep_ql = layer["indep_ql"]
+    dep_match = layer.get("dep_match", "")
+    dep_insert = layer.get("dep_insert", "")
+    indep_ql = layer.get("indep_ql", "")
+    core_ql = layer.get("core_ql", "")
     if dep_match == '':
         match_tql = ''
     else:
@@ -29,7 +30,7 @@ def build_insert_query(layer):
     if indep_ql == '' and dep_insert == '':
         insert_tql = ''
     else:
-        insert_tql = 'insert ' + indep_ql + dep_insert
+        insert_tql = 'insert ' + core_ql + indep_ql + dep_insert
     logger.debug(f'\n match_tql string?-> {match_tql}')
     logger.debug(f'\n insert_tql string?-> {insert_tql}')
     typeql_string = match_tql + insert_tql
@@ -246,11 +247,24 @@ def add_instructions_to_typedb(uri: str, port: str, database: str, instructions:
                     write_transaction = get_write_transaction(session)
                     with write_transaction as transaction:
                         query = instructions.get_query_for_id(instruction_id)
+                        try:
+                            # Temporary stdout to diagnose failing inserts
+                            print(query)
+                        except Exception:
+                            pass
                         add_layer(transaction, query)
                         instructions.update_instruction_as_success(instruction_id)
+        return instructions
     except Exception as e:
+        # Log and propagate the error so callers can handle it explicitly
         traceback_str = traceback.format_exc()
-        instructions.update_instruction_as_error(instruction_id, traceback_str)
-    return instructions
+        logger.exception(e)
+        try:
+            instructions.update_instruction_as_error(instruction_id, traceback_str)
+        except Exception:
+            # Best effort update; still raise the original exception
+
+            pass
+        raise
 
 
