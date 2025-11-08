@@ -41,6 +41,8 @@ bandit = "^1.8.3"
 pytest-xdist = "^3.7.0"
 pytest-cov = "^6.1.1"
 pyinstrument = "^5.0.2"
+import-linter = "^2.5.2"
+pydeps = "^3.0.1"
 
 [build-system]
 requires = ["poetry-core"]
