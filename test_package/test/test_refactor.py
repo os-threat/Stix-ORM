@@ -83,11 +83,6 @@ def standard_data_files_with_dependencies() -> List[str]:
     return standard_data_file_list
 
 
-def standard_data_files_with_cyclical() -> List[str]:
-    return [
-        "network_tunnel_basic.json",
-        "network_tunnel_DNS.json"
-    ]
 
 def excluded_files() -> List[str]:
     return [
@@ -100,7 +95,7 @@ def excluded_files() -> List[str]:
 def all_standard_data_file_paths() -> List[str]:
 
     top_dir_path = top_path()
-    data_standard_path = top_dir_path.joinpath("data/standard/")
+    data_standard_path = top_dir_path.joinpath("data/stix/examples")
 
     standard_data_file_list = []
 
@@ -118,13 +113,13 @@ def all_standard_data_file_paths() -> List[str]:
 def standard_data_file_paths_with_dependencies() -> List[str]:
 
     top_dir_path = top_path()
-    data_standard_path = top_dir_path.joinpath("data/standard/")
+    data_standard_path = top_dir_path.joinpath("data/stix/examples")
 
     standard_data_file_list = []
 
     for root, dirs, files in os.walk(data_standard_path):
         for file in files:
-            if file.endswith(".json") and file not in excluded_files() and file not in standard_data_files_with_cyclical() and file in standard_data_files_with_dependencies() :
+            if file.endswith(".json") and file not in excluded_files() and file in standard_data_files_with_dependencies() :
                 standard_data_file_list.append(os.path.join(root, file))
             else:
                 logger.debug("Excluding from test: " + file)
@@ -134,13 +129,13 @@ def standard_data_file_paths_with_dependencies() -> List[str]:
 def standard_data_file_paths_with_no_dependencies() -> List[str]:
 
     top_dir_path = top_path()
-    data_standard_path = top_dir_path.joinpath("data/standard/")
+    data_standard_path = top_dir_path.joinpath("data/stix/examples")
 
     standard_data_file_list = []
 
     for root, dirs, files in os.walk(data_standard_path):
         for file in files:
-            if file.endswith(".json") and file not in excluded_files() and file not in standard_data_files_with_cyclical() and file not in standard_data_files_with_dependencies() :
+            if file.endswith(".json") and file not in excluded_files() and file not in standard_data_files_with_dependencies() :
                 standard_data_file_list.append(os.path.join(root, file))
             else:
                 logger.debug("Excluding from test: " + file)
@@ -151,13 +146,13 @@ def standard_data_file_paths_with_no_dependencies() -> List[str]:
 def standard_data_file_paths_with_cyclical() -> List[str]:
 
     top_dir_path = top_path()
-    data_standard_path = top_dir_path.joinpath("data/standard/")
+    data_standard_path = top_dir_path.joinpath("data/stix/examples")
 
     standard_data_file_list = []
 
     for root, dirs, files in os.walk(data_standard_path):
         for file in files:
-            if file.endswith(".json") and file in standard_data_files_with_cyclical():
+            if file.endswith(".json"):
                 standard_data_file_list.append(os.path.join(root, file))
             else:
                 logger.debug("Excluding from test: " + file)
@@ -165,49 +160,49 @@ def standard_data_file_paths_with_cyclical() -> List[str]:
     return standard_data_file_list
 
 def artifact_basic_path() -> str:
-    data_standard_path = "data/standard/"
+    data_standard_path = "data/stix/examples"
     top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("artifact_basic.json"))
 
 def aaa_grouping_path() -> str:
-    data_standard_path = "data/standard/"
+    data_standard_path = "data/stix/examples"
     top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("grouping.json"))
 
 def aaa_indicator_path() -> str:
-    data_standard_path = "data/standard/"
+    data_standard_path = "data/stix/examples"
     top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_indicator.json"))
 
 def translation_campaign_path() -> str:
-    data_standard_path = "data/standard/"
+    data_standard_path = "data/stix/examples/issues"
     top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("issues").joinpath("translation_campaign.json"))
 
 
 def x509_path() -> str:
-    data_standard_path = "data/standard/"
+    data_standard_path = "data/stix/examples"
     top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("x509_cert_v3_ext.json"))
 
 def aaa_identity_path() -> str:
-    data_standard_path = "data/standard/"
+    data_standard_path = "data/stix/examples"
     top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_identity.json"))
 
 def network_tunnel_dns_path() -> str:
-    data_standard_path = "data/standard/issues"
+    data_standard_path = "data/stix/examples/issues"
     top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("network_tunnel_DNS.json"))
 
 def aaa_attack_path() -> str:
-    data_standard_path = "data/standard/"
+    data_standard_path = "data/stix/examples"
     top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_standard_path).joinpath("aaa_attack_pattern.json"))
 
 def variable_all_standard_data_filepaths() -> List[str]:
     top_dir_path = top_path()
-    standard_data_path = top_dir_path.joinpath("data/standard/")
+    standard_data_path = top_dir_path.joinpath("data/stix/examples")
     paths = []
 
     files_in_dir = list(standard_data_path.iterdir())
@@ -220,7 +215,7 @@ def variable_all_standard_data_filepaths() -> List[str]:
 def cert_filepaths() -> List[str]:
     paths = []
 
-    cert_root = "data/stix_cert_data"
+    cert_root = "data/stix/stix_cert_data"
 
     cert_list = [
         "attack_pattern_sharing",
@@ -276,7 +271,7 @@ def cert_filepaths() -> List[str]:
 def cert_grouped_filepaths() -> List[List[str]]:
     paths = []
 
-    cert_root = "data/stix_cert_data"
+    cert_root = "data/stix/stix_cert_data"
 
     cert_list = [
         "attack_pattern_sharing",
@@ -368,7 +363,8 @@ class TestTypeDB:
                             clear=True,
                             import_type=import_type)
         json_text = self.get_json_from_file(file_path)
-        typedb.add(json_text)
+        result = typedb.add(json_text)
+        self.validate_successful_result(result)
 
         local_list = typedb.get_stix_ids()
         result = typedb.delete(local_list)
