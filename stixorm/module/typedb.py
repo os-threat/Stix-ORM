@@ -300,24 +300,37 @@ class TypeDBSink(DataSink):
 
     def __retrieve_stix_id(self,
                            stix_id: str):
-        type_db_source = self.__get_source_client()
-        return type_db_source.get(stix_id)
+        try:
+            logger.debug(f"__retrieve_stix_id: retrieving {stix_id}")
+            type_db_source = self.__get_source_client()
+            result = type_db_source.get(stix_id)
+            logger.debug(f"__retrieve_stix_id: successfully retrieved {stix_id}")
+            return result
+        except Exception as e:
+            logger.exception(f"__retrieve_stix_id: failed to retrieve {stix_id}")
+            raise
 
 
     def __delete_instruction(self,
                              stixid: str):
+        try:
+            logger.debug(f"__delete_instruction: processing {stixid}")
+            stix_obj = self.__retrieve_stix_id(stixid)
 
-        stix_obj = self.__retrieve_stix_id(stixid)
+            dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
+            del_match, del_tql = delete_stix_object(stix_obj, dep_match, dep_insert, indep_ql, core_ql, self.import_type)
+            dep_obj["delete"] = del_match + '\n' + del_tql
 
-        dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
-        del_match, del_tql = delete_stix_object(stix_obj, dep_match, dep_insert, indep_ql, core_ql, self.import_type)
-        dep_obj["delete"] = del_match + '\n' + del_tql
-
-        log_delete_instruction(del_match, dep_insert, indep_ql, dep_obj, del_match, del_tql)
-        if del_match == '' and del_tql == '':
-            return None
-        else:
-            return dep_obj
+            log_delete_instruction(del_match, dep_insert, indep_ql, dep_obj, del_match, del_tql)
+            if del_match == '' and del_tql == '':
+                logger.debug(f"__delete_instruction: no delete query generated for {stixid}")
+                return None
+            else:
+                logger.debug(f"__delete_instruction: delete instruction created for {stixid}")
+                return dep_obj
+        except Exception as e:
+            logger.exception(f"__delete_instruction: failed to create delete instruction for {stixid}")
+            raise
 
 
     def __update_delete_layers(self,
@@ -325,46 +338,73 @@ class TypeDBSink(DataSink):
                                indexes,
                                missing,
                                dep_obj):
-        if dep_obj is None:
+        try:
+            if dep_obj is None:
+                return layers, indexes, missing
+            if len(layers) == 0:
+                missing = dep_obj['dep_list']
+                indexes.append(dep_obj['id'])
+                layers.append(dep_obj)
+                logger.debug(f"__update_delete_layers: added first layer for {dep_obj['id']}")
+            else:
+                layers, indexes, missing = add_delete_layers(layers, dep_obj, indexes, missing)
+                logger.debug(f"__update_delete_layers: added layer for {dep_obj['id']}, total layers: {len(layers)}")
             return layers, indexes, missing
-        if len(layers) == 0:
-            missing = dep_obj['dep_list']
-            indexes.append(dep_obj['id'])
-            layers.append(dep_obj)
-        else:
-            layers, indexes, missing = add_delete_layers(layers, dep_obj, indexes, missing)
-        return layers, indexes, missing
+        except Exception as e:
+            logger.exception(f"__update_delete_layers: failed to update layers for {dep_obj.get('id', 'unknown') if dep_obj else 'None'}")
+            raise
 
 
     def __retrieve_delete_instructions(self,
                                        stixids: List[str]) -> Instructions:
+        try:
+            logger.info(f"__retrieve_delete_instructions: processing {len(stixids)} STIX IDs for deletion")
+            layers = []
+            indexes = []
+            missing = []
 
-        layers = []
-        indexes = []
-        missing = []
+            instructions = Instructions()
 
-        instructions = Instructions()
+            for idx, stixid in enumerate(stixids):
+                try:
+                    logger.debug(f"__retrieve_delete_instructions: processing {idx+1}/{len(stixids)}: {stixid}")
+                    del_result = self.__delete_instruction(stixid)
+                    layers, indexes, missing = self.__update_delete_layers(layers, indexes, missing, del_result)
+                except Exception as e:
+                    logger.exception(f"__retrieve_delete_instructions: failed to process {stixid} (continuing with remaining)")
+                    # Continue processing remaining IDs instead of failing completely
+                    # Optionally: mark this as an error in instructions
+                    if self.strict_failure:
+                        raise
 
-        for stixid in stixids:
-            del_result = self.__delete_instruction(stixid)
-            layers, indexes, missing = self.__update_delete_layers(layers, indexes, missing, del_result)
-
-        for layer in layers:
-            instructions.insert_delete_instruction(layer['id'], layer)
-        return instructions
+            logger.info(f"__retrieve_delete_instructions: created {len(layers)} delete layers")
+            for layer in layers:
+                instructions.insert_delete_instruction(layer['id'], layer)
+            
+            logger.info(f"__retrieve_delete_instructions: completed with {len(instructions.instructions)} delete instructions")
+            return instructions
+        except Exception as e:
+            logger.exception(f"__retrieve_delete_instructions: failed to retrieve delete instructions for {len(stixids)} IDs")
+            raise
 
 
     def __order_delete_instructions(self,
                                     delete_instructions: Instructions):
-        layer = {}
-        layer['delete'] = 'match $a isa attribute; not { $b isa thing; $b has $a;}; delete $a isa attribute;'
-        delete_instructions.insert_delete_instruction(
-            "cleanup-1", layer
-        )
-        delete_instructions.insert_delete_instruction(
-            "cleanup-2", layer
-        )
-        return delete_instructions
+        try:
+            logger.debug("__order_delete_instructions: adding cleanup layers")
+            layer = {}
+            layer['delete'] = 'match $a isa attribute; not { $b isa thing; $b has $a;}; delete $a isa attribute;'
+            delete_instructions.insert_delete_instruction(
+                "cleanup-1", layer
+            )
+            delete_instructions.insert_delete_instruction(
+                "cleanup-2", layer
+            )
+            logger.debug(f"__order_delete_instructions: total instructions after cleanup: {len(delete_instructions.instructions)}")
+            return delete_instructions
+        except Exception as e:
+            logger.exception("__order_delete_instructions: failed to add cleanup layers")
+            raise
 
     def delete(self, stixid_list: List[str]) -> Instructions:
         """ Delete a list of STIX objects from the typedb_lib server. Must include all related objects and relations
@@ -372,17 +412,29 @@ class TypeDBSink(DataSink):
         Args:
             stixid_list (): The list of Stix-id's of the object's to delete
         """
+        try:
+            logger.info(f"TypeDBSink.delete: starting deletion of {len(stixid_list)} STIX objects")
+            logger.debug(f"TypeDBSink.delete: IDs to delete: {stixid_list[:10]}{'...' if len(stixid_list) > 10 else ''}")
+            
+            delete_instruction_result = self.__retrieve_delete_instructions(stixid_list)
+            order_instruction_result = self.__order_delete_instructions(delete_instruction_result)
+            
+            logger.info(f"TypeDBSink.delete: executing delete queries for {len(order_instruction_result.instructions)} instructions")
+            delete_from_database_result = delete_layers(self.uri,
+                                                        self.port,
+                                                        self.database,
+                                                        order_instruction_result)
 
-        delete_instruction_result = self.__retrieve_delete_instructions(stixid_list)
-        order_instruction_result = self.__order_delete_instructions(delete_instruction_result)
-        delete_from_database_result = delete_layers(self.uri,
-                                                    self.port,
-                                                    self.database,
-                                                    order_instruction_result)
-
-        instructions = delete_from_database_result
-
-        return instructions.convert_to_result()
+            instructions = delete_from_database_result
+            
+            logger.info(f"TypeDBSink.delete: completed deletion")
+            return instructions.convert_to_result()
+        except Exception as e:
+            logger.exception(f"TypeDBSink.delete: failed to delete {len(stixid_list)} STIX objects")
+            if self.strict_failure:
+                raise
+            # Return error results
+            return [Result(id=sid, status=ResultStatus.ERROR, error=str(e)) for sid in stixid_list]
 
 
 
