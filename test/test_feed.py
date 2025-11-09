@@ -61,12 +61,14 @@ def database(generate_connection):
         connection=generate_connection,
         clear=True,
         import_type=import_type,
+        strict_failure=True,
     )
     db.clear_db()
     db = TypeDBSink(
         connection=generate_connection,
         clear=True,
-        import_type=import_type
+        import_type=import_type,
+        strict_failure=True
     )
     yield db
     db.clear_db()
@@ -216,7 +218,8 @@ class TestFeed:
         """
         typedb = TypeDBSink(connection=generate_connection,
                             clear=False,
-                            import_type=import_type)
+                            import_type=import_type,
+                            strict_failure=True)
 
         typedb.clear_db()
 
@@ -263,7 +266,7 @@ class TestFeed:
         datetime2 = datetime.fromisoformat("2020-10-20T01:01:01.000")
         datetime3 = datetime.fromisoformat("2020-10-21T01:01:01.000")
 
-        typedb_sink = TypeDBSink(generate_connection, True, import_type)
+        typedb_sink = TypeDBSink(generate_connection, True, import_type, strict_failure=True)
 
         with open(osthreat, mode="r", encoding="utf-8") as f:
             json_text = json.load(f)

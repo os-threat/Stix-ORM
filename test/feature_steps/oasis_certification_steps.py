@@ -12,7 +12,7 @@ def input_table(table):
 @given("an empty database")
 def empty_database(working_connection):
     import_type = ImportTypeFactory().get_default_import()
-    sink_db = TypeDBSink(connection=working_connection, clear=True, import_type=import_type)
+    sink_db = TypeDBSink(connection=working_connection, clear=True, import_type=import_type, strict_failure=True)
     base_ids = sink_db.get_stix_ids()
     assert len(base_ids) == 0
     return sink_db

@@ -28,7 +28,7 @@ def variable_all_standard_data_filepaths() -> List[str]:
 def typedb_sink(generate_connection):
 
     schema_path = "path/to/schema.json"
-    typedb = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type)
+    typedb = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type, strict_failure=True)
     yield typedb
     typedb.clear_db()
 

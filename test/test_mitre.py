@@ -111,7 +111,8 @@ def attack_data():
 def setup_teardown(generate_connection):
     typedb = TypeDBSink(connection=generate_connection,
                         clear=False,
-                        import_type=import_type)
+                        import_type=import_type,
+                        strict_failure=True)
 
     typedb.clear_db()
 
@@ -119,7 +120,8 @@ def setup_teardown(generate_connection):
 
     typedb = TypeDBSink(connection=generate_connection,
                         clear=False,
-                        import_type=import_type)
+                        import_type=import_type,
+                        strict_failure=True)
 
     typedb.clear_db()
 

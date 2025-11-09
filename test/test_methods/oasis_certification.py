@@ -159,7 +159,7 @@ def run_profile(connection, short, profile):
                 continue
             import_type = import_type_factory.get_attack_import()
             # let's reset the database for each level
-            sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
+            sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type, strict_failure=True)
             source_db = TypeDBSource(connection=connection, import_type=import_type)
 
             sub_dir= pathlib.Path(__file__).parents[2].joinpath('data', 'stix_cert_data', level['dir'], level['sub_dir'])
@@ -213,7 +213,7 @@ def run_profile(connection, short, profile):
 
             import_type = import_type_factory.get_attack_import()
             # let's reset the database for each level
-            sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
+            sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type, strict_failure=True)
             source_db = TypeDBSource(connection=connection, import_type=import_type)
 
             sub_dir = pathlib.Path(__file__).parents[2].joinpath('data', 'stix_cert_data', level['dir'],
