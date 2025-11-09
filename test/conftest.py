@@ -59,7 +59,8 @@ def setup_teardown(generate_connection):
     import_type = import_type_factory.get_all_imports()
     typedb = TypeDBSink(connection=generate_connection,
                         clear=False,
-                        import_type=import_type)
+                        import_type=import_type,
+                        strict_failure=True)
 
     typedb.clear_db()
 
@@ -67,7 +68,8 @@ def setup_teardown(generate_connection):
 
     typedb = TypeDBSink(connection=generate_connection,
                         clear=False,
-                        import_type=import_type)
+                        import_type=import_type,
+                        strict_failure=True)
 
     typedb.clear_db()
 
@@ -84,7 +86,8 @@ def db_sink_for_default(generate_connection):
     import_type = import_type_factory.get_default_import()
     typedb = TypeDBSink(connection=generate_connection,
                         clear=True,
-                        import_type=import_type)
+                        import_type=import_type,
+                        strict_failure=True)
     return typedb
 
 @pytest.fixture(scope="session", autouse=True)
