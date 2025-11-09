@@ -20,12 +20,14 @@ def typedb(generate_connection):
         connection=generate_connection,
         clear=True,
         import_type=import_type,
+        strict_failure=True
     )
     db.clear_db()
     db = TypeDBSink(
         connection=generate_connection,
         clear=True,
         import_type=import_type,
+        strict_failure=True
     )
     yield db
     db.clear_db()
@@ -191,7 +193,6 @@ class TestMitre:
         result = typedb.add([data])
         #validate_is_successful(result)
 
-    # TODO: Fix cyclical
     def test_ics_attack_database_initialization(self, setup_teardown, typedb, ics_attack_data):
 
 
