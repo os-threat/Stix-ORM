@@ -134,6 +134,7 @@ class TestMitre:
         for result in results:
             assert result.status in [ ResultStatus.SUCCESS, ResultStatus.ALREADY_IN_DB]
 
+    @pytest.mark.skip(reason="File reference was removed")
     def test_traffic_duplication_json(self, setup_teardown, typedb, traffic_duplication_json):
 
         result = typedb.add(traffic_duplication_json)
