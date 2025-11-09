@@ -1,0 +1,6 @@
+[importlinter]
+root_package = stixorm
+
+[contract: no circular dependencies]
+name = Prevent circular dependencies
+type = no-cycles
