@@ -860,6 +860,20 @@ class TypeDBSink(DataSink):
                 # Remove the stix-id value assignment line
                 indep_ql_str = re.sub(r'^\s*\$stix-id\s+"[^"]+";?\s*$', '', indep_ql_str, flags=re.MULTILINE)
             
+            # Process dep_insert: remove "isa type," and "has stix-id" for the main entity variable
+            if dep_insert_str and main_entity_var:
+                # Remove "isa type," from the entity declaration if it appears
+                dep_insert_str = re.sub(
+                    r'(' + re.escape(main_entity_var) + r')\s+isa\s+[\w\-]+,\s*',
+                    r'\1 ',
+                    dep_insert_str,
+                    count=1
+                )
+                # Remove "has stix-id $var," from dep_insert (already set in Phase-1)
+                dep_insert_str = re.sub(r'has\s+stix-id\s+\$[\w\-]+,?\s*\n?', '', dep_insert_str)
+                # Remove the stix-id value assignment line
+                dep_insert_str = re.sub(r'^\s*\$stix-id\s+"[^"]+";?\s*$', '', dep_insert_str, flags=re.MULTILINE)
+            
             # Core_ql only has stix-id which is already set in Phase-1, so skip it entirely
             core_ql_str = ""  # Don't use core_ql in Phase-2
             
