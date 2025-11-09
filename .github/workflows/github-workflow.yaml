@@ -96,7 +96,7 @@ jobs:
 
       - name: Build Package
         run: |
-          poetry install --no-dev
+          poetry install --dev
           poetry build
 
       - name: Upload Artifact
