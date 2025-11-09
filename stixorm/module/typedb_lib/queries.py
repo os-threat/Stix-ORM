@@ -247,11 +247,7 @@ def add_instructions_to_typedb(uri: str, port: str, database: str, instructions:
                     write_transaction = get_write_transaction(session)
                     with write_transaction as transaction:
                         query = instructions.get_query_for_id(instruction_id)
-                        try:
-                            # Temporary stdout to diagnose failing inserts
-                            print(query)
-                        except Exception:
-                            pass
+                        logger.info(f"Executing TypeQL for instruction {instruction_id}:\n{query}")
                         add_layer(transaction, query)
                         instructions.update_instruction_as_success(instruction_id)
         return instructions
