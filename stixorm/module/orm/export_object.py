@@ -128,6 +128,8 @@ def make_sdo(res, import_type: ImportType):
         #logger.debug(f"obj tql -> {obj_tql}\n sdo tql name -> {sdo_tql_name}")
         # 2.B) get the is_list list, the list of properties that are lists for that object
         #is_list = auth["is_lists"]["sdo"]["sdo"] + auth["is_lists"]["sdo"][sdo_tql_name]
+        # 2.C) Add the inferred type to stix_dict (not stored as attribute in TypeDB)
+        stix_dict["type"] = sdo_type
         # 3.A) add the properties onto the  object
         stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
         #logger.debug(f'sdo, add properties, stix_dict -> {stix_dict}\n')
@@ -248,6 +250,8 @@ def make_sro(res, import_type: ImportType):
         logger.error(f'relationship type {sro_tql_name} not supported')
         return ''
 
+    # 2.C) Add the inferred type to stix_dict (not stored as attribute in TypeDB)
+    stix_dict["type"] = sro_type
     # 3.A) add the properties onto the the object
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
     # 3.B) add the relations onto the object
@@ -283,6 +287,8 @@ def make_sco(res: dict, import_type: ImportType):
 
     obj_tql, sco_tql_name, is_list, protocol = stix_dict_to_tql(stix_props)
 
+    # 2.B) Add the inferred type to stix_dict (not stored as attribute in TypeDB)
+    stix_dict["type"] = sco_tql_name
     # 3.A) add the properties onto the the object
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
     # 3.B) add the relations onto the object
@@ -341,6 +347,8 @@ def make_meta(res, import_type: ImportType):
 
     obj_tql, sdo_tql_name, is_list, protocol = stix_dict_to_tql(sdo.serialize())
 
+    # Add the inferred type to stix_dict
+    stix_dict["type"] = "marking-definition"  # All meta objects in this context are marking-definitions
     # Add the properties onto the the object
     stix_dict = make_properties(props, obj_tql, stix_dict, is_list)
     # Add the relations onto the object

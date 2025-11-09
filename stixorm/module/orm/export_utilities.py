@@ -52,9 +52,10 @@ def convert_ans_to_res(answer_iterator, r_tx, import_type: ImportType):
                        'symbol': key,
                        'T_id': thing.get_iid(),
                        'T_name': thing.get_type().get_label().name}
-                # 2 get and dsecribe properties
+                # 2 get and describe properties
                 props_obj = thing.get_has(r_tx)
                 ent['has'] = process_props(props_obj)
+                logger.debug(f'Entity {ent["T_name"]} has {len(ent["has"])} attributes: {[p["typeql"] for p in ent["has"]]}')
                 # 3. get and describe relations
                 reln_types = thing.get_relations(r_tx)
                 ent['relns'] = process_relns(reln_types, r_tx, import_type)
