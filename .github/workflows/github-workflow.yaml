@@ -23,7 +23,7 @@ jobs:
       # Label used to access the service container
       typedb:
         # Docker Hub image
-        image: vaticle/typedb
+        image: vaticle/typedb:2.25.7
         # Set health checks to wait until vaticle typedb has started
         ports: ['1729:1729']
 
