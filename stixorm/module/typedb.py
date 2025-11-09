@@ -410,6 +410,7 @@ class TypeDBSink(DataSink):
         logger.debug(f'\n-------------------------------------------------------------\n i have parsed\n')
         dep_match, dep_insert, indep_ql, core_ql, dep_obj = raw_stix2_to_typeql(stix_obj, self.import_type)
         logger.debug(f'\ndep_match {dep_match} \ndep_insert {dep_insert} \nindep_ql {indep_ql} \ncore_ql {core_ql}')
+        logger.info(f'TypeQL for {stix_dict.get("id", "unknown")}:\n  core_ql: {core_ql[:200] if core_ql else "empty"}\n  indep_ql: {indep_ql[:200] if indep_ql else "empty"}\n  dep_insert: {dep_insert[:200] if dep_insert else "empty"}')
         typeql_obj = TypeQLObject(
             dep_match=dep_match,
             dep_insert=dep_insert,
@@ -739,7 +740,7 @@ class TypeDBSink(DataSink):
                 return instructions
         # (Attributes skipped in Phase-1)
 
-        # Phase 2: relation inserts (internal and external)
+        # Phase 2: attribute and relation inserts (complete the objects)
         rel_ins = InsClass()
         for instr in instructions.instructions.values():
             if instr.status == InsStatus.ERROR:
@@ -747,70 +748,78 @@ class TypeDBSink(DataSink):
             tql = instr.typeql_obj
             if tql is None:
                 continue
-            if not tql.dep_insert:
+            # Phase-2 needs to insert: core_ql (entity with attrs) + indep_ql (independent attrs) + dep_insert (relations)
+            # But skip if all three are empty
+            if not (tql.core_ql or tql.indep_ql or tql.dep_insert):
                 continue
-            # Ensure all variables used in dep_insert are bound in the match (bind self by stix-id if missing)
+            
             import re
+            # Extract all TypeQL components
             dep_match_str = tql.dep_match or ""
-            match_vars = set(re.findall(r"(\$\w[\w\-]*)", dep_match_str))
-            dep_insert_str = tql.dep_insert or ""
+            core_ql_str = (tql.core_ql or "").strip()
+            indep_ql_str = (tql.indep_ql or "").strip()
+            dep_insert_str = (tql.dep_insert or "").strip()
+            
             logger.debug(f"Processing {instr.id}:")
-            logger.debug(f"  Original dep_match: {dep_match_str}")
-            logger.debug(f"  Original dep_insert: {dep_insert_str}")
-            logger.debug(f"  Match vars: {match_vars}")
-            # For matched variables, remove redundant stix-id assignments in the insert (already set in Phase-1)
-            # But keep stix-id for fresh variables being created in this insert
-            if match_vars:
-                for mv in match_vars:
-                    # Remove "has stix-id" assignments for matched variables only
-                    dep_insert_str = re.sub(rf'{re.escape(mv)}\s*,?\s*has\s+stix-id\s+[^,;]+', mv, dep_insert_str)
-            # If a variable is already matched, do not re-insert it with `isa` (causes THW14)
-            if match_vars:
-                logger.debug(f"  Removing matched vars from insert...")
-                for mv in sorted(match_vars):
-                    # Remove insert declarations for variables already bound in MATCH
-                    # Pattern: any statement declaring this variable with 'isa', including all its attributes until semicolon
-                    # e.g., "$hash0 isa sha-256, has hash-value "abc";" → removed
-                    pattern = rf'{re.escape(mv)}\s+isa\s+[\w\-]+[^;]*;'
-                    before = dep_insert_str
-                    dep_insert_str = re.sub(pattern, '', dep_insert_str, flags=re.MULTILINE)
-                    if before != dep_insert_str:
-                        logger.debug(f"    Removed {mv} declaration from insert")
-            logger.debug(f"  Cleaned dep_insert: {dep_insert_str}")
-            insert_vars = set(re.findall(r"(\$\w[\w\-]*)", dep_insert_str))
-            # Detect relation alias variables (e.g., `$rel (`)
-            rel_aliases = set(re.findall(r"^\s*(\$\w[\w\-]*)\s*\(", dep_insert_str, flags=re.MULTILINE))
-            # Detect ALL variables declared with "var isa Type" in insert (these should NOT be auto-bound)
-            vars_with_isa = set(re.findall(r"(\$\w[\w\-]*)\s+isa\s+", dep_insert_str, flags=re.MULTILINE))
-            # Detect value assignment variables (e.g., $size 25536; or $name "file.txt";)
-            value_vars = set(re.findall(r"^\s*(\$\w[\w\-]*)\s+[\"'\d]", dep_insert_str, flags=re.MULTILINE))
-            logger.debug(f"  Variables with 'isa' in insert: {vars_with_isa}")
-            logger.debug(f"  Value assignment variables: {value_vars}")
-            # Only auto-bind variables that are NOT already declared with isa, NOT value vars, NOT relation aliases
-            candidate_missing = insert_vars - vars_with_isa - rel_aliases - match_vars - value_vars
-            # Filter to only the "main" entity var (heuristic: shortest name or starts with type prefix)
+            logger.debug(f"  core_ql ({len(core_ql_str)} chars): {core_ql_str[:80]}")
+            logger.debug(f"  indep_ql ({len(indep_ql_str)} chars): {indep_ql_str[:80]}")
+            logger.debug(f"  dep_match ({len(dep_match_str)} chars): {dep_match_str[:80]}")
+            logger.debug(f"  dep_insert ({len(dep_insert_str)} chars): {dep_insert_str[:80]}")
+            
+            # Extract the main entity variable from core_ql (e.g., "$identity" from "$identity isa identity, has ...")
+            main_entity_var = None
+            if core_ql_str:
+                var_match = re.search(r'^\s*(\$\w[\w\-]*)\s+isa\s+', core_ql_str)
+                if var_match:
+                    main_entity_var = var_match.group(1)
+            
+            # Build match clause: need to match the main entity by stix-id, plus any dependencies
+            match_parts = []
             try:
                 type_label = instr.id.split("--", 1)[0]
             except Exception:
                 type_label = None
-            # Further filter: only bind vars that match the entity type name (e.g., $file for file--)
-            if type_label and candidate_missing:
-                main_var_candidates = {v for v in candidate_missing if type_label.replace("-","") in v.replace("$","").replace("-","")}
-                if main_var_candidates:
-                    candidate_missing = main_var_candidates
-                else:
-                    # Fallback: pick the shortest variable name (likely the main entity)
-                    candidate_missing = {min(candidate_missing, key=len)} if candidate_missing else set()
-            missing_vars = candidate_missing
-            logger.debug(f"  Variables to auto-bind in match: {missing_vars}")
-            extra_bind = ""
-            # Avoid binding with invalid 'isa relationship' for generic SROs
-            if type_label and type_label != "relationship" and missing_vars:
-                extra_bind = " " + " ".join([f'{v} isa {type_label}, has stix-id "{instr.id}";' for v in sorted(missing_vars)])
-            if dep_match_str or extra_bind:
-                q = "match" + extra_bind + (" " + dep_match_str if dep_match_str else "") + " insert " + dep_insert_str
+            
+            # Match the main entity (from Phase-1)
+            if main_entity_var and type_label and type_label != "relationship":
+                match_parts.append(f'{main_entity_var} isa {type_label}, has stix-id "{instr.id}";')
+            
+            # Add dependency matches
+            if dep_match_str:
+                match_parts.append(dep_match_str)
+            
+            # Build insert clause: convert core_ql and indep_ql to match-then-insert format
+            # Core_ql: "$var isa type, has stix-id $id; $id 'value';" → skip (only has stix-id, already set)
+            # Indep_ql: "$var isa type, has attr1 $v1, has attr2 $v2, ...; $v1 'val1'; $v2 'val2'; ..."
+            #           → "$var has attr1 $v1, has attr2 $v2, ...; $v1 'val1'; $v2 'val2'; ..."
+            
+            # Process indep_ql: remove "isa type," and "has stix-id" but keep other has clauses and value assignments
+            if indep_ql_str and main_entity_var:
+                # Remove "isa type," from the entity declaration (entity exists from Phase-1)
+                # Pattern: "$var isa type, has x, has y;" → "$var has x, has y;"
+                indep_ql_str = re.sub(
+                    r'(' + re.escape(main_entity_var) + r')\s+isa\s+[\w\-]+,\s*',
+                    r'\1 ',
+                    indep_ql_str,
+                    count=1
+                )
+                # Remove "has stix-id $var," from indep_ql (already set in Phase-1)
+                indep_ql_str = re.sub(r'has\s+stix-id\s+\$[\w\-]+,?\s*\n?', '', indep_ql_str)
+                # Remove the stix-id value assignment line
+                indep_ql_str = re.sub(r'^\s*\$stix-id\s+"[^"]+";?\s*$', '', indep_ql_str, flags=re.MULTILINE)
+            
+            # Core_ql only has stix-id which is already set in Phase-1, so skip it entirely
+            core_ql_str = ""  # Don't use core_ql in Phase-2
+            
+            # Combine insert components (as build_insert_query does)
+            full_insert = core_ql_str + ("\n" if core_ql_str and indep_ql_str else "") + indep_ql_str + ("\n" if (core_ql_str or indep_ql_str) and dep_insert_str else "") + dep_insert_str
+            
+            # Build final query
+            if match_parts:
+                q = "match " + " ".join(match_parts) + " insert " + full_insert
             else:
-                q = "insert " + dep_insert_str
+                q = "insert " + full_insert
+            
             logger.debug(f"Phase-2 query for {instr.id}:\n{q}")
             rel_ins.insert_add_instruction(instr.id, None)
             rel_ins.instructions[instr.id].status = InsStatus.CREATED_QUERY
@@ -983,6 +992,7 @@ class TypeDBSource(DataSource):
                                stix_id: str):
         logger.debug(f'__retrieve_stix_object: {stix_id}')
         obj_var, type_ql = get_embedded_match(stix_id, self.import_type)
+        # Note: Don't add "has $attr" to the query; thing.get_has() will fetch attributes
         query = 'match ' + type_ql + "get;"
         logger.debug(f'query is {query}')
 
@@ -994,6 +1004,7 @@ class TypeDBSource(DataSource):
                            import_type=self.import_type)
 
         logger.debug(f'data is -> {data}')
+        logger.info(f'TypeDBSource.get({stix_id}) retrieved data: {data}')
         stix_obj = parse(data=data, allow_custom=False, import_type=self.import_type)
 
         # result = write_to_file("stixorm/module/how_it_works/export_final.json", stix_obj)
