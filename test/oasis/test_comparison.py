@@ -14,7 +14,7 @@ class StixComparator(object):
 
     def __init__(self):
         folder_path = pathlib.Path(__file__).parents[2]
-        file_path = folder_path.joinpath('stixorm/module/definitions/common/mappings/is_list_sro.json')
+        file_path = folder_path.joinpath('stixorm/module/definitions/common/mappings/stix21/is_list_sro.json')
         file_path.exists()
         with open(str(file_path),  'r') as file:
             self._sro_list = json.load(file)
@@ -112,10 +112,8 @@ def test_granular_markings():
         return matched
 
     top_dir_path = pathlib.Path(__file__).parents[1]
-    file_path = 'data/examples/granular_markings.json'
+    file_path = 'data/stix/examples/granular_markings.json'
     filename = top_dir_path.joinpath(file_path)
-
-    assert filename.exists()
 
     with open(str(filename), mode="r", encoding="utf-8") as file:
         json_blob = json.load(file)

@@ -33,7 +33,7 @@ def typedb(generate_connection):
 
 @pytest.fixture
 def json_data():
-    data_standard_path = "data/mitre/"
+    data_standard_path = "data/attack/examples"
     top_dir_path = pathlib.Path(__file__).parents[0]
     file_path = str(top_dir_path.joinpath(data_standard_path).joinpath("attack_objects.json"))
     with open(file_path, mode="r", encoding="utf-8") as f:
@@ -47,7 +47,7 @@ def json_data():
 
 @pytest.fixture
 def traffic_duplication_json():
-    data_standard_path = "data/mitre/"
+    data_standard_path = "data/attack/examples"
     top_dir_path = pathlib.Path(__file__).parents[0]
     file_path = str(top_dir_path.joinpath(data_standard_path).joinpath("traffic_duplication.json"))
     with open(file_path, mode="r", encoding="utf-8") as f:
@@ -60,9 +60,9 @@ def traffic_duplication_json():
 
 @pytest.fixture
 def ics_attack_data():
-    data_standard_path = "data/mitre/"
+    data_standard_path = "data/attack"
     top_dir_path = pathlib.Path(__file__).parents[0]
-    file_path = str(top_dir_path.joinpath(data_standard_path).joinpath("history").joinpath("ics-attack.json"))
+    file_path = str(top_dir_path.joinpath(data_standard_path).joinpath("latest").joinpath("ics-attack-17.1.json"))
     with open(file_path, mode="r", encoding="utf-8") as f:
         json_text = json.load(f)
 
@@ -85,9 +85,9 @@ def validate_is_successful(results):
     for result in results:
         assert result.status in [ResultStatus.SUCCESS]
 
-def enterprise_attack_13_1():
+def enterprise_attack_17_1():
     top_dir_path = pathlib.Path(__file__).parents[0]
-    file_path = top_dir_path.joinpath("data").joinpath("mitre").joinpath("enterprise-attack-13.1.json")
+    file_path = top_dir_path.joinpath("data").joinpath("attack").joinpath("latest").joinpath("enterprise-attack-17.1.json")
     with open(str(file_path), "r") as file:
         data = json.load(file)
     return data["objects"]
@@ -162,18 +162,18 @@ class TestMitre:
                 count = count + 1
         assert count > 0
 
-    def test_load_enterprise_attack_13_1_first_object(self, setup_teardown, typedb):
+    def test_load_enterprise_attack_17_1_first_object(self, setup_teardown, typedb):
         top_dir_path = pathlib.Path(__file__).parents[0]
-        file_path = top_dir_path.joinpath("data").joinpath("mitre").joinpath("enterprise-attack-13.1.json")
+        file_path = top_dir_path.joinpath("data").joinpath("attack").joinpath("latest").joinpath("enterprise-attack-17.1.json")
         with open(str(file_path), "r") as file:
             data = json.load(file)
 
         result = typedb.add([data["objects"][0]])
         self.validate_has_missing_dependencies(result)
 
-    def test_load_enterprise_attack_13_1(self, setup_teardown, typedb):
+    def test_load_enterprise_attack_17_1(self, setup_teardown, typedb):
         top_dir_path = pathlib.Path(__file__).parents[0]
-        file_path = top_dir_path.joinpath("data").joinpath("mitre").joinpath("enterprise-attack-13.1.json")
+        file_path = top_dir_path.joinpath("data").joinpath("attack").joinpath("latest").joinpath("enterprise-attack-17.1.json")
         with open(str(file_path), "r") as file:
             data = json.load(file)
 

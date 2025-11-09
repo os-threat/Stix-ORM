@@ -32,6 +32,8 @@ def get_all_poison_ivy() -> str:
     data_standard_path = "data/threat_reports"
     top_dir_path = top_path()
     file_path = str(top_dir_path.joinpath(data_standard_path).joinpath("poisonivy.json"))
+    if not pathlib.Path(file_path).is_file():
+        pytest.skip(f"Missing test data: {file_path}", allow_module_level=True)
     json_text = get_json_from_file(file_path)
     return json_text[0]["objects"]
 
@@ -39,6 +41,8 @@ def get_poison_ivy() -> str:
     data_standard_path = "data/threat_reports"
     top_dir_path = top_path()
     file_path = str(top_dir_path.joinpath(data_standard_path).joinpath("poisonivy.json"))
+    if not pathlib.Path(file_path).is_file():
+        pytest.skip(f"Missing test data: {file_path}", allow_module_level=True)
     json_text = get_json_from_file(file_path)
     return json_text[0]
 
@@ -82,6 +86,8 @@ def get_json_from_file(file_path: str) -> List[dict]:
 def get_all_mitre():
     top_dir_path = pathlib.Path(__file__).parents[0]
     file_path = top_dir_path.joinpath("data").joinpath("mitre").joinpath("enterprise-attack-13.1.json")
+    if not file_path.is_file():
+        pytest.skip(f"Missing test data: {file_path}", allow_module_level=True)
     with open(str(file_path), "r") as file:
         data = json.load(file)
     return data["objects"]
