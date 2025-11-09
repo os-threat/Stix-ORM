@@ -4,9 +4,12 @@ import pathlib
 import traceback
 from dataclasses import dataclass
 from typing import List, Optional, Dict
+
+from beartype import beartype
 from typedb.api.connection.driver import TypeDBDriver
 from typedb.api.connection.session import TypeDBSession
 from typedb.api.connection.transaction import TypeDBTransaction
+from typedb.concept.thing.attribute import _Attribute
 from typedb.driver import TypeDB
 from stixorm.module.orm.import_objects import raw_stix2_to_typeql
 from stixorm.module.orm.delete_object import delete_stix_object, add_delete_layers
@@ -255,21 +258,23 @@ class TypeDBSink(DataSink):
         result = delete_database(self.uri, self.port, self.database)
         logger.debug("Successfully cleared database")
 
-
-    def __filter_markings(self, stix_ids: List[str]) -> List[str]:
+    @beartype
+    def __filter_markings(self, stix_ids: List[_Attribute]) -> List[str]:
         marking = ["marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9",
                    "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",
                    "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82",
                    "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed"]
 
         filtered_list = list(filter(lambda x: x.get_value() not in marking, stix_ids))
-        return self.__string_attibute_to_string(filtered_list)
+        return self.__string_attribute_to_string(filtered_list)
 
-    def __string_attibute_to_string(self,
-                                    string_attributes: List[str]):
+    @beartype
+    def __string_attribute_to_string(self,
+                                    string_attributes: List[_Attribute]):
         return [stix_id.get_value() for stix_id in string_attributes]
 
-    def __query_stix_ids(self):
+    @beartype
+    def __query_stix_ids(self) -> List[_Attribute]:
         get_ids_tql = 'match $ids isa stix-id; get $ids;'
         data_query = query_ids
         query_data = match_query(self.uri,
@@ -280,8 +285,8 @@ class TypeDBSink(DataSink):
 
         return query_data
 
-
-    def get_stix_ids(self):
+    @beartype
+    def get_stix_ids(self) -> List[str]:
         """ Get all the stix-ids in a database, should be moved to DataSource object
 
         Returns:
@@ -645,6 +650,30 @@ class TypeDBSink(DataSink):
                 "or a JSON formatted STIX bundle",
             )
 
+    def __is_relation_only(self, instruction: "AddInstruction") -> bool:
+        """
+        Detect STIX Relationship Objects (generic SRO) which should not be inserted as entities.
+        These have ids like 'relationship--<uuid>' and are represented as relations, not entity types.
+        """
+        try:
+            if instruction is None:
+                return False
+            if instruction.id.startswith("relationship--"):
+                return True
+            tql = instruction.typeql_obj
+            if tql is None:
+                return False
+            core = (tql.core_ql or "").strip()
+            # Heuristic: if core is empty, this object likely has only relation inserts
+            if core == "":
+                return False  # be conservative; rely primarily on id prefix
+            # If any accidental 'isa relationship' slipped into core, treat as relation-only
+            if "isa relationship" in core:
+                return True
+        except Exception:
+            return False
+        return False
+
     def __commit_entities_then_edges(self, instructions: Instructions) -> Instructions:
         """
         Two-phase commit for strongly connected components:
@@ -680,12 +709,16 @@ class TypeDBSink(DataSink):
             tql = instr.typeql_obj
             if tql is None:
                 continue
+            # Skip Phase-1 for generic SROs (relationship--...), which are relation-only
+            if self.__is_relation_only(instr):
+                continue
             # Minimal base entity create (type + stix-id), skip if exists
             try:
                 type_label = instr.id.split("--", 1)[0]
             except Exception:
                 type_label = None
-            if type_label and instr.id not in existing_in_db:
+            # Do not attempt to insert an 'isa relationship' entity
+            if type_label and type_label != "relationship" and instr.id not in existing_in_db:
                 base_q = f'insert $e isa {type_label}, has stix-id "{instr.id}";'
                 entity_ins.insert_add_instruction(instr.id, None)
                 entity_ins.instructions[instr.id].status = InsStatus.CREATED_QUERY
@@ -721,32 +754,64 @@ class TypeDBSink(DataSink):
             dep_match_str = tql.dep_match or ""
             match_vars = set(re.findall(r"(\$\w[\w\-]*)", dep_match_str))
             dep_insert_str = tql.dep_insert or ""
-            # Avoid re-assigning key 'stix-id' in Phase-2 (already set in Phase-1)
-            dep_insert_str = re.sub(r'^\s*has\s+stix-id\s+\$\w[\w\-]*,?\s*$', '', dep_insert_str, flags=re.MULTILINE)
-            # Also remove dangling variable assignment lines for $stix-id to prevent missing isa errors
-            dep_insert_str = re.sub(r'^\s*\$stix-id\b.*$', '', dep_insert_str, flags=re.MULTILINE)
+            logger.debug(f"Processing {instr.id}:")
+            logger.debug(f"  Original dep_match: {dep_match_str}")
+            logger.debug(f"  Original dep_insert: {dep_insert_str}")
+            logger.debug(f"  Match vars: {match_vars}")
+            # For matched variables, remove redundant stix-id assignments in the insert (already set in Phase-1)
+            # But keep stix-id for fresh variables being created in this insert
+            if match_vars:
+                for mv in match_vars:
+                    # Remove "has stix-id" assignments for matched variables only
+                    dep_insert_str = re.sub(rf'{re.escape(mv)}\s*,?\s*has\s+stix-id\s+[^,;]+', mv, dep_insert_str)
+            # If a variable is already matched, do not re-insert it with `isa` (causes THW14)
+            if match_vars:
+                logger.debug(f"  Removing matched vars from insert...")
+                for mv in sorted(match_vars):
+                    # Remove insert declarations for variables already bound in MATCH
+                    # Pattern: any statement declaring this variable with 'isa', including all its attributes until semicolon
+                    # e.g., "$hash0 isa sha-256, has hash-value "abc";" → removed
+                    pattern = rf'{re.escape(mv)}\s+isa\s+[\w\-]+[^;]*;'
+                    before = dep_insert_str
+                    dep_insert_str = re.sub(pattern, '', dep_insert_str, flags=re.MULTILINE)
+                    if before != dep_insert_str:
+                        logger.debug(f"    Removed {mv} declaration from insert")
+            logger.debug(f"  Cleaned dep_insert: {dep_insert_str}")
             insert_vars = set(re.findall(r"(\$\w[\w\-]*)", dep_insert_str))
             # Detect relation alias variables (e.g., `$rel (`)
             rel_aliases = set(re.findall(r"^\s*(\$\w[\w\-]*)\s*\(", dep_insert_str, flags=re.MULTILINE))
-            # Detect owner variables declared with "var isa Type" in insert
-            owner_declared = set(re.findall(r"^\s*(\$\w[\w\-]*)\s+isa\s+\w+", dep_insert_str, flags=re.MULTILINE))
-            # Default missing set: only owner vars if present; otherwise non-relation vars
-            if owner_declared:
-                candidate_missing = owner_declared
-            else:
-                candidate_missing = insert_vars - rel_aliases
-            missing_vars = candidate_missing - match_vars
+            # Detect ALL variables declared with "var isa Type" in insert (these should NOT be auto-bound)
+            vars_with_isa = set(re.findall(r"(\$\w[\w\-]*)\s+isa\s+", dep_insert_str, flags=re.MULTILINE))
+            # Detect value assignment variables (e.g., $size 25536; or $name "file.txt";)
+            value_vars = set(re.findall(r"^\s*(\$\w[\w\-]*)\s+[\"'\d]", dep_insert_str, flags=re.MULTILINE))
+            logger.debug(f"  Variables with 'isa' in insert: {vars_with_isa}")
+            logger.debug(f"  Value assignment variables: {value_vars}")
+            # Only auto-bind variables that are NOT already declared with isa, NOT value vars, NOT relation aliases
+            candidate_missing = insert_vars - vars_with_isa - rel_aliases - match_vars - value_vars
+            # Filter to only the "main" entity var (heuristic: shortest name or starts with type prefix)
             try:
                 type_label = instr.id.split("--", 1)[0]
             except Exception:
                 type_label = None
+            # Further filter: only bind vars that match the entity type name (e.g., $file for file--)
+            if type_label and candidate_missing:
+                main_var_candidates = {v for v in candidate_missing if type_label.replace("-","") in v.replace("$","").replace("-","")}
+                if main_var_candidates:
+                    candidate_missing = main_var_candidates
+                else:
+                    # Fallback: pick the shortest variable name (likely the main entity)
+                    candidate_missing = {min(candidate_missing, key=len)} if candidate_missing else set()
+            missing_vars = candidate_missing
+            logger.debug(f"  Variables to auto-bind in match: {missing_vars}")
             extra_bind = ""
-            if type_label and missing_vars:
+            # Avoid binding with invalid 'isa relationship' for generic SROs
+            if type_label and type_label != "relationship" and missing_vars:
                 extra_bind = " " + " ".join([f'{v} isa {type_label}, has stix-id "{instr.id}";' for v in sorted(missing_vars)])
             if dep_match_str or extra_bind:
                 q = "match" + extra_bind + (" " + dep_match_str if dep_match_str else "") + " insert " + dep_insert_str
             else:
                 q = "insert " + dep_insert_str
+            logger.debug(f"Phase-2 query for {instr.id}:\n{q}")
             rel_ins.insert_add_instruction(instr.id, None)
             rel_ins.instructions[instr.id].status = InsStatus.CREATED_QUERY
             rel_ins.instructions[instr.id].query = q
