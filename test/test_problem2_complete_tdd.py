@@ -31,7 +31,8 @@ def test_enrichment_resolver_fetches_identity(generate_connection):
                         clear=True,
                         import_type=import_type,
                         enrich_resolver=_resolver_for_identity,
-                        sanitize_profile="attack_flow")
+                        sanitize_profile="attack_flow",
+                        strict_failure=True)
 
     identity = {
         "type": "identity",
@@ -59,7 +60,8 @@ def test_attack_flow_sco_sanitisation_scoped(generate_connection):
     typedb = TypeDBSink(connection=generate_connection,
                         clear=True,
                         import_type=import_type,
-                        sanitize_profile="attack_flow")
+                        sanitize_profile="attack_flow",
+                        strict_failure=True)
 
     sco_file = {
         "type": "file",
