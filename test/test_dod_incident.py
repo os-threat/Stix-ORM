@@ -1,14 +1,7 @@
 import json
-import os
-import datetime
-import stix2
-from stix2 import Identity
 import pytest
-import pytest
-from stix2 import parse
 from stixorm.module.authorise import import_type_factory
 from stixorm.module.typedb import TypeDBSink
-from stixorm.module.typedb_lib.instructions import ResultStatus
 
 import_type = import_type_factory.get_all_imports()
 
@@ -72,10 +65,7 @@ class TestDOD:
         self.clean_db(generate_connection)
     def test_load(self,database:TypeDBSink):
         import pathlib
-        import pytest
         path = pathlib.Path(__file__).parents[0].joinpath('data/os-threat/incident/human_trigger.json')
-        if not path.is_file():
-            pytest.skip(f"Missing test data: {path}")
         with open(str(path),'r') as file:
 
             bundle_json = json.load(file)

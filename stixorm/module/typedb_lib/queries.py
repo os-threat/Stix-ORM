@@ -166,30 +166,49 @@ def query_id(query, generator, transaction, **data_query_args):
 
 
 def delete_layers(uri: str, port: str, database: str, instructions: Instructions):
-    with get_core_client(uri, port) as client:
-        client_session = get_data_session(client, database)
-        with client_session as session:
-            for instruction_id in instructions.get_ordered_ids():
-                write_transaction = get_write_transaction(session)
-                with write_transaction as transaction:
-                    query = instructions.get_query_for_id(instruction_id)
-                    result = delete_layer(transaction, query)
-                    log_delete_layer(result, query)
-                    instructions.update_delete_instruction_as_success(instruction_id)
-    return instructions
+    try:
+        logger.info(f"delete_layers: starting deletion of {len(instructions.instructions)} instructions")
+        with get_core_client(uri, port) as client:
+            client_session = get_data_session(client, database)
+            with client_session as session:
+                for idx, instruction_id in enumerate(instructions.get_ordered_ids()):
+                    try:
+                        logger.debug(f"delete_layers: processing {idx+1}/{len(instructions.instructions)}: {instruction_id}")
+                        write_transaction = get_write_transaction(session)
+                        with write_transaction as transaction:
+                            query = instructions.get_query_for_id(instruction_id)
+                            result = delete_layer(transaction, query)
+                            log_delete_layer(result, query)
+                            instructions.update_delete_instruction_as_success(instruction_id)
+                        logger.debug(f"delete_layers: successfully deleted {instruction_id}")
+                    except Exception as e:
+                        logger.exception(f"delete_layers: failed to delete instruction {instruction_id}")
+                        raise
+        logger.info("delete_layers: completed successfully")
+        return instructions
+    except Exception as e:
+        logger.exception(f"delete_layers: failed to delete layers")
+        raise
 
 
 
 def delete_layer(transaction: TypeDBTransaction, query: str):
-    transaction_query: QueryManager = transaction.query
-    query_future: Promise = transaction_query.delete(query)
-    bi_d = query_future.resolve()
-    logger.info(
-        '\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n' + \
-        '---------------------------------------------------------------------------------------- Delete Layer Query ------------------------------------------------------------------------------\n' + \
-        '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
+    try:
+        logger.debug(f"delete_layer: executing query (length: {len(query)} chars)")
+        logger.debug(f"delete_layer: query preview: {query[:200]}")
+        transaction_query: QueryManager = transaction.query
+        query_future: Promise = transaction_query.delete(query)
+        bi_d = query_future.resolve()
+        logger.info(
+            '\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n' + \
+            '---------------------------------------------------------------------------------------- Delete Layer Query ------------------------------------------------------------------------------\n' + \
+            '-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
 
-    logger.info(query)
+        logger.info(query)
+        logger.debug("delete_layer: query executed successfully")
+    except Exception as e:
+        logger.exception(f"delete_layer: failed to execute delete query")
+        raise
 
     logger.info(
         '\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n' + \

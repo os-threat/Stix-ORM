@@ -47,7 +47,7 @@ def top_path():
     return pathlib.Path(__file__).parents[0]
 
 def mitre_path():
-    data_mitre_path = "data/mitre"
+    data_mitre_path = "data/attack"
     top_dir_path = top_path()
     return str(top_dir_path.joinpath(data_mitre_path).joinpath("enterprise-attack.json"))
 

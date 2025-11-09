@@ -134,13 +134,12 @@ class TestIdentityInsertion:
         assert "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff" in identity_ids
         assert "identity--e5f1b90a-d9b6-40ab-81a9-8a29df4b6b65" in identity_ids
 
-    @pytest.mark.skip(reason="Deletion requires TypeDBSource.get() which has a known issue retrieving 'type' attribute")
     def test_identity_deletion(self, typedb_sink, identity_data):
         """Test that inserted identities can be deleted.
         
-        Note: This test is skipped due to a known issue in TypeDBSource.get()
-        where the 'type' attribute is not retrieved from the database,
-        causing parse errors during deletion flow.
+        Note: This test is skipped because TypeDBSource.get() uses get_embedded_match()
+        which only fetches the stix-id, not all required attributes. The export flow
+        needs to use get_full_object_match() or fetch all attributes explicitly.
         """
         # Insert the data
         result = typedb_sink.add(identity_data)
