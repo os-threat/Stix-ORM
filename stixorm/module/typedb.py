@@ -27,7 +27,8 @@ from stixorm.module.typedb_lib.handlers import handle_result
 from stixorm.module.typedb_lib.logging import log_delete_instruction
 from stixorm.module.typedb_lib.queries import delete_database, match_query, query_ids, delete_layers, build_match_id_query,\
     build_insert_query, query_id, add_instructions_to_typedb
-from stixorm.module.typedb_lib.instructions import Instructions, Status, AddInstruction, TypeQLObject, Result
+from stixorm.module.typedb_lib.instructions import Instructions, Status, AddInstruction, TypeQLObject, Result, \
+    ResultStatus
 from stixorm.module.typedb_lib.factories.import_type_factory import ImportType, ImportTypeFactory
 from stixorm.module.parsing.conversion_decisions import get_embedded_match
 
@@ -540,23 +541,48 @@ class TypeDBSink(DataSink):
             saved separately; you will be able to retrieve any of the objects
             the Bundle contained, but not the Bundle itself.
         """
-        logger.debug("1. starting in add")
+        logger.info("TypeDBSink.add: start")
         obj_result = self._gather_objects(stix_data)
+        try:
+            count = len(obj_result) if isinstance(obj_result, list) else 1
+        except Exception:
+            count = -1
+        logger.info(f"TypeDBSink.add: gathered objects count={count}, sanitize_profile={getattr(self,'sanitize_profile',None)}")
         # Preprocess: enrich missing references and sanitize SCO timestamps (Problem 2)
         obj_result = self.__enrich_and_sanitize(obj_result)
 
-        generate_instructions_result = self.__generate_instructions(obj_result)
+        try:
+            generate_instructions_result = self.__generate_instructions(obj_result)
+        except Exception as e:
+            logger.exception("TypeDBSink.add: __generate_instructions failed")
+            if self.strict_failure:
+                raise
+            return [Result(id="unknown", status=ResultStatus.ERROR, error=str(e))]
         logger.info("\n##########################################################################################################################################################\n")
         #logger.info(f"generate instructions is {generate_instructions_result}")
-        instruction_dependency_graph_result =  self.__create_instruction_dependency_graph(generate_instructions_result)
-        check_missing_dependency_result = self.__check_missing_dependencies(instruction_dependency_graph_result)
+        try:
+            instruction_dependency_graph_result =  self.__create_instruction_dependency_graph(generate_instructions_result)
+            check_missing_dependency_result = self.__check_missing_dependencies(instruction_dependency_graph_result)
+        except Exception as e:
+            logger.exception("TypeDBSink.add: dependency analysis failed")
+            if self.strict_failure:
+                raise
+            return [Result(id="unknown", status=ResultStatus.ERROR, error=str(e))]
 
         instructions: Instructions = check_missing_dependency_result
         if instructions.exist_missing_dependencies():
+            logger.info(f"TypeDBSink.add: missing dependencies detected -> {instructions.verified_missing_dependencies}")
             return instructions.convert_to_result()
         # Always use two-phase commit to ensure entities exist before edges (handles cycles and acyclic cases)
-        handled = self.__commit_entities_then_edges(instructions)
-        return handled.convert_to_result()
+        try:
+            handled = self.__commit_entities_then_edges(instructions)
+            logger.info("TypeDBSink.add: completed two-phase commit")
+            return handled.convert_to_result()
+        except Exception as e:
+            logger.exception("TypeDBSink.add: two-phase commit failed")
+            if self.strict_failure:
+                raise
+            return [Result(id="unknown", status=ResultStatus.ERROR, error=str(e))]
 
         # Unreachable due to early return; keep legacy path for reference
         # (entities were already committed in two-phase above)
@@ -671,6 +697,9 @@ class TypeDBSink(DataSink):
             try:
                 add_instructions_to_typedb(self.uri, self.port, self.database, entity_ins)
             except Exception as e:
+                logger.exception("Phase-1 entity insert failed")
+                if self.strict_failure:
+                    raise
                 # propagate errors to original instructions
                 for instr in instructions.instructions.values():
                     instructions.update_instruction_as_error(instr.id, str(e))
@@ -726,6 +755,9 @@ class TypeDBSink(DataSink):
             try:
                 add_instructions_to_typedb(self.uri, self.port, self.database, rel_ins)
             except Exception as e:
+                logger.exception("Phase-2 relation insert failed")
+                if self.strict_failure:
+                    raise
                 for instr in instructions.instructions.values():
                     instructions.update_instruction_as_error(instr.id, str(e))
                 return instructions
