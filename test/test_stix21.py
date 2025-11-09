@@ -116,7 +116,7 @@ class StixComparator(object):
 @pytest.fixture
 def typedb_connection(generate_connection):
     import_type = ImportTypeFactory().get_default_import()
-    typedb_sink = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type)
+    typedb_sink = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type, strict_failure=True)
     typedb_source = TypeDBSource(connection=generate_connection, import_type=import_type)
     data_folder = pathlib.Path(__file__).parents[0].joinpath("data/stix/examples/")
     example = str(pathlib.Path(__file__).parents[0].joinpath("data/stix/examples/"))

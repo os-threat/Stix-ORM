@@ -50,12 +50,14 @@ def database(generate_connection):
         connection=generate_connection,
         clear=True,
         import_type=import_type,
+        strict_failure=True,
     )
     db.clear_db()
     db = TypeDBSink(
         connection=generate_connection,
         clear=True,
-        import_type=import_type
+        import_type=import_type,
+        strict_failure=True
     )
     yield db
     db.clear_db()

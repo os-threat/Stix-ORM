@@ -137,7 +137,7 @@ class CertificationTest():
 
         # let's reset the database for each profile
         import_type=import_type_factory.get_default_import()
-        sink_db = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type)
+        sink_db = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type, strict_failure=True)
         # get all the initial STIX IDs (only markings should be there)
         base_ids = sink_db.get_stix_ids()
         # markings should be automatically ignored
@@ -277,7 +277,7 @@ class CertificationTest():
                     continue
                 import_type = import_type_factory.get_attack_import()
                 # let's reset the database for each level
-                sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
+                sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type, strict_failure=True)
                 source_db = TypeDBSource(connection=connection, import_type=import_type)
 
                 sub_dir= pathlib.Path(__file__).parents[2].joinpath('data', 'stix_cert_data', level['dir'], level['sub_dir'])
@@ -332,7 +332,7 @@ class CertificationTest():
 
                 import_type = import_type_factory.get_attack_import()
                 # let's reset the database for each level
-                sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type)
+                sink_db = TypeDBSink(connection=connection, clear=True, import_type=import_type, strict_failure=True)
                 source_db = TypeDBSource(connection=connection, import_type=import_type)
 
                 sub_dir = pathlib.Path(__file__).parents[2].joinpath('data', 'stix_cert_data', level['dir'],

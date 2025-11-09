@@ -8,7 +8,7 @@ from stixorm.module.typedb_lib.instructions import ResultStatus
 @pytest.mark.usefixtures("setup_teardown")
 def test_identity_marking_circular_refs_load_success(generate_connection):
     import_type = import_type_factory.get_default_import()
-    typedb = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type)
+    typedb = TypeDBSink(connection=generate_connection, clear=True, import_type=import_type, strict_failure=True)
 
     identity_id = "identity--11111111-1111-4111-8111-111111111111"
     # Use canonical TLP:WHITE id/created to satisfy stix2 constraint checks

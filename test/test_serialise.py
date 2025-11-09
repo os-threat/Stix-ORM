@@ -140,8 +140,9 @@ def test_serialise_poison_ivy(setup_teardown, generate_connection):
     json_data = get_poison_ivy()
     import_type = import_type_factory.get_all_imports()
     typedb_sink = TypeDBSink(connection=generate_connection,
-                        clear=True,
-                        import_type=import_type)
+                                 clear=True,
+                                 import_type=import_type,
+                                 strict_failure=True)
 
     typedb_sink.add(json_data)
     typedb_source = TypeDBSource(connection=generate_connection, import_type=import_type)
